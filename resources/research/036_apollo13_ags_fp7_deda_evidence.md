@@ -58,11 +58,11 @@ The card documents several values of DEDA address 400:
 
 ### Alignment / calibration
 
-- **400 +3** — AGS/PGNS alignment
+- **400 +3** — IMU Align *(Apollo 13 dictionary wording; supersedes the looser training-card-only label used in the initial pass)*
 - **400 +4** — lunar alignment
 - **400 +5** — body-axis alignment
-- **400 +6** — gyro/accelerometer calibration
-- **400 +7** — accelerometer calibration
+- **400 +6** — gyro and accelerometer calibration
+- **400 +7** — inflight accelerometer-only calibration
 
 This is a good example of why a DEDA address cannot be modeled as one fixed “parameter.” The entered value selects operational logic.
 
@@ -312,3 +312,59 @@ These must not be collapsed into one generic AGS “screen.”
 3. Map the MSK 1123 DEDA block itself: current address, readout, clear/register status.
 4. Determine which of 1123 AGS VEL / DEL VEL / ULL / ACT VEL correspond to onboard FP7 variables versus ground-transformed values.
 5. Preserve actual Apollo 13 burn-monitor sequences as candidate scenario/procedure validation cases, without yet turning them into gameplay abstractions.
+
+
+## 2026-09-11 mission-specific dictionary verification
+
+NASA's indexed text for the **Apollo 13 G&N Dictionary** now exposes enough of the AGS pages to verify several Flight Program 7 entries directly from the mission-specific source.
+
+This supersedes the training-card-only wording for these entries.
+
+### Apollo 13 selector logic — address 400
+
+The Apollo 13 dictionary gives:
+
+- **400 +00000** — Attitude Hold
+- **400 +10000** — Auto Guidance Steering
+- **400 +20000** — Z-Body Axis Steering
+- **400 +30000** — **IMU Align**
+- **400 +40000** — Lunar Align
+- **400 +50000** — Body Axis Align
+- **400 +60000** — Gyro and Accelerometer Calibration
+- **400 +70000** — Inflight Accelerometer Only Calibration
+
+Correction: the prior note's looser training-card description of `400 +3` as “AGS/PGNS alignment” is not the Apollo 13 dictionary label. For the Apollo 13 profile, use **IMU Align** unless a procedure requires a more detailed functional description.
+
+### Apollo 13 delta-V monitor addresses
+
+The mission-specific dictionary directly confirms:
+
+- **404** — ΔVX; use 470 for readout
+- **405** — ΔVY; use 471 for readout
+- **406** — ΔVZ; use 472 for readout
+- **450** — ΔVX (LV), +forward
+- **451** — ΔVY (LV), +right
+- **452** — ΔVZ (LV), +down
+- **470** — measured ΔVX, +up, 0.1 ft/s; use 404 to zero
+- **471** — measured ΔVY, +right, 0.1 ft/s; use 405 to zero
+- **472** — measured ΔVZ, +forward, 0.1 ft/s; use 406 to zero
+- **500 / 501 / 502** — ΔVg X/Y/Z, +up/+right/+forward
+
+This removes the need to rely on the later training card for those address meanings.
+
+### Apollo 13 timing/calibration/ullage entries
+
+The mission-specific dictionary also directly confirms:
+
+- **377** — AGS Computer Time, 0.1 min
+- **540 / 541 / 542** — X/Y/Z accelerometer-bias compensation coefficients, 0.001 ft/s²
+- **544 / 545 / 546** — X/Y/Z gyro-bias compensation coefficients, 0.01°/hr
+- **547** — lunar-align azimuth correction
+- **614** — ullage counter, 2-second units
+- **616** — ullage-counter value for ullage completion, 2-second units
+
+### Evidence boundary
+
+The web search index exposes source text but the large PDF still could not be opened/rendered in the current reader. Therefore these entries are **mission-specific indexed-text verification**, not direct visual page inspection.
+
+The remaining major gap is no longer the DEDA address dictionary. It is the **Flight Program 7 AEA telemetry-word list and its routing into MSK 1123**.
