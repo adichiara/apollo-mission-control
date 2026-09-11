@@ -513,3 +513,40 @@ The communications subsystem must expose physical/link dependencies rather than 
 2. Resolve CLAD full title/display number.
 3. Extract INCO DRK/MSK assignments and command-verification workflow.
 4. Continue with FIDO/RETRO to reconstruct the ground trajectory side of the same cross-discipline data chain.
+
+
+## 2026-09-11 — Apollo 13 FIDO / RETRO reconstruction
+
+### Completed
+
+- Added detailed FIDO and RETRO station specifications from the Apollo 13 Mission Operations Report.
+- Preserved the internal distinction:
+  - **FIDO** = ground trajectory solution and data/vector quality.
+  - **RETRO** = return/reentry plan built from the accepted trajectory.
+- Documented FIDO handling of:
+  - invalid or unavailable tracking data
+  - multiple competing vectors (IU, CMC, high-speed, Select, MSFC)
+  - RTCC ephemeris/model-state errors
+  - tracking glitches versus possible real ΔV
+  - communications interference delaying valid LM tracking
+  - final entry-vector selection
+- Documented RETRO handling of:
+  - P37/RTE block data
+  - free-return restoration
+  - direct-return and PC+2 option trades
+  - landing time / landing area / ΔV / weather / recovery tradeoffs
+  - entry PAD generation
+  - entry flight-path angle
+  - onboard/ground clock corrections
+  - separation geometry and backup entry logic
+- Preserved operational vector identifiers such as CCHU08, BDAX36, MILX99 and GWMX307 rather than replacing them with generic project labels.
+
+### New files
+
+- `docs/stations/APOLLO13_FIDO.md`
+- `docs/stations/APOLLO13_RETRO.md`
+- `resources/research/019_apollo13_fido_retro.md`
+
+### Key architecture consequence
+
+Even if future player-count scaling combines FIDO and RETRO, the simulator should retain separate trajectory-state and return-plan functions internally.
