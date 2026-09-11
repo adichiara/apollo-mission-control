@@ -106,3 +106,44 @@ A generic "retro terminal" is no longer an acceptable historical stand-in for th
 3. Continue search for PHO-TN401.
 4. Map controller responsibilities to actual displays/parameters.
 5. Begin primary-source voice-loop topology reconstruction.
+
+
+## 2026-09-11 — Phase 1: Controller information workflow, pass 2
+
+### Completed
+
+- Located and reviewed the Apollo-11-specific **RTCC Operations Support Plan for Mission G**.
+- Identified Apollo 11 telemetry-reference MSK display numbers.
+- Confirmed mission-specific operational use of display requests, PBI inputs, MED inputs, and hard-copy verification.
+- Identified PHO-TR170A and PHO-TR170B as key missing requirements/display-format documents.
+- Documented the Apollo TV display distinction between display-request mode and channel-attach mode.
+- Recorded that lunar missions used 36 computer-driven TV channels.
+- Added a concrete Apollo 13 EECOM console benchmark while explicitly keeping it separate from Apollo 11 configuration.
+- Documented NASA's formal distinction between:
+  - Flight Mission Rules
+  - Flight Control Operations Handbook interface procedures
+  - controller-specific Flight Controller Console Handbooks
+- Recorded the physical-paper adaptation for historically hard-copy products.
+
+### New documents
+
+- `docs/CONTROLLER_INFORMATION_WORKFLOW.md`
+- `docs/PHYSICAL_DOCUMENT_WORKFLOW.md`
+- `resources/research/007_mission_g_rtcc_operations.md`
+- `resources/research/008_controller_console_and_document_evidence.md`
+
+### High-priority source hunt created
+
+1. PHO-TR170A
+2. PHO-TR170B
+3. Apollo-11-era PHO-TR155
+4. Mission G Flight Control Operations Handbook
+5. Mission G controller console handbooks
+6. Data Acquisition Plan Annex B / Telemetry Data Formats Control Handbook
+
+### Next research
+
+- map specific controller stations to display families and telemetry parameters
+- reconstruct voice-loop topology
+- identify which dynamic products were hard copy versus CRT
+- locate console-handbook material for the Apollo 11 CSM and LM systems positions
