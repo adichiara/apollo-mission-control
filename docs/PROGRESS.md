@@ -474,3 +474,42 @@ Identified exact catalog entries for LMA-790-2-LMS, including **Volume II Sectio
 - `docs/stations/APOLLO13_GUIDO.md`
 - `resources/research/016_apollo13_lm_data_links.md`
 - `resources/research/017_telmu_control_source_conflict.md`
+
+
+## 2026-09-11 — Apollo 13 INCO station reconstruction
+
+### Completed
+
+- Added a detailed Apollo 13 INCO station specification.
+- Documented INCO as a multi-variable communications/command role rather than a single signal-strength monitor.
+- Recorded contemporary INCO cues:
+  - digital uplink signal strength
+  - calibrated uplink/downlink meters
+  - telemetry dropouts
+  - voice noise
+  - antenna look-angle display
+  - active MSFN site / two-way lock
+  - bitrate
+  - command margin
+- Identified the mission-specific **LM Look Angle Display — MSK 1475**.
+- Documented its Apollo 13 defect: it did not operate with LM low-bit-rate telemetry, a known simulation-discovered problem accepted for the mission and recommended for correction before Apollo 14.
+- Documented CLAD/LAD dependency on RTCC Computer Dynamics MED inputs and the resulting cross-discipline coordination problem with FIDO.
+- Documented actual Apollo 13 command-uplink timing/margin problems during PTC antenna switching.
+- Documented the CSM HGA anomaly, S-IVB/LM downlink interference, low-power communications configuration, entry geometry/attenuation anomaly, and DSE data-retrieval role.
+- Recorded INCO's unusually direct simulation critique: incorrect simulation of communications dependencies produced **negative training** and reduced Flight Director confidence.
+
+### New files
+
+- `docs/stations/APOLLO13_INCO.md`
+- `resources/research/018_apollo13_inco_station.md`
+
+### Key architecture consequence
+
+The communications subsystem must expose physical/link dependencies rather than scripted command success/failure. A communication command can fail because geometry, antenna selection, network lock, bitrate, carrier/subcarrier state, or ground-site procedure removes the command path.
+
+### Next
+
+1. Locate the actual MSK 1475 screen definition.
+2. Resolve CLAD full title/display number.
+3. Extract INCO DRK/MSK assignments and command-verification workflow.
+4. Continue with FIDO/RETRO to reconstruct the ground trajectory side of the same cross-discipline data chain.
