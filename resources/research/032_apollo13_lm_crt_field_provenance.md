@@ -103,7 +103,7 @@ The following Apollo 13 MSK 1137 families cannot yet be assigned to one raw LGC 
 - radar-minus-AGS velocity comparisons — require AGS data not supplied solely by the LGC Descent/Ascent list.
 - radar-minus-AGS altitude — likewise requires AGS altitude plus radar altitude.
 - RTCC mass — ASPO explicitly distinguishes an RTCC-computed mass from the spacecraft/downlinked LM and CSM masses.
-- `BIAS` / octal PIPA-bias load values — ASPO identifies these as ground-computed; source algorithm still to be traced.
+- `BIAS` / octal PIPA-bias load values — ASPO identifies these as ground-computed. A February 1970 H-2 planning note now documents the intended **lunar-surface** bias-estimation method, but the general mission-phase calculation/routing and OCTAL load-generation path remain unresolved. See note 033.
 
 ## Clearly non-LGC / additional-source families
 
@@ -188,3 +188,12 @@ That is a strong reason not to model MSK 1137 as a single subsystem-owned data p
 3. Complete MSK 1123 field-by-field provenance using the same method.
 4. Resolve exact CRT refresh behavior and station access/request workflow.
 5. Only after those steps, create an implementation parameter dictionary.
+
+
+## PIPA-bias workflow lead
+
+Research note 033 documents a February 27, 1970 Apollo 13 planning procedure for lunar-surface PIPA-bias estimation. The method combines MPAD lunar gravity, gimbal angles, GUIDO's local-vertical attitude determination, and PIPA-derived measured gravity to form a ground bias estimate.
+
+This resolves **one intended H-2 ground-computation workflow**, not the complete MSK 1137 BIAS/OCTAL implementation for all phases. The Apollo 13 Mission Operations Report independently confirms active PIPA-bias monitoring and actual CSM bias updates during the flown mission.
+
+See `033_apollo13_pipa_bias_ground_workflow.md`.
