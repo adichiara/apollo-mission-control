@@ -344,3 +344,28 @@ This is strong continuity evidence, but the Apollo 13 ASPO 45 pages still must b
 The former size/extraction blocker is resolved. Direct inspection of the Apollo 13 scan confirms MSK 683, 966, 1123, and 1137 in ASPO-1–12 (PDF pages 179–190). Layouts are on PDF 180, 182, 186, and 188 respectively. These identifiers/layout references are now **MISSION-SPECIFIC**, superseding earlier unresolved identifier status in this document. Unchanged field-level continuity from Apollo 11 remains unproven.
 
 See [direct inspection and page map](../../resources/research/029_apollo13_aspo45_direct_inspection.md). Full transcription, refresh behavior, operational revisions, and station access remain open. No station maturity rating is raised by this update alone.
+
+
+## 2026-09-11 field-provenance update
+
+R-567 Rev. 8 now provides a direct source path for a substantial subset of the Apollo 13 LM CRT information. The Descent/Ascent downlist includes, among other families:
+
+- list identity/sync;
+- landing-radar CDU/time/velocity/range data;
+- DSKY display-table words;
+- desired and actual body rates;
+- failure registers and restart count;
+- RADMODES and DAPBOOLS;
+- desired and actual CDU angles;
+- PIPA/delta-velocity data;
+- LM/CSM mass;
+- guidance thrust command;
+- TIG and time-to-go information.
+
+This does **not** mean MSK 1123/1137 are raw downlist displays. In particular, the Apollo 13 MSK 1137 stable-member landing-radar velocity components require ground-side assembly/transformation from time-tagged antenna-axis measurements, and several displayed comparison quantities are explicitly ground-derived.
+
+See `resources/research/032_apollo13_lm_crt_field_provenance.md`.
+
+### Revised GUIDO gap
+
+The question is no longer simply "which LGC values existed." The remaining implementation-critical gap is the **ground transformation and display-routing layer** between downlist words and the final CRT fields, plus station access/request behavior.
