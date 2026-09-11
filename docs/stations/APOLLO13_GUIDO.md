@@ -454,3 +454,19 @@ This provides a strong architectural explanation for Apollo 13's documented post
 The exact Apollo 13 Flight Program 7 word IDs and RTCC conversion equation remain unresolved, so the project does not yet freeze the final MSK 1123 AGS ATT implementation.
 
 See `resources/research/040_apollo13_ags_attitude_direction_cosine_path.md`.
+
+
+## 2026-09-11 AGS delta-V interface separation
+
+The AGS measured-delta-V path is now separated into distinct crew and ground interfaces.
+
+Adjacent AGS program documentation shows:
+
+- **VD1X/Y/Z (0404–0406)** — body-axis sensed-velocity accumulations updated every 40 ms and included in the AEA telemetry block;
+- **VDX/Y/Z (0470–0472)** — separate values updated at the 2-second navigation cycle and exposed to the crew through DEDA 470/471/472.
+
+Apollo 13 mission-specific procedures validate the DEDA side: Mission Control had the crew zero 404/405/406 and monitor 470 for contingency burns.
+
+This means GUIDO's ground information did not inherently depend on whatever address the crew happened to be viewing on DEDA. The exact MSK 1123 AGS DEL VEL source still needs RTCC/display-routing evidence.
+
+See `resources/research/041_apollo13_ags_delta_v_interfaces.md`.
