@@ -731,3 +731,47 @@ The largest common Phase 1 gap is now exact console/display reconstruction, not 
 - Added `resources/research/033_apollo13_pipa_bias_ground_workflow.md`.
 - Updated GUIDO, FIDO, and the LM CRT provenance note.
 - The source resolves one ground-computation path but does **not** yet establish the complete MSK 1137 BIAS/OCTAL display-routing or load-generation implementation.
+
+
+## 2026-09-11 — MSK 1137 non-LGC telemetry provenance
+
+### Completed
+
+- Traced several Apollo 13 MSK 1137 hardware fields into named spacecraft telemetry measurements.
+- LM-7/8/9 Elementary Functional Diagrams identify:
+  - **GQ6510P** — DPS thrust-chamber pressure;
+  - **GQ6806H** — variable-injector actuator position.
+- Directly rendered the March 9, 1970 LM Data Book redline pages and verified:
+  - **GN7563T** — LM-7 landing-radar antenna temperature;
+  - **GN7723T** — rendezvous-radar antenna temperature for LM-6 and subsequent.
+- The LR-temperature redline sheet explicitly warns that CRT readings may differ from heater trip values because instrumentation error is not included in the trip values.
+- Cross-checked a NASA Apollo telemetry summary that maps:
+  - GQ6806H;
+  - GN7563T;
+  - GN7723T;
+  - PIPA power/telemetry-bias/IMU supply measurements;
+  - PIPA temperature
+  to primary MSK 1137.
+- Kept the later telemetry summary classified as Apollo-wide/retrospective routing evidence rather than an Apollo-13-specific configuration source.
+- Kept **GQ6510P → MSK 1137 TCP** provisional because the inspected routing row does not explicitly list 1137 even though the mission-era measurement identity and Apollo 13 field meaning match.
+
+### New research note
+
+- `resources/research/034_apollo13_msk1137_non_lgc_telemetry.md`
+
+### Architecture consequence
+
+MSK 1137 is now demonstrably a composite of:
+
+1. LGC digital-downlink data;
+2. PCM hardware/instrumentation measurements;
+3. ground-derived/transformed products.
+
+The simulator must preserve those origins rather than populate the CRT directly from one idealized subsystem state.
+
+### Next work
+
+1. Find Apollo-13-specific instrumentation definitions for the 1137 PGNCS power/PIPA fields and radar validity discretes.
+2. Certify the thrust-chamber-pressure display routing.
+3. Recover engineering conversions/display precision and CRT update cadence.
+4. Repeat the field-provenance process for MSK 1123.
