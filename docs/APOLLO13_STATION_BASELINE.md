@@ -401,6 +401,8 @@ INCO is not simply a signal-strength monitor. The role requires a model of:
 - exact command-control interface
 - how much MSFN site status was displayed locally versus provided by NETWORK/CCATS
 
+Detailed INCO specification: [`docs/stations/APOLLO13_INCO.md`](stations/APOLLO13_INCO.md)
+
 ---
 
 ## PROCEDURES / O&P
