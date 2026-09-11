@@ -398,3 +398,23 @@ For GUIDO, the page combines LGC/PGNS digital-downlink state with independently 
 The next high-value GUIDO task is specifically the **Apollo 13 G&N Dictionary / AGS Flight Program 7** mapping for the 1123 AGS and DEDA fields. That source is mission-specific and particularly important because public source-code coverage for Flight Program 7 is incomplete.
 
 See `resources/research/035_apollo13_msk1123_field_provenance.md`.
+
+
+## 2026-09-11 AGS Flight Program 7 operational evidence
+
+The AGS side of the Apollo 13 guidance picture now has concrete DEDA-address evidence rather than only generic AGS categories.
+
+A directly inspected TRW **Flight Program 7** training card documents operational address families including:
+
+- 400 selector values for attitude hold, guidance steering, Z-axis steering, AGS/PGNS alignment, lunar alignment, body-axis alignment, and calibration;
+- 404/405/406 delta-V reset quantities;
+- 450–452, 470–472, and 500–502 delta-V / velocity-monitor families;
+- 337R altitude, 360R–362R LM inertial velocity, 367R altitude rate, 377 AGS clock;
+- 540–542 accelerometer bias, 544–546 gyro drift;
+- 614R / 616 ullage-count logic.
+
+More importantly, Apollo 13's actual flight record independently validates selected address use. Before contingency burns Mission Control called for **400+5 body-axis alignment**, then **400+0 attitude hold**. Before MCC-7, the crew was told to zero **404/405/406** and select **470**; Haise reported a small pre-burn bias at 470 as the burn began.
+
+This confirms that the address logic was operationally real for Apollo 13, but does **not** yet prove which AEA variables populate each MSK 1123 AGS field.
+
+See `resources/research/036_apollo13_ags_fp7_deda_evidence.md`.
