@@ -509,3 +509,29 @@ NASA/contractor bibliography records identify:
 - **Status:** REVIEWED as LATER-APOLLO MAPPING evidence
 - **Use:** Shows individual LM telemetry measurements assigned to primary MSKs including 1123 and 1137.
 - **Caution:** Supports continuity of display function, not exact Apollo 13 layout.
+
+
+### Apollo 13 Mission Techniques — Mission H-2
+
+- **Source family:** NASA MSC Internal Notes, Apollo Mission Techniques, Mission H-2 and Subsequent
+- **Dates:** January–February 1970
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Officially approved guidance/control sequences, data flow, real-time decision logic, comparison limits, contingency logic, and MCC/crew responsibilities for Apollo 13.
+- **Public collection:** https://www.ibiblio.org/apollo/Documents/
+- **Key documents located:**
+  - MSC 01296 — Abort from Lunar Powered Descent and Subsequent Rendezvous, 1970-01-07
+  - MSC 01297 — Lunar Orbit Activities, 1970-01-30
+  - MSC 01520 — Lunar Descent, 1970-02-15
+  - MSC 01522 — Lunar Powered Ascent, 1970-02-09
+  - Mission H-2 Contingency Procedures
+  - Manual Ascent
+  - Translunar Midcourse Corrections and Lunar Orbit Insertion
+- **Importance:** These documents are primary scenario/procedure sources because they state the approved preflight real-time decision logic rather than retrospective interpretation.
+
+### Apollo 13 LM Malfunction Procedures
+
+- **Title:** Apollo 13 Flight Data File — LM Malfunction Procedures
+- **Date:** 1970-03-16
+- **URL:** https://www.ibiblio.org/apollo/Documents/Apollo%2013%20Malfunction%20Procedures.pdf
+- **Status:** IDENTIFIED / REVIEW BEGUN
+- **Use:** Crew-facing malfunction diagnosis and corrective procedures; important for distinguishing controller telemetry/decision support from the actions CAPCOM asks the crew to perform.
