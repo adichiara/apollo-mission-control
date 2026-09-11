@@ -592,3 +592,25 @@ NASA/contractor bibliography records identify:
 - **Use:** Apollo-wide Lunar Module Telemetry Data Summary with measurement IDs, loading/sample information, PCM products, and Primary MSK numbers.
 - **Current use:** Independent display-routing/continuity evidence for MSK 1137 measurements including GQ6806H, radar temperatures/status, PGNCS electrical measurements, and PIPA temperature.
 - **Caution:** Retrospective Apollo-wide source. Mission-specific Apollo 13 configuration should be confirmed from contemporary sources where possible.
+
+
+### LM PGNS/AGS Training Card — Flight Program 7
+
+- **Title:** LM PGNS/AGS Training Card
+- **Organization:** TRW Systems Group for NASA/MSC
+- **Date:** October 1970
+- **Task:** ASPO 81C-3
+- **Public scan:** https://ibiblio.org/apollo/Documents/LM%20PGNS-AGS%20Training%20Card.pdf
+- **Status:** REVIEWED-DETAILED; principal card page directly rendered and visually inspected
+- **Use:** Operationally oriented PGNS and **AGS Flight Program 7** reference; DEDA address families, guidance/steering selectors, navigation variables, delta-V monitoring, alignment/calibration, and ullage logic.
+- **Caution:** Post-Apollo-13 document referencing the Apollo 14 LM-8 G&N Dictionary. Use for FP7 structure/continuity, not as sole proof of Apollo-13-specific configuration. Selected address semantics are independently validated by Apollo 13 flight transcripts.
+
+### Apollo 13 Flight Crew G&N Dictionary
+
+- **Title:** Apollo 13 G&N Dictionary
+- **Date:** 1970-03-25
+- **Source index:** Apollo 13 Flight Journal mission documents
+- **Public scan:** https://apollojournals.org/afj/ap13fj/pdf-hr/76-a13-g-n-dictionary.pdf
+- **Status:** IDENTIFIED / INDEXED-TEXT PARTIAL; 36.9 MB scan exceeds current PDF web reader
+- **Use:** Mission-specific PGNS/AGS crew reference; uniquely valuable for AGS Flight Program 7 address semantics and procedures.
+- **Current limitation:** Full AGS pages still need direct page-level inspection or a reliable transcription before they are used to freeze the Apollo 13 address dictionary.
