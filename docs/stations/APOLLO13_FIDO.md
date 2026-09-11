@@ -320,3 +320,14 @@ This separation is a core architecture requirement.
 
 - *Mission Operations Report — Apollo 13*, Appendix C: Flight Dynamics Officer.
   https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf
+
+
+## 2026-09-11 PIPA-bias cross-discipline evidence
+
+A February 27, 1970 H-2 Lunar Surface Branch planning note states that Apollo 13 PIPA-bias measurements during lunar launch preparation were intended to provide **FIDO a PGNS delta-V error estimation**.
+
+The same note assigns part of the bias-estimation input to GUIDO (local-vertical attitude) and uses MPAD lunar-gravity data plus gimbal/PIPA information.
+
+This is useful evidence that some FIDO trajectory-confidence inputs were products assembled across guidance and ground-analysis functions rather than values originating solely inside the flight-dynamics chain.
+
+See `resources/research/033_apollo13_pipa_bias_ground_workflow.md`.
