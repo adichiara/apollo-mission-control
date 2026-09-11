@@ -62,6 +62,25 @@ For every controller position:
 - flight plan/timeline
 - mission-specific reference tables
 
+### Known mission-specific conditions and quirks
+
+Mission profiles may include conditions that were already known to NASA before or during the mission, such as:
+
+- known spacecraft anomalies at launch
+- accepted ground-system/display deficiencies
+- documented software limitations
+- established workaround procedures
+- known instrumentation quirks
+- configuration-specific redlines/constraints
+
+These are **not scenario surprises**. They belong to the historical baseline known to the appropriate controllers/crew.
+
+Examples already documented for Apollo 13 include:
+
+- LM Look Angle Display MSK 1475 not operating from LM low-bit-rate telemetry
+- known LUMINARY/COLOSSUS operational notes and restart behaviors
+- known LM-7 preflight anomalies and configuration constraints
+
 ### Scenario state
 
 - mission elapsed time
@@ -69,6 +88,7 @@ For every controller position:
 - crew state
 - ground/network state
 - allowable historically sourced failure/scenario injections
+- separation between baseline known conditions and hidden scenario injections
 
 ## Inheritance rule
 
