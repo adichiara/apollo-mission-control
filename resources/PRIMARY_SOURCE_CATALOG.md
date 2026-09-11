@@ -558,3 +558,37 @@ NASA/contractor bibliography records identify:
 - **Status:** INDEXED-TEXT REVIEWED; direct visual page verification still pending because the large scan was not renderable in the current web reader
 - **Use:** Apollo-13-specific planned method for lunar-surface PIPA-bias computation; establishes MPAD lunar gravity, gimbal angles, GUIDO local-vertical attitude, and PIPA measurements as inputs; states launch-preparation use for FIDO PGNS delta-V error estimation.
 - **Caution:** Apollo 13 did not land, so the planned lunar-surface procedure was not executed on the mission. Do not generalize this one method to every MSK 1137 BIAS/OCTAL use without further sources.
+
+
+### Lunar Module 7, 8 & 9 Elementary Functional Diagrams
+
+- **Document:** LED-267-37C
+- **Title:** Lunar Module 7, 8 & 9 Elementary Functional Diagrams
+- **Public scan:** https://www.ibiblio.org/apollo/Documents/lm-7%2C8%2C9_elementary_functional_diagrams.pdf
+- **Status:** INDEXED-TEXT REVIEWED; source file exceeds the current web PDF renderer limit
+- **Use:** Vehicle-era hardware/measurement identity and functional routing. Current verified measurement-index findings include GQ6510P (thrust chamber pressure) and GQ6806H (variable injector actuator position).
+- **Importance:** Direct LM-7-family evidence for the non-LGC telemetry side of MSK 1137.
+- **Caution:** A measurement's existence in the LM-7/8/9 diagrams does not by itself prove its Mission Control CRT destination.
+
+### LM Data Book — Launch Mission Rule Redlines, Revision 5
+
+- **Document:** SNA-8-D-027(II)PT2 / HSI-41196
+- **Title:** CSM/LM Spacecraft Operational Data Book, Volume II, Part 2 — LM Data Book: Launch Mission Rule Redlines
+- **Revision/date:** Revision 5, 1970-03-09
+- **Public scan:** https://ibiblio.org/apollo/Documents/HSI-41196.pdf
+- **Status:** REVIEWED-PARTIAL; relevant radar pages directly rendered and visually checked
+- **Use:** Apollo-13/LM-7 measurement definitions, ranges, errors and launch redline rationale.
+- **Current high-value pages:** GN7563T LR antenna temperature (LM-7) and GN7723T RR antenna temperature (LM-6 & subsequent).
+- **Important evidence:** The LR temperature rationale explicitly distinguishes physical heater trip values from possible CRT readings because instrumentation error is not included in the physical trip thresholds.
+
+### Apollo Experience Report — Engineering and Analysis Mission Support
+
+- **Report:** NASA-TN-D-7993
+- **NASA document ID:** 19750018953
+- **Publication:** 1975
+- **Source:** NASA Technical Reports Server
+- **URL:** https://ntrs.nasa.gov/citations/19750018953
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Apollo-wide Lunar Module Telemetry Data Summary with measurement IDs, loading/sample information, PCM products, and Primary MSK numbers.
+- **Current use:** Independent display-routing/continuity evidence for MSK 1137 measurements including GQ6806H, radar temperatures/status, PGNCS electrical measurements, and PIPA temperature.
+- **Caution:** Retrospective Apollo-wide source. Mission-specific Apollo 13 configuration should be confirmed from contemporary sources where possible.
