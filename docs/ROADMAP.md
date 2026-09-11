@@ -84,6 +84,7 @@ Research and catalog:
 - display request/selection workflow
 - field provenance (raw telemetry vs onboard-computed vs ground-derived)
 - ground transformation/calculation path for derived CRT values
+- validation cases for incorrect ground-derived products even when raw telemetry/spacecraft state are valid
 - plot/tabular formats
 - console controls relevant to play
 - hard-copy products where relevant
