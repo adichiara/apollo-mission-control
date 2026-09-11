@@ -461,3 +461,24 @@ NASA/contractor bibliography records identify:
 - **Status:** CATALOG IDENTIFIED; individual scans still being located/extracted
 - **Source:** Virtual AGC / NARA corporate index
 - **Use:** Simulator architecture, instructor operation, subsystem simulation, and especially the explicit simulator-output tables.
+
+
+### Telemetry and Communications to Apollo
+
+- **Title:** Telemetry and Communications to Apollo
+- **Date:** 1970
+- **Source:** International Telemetering Conference proceedings / University of Arizona repository
+- **URL:** https://repository.arizona.edu/bitstream/10150/607014/1/ITC_1970_70-11-5.pdf
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Contemporary operational description of INCO antenna management, signal-strength cues, look-angle displays, telemetry-rate changes, command timing, steerable/high-gain antenna support, and DSE retrieval.
+- **Important evidence:** INCO used distinct digital/analog link-quality cues and MCC-calculated spacecraft antenna look-angle displays; DSE dumps were initiated by INCO-executed commands.
+
+### Apollo 13 INCO Post-Mission Report
+
+- **Source:** Appendix I, Apollo 13 Mission Operations Report
+- **Date:** 1970-04-28
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Mission-specific communications anomalies, commands, network/RTCC interfaces, display deficiencies, and simulation critique.
+- **Key display:** **LM Look Angle Display — MSK 1475**
+- **Key defect:** did not operate with LM low-bit-rate telemetry during Apollo 13.
+- **Key training finding:** incorrectly simulated communications dependencies created negative training.
