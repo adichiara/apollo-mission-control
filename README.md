@@ -15,6 +15,7 @@ See:
 - [Project principles](docs/PROJECT_PRINCIPLES.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Simulation architecture](docs/SIMULATION_ARCHITECTURE.md)
+- [Flight-control organization baseline](docs/FLIGHT_CONTROL_ORGANIZATION.md)
 - [Decisions](docs/DECISIONS.md)
 - [Open questions](docs/OPEN_QUESTIONS.md)
 - [Progress log](docs/PROGRESS.md)
