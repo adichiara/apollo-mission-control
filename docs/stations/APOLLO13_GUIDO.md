@@ -319,3 +319,21 @@ Do not substitute Apollo 11/12 CRT pages for Apollo 13 until the Apollo 13 ASPO 
 - MIT/Charles Stark Draper Laboratory R-567, Section 2, Rev. 8 — LUMINARY 1C Data Links, March 1970:
   https://www.ibiblio.org/apollo/NARA-SW/R-567-sec2-rev8.pdf
 - Apollo 13 Guidance & Navigation Summary — AC Electronics, public scan indexed by Apollo 13 Flight Journal.
+
+
+## 9A. Cross-mission CRT continuity evidence
+
+Earlier AC/Delco Apollo guidance summaries explicitly define the ASPO 45 CRT family:
+
+- MSK 683 — CM
+- MSK 966 — CM
+- MSK 1123 — LM
+- MSK 1137 — LM
+
+For the LM, **MSK 1123** is documented as a combined guidance/control/propulsion real-time page containing timing, downlink/site identification, DAP/body rates, attitude commands, gimbal/CDU/IMU/AGS attitude, PGNS/AGS errors, and velocity/delta-velocity information.
+
+**MSK 1137** is documented as a powered-descent/control page containing throttle-selection/command, commanded thrust, thrust-chamber pressure, guidance/DAP error, desired rates, gimbal direction, control-mode state, and accumulated torque information.
+
+Later Apollo telemetry tables continue to map individual LM guidance/radar/propulsion measurements to 1123 and 1137.
+
+This is strong continuity evidence, but the Apollo 13 ASPO 45 pages still must be extracted before either page is treated as unchanged Apollo 13 configuration.
