@@ -362,3 +362,27 @@ The following source classes are specifically needed and should be added as they
 - **Status:** REVIEWED-PARTIAL
 - **Use:** Mission-specific LM electrical/environmental/consumables chronology, power-down strategy, water/O2/LiOH usage, battery behavior, thermal tradeoffs, and projected LM lifetime.
 - **Important evidence:** TELMU continuously compared resource consumption against the return timeline rather than relying on a single aggregate "lifetime" value.
+
+
+### Apollo 13 Review Board EECOM display figures — B7-7/B7-8/B7-9
+
+- **Parent source:** Report of Apollo 13 Review Board, Appendix B
+- **NASA document ID:** 19700078726
+- **Figures:**
+  - B7-7 — CSM EECOM engineer console
+  - B7-8 — Electrical power system parameters / CSM EPS HIGH DENSITY
+  - B7-9 — Cryogenic system display / CSM ECS-CRYO TAB
+- **Status:** REVIEWED-PARTIAL at parameter/console-component level
+- **Use:** Primary implementation evidence for the first EECOM reference station.
+- **Key facts:** two precision monitors; DRK/MSK/event/status/SMEK/analog/voice components; two high-use real-time displays; one-second display updates; controller-set limit-sense behavior.
+- **Caution:** OCR/transcribed field codes should be visually checked against the high-resolution figures before code/data files are frozen.
+- **NTRS:** https://ntrs.nasa.gov/citations/19700078726
+
+### AS-508 High Speed Data Format 30
+
+- **Parent source:** AS-508 MCC/MSFN Mission Configuration/System Description
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Apollo 13 post-pass high-rate telemetry analysis model.
+- **Documented characteristics:** 2.4-kbps format; 29 selectable CSM subformats and 21 LM subformats; a subformat could include four analog values at 50 samples/s, four analog values at 10 samples/s, seven discretes at 10 samples/s, plus CTE or MET.
+- **Operational evidence:** Apollo 13 EECOM reported extensive use of Format 30 playback for the O2 tank 2 anomaly.
+- **NTRS:** https://ntrs.nasa.gov/citations/19700024253
