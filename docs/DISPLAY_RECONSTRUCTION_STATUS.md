@@ -99,6 +99,16 @@ Documented fields include:
 
 This display clearly spans information relevant to GUIDO and CONTROL.
 
+Cross-mission Apollo 11/12 definitions now separate the adjacent velocity rows more precisely:
+
+- **AGS VEL** — Abort Guidance System indicated velocity, `XXXX` ft/sec;
+- **LGC DEL VEL** — PIPA output for a 2-second interval, `XX.X` ft/sec;
+- **AGS DEL VEL** — Abort Guidance System measured velocity, `XX.X` ft/sec;
+- **AGS ULL** — Abort Guidance ullage measurement, `XX.X` ft/sec;
+- **ACT VEL** — accumulated velocity along thrust, `XX.X` ft/sec.
+
+These definitions are **CROSS-MISSION** evidence. They constrain semantic meaning and expected precision but do not certify Apollo 13 masks, FP7 telemetry sources, or RTCC transformations.
+
 ### MSK 1137 — LM powered-descent/control display — CROSS-MISSION
 
 Earlier Apollo material explicitly documents fields including:
@@ -169,6 +179,8 @@ For Apollo 13:
 3. use later Apollo telemetry mappings as supporting continuity evidence;
 4. do not fill missing Apollo 13 fields solely from later missions.
 
+A field's **meaning/mask**, **source telemetry**, and **ground transformation** are separate evidence questions. Continuity in one does not establish continuity in the others.
+
 ---
 
 ## Highest-value extraction target
@@ -193,6 +205,10 @@ from workflow-level reconstruction to actual display reconstruction.
   https://apollojournals.org/afj/ap13fj/a13-documents.html
 - AC Electronics Apollo 11 Guidance & Navigation Summary:
   https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
+- Apollo 12 Delco Guidance & Navigation Summary:
+  https://ibiblio.org/apollo/Documents/apollo12_delco.pdf
+- J. L. Nevins, *Man-Machine Design for the Apollo Navigation, Guidance, and Control System — Revisited*, January 1970:
+  https://web.mit.edu/digitalapollo/Documents/Chapter7/nevinsrevisited.pdf
 - Apollo 17 Mission Evaluation Plan, NASA-TM-X-69530 / MSC-07361:
   https://ntrs.nasa.gov/citations/19730018126
 - LM-10 Instrumentation Packet:
@@ -209,3 +225,10 @@ See [direct inspection and page map](../resources/research/029_apollo13_aspo45_d
 ## 2026-09-11 — MSK 1137 field differences verified
 
 Apollo 11 PDF 205–207 and Apollo 13 PDF 188–190 show changed attitude rows, reference frames, and landing-radar comparison definitions. Shared MSK numbers do not establish shared field semantics. See [comparison](../resources/research/030_apollo11_apollo13_msk1137_comparison.md) and [Apollo 13 inventory](../resources/research/031_apollo13_msk1137_field_inventory.md). Full 1123 and CM 683/966 comparisons remain pending.
+
+
+## 2026-09-11 — MSK 1123 velocity semantics and mixed-source format
+
+Research note 045 uses Apollo 11/12 display-definition pages to separate the meanings and masks of AGS VEL, LGC DEL VEL, AGS DEL VEL, AGS ULL, and ACT VEL. A January 1970 MIT Instrumentation Laboratory report independently reproduces the 1123-style page as a **Typical Data Format for Ground Consoles**, visibly including the AEA/LGC/PCM header and those same field families.
+
+This strengthens the composite-ground-product interpretation of MSK 1123 but does not resolve the exact Apollo 13 field routing. The AEA/LGC/PCM boxes are also **not** yet documented as dynamic validity/status indicators; their runtime behavior remains unresolved.
