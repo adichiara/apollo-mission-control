@@ -1055,3 +1055,31 @@ The simulator must preserve those origins rather than populate the CRT directly 
 2. Recover exact FP7 Table 2.1-7.
 3. Re-transcribe Apollo 13 MSK 1123 field masks/precision.
 4. Verify LM-7 instrumentation calibration for attitude/rate channels.
+
+
+## 2026-09-11 — MSK 1123 velocity semantics and mixed-source ground format
+
+### Completed
+
+- Added research note 045 to separate the adjacent velocity-related rows on MSK 1123 using AC/Delco Apollo 11/12 definitions:
+  - **AGS VEL** — Abort Guidance System indicated velocity (`XXXX` ft/sec in the earlier definition family);
+  - **LGC DEL VEL** — PIPA output for a 2-second interval (`XX.X` ft/sec);
+  - **AGS DEL VEL** — Abort Guidance System measured velocity (`XX.X` ft/sec);
+  - **AGS ULL** — Abort Guidance ullage measurement (`XX.X` ft/sec);
+  - **ACT VEL** — accumulated velocity along thrust (`XX.X` ft/sec).
+- Used the Apollo 12 source to resolve the OCR ambiguity around the **AGS ULL** label.
+- Located and inspected J. L. Nevins' January 1970 MIT Instrumentation Laboratory report, which reproduces the 1123-style page as Figure 16(a), **Typical Data Format for Ground Consoles**, including the AEA/LGC/PCM header and the same AGS/LGC velocity rows.
+- Documented the surrounding operational context: the ground compared onboard primary/backup guidance state with ground-tracking-derived information during powered descent and used a powered-flight processor for independent state estimation.
+- Preserved the evidence boundary: these sources clarify field meaning and composite ground-console architecture, but they do **not** select the Apollo 13 FP7 telemetry word, establish the exact RTCC conversion, or prove that the AEA/LGC/PCM header boxes were dynamic validity/status indicators.
+- Updated the display-status, station-status, roadmap, and source-catalog documentation accordingly.
+
+### New research note
+
+- `resources/research/045_msk1123_velocity_semantics_and_ground_format.md`
+
+### Next work
+
+1. Directly transcribe the Apollo 13 MSK 1123 velocity rows/masks from the mission-specific ASPO page.
+2. Recover the February 1970 LM-7 Table 2.1-7 Flight Program 7 telemetry list.
+3. Locate MCC/RTCC definitions selecting or transforming AGS VEL / DEL VEL / ULL / ACT VEL.
+4. Determine the runtime meaning, if any, of the AEA/LGC/PCM header boxes.
