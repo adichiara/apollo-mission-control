@@ -395,3 +395,37 @@ parameter + vehicle configuration + mission phase + rule/procedure
 The former size/extraction blocker is resolved. Direct inspection of the Apollo 13 scan confirms MSK 683, 966, 1123, and 1137 in ASPO-1–12 (PDF pages 179–190). Layouts are on PDF 180, 182, 186, and 188 respectively. These identifiers/layout references are now **MISSION-SPECIFIC**, superseding earlier unresolved identifier status in this document. Unchanged field-level continuity from Apollo 11 remains unproven.
 
 See [direct inspection and page map](../../resources/research/029_apollo13_aspo45_direct_inspection.md). Full transcription, refresh behavior, operational revisions, and station access remain open. No station maturity rating is raised by this update alone.
+
+
+## 2026-09-11 field-provenance update
+
+Mission-specific R-567 Rev. 8 now maps a substantial fraction of the guidance/control content behind MSK 1123/1137 to actual LGC Descent/Ascent downlist words. Directly supported families include:
+
+- desired/actual body rates;
+- desired/actual CDU angles;
+- DAP/radar mode words;
+- accumulated RCS command-on-time;
+- moment offsets;
+- LM/CSM mass;
+- PIPA/delta-velocity data;
+- guidance thrust command;
+- radar measurements and time tags;
+- alarm/restart state.
+
+The same pass also proves that the CONTROL-oriented CRT cannot be modeled as one LGC packet. MSK 1137 combines:
+
+1. LGC/downlink-derived quantities;
+2. ground-computed/transformed values;
+3. non-LGC spacecraft instrumentation such as actuator, chamber-pressure, voltage, and temperature information.
+
+The stable-member landing-radar velocity display is a concrete example: R-567 transmits time-tagged antenna-axis samples one component at a time, while MSK 1137 presents three stable-member components and comparison residuals. Ground processing is therefore part of the display semantics.
+
+See `resources/research/032_apollo13_lm_crt_field_provenance.md`.
+
+### Revised CONTROL gap
+
+Priority now shifts to locating:
+
+- RTCC/ground algorithms for radar coordinate conversion and PGNS/AGS comparisons;
+- PCM/telemetry sources for the non-LGC propulsion/control fields;
+- exact CRT refresh/request behavior.
