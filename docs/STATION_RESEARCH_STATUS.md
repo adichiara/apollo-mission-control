@@ -21,7 +21,7 @@ Purpose: track how far each Apollo 13-era station has been reconstructed and pre
 | EECOM | **A** | `APOLLO13_EECOM.md` | official console diagram + two real display formats | full display catalog / keyboard layouts |
 | GNC | B | `APOLLO13_GNC.md` | GNC report + earlier CRT continuity lead | 683 field transcription / source mapping |
 | TELMU | B | `APOLLO13_TELMU.md` | TELMU report, consumables/power chronology | exact LM systems displays |
-| CONTROL | B | `APOLLO13_CONTROL.md` | CONTROL report + 1137 layout + LGC field provenance | RTCC transforms + non-LGC PCM telemetry + console workflow |
+| CONTROL | B | `APOLLO13_CONTROL.md` | CONTROL report + 1137 layout + LGC and selected LM-7 PCM provenance | remaining PCM routing/conversions + RTCC transforms + console workflow |
 | INCO | B | `APOLLO13_INCO.md` | INCO report + comms paper; MSK 1475 known | actual look-angle/command display layouts |
 | PROCEDURES | B | `APOLLO13_PROCEDURES.md` | Procedures report; FCOH; MSK 1503 known | console/request/display workflow |
 | FAO | B | `APOLLO13_FAO.md` | FAO postflight report + revised flight plan | exact FAO/Ground Timeline displays |
@@ -124,3 +124,19 @@ R-567 Rev. 8 has now been mapped against the Apollo 13 LM CRT evidence. This est
 The strongest new result is the landing-radar chain: the LGC downlink sends time-tagged antenna-axis data one velocity component at a time, while MSK 1137 presents stable-member velocity components and guidance-comparison residuals. Exact RTCC/ground transformation logic is therefore now a high-priority research target.
 
 See research note 032. Maturity ratings remain unchanged at B because display access, ground transforms, non-LGC telemetry provenance, and console workflow are not yet fully reconstructed.
+
+
+## 2026-09-11 — MSK 1137 non-LGC telemetry pass
+
+Vehicle-specific sources now identify several physical/PCM measurements behind the Apollo 13 MSK 1137 hardware fields:
+
+- GQ6510P — DPS thrust-chamber pressure;
+- GQ6806H — variable-injector actuator position;
+- GN7563T — LM-7 landing-radar antenna temperature;
+- GN7723T — rendezvous-radar antenna temperature.
+
+Apollo-wide NASA telemetry tables independently route GQ6806H, GN7563T, GN7723T, several PGNCS electrical measurements, and PIPA temperature to MSK 1137. Because those routing tables are retrospective, the Apollo 13 profile still requires mission-era confirmation where possible.
+
+CONTROL remains maturity B: the provenance picture is materially better, but exact Apollo 13 display loading, engineering conversions, refresh behavior, and complete console workflow are not yet reconstructed.
+
+See research note 034.
