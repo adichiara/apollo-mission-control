@@ -176,3 +176,32 @@ The exact paths and responsibilities in this diagram are research targets. Where
 The project is intended to run from a central server hosted on Render with players connecting from phones.
 
 Specific web framework, database, WebSocket implementation, frontend framework, and persistence strategy remain open until simulation requirements are better defined.
+
+
+## Mission-era configuration profiles
+
+The reusable simulation should distinguish the **common Apollo platform** from a **mission-specific historical profile**.
+
+Current design direction:
+
+- use the Apollo 13-era MCC configuration as the default technical baseline/superset for shared implementation;
+- apply mission-specific configuration data for Apollo 11, Apollo 12, Apollo 13, and later scenarios;
+- allow a mission profile to change nomenclature, controller availability, display sets, procedures, rules, telemetry/configuration, console capabilities, and spacecraft/ground-system details where sources establish differences.
+
+Example:
+
+```text
+COMMON APOLLO PLATFORM
+        |
+        +-- APOLLO 11 PROFILE
+        |      TELCOM terminology
+        |      Apollo 11 display/configuration evidence
+        |      Apollo 11 flight rules / spacecraft state
+        |
+        +-- APOLLO 13 PROFILE
+               TELMU terminology
+               AS-508 MCC/MSFN configuration
+               Apollo 13 displays/rules/spacecraft state
+```
+
+This avoids maintaining entirely separate simulators while also avoiding the false assumption that a later Apollo console configuration is automatically historically correct for an earlier mission.
