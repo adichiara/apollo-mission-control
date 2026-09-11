@@ -216,3 +216,12 @@ This removes another ambiguity in MSK 1123: its AGS ULL field is in velocity uni
 Research note 043 ties the DEDA portion of MSK 1123 to explicit AEA telemetry variables: readout-mode flag, DEDA data, clear-mode flag, and DEDA address.
 
 This is another piece of the 1123 page that can now be implemented from a historically separated source path rather than by mirroring a crew display. Exact Apollo 13 masks/formatting and FP7 telemetry IDs remain unresolved; GUIDO/CONTROL remain maturity B.
+
+
+## 2026-09-11 — consolidated MSK 1123 AGS field matrix
+
+Research note 044 consolidates the AGS portion of MSK 1123 into source-path confidence classes.
+
+Several rows now have strong provenance (AGS time, RGA rates, AGS attitude, AGS attitude error, DEDA state), while ASA rate, AGS velocity, AGS delta velocity, and AGS ullage have constrained but not yet certified source mappings.
+
+The main research bottleneck has shifted from “what does the page contain?” to **exact FP7 telemetry membership and RTCC/display transformation rules**. GUIDO/CONTROL remain at B.
