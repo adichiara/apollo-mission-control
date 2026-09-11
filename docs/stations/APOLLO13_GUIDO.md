@@ -418,3 +418,21 @@ More importantly, Apollo 13's actual flight record independently validates selec
 This confirms that the address logic was operationally real for Apollo 13, but does **not** yet prove which AEA variables populate each MSK 1123 AGS field.
 
 See `resources/research/036_apollo13_ags_fp7_deda_evidence.md`.
+
+
+## 2026-09-11 AGS telemetry / RTCC processing evidence
+
+The AGS information path is now explicitly separated from the crew DEDA interface.
+
+Mission-era LM documentation contains:
+- a dedicated AEA telemetry-word list;
+- separate DEDA input/output/accessibility tables;
+- an AEA output-telemetry path built around a 50-word block.
+
+General AGS documentation describes that digital telemetry list as repeating once per second. Each output word carries an identifier plus an 18-bit AEA memory value. The exact **Flight Program 7** word-to-memory list still requires direct extraction from the February 1970 LM-7 handbook, so no FP6 table has been silently reused.
+
+Apollo 13 also gives direct evidence that GUIDO/Mission Control could receive a bad **ground-processed** AGS result while the vehicle state was satisfactory. After MCC-5, RTCC incorrectly processed AGS body angles; the bad readout was rejected in favor of the independent FDAI reference.
+
+This is a core GUIDO fidelity requirement: displayed guidance information is a ground product, not guaranteed truth.
+
+See `resources/research/037_apollo13_ags_telemetry_ground_processing.md`.
