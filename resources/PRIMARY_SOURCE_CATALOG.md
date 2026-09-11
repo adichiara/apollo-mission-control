@@ -611,9 +611,10 @@ NASA/contractor bibliography records identify:
 - **Date:** 1970-03-25
 - **Source index:** Apollo 13 Flight Journal mission documents
 - **Public scan:** https://apollojournals.org/afj/ap13fj/pdf-hr/76-a13-g-n-dictionary.pdf
-- **Status:** IDENTIFIED / INDEXED-TEXT PARTIAL; 36.9 MB scan exceeds current PDF web reader
-- **Use:** Mission-specific PGNS/AGS crew reference; uniquely valuable for AGS Flight Program 7 address semantics and procedures.
-- **Current limitation:** Full AGS pages still need direct page-level inspection or a reliable transcription before they are used to freeze the Apollo 13 address dictionary.
+- **Status:** REVIEWED-PARTIAL through NASA indexed text; 36.9 MB scan still exceeds current PDF renderer
+- **Use:** Mission-specific PGNS/AGS crew reference; now directly verifies key Flight Program 7 selector, delta-V monitor, calibration, timing, and ullage address semantics.
+- **Verified indexed-text examples:** 400 selector modes; 404–406/470–472 delta-V monitor relationships; 450–452 and 500–502 velocity/delta-V families; 377 AGS computer time; 540–547 bias/calibration entries; 614/616 ullage counters.
+- **Current limitation:** Exact AGS pages have not been visually rendered in this environment, and the AEA Flight Program 7 telemetry-word list is not supplied by the G&N Dictionary.
 
 
 ### Apollo Operations Handbook — LM 7 and Subsequent, Volume I
