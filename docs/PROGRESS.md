@@ -379,3 +379,36 @@ EECOM monitoring is not merely a numeric-data screen. The historical station has
 3. higher-rate recorded telemetry/playback products.
 
 The simulator should preserve the possibility that the correct information exists but is overlooked, transient, contradictory, or initially interpreted as instrumentation failure.
+
+
+## 2026-09-11 — GNC display-source and simulator-document research
+
+### Apollo 13 GNC display source
+
+- Confirmed that the full **AC Electronics Apollo 13 Guidance & Navigation Summary** is publicly linked in the Apollo 13 Flight Journal high-resolution collection.
+- Independently confirmed the same title in the Smithsonian NASM Hamilton collection.
+- Confirmed the Apollo 13 volume contains an **ASPO 45 CRT Displays** section.
+- Did **not** assume that Apollo 11/12 **CSM GNC PRIMARY TAB 0683** or LM displays 1123/1137 carried over unchanged.
+- Updated the GNC station specification to mark mission-specific CRT extraction as the remaining primary-source task.
+
+### Simulator technical sources
+
+- Identified surviving Lunar Module Mission Simulator instructor documentation describing simulator switches, displays, and subsystem simulation.
+- Identified the LEM Mission Simulator technical addendum containing mathematical-model flowcharts.
+- Identified a Lunar Module Simulator user's manual and Console Directory reportedly listing available simulator telemetry.
+- Added a new research distinction:
+  - spacecraft documentation tells us what the real vehicle did;
+  - Mission Control documentation tells us what controllers saw/did;
+  - simulator documentation tells us how NASA/Singer itself modeled the vehicle for training.
+
+### New notes
+
+- `resources/research/013_apollo13_gnc_crt_source.md`
+- `resources/research/014_mission_simulator_technical_sources.md`
+
+### Next
+
+1. Extract the Apollo 13 ASPO 45 CRT section.
+2. Locate/download the LM Mission Simulator Instructor Handbook and Console Directory.
+3. Use simulator documentation to validate the LM subsystem model before inventing any equations.
+4. Continue station-display reconstruction for CONTROL/TELMU/INCO.
