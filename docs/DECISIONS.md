@@ -90,3 +90,15 @@ The following are deliberately not decisions:
 - time acceleration
 - scenario-selection UI
 - post-simulation evaluation format
+
+
+## D-011 — Represent documented hard-copy flow physically where practical
+
+**Status:** Accepted in principle  
+**Date:** 2026-09-11
+
+Where Apollo information was historically delivered or verified as hard copy, the in-person simulation may represent that product with a physical paper sheet passed to the appropriate player.
+
+This is an adaptation of the information-delivery mechanism, not a claim that controllers literally passed the same document hand-to-hand in the MOCR.
+
+Exact document classes and delivery method remain scenario-specific and must be researched before implementation.
