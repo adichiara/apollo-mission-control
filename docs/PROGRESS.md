@@ -718,3 +718,16 @@ The largest common Phase 1 gap is now exact console/display reconstruction, not 
 2. Trace non-LGC telemetry feeding MSK 1137: actuator position, chamber pressure, voltages, temperatures, and related validity/status.
 3. Complete MSK 1123 field-by-field provenance.
 4. Continue CM MSK 683/966 transcription/comparison after the LM provenance chain is sufficiently constrained.
+
+
+## 2026-09-11 — Apollo 13 PIPA-bias ground workflow
+
+- Located a February 27, 1970 H-2 Lunar Surface Branch “Note of Interest” describing the intended Apollo 13 lunar-surface PIPA-bias calculation.
+- Documented the ground inputs: MPAD lunar gravity, gimbal angles, GUIDO local-vertical attitude, and PIPA-derived measured gravity.
+- Documented that launch-preparation bias measurements were intended to provide FIDO a PGNS delta-V error estimate.
+- Cross-checked the operational significance against the Apollo 13 Mission Operations Report:
+  - CSM GNC monitored bias before and after TLI and later updated a shifted Z-PIPA bias before entry;
+  - late in the contingency, LM PGNS initialization included a check that PIPA bias “looked good” before the MCC-7 alignment/burn sequence.
+- Added `resources/research/033_apollo13_pipa_bias_ground_workflow.md`.
+- Updated GUIDO, FIDO, and the LM CRT provenance note.
+- The source resolves one ground-computation path but does **not** yet establish the complete MSK 1137 BIAS/OCTAL display-routing or load-generation implementation.
