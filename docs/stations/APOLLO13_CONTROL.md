@@ -500,3 +500,20 @@ This supports modeling AGS burn monitoring as a stateful preparation/measurement
 The exact relation between these DEDA variables and CONTROL-visible MSK 1123 fields still requires AEA telemetry-to-CRT mapping.
 
 See `resources/research/036_apollo13_ags_fp7_deda_evidence.md`.
+
+
+## 2026-09-11 RTCC AGS body-angle anomaly
+
+Apollo 13 provides a concrete CONTROL-relevant example of a **ground-processing failure** rather than a spacecraft-control failure.
+
+After MCC-5, the crew established PTC using AGS and then switched to low-bit-rate telemetry. Mission Control's final high-bit-rate attitude indication did not match the desired attitude, so high bit rate was restored. The Mission Operations Report states that the **RTCC was incorrectly processing AGS body angles**.
+
+The ground discarded the erroneous product and used the FDAI reference, which showed that PTC had in fact been established correctly.
+
+This requires the eventual simulator to allow:
+- actual vehicle attitude to be correct;
+- AGS hardware/state to be satisfactory;
+- a ground-derived attitude product to be wrong;
+- controllers to resolve the discrepancy from independent information.
+
+See `resources/research/037_apollo13_ags_telemetry_ground_processing.md`.
