@@ -227,3 +227,39 @@ Therefore "Apollo 13 baseline" means reusable platform architecture, not that la
 3. Search archival references for SimSup case sheets/malfunction lists.
 4. Reconstruct the Apollo 11 program-alarm simulation case as far as documentation allows.
 5. Continue mapping station responsibilities to telemetry parameters and control actions.
+
+
+## 2026-09-11 — Phase 1: Detailed EECOM reconstruction
+
+### Completed
+
+- Added a detailed Apollo 13 EECOM station specification.
+- Transcribed the two official Review Board display families:
+  - **CSM EPS HIGH DENSITY**
+  - **CSM ECS-CRYO TAB**
+- Recorded their documented one-second update cadence.
+- Cataloged major parameter families, measurement identifiers, units, and representative values from figures B7-8 and B7-9.
+- Documented the three event-indicator groups and the manual limit-sense behavior.
+- Recorded that panel 3 contained 72 lights, including 12 cryogenic pressure/temperature/quantity limit-sense lights.
+- Recorded the Review Board finding that an O2 tank 2 pressure limit indication should have occurred roughly 30 seconds before failure but may not have been observed.
+- Separated **HSD Format 30** historical playback from the live display named **CSM EPS HIGH DENSITY**.
+- Recorded that Format 30 was new for Apollo 13 and used extensively for O2 tank 2 anomaly playback.
+- Explicitly withheld any Apollo 13 EECOM direct-command controls because current evidence has not established them.
+- Added a source-quality warning for the modern Andy Anderson EECOM reconstruction: parts of its DRK and limit-sense layout are acknowledged reconstructions rather than primary documentation.
+
+### New documents
+
+- `docs/stations/APOLLO13_EECOM.md`
+- `resources/research/012_apollo13_eecom_reconstruction.md`
+
+### Major source-provenance finding
+
+Philco-Ford progress report **PHO-TR474** confirms that the Apollo 13 / Mission H-2 **PHO-TR155 Revision C** was issued on **1970-03-06**.
+
+This means the missing exact Apollo 13 MCC Operational Configuration is not hypothetical; its existence and revision date are documented. Locating a surviving copy is now a high-priority archival target.
+
+### Current EECOM implementation status
+
+Enough evidence exists for a research prototype of the two principal EECOM displays and basic console behavior.
+
+Not enough evidence yet exists to claim a complete Apollo 13 EECOM console recreation.
