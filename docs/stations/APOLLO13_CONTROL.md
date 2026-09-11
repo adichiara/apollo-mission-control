@@ -459,3 +459,23 @@ The remaining high-value work is now:
 2. establish Apollo-13-specific definitions for the PGNCS power/PIPA measurements;
 3. recover engineering conversion / display precision and CRT update behavior;
 4. continue the same provenance reconstruction for MSK 1123.
+
+
+## 2026-09-11 MSK 1123 provenance pass
+
+The first source-class reconstruction for **MSK 1123 — LM GUID, CONTROL AND PROP RT** is now documented.
+
+The page is confirmed to mix:
+
+- LGC/PGNS digital-downlink values;
+- direct PCM control-hardware measurements;
+- AGS/AEA information;
+- radar information;
+- APS/RCS propulsion state;
+- ground context and processed comparisons.
+
+Apollo telemetry routing tables explicitly associate named control measurements with 1123, including RGA yaw/pitch/roll rates and attitude-error channels, and also route selected APS/RCS measurements to the same page.
+
+This materially strengthens the case that 1123 is one of CONTROL's cross-discipline real-time pages, but exact Apollo-13-specific routing/calibration and station access are still incomplete.
+
+See `resources/research/035_apollo13_msk1123_field_provenance.md`.
