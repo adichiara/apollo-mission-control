@@ -35,9 +35,9 @@ AC/Delco mission-summary material for Apollo 11 explicitly identifies the ASPO 4
 - **MSK 1123 (LM)**
 - **MSK 1137 (LM)**
 
-An Apollo 13 AC Electronics *Guidance & Navigation Summary* survives and explicitly contains an **ASPO 45 CRT Displays** section, but the Apollo 13 pages have not yet been extracted.
+An Apollo 13 AC Electronics *Guidance & Navigation Summary* survives and explicitly contains an **ASPO 45 CRT Displays** section, and its pages have now been directly inspected (see notes 029–031).
 
-Therefore the identifiers below are not yet promoted to Apollo 13 mission-specific status.
+The four identifiers are now confirmed in the Apollo 13 source. The earlier summaries below remain cross-mission reference material; they are not a substitute for the Apollo 13 field definitions.
 
 ### MSK 683 — CSM GNC PRIMARY TAB — CROSS-MISSION
 
@@ -204,3 +204,8 @@ from workflow-level reconstruction to actual display reconstruction.
 The former size/extraction blocker is resolved. Direct inspection of the Apollo 13 scan confirms MSK 683, 966, 1123, and 1137 in ASPO-1–12 (PDF pages 179–190). Layouts are on PDF 180, 182, 186, and 188 respectively. These identifiers/layout references are now **MISSION-SPECIFIC**, superseding earlier unresolved identifier status in this document. Unchanged field-level continuity from Apollo 11 remains unproven.
 
 See [direct inspection and page map](../resources/research/029_apollo13_aspo45_direct_inspection.md). Full transcription, refresh behavior, operational revisions, and station access remain open. No station maturity rating is raised by this update alone.
+
+
+## 2026-09-11 — MSK 1137 field differences verified
+
+Apollo 11 PDF 205–207 and Apollo 13 PDF 188–190 show changed attitude rows, reference frames, and landing-radar comparison definitions. Shared MSK numbers do not establish shared field semantics. See [comparison](../resources/research/030_apollo11_apollo13_msk1137_comparison.md) and [Apollo 13 inventory](../resources/research/031_apollo13_msk1137_field_inventory.md). Full 1123 and CM 683/966 comparisons remain pending.

@@ -669,3 +669,14 @@ The largest common Phase 1 gap is now exact console/display reconstruction, not 
 - Verified selected LM definitions, including ground-computed fields, repeated BIAS labels, and a two-second PIPA interval that must not be mistaken for CRT refresh rate.
 - Added research note 029 with exact page map, source hash, evidence limits, and next work.
 - Updated display and station references. Station maturity remains unchanged; full field transcription, telemetry mapping, and Apollo 11 comparison remain pending.
+
+
+## 2026-09-11 — Apollo 11/13 MSK 1137 comparison and inventory
+
+- Visually compared Apollo 11 PDF 205–207 with Apollo 13 PDF 188–190.
+- Confirmed changed CMD/SERVO versus BIAS/OCTAL rows, body versus stable-member radar velocities, and changed altitude/comparison definitions.
+- Added note 030 with source hash, page references, limits and implications for mission-specific field profiles.
+- Added note 031, a normalized inventory covering the named Apollo 13 1137 definition groups; grouped fields and uncertain labels are explicitly identified.
+- Updated current display/station status to reflect the resolved extraction blocker.
+- No live renderer, historical simplification, or scenario selection introduced.
+- Next: full 1123 comparison, then CM 683/966; resolve calculations/downlist mappings before implementation.

@@ -17,11 +17,11 @@ Purpose: track how far each Apollo 13-era station has been reconstructed and pre
 | CAPCOM | B | `APOLLO13_CAPCOM.md` | official role + restored CAPCOM/air-ground audio | exact console/display/procedure staging |
 | FIDO | B | `APOLLO13_FIDO.md` | FIDO postflight report, RTCC/vector operations | exact trajectory displays / MSK |
 | RETRO | B | `APOLLO13_RETRO.md` | RETRO postflight report, RTE/entry products | exact return/entry displays / MSK |
-| GUIDO | B | `APOLLO13_GUIDO.md` | GUIDO report + LUMINARY 1C data-link spec | extract Apollo 13 ASPO 45 CRT pages |
+| GUIDO | B | `APOLLO13_GUIDO.md` | GUIDO report + LUMINARY 1C data-link spec | finish field transcription and source mapping |
 | EECOM | **A** | `APOLLO13_EECOM.md` | official console diagram + two real display formats | full display catalog / keyboard layouts |
-| GNC | B | `APOLLO13_GNC.md` | GNC report + earlier CRT continuity lead | Apollo 13 CRT section extraction |
+| GNC | B | `APOLLO13_GNC.md` | GNC report + earlier CRT continuity lead | 683 field transcription / source mapping |
 | TELMU | B | `APOLLO13_TELMU.md` | TELMU report, consumables/power chronology | exact LM systems displays |
-| CONTROL | B | `APOLLO13_CONTROL.md` | CONTROL report, DPS/RCS/control thresholds | exact LM control displays |
+| CONTROL | B | `APOLLO13_CONTROL.md` | CONTROL report, DPS/RCS/control thresholds | 1137 layout found; field calculations/source mapping pending |
 | INCO | B | `APOLLO13_INCO.md` | INCO report + comms paper; MSK 1475 known | actual look-angle/command display layouts |
 | PROCEDURES | B | `APOLLO13_PROCEDURES.md` | Procedures report; FCOH; MSK 1503 known | console/request/display workflow |
 | FAO | B | `APOLLO13_FAO.md` | FAO postflight report + revised flight plan | exact FAO/Ground Timeline displays |
@@ -49,7 +49,7 @@ It is the only station currently at maturity A because the Apollo 13 Review Boar
 
 ### Best next display-reconstruction targets
 
-1. **GUIDO/GNC** — Apollo 13 Guidance & Navigation Summary contains a mission-specific CRT section and is publicly available, but needs extraction.
+1. **GUIDO/GNC** — Apollo 13 Guidance & Navigation Summary contains a mission-specific CRT section and is now inspected; field-level transcription and mapping remain pending.
 2. **INCO** — actual display ID MSK 1475 is known; layout still missing.
 3. **PROCEDURES** — actual display ID MSK 1503 is known; layout still missing.
 4. **TELMU/CONTROL** — simulator/output-table documentation may reveal LM telemetry and display structure.
@@ -110,3 +110,8 @@ A reasonable research exit condition is:
 - no player-count aggregation decisions made from role titles alone.
 
 The project is approaching that point for Apollo 13, but exact display reconstruction remains the largest gap.
+
+
+## 2026-09-11 — Source extraction and comparison status
+
+ASPO 45 pages are accessible and inspected. MSK 1137 has a normalized Apollo 13 definition-group inventory and verified differences from Apollo 11. See research notes 029–031. This advances display evidence without resolving full console configuration, access, refresh behavior, or operational revisions; maturity ratings remain unchanged.
