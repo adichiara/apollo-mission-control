@@ -197,3 +197,20 @@ Research note 033 documents a February 27, 1970 Apollo 13 planning procedure for
 This resolves **one intended H-2 ground-computation workflow**, not the complete MSK 1137 BIAS/OCTAL implementation for all phases. The Apollo 13 Mission Operations Report independently confirms active PIPA-bias monitoring and actual CSM bias updates during the flown mission.
 
 See `033_apollo13_pipa_bias_ground_workflow.md`.
+
+
+## Non-LGC telemetry follow-up
+
+Research note 034 now traces several of the previously unresolved MSK 1137 instrumentation fields into named spacecraft measurements.
+
+Strongest current chains:
+
+- **GQ6806H** — variable injector actuator position → MSK 1137 routing documented;
+- **GN7563T** — LM-7 LR antenna temperature → MSK 1137 routing documented;
+- **GN7723T** — RR antenna temperature → MSK 1137 routing documented.
+
+**GQ6510P** is established as the LM-7-era DPS thrust-chamber-pressure measurement and is therefore the prime TCP source candidate, but the currently inspected routing table does not explicitly associate it with 1137; keep that edge provisional.
+
+The same work also confirms that instrumentation error can make a CRT engineering reading differ from a physical hardware trip value. Physical state, measured state, and displayed state therefore need separate identities in the implementation model.
+
+See `034_apollo13_msk1137_non_lgc_telemetry.md`.
