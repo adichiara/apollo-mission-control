@@ -17,11 +17,11 @@ Purpose: track how far each Apollo 13-era station has been reconstructed and pre
 | CAPCOM | B | `APOLLO13_CAPCOM.md` | official role + restored CAPCOM/air-ground audio | exact console/display/procedure staging |
 | FIDO | B | `APOLLO13_FIDO.md` | FIDO postflight report, RTCC/vector operations | exact trajectory displays / MSK |
 | RETRO | B | `APOLLO13_RETRO.md` | RETRO postflight report, RTE/entry products | exact return/entry displays / MSK |
-| GUIDO | B | `APOLLO13_GUIDO.md` | GUIDO report + LUMINARY 1C data-link spec | finish field transcription and source mapping |
+| GUIDO | B | `APOLLO13_GUIDO.md` | GUIDO report + LUMINARY 1C data-link spec + LM CRT provenance map | ground transformation/display routing; exact console access |
 | EECOM | **A** | `APOLLO13_EECOM.md` | official console diagram + two real display formats | full display catalog / keyboard layouts |
 | GNC | B | `APOLLO13_GNC.md` | GNC report + earlier CRT continuity lead | 683 field transcription / source mapping |
 | TELMU | B | `APOLLO13_TELMU.md` | TELMU report, consumables/power chronology | exact LM systems displays |
-| CONTROL | B | `APOLLO13_CONTROL.md` | CONTROL report, DPS/RCS/control thresholds | 1137 layout found; field calculations/source mapping pending |
+| CONTROL | B | `APOLLO13_CONTROL.md` | CONTROL report + 1137 layout + LGC field provenance | RTCC transforms + non-LGC PCM telemetry + console workflow |
 | INCO | B | `APOLLO13_INCO.md` | INCO report + comms paper; MSK 1475 known | actual look-angle/command display layouts |
 | PROCEDURES | B | `APOLLO13_PROCEDURES.md` | Procedures report; FCOH; MSK 1503 known | console/request/display workflow |
 | FAO | B | `APOLLO13_FAO.md` | FAO postflight report + revised flight plan | exact FAO/Ground Timeline displays |
@@ -115,3 +115,12 @@ The project is approaching that point for Apollo 13, but exact display reconstru
 ## 2026-09-11 — Source extraction and comparison status
 
 ASPO 45 pages are accessible and inspected. MSK 1137 has a normalized Apollo 13 definition-group inventory and verified differences from Apollo 11. See research notes 029–031. This advances display evidence without resolving full console configuration, access, refresh behavior, or operational revisions; maturity ratings remain unchanged.
+
+
+## 2026-09-11 — LM CRT provenance pass
+
+R-567 Rev. 8 has now been mapped against the Apollo 13 LM CRT evidence. This establishes direct LGC origins for many MSK 1123/1137 field families and, equally importantly, identifies fields that must be ground-derived or sourced from non-LGC telemetry.
+
+The strongest new result is the landing-radar chain: the LGC downlink sends time-tagged antenna-axis data one velocity component at a time, while MSK 1137 presents stable-member velocity components and guidance-comparison residuals. Exact RTCC/ground transformation logic is therefore now a high-priority research target.
+
+See research note 032. Maturity ratings remain unchanged at B because display access, ground transforms, non-LGC telemetry provenance, and console workflow are not yet fully reconstructed.
