@@ -230,3 +230,17 @@ After the vertical slice is validated:
 - Staff Support Room roles if practical
 - additional documented simulation cases
 - deeper ground-system fidelity
+
+
+## Validation approach
+
+Apollo 13 readiness documentation shows a layered verification process rather than reliance on one end-to-end exercise. The project will follow the same broad pattern:
+
+1. component/source fidelity;
+2. subsystem closed-loop validation;
+3. onboard-computer / RTCC integration;
+4. procedure validation;
+5. documented boundary/anomaly tests;
+6. integrated controller simulation.
+
+See `docs/SIMULATION_VALIDATION.md`.
