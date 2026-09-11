@@ -202,3 +202,10 @@ Research note 041 separates the AEA's telemetered delta-V accumulation from the 
 The telemetry block carries VD1X/Y/Z at 0404–0406, while Apollo 13 DEDA 470–472 represents separate 2-second navigation-update values. Apollo 13 used 404–406 zeroing and 470 monitoring operationally during contingency burns.
 
 This removes another potential false simplification: MSK 1123 AGS DEL VEL must not be implemented as a mirror of the crew's current DEDA display. Exact CRT routing remains unresolved; maturity stays B.
+
+
+## 2026-09-11 — AGS ullage provenance pass
+
+Research note 042 separates the AGS ullage measurement, threshold test, consecutive-cycle counter, completion criterion, and controller-visible field.
+
+This removes another ambiguity in MSK 1123: its AGS ULL field is in velocity units and therefore is not simply the MU8 counter or an ullage-acquired Boolean. Exact field calculation/routing remains unresolved; GUIDO/CONTROL maturity stays B.
