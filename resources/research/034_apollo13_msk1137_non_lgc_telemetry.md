@@ -208,7 +208,7 @@ The Apollo telemetry summary maps several instrumentation measurements directly 
 
 | Measurement | Telemetry title | MSK 1137 relationship |
 |---|---|---|
-| GG0104V | VDC PIPA SUPPLY | primary MSK 1137 |
+| GG1040V | VDC PIPA SUPPLY | primary MSK 1137 |
 | GG1110V / source OCR variants | 2.5 VDC TM BIAS | primary MSK 1137 |
 | GG1201V / source OCR variants | IMU 28 VAC 800 | primary MSK 1137 |
 | GG1331V | IRIG SUSP 3.2 KC | primary MSK 1137 |
@@ -327,7 +327,7 @@ Do not automatically compare both against one idealized number.
 | RR temp | GN7723T | Yes — LM-6 & subsequent redline | Yes — NASA telemetry summary | Strong |
 | LR velocity valid | GN7557X | not yet mission-specific in this pass | Yes | Partial |
 | RR track/data state | GN7621X | not yet mission-specific in this pass | Yes | Partial |
-| 120V PIPA supply | GG0104V | mission-specific check pending | Yes | Partial |
+| 120V PIPA supply | GG1040V | LM handbook baseline confirms identity; exact preflight page revision still to verify | Yes — Apollo telemetry summary routes to 1137 | Strong continuity / mission-profile freeze pending |
 | TM bias voltage | GG1110V / identifier check pending | mission-specific check pending | Yes | Partial |
 | 800-Hz IMU supply | GG1201V / identifier check pending | mission-specific check pending | Yes | Partial |
 | 3.2-kHz suspension supply | GG1331V | mission-specific check pending | Yes | Partial |
@@ -377,7 +377,7 @@ Do not automatically compare both against one idealized number.
 # 12. Next work
 
 1. Locate Apollo-13/LM-7 instrumentation definitions for:
-   - GG0104V;
+   - GG1040V;
    - GG1110V;
    - GG1201V;
    - GG1331V;
@@ -388,3 +388,24 @@ Do not automatically compare both against one idealized number.
 3. Identify the engineering conversion and display precision for the strong mappings.
 4. Determine the actual CRT update cadence, which must remain separate from telemetry sample rate.
 5. Apply the same provenance method to MSK 1123.
+
+
+## 2026-09-11 identifier correction and handbook check
+
+A follow-up check corrected one transcription error in this note:
+
+- **GG1040V**, not `GG0104V`, is the 120-VDC PIPA pulse-torque reference measurement.
+
+This is independently supported by:
+- the LM Apollo Operations Handbook signal-conditioner table, which names **GG1040V** as the 120-VDC pulse-torque reference;
+- NASA's Apollo telemetry summary, which lists **GG1040V / PLS TORG REF** and routes it to primary MSKs including **1137**.
+
+The same handbook table supports these identities:
+- **GG1110V** — PCM 2.5-VDC telemetry bias;
+- **GG1201V** — IMU 28-V, 800-cps 1% supply;
+- **GG1331V** — 3,200-cps / 28-V supply;
+- **GG2300T** — PIPA temperature.
+
+However, the readily searchable handbook pages carrying this table show a June 15, 1970 change date. The Apollo 13 Flight Journal separately preserves the **LM-7 and Subsequent handbook dated 1970-02-01**, but its 639-MB scan was too large for the current web renderer. Until the February scan's relevant pages are directly verified, these PGNCS identities remain **strong mission-era continuity evidence, not frozen Apollo-13 profile proof**.
+
+The Apollo 13 mission document index confirms the existence/date of that preflight LM-7 handbook. The exact February-page content remains a verification task.
