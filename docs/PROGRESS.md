@@ -896,3 +896,26 @@ The simulator must preserve those origins rather than populate the CRT directly 
   - 614/616 ullage counters.
 - Preserved the source-quality boundary: the large PDF still could not be rendered, so this is indexed-text verification rather than page-image verification.
 - The AGS research target is now narrower: recover the **Flight Program 7 AEA telemetry word list** and connect it to MSK 1123.
+
+
+## 2026-09-11 — FP7 telemetry continuity matrix
+
+### Completed
+
+- Compared the full 50-word telemetry regions in the surviving FP6 and FP8 AGS assembly listings.
+- Confirmed both place the telemetry block at **0325–0406 octal**.
+- Found symbol continuity at **49 of 50** positions; address **0371** differs between FP6 (`VT`) and FP8 (`VF`).
+- Used the Apollo 13 G&N Dictionary to resolve mission-specific meaning for address 0371 and to verify or partially verify **25 of 50** candidate telemetry addresses overall.
+- Added an evidence-status matrix rather than inferring the unresolved half of FP7.
+- Kept telemetry ID ordering and all unresolved addresses unfrozen until the LM-7 Table 2.1-7 is directly recovered.
+
+### New research notes
+
+- `resources/research/038_apollo13_fp7_telemetry_continuity_bounds.md`
+- `resources/research/039_apollo13_fp7_telemetry_candidate_matrix.md`
+
+### Next work
+
+1. Search Apollo 13 indexed material for unresolved addresses in the 0325–0406 block.
+2. Recover the February 1970 Table 2.1-7.
+3. Map verified AGS telemetry words into the AGS fields on MSK 1123, keeping RTCC transformations separate.
