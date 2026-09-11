@@ -470,3 +470,21 @@ Apollo 13 mission-specific procedures validate the DEDA side: Mission Control ha
 This means GUIDO's ground information did not inherently depend on whatever address the crew happened to be viewing on DEDA. The exact MSK 1123 AGS DEL VEL source still needs RTCC/display-routing evidence.
 
 See `resources/research/041_apollo13_ags_delta_v_interfaces.md`.
+
+
+## 2026-09-11 AGS ullage provenance
+
+The AGS ullage logic is now split into the historically distinct states that matter for guidance monitoring:
+
+- sensed X-axis velocity / thrust-acceleration measurement;
+- per-cycle threshold result;
+- MU8 consecutive-cycle counter;
+- 1K9 completion limit;
+- ullage-acquired / engine-on consequence;
+- controller-facing MSK 1123 AGS ULL engineering field.
+
+Adjacent AGS program documentation shows AT being computed from the current versus prior X-axis velocity accumulation and compared against the ullage threshold. MU8 is incremented only on qualifying cycles, with a three-cycle completion criterion.
+
+MSK 1123's AGS ULL field is in velocity units, so it is **not** simply the MU8 counter or an ullage Boolean.
+
+See `resources/research/042_apollo13_ags_ullage_provenance.md`.
