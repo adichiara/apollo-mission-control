@@ -966,3 +966,31 @@ The simulator must preserve those origins rather than populate the CRT directly 
 1. Trace MSK 1123 AGS DEL VEL into RTCC/display documentation.
 2. Perform the same provenance analysis for AGS ULL.
 3. Recover the exact FP7 telemetry table where possible.
+
+
+## 2026-09-11 — AGS ullage provenance
+
+### Completed
+
+- Separated the AGS ullage chain into:
+  - sensed X-axis delta-V / thrust acceleration;
+  - per-cycle threshold qualification;
+  - MU8 consecutive-cycle counter;
+  - 1K9 completion limit;
+  - ullage-acquired state;
+  - controller-facing AGS ULL measurement.
+- Confirmed adjacent-program code uses AT as the thrust-acceleration quantity compared with the ullage threshold.
+- Confirmed MU8 is incremented only when the threshold is met and reset otherwise.
+- Confirmed MU8/S12 is separately packaged for telemetry and DEDA 614/616 exposes the counter logic.
+- Established that MSK 1123 AGS ULL, because it is a velocity-unit field, cannot simply be the counter/status value.
+- Left the exact FP7 / MCC calculation source unresolved pending direct display-routing evidence.
+
+### New research note
+
+- `resources/research/042_apollo13_ags_ullage_provenance.md`
+
+### Next work
+
+1. Locate MCC/RTCC definitions for MSK 1123 AGS DEL VEL and AGS ULL.
+2. Recover the exact LM-7 FP7 telemetry table where possible.
+3. Continue converting the AGS portion of MSK 1123 into a field-by-field provenance specification.
