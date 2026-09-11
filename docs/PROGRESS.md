@@ -691,3 +691,30 @@ The largest common Phase 1 gap is now exact console/display reconstruction, not 
 - Added `resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md` with the findings and a complete file ledger.
 - Added `scripts/audit_documentation.py` for repeatable link inventory, internal-link validation, duplicate-note detection, and optional HTTP diagnostics.
 - Audit result: no material historical conclusion required reversal; remaining gaps are explicitly qualified.
+
+
+## 2026-09-11 — LM CRT field provenance pass
+
+### Completed
+
+- Re-opened the Apollo 13 mission-specific **R-567 Rev. 8 LUMINARY 1C Data Links** source and visually verified the Descent/Ascent mnemonic and description pages.
+- Mapped a substantial set of MSK 1123/1137 information families to actual LGC downlist sources, including radar data, DSKY state, rates, CDU angles, alarm/restart state, DAP/radar words, mass, PIPA/delta-V data, guidance thrust, and torque-command accumulators.
+- Established that the Apollo 13 LM CRT pages are not raw downlist dumps.
+- Identified a concrete ground-processing dependency: R-567 sends landing-radar velocity as time-tagged antenna-axis samples one component at a time, whereas MSK 1137 presents stable-member components and guidance-comparison residuals.
+- Separated currently known field provenance into:
+  - direct/decoded LGC downlink;
+  - ground-derived/transformed;
+  - non-LGC PCM/spacecraft telemetry or ground context.
+- Updated GUIDO and CONTROL station specifications and the station research-status index.
+- Kept both stations at maturity **B** because exact ground algorithms, non-LGC telemetry routing, refresh behavior, and console access remain incomplete.
+
+### New research note
+
+- `resources/research/032_apollo13_lm_crt_field_provenance.md`
+
+### Next research
+
+1. Locate RTCC/ground processing definitions for landing-radar coordinate conversion and PGNS/AGS comparison values.
+2. Trace non-LGC telemetry feeding MSK 1137: actuator position, chamber pressure, voltages, temperatures, and related validity/status.
+3. Complete MSK 1123 field-by-field provenance.
+4. Continue CM MSK 683/966 transcription/comparison after the LM provenance chain is sufficiently constrained.
