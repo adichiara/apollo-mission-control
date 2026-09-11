@@ -197,3 +197,10 @@ from workflow-level reconstruction to actual display reconstruction.
   https://ntrs.nasa.gov/citations/19730018126
 - LM-10 Instrumentation Packet:
   https://www.ibiblio.org/apollo/Documents/LM-10_Instrumentation_Packet.pdf
+
+
+## 2026-09-11 evidence update — mission-specific CRT pages inspected
+
+The former size/extraction blocker is resolved. Direct inspection of the Apollo 13 scan confirms MSK 683, 966, 1123, and 1137 in ASPO-1–12 (PDF pages 179–190). Layouts are on PDF 180, 182, 186, and 188 respectively. These identifiers/layout references are now **MISSION-SPECIFIC**, superseding earlier unresolved identifier status in this document. Unchanged field-level continuity from Apollo 11 remains unproven.
+
+See [direct inspection and page map](../resources/research/029_apollo13_aspo45_direct_inspection.md). Full transcription, refresh behavior, operational revisions, and station access remain open. No station maturity rating is raised by this update alone.

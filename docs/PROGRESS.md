@@ -660,3 +660,12 @@ The largest common Phase 1 gap is now exact console/display reconstruction, not 
 ### New source
 
 - Added the March 16, 1970 Apollo 13 LM Malfunction Procedures to the source catalog.
+
+
+## 2026-09-11 — Apollo 13 ASPO 45 extraction blocker resolved
+
+- Downloaded and visually inspected the mission-specific scan; CRT section is PDF pages 179–190 (ASPO-1–12).
+- Confirmed MSK 683, 966, 1123, and 1137 and located layouts and definition pages.
+- Verified selected LM definitions, including ground-computed fields, repeated BIAS labels, and a two-second PIPA interval that must not be mistaken for CRT refresh rate.
+- Added research note 029 with exact page map, source hash, evidence limits, and next work.
+- Updated display and station references. Station maturity remains unchanged; full field transcription, telemetry mapping, and Apollo 11 comparison remain pending.

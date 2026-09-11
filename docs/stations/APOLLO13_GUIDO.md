@@ -337,3 +337,10 @@ For the LM, **MSK 1123** is documented as a combined guidance/control/propulsion
 Later Apollo telemetry tables continue to map individual LM guidance/radar/propulsion measurements to 1123 and 1137.
 
 This is strong continuity evidence, but the Apollo 13 ASPO 45 pages still must be extracted before either page is treated as unchanged Apollo 13 configuration.
+
+
+## 2026-09-11 evidence update — mission-specific CRT pages inspected
+
+The former size/extraction blocker is resolved. Direct inspection of the Apollo 13 scan confirms MSK 683, 966, 1123, and 1137 in ASPO-1–12 (PDF pages 179–190). Layouts are on PDF 180, 182, 186, and 188 respectively. These identifiers/layout references are now **MISSION-SPECIFIC**, superseding earlier unresolved identifier status in this document. Unchanged field-level continuity from Apollo 11 remains unproven.
+
+See [direct inspection and page map](../../resources/research/029_apollo13_aspo45_direct_inspection.md). Full transcription, refresh behavior, operational revisions, and station access remain open. No station maturity rating is raised by this update alone.

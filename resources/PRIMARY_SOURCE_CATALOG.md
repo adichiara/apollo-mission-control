@@ -535,3 +535,12 @@ NASA/contractor bibliography records identify:
 - **URL:** https://www.ibiblio.org/apollo/Documents/Apollo%2013%20Malfunction%20Procedures.pdf
 - **Status:** IDENTIFIED / REVIEW BEGUN
 - **Use:** Crew-facing malfunction diagnosis and corrective procedures; important for distinguishing controller telemetry/decision support from the actions CAPCOM asks the crew to perform.
+
+
+### Apollo 13 Guidance & Navigation Summary — inspection update
+
+- **Status:** REVIEWED-PARTIAL; supersedes prior CRT extraction-pending entries above.
+- **Direct scan:** https://apollojournals.org/afj/ap13fj/pdf-hr/a13-ac-elect-g-n-summary.pdf
+- **Verified section:** PDF 179–190 / ASPO-1–12, including four display layouts and selected LM field definitions.
+- **Research record:** [029 — direct inspection](research/029_apollo13_aspo45_direct_inspection.md), including SHA-256 and page map.
+- **Limits:** complete transcription, operational revision verification, and Apollo 11 comparison still pending.
