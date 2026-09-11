@@ -340,3 +340,42 @@ Not enough evidence yet exists to claim a complete Apollo 13 EECOM console recre
 ### Pattern now established across four stations
 
 EECOM, GNC, CONTROL, and TELMU all show the same important simulator principle: the controller should reason from **imperfect measurements, configuration, trends, dependencies, and rules**, not receive a software diagnosis of the underlying failure.
+
+
+## 2026-09-11 — Apollo 13 EECOM reference-station deep dive
+
+### Completed
+
+- Promoted CSM EECOM to the first detailed reference-station specification.
+- Transcribed the documented logical contents of the two Apollo 13 EECOM formats identified by the Review Board as most frequently used:
+  - **CSM EPS HIGH DENSITY**
+  - **CSM ECS-CRYO TAB**
+- Preserved original telemetry/channel identifiers where visible in the source rather than replacing them with project-generated names.
+- Recorded the documented **one-second update cadence** for these two formats.
+- Documented Apollo 13 EECOM event/limit-sense behavior:
+  - manually selected high/low thresholds
+  - intentionally tight monitoring limits
+  - 72 indicators on panel 3
+  - 12 cryogenic pressure/temperature/quantity limit-sense indications
+  - master caution/warning event indication
+  - historically non-latching transient behavior
+- Recorded the Review Board finding that an O2 tank 2 pressure limit indication should have occurred roughly 30 seconds before tank failure but may not have been noticed.
+- Separated normal one-second CRT telemetry from **High Speed Data Format 30** playback.
+- Recorded HSD Format 30 structure from AS-508 configuration documentation: 2.4 kbps post-pass playback, selectable CSM/LM high-rate subformats.
+- Explicitly left unresolved the Apollo 13 EECOM DRK, MSK, SMEK, event-panel legends, analog-meter use, full display inventory, and exact ground-command authority.
+- Recorded that modern EECOM reconstruction drawings contain acknowledged inference from later missions and therefore cannot resolve those gaps.
+
+### New/updated documents
+
+- `docs/stations/APOLLO13_EECOM.md`
+- `resources/research/012_apollo13_eecom_reference_station.md`
+
+### Key simulation implication
+
+EECOM monitoring is not merely a numeric-data screen. The historical station has at least three distinct information mechanisms that must remain separable:
+
+1. real-time selectable CRT formats,
+2. transient event/limit-sense indications,
+3. higher-rate recorded telemetry/playback products.
+
+The simulator should preserve the possibility that the correct information exists but is overlooked, transient, contradictory, or initially interpreted as instrumentation failure.
