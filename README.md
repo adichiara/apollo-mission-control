@@ -17,6 +17,7 @@ See:
 - [Simulation architecture](docs/SIMULATION_ARCHITECTURE.md)
 - [Flight-control organization baseline](docs/FLIGHT_CONTROL_ORGANIZATION.md)
 - [Display-system baseline](docs/DISPLAY_SYSTEM_BASELINE.md)
+- [Display reconstruction status](docs/DISPLAY_RECONSTRUCTION_STATUS.md)
 - [Controller information workflow](docs/CONTROLLER_INFORMATION_WORKFLOW.md)
 - [Physical document workflow](docs/PHYSICAL_DOCUMENT_WORKFLOW.md)
 - [Voice communications baseline](docs/VOICE_COMMUNICATIONS_BASELINE.md)
