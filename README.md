@@ -35,3 +35,14 @@ See:
 ## Current status
 
 Foundation/research phase. No simulation code has been committed yet.
+
+
+## Apollo 13 station specifications
+
+Detailed research specifications are being built under `docs/stations/`:
+
+- [EECOM](docs/stations/APOLLO13_EECOM.md)
+- [GNC](docs/stations/APOLLO13_GNC.md)
+- [GUIDO](docs/stations/APOLLO13_GUIDO.md)
+- [TELMU](docs/stations/APOLLO13_TELMU.md)
+- [CONTROL](docs/stations/APOLLO13_CONTROL.md)
