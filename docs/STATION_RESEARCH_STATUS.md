@@ -175,3 +175,12 @@ General AGS documentation establishes a 50-word digital telemetry block repeated
 The Apollo 13 Mission Operations Report adds a particularly important real-world validation case: after MCC-5 the **RTCC incorrectly processed AGS body angles**. Mission Control rejected the bad ground readout and used the independent FDAI reference, which showed PTC was actually correct.
 
 This confirms that ground-processing validity must be modeled separately from spacecraft/telemetry validity. Station maturity remains unchanged.
+
+
+## 2026-09-11 — FP7 telemetry continuity matrix
+
+Research notes 038–039 now constrain the missing Apollo 13 AEA telemetry list much more tightly.
+
+The surviving FP6 and FP8 source listings both place their 50-word telemetry block at octal addresses **0325–0406**. Their symbols agree at 49 of 50 positions; address 0371 differs. The Apollo 13 G&N Dictionary independently supplies direct or partial mission-specific meaning for 25 of those 50 candidate addresses, including navigation vectors, time, velocity, selector state, and delta-V monitor words.
+
+This is still **not** treated as a certified Apollo 13 Table 2.1-7. The remaining authority target is the February 1970 LM-7 handbook telemetry table. GUIDO/CONTROL maturity remains B.
