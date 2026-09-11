@@ -17,7 +17,7 @@ Purpose: track how far each Apollo 13-era station has been reconstructed and pre
 | CAPCOM | B | `APOLLO13_CAPCOM.md` | official role + restored CAPCOM/air-ground audio | exact console/display/procedure staging |
 | FIDO | B | `APOLLO13_FIDO.md` | FIDO postflight report, RTCC/vector operations | exact trajectory displays / MSK |
 | RETRO | B | `APOLLO13_RETRO.md` | RETRO postflight report, RTE/entry products | exact return/entry displays / MSK |
-| GUIDO | B | `APOLLO13_GUIDO.md` | GUIDO report + LUMINARY 1C + 1123/1137 provenance maps | AGS FP7 mapping + ground routing + exact console access |
+| GUIDO | B | `APOLLO13_GUIDO.md` | GUIDO report + LUMINARY 1C + 1123/1137 provenance + in-flight FP7 DEDA evidence | AEA telemetry-to-CRT mapping + ground routing + exact console access |
 | EECOM | **A** | `APOLLO13_EECOM.md` | official console diagram + two real display formats | full display catalog / keyboard layouts |
 | GNC | B | `APOLLO13_GNC.md` | GNC report + earlier CRT continuity lead | 683 field transcription / source mapping |
 | TELMU | B | `APOLLO13_TELMU.md` | TELMU report, consumables/power chronology | exact LM systems displays |
@@ -149,3 +149,18 @@ Research note 035 begins the same field-provenance treatment for Apollo 13 MSK 1
 The key result is that 1123 is also a composite Mission Control product. It combines LGC/PGNS downlink values, PCM control measurements, AGS/AEA information, radar data, propulsion state, and ground context. Apollo telemetry routing tables explicitly tie RGA rate channels, attitude-error channels, and selected APS/RCS measurements to 1123.
 
 GUIDO and CONTROL remain at B: the display's source architecture is substantially clearer, but mission-specific AGS Flight Program 7 mapping, exact LM-7 PCM routing/calibration, ground transformations, station access, and refresh behavior remain unresolved.
+
+
+## 2026-09-11 — AGS Flight Program 7 operational pass
+
+Research note 036 adds directly inspected Flight Program 7 DEDA address evidence and, crucially, Apollo 13 in-flight validation.
+
+Actual Apollo 13 contingency-burn procedures used:
+- 400+5 body-axis alignment;
+- 400+0 attitude hold;
+- 404/405/406 reset;
+- DEDA 470 burn monitoring.
+
+This narrows the AGS gap from “what did Flight Program 7 expose?” to the more specific **AEA telemetry → ground decoding → MSK 1123 field** path.
+
+GUIDO and CONTROL remain maturity B because that telemetry/display path, station access, and update behavior are still incomplete.
