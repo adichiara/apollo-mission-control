@@ -994,3 +994,32 @@ The simulator must preserve those origins rather than populate the CRT directly 
 1. Locate MCC/RTCC definitions for MSK 1123 AGS DEL VEL and AGS ULL.
 2. Recover the exact LM-7 FP7 telemetry table where possible.
 3. Continue converting the AGS portion of MSK 1123 into a field-by-field provenance specification.
+
+
+## 2026-09-11 — MSK 1123 DEDA telemetry provenance
+
+### Completed
+
+- Traced the MSK 1123 AGS/DEDA block into explicit AEA telemetry variables:
+  - RMF — readout-mode flag;
+  - DD — most recent DEDA data;
+  - CMF — clear-mode flag;
+  - ADST — DEDA address.
+- Verified those meanings in the AGS operating manual and corresponding FP6/FP8 source variables.
+- Preserved the distinction between:
+  - the astronaut's physical DEDA display;
+  - AEA DEDA-processing state;
+  - the AEA telemetry stream;
+  - the Mission Control CRT representation.
+- Confirmed that Apollo 13 MSK 1123 includes AGS DEDA information, while leaving exact mission-specific labels/masks and FP7 telemetry IDs unresolved.
+
+### New research note
+
+- `resources/research/043_apollo13_msk1123_deda_telemetry.md`
+
+### Next work
+
+1. Transcribe the exact Apollo 13 MSK 1123 DEDA block.
+2. Recover FP7 Table 2.1-7 telemetry IDs.
+3. Search Apollo 13 controller loops for actual use of the ground DEDA-status block.
+4. Continue field-by-field AGS mapping for MSK 1123.
