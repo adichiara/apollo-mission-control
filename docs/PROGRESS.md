@@ -816,3 +816,34 @@ The simulator must preserve those origins rather than populate the CRT directly 
 1. Extract Apollo 13 AGS Flight Program 7 / DEDA mappings from the mission-specific G&N Dictionary.
 2. Verify LM-7 definitions for the currently Apollo-wide 1123 PCM channels.
 3. Resolve radar field source paths and OCR-damaged RCS identifiers.
+
+
+## 2026-09-11 — AGS Flight Program 7 / DEDA pass
+
+### Completed
+
+- Identified the Apollo 13 G&N Dictionary as the mission-specific AGS source, but its 36.9 MB scan exceeded the available PDF web reader.
+- Directly rendered the TRW **LM PGNS/AGS Training Card** and extracted Flight Program 7 operational DEDA address families.
+- Documented selector/address semantics for:
+  - 400 submodes/alignment;
+  - 404/405/406 delta-V reset;
+  - 450–452 / 470–472 / 500–502 delta-V and velocity-monitor families;
+  - 337R, 360R–362R, 367R, 377 navigation/time quantities;
+  - 540–542 accelerometer bias;
+  - 544–546 gyro drift;
+  - 614R/616 ullage logic.
+- Cross-checked against actual Apollo 13 flight operations:
+  - 400+5 body-axis alignment and 400+0 attitude hold were used during contingency burns;
+  - MCC-7 preparation explicitly called for zeroing 404/405/406 and selecting 470;
+  - Haise reported a small pre-burn bias at address 470.
+- Kept the evidence boundary explicit: operational DEDA semantics are now strong, but the exact AEA telemetry-to-MSK-1123 mapping is still unresolved.
+
+### New research note
+
+- `resources/research/036_apollo13_ags_fp7_deda_evidence.md`
+
+### Next work
+
+1. Find AEA/AGS telemetry documentation linking FP7 variables to LM PCM words/channels.
+2. Map MSK 1123 AGS VEL / DEL VEL / ULL / ACT VEL to exact onboard/ground quantities.
+3. Recover the Apollo 13 G&N Dictionary AGS pages through an alternate page-level/transcribed source if possible.
