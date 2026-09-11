@@ -919,3 +919,27 @@ The simulator must preserve those origins rather than populate the CRT directly 
 1. Search Apollo 13 indexed material for unresolved addresses in the 0325–0406 block.
 2. Recover the February 1970 Table 2.1-7.
 3. Map verified AGS telemetry words into the AGS fields on MSK 1123, keeping RTCC transformations separate.
+
+
+## 2026-09-11 — AGS attitude direction-cosine path
+
+### Completed
+
+- Traced the AGS attitude telemetry representation in surviving FP6/FP8 source listings.
+- Confirmed that the telemetry block carries **six direction cosines**:
+  - A11T/A12T/A13T — X-body row;
+  - A31T/A32T/A33T — Z-body row.
+- Confirmed the telemetry-initialize routine copies the current internal A11–A13 and A31–A33 values into those telemetry words.
+- Cross-checked general AGS telemetry documentation stating that six direction cosines are snapshotted at the one-second telemetry-block boundary.
+- Connected that architecture to Apollo 13's documented post-MCC-5 event in which RTCC incorrectly processed AGS body angles.
+- Kept the exact RTCC conversion equation and FP7 word-ID certification unresolved rather than inferring them.
+
+### New research note
+
+- `resources/research/040_apollo13_ags_attitude_direction_cosine_path.md`
+
+### Next work
+
+1. Locate the RTCC/ground equation converting AGS direction cosines to body angles.
+2. Recover LM-7 Table 2.1-7 to certify the FP7 telemetry IDs.
+3. Map the final ground-derived angles into exact Apollo 13 MSK 1123 AGS ATT fields.
