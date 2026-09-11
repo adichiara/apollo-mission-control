@@ -23,6 +23,8 @@ See:
 - [Apollo 13 station baseline](docs/APOLLO13_STATION_BASELINE.md)
 - [Apollo 13 EECOM station specification](docs/stations/APOLLO13_EECOM.md)
 - [Apollo 13 GNC station specification](docs/stations/APOLLO13_GNC.md)
+- [Apollo 13 CONTROL station specification](docs/stations/APOLLO13_CONTROL.md)
+- [Apollo 13 TELMU station specification](docs/stations/APOLLO13_TELMU.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
 - [Decisions](docs/DECISIONS.md)
