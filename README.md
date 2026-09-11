@@ -47,3 +47,5 @@ Detailed research specifications are being built under `docs/stations/`:
 - [TELMU](docs/stations/APOLLO13_TELMU.md)
 - [CONTROL](docs/stations/APOLLO13_CONTROL.md)
 - [INCO](docs/stations/APOLLO13_INCO.md)
+- [FIDO](docs/stations/APOLLO13_FIDO.md)
+- [RETRO](docs/stations/APOLLO13_RETRO.md)
