@@ -429,3 +429,33 @@ Priority now shifts to locating:
 - RTCC/ground algorithms for radar coordinate conversion and PGNS/AGS comparisons;
 - PCM/telemetry sources for the non-LGC propulsion/control fields;
 - exact CRT refresh/request behavior.
+
+
+## 2026-09-11 non-LGC telemetry provenance
+
+The MSK 1137 hardware/instrumentation side is now partially reconstructed rather than represented only as generic information families.
+
+Mission-era LM-7/8/9 documentation identifies:
+
+- **GQ6510P** — DPS thrust-chamber pressure;
+- **GQ6806H** — variable-injector actuator position.
+
+The March 9, 1970 LM Data Book identifies:
+
+- **GN7563T** — landing-radar antenna temperature, explicitly **LM-7**;
+- **GN7723T** — rendezvous-radar antenna temperature, **LM-6 and subsequent**.
+
+A later NASA Apollo telemetry summary independently maps GQ6806H, GN7563T and GN7723T to primary display **MSK 1137**, giving a strong two-source chain from spacecraft measurement identity to display destination. The same summary maps several PGNCS electrical/temperature measurements to 1137, including PIPA supply, telemetry-bias voltage, 800-Hz IMU supply, 3.2-kHz suspension supply and PIPA temperature; Apollo-13-specific identifier/calibration confirmation remains pending for those fields.
+
+A particularly important fidelity constraint comes from the LM-7 LR-temperature redline sheet: it states that the **CRT reading may not correspond directly to the physical heater trip values because instrumentation error is not included in those trip values**. The simulation therefore cannot treat physical state, telemetry measurement, and displayed engineering value as automatically identical.
+
+See `resources/research/034_apollo13_msk1137_non_lgc_telemetry.md`.
+
+### Revised CONTROL gap
+
+The remaining high-value work is now:
+
+1. certify GQ6510P routing to the Apollo 13 MSK 1137 TCP field;
+2. establish Apollo-13-specific definitions for the PGNCS power/PIPA measurements;
+3. recover engineering conversion / display precision and CRT update behavior;
+4. continue the same provenance reconstruction for MSK 1123.
