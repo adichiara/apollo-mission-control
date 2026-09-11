@@ -17,7 +17,7 @@ Purpose: track how far each Apollo 13-era station has been reconstructed and pre
 | CAPCOM | B | `APOLLO13_CAPCOM.md` | official role + restored CAPCOM/air-ground audio | exact console/display/procedure staging |
 | FIDO | B | `APOLLO13_FIDO.md` | FIDO postflight report, RTCC/vector operations | exact trajectory displays / MSK |
 | RETRO | B | `APOLLO13_RETRO.md` | RETRO postflight report, RTE/entry products | exact return/entry displays / MSK |
-| GUIDO | B | `APOLLO13_GUIDO.md` | GUIDO report + LUMINARY 1C + 1123/1137 provenance + in-flight FP7 DEDA evidence | AEA telemetry-to-CRT mapping + ground routing + exact console access |
+| GUIDO | B | `APOLLO13_GUIDO.md` | GUIDO report + LUMINARY 1C + 1123/1137 provenance + FP7 DEDA/AEA telemetry evidence | exact FP7 telemetry word map + MSK routing + console access |
 | EECOM | **A** | `APOLLO13_EECOM.md` | official console diagram + two real display formats | full display catalog / keyboard layouts |
 | GNC | B | `APOLLO13_GNC.md` | GNC report + earlier CRT continuity lead | 683 field transcription / source mapping |
 | TELMU | B | `APOLLO13_TELMU.md` | TELMU report, consumables/power chronology | exact LM systems displays |
@@ -164,3 +164,14 @@ Actual Apollo 13 contingency-burn procedures used:
 This narrows the AGS gap from “what did Flight Program 7 expose?” to the more specific **AEA telemetry → ground decoding → MSK 1123 field** path.
 
 GUIDO and CONTROL remain maturity B because that telemetry/display path, station access, and update behavior are still incomplete.
+
+
+## 2026-09-11 — AGS telemetry / RTCC processing pass
+
+Research note 037 separates the AEA's ground telemetry stream from the crew DEDA interface and documents the mission-era LM-7 handbook's dedicated AEA telemetry-word-list table.
+
+General AGS documentation establishes a 50-word digital telemetry block repeated once per second, but the exact Flight Program 7 word-to-memory assignments are still being extracted rather than copied from Flight Program 6.
+
+The Apollo 13 Mission Operations Report adds a particularly important real-world validation case: after MCC-5 the **RTCC incorrectly processed AGS body angles**. Mission Control rejected the bad ground readout and used the independent FDAI reference, which showed PTC was actually correct.
+
+This confirms that ground-processing validity must be modeled separately from spacecraft/telemetry validity. Station maturity remains unchanged.
