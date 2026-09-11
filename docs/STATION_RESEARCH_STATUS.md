@@ -184,3 +184,12 @@ Research notes 038–039 now constrain the missing Apollo 13 AEA telemetry list 
 The surviving FP6 and FP8 source listings both place their 50-word telemetry block at octal addresses **0325–0406**. Their symbols agree at 49 of 50 positions; address 0371 differs. The Apollo 13 G&N Dictionary independently supplies direct or partial mission-specific meaning for 25 of those 50 candidate addresses, including navigation vectors, time, velocity, selector state, and delta-V monitor words.
 
 This is still **not** treated as a certified Apollo 13 Table 2.1-7. The remaining authority target is the February 1970 LM-7 handbook telemetry table. GUIDO/CONTROL maturity remains B.
+
+
+## 2026-09-11 — AGS direction-cosine attitude path
+
+Research note 040 documents the attitude representation behind the AGS telemetry architecture.
+
+FP6 and FP8 source listings both show six telemetered direction cosines (X-body and Z-body rows) snapshotted for telemetry, rather than final body Euler angles. This fits Apollo 13's documented RTCC body-angle-processing failure and gives the project a concrete ground-transform boundary for MSK 1123 AGS ATT.
+
+The exact FP7 Table 2.1-7 identifiers and RTCC conversion equations remain unresolved. GUIDO/CONTROL maturity remains B.
