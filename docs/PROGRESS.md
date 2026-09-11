@@ -550,3 +550,41 @@ The communications subsystem must expose physical/link dependencies rather than 
 ### Key architecture consequence
 
 Even if future player-count scaling combines FIDO and RETRO, the simulator should retain separate trajectory-state and return-plan functions internally.
+
+
+## 2026-09-11 — FLIGHT/CAPCOM, PROCEDURES/FAO, and Phase 1 station status
+
+### New station specifications
+
+- `docs/stations/APOLLO13_FLIGHT.md`
+- `docs/stations/APOLLO13_CAPCOM.md`
+- `docs/stations/APOLLO13_PROCEDURES.md`
+- `docs/stations/APOLLO13_FAO.md`
+
+### FLIGHT / CAPCOM findings
+
+- Preserved FLIGHT as a decision/integration role rather than an omniscient master console.
+- Preserved the operational communication path:
+  `discipline → FLIGHT → CAPCOM → crew`.
+- Documented crew observations/readbacks as a separate information source from telemetry.
+- Documented verbal polling as a real readiness/ownership mechanism, not a game UI feature.
+
+### PROCEDURES / FAO findings
+
+- PROCEDURES owns the MCC/MSFN/ground procedural interface, not the crew activity timeline.
+- FAO owns/coordinated the mutable flight plan and crew timeline.
+- Identified **MSK 1503 — next station contact table** from the Apollo 13 PROCEDURES report.
+- Documented real-time ground-processing changes, site handover problems, playback/delog coordination, and analog-recorder calibration impacts.
+- Documented FAO's continuous integration of EECOM/GNC/NETWORK/Flight Plan Support constraints and the post-accident rebuilding of the crew timeline.
+
+### Research status matrix
+
+Added `docs/STATION_RESEARCH_STATUS.md`.
+
+Current maturity:
+
+- EECOM: A — station reference
+- FLIGHT, CAPCOM, FIDO, RETRO, GUIDO, GNC, TELMU, CONTROL, INCO, PROCEDURES, FAO: B — strong mission-specific workflow evidence; exact displays still incomplete
+- SURGEON, NETWORK, BOOSTER and several management/support positions: C — role baseline
+
+The largest common Phase 1 gap is now exact console/display reconstruction, not role definition.
