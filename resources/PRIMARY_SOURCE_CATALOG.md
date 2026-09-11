@@ -102,3 +102,59 @@ The following source classes are specifically needed and should be added as they
 - mission-specific console display lists
 - Flight Director loop recordings/transcripts
 - technical crew debriefings and mission reports for selected scenarios
+
+
+---
+
+## Added during Phase 1 organization research — 2026-09-11
+
+### Apollo 13 Review Board Appendix A — MCC Activities
+
+- **Title:** Report of Apollo 13 Review Board, Appendix A — Baseline Data: Apollo 13 Flight Systems and Operations
+- **Relevant section:** Part A4, Mission Control Center Activities
+- **NASA document ID:** 19700078804
+- **Source:** NASA Technical Reports Server
+- **URL:** https://ntrs.nasa.gov/api/citations/19700078804/downloads/19700078804.pdf
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Detailed MOCR responsibilities, Staff Support Rooms, CCATS, RTCC, and Apollo-era MCC organization.
+- **Important limitation:** Apollo 13 configuration cannot automatically be imposed on Apollo 11; mission-specific differences must be checked.
+
+### Flight control of the Apollo lunar landing mission
+
+- **Title:** Flight control of the Apollo lunar landing mission
+- **Author:** M. P. Frank
+- **NASA document ID:** 19700009496
+- **Report:** NASA-TM-X-58036
+- **Publication date:** 1969-12-01
+- **Source:** NASA Technical Reports Server
+- **URL:** https://ntrs.nasa.gov/citations/19700009496
+- **Status:** IDENTIFIED / REVIEWED-PARTIAL through indexed text
+- **Use:** Contemporary description of lunar-mission flight-control organization, MOCR/SSR relationships, decision structure, and flight rules.
+
+### Apollo 11 Press Kit
+
+- **Title:** Apollo 11 Lunar Landing Mission Press Kit
+- **NASA document ID:** 19690022248
+- **Report:** NASA-NEWS-RELEASE-69-83K
+- **Publication date:** 1969-07-06
+- **Source:** NASA Technical Reports Server
+- **URL:** https://ntrs.nasa.gov/citations/19690022248
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Contemporary mission configuration, MSFN/NASCOM description, crew/controller integrated-simulation statement, mission background.
+
+### Apollo 11 Flight Director Loop — EVA
+
+- **Source:** NASA Apollo Lunar Surface Journal
+- **URL:** https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/Apollo11EVA_FD_Loop_Audio.html
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Actual controller call signs, Flight Director polling/cadence, operational exchanges during lunar EVA.
+- **Important observation:** Actual Apollo 11 loop uses the call sign **Telcom**.
+
+### Robert H. Heselmeyer Oral History
+
+- **Source:** NASA Johnson Space Center Oral History Project
+- **Interview date:** 2004-11-12
+- **URL:** https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/HeselmeyerRH/HeselmeyerRH_11-12-04.pdf
+- **Status:** REVIEWED-PARTIAL
+- **Use:** LM systems-controller experience; TELCOM/TELMU terminology transition; Apollo 13 support workflow.
+- **Evidence class:** Retrospective oral history. Use contemporary documents/audio when available for exact mission-specific nomenclature.
