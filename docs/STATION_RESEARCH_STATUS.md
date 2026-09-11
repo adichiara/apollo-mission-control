@@ -209,3 +209,10 @@ This removes another potential false simplification: MSK 1123 AGS DEL VEL must n
 Research note 042 separates the AGS ullage measurement, threshold test, consecutive-cycle counter, completion criterion, and controller-visible field.
 
 This removes another ambiguity in MSK 1123: its AGS ULL field is in velocity units and therefore is not simply the MU8 counter or an ullage-acquired Boolean. Exact field calculation/routing remains unresolved; GUIDO/CONTROL maturity stays B.
+
+
+## 2026-09-11 — MSK 1123 DEDA telemetry pass
+
+Research note 043 ties the DEDA portion of MSK 1123 to explicit AEA telemetry variables: readout-mode flag, DEDA data, clear-mode flag, and DEDA address.
+
+This is another piece of the 1123 page that can now be implemented from a historically separated source path rather than by mirroring a crew display. Exact Apollo 13 masks/formatting and FP7 telemetry IDs remain unresolved; GUIDO/CONTROL remain maturity B.
