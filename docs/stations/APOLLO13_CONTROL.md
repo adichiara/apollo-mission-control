@@ -534,3 +534,16 @@ Therefore the Apollo 13 ground display path could legitimately fail at the conve
 This strengthens the requirement that CONTROL's attitude display be a fallible ground product rather than a direct alias of simulated vehicle attitude.
 
 See `resources/research/040_apollo13_ags_attitude_direction_cosine_path.md`.
+
+
+## 2026-09-11 AGS delta-V interface separation
+
+The Apollo 13 burn-monitor workflow now has a more precise information-path model.
+
+AEA telemetry carries high-frequency body-axis sensed-velocity accumulation variables (VD1X/Y/Z), while the crew's DEDA 470/471/472 readouts are separate 2-second navigation-update values (VDX/Y/Z). Apollo 13 used the latter operationally during contingency burns.
+
+CONTROL therefore should be able to receive ground telemetry-based delta-V information independently of the crew's currently selected DEDA address.
+
+The exact MSK 1123 AGS DEL VEL routing remains under research.
+
+See `resources/research/041_apollo13_ags_delta_v_interfaces.md`.
