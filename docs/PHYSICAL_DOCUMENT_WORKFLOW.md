@@ -1,87 +1,47 @@
-# Physical Document Workflow
+# Physical Documents and Hard-Copy Research
 
-Status: **design direction grounded in documented Apollo practice**
+Status: **historical research topic; no formal paper mechanic selected**
 
 ## Historical basis
 
-Apollo Mission Control used multiple forms of physical hard copy.
+Apollo Mission Control used physical hard copy, including pneumatic-tube delivery, teletype output, charts, messages, reference documents, and controller handbooks.
 
-Historical sources document:
+This remains relevant because it tells us what information controllers actually had and in what form.
 
-- pneumatic-tube stations integrated into Mission Control consoles
-- charts, graphs, messages, and other materials moved between operational areas
-- teletype hard copy used to verify some RTCC transmissions
-- controller-specific console handbooks
-- Flight Control Operations Handbooks
-- Flight Mission Rules
-- mission plans, tables, and reference products
+## Simulation position
 
-Hard copy was therefore part of the operational information system, not simply office paperwork.
+The project is **not** creating a formalized "pass paper" game system.
 
-## Project adaptation
+Because the simulation is played in person, players can naturally:
 
-For an in-person tabletop simulation, a physical sheet handed from one player to another can represent an Apollo hard-copy product that historically would have reached a controller through the MCC's pneumatic-tube/document-distribution system.
+- write notes,
+- hand one another a sheet,
+- mark printed procedures,
+- point to reference material,
+- share whatever paper information is useful.
 
-This is a **simulation adaptation**, not a claim that Apollo controllers literally passed the same sheet across the MOCR table.
+That requires no additional rules.
 
-The adaptation has several advantages:
+The amount of paper used in the final simulation may be minimized. We will first determine what Apollo actually used, then decide whether a given hard-copy product is important enough to reproduce.
 
-- preserves the fact that information could arrive as a discrete document rather than appearing automatically on-screen
-- creates a natural distinction between console telemetry and analysis products
-- allows support-room/RTCC outputs to exist physically
-- preserves finite controller attention
-- avoids adding modern UI panels for information that was historically paper-based
+## What still matters historically
 
-## Current design decision
+Research should continue to identify:
 
-Use physical paper **where the historical information product was paper/hard copy or where a documented hard-copy path is the closest practical representation**.
+- which products existed only or primarily as hard copy,
+- which products materially affected controller decisions,
+- which documents controllers routinely consulted,
+- whether information latency or document delivery mattered operationally.
 
-Do not convert arbitrary digital telemetry into paper merely for atmosphere.
+If a historical paper product is not important to the simulated task, there is no current requirement to reproduce it.
 
-## Candidate document classes
+## Backroom relationship
 
-These are research categories, not yet approved game components:
+The same principle applies to Staff Support Rooms.
 
-### Player reference documents
+Backroom teams were historically important and must be understood before simplification, but the project has **not** decided that they need to become explicit game roles, paper-message generators, or simulated agents.
 
-- Flight Mission Rules
-- controller console handbook extracts
-- Flight Control Operations Handbook procedures
-- mission timelines
-- controller-specific tables/reference pages
-
-### Dynamically delivered hard-copy products
-
-Potential examples to research:
-
-- trajectory solutions
-- maneuver products
-- message/command verification
-- plotted data
-- generated tables
-- support-room analysis
-- updated procedures or flight-plan pages
-
-### Administrative / simulation-control material
-
-Could include scenario setup or SimSup materials, but these should not become visible to controller players unless historically appropriate.
-
-## Representation options still open
-
-The project has not yet chosen whether dynamic hard copy will be:
-
-1. preprinted and released by SimSup at the appropriate time,
-2. printed live by the server,
-3. displayed to a non-player operator who physically hands over a prepared sheet,
-4. produced through another practical mechanism.
-
-The choice should depend on the actual source/product and the burden of live play.
-
-## Important constraint
-
-Physical paper should not become a disguised hint system.
-
-If the historical product contained raw or processed data, the simulation paper should contain the corresponding information—not an explanation of what the player ought to conclude.
+First document the real support relationship. Representation comes later.
 
 ## Sources
 
