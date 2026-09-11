@@ -82,6 +82,7 @@ Research and catalog:
 - CRT geometry and field layout
 - update rates where documented
 - display request/selection workflow
+- field meaning and display mask/precision, tracked separately from source-path evidence and mission-to-mission continuity
 - field provenance (raw telemetry vs onboard-computed vs ground-derived)
 - ground transformation/calculation path for derived CRT values
 - validation cases for incorrect ground-derived products even when raw telemetry/spacecraft state are valid
