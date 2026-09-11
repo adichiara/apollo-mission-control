@@ -435,3 +435,29 @@ The following source classes are specifically needed and should be added as they
 - **Status:** REVIEWED-PARTIAL
 - **Use:** Apollo simulator configuration control, training progression, MCC integration, discrepancy/change management, instructor-only aids, and simulator math-model update process.
 - **Importance:** Direct evidence for how NASA itself maintained simulator fidelity against changing spacecraft configurations.
+
+
+### R-567 — LUMINARY 1C Section 2, Data Links
+
+- **Title:** Guidance System Operations Plan for Manned LM Earth Orbital and Lunar Missions Using Program LUMINARY 1C (LM131 Rev. 1), Section 2 — Data Links
+- **Report:** R-567
+- **Revision:** 8
+- **Date:** March 1970
+- **Organization:** MIT / Charles Stark Draper Laboratory for NASA/MSC
+- **URL:** https://www.ibiblio.org/apollo/NARA-SW/R-567-sec2-rev8.pdf
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Apollo-13-specific LGC uplink/downlink definition, P27 update verification, program-selected downlists, telemetry timing/snapshot behavior, AGS initialization/update.
+- **Importance:** Primary source for GUIDO/CONTROL onboard-computer information paths; must not be confused with the eventual MCC CRT display format.
+
+### LM Mission Simulator Instructor Handbook catalog records
+
+NASA/contractor bibliography records identify:
+
+- **LMA-790-2-LMS**, 1967-04-01, *67-14186 — Volume I, Simulator Description
+- **LMA-790-2-LMS**, 1967-04-01, *67-14187 — Volume II, Simulator Operation, Sections 1 and 4
+- **LMA-790-2-LMS**, 1967-04-01, *67-14188 — Volume II, Simulator Operation, Sections 5 and 6
+- **LMA-790-2-LMS**, 1967-07-01, *67-16127 — Volume II, Section 7, Simulator Output Tables
+
+- **Status:** CATALOG IDENTIFIED; individual scans still being located/extracted
+- **Source:** Virtual AGC / NARA corporate index
+- **Use:** Simulator architecture, instructor operation, subsystem simulation, and especially the explicit simulator-output tables.
