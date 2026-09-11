@@ -193,3 +193,12 @@ Research note 040 documents the attitude representation behind the AGS telemetry
 FP6 and FP8 source listings both show six telemetered direction cosines (X-body and Z-body rows) snapshotted for telemetry, rather than final body Euler angles. This fits Apollo 13's documented RTCC body-angle-processing failure and gives the project a concrete ground-transform boundary for MSK 1123 AGS ATT.
 
 The exact FP7 Table 2.1-7 identifiers and RTCC conversion equations remain unresolved. GUIDO/CONTROL maturity remains B.
+
+
+## 2026-09-11 — AGS delta-V interface pass
+
+Research note 041 separates the AEA's telemetered delta-V accumulation from the crew DEDA readout path.
+
+The telemetry block carries VD1X/Y/Z at 0404–0406, while Apollo 13 DEDA 470–472 represents separate 2-second navigation-update values. Apollo 13 used 404–406 zeroing and 470 monitoring operationally during contingency burns.
+
+This removes another potential false simplification: MSK 1123 AGS DEL VEL must not be implemented as a mirror of the crew's current DEDA display. Exact CRT routing remains unresolved; maturity stays B.
