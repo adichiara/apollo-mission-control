@@ -92,13 +92,32 @@ The following are deliberately not decisions:
 - post-simulation evaluation format
 
 
-## D-011 — Represent documented hard-copy flow physically where practical
+## D-011 — Paper exchange is not a formal subsystem
+
+**Status:** Clarified  
+**Date:** 2026-09-11
+
+Apollo hard-copy workflows remain a historical research topic, but the simulation will not assume a formalized paper-delivery mechanic.
+
+Because play is in person, players may naturally write, pass, or share paper when useful, using whatever materials are available. The amount of printed/dynamic paper should not be increased merely for atmosphere and may ultimately be minimized where that does not remove historically important information.
+
+No decision has yet been made about which historical hard-copy products, if any, must be reproduced during live play.
+
+## D-012 — Apollo 13-era MCC as default technical baseline
 
 **Status:** Accepted in principle  
 **Date:** 2026-09-11
 
-Where Apollo information was historically delivered or verified as hard copy, the in-person simulation may represent that product with a physical paper sheet passed to the appropriate player.
+Use the Apollo 13-era Mission Control configuration as the default technical/research baseline for the reusable simulation platform because it represents a later, mature Apollo lunar-mission configuration and is unusually well documented.
 
-This is an adaptation of the information-delivery mechanism, not a claim that controllers literally passed the same document hand-to-hand in the MOCR.
+This does **not** mean Apollo 13-specific details are automatically shown in earlier scenarios.
 
-Exact document classes and delivery method remain scenario-specific and must be researched before implementation.
+Each mission/scenario must support a mission-specific historical profile that can override, remove, or rename later features where contemporary documentation shows a difference. Known example: Apollo 11 uses the LM systems call sign **TELCOM**, while Apollo 13 mission documentation uses **TELMU**.
+
+Therefore:
+
+- shared simulation machinery should favor the later Apollo-compatible superset where practical;
+- visible station nomenclature, available displays, procedures, spacecraft/ground configuration, rules, and capabilities remain mission-specific;
+- an Apollo 11 scenario should reproduce Apollo 11 where a documented difference exists rather than presenting the Apollo 13 configuration unchanged.
+
+The first playable mission/scenario remains undecided.
