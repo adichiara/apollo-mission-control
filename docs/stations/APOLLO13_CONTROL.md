@@ -517,3 +517,20 @@ This requires the eventual simulator to allow:
 - controllers to resolve the discrepancy from independent information.
 
 See `resources/research/037_apollo13_ags_telemetry_ground_processing.md`.
+
+
+## 2026-09-11 AGS direction-cosine telemetry path
+
+The post-MCC-5 RTCC body-angle anomaly now has a documented source-layer model.
+
+Adjacent AGS flight-program source listings show that the AEA telemeters six attitude direction cosines rather than three final body angles. Those six values are snapshotted from the internal body-axis orientation matrix for telemetry.
+
+Therefore the Apollo 13 ground display path could legitimately fail at the conversion step while:
+
+- actual vehicle attitude remained correct;
+- AGS attitude state remained correct;
+- the transmitted orientation data remained usable.
+
+This strengthens the requirement that CONTROL's attitude display be a fallible ground product rather than a direct alias of simulated vehicle attitude.
+
+See `resources/research/040_apollo13_ags_attitude_direction_cosine_path.md`.
