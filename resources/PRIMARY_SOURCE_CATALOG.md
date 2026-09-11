@@ -238,3 +238,25 @@ The following source classes are specifically needed and should be added as they
 - **Status:** REVIEWED-PARTIAL
 - **Use:** Concrete EECOM console anatomy; identifies two precision TV monitors, DRK, MSK, event/status controls, voice positions, and frequently used one-second-update displays.
 - **Caution:** Apollo 13 example; do not impose on Apollo 11 without confirmation.
+
+
+### AS-508 MCC/MSFN Mission Configuration/System Description
+
+- **Mission:** Apollo 13 / AS-508
+- **Organization:** Manned Spacecraft Center, Flight Support Division
+- **Date:** March 1970
+- **Source:** NASA / Apollo Flight Journal
+- **URL:** https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/as-508-mcc-msfn-config.pdf
+- **Status:** IDENTIFIED / REVIEWED-PARTIAL
+- **Use:** Detailed Apollo 13-era description of MCC/MSFN interfaces, communications, telemetry, command, tracking, and data flow.
+- **Project role:** Primary source for the current default technical baseline/superset; earlier-mission scenarios still require mission-specific overrides.
+
+### Apollo 13 Mission Operations Report
+
+- **Title:** Mission Operations Report — Apollo 13
+- **Date:** 1970-04-28
+- **Source:** NASA
+- **URL:** https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Controller-by-controller post-mission operational reports; appendices include BSE, RETRO, FIDO, GUIDO, EECOM, GNC, TELMU, CONTROL, INCO, PROCEDURES, FAO, SURGEON, recovery, and network operations.
+- **Important evidence:** Apollo 13 documentation explicitly uses **TELMU**, demonstrating a mission-era nomenclature difference from Apollo 11 TELCOM.
