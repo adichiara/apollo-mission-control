@@ -547,3 +547,14 @@ CONTROL therefore should be able to receive ground telemetry-based delta-V infor
 The exact MSK 1123 AGS DEL VEL routing remains under research.
 
 See `resources/research/041_apollo13_ags_delta_v_interfaces.md`.
+
+
+## 2026-09-11 AGS ullage provenance
+
+The AGS ullage information path now distinguishes measurement from logic state.
+
+The AGS evaluates sensed X-axis acceleration/velocity over successive 2-second cycles, compares it with a threshold, and advances a consecutive-cycle counter before declaring ullage. The counter and status are separately available through DEDA/telemetry.
+
+Because MSK 1123's AGS ULL field is a velocity-unit measurement, CONTROL must not treat that field as synonymous with “ullage acquired.”
+
+See `resources/research/042_apollo13_ags_ullage_provenance.md`.
