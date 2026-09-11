@@ -387,3 +387,14 @@ The actual Apollo 13 Mission Operations Report also records PIPA-bias monitoring
 This provides concrete evidence that GUIDO's role in inertial-state validity extended into ground-derived bias assessment rather than merely reading raw accelerometer telemetry.
 
 See `resources/research/033_apollo13_pipa_bias_ground_workflow.md`.
+
+
+## 2026-09-11 MSK 1123 provenance pass
+
+MSK 1123 has now been decomposed by source class.
+
+For GUIDO, the page combines LGC/PGNS digital-downlink state with independently sourced AGS, radar, PCM control-hardware, propulsion, and ground-context information. This means GUIDO's visible guidance picture can disagree internally when one telemetry/processing path is degraded.
+
+The next high-value GUIDO task is specifically the **Apollo 13 G&N Dictionary / AGS Flight Program 7** mapping for the 1123 AGS and DEDA fields. That source is mission-specific and particularly important because public source-code coverage for Flight Program 7 is incomplete.
+
+See `resources/research/035_apollo13_msk1123_field_provenance.md`.
