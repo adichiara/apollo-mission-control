@@ -65,6 +65,37 @@ Historical subjects to reconstruct include:
 
 Do not collapse this into direct access to simulation variables where the historical distinction affects controller work.
 
+### Ground-processing fallibility
+
+Apollo 13 supplies direct evidence that ground-derived controller information can be wrong even when the spacecraft condition is satisfactory.
+
+After MCC-5, the LM crew established passive thermal control using AGS. Mission Control's last high-bit-rate attitude indication disagreed with the desired attitude; the Apollo 13 Mission Operations Report states that the **RTCC was incorrectly processing AGS body angles**. Controllers discarded that improper readout and relied on the independent FDAI reference, which showed PTC had been correctly established.
+
+Therefore the ground-processing layer must be capable of representing:
+
+- valid spacecraft state with incorrect ground transformation;
+- correct received telemetry with a bad derived product;
+- stale or misconfigured computational products;
+- independent cues that allow controllers to reject a bad display value.
+
+The architecture must never define controller-visible values as direct aliases of authoritative physical-state variables.
+
+Conceptually:
+
+```text
+physical state
+    ↓
+sensor / onboard computation
+    ↓
+raw telemetry
+    ↓
+ground decoding / transformation   ← can be wrong
+    ↓
+controller product / CRT
+```
+
+See `resources/research/037_apollo13_ags_telemetry_ground_processing.md`.
+
 ### 5. Controller information services
 
 Defines exactly what each controller position can request/observe.
