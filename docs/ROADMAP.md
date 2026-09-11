@@ -82,6 +82,8 @@ Research and catalog:
 - CRT geometry and field layout
 - update rates where documented
 - display request/selection workflow
+- field provenance (raw telemetry vs onboard-computed vs ground-derived)
+- ground transformation/calculation path for derived CRT values
 - plot/tabular formats
 - console controls relevant to play
 - hard-copy products where relevant
