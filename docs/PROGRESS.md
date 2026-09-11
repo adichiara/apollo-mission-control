@@ -412,3 +412,26 @@ The simulator should preserve the possibility that the correct information exist
 2. Locate/download the LM Mission Simulator Instructor Handbook and Console Directory.
 3. Use simulator documentation to validate the LM subsystem model before inventing any equations.
 4. Continue station-display reconstruction for CONTROL/TELMU/INCO.
+
+
+## 2026-09-11 — NASA simulator configuration/fidelity research
+
+### Completed
+
+- Reviewed NASA MSC's 1968 **Flight Crew Operations Branch — Simulator Operations** report.
+- Documented that Apollo simulator fidelity was maintained through formal configuration/change control rather than informal approximation.
+- Recorded that simulator system changes were checked against controlled spacecraft sources such as Apollo Operations Handbooks, schematics, and approved modification data.
+- Recorded the simulator distinction between:
+  - spacecraft-representation behavior,
+  - instructor-only aids/readouts,
+  - known simulator discrepancies.
+- Confirmed that integrated training was preceded by explicit MCC-Houston ground-interface checkout.
+- Added the principle that known historical simulator artifacts/limitations must not be mistaken for actual spacecraft physics.
+
+### New research note
+
+- `resources/research/015_simulator_configuration_fidelity.md`
+
+### Architecture implication
+
+The eventual SimSup/instructor interface may expose authoritative simulation state and special instructor aids, but those data must remain isolated from controller players unless a historical controller product carries them into Mission Control.
