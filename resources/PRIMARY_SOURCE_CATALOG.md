@@ -158,3 +158,30 @@ The following source classes are specifically needed and should be added as they
 - **Status:** REVIEWED-PARTIAL
 - **Use:** LM systems-controller experience; TELCOM/TELMU terminology transition; Apollo 13 support workflow.
 - **Evidence class:** Retrospective oral history. Use contemporary documents/audio when available for exact mission-specific nomenclature.
+
+
+### Apollo Experience Report — flight-control data/display needs
+
+- **Title:** Apollo Experience Report: Flight-Control Data Needs, Terminal Display Devices, and Ground System Configuration Requirements
+- **Author:** Richard A. Hoover
+- **NASA document ID:** 19740015284
+- **Report:** NASA-TN-D-7685 / JSC-S-396
+- **Publication date:** 1974-05-01
+- **Source:** NASA Technical Reports Server
+- **URL:** https://ntrs.nasa.gov/citations/19740015284
+- **Status:** IDENTIFIED
+- **Use:** User-organization review of Apollo flight-control data systems, ground display/control devices, and configuration-management experience.
+- **Caution:** Retrospective Apollo Experience Report; mission-specific implementation details must be checked against contemporary sources.
+
+### NASA MCC Display/Control System Usage and Effectiveness, Apollo 11
+
+- **Title:** NASA MCC Display/Control System Usage and Effectiveness, Apollo 11
+- **Authors:** B. Costis, W. Ortolani, W. Moreland
+- **Report:** PHO-TN401
+- **Contract:** NAS 9-1261
+- **Date:** 1969-12-24
+- **Organization:** Philco-Ford Corporation for NASA
+- **Archive location:** Box 078-65/66, Mission Documents: Apollo 11, Apollo Program, Johnson Space Center History Collection, University of Houston-Clear Lake
+- **Status:** IDENTIFIED — PUBLIC DIGITAL COPY NOT YET LOCATED
+- **Use:** Apollo-11-specific MCC Display/Control System usage and effectiveness; high-priority source for authentic display-request behavior.
+- **Discovery source:** HAER TX-109-C, p. 17 footnote 37.
