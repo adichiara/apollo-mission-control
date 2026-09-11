@@ -436,3 +436,21 @@ Apollo 13 also gives direct evidence that GUIDO/Mission Control could receive a 
 This is a core GUIDO fidelity requirement: displayed guidance information is a ground product, not guaranteed truth.
 
 See `resources/research/037_apollo13_ags_telemetry_ground_processing.md`.
+
+
+## 2026-09-11 AGS direction-cosine telemetry path
+
+The AGS attitude path is now more concrete.
+
+Surviving FP6/FP8 AGS source listings show that the telemetry block carries **six direction cosines**, not ready-made body Euler angles:
+
+- A11T/A12T/A13T — copied from the X-body direction-cosine row;
+- A31T/A32T/A33T — copied from the Z-body direction-cosine row.
+
+General AGS telemetry documentation states that these six values are snapshotted for telemetry at the one-second block boundary.
+
+This provides a strong architectural explanation for Apollo 13's documented post-MCC-5 problem: the spacecraft/AGS attitude could be correct while the **RTCC body-angle conversion** was wrong.
+
+The exact Apollo 13 Flight Program 7 word IDs and RTCC conversion equation remain unresolved, so the project does not yet freeze the final MSK 1123 AGS ATT implementation.
+
+See `resources/research/040_apollo13_ags_attitude_direction_cosine_path.md`.
