@@ -182,3 +182,48 @@ No headset/loop implementation has been selected. The first scenario's actual lo
 Mission-specific differences are already documented. Apollo 13's Mission Operations Report has a dedicated **TELMU** appendix, whereas Apollo 11's official manning/audio uses **TELCOM**. The AS-508 MCC/MSFN Mission Configuration/System Description provides a detailed Apollo 13-era ground-system baseline.
 
 Therefore "Apollo 13 baseline" means reusable platform architecture, not that later terminology/configuration may be shown unchanged in Apollo 11 scenarios.
+
+
+## 2026-09-11 — Phase 1: Apollo 13 station baseline and simulation-case research
+
+### Controller station reconstruction
+
+- Added an Apollo 13 station-by-station working baseline for FLIGHT, CAPCOM, FIDO, RETRO, GUIDO, EECOM, GNC, TELMU, CONTROL, INCO, PROCEDURES, FAO, and SURGEON.
+- Preserved distinction between documented responsibilities and still-missing display/console details.
+- Identified EECOM as the first station that can plausibly be reconstructed from surviving console evidence:
+  - actual console layout
+  - two high-use display examples
+  - parameter labels/example values
+  - one-second display updates
+  - event/limit-sense behavior
+- Recorded controller-specific operational evidence from the Apollo 13 Mission Operations Report:
+  - GNC diagnosing RCS/control behavior
+  - TELMU managing LM lifetime/consumables
+  - CONTROL handling DPS/RCS/attitude concerns
+  - INCO managing link/antenna/command behavior
+  - GUIDO handling onboard guidance/computer/alignment state
+  - FIDO dealing with tracking validity and RTCC trajectory state
+
+### Simulation-case research
+
+- Confirmed that Apollo 13 premission training was broken into documented mission-phase simulations rather than one generic full-mission simulation.
+- Cataloged named simulation families including LM activation/descent, descent abort, ascent, launch abort, reentry, LOI/DOI, TEI, FIDO/BSE math-model, network, and communications/data-flow validation.
+- Added scenario evidence levels so a named historical simulation category is not mistaken for a fully reconstructable scenario.
+- Recorded the Apollo 11 computer-failure/program-alarm simulation as a high-priority case to reconstruct from stronger source material.
+- Recorded Harold Miller's account that simulations were intended to exercise procedures, ground rules, teamwork, and communications and that simulated data was routed through the control-center system.
+
+### New documents
+
+- `docs/APOLLO13_STATION_BASELINE.md`
+- `docs/MISSION_PROFILE_MODEL.md`
+- `docs/SIMULATION_SCENARIO_RESEARCH.md`
+- `resources/research/010_apollo13_controller_station_evidence.md`
+- `resources/research/011_apollo_simulation_cases.md`
+
+### Next research
+
+1. Reconstruct the Apollo 13 EECOM station in detail from figures B7-7 through B7-9 and related documentation.
+2. Locate exact display-format information for GNC, TELMU, CONTROL, GUIDO, FIDO/RETRO, and INCO.
+3. Search archival references for SimSup case sheets/malfunction lists.
+4. Reconstruct the Apollo 11 program-alarm simulation case as far as documentation allows.
+5. Continue mapping station responsibilities to telemetry parameters and control actions.
