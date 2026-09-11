@@ -100,6 +100,8 @@ A faithful FIDO station cannot simply show a perfect authoritative position vect
 - exact tracking-data-selection workflow between FIDO and RTCC support
 - precise FIDO/RETRO division by mission phase in each target scenario
 
+Detailed FIDO specification: [`docs/stations/APOLLO13_FIDO.md`](stations/APOLLO13_FIDO.md)
+
 ---
 
 ## RETRO — Retrofire Officer
@@ -121,6 +123,8 @@ Likely information families include:
 ### Unresolved
 
 Detailed Apollo 13 RETRO display inventory and console controls remain to be reconstructed from Appendix B and related trajectory documentation.
+
+Detailed RETRO specification: [`docs/stations/APOLLO13_RETRO.md`](stations/APOLLO13_RETRO.md)
 
 ---
 
