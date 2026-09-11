@@ -238,6 +238,8 @@ EECOM's postflight report emphasizes:
 
 EECOM is currently the best-documented candidate for the **first historically reconstructed phone station** because both console anatomy and representative display contents survive.
 
+Detailed station specification: [`docs/stations/APOLLO13_EECOM.md`](stations/APOLLO13_EECOM.md)
+
 ---
 
 ## CSM GNC — Guidance, Navigation & Control Systems Engineer
