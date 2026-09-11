@@ -346,3 +346,19 @@ The following source classes are specifically needed and should be added as they
 - **MSK/display number:** 683 / 0683
 - **Status:** REVIEWED as cross-mission comparison; **NOT YET CONFIRMED FOR APOLLO 13**
 - **Use:** Reference template for researching Apollo 13 GNC displays.
+
+
+### Apollo 13 LM CONTROL Post-Mission Report
+
+- **Source:** Appendix H, Apollo 13 Mission Operations Report
+- **Date:** 1970-04-24 / included in 1970-04-28 report
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Mission-specific LM propulsion/control workload, DPS supercritical-helium threshold logic, RCS/DAP/GDA behavior, burn shutdown criteria, PTC and contingency maneuver configuration.
+- **Important evidence:** Explicit controller decision thresholds and a PC+2 criterion designated **ground callout only**.
+
+### Apollo 13 TELMU Post-Mission Report
+
+- **Source:** Appendix G, Apollo 13 Mission Operations Report
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Mission-specific LM electrical/environmental/consumables chronology, power-down strategy, water/O2/LiOH usage, battery behavior, thermal tradeoffs, and projected LM lifetime.
+- **Important evidence:** TELMU continuously compared resource consumption against the return timeline rather than relying on a single aggregate "lifetime" value.
