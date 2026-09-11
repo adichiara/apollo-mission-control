@@ -19,6 +19,7 @@ See:
 - [Display-system baseline](docs/DISPLAY_SYSTEM_BASELINE.md)
 - [Controller information workflow](docs/CONTROLLER_INFORMATION_WORKFLOW.md)
 - [Physical document workflow](docs/PHYSICAL_DOCUMENT_WORKFLOW.md)
+- [Voice communications baseline](docs/VOICE_COMMUNICATIONS_BASELINE.md)
 - [Decisions](docs/DECISIONS.md)
 - [Open questions](docs/OPEN_QUESTIONS.md)
 - [Progress log](docs/PROGRESS.md)
