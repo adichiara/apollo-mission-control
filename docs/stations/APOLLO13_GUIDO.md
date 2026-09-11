@@ -507,3 +507,25 @@ This means GUIDO can receive DEDA interaction state through telemetry even when 
 Exact Apollo 13 labels, formatting masks, and FP7 telemetry IDs remain to be transcribed/certified.
 
 See `resources/research/043_apollo13_msk1123_deda_telemetry.md`.
+
+
+## 2026-09-11 consolidated MSK 1123 AGS matrix
+
+The AGS portion of MSK 1123 is now consolidated into a field-by-field provenance matrix.
+
+Strong source paths now exist for:
+- AGS time — AEA time telemetry family;
+- RGA rates — direct PCM rate-gyro measurements;
+- AGS attitude — AEA direction cosines plus ground conversion;
+- AGS attitude error — AEA analog error outputs measured through PCM;
+- DEDA state — RMF/DD/CMF/ADST digital telemetry.
+
+Strong but not yet certified field candidates include:
+- ASA rate — DAX/DAY/DAZ delta-angle telemetry;
+- AGS velocity — VX/VY/VZ;
+- AGS delta velocity — DVX/DVY/DVZ versus the separately documented VD1/VDX layers;
+- AGS ullage — X-axis sensed-velocity/thrust-acceleration chain.
+
+This substantially narrows the remaining GUIDO display work to exact FP7 telemetry membership, RTCC transformations, LM-7 calibration, and Apollo 13 masks/refresh behavior.
+
+See `resources/research/044_apollo13_msk1123_ags_field_matrix.md`.
