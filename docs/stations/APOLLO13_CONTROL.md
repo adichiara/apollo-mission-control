@@ -569,3 +569,17 @@ The ground telemetry stream includes readout mode, current/most-recent DEDA data
 Exact Apollo 13 field formatting and operational use on the CONTROL console remain under research.
 
 See `resources/research/043_apollo13_msk1123_deda_telemetry.md`.
+
+
+## 2026-09-11 consolidated MSK 1123 AGS matrix
+
+The CONTROL-relevant AGS portion of MSK 1123 is now separated into distinct digital, analog/PCM, and ground-derived paths.
+
+Of particular importance:
+- RGA rates are direct hardware/PCM measurements;
+- AGS attitude errors are AEA analog outputs that can be measured independently of the digital AEA telemetry list;
+- AGS body attitude is a ground-derived product from telemetered direction cosines;
+- DEDA state is separately telemetered;
+- multiple different AEA delta-V representations exist and must not be collapsed.
+
+See `resources/research/044_apollo13_msk1123_ags_field_matrix.md`.
