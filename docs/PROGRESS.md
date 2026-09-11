@@ -263,3 +263,37 @@ This means the missing exact Apollo 13 MCC Operational Configuration is not hypo
 Enough evidence exists for a research prototype of the two principal EECOM displays and basic console behavior.
 
 Not enough evidence yet exists to claim a complete Apollo 13 EECOM console recreation.
+
+
+## 2026-09-11 — Phase 1: Detailed CSM GNC reconstruction
+
+### Completed
+
+- Added a detailed Apollo 13 CSM GNC station specification.
+- Reconstructed mission-specific GNC reasoning around:
+  - SM RCS quad/manifold pressures
+  - helium isolation state
+  - electrical-bus dependencies
+  - DAP quad selection
+  - commanded jets versus actual control authority
+  - unavailable valve/talkback indications
+  - CM RCS injector-temperature/preheat requirements
+- Recorded the critical information-quality rule that **loss of indication power does not reveal the physical valve state**.
+- Clarified the GNC/GUIDO boundary:
+  - GNC = physical propulsion/control hardware and achieved vehicle control
+  - GUIDO = onboard computer/guidance/navigation state and updates
+- Identified **CSM GNC PRIMARY TAB 0683** in Apollo 11/12 AC/Delco material as a strong continuity candidate.
+- Confirmed that an Apollo 13-specific AC Electronics Guidance and Navigation Summary exists in the Smithsonian archive and contains an **ASPO 45 CRT Displays** section.
+- Did **not** assume that display 0683 carried into Apollo 13 unchanged.
+
+### New documents
+
+- `docs/stations/APOLLO13_GNC.md`
+- `resources/research/013_apollo13_gnc_reconstruction.md`
+
+### Highest-value missing evidence
+
+1. Digitally inspect the Smithsonian Apollo 13 AC Electronics manual.
+2. Locate H-2 PHO-TR155 Revision C.
+3. Confirm Apollo 13 GNC display numbers/layouts.
+4. Locate exact GNC console panel configuration.
