@@ -546,3 +546,15 @@ NASA/contractor bibliography records identify:
 - **Verified section:** PDF 179–190 / ASPO-1–12, including four display layouts and selected LM field definitions.
 - **Research record:** [029 — direct inspection](research/029_apollo13_aspo45_direct_inspection.md), including SHA-256 and page map.
 - **Limits:** complete transcription, operational revision verification, and comparison of MSK 683/966/1123 remain pending; MSK 1137 is compared in Research Note 030.
+
+
+### Apollo 13 Lunar Surface Branch PIPA-bias planning note
+
+- **Title:** Note of Interest — Pipa Bias Measurements on the Lunar Surface
+- **Author:** John L. Nelson, GNC Section, LSB
+- **Date:** 1970-02-27
+- **Compilation:** Lunar Surface Branch Notes of Interest
+- **Public scan:** https://www.ibiblio.org/apollo/Documents/lsb_notes_of_interest_june_1970.pdf
+- **Status:** INDEXED-TEXT REVIEWED; direct visual page verification still pending because the large scan was not renderable in the current web reader
+- **Use:** Apollo-13-specific planned method for lunar-surface PIPA-bias computation; establishes MPAD lunar gravity, gimbal angles, GUIDO local-vertical attitude, and PIPA measurements as inputs; states launch-preparation use for FIDO PGNS delta-V error estimation.
+- **Caution:** Apollo 13 did not land, so the planned lunar-surface procedure was not executed on the mission. Do not generalize this one method to every MSK 1137 BIAS/OCTAL use without further sources.
