@@ -185,3 +185,56 @@ The following source classes are specifically needed and should be added as they
 - **Status:** IDENTIFIED — PUBLIC DIGITAL COPY NOT YET LOCATED
 - **Use:** Apollo-11-specific MCC Display/Control System usage and effectiveness; high-priority source for authentic display-request behavior.
 - **Discovery source:** HAER TX-109-C, p. 17 footnote 37.
+
+
+### Project Apollo 500 RTCC Operations Support Plan for Mission G
+
+- **Title:** Project Apollo 500 RTCC Operations Support Plan for Mission G
+- **Document:** MSC Internal Note No. 69-FS-2
+- **Organization:** Flight Support Division, Flight Software Branch, Manned Spacecraft Center
+- **Date:** April 1969
+- **Mission:** Mission G / Apollo 11
+- **URL:** https://www.ibiblio.org/apollo/Documents/RTCC%20Operations%20Support%20Plan%20for%20Mission%20G.pdf
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Apollo-11-specific RTCC operating procedures, display requests, PBI/MED interfaces, telemetry-reference display numbers, documentation references, hard-copy verification.
+- **High value:** Direct bridge between Apollo 11 flight-control operations and RTCC/display behavior.
+
+### PHO-TR170A / PHO-TR170B
+
+- **Titles:** Exact full titles not yet confirmed
+- **Identified through:** Mission G RTCC Operations Support Plan
+- **Status:** IDENTIFIED — NOT YET LOCATED
+- **Use indicated by source:**
+  - PHO-TR170A — basic program requirements
+  - PHO-TR170B — detailed television display formats
+- **Priority:** Very high for display reconstruction.
+
+### Universal CSM Console Handbook — S/C 106 and subsequent vehicles
+
+- **Organization:** Flight Control Division, Manned Spacecraft Center
+- **Date:** May 1969
+- **Status:** PARTIALLY IDENTIFIED; complete original not yet located in this pass
+- **Known surviving section:** D5, Real-Time Commanding, Revision A dated 1969-04-17
+- **Discovery/transcription:** https://www.earlyspaceflight.nl/Mission_Management/JSC/MCC/Command_Subsystem/RealTimeCommanding.html
+- **Use:** Apollo-11-era controller-console operating procedure evidence.
+- **Priority:** High.
+
+### NASA-SP-287 — What Made Apollo a Success?
+
+- **Title:** What Made Apollo a Success?
+- **NASA document ID:** 19720005243
+- **Report:** NASA-SP-287
+- **Publication date:** 1971
+- **Source:** NASA Technical Reports Server
+- **URL:** https://ntrs.nasa.gov/citations/19720005243
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Flight-control documentation hierarchy, console handbooks, FCOH, controller training and simulation periods.
+
+### Apollo 13 Review Board Appendix B — EECOM console example
+
+- **NASA document ID:** 19700078726
+- **Source:** NASA Technical Reports Server
+- **URL:** https://ntrs.nasa.gov/citations/19700078726
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Concrete EECOM console anatomy; identifies two precision TV monitors, DRK, MSK, event/status controls, voice positions, and frequently used one-second-update displays.
+- **Caution:** Apollo 13 example; do not impose on Apollo 11 without confirmation.
