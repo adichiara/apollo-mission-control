@@ -435,3 +435,42 @@ The simulator should preserve the possibility that the correct information exist
 ### Architecture implication
 
 The eventual SimSup/instructor interface may expose authoritative simulation state and special instructor aids, but those data must remain isolated from controller players unless a historical controller product carries them into Mission Control.
+
+
+## 2026-09-11 — Apollo 13 GUIDO / LM data-link reconstruction
+
+### Completed
+
+- Located and reviewed the Apollo-13-specific **R-567 Section 2, Revision 8** for flown LUMINARY 1C / LM131 Rev. 1.
+- Documented the actual ground-to-LGC update workflow, including P27 and Verbs 70–73.
+- Documented the six program-dependent LM downlink families:
+  - Orbital Maneuvers
+  - Coast and Align
+  - Rendezvous and Prethrust
+  - Descent and Ascent
+  - Lunar Surface Align
+  - AGS Initialization and Update
+- Recorded mission-specific descent/ascent activation in P12, P63, P64, P66, P68, P70 and P71.
+- Recorded actual Apollo 13 downlink data families including state vectors, body rates, CDU state, DAP flags, failure registers, radar data and guidance/control channels.
+- Documented downlink **snapshot/time-coherence behavior**, establishing that telemetry packaging has its own timing semantics.
+- Added the first detailed Apollo 13 GUIDO station specification.
+- Explicitly preserved the distinction between raw LGC downlists and MCC CRT formats.
+
+### Source conflict identified
+
+A passage in Apollo 13 Review Board Appendix B appears to transpose TELMU and CONTROL responsibility descriptions. The Apollo 13 Mission Operations Report, acronym list, controller appendices and actual loop behavior consistently show:
+
+- TELMU = LM electrical/environmental/EMU/consumables
+- CONTROL = LM guidance/control/propulsion
+
+The contradictory Review Board passage is now documented rather than silently ignored.
+
+### LM simulator catalog progress
+
+Identified exact catalog entries for LMA-790-2-LMS, including **Volume II Section 7 — Simulator Output Tables** (*67-16127). Locating the scan is now a targeted source-retrieval task.
+
+### New files
+
+- `docs/stations/APOLLO13_GUIDO.md`
+- `resources/research/016_apollo13_lm_data_links.md`
+- `resources/research/017_telmu_control_source_conflict.md`
