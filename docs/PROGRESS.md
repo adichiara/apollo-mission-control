@@ -297,3 +297,46 @@ Not enough evidence yet exists to claim a complete Apollo 13 EECOM console recre
 2. Locate H-2 PHO-TR155 Revision C.
 3. Confirm Apollo 13 GNC display numbers/layouts.
 4. Locate exact GNC console panel configuration.
+
+
+## 2026-09-11 — Phase 1: Detailed LM CONTROL and TELMU reconstruction
+
+### LM CONTROL
+
+- Added a detailed Apollo 13 CONTROL station specification.
+- Reconstructed the pre-accident DPS supercritical-helium monitoring decision tree:
+  - 660–770 psia: acceptable
+  - 770–800 psia: recheck
+  - >800 psia: periodic telemetry/trend extrapolation
+  - predicted ≥1800 psia at PDI: proposed DPS burn/vent procedure
+- Documented CONTROL's role in LM activation, DPS/RCS configuration, GDA trim, DAP/deadband changes, RCS conservation, PTC establishment, and contingency maneuver planning.
+- Recorded the PC+2 shutdown rules, including a fuel/oxidizer inlet differential criterion explicitly described as a **ground callout only**.
+- Preserved the distinction between CONTROL's physical propulsion/control role and GUIDO's guidance/computer role.
+
+### TELMU
+
+- Added a detailed Apollo 13 TELMU station specification.
+- Reconstructed the LM lifetime problem around:
+  - electrical current / amp-hours
+  - cooling water
+  - oxygen
+  - LiOH / CO2 removal
+  - thermal state
+- Documented progressive power-down from roughly 45–50 A to about 12 A and water-use reduction to about 2.5–2.8 lb/hr.
+- Recorded the early consumable targets used to support the selected return trajectory.
+- Recorded configuration-dependent cases where simple fixed-limit logic would be wrong:
+  - invalid nominal O2 redline in the actual configuration
+  - probable battery-warning sensor failure despite nominal voltage/current
+  - changing CO2 capability after adaptation of CSM LiOH cartridges
+- Documented TELMU's continuous use of projected consumable lifetime relative to mission milestones.
+
+### New documents
+
+- `docs/stations/APOLLO13_CONTROL.md`
+- `docs/stations/APOLLO13_TELMU.md`
+- `resources/research/014_apollo13_control_reconstruction.md`
+- `resources/research/015_apollo13_telmu_reconstruction.md`
+
+### Pattern now established across four stations
+
+EECOM, GNC, CONTROL, and TELMU all show the same important simulator principle: the controller should reason from **imperfect measurements, configuration, trends, dependencies, and rules**, not receive a software diagnosis of the underlying failure.
