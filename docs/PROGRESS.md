@@ -878,3 +878,21 @@ The simulator must preserve those origins rather than populate the CRT directly 
 2. Compare it with the earlier FP6 list to identify software-version changes.
 3. Map AEA telemetry words to MSK 1123 fields and ground coordinate transformations.
 4. Use the Apollo 13 RTCC body-angle error as a future ground-processing validation case.
+
+
+## 2026-09-11 — Apollo 13 G&N Dictionary indexed verification
+
+- NASA's indexed text for the mission-specific Apollo 13 G&N Dictionary exposed key AGS Flight Program 7 entries directly.
+- Corrected the Apollo 13 profile wording for **400 +30000** to **IMU Align**; the earlier “AGS/PGNS alignment” label came from later training-card continuity evidence.
+- Directly verified from indexed mission-specific source text:
+  - 400 selector modes;
+  - 404/405/406 reset values and 470/471/472 measured-delta-V readouts;
+  - 450–452 local-vertical delta-V;
+  - 500–502 ΔVg;
+  - 377 AGS computer time;
+  - 540–542 accelerometer bias coefficients;
+  - 544–546 gyro bias coefficients;
+  - 547 lunar-align azimuth correction;
+  - 614/616 ullage counters.
+- Preserved the source-quality boundary: the large PDF still could not be rendered, so this is indexed-text verification rather than page-image verification.
+- The AGS research target is now narrower: recover the **Flight Program 7 AEA telemetry word list** and connect it to MSK 1123.
