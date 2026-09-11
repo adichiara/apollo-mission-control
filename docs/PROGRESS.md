@@ -147,3 +147,22 @@ A generic "retro terminal" is no longer an acceptable historical stand-in for th
 - reconstruct voice-loop topology
 - identify which dynamic products were hard copy versus CRT
 - locate console-handbook material for the Apollo 11 CSM and LM systems positions
+
+
+## 2026-09-11 — Phase 1: Voice communications, pass 1
+
+### Completed
+
+- Confirmed the Apollo MCC Voice Communications Subsystem as a dedicated technical subsystem in PHO-FAM001.
+- Documented internal intercom, air-to-ground control, recording/playback, trainer circuits, and communications switching as part of the controller environment.
+- Added a high-level voice-loop architecture document.
+- Recorded the in-person communication problem explicitly: co-located players can bypass historically meaningful information channels simply by talking across the table.
+
+### New documents
+
+- `docs/VOICE_COMMUNICATIONS_BASELINE.md`
+- `resources/research/009_voice_communications_system.md`
+
+### Not decided
+
+No headset/loop implementation has been selected. The first scenario's actual loop requirements will be researched before choosing how strictly to enforce voice topology.
