@@ -22,6 +22,7 @@ See:
 - [Voice communications baseline](docs/VOICE_COMMUNICATIONS_BASELINE.md)
 - [Apollo 13 station baseline](docs/APOLLO13_STATION_BASELINE.md)
 - [Apollo 13 EECOM station specification](docs/stations/APOLLO13_EECOM.md)
+- [Apollo 13 GNC station specification](docs/stations/APOLLO13_GNC.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
 - [Decisions](docs/DECISIONS.md)
