@@ -45,7 +45,8 @@ This is a **project software architecture decision informed by the historical in
 
 ## Sources
 
-1. NASA Apollo-era mission documentation surfaced through NTRS:
+1. *Apollo 13 Third Lunar Landing Mission Press Kit*, NASA release 70-50K,
+   April 2, 1970 (NTRS 19760066779):
    https://ntrs.nasa.gov/api/citations/19760066779/downloads/19760066779.pdf
 
 2. MCC Display Formats Manual:
@@ -53,6 +54,5 @@ This is a **project software architecture decision informed by the historical in
 
 ## Unresolved
 
-- Exact document metadata for source 1 must be identified before it becomes an implementation citation.
 - Detailed CCATS/RTCC/display-system boundaries need primary technical documentation.
 - Exact front-room/backroom relationships need mission/era-specific research.

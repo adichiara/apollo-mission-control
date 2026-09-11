@@ -80,9 +80,7 @@ The Apollo 11/12 GNC display appears under the same section title.
 
 ### Research conclusion
 
-Continuity is plausible but **not yet proven**.
-
-Do not promote CSM GNC PRIMARY TAB 0683 into the Apollo 13 implementation until the Apollo 13 manual itself is inspected or another Apollo 13 source confirms it.
+Direct inspection has now confirmed MSK 683 in the Apollo 13 ASPO 45 section. This supersedes the original source-access conclusion in this note. Exact field continuity from Apollo 11/12 still requires a field-by-field comparison.
 
 ## Additional primary source
 
@@ -92,15 +90,14 @@ It is valuable for modeling spacecraft GNC behavior but is not itself evidence o
 
 ## Next actions
 
-- obtain/inspect the Smithsonian Apollo 13 Guidance and Navigation Summary digital images
 - locate H-2 PHO-TR155 Revision C
-- identify Apollo 13 GNC display numbers and panel configuration
-- use the earlier 0683 display only as a comparison template until confirmed
+- compare Apollo 13 MSK 683 and 966 fields against the earlier manuals
+- identify the Apollo 13 GNC panel configuration and station access
 
 ## Sources
 
 - Apollo 13 Mission Operations Report, Appendix F
-- NTRS 19710010485
 - NTRS 19730017939
 - Smithsonian NASM.1986.0158, Box 2 Folder 10
 - Apollo 11/12 AC/Delco Guidance and Navigation Summary manuals
+- [Research Note 029 — Apollo 13 ASPO 45 direct inspection](029_apollo13_aspo45_direct_inspection.md)

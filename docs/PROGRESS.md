@@ -680,3 +680,14 @@ The largest common Phase 1 gap is now exact console/display reconstruction, not 
 - Updated current display/station status to reflect the resolved extraction blocker.
 - No live renderer, historical simplification, or scenario selection introduced.
 - Next: full 1123 comparison, then CM 683/966; resolve calculations/downlist mappings before implementation.
+
+
+## 2026-09-11 — Repository-wide evidence verification audit
+
+- Inventoried all 67 pre-audit Markdown files and 54 unique external source URLs.
+- Rechecked material claim families against NASA/NTRS records, contemporaneous mission reports, technical manuals, and directly rendered ASPO 45 pages.
+- Corrected four obsolete NASA file URLs and clarified the exact identity/use of NTRS 19760066779 and 19710010485.
+- Updated superseded ASPO 45 extraction statements while preserving genuine field-level and cross-mission limits.
+- Added `resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md` with the findings and a complete file ledger.
+- Added `scripts/audit_documentation.py` for repeatable link inventory, internal-link validation, duplicate-note detection, and optional HTTP diagnostics.
+- Audit result: no material historical conclusion required reversal; remaining gaps are explicitly qualified.

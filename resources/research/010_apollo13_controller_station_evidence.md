@@ -94,5 +94,5 @@ The project should not define those fields generically and then populate them wi
 ## Sources
 
 - https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf
-- https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/a13-review-report-app-b-c-d-e-19700078726.pdf
+- https://ntrs.nasa.gov/citations/19700078726
 - https://ntrs.nasa.gov/citations/19700024253

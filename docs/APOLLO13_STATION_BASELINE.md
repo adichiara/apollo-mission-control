@@ -470,7 +470,7 @@ This is a research-priority order only. It does not determine player-role priori
   https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf
 
 - *Report of Apollo 13 Review Board, Appendix B*, especially figures B7-7 through B7-9.  
-  https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/a13-review-report-app-b-c-d-e-19700078726.pdf
+  https://ntrs.nasa.gov/citations/19700078726
 
 - *Report of Apollo 13 Review Board, Appendix A*, Mission Control organization.  
   https://ntrs.nasa.gov/citations/19700078804

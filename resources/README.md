@@ -6,6 +6,7 @@ This directory is the provenance layer for the simulation.
 
 - `PRIMARY_SOURCE_CATALOG.md` — master index of identified source documents.
 - `research/` — project research notes derived from sources.
+- `audits/` — dated verification reports and file-by-file evidence ledgers.
 - `primary-sources/` — reserved for local copies of primary documents when the project decides that mirroring is appropriate and legally/permanently practical.
 
 ## Research rule

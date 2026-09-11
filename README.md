@@ -34,6 +34,7 @@ See:
 - [Open questions](docs/OPEN_QUESTIONS.md)
 - [Progress log](docs/PROGRESS.md)
 - [Research resources](resources/README.md)
+- [Evidence verification audit](resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md)
 
 ## Current status
 

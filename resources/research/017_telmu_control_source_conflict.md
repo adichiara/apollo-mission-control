@@ -78,6 +78,6 @@ For implementation facts:
 ## Sources
 
 - Apollo 13 Mission Operations Report:
-  https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/a13-mission-ops-report-19700428.pdf
+  https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf
 - Apollo 13 Review Board Appendix B:
   https://ntrs.nasa.gov/citations/19700078726

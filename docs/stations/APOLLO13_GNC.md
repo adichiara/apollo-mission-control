@@ -395,8 +395,8 @@ Do not assume the GNC player has all retrospective information available live.
 
 ## Primary sources
 
-1. *GNC Apollo 13 Post-Mission Report*, Flight Control Division, Appendix F of Apollo 13 Mission Operations Report.  
-   NASA/NTRS document 19710010485; also contained in the full Mission Operations Report.
+1. *GNC Apollo 13 Post-Mission Report*, Flight Control Division, Appendix F of the *Apollo 13 Mission Operations Report*.
+   https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf
 
 2. *Mission Operations Report — Apollo 13*, 28 April 1970.
 
@@ -404,7 +404,7 @@ Do not assume the GNC player has all retrospective information available live.
 
 4. AC/Delco Electronics Apollo 11 and Apollo 12 Guidance and Navigation Summary material documenting CSM GNC PRIMARY TAB 0683.
 
-## Apollo 13 CRT source now located
+## Apollo 13 CRT source and direct inspection
 
 A high-resolution scan of **AC Electronics, Apollo 13 Guidance & Navigation Summary** is now publicly linked by the Apollo 13 Flight Journal.
 
@@ -412,7 +412,7 @@ The same title is independently cataloged by the Smithsonian National Air and Sp
 
 This resolves the question of whether a mission-specific Apollo 13 CRT source survives.
 
-It does **not yet** resolve the content question: the 244 MB scan is too large for the current web-analysis path to inspect page-by-page, so the project still cannot claim that Apollo 13 retained CSM GNC PRIMARY TAB 0683 unchanged from Apollo 11/12.
+The scan has now been downloaded and inspected directly. Apollo 13 uses MSK 683, 966, 1123, and 1137 in the ASPO 45 section. Shared identifiers do not establish unchanged field definitions.
 
 ### Primary scan index
 
@@ -428,10 +428,10 @@ It does **not yet** resolve the content question: the 244 MB scan is too large f
 
 - Apollo 13 mission-specific CRT manual exists: **DOCUMENTED**
 - Apollo 13 manual contains ASPO 45 CRT display material: **DOCUMENTED**
-- CSM GNC PRIMARY TAB 0683 retained unchanged: **UNRESOLVED**
-- Apollo 13 LM display numbers 1123 / 1137 retained unchanged: **UNRESOLVED**
+- Apollo 13 MSK 683 / 966 / 1123 / 1137 identifiers and layouts: **DOCUMENTED**
+- Unchanged field continuity from Apollo 11/12: **NOT ESTABLISHED**
 
-The next extraction task is specifically the ASPO 45 CRT section of the Apollo 13 scan.
+The remaining extraction task is full transcription and source mapping for each field, particularly MSK 683, 966, and 1123.
 
 
 ## 2026-09-11 evidence update — mission-specific CRT pages inspected

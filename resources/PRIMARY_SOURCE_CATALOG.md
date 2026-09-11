@@ -33,13 +33,15 @@ This is not yet exhaustive. It prioritizes sources needed to reconstruct Mission
 - **Use:** Includes official Apollo 11 flight-control manning list and flight-control historical material.
 - **Caution:** Retrospective source; use contemporary mission documents where available for operational specifics.
 
-### Apollo Mission Control organization overview
+### Apollo 13 Third Lunar Landing Mission Press Kit
 
-- **Source identified:** NASA Apollo-era mission documentation describing MCC as receiving tracking/telemetry from the Manned Space Flight Network, processing it through the Real-Time Computer Complex, and displaying it to controllers in the MOCR and adjacent staff-support rooms.
+- **Title:** Apollo 13 Third Lunar Landing Mission Press Kit
+- **NASA release:** 70-50K
+- **Date:** 1970-04-02
+- **NTRS document ID:** 19760066779
 - **NTRS PDF surfaced in research:** https://ntrs.nasa.gov/api/citations/19760066779/downloads/19760066779.pdf
-- **Status:** IDENTIFIED
+- **Status:** REVIEWED-PARTIAL
 - **Use:** High-level organization; states three basic MOCR operations groups: mission command/control, systems operations, and flight dynamics.
-- **Action:** Identify exact document title/report metadata before citing it as an implementation source.
 
 ---
 
@@ -246,7 +248,7 @@ The following source classes are specifically needed and should be added as they
 - **Organization:** Manned Spacecraft Center, Flight Support Division
 - **Date:** March 1970
 - **Source:** NASA / Apollo Flight Journal
-- **URL:** https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/as-508-mcc-msfn-config.pdf
+- **URL:** https://ntrs.nasa.gov/citations/19700024253
 - **Status:** IDENTIFIED / REVIEWED-PARTIAL
 - **Use:** Detailed Apollo 13-era description of MCC/MSFN interfaces, communications, telemetry, command, tracking, and data flow.
 - **Project role:** Primary source for the current default technical baseline/superset; earlier-mission scenarios still require mission-specific overrides.
@@ -256,7 +258,7 @@ The following source classes are specifically needed and should be added as they
 - **Title:** Mission Operations Report — Apollo 13
 - **Date:** 1970-04-28
 - **Source:** NASA
-- **URL:** https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf
+- **URL:** https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf
 - **Status:** REVIEWED-PARTIAL
 - **Use:** Controller-by-controller post-mission operational reports; appendices include BSE, RETRO, FIDO, GUIDO, EECOM, GNC, TELMU, CONTROL, INCO, PROCEDURES, FAO, SURGEON, recovery, and network operations.
 - **Important evidence:** Apollo 13 documentation explicitly uses **TELMU**, demonstrating a mission-era nomenclature difference from Apollo 11 TELCOM.
@@ -276,7 +278,7 @@ The following source classes are specifically needed and should be added as they
 
 - **Source:** Report of Apollo 13 Review Board, Appendix B, Part B7
 - **Key figures:** B7-7, B7-8, B7-9
-- **URL:** https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/a13-review-report-app-b-c-d-e-19700078726.pdf
+- **URL:** https://ntrs.nasa.gov/citations/19700078726
 - **Status:** REVIEWED-PARTIAL
 - **Use:** Apollo 13 EECOM console component layout, event/limit indications, two frequently used one-second-update display formats, and actual parameter labels/example values.
 - **Importance:** Strongest controller-specific console/display reconstruction source located so far.
@@ -308,14 +310,14 @@ The following source classes are specifically needed and should be added as they
 - **Use if located:** Exact Apollo 13 console/panel configuration, likely resolving current uncertainty around EECOM DRK, limit-sense panel layout, and other controller-station hardware.
 
 
-### GNC Apollo 13 Post-Mission Report
+### Apollo 13 investigation team — Panel 3 final report
 
-- **Title:** GNC Apollo 13 Post-Mission Report
+- **NTRS title:** MSC Apollo 13 investigation team. Panel 3 - Flight operations and network: Final report
 - **NASA document ID:** 19710010485
-- **Source:** NASA Technical Reports Server / Appendix F of the Apollo 13 Mission Operations Report
+- **Source:** NASA Technical Reports Server
 - **URL:** https://ntrs.nasa.gov/citations/19710010485
 - **Status:** REVIEWED-PARTIAL
-- **Use:** Mission-specific CSM GNC real-time troubleshooting and configuration evidence: SM/CM RCS, DAP/quad selection, electrical dependencies, ambiguous indications, entry RCS thermal preparation.
+- **Use:** Container record for the flight-operations investigation material. Mission-specific GNC evidence should be cited to Appendix F of the Apollo 13 Mission Operations Report where possible.
 
 ### Apollo 13 Guidance, Navigation, and Control Systems Performance Analysis
 
@@ -396,10 +398,10 @@ The following source classes are specifically needed and should be added as they
 - **Public high-resolution scan:** Apollo 13 Flight Journal
 - **Document index:** https://apollojournals.org/afj/ap13fj/a13-documents.html
 - **Archive confirmation:** Smithsonian NASM, Apollo Flight Guidance Computer Software Collection [Hamilton], Box 2, Folder 10
-- **Status:** SOURCE LOCATED — CRT SECTION EXTRACTION PENDING
+- **Status:** REVIEWED-PARTIAL — ASPO 45 section directly inspected
 - **Known contents:** CM Software, LM Software, **ASPO 45 CRT Displays**, Launch and Burn Schedule, Burn Perturbations, Hardware.
 - **Use:** Highest-priority mission-specific source for Apollo 13 GNC/GUIDO/LM guidance CRT display reconstruction.
-- **Important limitation:** The 244 MB scan is not currently inspectable through the project web-analysis path; earlier Apollo 11/12 display numbers must not be assumed unchanged.
+- **Important limitation:** identifiers and layout pages are confirmed; complete field transcription and operational revision verification remain incomplete. Earlier Apollo 11/12 field definitions must not be assumed unchanged.
 
 ### Lunar Module Mission Simulator Instructor's Handbook — Volume I
 
@@ -543,4 +545,4 @@ NASA/contractor bibliography records identify:
 - **Direct scan:** https://apollojournals.org/afj/ap13fj/pdf-hr/a13-ac-elect-g-n-summary.pdf
 - **Verified section:** PDF 179–190 / ASPO-1–12, including four display layouts and selected LM field definitions.
 - **Research record:** [029 — direct inspection](research/029_apollo13_aspo45_direct_inspection.md), including SHA-256 and page map.
-- **Limits:** complete transcription, operational revision verification, and Apollo 11 comparison still pending.
+- **Limits:** complete transcription, operational revision verification, and comparison of MSK 683/966/1123 remain pending; MSK 1137 is compared in Research Note 030.
