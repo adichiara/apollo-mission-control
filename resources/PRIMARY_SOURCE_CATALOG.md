@@ -386,3 +386,41 @@ The following source classes are specifically needed and should be added as they
 - **Documented characteristics:** 2.4-kbps format; 29 selectable CSM subformats and 21 LM subformats; a subformat could include four analog values at 50 samples/s, four analog values at 10 samples/s, seven discretes at 10 samples/s, plus CTE or MET.
 - **Operational evidence:** Apollo 13 EECOM reported extensive use of Format 30 playback for the O2 tank 2 anomaly.
 - **NTRS:** https://ntrs.nasa.gov/citations/19700024253
+
+
+### AC Electronics — Apollo 13 Guidance & Navigation Summary
+
+- **Mission:** Apollo 13
+- **Organization:** AC Electronics / General Motors
+- **Date:** circa 1970
+- **Public high-resolution scan:** Apollo 13 Flight Journal
+- **Document index:** https://apollojournals.org/afj/ap13fj/a13-documents.html
+- **Archive confirmation:** Smithsonian NASM, Apollo Flight Guidance Computer Software Collection [Hamilton], Box 2, Folder 10
+- **Status:** SOURCE LOCATED — CRT SECTION EXTRACTION PENDING
+- **Known contents:** CM Software, LM Software, **ASPO 45 CRT Displays**, Launch and Burn Schedule, Burn Perturbations, Hardware.
+- **Use:** Highest-priority mission-specific source for Apollo 13 GNC/GUIDO/LM guidance CRT display reconstruction.
+- **Important limitation:** The 244 MB scan is not currently inspectable through the project web-analysis path; earlier Apollo 11/12 display numbers must not be assumed unchanged.
+
+### Lunar Module Mission Simulator Instructor's Handbook — Volume I
+
+- **Title:** Lunar Module Mission Simulator Instructor's Handbook, Volume I — Simulator Description
+- **Source location:** Virtual AGC document collection
+- **Status:** IDENTIFIED
+- **Use:** Simulator switches/displays and subsystem simulation behavior; potentially a primary source for the underlying LM simulation model and instructor controls.
+- **Discovery source:** https://www.ibiblio.org/apollo/changes.html
+
+### Proposal for LEM Mission Simulator — Volume II Technical Addendum
+
+- **Title:** Proposal for LEM Mission Simulator, Volume II, Technical Addendum: Glossary of Symbols
+- **Organization:** Link Group–Systems Division / General Precision
+- **Public source:** https://www.ibiblio.org/apollo/Documents/proposal_for_lem_mission_simulator_vol2.pdf
+- **Status:** IDENTIFIED
+- **Use:** Simulator mathematical-model/flowchart source; reported to contain detailed flowcharts describing LMS simulation equations.
+- **Caution:** Proposal/design documentation must be distinguished from as-flown spacecraft hardware behavior.
+
+### Lunar Module Simulator User's Manual / Console Directory
+
+- **Source location:** Virtual AGC document library
+- **Status:** IDENTIFIED
+- **Use:** Simulator operation and available telemetry/console outputs. The collection describes the Console Directory as listing simulator telemetry measurements.
+- **Priority:** High for mapping LM simulated state to telemetry and for validating TELMU/CONTROL information families.
