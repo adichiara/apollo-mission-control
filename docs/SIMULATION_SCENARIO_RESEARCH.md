@@ -170,3 +170,22 @@ Both may eventually be valuable, but they have different historical provenance.
 
 4. Apollo 11 Lunar Surface Journal program-alarm materials.  
    https://history.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11.1201-fm.html
+
+
+## 9. Apollo 13 simulator discrepancy reports
+
+A surviving set of contemporaneous **Simulation Discrepancy Reports** references Apollo 13's **LUM 131 Rev. 1** guidance-software configuration.
+
+One clearly legible case tested the effects of a **hardware restart** on the closed-loop primary guidance system and documented effects on:
+
+- navigation-update frequency;
+- P32 input/computation state;
+- temporary control reversal in a rate-command mode;
+- additional navigation/display behavior still being investigated.
+
+These reports are not the same thing as integrated SimSup mission exercises. They are engineering/simulator test evidence.
+
+They nevertheless provide valuable constraints on how the simulator should represent guidance-computer restarts and configuration problems: as dependent state transitions rather than a single canned failure flag.
+
+Source:
+https://www.ibiblio.org/apollo/Documents/apollo_13_simulator_discrepencies.pdf
