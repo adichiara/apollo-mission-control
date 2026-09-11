@@ -280,3 +280,29 @@ The following source classes are specifically needed and should be added as they
 - **Status:** REVIEWED-PARTIAL
 - **Use:** Apollo 13 EECOM console component layout, event/limit indications, two frequently used one-second-update display formats, and actual parameter labels/example values.
 - **Importance:** Strongest controller-specific console/display reconstruction source located so far.
+
+
+### PHO-TR474 — Mission Control Center Progress Report
+
+- **Report:** PHO-TR474
+- **Organization:** Philco Houston Operations / Philco-Ford Corporation
+- **Date:** 1970-04-10
+- **Contract:** NAS 9-1261
+- **NASA document ID:** 19700016172
+- **Source:** NASA Technical Reports Server
+- **URL:** https://ntrs.nasa.gov/citations/19700016172
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Provenance for Apollo 13/H-2 operational-configuration documentation.
+- **Important finding:** The report states that Mission H-2 PHO-TR155 outputs were issued as Revision A on 1970-01-23, Revision B on 1970-02-13, and **Revision C on 1970-03-06**.
+- **Implication:** The exact Apollo 13-era PHO-TR155 configuration document demonstrably existed. A copy has not yet been located in the current public web search.
+
+### PHO-TR155 — Mission H-2 / Apollo 13 Revision C
+
+- **Title family:** MCC Operational Configuration
+- **Mission:** H-2 / Apollo 13
+- **Revision:** C
+- **Issue date:** 1970-03-06
+- **Status:** EXISTENCE CONFIRMED — COPY NOT YET LOCATED
+- **Evidence:** PHO-TR474, 1970-04-10.
+- **Priority:** Very high.
+- **Use if located:** Exact Apollo 13 console/panel configuration, likely resolving current uncertainty around EECOM DRK, limit-sense panel layout, and other controller-station hardware.
