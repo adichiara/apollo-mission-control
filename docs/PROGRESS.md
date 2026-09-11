@@ -76,3 +76,33 @@ The documented MCC organization reinforces the existing separation between physi
 3. Begin mapping controller positions to actual displays, parameters, and support-room inputs.
 4. Research voice-loop topology using primary Apollo documentation/audio.
 5. Continue searching for integrated-simulation / SimSup scenario documentation.
+
+
+## 2026-09-11 — Phase 1: Console/display architecture, pass 1
+
+### Completed
+
+- Documented the high-level MCC console display path from RTCC-generated information through the Display and Control System to controller CRTs.
+- Confirmed that MCC operational displays combined static/background information with dynamic real-time information.
+- Documented that controller displays were requested in preset formats rather than functioning as fixed dashboards.
+- Identified Apollo-11-specific Philco-Ford report **PHO-TN401**, *NASA MCC Display/Control System Usage and Effectiveness, Apollo 11*.
+- Recorded its archival location; a public digital copy was not found in this search pass.
+- Documented the historical distinction between controller CRT displays, group displays, and hard-copy/pneumatic-tube products.
+- Recorded that exact MSK/DRK hardware by Apollo 11 station remains unresolved.
+
+### New documents
+
+- `docs/DISPLAY_SYSTEM_BASELINE.md`
+- `resources/research/006_console_display_architecture.md`
+
+### Important implementation constraint
+
+A generic "retro terminal" is no longer an acceptable historical stand-in for the final controller display. The documented MCC system constructed selectable operational display formats from static and dynamic elements. Exact station formats must be reconstructed before the player interface is treated as historically faithful.
+
+### Next research
+
+1. Locate Apollo 11-era console layout and display-format inventories by controller.
+2. Locate PHO-FAM001 (1967 MCC Houston Familiarization Manual).
+3. Continue search for PHO-TN401.
+4. Map controller responsibilities to actual displays/parameters.
+5. Begin primary-source voice-loop topology reconstruction.
