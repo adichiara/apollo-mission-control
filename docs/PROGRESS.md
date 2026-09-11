@@ -775,3 +775,13 @@ The simulator must preserve those origins rather than populate the CRT directly 
 2. Certify the thrust-chamber-pressure display routing.
 3. Recover engineering conversions/display precision and CRT update cadence.
 4. Repeat the field-provenance process for MSK 1123.
+
+
+## 2026-09-11 — MSK 1137 identifier correction and handbook verification
+
+- Corrected a research-note transcription error: the PIPA 120-VDC pulse-torque reference is **GG1040V**, not GG0104V.
+- Confirmed GG1040V in both the LM Apollo Operations Handbook and the Apollo telemetry-summary routing table; the latter routes it to MSK 1137.
+- Confirmed handbook identities for GG1110V, GG1201V, GG1331V, and GG2300T.
+- Preserved an evidence-boundary warning: the searchable handbook pages carrying those telemetry identities are from a June 15, 1970 changed revision.
+- Confirmed that the Apollo 13 Flight Journal preserves a **1970-02-01 LM-7 and Subsequent** handbook scan, but the 639-MB file exceeds the current web renderer. Direct verification of the corresponding preflight pages remains pending.
+- No Apollo-13 mission-profile mapping was promoted solely from the later changed handbook revision.
