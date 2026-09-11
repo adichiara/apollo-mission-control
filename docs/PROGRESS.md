@@ -847,3 +847,34 @@ The simulator must preserve those origins rather than populate the CRT directly 
 1. Find AEA/AGS telemetry documentation linking FP7 variables to LM PCM words/channels.
 2. Map MSK 1123 AGS VEL / DEL VEL / ULL / ACT VEL to exact onboard/ground quantities.
 3. Recover the Apollo 13 G&N Dictionary AGS pages through an alternate page-level/transcribed source if possible.
+
+
+## 2026-09-11 — AGS telemetry and RTCC processing pass
+
+### Completed
+
+- Confirmed that the 1 February 1970 **LM-7 and Subsequent Apollo Operations Handbook** contains:
+  - AEA input/output signal tables;
+  - **AEA Telemetry Word List, Table 2.1-7**;
+  - PGNS downlink sequence;
+  - separate DEDA input/output/accessibility tables.
+- Preserved the current extraction boundary: the exact Flight Program 7 telemetry word list has not yet been directly recovered, so earlier Flight Program 6 word assignments are not being reused as Apollo 13 facts.
+- Documented the AEA telemetry architecture:
+  - 50-word softwired telemetry block;
+  - repeated once per second in general AGS documentation;
+  - output word built from identification code + 18-bit AEA computer word.
+- Explicitly separated the DEDA crew interface from the AEA ground-telemetry stream.
+- Documented the Apollo 13 post-MCC-5 anomaly in which **RTCC incorrectly processed AGS body angles** while PTC was actually correct.
+- Updated the simulation architecture so ground transformations can fail independently of spacecraft state and received telemetry.
+- Updated GUIDO, CONTROL, roadmap, and station-status documentation.
+
+### New research note
+
+- `resources/research/037_apollo13_ags_telemetry_ground_processing.md`
+
+### Next work
+
+1. Recover the February 1970 LM-7 Table 2.1-7 exact Flight Program 7 telemetry word list.
+2. Compare it with the earlier FP6 list to identify software-version changes.
+3. Map AEA telemetry words to MSK 1123 fields and ground coordinate transformations.
+4. Use the Apollo 13 RTCC body-angle error as a future ground-processing validation case.
