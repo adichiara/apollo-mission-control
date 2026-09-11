@@ -48,3 +48,15 @@ Questions remain open until research or an explicit project decision resolves th
 
 28. Should primary PDFs be mirrored under `resources/primary-sources/` or should the repository keep stable source links plus hashes/metadata?
 29. What citation convention should code and data files use to identify historical provenance?
+
+
+## EECOM / Apollo 13 configuration
+
+30. Can a surviving copy of **PHO-TR155 Mission H-2 Revision C (issued 1970-03-06)** be located?
+31. What were the exact Apollo 13 EECOM DRK key legends and arrangement?
+32. What were the exact Apollo 13 EECOM limit-sense/event-indicator legends beyond the functions documented by the Review Board?
+33. What did the Status/Status Report and Summary Message Enable keyboards do in Apollo 13 EECOM operations?
+34. What was the analog-meter selection/use at the EECOM console?
+35. What direct ground-command authority, if any, remained at Apollo 13 EECOM?
+36. What were the complete EECOM display-format/channel IDs beyond the two preserved Review Board examples?
+37. What exact user workflow did EECOM use for HSD Format 30 playback requests and review?
