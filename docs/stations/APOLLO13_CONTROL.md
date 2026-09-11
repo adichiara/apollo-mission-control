@@ -558,3 +558,14 @@ The AGS evaluates sensed X-axis acceleration/velocity over successive 2-second c
 Because MSK 1123's AGS ULL field is a velocity-unit measurement, CONTROL must not treat that field as synonymous with “ullage acquired.”
 
 See `resources/research/042_apollo13_ags_ullage_provenance.md`.
+
+
+## 2026-09-11 MSK 1123 DEDA telemetry block
+
+The AGS DEDA portion of MSK 1123 is now tied to explicit AEA telemetry variables rather than treated as a generic crew-display mirror.
+
+The ground telemetry stream includes readout mode, current/most-recent DEDA data, clear mode, and DEDA address. This provides CONTROL/GUIDO with an independently telemetered view of AGS/DEDA interaction state.
+
+Exact Apollo 13 field formatting and operational use on the CONTROL console remain under research.
+
+See `resources/research/043_apollo13_msk1123_deda_telemetry.md`.
