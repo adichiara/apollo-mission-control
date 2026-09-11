@@ -488,3 +488,22 @@ Adjacent AGS program documentation shows AT being computed from the current vers
 MSK 1123's AGS ULL field is in velocity units, so it is **not** simply the MU8 counter or an ullage Boolean.
 
 See `resources/research/042_apollo13_ags_ullage_provenance.md`.
+
+
+## 2026-09-11 MSK 1123 DEDA telemetry block
+
+The AGS/DEDA block on MSK 1123 now has a concrete telemetry source architecture.
+
+Adjacent AGS flight-program documentation explicitly telemeters:
+- RMF — DEDA readout-mode flag;
+- DD — most recent DEDA data word;
+- CMF — DEDA clear-mode flag;
+- ADST — DEDA address associated with the most recent communication.
+
+These are independent ground-telemetry variables, not a screen capture of the astronaut's DEDA. Apollo 13's mission-specific MSK 1123 is confirmed to contain AGS DEDA information.
+
+This means GUIDO can receive DEDA interaction state through telemetry even when the crew's local interface is a separate hardware/display path.
+
+Exact Apollo 13 labels, formatting masks, and FP7 telemetry IDs remain to be transcribed/certified.
+
+See `resources/research/043_apollo13_msk1123_deda_telemetry.md`.
