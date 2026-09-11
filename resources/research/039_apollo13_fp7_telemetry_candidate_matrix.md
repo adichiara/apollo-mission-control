@@ -79,7 +79,7 @@ It is deliberately called a **candidate matrix**, not the Apollo 13 telemetry ta
 
 - Total candidate positions: **50**
 - Adjacent-program symbol agreement: **49/50**
-- Direct/partial Apollo 13 address evidence currently captured here: **24/50**
+- Direct/partial Apollo 13 address evidence currently captured here: **25/50**
 - Clear adjacent-program symbol conflict: **1/50** — address 0371 (`VT` in FP6, `VF` in FP8)
 
 The 49/50 agreement describes **symbols in the compared source listings**, not guaranteed semantic identity. Even a stable symbol can have revised logic, scaling, or use.
