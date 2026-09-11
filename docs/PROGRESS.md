@@ -588,3 +588,39 @@ Current maturity:
 - SURGEON, NETWORK, BOOSTER and several management/support positions: C — role baseline
 
 The largest common Phase 1 gap is now exact console/display reconstruction, not role definition.
+
+
+## 2026-09-11 — Exact-display continuity and Apollo 13 simulator discrepancies
+
+### Display reconstruction
+
+- Added `docs/DISPLAY_RECONSTRUCTION_STATUS.md`.
+- Established a known display-number backbone:
+  - MSK 683 — CM
+  - MSK 966 — CM
+  - MSK 1123 — LM
+  - MSK 1137 — LM
+  - MSK 1475 — Apollo 13 LM Look Angle Display
+  - MSK 1503 — Apollo 13 Next Station Contact Table
+- Transcribed cross-mission field families for LM MSK 1123 and 1137 from AC/Delco guidance material.
+- Confirmed that later NASA telemetry tables still assign LM guidance/radar/propulsion parameters to 1123/1137, supporting functional continuity.
+- Kept Apollo 13 status unresolved until the mission-specific ASPO 45 pages are extracted.
+- Updated GUIDO and CONTROL specs with this evidence without promoting it to Apollo 13 fact.
+
+### Apollo 13 simulator evidence
+
+- Reviewed surviving Apollo 13 **Simulation Discrepancy Reports** referencing LUM 131 Rev. 1.
+- Recorded a hardware-restart test showing coupled effects on navigation updates, P32 computation state, rate-control response, and other guidance/display behavior.
+- Added these as engineering/simulator-test evidence, explicitly separate from integrated SimSup scenario evidence.
+
+### New research notes
+
+- `resources/research/022_cross_mission_lm_crt_evidence.md`
+- `resources/research/023_apollo13_simulator_discrepancies.md`
+
+### Next high-payoff source work
+
+1. Extract Apollo 13 ASPO 45 CRT pages.
+2. Find the LM Mission Simulator Volume II Section 7 output tables.
+3. Locate Apollo-era RTCC/FIDO/RETRO display definitions.
+4. Reconstruct the exact INCO MSK 1475 layout and PROCEDURES MSK 1503 layout.
