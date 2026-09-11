@@ -943,3 +943,26 @@ The simulator must preserve those origins rather than populate the CRT directly 
 1. Locate the RTCC/ground equation converting AGS direction cosines to body angles.
 2. Recover LM-7 Table 2.1-7 to certify the FP7 telemetry IDs.
 3. Map the final ground-derived angles into exact Apollo 13 MSK 1123 AGS ATT fields.
+
+
+## 2026-09-11 — AGS delta-V interface separation
+
+### Completed
+
+- Distinguished the AEA telemetry delta-V variables from DEDA crew readouts:
+  - VD1X/Y/Z (0404–0406): 40-ms body-axis sensed-velocity accumulation in telemetry;
+  - VDX/Y/Z (0470–0472): 2-second navigation-update values exposed through DEDA 470–472.
+- Verified the adjacent-program source-code relationship in which navigation logic copies VD1 into VDX.
+- Retained Apollo 13 mission-specific validation for the DEDA side through the 404/405/406 → 470 contingency-burn procedure.
+- Established that Mission Control's ground delta-V information need not depend on the crew's current DEDA selection.
+- Kept the exact MSK 1123 AGS DEL VEL source unresolved pending MCC/RTCC display-routing evidence.
+
+### New research note
+
+- `resources/research/041_apollo13_ags_delta_v_interfaces.md`
+
+### Next work
+
+1. Trace MSK 1123 AGS DEL VEL into RTCC/display documentation.
+2. Perform the same provenance analysis for AGS ULL.
+3. Recover the exact FP7 telemetry table where possible.
