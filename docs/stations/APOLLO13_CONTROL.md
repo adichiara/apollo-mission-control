@@ -319,3 +319,40 @@ Both may care about PGNS/LGC information, but for different reasons.
 ## Primary source
 
 - *Mission Operations Report — Apollo 13*, Appendix H: LM Control Officer (Control), 24 April / 28 April 1970.
+
+
+## 10A. Cross-mission CRT continuity evidence
+
+Earlier Apollo AC/Delco guidance material identifies two LM CRT pages that align closely with CONTROL's documented workload:
+
+### MSK 1123 — LM guidance/control/propulsion real-time
+
+Documented field families include:
+
+- DAP/body rates
+- AGS rate/ASA rates
+- commanded attitude
+- gimbal/CDU/IMU/AGS attitude
+- PGNS/AGS errors
+- guidance-system velocity and delta-velocity
+- propulsion/control quantities
+
+### MSK 1137 — LM powered-descent/control
+
+Documented fields include:
+
+- throttle select
+- manual/automatic/total throttle
+- actuator position
+- LGC-commanded thrust
+- thrust-chamber pressure
+- attitude/guidance error
+- desired body rates
+- engine-induced angular acceleration
+- engine-gimbal direction
+- attitude-hold/automatic stabilization state
+- commanded control torque
+
+Later Apollo telemetry tables map APS/DPS/RCS/radar measurements to these MSKs, strengthening continuity evidence.
+
+However, until the Apollo 13 AC Electronics ASPO 45 section is extracted, the project does **not** claim that Apollo 13 used these pages unchanged.
