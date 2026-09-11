@@ -624,3 +624,39 @@ The largest common Phase 1 gap is now exact console/display reconstruction, not 
 2. Find the LM Mission Simulator Volume II Section 7 output tables.
 3. Locate Apollo-era RTCC/FIDO/RETRO display definitions.
 4. Reconstruct the exact INCO MSK 1475 layout and PROCEDURES MSK 1503 layout.
+
+
+## 2026-09-11 — H-2 Mission Techniques and validation architecture
+
+### Mission Techniques
+
+- Identified the Apollo 13 / Mission H-2 Mission Techniques suite as a central primary source for real-time decision logic.
+- The documents explicitly state that they contain the officially approved:
+  - guidance/control sequence of events
+  - data flow
+  - real-time decision logic
+- Reviewed H-2 Lunar Descent, Descent Abort, Lunar Orbit, Powered Ascent, and Contingency material.
+- Documented the H-2 division of responsibility:
+  - ground detects slow/insidious drift and makes/advises decisions
+  - crew handles errors requiring immediate action
+  - ground-to-LM abort decision/communication delay may be up to about 20 seconds
+- Documented PDI GO/NO-GO logic and the important exception that loss of high-bit-rate data did not automatically require NO-GO if guidance/navigation status could be adequately verified by manual readout/voice.
+- Documented the pre-PDI ground-processing chain using MSFN tracking, RTCC high-speed mode, PFP/Lear processing, PGNCS/AGS/MSFN residuals and strip-chart displays.
+- Documented multi-cue diagnosis requirements, landing-radar logic, propellant-margin analog monitoring, and Flight Director real-time judgment points.
+- Added `resources/research/028_apollo13_mission_techniques.md`.
+
+### Validation
+
+- Added `docs/SIMULATION_VALIDATION.md`.
+- Adopted a source-derived validation hierarchy:
+  1. component/source fidelity
+  2. subsystem closed-loop
+  3. onboard computer / RTCC integration
+  4. procedure validation
+  5. boundary/anomaly cases
+  6. integrated controller simulation
+- Added validation states for documented limitations/deviations rather than treating fidelity as binary.
+
+### New source
+
+- Added the March 16, 1970 Apollo 13 LM Malfunction Procedures to the source catalog.
