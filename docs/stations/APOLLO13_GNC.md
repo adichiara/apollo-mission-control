@@ -404,6 +404,31 @@ Do not assume the GNC player has all retrospective information available live.
 
 4. AC/Delco Electronics Apollo 11 and Apollo 12 Guidance and Navigation Summary material documenting CSM GNC PRIMARY TAB 0683.
 
-## Archival source target
+## Apollo 13 CRT source now located
 
-- AC Electronics, *Apollo 13 Guidance and Navigation Summary*, circa 1970, Smithsonian National Air and Space Museum Archives, Apollo Flight Guidance Computer Software Collection [Hamilton], Box 2, Folder 10.
+A high-resolution scan of **AC Electronics, Apollo 13 Guidance & Navigation Summary** is now publicly linked by the Apollo 13 Flight Journal.
+
+The same title is independently cataloged by the Smithsonian National Air and Space Museum Archives in the Hamilton collection (Box 2, Folder 10). Auction/catalog descriptions also confirm that the Apollo 13 volume contains an **ASPO 45 CRT Displays** section.
+
+This resolves the question of whether a mission-specific Apollo 13 CRT source survives.
+
+It does **not yet** resolve the content question: the 244 MB scan is too large for the current web-analysis path to inspect page-by-page, so the project still cannot claim that Apollo 13 retained CSM GNC PRIMARY TAB 0683 unchanged from Apollo 11/12.
+
+### Primary scan index
+
+- Apollo 13 Flight Journal, Mission Documents — high-resolution collection:
+  https://apollojournals.org/afj/ap13fj/a13-documents.html
+
+### Independent archive record
+
+- Smithsonian NASM, Apollo Flight Guidance Computer Software Collection [Hamilton], Box 2, Folder 10:
+  https://www.si.edu/object/archives/sova-nasm-1986-0158
+
+### Research status
+
+- Apollo 13 mission-specific CRT manual exists: **DOCUMENTED**
+- Apollo 13 manual contains ASPO 45 CRT display material: **DOCUMENTED**
+- CSM GNC PRIMARY TAB 0683 retained unchanged: **UNRESOLVED**
+- Apollo 13 LM display numbers 1123 / 1137 retained unchanged: **UNRESOLVED**
+
+The next extraction task is specifically the ASPO 45 CRT section of the Apollo 13 scan.
