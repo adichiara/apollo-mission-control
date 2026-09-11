@@ -225,3 +225,12 @@ Research note 044 consolidates the AGS portion of MSK 1123 into source-path conf
 Several rows now have strong provenance (AGS time, RGA rates, AGS attitude, AGS attitude error, DEDA state), while ASA rate, AGS velocity, AGS delta velocity, and AGS ullage have constrained but not yet certified source mappings.
 
 The main research bottleneck has shifted from “what does the page contain?” to **exact FP7 telemetry membership and RTCC/display transformation rules**. GUIDO/CONTROL remain at B.
+
+
+## 2026-09-11 — MSK 1123 velocity-row semantics and ground-format context
+
+Research note 045 separates five adjacent velocity-related rows using the Apollo 11/12 AC/Delco display definitions: **AGS VEL** (indicated velocity), **LGC DEL VEL** (two-second PIPA output), **AGS DEL VEL** (measured velocity), **AGS ULL** (ullage measurement), and **ACT VEL** (accumulated velocity along thrust). The older display definitions also constrain their historical precision without proving that the Apollo 13 masks were unchanged.
+
+A January 1970 MIT Instrumentation Laboratory report independently reproduces the 1123-style page as a **Typical Data Format for Ground Consoles**, including the AEA/LGC/PCM header and the same velocity rows. This strengthens the evidence that the page is a composite ground-monitoring product rather than a direct mirror of a single onboard source.
+
+The new evidence does **not** identify the exact Apollo 13 FP7 telemetry word or RTCC transformation feeding AGS VEL / DEL VEL / ULL, nor does it establish that the AEA/LGC/PCM header boxes were dynamic validity indicators. GUIDO and CONTROL therefore remain at maturity B.
