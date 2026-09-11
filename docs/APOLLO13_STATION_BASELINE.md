@@ -161,6 +161,8 @@ This must remain distinct from FIDO's ground trajectory role.
 - exact command/upload UI
 - exact ground representation of DSKY/computer telemetry
 
+Detailed GUIDO specification: [`docs/stations/APOLLO13_GUIDO.md`](stations/APOLLO13_GUIDO.md)
+
 ---
 
 ## CSM EECOM — Electrical / Environmental / Sequential Systems
