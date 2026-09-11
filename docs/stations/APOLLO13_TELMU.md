@@ -381,3 +381,31 @@ This supports continued research into backroom relationships even if the final s
 
 - *Mission Operations Report — Apollo 13*, Appendix G: TELMU Post Mission Report.
 - *Apollo 13 Mission Report*, sections 7.2.3–7.2.5.
+
+
+## 14A. LM-7 mission-era measurement/redline source
+
+The **CSM/LM Spacecraft Operational Data Book, Volume II Part 2, Revision 5 (March 9, 1970)** is explicitly updated for LM-7 and provides Apollo 13-era launch-rule measurement definitions for TELMU-related systems.
+
+Examples include:
+
+- Commander's/System Engineer bus voltage measurements;
+- descent-stage battery currents;
+- consumable measurements;
+- EPS/ECS subsystem redlines;
+- measurement ranges and accuracy;
+- backup values and rationale.
+
+### Critical scope limitation
+
+These are **launch mission-rule redlines**, not universal in-flight operational limits.
+
+Use the book for:
+
+- measurement identity;
+- units/range/accuracy;
+- instrumentation dependencies;
+- launch-phase thresholds;
+- causal/backup rationale.
+
+For in-flight scenarios, use mission-phase flight rules, controller reports, procedures, and system documentation to establish the applicable limits.
