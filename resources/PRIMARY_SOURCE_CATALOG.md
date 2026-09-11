@@ -614,3 +614,23 @@ NASA/contractor bibliography records identify:
 - **Status:** IDENTIFIED / INDEXED-TEXT PARTIAL; 36.9 MB scan exceeds current PDF web reader
 - **Use:** Mission-specific PGNS/AGS crew reference; uniquely valuable for AGS Flight Program 7 address semantics and procedures.
 - **Current limitation:** Full AGS pages still need direct page-level inspection or a reliable transcription before they are used to freeze the Apollo 13 address dictionary.
+
+
+### Apollo Operations Handbook — LM 7 and Subsequent, Volume I
+
+- **Document:** LMA790-3-LM
+- **Title:** Apollo Operations Handbook, Lunar Module LM 7 and Subsequent, Volume I — Subsystems Data
+- **Date:** 1970-02-01
+- **Prepared for:** NASA / Flight Crew Support Division
+- **Apollo 13 relevance:** LM-7 is Apollo 13's lunar module.
+- **Status:** REVIEWED-PARTIAL through mission-specific searchable archival indexing; high-resolution original scan is too large for the current web PDF reader.
+- **Important GN&C tables identified:**
+  - 2.1-5 — AEA Input Signal Characteristics
+  - 2.1-6 — AEA Output Signal Characteristics
+  - **2.1-7 — AEA Telemetry Word List**
+  - 2.1-8 — PGNS Downlink Data Update Sequence
+  - 2.1-36 — DEDA Input List
+  - 2.1-37 — DEDA Output List
+  - 2.1-38 — DEDA Accessible Constants
+- **Use:** Mission-specific/preflight evidence for the Apollo 13 AEA/AGS telemetry and DEDA architecture.
+- **Current limitation:** exact Table 2.1-7 Flight Program 7 word-to-memory contents still need direct extraction; do not substitute an earlier FP6 table.
