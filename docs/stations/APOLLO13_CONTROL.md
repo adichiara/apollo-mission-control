@@ -479,3 +479,24 @@ Apollo telemetry routing tables explicitly associate named control measurements 
 This materially strengthens the case that 1123 is one of CONTROL's cross-discipline real-time pages, but exact Apollo-13-specific routing/calibration and station access are still incomplete.
 
 See `resources/research/035_apollo13_msk1123_field_provenance.md`.
+
+
+## 2026-09-11 AGS burn-monitor evidence
+
+Apollo 13's contingency burns provide direct operational evidence for AGS/CONTROL monitoring behavior.
+
+For the final course correction, Mission Control instructed the crew to:
+
+- perform a body-axis alignment;
+- zero DEDA addresses 404/405/406;
+- select address 470;
+- inspect the pre-burn bias;
+- execute the burn while using AGS as an independent monitor.
+
+Haise reported about -0.2 bias at 470 as ignition occurred.
+
+This supports modeling AGS burn monitoring as a stateful preparation/measurement process rather than a generic “backup guidance enabled” switch.
+
+The exact relation between these DEDA variables and CONTROL-visible MSK 1123 fields still requires AEA telemetry-to-CRT mapping.
+
+See `resources/research/036_apollo13_ags_fp7_deda_evidence.md`.
