@@ -29,6 +29,7 @@ See:
 - [Apollo 13 TELMU station specification](docs/stations/APOLLO13_TELMU.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
+- [Simulation validation strategy](docs/SIMULATION_VALIDATION.md)
 - [Decisions](docs/DECISIONS.md)
 - [Open questions](docs/OPEN_QUESTIONS.md)
 - [Progress log](docs/PROGRESS.md)
