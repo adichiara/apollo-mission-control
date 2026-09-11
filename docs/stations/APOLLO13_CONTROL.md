@@ -356,3 +356,35 @@ Documented fields include:
 Later Apollo telemetry tables map APS/DPS/RCS/radar measurements to these MSKs, strengthening continuity evidence.
 
 However, until the Apollo 13 AC Electronics ASPO 45 section is extracted, the project does **not** claim that Apollo 13 used these pages unchanged.
+
+
+## 12A. LM-7 mission-era measurement/redline source
+
+The March 9, 1970 LM-7 redline book provides mission-specific measurement definitions and launch constraints for propulsion/control systems.
+
+A particularly useful Apollo 13 measurement is:
+
+**GQ 3435 P — Supercritical Helium Supply Tank Pressure**
+
+The document records:
+
+- range: 0–2000 psia;
+- prelaunch rise-rate assumptions;
+- launch redline derivation;
+- measurement/system rationale.
+
+It derives a maximum launch redline around **959 psia** based on projected pressure at the first DPS burn.
+
+This must not be confused with CONTROL's later in-flight decision branches (660–770 / 770–800 / >800 psia during LM entry). The same telemetry parameter legitimately uses different criteria in different mission phases.
+
+The redline book also contains RCS discrete/backup logic showing that suspect valve indications can be cross-checked through commanded jet firing and telemetered thrust-chamber pressure.
+
+### Simulation implication
+
+Thresholds belong to:
+
+```text
+parameter + vehicle configuration + mission phase + rule/procedure
+```
+
+—not to the parameter alone.
