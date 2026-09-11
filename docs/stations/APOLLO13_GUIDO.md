@@ -369,3 +369,21 @@ See `resources/research/032_apollo13_lm_crt_field_provenance.md`.
 ### Revised GUIDO gap
 
 The question is no longer simply "which LGC values existed." The remaining implementation-critical gap is the **ground transformation and display-routing layer** between downlist words and the final CRT fields, plus station access/request behavior.
+
+
+## 2026-09-11 PIPA-bias workflow evidence
+
+A February 27, 1970 H-2 Lunar Surface Branch planning note documents a specific Apollo 13 ground method for lunar-surface PIPA-bias estimation. The method used:
+
+- MPAD lunar gravity;
+- gimbal angles;
+- the **Guidance Officer's determination of local-vertical attitude**;
+- PIPA-derived measured gravity.
+
+Expected gravity was resolved into LM stable-member axes and differenced from measured gravity to obtain the bias estimate.
+
+The actual Apollo 13 Mission Operations Report also records PIPA-bias monitoring during the contingency: after late LM PGNS initialization for MCC-7, the PIPA bias was judged satisfactory before the alignment/burn-planning sequence continued.
+
+This provides concrete evidence that GUIDO's role in inertial-state validity extended into ground-derived bias assessment rather than merely reading raw accelerometer telemetry.
+
+See `resources/research/033_apollo13_pipa_bias_ground_workflow.md`.
