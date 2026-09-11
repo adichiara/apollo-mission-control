@@ -635,3 +635,28 @@ NASA/contractor bibliography records identify:
   - 2.1-38 — DEDA Accessible Constants
 - **Use:** Mission-specific/preflight evidence for the Apollo 13 AEA/AGS telemetry and DEDA architecture.
 - **Current limitation:** exact Table 2.1-7 Flight Program 7 word-to-memory contents still need direct extraction; do not substitute an earlier FP6 table.
+
+
+### Delco/AC Electronics Apollo 12 Guidance & Navigation Summary — cross-mission MSK 1123 reference
+
+- **Mission:** Apollo 12
+- **Organization:** Delco / AC Electronics
+- **Public scan:** https://ibiblio.org/apollo/Documents/apollo12_delco.pdf
+- **Status:** REVIEWED-PARTIAL as **CROSS-MISSION** evidence
+- **Use:** Cleanly preserves MSK 1123 field definitions and display masks for the velocity group: AGS VEL (indicated velocity), LGC DEL VEL (two-second PIPA output), AGS DEL VEL (measured velocity), AGS ULL (ullage measurement), and ACT VEL (accumulated velocity along thrust).
+- **Importance:** Resolves OCR ambiguity in the earlier Apollo 11 extraction, especially the **AGS ULL** row.
+- **Caution:** This source constrains historical semantics/precision but does not establish unchanged Apollo 13 masks, FP7 telemetry routing, or RTCC calculations.
+
+### J. L. Nevins — Man-Machine Design for Apollo GN&C, Revisited
+
+- **Title:** *Man-Machine Design for the Apollo Navigation, Guidance, and Control System — Revisited: Apollo, A Transition in the Art of Piloting a Vehicle*
+- **Author:** J. L. Nevins
+- **Organization:** MIT Instrumentation Laboratory
+- **Report:** E-2476
+- **Date:** January 1970
+- **Contract:** NAS 9-4065
+- **Public scan:** https://web.mit.edu/digitalapollo/Documents/Chapter7/nevinsrevisited.pdf
+- **Status:** REVIEWED-PARTIAL; Figure 16(a) directly inspected
+- **Use:** Contemporary Apollo description of ground monitoring during powered descent. Figure 16(a), **Typical Data Format for Ground Consoles**, reproduces the 1123-style layout with AEA/LGC/PCM header, AGS/LGC velocity rows, DEDA, DSKY, attitude, radar and related guidance/control fields.
+- **Important context:** The text describes independent ground state estimation from tracking and comparison against telemetered onboard guidance state, reinforcing the composite ground-product interpretation of the page.
+- **Caution:** The report does not establish that the AEA/LGC/PCM header boxes are dynamic validity indicators, nor does it provide the exact Apollo 13 FP7-to-CRT routing.
