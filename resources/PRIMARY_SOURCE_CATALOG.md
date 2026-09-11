@@ -447,8 +447,8 @@ The following source classes are specifically needed and should be added as they
 - **Date:** March 1970
 - **Organization:** MIT / Charles Stark Draper Laboratory for NASA/MSC
 - **URL:** https://www.ibiblio.org/apollo/NARA-SW/R-567-sec2-rev8.pdf
-- **Status:** REVIEWED-PARTIAL
-- **Use:** Apollo-13-specific LGC uplink/downlink definition, P27 update verification, program-selected downlists, telemetry timing/snapshot behavior, AGS initialization/update.
+- **Status:** REVIEWED-DETAILED for Descent/Ascent downlist and selected field descriptions; other list families remain partial
+- **Use:** Apollo-13-specific LGC uplink/downlink definition, P27 update verification, program-selected downlists, telemetry timing/snapshot behavior, AGS initialization/update, and field-level provenance mapping into the mission-specific LM CRT evidence.
 - **Importance:** Primary source for GUIDO/CONTROL onboard-computer information paths; must not be confused with the eventual MCC CRT display format.
 
 ### LM Mission Simulator Instructor Handbook catalog records
