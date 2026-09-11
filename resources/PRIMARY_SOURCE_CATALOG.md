@@ -306,3 +306,43 @@ The following source classes are specifically needed and should be added as they
 - **Evidence:** PHO-TR474, 1970-04-10.
 - **Priority:** Very high.
 - **Use if located:** Exact Apollo 13 console/panel configuration, likely resolving current uncertainty around EECOM DRK, limit-sense panel layout, and other controller-station hardware.
+
+
+### GNC Apollo 13 Post-Mission Report
+
+- **Title:** GNC Apollo 13 Post-Mission Report
+- **NASA document ID:** 19710010485
+- **Source:** NASA Technical Reports Server / Appendix F of the Apollo 13 Mission Operations Report
+- **URL:** https://ntrs.nasa.gov/citations/19710010485
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Mission-specific CSM GNC real-time troubleshooting and configuration evidence: SM/CM RCS, DAP/quad selection, electrical dependencies, ambiguous indications, entry RCS thermal preparation.
+
+### Apollo 13 Guidance, Navigation, and Control Systems Performance Analysis
+
+- **Title:** Guidance, Navigation, and Control Systems Performance Analysis: Apollo 13 Mission Report
+- **NASA document ID:** 19730017939
+- **Reports:** MSC-02680-SUPPL-1 / NASA-TM-X-69528 / TRW-11176-H586-R0-00-SUPPL-1
+- **Publication date:** 1970-09-01
+- **URL:** https://ntrs.nasa.gov/citations/19730017939
+- **Status:** IDENTIFIED / REVIEWED-PARTIAL
+- **Use:** Detailed spacecraft GNC performance; useful for simulation physics/state behavior, but not by itself proof of exact MOCR display layout.
+
+### AC Electronics, Apollo 13 Guidance and Navigation Summary
+
+- **Organization:** AC Electronics / Delco
+- **Date:** circa 1970
+- **Archive:** Smithsonian National Air and Space Museum Archives, Apollo Flight Guidance Computer Software Collection [Hamilton], NASM.1986.0158, Box 2 Folder 10
+- **URL:** https://www.si.edu/object/archives/sova-nasm-1986-0158
+- **Status:** EXISTENCE AND DIGITAL CONTENT CONFIRMED; CONTENT NOT YET FULLY INSPECTED
+- **Use:** High-priority source for Apollo 13 GNC/Guidance display continuity.
+- **Known catalog description:** Includes section **ASPO 45 CRT Displays**.
+- **Research question:** Whether CSM GNC PRIMARY TAB MSK 683 / display 0683, documented for Apollo 11/12, remained in Apollo 13 and with what revisions.
+
+### CSM GNC PRIMARY TAB 0683 — Apollo 11/12 evidence
+
+- **Source family:** AC/Delco Guidance and Navigation Summary manuals
+- **Documented missions:** Apollo 11 and Apollo 12
+- **Display:** CSM GNC PRIMARY TAB
+- **MSK/display number:** 683 / 0683
+- **Status:** REVIEWED as cross-mission comparison; **NOT YET CONFIRMED FOR APOLLO 13**
+- **Use:** Reference template for researching Apollo 13 GNC displays.
