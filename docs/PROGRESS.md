@@ -785,3 +785,34 @@ The simulator must preserve those origins rather than populate the CRT directly 
 - Preserved an evidence-boundary warning: the searchable handbook pages carrying those telemetry identities are from a June 15, 1970 changed revision.
 - Confirmed that the Apollo 13 Flight Journal preserves a **1970-02-01 LM-7 and Subsequent** handbook scan, but the 639-MB file exceeds the current web renderer. Direct verification of the corresponding preflight pages remains pending.
 - No Apollo-13 mission-profile mapping was promoted solely from the later changed handbook revision.
+
+
+## 2026-09-11 — MSK 1123 first provenance pass
+
+### Completed
+
+- Began a field-provenance reconstruction for **MSK 1123 — LM GUID, CONTROL AND PROP RT**.
+- Separated the page into:
+  - LGC/PGNS digital downlink;
+  - PCM control-hardware measurements;
+  - AGS/AEA telemetry/state;
+  - radar data;
+  - APS/RCS propulsion telemetry;
+  - ground/context and processed values.
+- Confirmed Apollo telemetry routing for:
+  - GH1461V / GH1462V / GH1463V — RGA yaw/pitch/roll rates → 1123;
+  - GG2219V and GH1457V attitude-error families → 1123;
+  - GH1644X PGNS attitude-hold mode → 1123;
+  - selected APS helium/valve/fuel-low channels → 1123.
+- Preserved the mission-specific boundary: those routing tables are Apollo-wide/retrospective until the corresponding LM-7 source is verified.
+- Identified the Apollo 13 Flight Crew G&N Dictionary / **AGS Flight Program 7** as the next best source for the 1123 AGS/DEDA section.
+
+### New research note
+
+- `resources/research/035_apollo13_msk1123_field_provenance.md`
+
+### Next work
+
+1. Extract Apollo 13 AGS Flight Program 7 / DEDA mappings from the mission-specific G&N Dictionary.
+2. Verify LM-7 definitions for the currently Apollo-wide 1123 PCM channels.
+3. Resolve radar field source paths and OCR-damaged RCS identifiers.
