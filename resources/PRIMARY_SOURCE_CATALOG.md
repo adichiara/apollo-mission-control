@@ -424,3 +424,14 @@ The following source classes are specifically needed and should be added as they
 - **Status:** IDENTIFIED
 - **Use:** Simulator operation and available telemetry/console outputs. The collection describes the Console Directory as listing simulator telemetry measurements.
 - **Priority:** High for mapping LM simulated state to telemetry and for validating TELMU/CONTROL information families.
+
+
+### Flight Crew Operations Branch — Simulator Operations
+
+- **Title:** NASA Manned Spacecraft Center, Flight Crew Operations Branch, Simulator Operations
+- **Author:** Riley David McCafferty
+- **Date:** 1968-02-14
+- **Public scan:** https://www.ibiblio.org/apollo/Documents/msc_simulator_operations.pdf
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Apollo simulator configuration control, training progression, MCC integration, discrepancy/change management, instructor-only aids, and simulator math-model update process.
+- **Importance:** Direct evidence for how NASA itself maintained simulator fidelity against changing spacecraft configurations.
