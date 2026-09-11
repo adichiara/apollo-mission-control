@@ -44,9 +44,11 @@ Deliverables:
 
 **Important:** minimum player count and role aggregation are not decided until this work shows what would actually be combined or lost.
 
-## Phase 2 — Select the first simulation baseline
+## Phase 2 — Select the first playable mission/scenario
 
 **Goal:** choose a specific mission and phase for the first implementation.
+
+The reusable technical platform currently uses the Apollo 13-era MCC as its default research/implementation baseline, with mission-specific historical profiles layered over it. Phase 2 therefore selects the **first playable scenario**, not a single permanent historical configuration for the whole project.
 
 Candidate selection criteria:
 
@@ -60,8 +62,8 @@ Candidate selection criteria:
 
 Deliverables:
 
-- selected mission/configuration
-- exact spacecraft/ground-system baseline
+- selected mission and mission-era profile
+- exact spacecraft/ground-system configuration for that scenario
 - selected mission interval
 - nominal timeline
 - source package for that interval
