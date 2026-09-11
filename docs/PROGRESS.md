@@ -1023,3 +1023,35 @@ The simulator must preserve those origins rather than populate the CRT directly 
 2. Recover FP7 Table 2.1-7 telemetry IDs.
 3. Search Apollo 13 controller loops for actual use of the ground DEDA-status block.
 4. Continue field-by-field AGS mapping for MSK 1123.
+
+
+## 2026-09-11 — consolidated MSK 1123 AGS provenance
+
+### Completed
+
+- Consolidated the AGS portion of MSK 1123 into one field-oriented provenance matrix.
+- Established strong source paths for:
+  - AGS time;
+  - RGA rates;
+  - AGS body attitude;
+  - AGS attitude error;
+  - DEDA status.
+- Refined strong candidates for:
+  - ASA body rates;
+  - AGS indicated velocity;
+  - AGS measured delta velocity;
+  - AGS ullage measurement.
+- Corrected an overly narrow earlier delta-V assumption by restoring **DVX/DVY/DVZ (0350–0352)** as an important direct telemetry candidate alongside VD1 and DEDA VDX.
+- Distinguished AEA analog attitude-error outputs from the separate AEA digital telemetry path.
+- Preserved unresolved field mappings instead of forcing a one-source AGS display model.
+
+### New research note
+
+- `resources/research/044_apollo13_msk1123_ags_field_matrix.md`
+
+### Next work
+
+1. Locate MCC/RTCC definitions for AGS VEL / DEL VEL / ULL.
+2. Recover exact FP7 Table 2.1-7.
+3. Re-transcribe Apollo 13 MSK 1123 field masks/precision.
+4. Verify LM-7 instrumentation calibration for attitude/rate channels.
