@@ -260,3 +260,23 @@ The following source classes are specifically needed and should be added as they
 - **Status:** REVIEWED-PARTIAL
 - **Use:** Controller-by-controller post-mission operational reports; appendices include BSE, RETRO, FIDO, GUIDO, EECOM, GNC, TELMU, CONTROL, INCO, PROCEDURES, FAO, SURGEON, recovery, and network operations.
 - **Important evidence:** Apollo 13 documentation explicitly uses **TELMU**, demonstrating a mission-era nomenclature difference from Apollo 11 TELCOM.
+
+
+### The Early Days of Simulation and Operations
+
+- **Author:** Harold G. Miller
+- **Date:** 2013-06-30
+- **Source:** NASA historical paper
+- **URL:** https://www.nasa.gov/wp-content/uploads/2025/08/millerhg-paper.pdf
+- **Status:** REVIEWED-PARTIAL
+- **Use:** First-person retrospective from a NASA simulation-design leader covering control-center simulation architecture, SimSup practice, segmented Apollo simulation cases, failure insertion philosophy, and examples of simulated failures later encountered in flight.
+- **Evidence class:** Retrospective firsthand account; use surviving contemporary case documentation when available for exact scenario reconstruction.
+
+### Apollo 13 EECOM console / instrument-system evidence
+
+- **Source:** Report of Apollo 13 Review Board, Appendix B, Part B7
+- **Key figures:** B7-7, B7-8, B7-9
+- **URL:** https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/a13-review-report-app-b-c-d-e-19700078726.pdf
+- **Status:** REVIEWED-PARTIAL
+- **Use:** Apollo 13 EECOM console component layout, event/limit indications, two frequently used one-second-update display formats, and actual parameter labels/example values.
+- **Importance:** Strongest controller-specific console/display reconstruction source located so far.
