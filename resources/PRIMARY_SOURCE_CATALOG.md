@@ -482,3 +482,30 @@ NASA/contractor bibliography records identify:
 - **Key display:** **LM Look Angle Display — MSK 1475**
 - **Key defect:** did not operate with LM low-bit-rate telemetry during Apollo 13.
 - **Key training finding:** incorrectly simulated communications dependencies created negative training.
+
+
+### Apollo 13 Simulation Discrepancy Reports
+
+- **Source:** Virtual AGC document collection
+- **URL:** https://www.ibiblio.org/apollo/Documents/apollo_13_simulator_discrepencies.pdf
+- **Status:** REVIEWED-PARTIAL
+- **Configuration:** References LUM 131 Rev. 1 / Apollo 13 LM guidance-software test configuration.
+- **Use:** Contemporaneous simulator/software discrepancy cases; restart effects, load/configuration verification, and test-case behavior.
+- **Caution:** These are simulator/program test discrepancies, not automatically integrated Mission Control training scenarios.
+
+### AC/Delco ASPO 45 CRT display family — Apollo 11 cross-mission reference
+
+- **Source:** AC Electronics Apollo 11 Guidance & Navigation Summary
+- **URL:** https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
+- **Status:** REVIEWED as CROSS-MISSION evidence
+- **Known CRT identifiers:** MSK 683, 966, 1123, 1137
+- **Use:** Exact earlier-mission field definitions for CM/LM guidance/control CRTs; comparison target for Apollo 13 ASPO 45 extraction.
+- **Caution:** Do not treat unchanged continuity into Apollo 13 as established.
+
+### Later Apollo LM telemetry-to-MSK mapping
+
+- **Source examples:** Apollo 17 Mission Evaluation Plan and LM instrumentation packets
+- **NTRS:** https://ntrs.nasa.gov/citations/19730018126
+- **Status:** REVIEWED as LATER-APOLLO MAPPING evidence
+- **Use:** Shows individual LM telemetry measurements assigned to primary MSKs including 1123 and 1137.
+- **Caution:** Supports continuity of display function, not exact Apollo 13 layout.
