@@ -57,7 +57,7 @@ Candidate selection criteria:
 - availability of controller/display information
 - availability of transcripts/audio
 - availability of simulator or malfunction records
-- useful interaction among several controller disciplines
+- mission-specific scenario interaction among several controller disciplines
 - manageable first implementation scope
 
 Deliverables:
@@ -96,6 +96,17 @@ Deliverables:
 - reusable historical display renderer
 - controller-specific display catalog for the selected baseline
 - authenticity comparison against source photographs/manuals
+
+### Current research checkpoint — Apollo 13 LM guidance/control displays
+
+- [x] Mission-specific MSK 1123 and 1137 layouts identified and inspected.
+- [x] Major LGC, PCM, AEA/AGS, and ground-derived source classes separated.
+- [x] AEA Table 2.1-7 telemetry structure and engineering definitions recovered from contemporary handbook copies, including distinct present-velocity, short-interval delta-V, sensed body-axis velocity-increment, DEDA, direction-cosine, and ullage-counter products.
+- [ ] Directly compare the Apollo 13 LM-7 Table 2.1-7 page against the later searchable same-basic-date handbook copy.
+- [ ] Recover MCC/RTCC rules that select/transform AEA telemetry into MSK 1123 AGS VEL / AGS DEL VEL / AGS ULL / ACT VEL.
+- [ ] Establish exact Apollo 13 field masks, refresh/validity behavior, and station display-access workflow before implementation is frozen.
+
+The telemetry table narrows the source candidates but does **not** by itself certify telemetry-word-to-CRT-field mappings.
 
 ## Phase 4 — Authoritative simulation model
 
