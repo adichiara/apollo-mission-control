@@ -164,7 +164,7 @@ Model only what the selected scenario requires initially, but preserve subsystem
 
 ### Immediate next work
 
-- [ ] define subsystem dependencies and derived-value equations only where the selected slice needs them
+- [x] define subsystem dependencies; derived-value equations remain limited to sourced/required behavior
 - [ ] determine the minimum trajectory-state representation required for the first propagating implementation
 - [ ] define update/sample cadence for the minimum player-facing products
 - [ ] convert the nominal state machine and parameter contract into the first implementation schema/data fixtures
@@ -191,8 +191,8 @@ Deliverables:
 - [x] first-slice documented parameter dictionary
 - [x] first-slice units and ownership/source layers
 - [x] nominal-state validation targets
-- [ ] update/sample behavior for each player-facing product
-- [ ] subsystem dependencies
+- [x] update/sample behavior contract for first-slice products, with exact historical CRT cadence left unresolved where unsupported
+- [x] first-slice subsystem dependency contract
 - [ ] failure propagation tests
 
 ## Phase 5 — Mission Control data path
