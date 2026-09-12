@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — browser rejoin, first nonnominal web/session path, and explicit crew-response domain chain implemented; HTTP crew-response exposure is next**
+Status: **CURRENT — continuous mission clock adopted; dependency-driven integration is now the active priority**
 
 ## Completed presentation/session/web checkpoints
 
@@ -10,16 +10,36 @@ Status: **CURRENT — browser rejoin, first nonnominal web/session path, and exp
 - [x] deterministic scenario advancement, lifecycle, and audit log;
 - [x] unique station assignment and station-scoped snapshots;
 - [x] readiness reports surfaced to FLIGHT;
-- [x] explicit FLIGHT GO/NO-GO decision gate;
+- [x] explicit FLIGHT GO/NO-GO decision requirement;
 - [x] explicit FLIGHT/CAPCOM queue and transmission path;
 - [x] scripted nominal seven-station playthrough;
 - [x] FastAPI/Uvicorn JSON transport and phone client;
 - [x] Render configuration and health endpoint;
 - [x] idempotent same-player/same-station server rejoin;
 - [x] browser `localStorage` persistence of prototype player/station identity and automatic rejoin after reload;
-- [x] explicit simulation-pause semantics for blocking decision gates (research note 081).
+- [x] **continuous mission clock** adopted: controller decisions do not stop GET;
+- [x] explicit game/session pause retained as the only ordinary clock-stop mechanism;
+- [x] nominal downstream events can be missed when prerequisites are absent and are not replayed retroactively.
 
 The current deployment architecture remains single-process/in-memory. Restart or redeploy loses the live session; multiple workers/sessions remain deferred.
+
+See D-016 and `resources/research/084_continuous_mission_clock_architecture.md`.
+
+## Continuous-time engine boundary — implemented
+
+The session no longer treats the final FLIGHT poll as a scene boundary that freezes simulation time.
+
+At the approximately 79:17 GET poll:
+
+- `flight_go` becomes a pending decision requirement;
+- session status remains `RUNNING`;
+- GET continues;
+- FLIGHT may record GO or NO-GO at the actual current GET;
+- downstream nominal events execute only if their operational prerequisites are present when their scheduled time arrives;
+- ineligible nominal events are recorded as `scenario_event_missed` with a reason;
+- missed nominal events are not replayed automatically after a late GO.
+
+This turns timing itself into part of the simulation outcome rather than an artificial player timer or score.
 
 ## First nonnominal session/API path — implemented through CAPCOM transmission
 
@@ -57,13 +77,14 @@ Implemented as distinct layers:
 
 See `resources/research/083_pc2_crew_response_after_ground_shutdown_call.md`.
 
-## Active priority — expose crew response and reconnect evidence
+## Active priority — make dependencies declarative, then continue HTTP integration
 
-1. expose explicit crew receipt and crew DPS shutdown command through the HTTP validation interface;
-2. expose an explicit scenario/vehicle physical-response operation without inventing timing;
-3. reuse the existing shutdown-confirmation architecture after physical engine-off;
-4. require fresh controller evidence rather than treating physical state as automatically player-visible;
-5. do not invent exact response delay, cockpit choreography, pressure tailoff, or a binary chamber-pressure confirmation threshold.
+1. move nominal event prerequisites out of PC+2-specific session `if` statements into a reusable scenario-event eligibility model;
+2. preserve the rule that missing prerequisites cause a nominal event to be missed, not delayed or replayed automatically;
+3. expose explicit crew receipt and crew DPS shutdown command through the HTTP validation interface;
+4. expose an explicit scenario/vehicle physical-response operation without inventing timing;
+5. reconnect physical shutdown to the existing fresh controller-evidence path;
+6. after runnable smoke validation, replace manual GET advancement with realtime pacing driven by wall clock while session status is `RUNNING`.
 
 ## Integration validation still required
 
@@ -73,8 +94,10 @@ When a runnable repository environment is available:
 - exercise several phone/browser clients against one server;
 - verify reload/rejoin does not change mission state;
 - verify station information isolation;
-- verify decision-gate pause/resume behavior;
-- verify the nominal timeline reaches power-down;
+- verify GET continues through pending controller decisions;
+- verify explicit pause is the only normal clock stop;
+- verify late decisions create missed-event consequences rather than retroactive event execution;
+- verify the nominal timeline reaches power-down when prerequisites are satisfied on time;
 - verify the ΔP nonnominal path through CONTROL and CAPCOM;
 - verify communication → crew receipt → crew command → physical response ordering;
 - then validate fresh shutdown evidence through the normal controller path.
@@ -94,4 +117,4 @@ When a runnable repository environment is available:
 
 ## Current success criterion
 
-A rejoin-safe phone-accessible prototype in which a source-bounded nonnominal condition can move through **source observation → correct station information → controller decision → CAPCOM transmission → explicit crew receipt/action → physical response → fresh controller evidence**, with no hidden automatic decisions or invented historical routing.
+A rejoin-safe phone-accessible prototype running a **continuous authoritative mission clock** in which player actions affect event eligibility and mission evolution, and a source-bounded nonnominal condition can move through **source observation → correct station information → controller decision → CAPCOM transmission → explicit crew receipt/action → physical response → fresh controller evidence**, with no hidden automatic decisions or invented historical routing.
