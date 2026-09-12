@@ -77,6 +77,7 @@ def _status_payload(session: PC2Session) -> dict[str, Any]:
         "get_s": session.state.get_s,
         "phase": session.state.phase,
         "pending_gate": session.pending_gate,
+        "pause_reason": session.pause_reason,
         "assigned_stations": sorted(session.station_assignments.values()),
         "available_stations": list(session.available_stations),
     }
