@@ -96,21 +96,34 @@ def evaluate_pc2_shutdown_rules(
     ces_failure = control.products["ces.dc_failure"].value
     results["ces_dc_failure"] = RuleEvaluation("ces_dc_failure", RuleState.TRIGGERED if ces_failure else RuleState.CLEAR, "CONTROL", "control electronics system DC power failure", observation=ces_failure)
 
-    inverter_warning = bool(telmu.products["lm.inverter_warning"].value)
+    inverter_product = telmu.products["lm.inverter_warning"]
+    inverter_warning = bool(inverter_product.value)
+    warning_observed_get = inverter_product.source_time_get
     switch_attempted = bool(telmu.products["lm.inverter_switch_attempted"].value)
     switch_get = telmu.products["lm.inverter_switch_attempt_get_s"].value
+
     if not inverter_warning:
         inverter_state = RuleState.CLEAR
-    elif not switch_attempted:
+    elif not switch_attempted or switch_get is None:
+        inverter_state = RuleState.NOT_EVALUABLE
+    elif warning_observed_get is None or warning_observed_get < float(switch_get):
+        # A warning observed only before the switch is not the documented
+        # positive criterion. A current post-switch observation is required.
         inverter_state = RuleState.NOT_EVALUABLE
     else:
-        # No invented persistence timer: the rule is satisfied when the modeled
-        # warning is still present in the post-switch state.
+        # No invented persistence timer. The documented criterion is satisfied
+        # once a distinct post-switch observation still shows the warning.
         inverter_state = RuleState.TRIGGERED
+
     results["persistent_inverter_warning"] = RuleEvaluation(
         "persistent_inverter_warning", inverter_state, "TELMU/CONTROL",
         "inverter warning remaining after switching inverters",
-        observation={"warning": inverter_warning, "switch_attempted": switch_attempted, "switch_get_s": switch_get},
+        observation={
+            "warning": inverter_warning,
+            "warning_observed_get_s": warning_observed_get,
+            "switch_attempted": switch_attempted,
+            "switch_get_s": switch_get,
+        },
     )
 
     return results
