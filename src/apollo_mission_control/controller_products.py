@@ -63,7 +63,7 @@ def project_controller_products(state: PC2State, fixture: dict[str, Any]) -> dic
         "dps.engine_gimbal_warning": _live_product(state, dps["engine_gimbal_warning"], source_layer="onboard/telemetry", provenance="pc2.fixture.dps.engine_gimbal_warning"),
         "ces.dc_failure": _live_product(state, vehicle_control["ces_dc_failure"], source_layer="onboard/telemetry", provenance="pc2.fixture.vehicle_control.ces_dc_failure"),
     }
-    control_deferred = ["dps.inlet_pressure_psi", "vehicle.attitude_error_xyz_deg", "vehicle.body_rate_xyz_deg_s"]
+    control_deferred = ["dps.inlet_pressure_psi"]
     if state.dps_chamber_pressure_psi is None:
         control_deferred.insert(0, "dps.chamber_pressure_psi")
     else:
@@ -79,6 +79,22 @@ def project_controller_products(state: PC2State, fixture: dict[str, Any]) -> dic
             state, state.dps_fuel_oxidizer_delta_p_psi, units="psi",
             source_layer="ground-derived/propulsion-monitoring",
             provenance="Apollo 13 PC+2 ground fuel/oxidizer delta-P product; exact LM-measurement transformation/routing unresolved",
+        )
+    if state.attitude_error_xyz_deg is None:
+        control_deferred.append("vehicle.attitude_error_xyz_deg")
+    else:
+        control_products["vehicle.attitude_error_xyz_deg"] = _live_product(
+            state, dict(state.attitude_error_xyz_deg), units="deg",
+            source_layer="measurement/telemetry",
+            provenance="Apollo 13 PC+2 CONTROL attitude-error observation family; exact LM-7 PCM/display routing unresolved",
+        )
+    if state.body_rate_xyz_deg_s is None:
+        control_deferred.append("vehicle.body_rate_xyz_deg_s")
+    else:
+        control_products["vehicle.body_rate_xyz_deg_s"] = _live_product(
+            state, dict(state.body_rate_xyz_deg_s), units="deg/s",
+            source_layer="measurement/telemetry",
+            provenance="Apollo 13 PC+2 CONTROL angular-rate observation family; exact LM-7 PCM/display routing unresolved",
         )
     control = ProjectionSet("CONTROL", control_products, tuple(control_deferred))
 
