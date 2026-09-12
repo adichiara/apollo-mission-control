@@ -236,7 +236,7 @@ This strengthens the composite-ground-product interpretation of MSK 1123 but doe
 
 ## 2026-09-11 — AEA telemetry-word-list recovery
 
-Research note 046 recovers the engineering structure of **Table 2.1-7 — Abort Electronics Assembly - Telemetry Word List** from a contemporary LMA790-3-LM handbook copy with the same 1 February 1970 basic date as the Apollo 13 LM-7 handbook. The searchable copy carries a later 15 June 1970 change date, so its rows are retained as strong continuity evidence until the exact LM-7 page is directly compared.
+Research note 046 recovers the engineering structure of **Table 2.1-7 — Abort Electronics Assembly - Telemetry Word List** from a later contemporary LMA790-3-LM configuration. The source chronology is now explicit: Apollo 13's **LM-7 and Subsequent** handbook is Basic Date **15 December 1968**, Change Date **1 February 1970**; the searchable **LM-10 and Subsequent** copy is Basic Date **1 February 1970**, Change Date **15 June 1970**. The LM-10 table therefore remains continuity evidence until the exact LM-7 rows are directly compared.
 
 The table explicitly separates:
 
@@ -247,3 +247,10 @@ The table explicitly separates:
 - DEDA state, direction cosines, timing, and other AGS quantities.
 
 This materially narrows the MSK 1123 source candidates and independently confirms that **AGS ULL cannot simply display the telemetry ullage counter**, because the CRT field is a velocity-unit measurement. It still does not tell us which incremental-velocity family feeds AGS DEL VEL, what ground calculation produces AGS ULL or ACT VEL, or whether AGS VEL is transformed before display. Those remain explicit RTCC/display-routing gaps.
+
+
+## 2026-09-12 — AGS ullage logic narrowed
+
+Research note 047 adds primary AGS specification evidence for the physical ullage test. The AGS detects ullage from **accumulated +X-axis velocity increment over each 2-second computer cycle**, requiring the threshold to be met for three consecutive cycles. The inspected AGS specification expresses the criterion as **0.2 ft/s per 2-second cycle**; the later LM-10 handbook expresses the equivalent condition as average +X acceleration greater than **0.1 ft/s²** for the same cycle length.
+
+This makes a velocity-valued quantity in the two-second ullage-test chain the strongest current physical candidate for the MSK 1123 **AGS ULL** row. It still does not prove the exact CRT source or ground transformation. **AGS ULL** and **ACT VEL** remain separate unresolved display parameters and must not be merged merely because both involve accumulated velocity.
