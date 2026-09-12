@@ -275,7 +275,20 @@ The following source classes are specifically needed and should be added as they
 - **Status:** REVIEWED-DETAILED for approximately 77:55–79:34 GET through the preserved transcript/Flight Journal chronology.
 - **Use:** Final P30 maneuver-PAD transfer beginning at 77:55:24, weak-link/readback behavior, S-band power-amplifier change, ranging/uplink chronology, final readiness polling, ignition/throttle/shutdown voice reports, and post-burn residual/readback workflow.
 - **Important distinction:** voice timestamps record communication/report events and can lag the underlying physical spacecraft event. They should not override Mission Operations Report computed TIG/cutoff values for physics validation.
-- **Research record:** `research/050_pc2_initialization_and_nominal_validation.md`.
+- **Research records:** `research/050_pc2_initialization_and_nominal_validation.md`, `research/051_pc2_ullage_and_throttle_profile.md`.
+
+### Apollo 13 LM emergency-operation systems analysis — Panel 3 Addendum 1
+
+- **Title:** MSC Apollo 13 investigation team. Panel 3 - Flight operations and network, addendum 1 Final report: Analysis of Apollo 13 lunar module systems during emergency operation following command service module oxygen tank explosion
+- **NASA document ID:** 19710010487
+- **Reports:** NASA-TM-X-66935 / REPT-70-FC13-47-ADD-1
+- **Publication date:** June 1970
+- **Source:** NASA Technical Reports Server
+- **URL:** https://ntrs.nasa.gov/citations/19710010487
+- **Status:** REVIEWED-PARTIAL for the PC+2 DPS profile through NTRS indexed text
+- **Use:** Postflight LM subsystem/propulsion analysis; provides a more detailed physical PC+2 throttle/ramp description than the crew maneuver PAD.
+- **Caution:** The indexed profile uses rounded segment durations and a timing convention that does not cleanly reproduce the higher-precision Flight Control Division TIG/cutoff contract. It is retained for later engine-response modeling and is not substituted blindly into the first nominal event model.
+- **Research record:** `research/051_pc2_ullage_and_throttle_profile.md`.
 
 
 ### The Early Days of Simulation and Operations
