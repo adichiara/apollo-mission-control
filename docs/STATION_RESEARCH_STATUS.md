@@ -280,3 +280,12 @@ Scenario-specific readiness now includes:
 - **FLIGHT/CAPCOM:** the final GO/NO-GO and air-ground decision/readback path is documented and remains intentionally separate from raw subsystem state.
 
 All affected stations remain at their existing maturity grades. The next station research should be driven by the minimum PC+2 player-facing product set rather than by generic console completeness.
+
+
+## 2026-09-12 — PC+2 ullage/throttle command chronology
+
+Research note 051 freezes the first-slice procedure/command sequence relevant to CONTROL and CAPCOM: manual two-jet ullage begins at **TIG−10 s**, minimum throttle begins at ignition, 40-percent throttle is commanded at **TIG+5 s**, and maximum throttle is commanded after the documented 21-second 40-percent segment.
+
+The crew's later 40-percent and 100-percent voice reports remain separate communication events. This is important for station modeling because CONTROL should not receive a perfect throttle-state transition merely because the crew procedure commanded one; physical engine response, telemetry indication and crew report are different information layers.
+
+This improves scenario fidelity but does **not** resolve exact CONTROL CRT timing, telemetry-to-display routing, or detailed physical engine-response dynamics. CONTROL therefore remains maturity **B**.
