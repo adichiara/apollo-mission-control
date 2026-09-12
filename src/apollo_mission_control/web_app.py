@@ -17,6 +17,7 @@ from pydantic import BaseModel, Field
 
 from .pc2_nominal import load_fixture
 from .pc2_session import PC2Session
+from .scenario_injection import EvidenceClass, StateInjection
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -55,6 +56,18 @@ class FlightDecisionRequest(BaseModel):
 class CapcomQueueRequest(BaseModel):
     action: str = Field(min_length=1, max_length=128)
     parameters: dict[str, Any] = Field(default_factory=dict)
+    basis: str = Field(min_length=1, max_length=1000)
+
+
+class StateInjectionRequest(BaseModel):
+    injection_id: str = Field(min_length=1, max_length=128)
+    target: str = Field(min_length=1, max_length=128)
+    value: Any
+    evidence_class: EvidenceClass
+    provenance: str = Field(min_length=1, max_length=2000)
+
+
+class ControlDeltaPCalloutRequest(BaseModel):
     basis: str = Field(min_length=1, max_length=1000)
 
 
@@ -165,6 +178,23 @@ def advance_session(request: AdvanceRequest) -> dict[str, Any]:
         return payload
 
 
+@app.post("/api/session/admin/injection")
+def apply_injection(request: StateInjectionRequest) -> dict[str, Any]:
+    """Prototype scenario-authoring/validation endpoint, not a player control."""
+    with _lock:
+        session = _require_session()
+        injection = StateInjection(
+            injection_id=request.injection_id,
+            get_s=float(session.state.get_s),
+            target=request.target,
+            value=request.value,
+            evidence_class=request.evidence_class,
+            provenance=request.provenance,
+        )
+        _domain_call(lambda: session.apply_session_injection(injection))
+        return _status_payload(session)
+
+
 @app.get("/api/session/player/{player_id}")
 def player_snapshot(player_id: str) -> dict[str, Any]:
     with _lock:
@@ -210,6 +240,27 @@ def queue_capcom(player_id: str, request: CapcomQueueRequest) -> dict[str, Any]:
         return {
             "item_id": item.item_id,
             "get_s": item.get_s,
+            "requested_by": item.requested_by,
+            "action": item.action,
+            "parameters": item.parameters,
+            "basis": item.basis,
+            "transmitted": item.transmitted,
+        }
+
+
+@app.post("/api/session/control/{player_id}/delta-p-callout")
+def control_delta_p_callout(
+    player_id: str, request: ControlDeltaPCalloutRequest
+) -> dict[str, Any]:
+    with _lock:
+        session = _require_session()
+        item = _domain_call(
+            lambda: session.record_control_delta_p_callout(player_id, basis=request.basis)
+        )
+        return {
+            "item_id": item.item_id,
+            "get_s": item.get_s,
+            "requested_by": item.requested_by,
             "action": item.action,
             "parameters": item.parameters,
             "basis": item.basis,
@@ -224,6 +275,7 @@ def transmit_capcom(player_id: str, item_id: int) -> dict[str, Any]:
         item = _domain_call(lambda: session.transmit_capcom_item(player_id, item_id))
         return {
             "item_id": item.item_id,
+            "requested_by": item.requested_by,
             "action": item.action,
             "transmitted": item.transmitted,
             "transmitted_get_s": item.transmitted_get_s,
