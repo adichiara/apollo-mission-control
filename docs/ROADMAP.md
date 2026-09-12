@@ -62,6 +62,8 @@ Key research chain:
 - `077_pc2_inco_player_presentation_boundary.md`
 - `078_pc2_flight_capcom_player_presentation_boundary.md`
 - `079_pc2_first_playable_session_boundary.md`
+- `080_web_transport_selection.md`
+- `081_pc2_mission_clock_and_decision_gate_semantics.md`
 
 Deliverables:
 
@@ -72,6 +74,8 @@ Deliverables:
 - [x] nominal event timeline through immediate power-down
 - [x] core scenario-specific primary-source package
 - [x] minimum first-slice player-facing station set
+- [x] first phone-accessible transport shell
+- [x] explicit mission-clock / decision-gate semantics for deterministic slice
 - [ ] low-player-count station aggregation
 
 ## Phase 3 — Display and console reconstruction
@@ -111,7 +115,7 @@ Current PC+2 checkpoint:
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **nominal event model + controller products + partial rules + failure/action/communication layers + shutdown/restart physical-response/evidence paths + minimum station presentation set + first authoritative session core implemented**
+**Status:** **nominal event model + controller products + partial rules + failure/action/communication layers + shutdown/restart physical-response/evidence paths + minimum station presentation set + authoritative session/web prototype implemented**
 
 Completed:
 
@@ -145,16 +149,23 @@ Completed:
 - [x] minimum player-facing presentation set implemented for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM
 - [x] single-process authoritative `PC2Session` owns state, GET, historical event progression, station assignment, station-scoped views, readiness reports, FLIGHT GO gating, CAPCOM handoff, pause/resume, and audit events
 - [x] playable session intercepts the historical final-poll fixture event instead of auto-setting FLIGHT GO
-- [x] NO-GO holds progression at final readiness; explicit FLIGHT GO clears the gate
+- [x] serializable station-scoped player snapshots implemented
+- [x] readiness reports surfaced directly in FLIGHT view
+- [x] CAPCOM queue state surfaced directly in CAPCOM view
+- [x] deterministic seven-station nominal playthrough implemented
+- [x] FastAPI/Uvicorn transport and phone-first shell implemented
+- [x] same-player/same-station rejoin is idempotent at HTTP boundary
+- [x] blocking FLIGHT decision gate is an explicit **simulation pause**, not an implied historical GET stop
+- [x] pause reason is exposed in session/player API state
+- [x] manual resume cannot bypass a pending controller gate; GO resumes and NO-GO remains paused
 
 ### Immediate next work
 
-- [ ] add a serializable **session/player snapshot DTO** suitable for a future web/mobile client
-- [ ] surface controller readiness reports directly in the FLIGHT player view
-- [ ] surface pending/transmitted CAPCOM queue items in the CAPCOM player view
-- [ ] add a deterministic scripted **multi-station nominal playthrough** through the session layer
-- [ ] validate station information isolation and audit-event ordering end-to-end
-- [ ] then select/implement the thin web/session transport and mobile presentation shell
+- [ ] persist player ID/station in the browser and automatically attempt same-player/same-station rejoin after reload
+- [ ] run domain/session/API suite in a runnable checked-out environment and smoke-test several browser clients
+- [ ] route one already-modeled nonnominal branch through the same session/API path
+- [ ] add realtime pacing only after smoke validation, using explicit simulation-pause semantics
+- [ ] do not invent a numeric PC+2 delay tolerance or retroactive event policy from the source statement that TIG was not time critical
 - [ ] do not create a post-burn FIDO trajectory solution merely to make the screen complete
 - [ ] keep `crew_thrust_monitor` `NOT_EVALUABLE` unless a direct LM-7 source identifies the percent-thrust indication
 - [ ] keep singular 150-psi inlet-pressure aggregation deferred unless a direct source becomes cheaply available
@@ -183,6 +194,7 @@ Important constraints:
 - INCO communications subchannels are not collapsed into a hidden communications-health verdict;
 - FLIGHT GO is a player/controller decision in session play, not a consequence of hidden nominal state;
 - CAPCOM queued/transmitted messages do not directly mutate authoritative vehicle state;
+- decision-gate pause is a project simulation policy, not a claim that historical Apollo GET stopped;
 - exact player display coordinates/routing are not invented where source coverage is incomplete;
 - synthetic boundary-test values/times are labeled non-historical;
 - injections, actions, communications, controller decisions, physical responses, controller products, player presentation, and session orchestration remain separate layers.
@@ -204,7 +216,7 @@ Current checkpoint:
 - session station assignment selects only the assigned station's projection/presentation;
 - controller readiness reports and FLIGHT decisions are session events, not spacecraft state;
 - FLIGHT→CAPCOM queueing and CAPCOM transmission are separate audit events;
-- network transport and exact display cadence remain future work where documented.
+- HTTP transport remains a thin adapter over the domain layer.
 
 ## Phase 6 — Procedures and flight rules
 
@@ -223,7 +235,8 @@ PC+2 checkpoint:
 - [x] premature-shutdown restart rule and contemporaneous restart sequence recovered
 - [x] 77-percent onboard thrust criterion deliberately remains `NOT_EVALUABLE`
 - [x] attitude-error/rate thresholds and operational exception allocation resolved from contemporaneous read-up/readback
-- [x] final GO/NO-GO decision is now represented as an explicit playable-session FLIGHT gate
+- [x] final GO/NO-GO decision represented as explicit playable-session FLIGHT gate
+- [x] decision gate now has explicit simulation-pause semantics
 - [ ] exact startup-transient time boundary remains unresolved
 - [ ] exact alternate-inverter identity/switch details remain unresolved
 - [ ] singular 150-psi ground inlet-pressure rule remains `NOT_EVALUABLE`
@@ -246,7 +259,8 @@ Current checkpoint:
 - [x] premature-shutdown restart branch modeled without scripting restart success
 - [x] ground-only ΔP shutdown callout loop implemented
 - [x] command/physical-response/evidence boundaries established for DPS shutdown and restart
-- [x] nominal timed scenario events now run inside an authoritative session that can pause at player decision gates
+- [x] nominal timed scenario events run inside an authoritative session that explicitly pauses at blocking player decision gates
+- [ ] route one existing nonnominal branch through session/API orchestration
 - [ ] documented nonnominal Apollo training case reconstructed only when source detail is sufficient
 - [ ] historical SimSup/operator interface deferred
 
@@ -254,7 +268,7 @@ Scenario implementation rule: inject underlying conditions; do not announce diag
 
 ## Phase 8 — Multi-player session layer
 
-**Status:** **single-process authoritative prototype implemented; network/web layer pending**
+**Status:** **single-process authoritative + first web/phone prototype implemented**
 
 **Goal:** central authoritative server, session/join, station assignment, phone clients, synchronized GET/state, reconnection, and server-controlled scenario state.
 
@@ -267,19 +281,23 @@ Completed first prototype:
 - [x] explicit FLIGHT GO/NO-GO gate at the historical final poll
 - [x] FLIGHT→CAPCOM approved-message queue
 - [x] explicit CAPCOM transmission event
-- [x] pause/resume
+- [x] manual and decision-gate pause semantics
 - [x] chronological audit log
+- [x] serializable player snapshots
+- [x] scripted multi-station nominal playthrough
+- [x] FastAPI/Uvicorn transport
+- [x] session creation/join/status/action endpoints
+- [x] responsive phone shell
+- [x] idempotent same-player/same-station rejoin
+- [x] Render deployment configuration
 
 Immediate next integration:
 
-- [ ] serializable session/player snapshot DTO
-- [ ] readiness reports visible in FLIGHT presentation
-- [ ] CAPCOM queue visible in CAPCOM presentation
-- [ ] scripted multi-station nominal playthrough
-- [ ] framework/transport selection
-- [ ] session creation/join endpoint
-- [ ] reconnection semantics
-- [ ] phone/mobile shell
+- [ ] browser-side local identity/station persistence + automatic rejoin attempt
+- [ ] executable multi-client smoke validation
+- [ ] first nonnominal session/API branch
+- [ ] realtime pacing driver using explicit pause policy
+- [ ] stronger reconnect credential only if playtesting shows casual player-ID collision is a real problem
 
 Role aggregation remains deferred until the seven-station first-slice workflow has been validated.
 
