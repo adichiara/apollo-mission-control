@@ -1,6 +1,7 @@
 # Roadmap addendum — PC+2 DPS restart physical response
 
-Date: 2026-09-12
+Date: 2026-09-12  
+Status: **CURRENT — supersedes the Phase 4 “Immediate next work” restart-response item in `docs/ROADMAP.md` until the next roadmap consolidation**
 
 ## Completed boundary
 
