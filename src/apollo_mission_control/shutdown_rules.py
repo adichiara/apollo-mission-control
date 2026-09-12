@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 
+from .attitude_monitoring import evaluate_attitude_error, evaluate_attitude_rate
 from .controller_products import ProjectionSet
 
 
@@ -32,11 +33,15 @@ class RuleEvaluation:
 def evaluate_pc2_shutdown_rules(
     projections: dict[str, ProjectionSet],
     fixture: dict[str, Any],
+    *,
+    startup_transient_exception_active: bool | None = None,
 ) -> dict[str, RuleEvaluation]:
     """Evaluate only PC+2 criteria supported by currently modeled observations.
 
     Missing project-model values produce NOT_EVALUABLE, not CLEAR and not a
-    simulated telemetry failure.
+    simulated telemetry failure. The attitude-error startup exception requires
+    explicit context; this function never derives it from throttle phase or
+    seconds since ignition because no reviewed source defines that boundary.
     """
     control = projections["CONTROL"]
     guido = projections["GUIDO"]
@@ -75,8 +80,41 @@ def evaluate_pc2_shutdown_rules(
             observation={"delta_p_psi": delta_p, "threshold_psi": threshold},
         )
 
-    results["attitude_error"] = deferred("attitude_error", "CONTROL/GUIDO", "absolute attitude error approximately 10 deg limit; startup wording unresolved")
-    results["attitude_rate"] = deferred("attitude_rate", "CONTROL", "absolute attitude rate approximately 10 deg/s limit; startup wording unresolved")
+    attitude_error_product = control.products.get("vehicle.attitude_error_xyz_deg")
+    attitude_error = evaluate_attitude_error(
+        None if attitude_error_product is None else attitude_error_product.value,
+        threshold_deg=float(fixture["shutdown_rules"]["attitude_error_abs_max_deg"]),
+        startup_transient_exception_active=startup_transient_exception_active,
+    )
+    results["attitude_error"] = RuleEvaluation(
+        "attitude_error",
+        RuleState(attitude_error.state.value),
+        "CONTROL",
+        attitude_error.basis,
+        observation={
+            "vector_deg": attitude_error.vector,
+            "max_abs_deg": attitude_error.max_abs_value,
+            "threshold_deg": attitude_error.threshold,
+            "startup_transient_exception_active": startup_transient_exception_active,
+        },
+    )
+
+    attitude_rate_product = control.products.get("vehicle.body_rate_xyz_deg_s")
+    attitude_rate = evaluate_attitude_rate(
+        None if attitude_rate_product is None else attitude_rate_product.value,
+        threshold_deg_s=float(fixture["shutdown_rules"]["body_rate_abs_max_deg_s"]),
+    )
+    results["attitude_rate"] = RuleEvaluation(
+        "attitude_rate",
+        RuleState(attitude_rate.state.value),
+        "CONTROL",
+        attitude_rate.basis,
+        observation={
+            "vector_deg_s": attitude_rate.vector,
+            "max_abs_deg_s": attitude_rate.max_abs_value,
+            "threshold_deg_s": attitude_rate.threshold,
+        },
+    )
 
     gimbal = control.products["dps.engine_gimbal_warning"].value
     results["engine_gimbal_warning"] = RuleEvaluation("engine_gimbal_warning", RuleState.TRIGGERED if gimbal else RuleState.CLEAR, "CONTROL", "engine gimbal warning/light", observation=gimbal)
@@ -107,13 +145,8 @@ def evaluate_pc2_shutdown_rules(
     elif not switch_attempted or switch_get is None:
         inverter_state = RuleState.NOT_EVALUABLE
     elif warning_observed_get is None or warning_observed_get <= float(switch_get):
-        # A warning whose represented observation time is only pre-switch or
-        # coincident with the switch does not establish the documented
-        # post-switch criterion. A distinct later observation is required.
         inverter_state = RuleState.NOT_EVALUABLE
     else:
-        # No invented persistence timer. Any distinct post-switch observation
-        # that still shows the warning satisfies the documented criterion.
         inverter_state = RuleState.TRIGGERED
 
     results["persistent_inverter_warning"] = RuleEvaluation(
