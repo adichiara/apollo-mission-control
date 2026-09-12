@@ -164,7 +164,7 @@ For PC+2, the final FLIGHT GO/NO-GO poll opens a decision requirement while GET 
 
 This establishes the engine as a **continuously evolving mission in which players intervene**, rather than a sequence of gated scenes.
 
-See `resources/research/082_continuous_mission_clock_architecture.md`.
+See `resources/research/084_continuous_mission_clock_architecture.md`.
 
 ## Not yet decided
 
