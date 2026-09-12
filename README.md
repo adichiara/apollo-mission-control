@@ -60,6 +60,8 @@ Implemented transport/session behavior includes:
 - explicitly record crew receipt of a transmitted shutdown call;
 - explicitly record the crew DPS shutdown command;
 - explicitly apply the physical DPS engine-off response at current authoritative GET;
+- explicitly record a crew shutdown report as controller-observable evidence;
+- let CONTROL assess fresh shutdown evidence without exposing hidden physical truth;
 - retain manual GET advancement only for integration/validation;
 - inspect a prototype audit endpoint.
 
@@ -101,13 +103,18 @@ CAPCOM continues to see an approved communication queue rather than direct autho
 
 ## First nonnominal end-to-end chain
 
-The source-bounded synthetic ΔP branch now reaches physical response through the session/API:
+The source-bounded synthetic ΔP branch now reaches fresh controller evidence through the session/API:
 
-`source observation → CONTROL product/rule → CONTROL decision → CAPCOM queue/transmission → crew receipt → crew shutdown command → physical DPS response`
+`source observation → CONTROL product/rule → CONTROL decision → CAPCOM queue/transmission → crew receipt → crew shutdown command → physical DPS response → crew report / fresh GQ6510P evidence → CONTROL evidence assessment`
 
 Every step remains explicit. CAPCOM transmission does not imply crew receipt, crew command does not imply physical engine shutdown, and physical response does not fabricate controller evidence.
 
-The current HTTP boundary is documented in `resources/research/085_pc2_http_crew_response_integration.md`.
+The CONTROL evidence assessment reports only evidence availability (`none`, `crew_reported`, `ground_pressure_observed`, `corroborated`). A chamber-pressure observation counts only if it is post-command, and no pressure magnitude is interpreted as a binary engine-off threshold. The assessment does not inspect authoritative `engine_running` state.
+
+See:
+
+- `resources/research/085_pc2_http_crew_response_integration.md`;
+- `resources/research/086_pc2_shutdown_evidence_http_integration.md`.
 
 ## Historical/presentation boundaries retained
 
@@ -128,17 +135,16 @@ Detailed DPS transients, exact display routing/cadence, and a post-burn FIDO tra
 
 ## Immediate priority
 
-The project is now firmly in **playable integration**, not subsystem expansion.
+The first source-bounded nonnominal branch is now integrated through fresh controller evidence. The next work is operational validation and player-surface cleanup:
 
-The continuous clock, declarative event prerequisites, realtime 1× pacing, and HTTP crew-response chain are implemented. The next integration items are:
+1. run the full domain/session/API suite in a runnable checked-out environment;
+2. exercise several phone/browser clients against one authoritative server;
+3. run the complete synthetic ΔP branch through the live API/browser path;
+4. verify realtime GET, explicit pause/resume, rejoin, and station information isolation under concurrent client activity;
+5. review the phone UI for continuous realtime operation;
+6. separate validation/admin controls from normal player-facing controls before broader playtesting.
 
-1. expose an explicit crew shutdown report as one controller-observable evidence channel;
-2. feed a fresh post-command `GQ6510P` chamber-pressure observation through the existing controller path;
-3. reuse `shutdown_confirmation.py` to aggregate evidence without inventing a pressure threshold or automatic `engine_off_confirmed` verdict;
-4. run the full domain/session/API suite and multi-client HTTP/mobile smoke path in a runnable checked-out environment;
-5. review the phone UI for continuous realtime operation and keep manual `/advance` as development-only infrastructure.
-
-Further historical research should reopen only when those integration steps expose a concrete information, procedure, or decision gap.
+Further historical research should reopen only when integrated play exposes a concrete information, procedure, or decision gap.
 
 ## Apollo 13 station specifications
 
