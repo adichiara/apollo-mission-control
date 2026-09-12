@@ -76,6 +76,7 @@ Research comparison: `resources/research/048_first_vertical_slice_candidate_asse
 Initialization/validation: `resources/research/050_pc2_initialization_and_nominal_validation.md`.  
 Ullage/throttle implementation research: `resources/research/051_pc2_ullage_and_throttle_profile.md`.  
 Controller-product projection research: `resources/research/052_pc2_controller_product_projection.md`.  
+Shutdown-rule evaluation research: `resources/research/053_pc2_shutdown_rule_evaluation.md`.  
 Parameter specification: `docs/scenarios/APOLLO13_PC2_PARAMETERS.md`.
 
 ### Phase 2 deliverables
@@ -135,7 +136,7 @@ The telemetry evidence narrows source candidates but does not certify every tele
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **nominal event + controller-product model in progress**
+**Status:** **nominal event + controller-product + partial rule model in progress**
 
 **Goal:** produce the mission state from which historically appropriate telemetry can be derived.
 
@@ -167,6 +168,7 @@ Model only what the selected scenario requires initially, but preserve subsystem
 - [x] framework-neutral Python nominal event prototype and validation tests
 - [x] explicit two-jet ullage, minimum/40-percent/maximum commanded throttle phases, and separate crew throttle-report events
 - [x] first station-specific controller-product projection layer with explicit validity, timing metadata, source layers, provenance, and implementation-gap separation
+- [x] partial source-backed shutdown-rule audit evaluator; unsupported observation paths remain explicitly `not_evaluable`
 
 ### Immediate next work
 
@@ -175,14 +177,17 @@ Model only what the selected scenario requires initially, but preserve subsystem
 - [x] define update/sample semantics for the minimum player-facing products; exact CRT cadence remains unresolved where unsupported
 - [x] convert the nominal state machine and parameter contract into the first implementation schema/data fixture
 - [x] add controller-product projections from authoritative state with validity/provenance metadata
-- [ ] implement independent shutdown-rule evaluation without a precomputed `burn_abort` state
-- [ ] add first nonnominal validation case only after the nominal product/rule path is complete
+- [x] implement independent shutdown-rule evaluation without a precomputed `burn_abort` state, limited to observation paths currently modeled
+- [ ] model the first deferred shutdown-rule observation path only when a defensible source/state representation is available
+- [ ] add the first nonnominal validation case only when its underlying condition and controller observation path are source-backed
 
 The exact Cartesian RTCC state vector at 77:55 is deliberately **not** being reverse-engineered from the maneuver PAD. It becomes an active research target only when the trajectory propagator requires it.
 
 Detailed DPS engine-response/ramp dynamics are also deferred. The nominal prototype currently models the source-backed **commanded** throttle profile and preserves later crew reports as separate communication events. See research note 051.
 
 The first projection implementation intentionally does not expose required-but-unmodeled numeric fields (for example exact nominal DPS pressure readings) as `unavailable` telemetry. Those are tracked as implementation gaps so research incompleteness cannot masquerade as a historical data-path failure. See research note 052.
+
+The rule evaluator follows the same boundary. Pressure, differential-pressure, attitude/rate, crew analog indications, positive ISS+program-alarm, and positive inverter-after-switch cases are not assumed clear merely because the executable model lacks their observations. See research note 053.
 
 Workstreams:
 
@@ -208,8 +213,9 @@ Deliverables:
 - [x] first-slice subsystem dependency contract
 - [x] first executable nominal event fixture/state model
 - [x] controller-product projection layer
-- [ ] shutdown-rule evaluation tests
-- [ ] failure propagation tests
+- [x] partial shutdown-rule evaluation + validation tests committed
+- [ ] first source-backed nonnominal validation case
+- [ ] broader failure propagation tests
 
 ## Phase 5 — Mission Control data path
 
@@ -243,6 +249,8 @@ Deliverables:
 - validate that the simulation exposes enough information for a controller to apply each implemented rule
 
 **Immediate priority:** PC+2 shutdown criteria, final maneuver PAD/readback, alignment state, maneuver update/uplink procedure, DPS/RCS readiness, burn monitoring, GO/NO-GO polling, and immediate post-burn power-down handoff.
+
+**Current PC+2 rule checkpoint:** the evaluator can audit modeled discrete warning criteria without issuing a shutdown command. Rules requiring unmodeled analog observations remain explicitly `not_evaluable`; a primary-source wording conflict over the startup-transient exception for attitude error/rate remains unresolved rather than guessed.
 
 ## Phase 7 — Simulation scenarios / SimSup
 
