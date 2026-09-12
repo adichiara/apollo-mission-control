@@ -7,24 +7,28 @@ Date: 2026-09-12
 - Confirmed that the minimum player-facing station set has reached its display-expansion stop condition: CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM all have first-pass project renderings.
 - Researched the next integration boundary against the contemporaneous Apollo 13 PC+2 record.
 - Preserved the documented sequence of controller readiness -> FLIGHT decision -> CAPCOM crew-facing GO rather than computing or transmitting GO automatically.
-- Added `src/apollo_mission_control/session_orchestration.py`.
-- Added `tests/test_session_orchestration.py`.
+- Reconciled concurrent implementation work around the richer canonical `src/apollo_mission_control/pc2_session.py`; removed the smaller duplicate session prototype and its tests.
 - Added research note `079_pc2_session_orchestration_boundary.md`.
 - Added `PC2_SESSION_ORCHESTRATION_SOURCES.md`.
 
 ## Implemented session behavior
 
-- authoritative monotonic session GET;
-- station/player assignment;
-- per-station current readiness report plus retained history;
-- explicit FLIGHT GO/NO-GO decision event;
-- controller/FLIGHT callout queue;
-- distinct CAPCOM-to-crew transmission event;
-- monotonically sequenced audit/replay record.
+The canonical `PC2Session` now provides:
+
+- authoritative scenario state and event progression;
+- session lifecycle and monotonic forward GET progression;
+- unique station/player assignment;
+- station-scoped player presentation selection;
+- controller readiness reports with audit history;
+- interception of the 79:17 nominal GO/NO-GO event as a real player decision gate;
+- explicit FLIGHT GO/NO-GO decision, written to normal scenario state;
+- FLIGHT-approved CAPCOM queue distinct from CAPCOM transmission;
+- ordered audit/replay events.
 
 ## Critical boundaries retained
 
 - all controllers reporting GO does not automatically set FLIGHT GO;
+- the nominal deterministic event model cannot silently bypass the playable FLIGHT gate;
 - a FLIGHT decision does not automatically reach the crew;
 - a queued callout requires a separate CAPCOM transmission;
 - crew-facing communication is not treated as physical spacecraft response;
@@ -33,16 +37,14 @@ Date: 2026-09-12
 
 ## Test status
 
-The new tests are committed. No successful runtime execution is recorded in this pass.
+`tests/test_pc2_session.py` covers station scoping, the explicit 79:17 FLIGHT gate, unauthorized decision rejection, NO-GO hold behavior, FLIGHT-to-CAPCOM handoff, pause/resume, and audit behavior. The tests are committed; no successful runtime execution is recorded in this pass.
 
 ## Next work
 
-Connect session state to the existing controller product/presentation layer:
+The canonical session already selects assigned station views and its FLIGHT decision already drives `state.flight_go`. Remaining domain integration is therefore:
 
-1. expose readiness reports to FLIGHT as session products;
-2. make the explicit session FLIGHT decision drive the FLIGHT product rather than a separate disconnected flag;
-3. expose pending callouts to CAPCOM without exposing hidden subsystem state;
-4. record CAPCOM transmission through the existing procedural communication boundary;
-5. provide assigned-station view selection from one synchronized session snapshot.
-
-Network transport, persistence, reconnect, and phone UI should follow after this domain integration is stable.
+1. expose player-submitted readiness reports to the FLIGHT view as a session-derived product;
+2. expose pending approved callouts to CAPCOM without exposing hidden subsystem state;
+3. record CAPCOM transmission through the existing procedural communication boundary;
+4. validate a complete nominal integrated PC+2 run through readiness poll, crew-facing GO, burn, shutdown report, residual review, and immediate power-down;
+5. then select transport, persistence/reconnect, and phone-client mechanisms.
