@@ -15,13 +15,24 @@ Questions remain open until research or an explicit project decision resolves th
 9. What Staff Support Room specialists backed each MOCR position?
 10. Which documented integrated-simulation malfunction cases survive in usable detail?
 
+Historical gaps should now be prioritized by scenario impact. An unresolved archival detail is not automatically a blocker; see the research-sufficiency rule in `PROJECT_PRINCIPLES.md`.
+
 ## Simulation scope
 
-11. Which mission and interval should be the first vertical slice?
-12. How much of the spacecraft must be physically modeled for that interval?
-13. How much of MSFN/CCATS/RTCC behavior materially affects controller decisions and therefore must be simulated?
-14. Which sensor/telemetry failure modes are necessary for the first scenario?
+11. **RESOLVED:** first vertical slice is Apollo 13 PC+2 preparation/execution, approximately 74:00–80:00 GET. See Decision D-013 and research note 048.
+12. How much of the spacecraft must be physically modeled for the PC+2 interval?
+13. How much of MSFN/CCATS/RTCC behavior materially affects PC+2 controller decisions and therefore must be simulated?
+14. Which sensor/telemetry failure modes are necessary for the first PC+2 scenario and later nonnominal variants?
 15. Should crew actions be scripted, operator-driven, or otherwise represented? This requires separate design after historical workflow research.
+
+## PC+2 vertical-slice definition
+
+30. What exact GET should initialize the first playable PC+2 scenario?
+31. Which controller positions are required for the first full-fidelity run, before player-count aggregation?
+32. Which PC+2-critical fields/products must be available to FLIGHT, FIDO/RETRO, GUIDO, CONTROL, TELMU, INCO, FAO/PROCEDURES, and CAPCOM?
+33. Which exact maneuver-state-vector/target-load/uplink steps must be represented versus initialized as completed state?
+34. Which documented shutdown criteria are player-observable from telemetry versus crew callout versus ground computation?
+35. What immediate post-burn verification and power-down activities belong inside the first scenario endpoint?
 
 ## Player scaling
 
@@ -49,14 +60,15 @@ Questions remain open until research or an explicit project decision resolves th
 28. Should primary PDFs be mirrored under `resources/primary-sources/` or should the repository keep stable source links plus hashes/metadata?
 29. What citation convention should code and data files use to identify historical provenance?
 
+## Deferred EECOM / Apollo 13 configuration gaps
 
-## EECOM / Apollo 13 configuration
+These remain useful archival targets but are not PC+2 blockers unless implementation shows otherwise.
 
-30. Can a surviving copy of **PHO-TR155 Mission H-2 Revision C (issued 1970-03-06)** be located?
-31. What were the exact Apollo 13 EECOM DRK key legends and arrangement?
-32. What were the exact Apollo 13 EECOM limit-sense/event-indicator legends beyond the functions documented by the Review Board?
-33. What did the Status/Status Report and Summary Message Enable keyboards do in Apollo 13 EECOM operations?
-34. What was the analog-meter selection/use at the EECOM console?
-35. What direct ground-command authority, if any, remained at Apollo 13 EECOM?
-36. What were the complete EECOM display-format/channel IDs beyond the two preserved Review Board examples?
-37. What exact user workflow did EECOM use for HSD Format 30 playback requests and review?
+36. Can a surviving copy of **PHO-TR155 Mission H-2 Revision C (issued 1970-03-06)** be located?
+37. What were the exact Apollo 13 EECOM DRK key legends and arrangement?
+38. What were the exact Apollo 13 EECOM limit-sense/event-indicator legends beyond the functions documented by the Review Board?
+39. What did the Status/Status Report and Summary Message Enable keyboards do in Apollo 13 EECOM operations?
+40. What was the analog-meter selection/use at the EECOM console?
+41. What direct ground-command authority, if any, remained at Apollo 13 EECOM?
+42. What were the complete EECOM display-format/channel IDs beyond the two preserved Review Board examples?
+43. What exact user workflow did EECOM use for HSD Format 30 playback requests and review?
