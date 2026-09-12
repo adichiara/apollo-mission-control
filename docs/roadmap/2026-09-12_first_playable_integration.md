@@ -1,99 +1,75 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — continuous-time nonnominal chain now reaches fresh controller evidence; runnable integration validation is next**
+Status: **CURRENT — continuous-time nonnominal chain, player/admin separation, and facilitator authority implemented; runnable multi-client validation is next**
 
-## Completed presentation/session/web checkpoints
+## Completed checkpoints
 
 - [x] minimum player presentations for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, CAPCOM;
 - [x] one authoritative mission state and synchronized GET;
-- [x] deterministic scenario advancement, lifecycle, and audit log;
-- [x] unique station assignment and station-scoped snapshots;
-- [x] readiness reports surfaced to FLIGHT;
-- [x] explicit FLIGHT GO/NO-GO decision requirement;
-- [x] explicit FLIGHT/CAPCOM queue and transmission path;
-- [x] scripted nominal seven-station playthrough;
-- [x] FastAPI/Uvicorn JSON transport and phone client;
-- [x] Render configuration and health endpoint;
-- [x] idempotent same-player/same-station server rejoin;
-- [x] browser `localStorage` persistence of prototype player/station identity and automatic rejoin after reload;
-- [x] continuous mission clock adopted: controller decisions do not stop GET;
-- [x] explicit game/session pause retained as the only ordinary clock-stop mechanism;
-- [x] nominal downstream events can be missed when prerequisites are absent and are not replayed retroactively;
-- [x] reusable declarative event-eligibility layer replaces PC+2 session-specific prerequisite branching;
-- [x] 1× monotonic wall-clock pacing integrated with the web session;
-- [x] HTTP validation path exposes crew receipt, crew shutdown command, and physical DPS engine-off response;
-- [x] explicit crew shutdown report exposed as controller-observable evidence;
-- [x] fresh post-command `GQ6510P` evidence integrated through the normal CONTROL product path;
-- [x] shutdown evidence aggregation exposed to CONTROL without an automatic engine-off verdict.
+- [x] readiness reports, FLIGHT decision requirement, CAPCOM queue/transmission, and audit trail;
+- [x] FastAPI/Uvicorn phone-accessible transport;
+- [x] rejoin-safe browser identity persistence;
+- [x] continuous mission clock: controller decisions do not stop GET;
+- [x] declarative nominal-event eligibility and missed-event consequences;
+- [x] 1× monotonic wall-clock pacing;
+- [x] end-to-end source-bounded ΔP branch through fresh CONTROL evidence;
+- [x] ordinary player station client separated from validation/SimSup client;
+- [x] primary-source review of Simulation Supervisor / simulation-control role separation;
+- [x] server-side facilitator credential for exercise-wide operations;
+- [x] Render deployment secret generated outside source control;
+- [x] facilitator authority kept separate from all controller station identities.
 
-The current deployment architecture remains single-process/in-memory. Restart or redeploy loses the live session; multiple workers/sessions remain deferred.
+The deployment remains single-process/in-memory. Restart/redeploy loses the live session; multiple workers/sessions and durable persistence remain deferred.
 
-See D-016 and research notes 084–086.
+See decisions D-016–D-017 and research notes 084–088.
 
-## Continuous-time engine boundary — implemented
+## Continuous-time engine boundary
 
-The session no longer treats the final FLIGHT poll as a scene boundary that freezes simulation time.
+At the approximately 79:17 GET final poll, `flight_go` becomes pending while the session remains `RUNNING`. GET continues. Downstream nominal events execute only if their prerequisites are present at their scheduled times; otherwise they are recorded as missed and are not replayed after a late decision.
 
-At the approximately 79:17 GET poll:
+Manual `/advance` is validation infrastructure only. Normal runtime pacing is 1× monotonic wall-clock time.
 
-- `flight_go` becomes a pending decision requirement;
-- session status remains `RUNNING`;
-- GET continues;
-- FLIGHT may record GO or NO-GO at the actual current GET;
-- downstream nominal events execute only if their operational prerequisites are present when their scheduled time arrives;
-- ineligible nominal events are recorded as `scenario_event_missed` with a reason;
-- missed nominal events are not replayed automatically after a late GO.
+## First nonnominal branch
 
-Prerequisites are declared through the reusable event-eligibility layer rather than embedded as PC+2-specific session branches.
+The synthetic PC+2 fuel/oxidizer ΔP branch now reaches controller evidence end to end:
 
-The web layer uses a monotonic realtime driver fixed at 1× and synchronizes the authoritative session on API interaction. Manual `/advance` remains only as development/validation infrastructure.
+`source injection → CONTROL product/rule → explicit CONTROL decision → CAPCOM queue/transmission → explicit crew receipt → crew shutdown command → physical DPS response → crew report / fresh GQ6510P observation → CONTROL evidence assessment`
 
-## First nonnominal session/API path — implemented through controller evidence
+The branch preserves all established guardrails: 26 psi is synthetic; internal CONTROL→CAPCOM routing is not claimed as historically exact; each communication/action/physical/evidence layer is explicit; stale pre-command pressure cannot count; no pressure magnitude becomes an engine-off threshold; and CONTROL evidence never reads hidden `engine_running` truth.
 
-Primary Apollo 13 sources establish the PC+2 **fuel/oxidizer ΔP >25 psi** criterion as a **ground callout**, but do not establish the exact internal CONTROL→FLIGHT→CAPCOM routing, exact hypothetical response wording, response latency, or a binary ground engine-off threshold.
+## Facilitator boundary
 
-Implemented without filling those gaps:
+The normal `/` client contains station-authorized controller operations only. The `/admin` interface contains exercise-control functions.
 
-- [x] explicit source-state injection through the existing whitelisted scenario-injection model;
-- [x] CONTROL receives the ground-derived ΔP through the normal product/presentation path;
-- [x] the existing common shutdown-rule evaluator determines whether the criterion is triggered;
-- [x] CONTROL must explicitly issue the shutdown callout decision;
-- [x] the callout enters the CAPCOM queue as `requested_by=CONTROL`;
-- [x] CAPCOM must explicitly transmit the item;
-- [x] CAPCOM transmission does not imply crew receipt;
-- [x] explicit crew receipt is required before the crew shutdown command;
-- [x] crew shutdown command remains separate from physical engine response;
-- [x] explicit vehicle DPS engine-off response occurs at current authoritative GET;
-- [x] explicit crew shutdown report is a separate evidence channel;
-- [x] fresh post-command `GQ6510P` chamber-pressure observation is a separate evidence channel;
-- [x] pre-command pressure cannot count as shutdown-response evidence;
-- [x] CONTROL receives evidence availability only: `none`, `crew_reported`, `ground_pressure_observed`, or `corroborated`;
-- [x] no pressure magnitude is treated as a binary engine-off threshold;
-- [x] evidence assessment does not inspect hidden authoritative `engine_running` state.
+When `APOLLO_FACILITATOR_TOKEN` is configured, exercise-wide API operations require the `X-Apollo-Facilitator` header. Render receives a generated secret through `render.yaml`; if a Render instance somehow lacks that configuration, protected operations fail closed.
 
-See research notes 082, 083, 085, and 086.
+Protected operations include lifecycle/reset, manual validation time, state injection, validation crew/vehicle response operations, and global audit access. Controller station operations remain independent of this credential.
 
-## Active priority — runnable integration validation and player-surface cleanup
+This is a modern software safety boundary. Historical NASA sources support the organizational separation of SimSup/simulation control from flight controllers, but do not establish an Apollo authentication mechanism.
 
-1. execute the full domain/session/API suite in a runnable checked-out environment;
-2. exercise several phone/browser clients against one authoritative server;
-3. run the complete synthetic ΔP branch through source observation → controller decision → CAPCOM → crew → vehicle → fresh controller evidence;
-4. verify realtime GET behavior under concurrent client polling/actions and explicit pause/resume;
-5. review the phone UI for continuous realtime operation;
-6. separate validation/admin controls from normal player-facing controls before broader playtesting;
-7. reopen historical research only if integrated play exposes a concrete missing decision dependency.
+## Active priority — runnable multi-client integration validation
+
+1. execute the complete domain/session/API test suite in a checked-out runtime;
+2. run one facilitator console plus several simultaneous phone station clients;
+3. verify realtime GET under concurrent polling/actions;
+4. verify facilitator pause/resume, player reload/rejoin, and station information isolation;
+5. run the complete synthetic ΔP branch through the live interfaces;
+6. verify players cannot invoke protected facilitator operations when deployment authorization is configured;
+7. repair usability/integration problems exposed by live multi-client operation;
+8. reopen historical research only if integrated play exposes a concrete missing procedure or information dependency.
 
 ## Integration validation still required
 
-- verify reload/rejoin does not change mission state;
-- verify station information isolation;
-- verify GET continues through pending controller decisions;
-- verify explicit pause is the only normal clock stop;
-- verify late decisions create missed-event consequences rather than retroactive event execution;
-- verify the nominal timeline reaches power-down when prerequisites are satisfied on time;
-- verify the full ΔP nonnominal branch and evidence freshness boundaries;
-- verify CONTROL evidence never leaks authoritative physical truth.
+- full-suite execution;
+- reload/rejoin state preservation;
+- station information isolation;
+- continuous GET through pending controller decisions;
+- explicit pause as the normal clock stop;
+- missed-event behavior after late decisions;
+- nominal PC+2 completion when prerequisites are satisfied on time;
+- end-to-end ΔP evidence freshness boundaries;
+- facilitator/player authority isolation in a deployed-style configuration.
 
 ## Explicitly deferred
 
@@ -105,10 +81,12 @@ See research notes 082, 083, 085, and 086.
 - backroom/staff-support simulation;
 - low-player-count station aggregation;
 - multi-session/durable production persistence;
-- historical SimSup UI;
+- historically exact SimSup console UI;
+- named/fine-grained facilitator accounts;
+- cryptographic player authentication;
 - numeric PC+2 allowable-delay/retargeting model without direct evidence;
-- time-acceleration controls.
+- time acceleration.
 
 ## Current success criterion
 
-A rejoin-safe phone-accessible prototype running a **continuous authoritative mission clock** in which player actions affect event eligibility and mission evolution, and a source-bounded nonnominal condition can move through **source observation → correct station information → controller decision → CAPCOM transmission → explicit crew receipt/action → physical response → fresh controller evidence**, with no hidden automatic decisions, hidden physical-truth leaks, or invented historical routing.
+A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior.
