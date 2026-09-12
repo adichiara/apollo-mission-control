@@ -27,7 +27,7 @@ class PC2SessionTests(unittest.TestCase):
         view = session.get_station_view("alice")
         self.assertEqual(view.title, "CONTROL — PC+2 BURN MONITOR")
 
-    def test_go_poll_is_a_player_decision_gate_not_an_automatic_nominal_go(self):
+    def test_go_poll_explicitly_pauses_simulation_for_player_decision(self):
         session = self._session()
         session.assign_station("flight", "FLIGHT")
         session.assign_station("control", "CONTROL")
@@ -37,6 +37,8 @@ class PC2SessionTests(unittest.TestCase):
 
         self.assertEqual(reached, hms_to_seconds("79:17:00"))
         self.assertEqual(session.pending_gate, "flight_go")
+        self.assertEqual(session.status, SessionStatus.PAUSED)
+        self.assertEqual(session.pause_reason, "decision_gate:flight_go")
         self.assertFalse(session.state.flight_go)
         self.assertEqual(session.state.phase, "pc2_final_readiness")
 
@@ -50,6 +52,8 @@ class PC2SessionTests(unittest.TestCase):
 
         self.assertTrue(session.state.flight_go)
         self.assertIsNone(session.pending_gate)
+        self.assertEqual(session.status, SessionStatus.RUNNING)
+        self.assertIsNone(session.pause_reason)
         self.assertEqual(session.state.phase, "pc2_go_for_burn")
 
         session.advance_to(hms_to_seconds("79:23:00"))
@@ -66,8 +70,20 @@ class PC2SessionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             session.record_flight_go("guido", go=True, basis="not authorized")
         self.assertEqual(session.pending_gate, "flight_go")
+        self.assertEqual(session.status, SessionStatus.PAUSED)
 
-    def test_no_go_keeps_session_at_readiness_gate(self):
+    def test_manual_resume_cannot_bypass_pending_decision_gate(self):
+        session = self._session()
+        session.assign_station("flight", "FLIGHT")
+        session.start()
+        session.advance_to(hms_to_seconds("79:17:00"))
+
+        with self.assertRaises(ValueError):
+            session.resume()
+        self.assertEqual(session.status, SessionStatus.PAUSED)
+        self.assertEqual(session.pending_gate, "flight_go")
+
+    def test_no_go_keeps_explicit_decision_pause(self):
         session = self._session()
         session.assign_station("flight", "FLIGHT")
         session.start()
@@ -76,9 +92,11 @@ class PC2SessionTests(unittest.TestCase):
         session.record_flight_go("flight", go=False, basis="one discipline not ready")
         self.assertFalse(session.state.flight_go)
         self.assertEqual(session.pending_gate, "flight_go")
+        self.assertEqual(session.status, SessionStatus.PAUSED)
+        self.assertEqual(session.pause_reason, "decision_gate:flight_go")
 
-        reached = session.advance_to(hms_to_seconds("79:23:00"))
-        self.assertEqual(reached, hms_to_seconds("79:17:00"))
+        with self.assertRaises(ValueError):
+            session.advance_to(hms_to_seconds("79:23:00"))
         self.assertFalse(session.state.p40_active)
 
     def test_flight_to_capcom_handoff_is_explicit_and_visible_to_capcom(self):
@@ -110,21 +128,17 @@ class PC2SessionTests(unittest.TestCase):
         self.assertIn("capcom_item_queued", kinds)
         self.assertIn("capcom_item_transmitted", kinds)
 
-    def test_player_snapshot_is_serializable_and_station_scoped(self):
+    def test_player_snapshot_exposes_pause_reason_without_hidden_state(self):
         session = self._session()
-        session.assign_station("inco", "INCO")
+        session.assign_station("flight", "FLIGHT")
         session.start()
-        session.advance_to(hms_to_seconds("77:56:00"))
+        session.advance_to(hms_to_seconds("79:17:00"))
 
-        snapshot = session.player_snapshot("inco")
-        payload = snapshot.to_dict()
+        payload = session.player_snapshot("flight").to_dict()
 
-        self.assertEqual(payload["player_id"], "inco")
-        self.assertEqual(payload["station"], "INCO")
-        self.assertEqual(payload["session_status"], "running")
-        self.assertEqual(payload["mission_phase"], session.state.phase)
-        self.assertIn("presentation", payload)
-        self.assertEqual(payload["presentation"]["title"], "INCO — PC+2 COMMUNICATIONS SUPPORT")
+        self.assertEqual(payload["session_status"], "paused")
+        self.assertEqual(payload["pending_gate"], "flight_go")
+        self.assertEqual(payload["pause_reason"], "decision_gate:flight_go")
         self.assertNotIn("station_assignments", payload)
         self.assertNotIn("audit_log", payload)
 
@@ -133,11 +147,13 @@ class PC2SessionTests(unittest.TestCase):
         session.start()
         session.pause()
         self.assertEqual(session.status, SessionStatus.PAUSED)
+        self.assertEqual(session.pause_reason, "manual")
         with self.assertRaises(ValueError):
             session.advance_to(hms_to_seconds("77:56:00"))
         session.resume()
         session.advance_to(hms_to_seconds("77:56:00"))
         self.assertEqual(session.status, SessionStatus.RUNNING)
+        self.assertIsNone(session.pause_reason)
         self.assertGreater(len(session.audit_log), 0)
 
 
