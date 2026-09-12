@@ -24,62 +24,38 @@ See:
 - [Voice communications baseline](docs/VOICE_COMMUNICATIONS_BASELINE.md)
 - [Apollo 13 station baseline](docs/APOLLO13_STATION_BASELINE.md)
 - [Station research status](docs/STATION_RESEARCH_STATUS.md)
-- [PC+2 DPS restart-response station-status addendum](docs/station-status/2026-09-12_pc2_dps_restart_response.md)
-- [PC+2 restart-evidence station-status addendum](docs/station-status/2026-09-12_pc2_restart_controller_evidence.md)
+- [PC+2 CONTROL presentation station-status addendum](docs/station-status/2026-09-12_pc2_control_presentation.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
 - [Simulation validation strategy](docs/SIMULATION_VALIDATION.md)
 - [Decisions](docs/DECISIONS.md)
 - [Open questions](docs/OPEN_QUESTIONS.md)
 - [Progress log](docs/PROGRESS.md)
-- [PC+2 DPS restart-response progress](docs/progress/2026-09-12_pc2_dps_restart_response.md)
-- [PC+2 restart-evidence progress](docs/progress/2026-09-12_pc2_restart_controller_evidence.md)
+- [PC+2 CONTROL presentation progress](docs/progress/2026-09-12_pc2_control_presentation.md)
 - [Research resources](resources/README.md)
 - [PC+2 implementation source catalog](resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md)
-- [PC+2 restart source catalog](resources/source-catalog/PC2_RESTART_SOURCES.md)
-- [PC+2 DPS restart-response source catalog](resources/source-catalog/PC2_DPS_RESTART_RESPONSE_SOURCES.md)
-- [PC+2 ΔP callout source catalog](resources/source-catalog/PC2_DELTA_P_CALLOUT_SOURCES.md)
-- [PC+2 DPS shutdown-response source catalog](resources/source-catalog/PC2_DPS_SHUTDOWN_RESPONSE_SOURCES.md)
-- [PC+2 DPS shutdown-confirmation source catalog](resources/source-catalog/PC2_DPS_SHUTDOWN_CONFIRMATION_SOURCES.md)
-- [Apollo 13 ground-product integrity sources](resources/source-catalog/APOLLO13_GROUND_PRODUCT_INTEGRITY_SOURCES.md)
+- [PC+2 CONTROL presentation source catalog](resources/source-catalog/PC2_CONTROL_PRESENTATION_SOURCES.md)
 - [Evidence verification audit](resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md)
 
 ## Current status
 
 The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation and execution**.
 
-The framework-neutral Python prototype includes source-backed nominal event/state progression, station-specific product projections, partial shutdown-rule evaluation, narrow source-bounded scenario injections, controller/crew action and communication layers, the inverter contingency loop, integrated attitude-error/rate monitoring, explicit observation-age semantics, hidden ground-product integrity, explicit controller product-rejection events, the premature-shutdown restart branch, the ground-only ΔP shutdown branch through physical DPS engine-off response and controller-observable evidence channels, and a separate successful DPS restart physical-response event.
+The framework-neutral Python prototype now includes the source-backed nominal event/state model, station-specific product projections, partial shutdown-rule evaluation, scenario injection/action/communication layers, product-integrity handling, premature-shutdown/restart response paths, and the first player-facing CONTROL presentation model.
 
-### Premature shutdown / physical restart response
+### First-pass CONTROL presentation
 
-The PC+2 restart path now preserves four separate concepts:
+The mission-specific Apollo 13 AC Electronics source directly documents **MSK 1123 — LM GUID, CONTROL AND PROP RT** and **MSK 1137 — LM powered-descent/control**. These sources now constrain the first player-facing CONTROL display, but the executable screen is deliberately labeled as a **project rendering**, not an exact Apollo CRT transcription.
 
-- restart eligibility;
-- crew execution of PRO / manual ullage / Engine Start / Descent Engine Command Override;
-- actual physical engine restart;
-- later controller-observable evidence.
+A critical fidelity boundary is preserved: Apollo 13 MSK 1137 defines `TCP` as chamber pressure in **percent**, while the implemented PC+2 measurement path uses LM-7-family `GQ6510P` thrust-chamber pressure in **psi**. The player view therefore shows the sourced psi quantity as `CHAMBER P`; it does not falsely relabel or convert it to historical `TCP`.
 
-Contemporary LM subsystem documentation supports the physical engine-on chain: engine-on command → pilot valves open → propellant shutoff valves open → propellant flow/combustion. The physical-response helper therefore may set `engine_running=True` only after a `RESTART_ELIGIBLE` classification and completion of the modeled restart actions.
+The first CONTROL rendering groups already-modeled information into:
 
-It deliberately does **not** invent an LM-7 restart delay, restart thrust setting, chamber-pressure rise curve, restart success probability, or automatic ground confirmation. The crew commands alone still do not start the engine.
+- burn / propulsion;
+- attitude / control;
+- ullage.
 
-### Controller evidence after restart
-
-Follow-up research found no primary/contemporary support for a special `RESTART CONFIRMED` ground discrete, restart-only chamber-pressure threshold, required crew success report, or fixed confirmation latency.
-
-A fresh post-restart `GQ6510P` thrust-chamber-pressure observation therefore reuses the common CONTROL product path already modeled for burn monitoring and shutdown-rule evaluation. Physical restart does not fabricate that observation, and an older pre-restart sample cannot be reused as fresh evidence.
-
-### DPS shutdown confirmation evidence
-
-The minimum Mission Control evidence after DPS shutdown remains bounded without inventing an `ENGINE OFF` telemetry flag. The model keeps independent crew-report and fresh post-command `GQ6510P` chamber-pressure channels and does not convert any pressure value into an authoritative binary engine-off threshold.
-
-### Ground-only ΔP shutdown callout
-
-Fuel/oxidizer differential pressure greater than **25 psi** is represented as a PC+2 ground-only shutdown criterion requiring a ground callout before crew action. Exactly 25 psi remains clear; synthetic values above the threshold are labeled non-historical test fixtures.
-
-### Ground-product integrity
-
-A separate Apollo 13 post-MCC-5 case established that RTCC could incorrectly process AGS body angles while spacecraft attitude was satisfactory. The reusable data path therefore distinguishes visible product validity/availability, hidden simulator integrity, and explicit controller detection/rejection. Hidden integrity never auto-diagnoses a product for the player.
+Per-field value, units, validity, source layer, and provenance are retained. Deferred project gaps such as the unresolved singular inlet-pressure product are omitted rather than shown as historical telemetry failures. Hidden integrity metadata is likewise not exposed to the player.
 
 ### Remaining bounded gaps
 
@@ -87,11 +63,9 @@ The singular PC+2 150-psi ground “engine inlet pressure” rule remains intent
 
 The onboard **77-percent thrust-monitor** criterion also remains `NOT_EVALUABLE`; primary sources confirm the rule but do not yet identify the exact percent-thrust crew display/signal.
 
-For the **attitude-error / attitude-rate** criteria, the project preserves the primary-source discrepancy between the contemporaneous crew-facing read-up and postflight wording. The operational implementation follows the rule actually transmitted and confirmed by the crew, while the exact duration of “startup transient” remains unresolved.
+Exact CONTROL CRT selection behavior, field coordinates, GQ6510P-to-`TCP` engineering conversion, refresh cadence, and exact display placement for several modeled PC+2 rule products remain unresolved and are not invented.
 
-The project does **not** yet claim full spacecraft physics, RTCC dynamics, exact historical CRT timing, complete Apollo 13 telemetry/display routing, a generic historical stale-data timeout, detailed DPS restart/shutdown transients, or historically reconstructed SimSup malfunction-command syntax.
-
-The current stopping point now moves away from DPS transient detail to the **first-pass player-facing CONTROL information presentation** for PC+2. Already-researched products should be mapped into a usable controller screen using exact Apollo structures where directly sourced; where exact routing/layout remains unresolved, the project rendering must be labeled as such rather than presented as a historical CRT reconstruction.
+The next implementation target is the **first-pass player-facing GUIDO presentation**, applying the same evidence discipline while taking advantage of the stronger LGC/PGNS provenance already recovered for MSK 1123/1137.
 
 ## Apollo 13 station specifications
 
