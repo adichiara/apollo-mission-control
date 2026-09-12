@@ -2,16 +2,18 @@
 
 The simulation/domain layer remains framework-neutral. This module owns only
 HTTP request/response adaptation, an in-memory single-session registry, realtime
-wall-clock pacing, and static prototype delivery.
+wall-clock pacing, facilitator authorization, and static prototype delivery.
 """
 
 from __future__ import annotations
 
+import hmac
+import os
 from pathlib import Path
 from threading import RLock
 from typing import Any, Callable
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
@@ -32,6 +34,7 @@ from .session_shutdown_evidence import (
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE_PATH = ROOT / "data" / "scenarios" / "apollo13_pc2_nominal.json"
 WEB_ROOT = ROOT / "web"
+FACILITATOR_TOKEN_ENV = "APOLLO_FACILITATOR_TOKEN"
 
 app = FastAPI(
     title="Apollo Mission Control",
@@ -131,6 +134,29 @@ def _domain_call(call: Callable[[], Any]) -> Any:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
+def _facilitator_guard(
+    x_apollo_facilitator: str | None = Header(default=None),
+) -> None:
+    """Protect facilitator/SimSup operations without conflating them with stations.
+
+    Local development remains permissive when no token is configured so the
+    framework-neutral prototype and existing tests can run without secret setup.
+    Deployed Render instances fail closed if the secret is unexpectedly absent.
+    """
+    expected = os.getenv(FACILITATOR_TOKEN_ENV)
+    if not expected:
+        if os.getenv("RENDER", "").lower() == "true":
+            raise HTTPException(
+                status_code=503,
+                detail="Facilitator authorization is not configured",
+            )
+        return
+    if not x_apollo_facilitator or not hmac.compare_digest(
+        x_apollo_facilitator, expected
+    ):
+        raise HTTPException(status_code=401, detail="Facilitator authorization required")
+
+
 def _status_payload(session: PC2Session) -> dict[str, Any]:
     return {
         "status": session.status.value,
@@ -162,7 +188,7 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
-@app.post("/api/session/create")
+@app.post("/api/session/create", dependencies=[Depends(_facilitator_guard)])
 def create_session() -> dict[str, Any]:
     global _session, _clock
     with _lock:
@@ -186,7 +212,7 @@ def join_session(request: JoinRequest) -> dict[str, Any]:
         return session.player_snapshot(request.player_id).to_dict()
 
 
-@app.post("/api/session/start")
+@app.post("/api/session/start", dependencies=[Depends(_facilitator_guard)])
 def start_session() -> dict[str, Any]:
     with _lock:
         session = _require_session()
@@ -195,7 +221,7 @@ def start_session() -> dict[str, Any]:
         return _status_payload(session)
 
 
-@app.post("/api/session/pause")
+@app.post("/api/session/pause", dependencies=[Depends(_facilitator_guard)])
 def pause_session() -> dict[str, Any]:
     with _lock:
         session = _sync_session()
@@ -204,7 +230,7 @@ def pause_session() -> dict[str, Any]:
         return _status_payload(session)
 
 
-@app.post("/api/session/resume")
+@app.post("/api/session/resume", dependencies=[Depends(_facilitator_guard)])
 def resume_session() -> dict[str, Any]:
     with _lock:
         session = _require_session()
@@ -213,7 +239,7 @@ def resume_session() -> dict[str, Any]:
         return _status_payload(session)
 
 
-@app.post("/api/session/advance")
+@app.post("/api/session/advance", dependencies=[Depends(_facilitator_guard)])
 def advance_session(request: AdvanceRequest) -> dict[str, Any]:
     """Manual validation control retained alongside realtime pacing."""
     with _lock:
@@ -225,7 +251,10 @@ def advance_session(request: AdvanceRequest) -> dict[str, Any]:
         return payload
 
 
-@app.post("/api/session/admin/injection")
+@app.post(
+    "/api/session/admin/injection",
+    dependencies=[Depends(_facilitator_guard)],
+)
 def apply_injection(request: StateInjectionRequest) -> dict[str, Any]:
     """Prototype scenario-authoring/validation endpoint, not a player control."""
     with _lock:
@@ -337,7 +366,10 @@ def transmit_capcom(player_id: str, item_id: int) -> dict[str, Any]:
         }
 
 
-@app.post("/api/session/crew/receipt/{item_id}")
+@app.post(
+    "/api/session/crew/receipt/{item_id}",
+    dependencies=[Depends(_facilitator_guard)],
+)
 def crew_receipt(item_id: int, request: CrewReceiptRequest) -> dict[str, Any]:
     with _lock:
         session = _sync_session()
@@ -351,7 +383,10 @@ def crew_receipt(item_id: int, request: CrewReceiptRequest) -> dict[str, Any]:
         )
 
 
-@app.post("/api/session/crew/shutdown/{item_id}")
+@app.post(
+    "/api/session/crew/shutdown/{item_id}",
+    dependencies=[Depends(_facilitator_guard)],
+)
 def crew_shutdown(item_id: int, request: CrewShutdownRequest) -> dict[str, Any]:
     with _lock:
         session = _sync_session()
@@ -373,14 +408,20 @@ def crew_shutdown(item_id: int, request: CrewShutdownRequest) -> dict[str, Any]:
         }
 
 
-@app.post("/api/session/crew/shutdown-report")
+@app.post(
+    "/api/session/crew/shutdown-report",
+    dependencies=[Depends(_facilitator_guard)],
+)
 def crew_shutdown_report(request: CrewShutdownReportRequest) -> dict[str, Any]:
     with _lock:
         session = _sync_session()
         return _domain_call(lambda: record_crew_shutdown_report(session, crew_id=request.crew_id))
 
 
-@app.post("/api/session/admin/vehicle/dps-engine-off")
+@app.post(
+    "/api/session/admin/vehicle/dps-engine-off",
+    dependencies=[Depends(_facilitator_guard)],
+)
 def dps_engine_off_response(request: EngineOffResponseRequest) -> dict[str, Any]:
     with _lock:
         session = _sync_session()
@@ -393,7 +434,7 @@ def dps_engine_off_response(request: EngineOffResponseRequest) -> dict[str, Any]
         )
 
 
-@app.get("/api/session/audit")
+@app.get("/api/session/audit", dependencies=[Depends(_facilitator_guard)])
 def audit_log() -> list[dict[str, Any]]:
     with _lock:
         session = _sync_session()
@@ -416,5 +457,5 @@ def index() -> FileResponse:
 
 @app.get("/admin", include_in_schema=False)
 def admin_console() -> FileResponse:
-    """Development/SimSup validation console; not an authorization boundary."""
+    """Facilitator/SimSup validation console; API operations require authority."""
     return FileResponse(WEB_ROOT / "admin.html")
