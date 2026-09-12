@@ -29,7 +29,7 @@ The Mission Operations Report gives the planned PC+2 parameters as approximately
 
 The revised flight plan places PC+2 preparation across roughly 74:00–80:00 GET.
 
-## 3. Recommended playable boundary
+## 3. Playable boundary
 
 ### Historical context window
 
@@ -37,17 +37,19 @@ The revised flight plan places PC+2 preparation across roughly 74:00–80:00 GET
 
 This captures the AOT alignment checks, mission-rule review, final maneuver updates, LM power-up, burn, and immediate power-down transition.
 
-### Recommended first playable start
+### First implementation start
 
-**Approximately 77:55–78:00 GET** is the current implementation recommendation, not yet a final decision.
+**77:55:00 GET** is the frozen nominal vertical-slice start.
 
-Reason:
+This is a source-backed operational boundary rather than an arbitrary round time:
 
-- the earlier Sun/star alignment verification and mission-rule review can be represented as established starting context;
-- the final maneuver PADs, state-vector/target-load handling, LM power-up, AGS/PGNS preparation, burn readiness, burn monitoring and post-burn handoff remain live;
-- this keeps the first session near a practical duration without inventing time compression before the project decides whether acceleration is allowed.
+- communications have just been reacquired after lunar occultation and are weak;
+- the final P30 LM maneuver PAD begins at 77:55:24;
+- the weak link interferes with the initial readback;
+- the crew raises S-band power and the link becomes strong enough to complete the exchange;
+- final targeting, burn-configuration power-up, ranging/uplink activity, readiness polling, burn execution, and post-burn verification all remain live.
 
-The exact start GET should be frozen only after the controller action sequence is mapped.
+Earlier Sun/star alignment verification and the Mission Rules review are initialized as established historical context rather than replayed.
 
 ### Working endpoint
 
@@ -64,15 +66,21 @@ Primary mission documentation establishes the following sequence:
 - 76:16 — PTC terminated; AOT star check completed satisfactorily.
 - 76:49 — maneuver toward burn attitude; AOT check at burn attitude satisfactory.
 - 77:09–77:34 — loss of signal during lunar occultation.
+- **77:55:00 — nominal vertical-slice start; communications weak after AOS.**
+- **77:55:24 — final P30 LM maneuver PAD read-up begins in the air-ground record.**
 - 77:56:27 — S-IVB lunar impact noted in the mission timeline.
-- ~77:59 — final PC+2 maneuver PADs passed to the crew.
-- 78:12 — LM power-up begun for burn configuration.
-- before TIG — state-vector/target-load and guidance preparation; AGS aligned/cross-checked against PGNS.
+- **77:59:17 — communications become loud and clear after the S-band power-amplifier change.**
+- The Flight Director report summarizes the final maneuver PADs as passed at approximately 77:59; this is consistent with the read-up beginning earlier and completing around that time.
+- 78:12 — LM power-up begun for burn configuration, with approximately 38–40 A required.
+- ~78:21–78:23 — ranging and final ground/uplink computer activity are completed sufficiently for computer control to return to the crew.
+- ~79:17 — Flight performs the final GO/NO-GO poll; the team is GO.
+- ~79:23 — LM is in P40 / final burn program state.
 - 79:27:38.30 — PC+2 ignition.
 - 79:32:02.12 — actual guided cutoff.
+- ~79:32:41 onward — post-burn residuals reviewed.
 - 79:34 — LM power-down initiated except functions required for subsequent attitude control/PTC.
 
-Exact action ownership and uplink timing should be refined from the controller appendices and technical transcript before implementation is frozen.
+The exact second for every internal switch transition is not frozen unless a controller procedure or failure case requires it.
 
 ## 5. Burn rules and monitoring requirements
 
@@ -89,7 +97,7 @@ The Mission Operations Report records a formal mission-rule review before PC+2. 
 - CES DC power failure;
 - persistent inverter warning after attempted inverter switching.
 
-The exact station/source for each criterion must be mapped before the player information model is frozen.
+The exact station/source for each criterion is tracked in research note 049 and the PC+2 parameter specification.
 
 The simulation should never present a generic `BURN GOOD/BAD` diagnosis. Controllers must see the measurements, warnings, crew reports, and guidance information from which the decision is made.
 
@@ -145,14 +153,21 @@ The simulation should never present a generic `BURN GOOD/BAD` diagnosis. Control
 
 The first slice should model only the state that can materially alter PC+2 decisions or observations.
 
+The stable implementation-oriented parameter set is maintained in:
+
+- `docs/scenarios/APOLLO13_PC2_PARAMETERS.md`
+- `resources/research/050_pc2_initialization_and_nominal_validation.md`
+
 ### Trajectory/navigation
 
 - mission time;
 - current trajectory state sufficient for the PC+2 target and post-burn verification;
-- maneuver target/vector;
-- PGNS state vector;
+- maneuver target in its documented coordinate representation;
+- PGNS state vector / loaded target state;
 - relevant AGS backup/cross-check state;
 - alignment/attitude-error state.
+
+The exact Cartesian RTCC state vector at 77:55 is deliberately deferred until the trajectory propagator requires it; it will not be reverse-engineered from the PAD.
 
 ### Propulsion/control
 
@@ -165,24 +180,30 @@ The first slice should model only the state that can materially alter PC+2 decis
 - attitude/rates;
 - engine/gimbal/control warnings relevant to documented shutdown criteria.
 
+Exact nominal pressure values are not invented from shutdown thresholds. They are added only when a source or implementation dependency justifies them.
+
 ### Guidance/computers
 
 - LGC operating state and program/alarm state;
 - PGNS guidance progression and cutoff;
 - AGS monitoring/backup state;
-- guidance residuals.
+- guidance residuals;
+- separation between LVLH maneuver-PAD components and IMU-coordinate PGNS velocity-to-be-gained values.
 
 ### Electrical/consumables
 
 - LM electrical load/power availability sufficient to support burn configuration;
-- consumable state required for readiness and post-burn power-down decisions;
-- only dependencies that can affect this interval need full behavior initially.
+- burn-configuration current around the documented 38–40 A level;
+- consumable state only where it can alter readiness or immediate post-burn power-down decisions.
 
 ### Communications/data path
 
+- initially weak air-ground link;
+- S-band power-amplifier state;
 - command/uplink availability;
-- air-ground voice availability;
-- telemetry availability/validity sufficient to allow historically meaningful data loss or stale-state variants later.
+- ranging availability;
+- telemetry availability/validity/age;
+- crew voice/readback as an information channel separate from telemetry.
 
 ## 8. Information-path requirements
 
@@ -206,12 +227,30 @@ FLIGHT / CAPCOM / crew action
 
 A future failure may occur at any of these layers. The first nominal run should therefore not wire all displayed values directly to perfect authoritative state.
 
-## 9. Deferred research that is not a blocker
+## 9. Nominal validation targets
+
+The first deterministic nominal fixture should reproduce at least:
+
+- TIG: **79:27:38.30 GET**;
+- planned burn duration: **263.69 s**;
+- actual burn duration: **263.82 s**;
+- actual cutoff: **79:32:02.12 GET**;
+- target resultant ΔV: **861.5 ft/s**;
+- executed PGNS IMU-coordinate Vg values approximately **+742.21, -425.88, +91.04 ft/s**;
+- post-burn PGNS residuals approximately **+1.0, +0.3, 0.0 ft/s**;
+- no shutdown-rule trigger in the nominal run;
+- transition into LM power-down after burn verification.
+
+Mission Operations Report computed event times are authoritative for physical/guidance validation; voice timestamps represent communication events and may lag the underlying spacecraft event.
+
+## 10. Deferred research that is not a blocker
 
 Unless a PC+2 implementation dependency emerges, defer:
 
 - complete MSK 1123/1137 parameter reconstruction outside burn-critical fields;
 - exact AGS ULL versus ACT VEL ground algorithm if those fields are not needed for player decisions in this slice;
+- exact Cartesian RTCC state vector before the trajectory model requires it;
+- exact nominal values for propulsion measurements for which only shutdown thresholds are currently documented;
 - full EECOM keyboard/panel reconstruction;
 - complete INCO MSK 1475 layout;
 - complete FIDO/RETRO display catalog;
@@ -221,26 +260,21 @@ Unless a PC+2 implementation dependency emerges, defer:
 
 These remain documented gaps, not permission to invent behavior.
 
-## 10. Immediate next work
+## 11. Immediate next work
 
-1. Build a PC+2 event/action matrix by controller from 77:55 through 80:00.
-2. Map every documented shutdown criterion to:
-   - responsible controller;
-   - physical quantity/event;
-   - onboard/telemetry/ground source;
-   - player-facing display or crew report.
-3. Define the initial-state parameter set at the selected start GET.
-4. Identify the smallest set of historical CRT fields/products actually required for the nominal PC+2 run.
-5. Produce a nominal-state validation table using the historical planned/actual burn values.
-6. Only then begin the implementation schema and simulation code.
+1. Define the nominal event/state transition model from 77:55 through 79:34 using the new parameter specification.
+2. Identify the smallest player-facing historical display/product set actually required by GUIDO, CONTROL, FIDO/RETRO, TELMU, INCO, FLIGHT, and CAPCOM.
+3. Map those required products to the parameter/source layers without reconstructing unrelated display fields.
+4. Use the historical nominal run as the first deterministic validation fixture.
+5. Only then begin the implementation schema and simulation code.
 
 ## Primary sources
 
 - *Mission Operations Report — Apollo 13*, 28 April 1970.  
-  https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf
-- Apollo 13 Flight Journal, Day 4 PC+2 preparation and execution.  
-  https://www.apollojournals.org/afj/ap13fj/12day4-approach-moon.html
-- Apollo 13 mission-document index, including Final Flight Mission Rules, technical air-to-ground transcript, Navigation Procedures and revised mission timeline.  
+  https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf
+- Apollo 13 Technical Air-to-Ground Voice Transcription, mission-document collection.  
   https://apollojournals.org/afj/ap13fj/a13-documents.html
+- Apollo 13 Flight Journal, Day 4 Part 2, used to navigate the underlying air-ground chronology.  
+  https://www.apollojournals.org/afj/ap13fj/13day4-leaving-moon.html
 - Apollo Mission Techniques, Mission H-2 and Subsequent series.  
   https://www.ibiblio.org/apollo/Documents/
