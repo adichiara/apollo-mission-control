@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — continuous-time nonnominal chain, player/admin separation, and facilitator authority implemented; runnable multi-client validation is next**
+Status: **CURRENT — automated/network multi-client validation artifacts implemented; actual suite/deployment/phone execution is next**
 
 ## Completed checkpoints
 
@@ -18,11 +18,16 @@ Status: **CURRENT — continuous-time nonnominal chain, player/admin separation,
 - [x] primary-source review of Simulation Supervisor / simulation-control role separation;
 - [x] server-side facilitator credential for exercise-wide operations;
 - [x] Render deployment secret generated outside source control;
-- [x] facilitator authority kept separate from all controller station identities.
+- [x] facilitator authority kept separate from all controller station identities;
+- [x] primary-source review of integrated flight-controller simulation as the validation model;
+- [x] in-process multi-client contract test across FLIGHT/CONTROL/CAPCOM/GUIDO + facilitator;
+- [x] destructive real-network multi-client smoke runner for dedicated validation deployments;
+- [x] admin UI evidence-class values reconciled with the server enum;
+- [x] stale pre-authorization UI contract assertion repaired.
 
 The deployment remains single-process/in-memory. Restart/redeploy loses the live session; multiple workers/sessions and durable persistence remain deferred.
 
-See decisions D-016–D-017 and research notes 084–088.
+See decisions D-016–D-017 and research notes 084–089.
 
 ## Continuous-time engine boundary
 
@@ -48,28 +53,53 @@ Protected operations include lifecycle/reset, manual validation time, state inje
 
 This is a modern software safety boundary. Historical NASA sources support the organizational separation of SimSup/simulation control from flight controllers, but do not establish an Apollo authentication mechanism.
 
-## Active priority — runnable multi-client integration validation
+## Multi-client validation boundary
+
+Research note 089 uses primary NASA simulation-training evidence to justify validating the controller environment as an integrated system while keeping facilitator/simulation-control functions distinct.
+
+`tests/test_web_multiclient_integration.py` now protects the in-process contract for:
+
+- shared authoritative state across independent clients;
+- station-scoped operational information;
+- same-player/same-station rejoin;
+- occupied-station and station-switch rejection;
+- facilitator authority isolation;
+- explicit pause semantics;
+- complete synthetic ΔP propagation and evidence ordering.
+
+`scripts/pc2_multiclient_smoke.py` carries the same checks into a real HTTP environment and adds simultaneous station polling.
+
+Neither artifact is recorded as executed/passing in this automation environment.
+
+## Active priority — execute runnable validation
 
 1. execute the complete domain/session/API test suite in a checked-out runtime;
-2. run one facilitator console plus several simultaneous phone station clients;
-3. verify realtime GET under concurrent polling/actions;
-4. verify facilitator pause/resume, player reload/rejoin, and station information isolation;
-5. run the complete synthetic ΔP branch through the live interfaces;
-6. verify players cannot invoke protected facilitator operations when deployment authorization is configured;
-7. repair usability/integration problems exposed by live multi-client operation;
-8. reopen historical research only if integrated play exposes a concrete missing procedure or information dependency.
+2. run `scripts/pc2_multiclient_smoke.py` against a dedicated local/Render instance;
+3. run one facilitator console plus several simultaneous real phone station clients;
+4. verify realtime GET under concurrent polling/actions and real network latency;
+5. verify facilitator pause/resume, player reload/rejoin, and station information isolation on actual browsers;
+6. repair usability/integration problems exposed by live multi-client operation;
+7. reopen historical research only if integrated play exposes a concrete missing procedure or information dependency.
 
 ## Integration validation still required
 
-- full-suite execution;
+Covered by automated contract tests but still requiring actual execution in a runnable environment:
+
 - reload/rejoin state preservation;
 - station information isolation;
-- continuous GET through pending controller decisions;
 - explicit pause as the normal clock stop;
-- missed-event behavior after late decisions;
-- nominal PC+2 completion when prerequisites are satisfied on time;
-- end-to-end ΔP evidence freshness boundaries;
-- facilitator/player authority isolation in a deployed-style configuration.
+- end-to-end ΔP evidence boundaries;
+- facilitator/player authority isolation.
+
+Still requiring live/deployed validation:
+
+- full-suite execution;
+- real concurrent HTTP polling/actions;
+- real phone/browser reload/rejoin;
+- continuous GET behavior under network latency;
+- phone readability and action ergonomics;
+- nominal PC+2 completion in a full live playthrough;
+- missed-event behavior during real late-controller decisions.
 
 ## Explicitly deferred
 
@@ -89,4 +119,4 @@ This is a modern software safety boundary. Historical NASA sources support the o
 
 ## Current success criterion
 
-A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior.
+A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior—validated both by automated contracts and an actual multi-device network run.
