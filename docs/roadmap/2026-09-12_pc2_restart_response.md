@@ -15,18 +15,21 @@ The premature-shutdown restart path now separates:
 
 The successful response is source-bounded to engine-on command, pilot-valve opening, propellant-shutoff-valve opening, and engine thrusting. It does not synthesize an LM-7 restart delay, restart thrust setting, GQ6510P buildup, or guaranteed success.
 
-Implementation:
+Follow-up research also found no source-backed reason to create a special `restart confirmed` product. A fresh post-restart `GQ6510P` sample should reuse the common CONTROL chamber-pressure path; no restart-specific pressure threshold, crew success report, or dedicated discrete is invented.
+
+Implementation/research:
 
 - `src/apollo_mission_control/dps_restart_response.py`
 - `tests/test_pc2_restart_response.py`
 - `resources/research/071_pc2_dps_restart_physical_response.md`
+- `resources/research/072_pc2_restart_controller_evidence.md`
 - `resources/source-catalog/PC2_DPS_RESTART_RESPONSE_SOURCES.md`
 
 ## Immediate next work
 
-Research the minimum source-backed **controller-observable evidence of a successful restart**. Prefer reuse of existing chamber-pressure/ground product paths if historically justified, but do not invent a restart-specific pressure threshold or crew report.
+Move away from DPS transient detail and begin the **first-pass player-facing CONTROL information presentation** for the PC+2 slice using already-researched products.
 
-If no mission-specific confirmation rule can be recovered economically, preserve fresh GQ6510P as a generic propulsion observation and move to the next player-relevant PC+2 dependency.
+Use exact Apollo display structure where directly sourced. Where exact CRT routing/layout remains unresolved, preserve the product provenance and label any project rendering explicitly rather than implying a historical screen reconstruction.
 
 ## Deferred
 
