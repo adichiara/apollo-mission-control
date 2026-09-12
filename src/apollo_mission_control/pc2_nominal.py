@@ -30,6 +30,7 @@ class Product:
     process_time_get: float | None = None
     display_time_get: float | None = None
     validity: Validity = Validity.VALID
+    source_layer: str = ""
     provenance: str = ""
 
 
