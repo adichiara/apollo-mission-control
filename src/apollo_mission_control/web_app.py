@@ -24,6 +24,10 @@ from .pc2_nominal import load_fixture
 from .pc2_session import PC2Session
 from .realtime_clock import RealtimeSessionClock
 from .scenario_injection import EvidenceClass, StateInjection
+from .session_shutdown_evidence import (
+    assess_session_shutdown_evidence,
+    record_crew_shutdown_report,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -93,6 +97,10 @@ class CrewShutdownRequest(BaseModel):
         min_length=1,
         max_length=2000,
     )
+
+
+class CrewShutdownReportRequest(BaseModel):
+    crew_id: str = Field(default="CREW", min_length=1, max_length=64)
 
 
 class EngineOffResponseRequest(BaseModel):
@@ -314,6 +322,16 @@ def control_delta_p_callout(
         }
 
 
+@app.get("/api/session/control/{player_id}/shutdown-evidence")
+def control_shutdown_evidence(player_id: str) -> dict[str, Any]:
+    """Return controller-observable evidence availability, never hidden truth."""
+    with _lock:
+        session = _sync_session()
+        if _domain_call(lambda: session.station_for(player_id)) != "CONTROL":
+            raise HTTPException(status_code=400, detail="Only the CONTROL player can request shutdown evidence")
+        return _domain_call(lambda: assess_session_shutdown_evidence(session))
+
+
 @app.post("/api/session/capcom/{player_id}/transmit/{item_id}")
 def transmit_capcom(player_id: str, item_id: int) -> dict[str, Any]:
     with _lock:
@@ -367,6 +385,16 @@ def crew_shutdown(item_id: int, request: CrewShutdownRequest) -> dict[str, Any]:
             "parameters": action.parameters,
             "provenance": action.provenance,
         }
+
+
+@app.post("/api/session/crew/shutdown-report")
+def crew_shutdown_report(request: CrewShutdownReportRequest) -> dict[str, Any]:
+    """Record the crew-report evidence channel without asserting physical truth."""
+    with _lock:
+        session = _sync_session()
+        return _domain_call(
+            lambda: record_crew_shutdown_report(session, crew_id=request.crew_id)
+        )
 
 
 @app.post("/api/session/admin/vehicle/dps-engine-off")
