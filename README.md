@@ -36,7 +36,7 @@ The framework-neutral domain model now includes:
 - hidden product-integrity handling and explicit controller interpretation events;
 - premature-shutdown/restart branches with command, physical-response, and controller-evidence boundaries kept separate;
 - first-pass presentation models for **CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM**;
-- one authoritative session layer with station assignment, synchronized GET, readiness reports, FLIGHT decision gating, CAPCOM handoff, player-scoped snapshots, explicit pause reasons, and audit logging;
+- one authoritative session layer with station assignment, continuous GET, readiness reports, FLIGHT decision requirements, CAPCOM handoff, player-scoped snapshots, explicit game pause, and audit logging;
 - a scripted seven-station nominal integration playthrough through post-burn power-down.
 
 ## Phone-accessible first playable shell
@@ -66,26 +66,29 @@ A browser/client may repeat the same player ID + station assignment to rejoin it
 
 This is lightweight prototype identity, not authentication.
 
-## Critical gameplay boundary: FLIGHT GO and mission time
+## Core engine rule: mission time is continuous
 
-The playable session does not auto-authorize the PC+2 burn from hidden nominal state.
+The engine is a **continuously evolving mission**, not a sequence of scenes waiting for player input.
 
-Primary-source review also resolved the ambiguity in what should happen to mission timing while FLIGHT deliberates:
+Apollo GET and controller-decision state are independent:
 
-- Apollo GET is a mission time reference; the reviewed sources do not say it stopped for a pending controller decision.
-- The Apollo 13 Flight Control Division report says PC+2 ignition time was **not time critical**, but provides no numeric allowable delay.
+- GET advances whenever the session is running;
+- pending controller decisions do not stop GET;
+- missing authorization/procedure prerequisites may make a nominal event ineligible when its time arrives;
+- missed nominal events are recorded and are not replayed retroactively;
+- only an explicit game/session pause stops simulated mission time.
 
-The deterministic first playable slice therefore uses an explicit **simulation pause** at the blocking FLIGHT decision gate. At approximately **79:17 GET**:
+For the PC+2 final readiness sequence, the approximately **79:17 GET** FLIGHT poll opens a `flight_go` requirement while the clock continues. If GO is recorded before P40, the nominal preparation sequence can continue. If P40 time arrives first, that nominal milestone is missed; a later GO does not rewind the mission and activate it afterward.
 
-- session status becomes `paused`;
-- `pause_reason` becomes `decision_gate:flight_go`;
-- controller readiness reports may still be submitted;
-- manual resume cannot bypass the gate;
-- FLIGHT GO clears the gate and resumes the simulation;
-- NO-GO keeps the pause active;
-- later historical events are not applied retroactively while the gate is unresolved.
+The same dependency principle applies downstream to ullage, ignition, throttle milestones, cutoff, residual review, and post-burn transitions.
 
-This is a project playability policy, **not** a claim that historical Apollo GET stopped. No delay tolerance or retargeting rule is invented from “not time critical.” See `resources/research/081_pc2_mission_clock_and_decision_gate_semantics.md`.
+This deliberately avoids inventing a numeric PC+2 delay tolerance or automatic retargeting procedure from the source statement that ignition time was “not time critical.” Late recovery behavior must be represented by explicit procedures/actions when supported.
+
+See:
+
+- `resources/research/081_pc2_mission_clock_and_decision_gate_semantics.md` for the source findings and superseded provisional pause policy;
+- `resources/research/084_continuous_mission_clock_architecture.md` for the current architecture;
+- D-016 in `docs/DECISIONS.md`.
 
 CAPCOM continues to see an approved communication queue rather than direct authoritative subsystem truth.
 
@@ -110,13 +113,15 @@ Detailed DPS transients, exact display routing/cadence, and a post-burn FIDO tra
 
 The project is now firmly in **playable integration**, not subsystem expansion.
 
-The mission-clock/gate ambiguity is resolved for the deterministic first slice. The next practical integration items are:
+The continuous-clock architecture is resolved. The next integration items are:
 
-1. persist player ID/station in the browser and automatically attempt same-player/same-station rejoin after reload;
-2. run the full domain/session/API suite and multi-client HTTP/mobile smoke path in a runnable checked-out environment;
-3. exercise one already-modeled nonnominal branch through the HTTP/session path;
-4. add realtime pacing only after smoke validation, using the explicit simulation-pause policy;
-5. reopen historical research only when one of those steps exposes a concrete information or decision gap.
+1. generalize nominal-event prerequisites so scenario dependencies are declarative rather than hard-coded in PC+2 session logic;
+2. expose crew receipt, crew shutdown command, and explicit physical response through the HTTP validation interface;
+3. reconnect physical shutdown to the existing fresh controller-evidence path without inventing a confirmation threshold;
+4. run the full domain/session/API suite and multi-client HTTP/mobile smoke path in a runnable checked-out environment;
+5. replace manual GET advancement with a realtime pacing driver while preserving explicit game pause as the only clock stop.
+
+Further historical research should reopen only when those integration steps expose a concrete information, procedure, or decision gap.
 
 ## Apollo 13 station specifications
 
