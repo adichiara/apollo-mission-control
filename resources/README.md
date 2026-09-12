@@ -20,6 +20,7 @@ Current supplements:
 - `source-catalog/PC2_FRESHNESS_SOURCES.md` — focused source record for observation age, data validity, and the unresolved absence of a PC+2-specific stale-data threshold.
 - `source-catalog/PC2_RESTART_SOURCES.md` — mission-specific sources for the premature DPS shutdown/restart branch and the distinction between rule-caused shutdown and restart-eligible unexplained shutdown.
 - `source-catalog/PC2_DELTA_P_CALLOUT_SOURCES.md` — mission-specific sources for the ground-only fuel/oxidizer ΔP >25 psi shutdown callout and crew-response path.
+- `source-catalog/PC2_DPS_SHUTDOWN_RESPONSE_SOURCES.md` — contemporary LM sources for crew STOP-pushbutton control, engine-off command routing, and DPS valve-response semantics.
 - `source-catalog/APOLLO13_GROUND_PRODUCT_INTEGRITY_SOURCES.md` — mission-specific sources for the post-MCC-5 RTCC/AGS body-angle processing error and the distinction between product availability/validity and hidden data integrity.
 
 ## Research rule
