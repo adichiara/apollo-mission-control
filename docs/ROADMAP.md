@@ -41,6 +41,7 @@ Key research chain:
 - `056_pc2_scenario_injection_architecture.md`
 - `057_pc2_dps_inlet_pressure_observation_path.md`
 - `058_pc2_fuel_oxidizer_delta_p_observation_path.md`
+- `059_pc2_inverter_warning_after_switch.md`
 
 Deliverables:
 
@@ -66,6 +67,7 @@ Current PC+2 checkpoint:
 - [x] LM-7-family `GQ6510P` established as DPS thrust-chamber-pressure measurement; exact Apollo 13 ground/display routing unresolved
 - [x] LM-7-family `GQ3611P` and `GQ4111P` established as separate fuel/oxidizer engine-interface pressure measurements
 - [x] PC+2 fuel/oxidizer ΔP established as a distinct ground-only CONTROL rule product; exact computation/display routing remains unresolved
+- [x] inverter caution narrowed to processed AC voltage/frequency quality with LM-5-and-later selection-transient inhibit behavior; exact PC+2 telemetry/display route unresolved
 - [ ] determine the exact CONTROL ground product/selection logic behind the singular PC+2 150-psi “engine inlet pressure” criterion only if a direct source becomes readily available
 - [ ] map required products into first-pass station screens, using exact Apollo formats where available and explicitly labeled project renderings elsewhere
 - [ ] recover additional MCC/RTCC transforms only when PC+2 station behavior requires them
@@ -74,7 +76,7 @@ Non-PC+2 display reconstruction remains deferred.
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **nominal event + product projection + partial rules + timed nonnominal source injections implemented**
+**Status:** **nominal event + product projection + partial rules + source injections + first operational action path implemented**
 
 Completed:
 
@@ -95,12 +97,15 @@ Completed:
 - [x] inlet-pressure source-state research: two LM-7 interface measurements identified, unsupported singular ground aggregation deliberately left unresolved
 - [x] fuel/oxidizer ΔP rule path modeled as an optional **ground-derived** observation without inventing a GQ3611P/GQ4111P subtraction or sign convention
 - [x] source-bounded ΔP boundary tests defined at 26 psi (triggered) and exactly 25 psi (clear)
+- [x] inverter caution and inverter-switch action represented as separate state/event classes
+- [x] first generic operational-action object implemented with `switch_lm_inverter`
+- [x] post-switch inverter-warning rule path evaluable without inventing a persistence timer or inverter identity
 
 Immediate next work:
 
-- [ ] research the persistent inverter-warning-after-switch criterion or another remaining rule path using mission-specific primary evidence first
+- [ ] recover enough primary procedure evidence for the inverter contingency to define the crew/CAPCOM action-report sequence without inventing switch identity or timing
+- [ ] use the new source-injection + operational-action separation to build a small end-to-end decision/action loop
 - [ ] keep singular 150-psi inlet-pressure aggregation deferred unless a direct CONTROL/procedure/display source becomes cheaply available
-- [ ] migrate another researched warning/measurement from nominal fixture constants into explicit runtime source state before making it injectable
 - [ ] add broader failure-propagation tests only where subsystem behavior is source-backed
 - [ ] determine minimum trajectory-state representation when a propagating trajectory implementation becomes necessary
 
@@ -110,9 +115,10 @@ Important constraints:
 - exact nominal PC+2 chamber-pressure and ΔP traces are not invented;
 - singular ground `dps_inlet_pressure_psi` is **not** invented from the two interface-pressure transducers;
 - fuel/oxidizer ΔP is not computed from those transducers until the historical ground transformation/sign convention is sourced;
+- no inverter persistence timer or exact alternate-inverter identity is invented;
 - detailed DPS ramp dynamics remain deferred;
 - synthetic boundary-test values are labeled non-historical;
-- scenario injection changes source state, not diagnoses, rule results, or controller decisions.
+- scenario injection changes source state/observations, while operational actions record what crew/controllers do; neither directly sets diagnoses or outcomes.
 
 ## Phase 5 — Mission Control data path
 
@@ -124,6 +130,7 @@ Current checkpoint:
 - source injections prove that changed observations can flow through CONTROL and the rule evaluator without special-case scenario logic;
 - inlet-pressure research exposes a concrete unresolved selection/aggregation problem rather than hiding it behind one generic value;
 - ΔP is intentionally represented as a ground-derived product because its exact LM-measurement transformation remains unresolved;
+- inverter warning is kept distinct from the crew switch action that makes the positive mission rule evaluable;
 - stale/missing/invalid behavior, network transport, and exact display cadence remain future work where documented.
 
 ## Phase 6 — Procedures and flight rules
@@ -137,9 +144,11 @@ PC+2 checkpoint:
 - [x] ground chamber-pressure criterion evaluable when a numerical source observation is supplied
 - [x] fuel and oxidizer LM-7 engine-interface pressure measurement identities established
 - [x] fuel/oxidizer ΔP >25 psi criterion evaluable when an explicit ground-derived product is supplied
+- [x] inverter-warning-after-switch criterion evaluable when both warning observation and explicit switch action are represented
 - [ ] singular 150-psi ground inlet-pressure rule remains `NOT_EVALUABLE` until selection/aggregation semantics are sourced
-- [ ] crew analog indications, attitude/rate, and positive inverter-after-switch remain deferred
+- [ ] crew analog indications and attitude/rate criteria remain deferred
 - [ ] startup-transient wording conflict remains unresolved rather than silently normalized
+- [ ] exact inverter contingency procedure/action-report sequence remains to be recovered
 
 ## Phase 7 — Simulation scenarios / SimSup
 
@@ -150,6 +159,7 @@ Current checkpoint:
 - [x] scenario evidence levels defined
 - [x] primary-source simulator evidence supports source-condition → dependent-effects architecture
 - [x] generic timed injection contract implemented for researched source/ground-product state
+- [x] operational actions structurally separated from malfunction injections
 - [x] synthetic rule-boundary fixtures clearly distinguished from historical Apollo training cases
 - [ ] documented nonnominal Apollo training case reconstructed only when source detail is sufficient
 - [ ] historical SimSup/operator interface deferred
