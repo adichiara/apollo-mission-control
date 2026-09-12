@@ -2,7 +2,7 @@
 
 A cooperative, historically grounded simulation of Apollo-era Mission Control.
 
-Players sit together as flight controllers. Each player uses a phone as the display/interface for a controller station and uses printed station documentation such as flight rules and procedures. A central server maintains the live mission simulation.
+Players sit together as flight controllers. Each player uses a phone as the display/interface for a controller station and printed controller material as needed. A central authoritative server owns the live mission simulation.
 
 ## Project standard
 
@@ -14,14 +14,12 @@ See:
 
 - [Project principles](docs/PROJECT_PRINCIPLES.md)
 - [Roadmap](docs/ROADMAP.md)
-- [Current first-playable integration roadmap addendum](docs/roadmap/2026-09-12_first_playable_integration.md)
+- [Current first-playable integration roadmap](docs/roadmap/2026-09-12_first_playable_integration.md)
+- [Decisions](docs/DECISIONS.md)
 - [Simulation architecture](docs/SIMULATION_ARCHITECTURE.md)
-- [Controller information workflow](docs/CONTROLLER_INFORMATION_WORKFLOW.md)
-- [Apollo 13 station baseline](docs/APOLLO13_STATION_BASELINE.md)
-- [Station research status](docs/STATION_RESEARCH_STATUS.md)
-- [Latest station/session status](docs/station-status/2026-09-12_first_playable_session.md)
-- [Progress log](docs/PROGRESS.md)
-- [Latest first-playable session progress](docs/progress/2026-09-12_first_playable_session.md)
+- [PC+2 player products](docs/scenarios/APOLLO13_PC2_PLAYER_PRODUCTS.md)
+- [Latest session progress](docs/progress/2026-09-12_first_playable_session.md)
+- [Latest web-transport progress](docs/progress/2026-09-12_web_transport.md)
 - [Research resources](resources/README.md)
 - [Evidence verification audit](resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md)
 
@@ -29,85 +27,89 @@ See:
 
 The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation and execution**.
 
-The framework-neutral Python prototype now includes:
+The framework-neutral domain model now includes:
 
 - source-backed nominal PC+2 event/state progression;
 - station-specific controller-product projections;
 - partial shutdown-rule evaluation;
 - source-bounded scenario injection/action/communication layers;
 - hidden product-integrity handling and explicit controller interpretation events;
-- premature-shutdown / restart branches with command, physical-response, and controller-evidence boundaries kept separate;
-- first-pass player-facing presentation models for **CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM**;
-- a new **single-process authoritative session layer** for station assignment, synchronized GET, readiness reports, FLIGHT decision gating, CAPCOM handoff, and audit logging.
+- premature-shutdown/restart branches with command, physical-response, and controller-evidence boundaries kept separate;
+- first-pass presentation models for **CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM**;
+- one authoritative session layer with station assignment, synchronized GET, readiness reports, FLIGHT decision gating, CAPCOM handoff, player-scoped snapshots, and audit logging;
+- a scripted seven-station nominal integration playthrough through post-burn power-down.
 
-## Player-facing presentation checkpoint
+## Phone-accessible first playable shell
 
-The minimum first-slice station presentation set is now complete.
+The repository now also contains a thin **FastAPI + Uvicorn** transport and a dependency-free phone-first browser interface.
 
-Where exact Apollo display evidence is incomplete, each interface is explicitly labeled a **project rendering** of documented controller information rather than a reconstructed historical CRT. Controller-facing values preserve their units, validity, source layer, and provenance. Hidden simulator integrity is not exposed, and unmodeled fields are omitted instead of being presented as failed historical telemetry.
+Implemented transport operations include:
 
-Key fidelity boundaries remain intact:
+- create/reset PC+2 session;
+- join or rejoin a logical station;
+- start/pause/resume;
+- retrieve station-scoped player snapshots;
+- submit readiness reports;
+- record FLIGHT GO/NO-GO;
+- queue FLIGHT-approved CAPCOM items;
+- transmit those items as CAPCOM;
+- manually advance GET for integration testing;
+- inspect a prototype audit endpoint.
 
-- historical MSK 1137 `TCP` percent is not silently equated to modeled `GQ6510P` chamber pressure in psi;
-- TELMU's documented **38–40 A** burn-configuration figure remains a reference/configuration value rather than fabricated live current telemetry;
-- GUIDO residuals are not substituted for a missing FIDO post-burn propagated trajectory solution;
-- INCO keeps link quality, voice, telemetry, ranging, and uplink as separate operational products;
-- FLIGHT does not receive a consolidated omniscient subsystem-health dashboard;
-- CAPCOM remains a communications/procedure role and does not receive direct hidden spacecraft truth.
+Deployment scaffolding is included for Render via `render.yaml`, with Python pinned through `.python-version`.
 
-## First playable session integration
+The first server is deliberately **single-process and in-memory**. Restart, redeploy, or service spin-down loses the current live session, and multiple workers would create conflicting authoritative state. That is acceptable for the first workflow/playability milestone, not for durable production games.
 
-`src/apollo_mission_control/pc2_session.py` now provides the first authoritative playable-session core.
+### Rejoin behavior
 
-The prototype currently supports:
+A browser/client may repeat the same player ID + station assignment to rejoin its existing station without modifying the mission state. The same player ID cannot silently switch stations, and a different player cannot take an occupied station.
 
-- one authoritative mission state;
-- synchronized mission GET;
-- unique logical station assignment;
-- station-scoped player views;
-- chronological application of the historical PC+2 fixture events;
-- controller readiness-report events;
-- explicit FLIGHT GO/NO-GO decision gating;
-- FLIGHT-approved CAPCOM queue items;
-- explicit CAPCOM transmission events;
-- pause/resume;
-- chronological audit logging.
+This is lightweight prototype identity, not authentication.
 
-### Important gameplay correction
+## Critical gameplay boundary: FLIGHT GO
 
-The older deterministic nominal model automatically sets `flight_go=True` when the historical final-poll timestamp is reached. That remains useful for nominal validation, but it is not acceptable gameplay behavior.
+The older deterministic nominal validator automatically reaches historical GO at the final-poll timestamp. The playable session does not.
 
-The new session layer intercepts the approximately **79:17 GET** final poll and stops progression at final readiness. The assigned FLIGHT player must explicitly record GO before the session can advance toward P40. A NO-GO leaves the session blocked at the readiness gate.
+At approximately **79:17 GET**, session progression reaches the final readiness gate. The assigned FLIGHT player must explicitly record GO before the scenario can proceed toward P40. FLIGHT sees explicit controller readiness reports rather than a hidden consolidated subsystem-health verdict.
 
-This preserves the researched operating principle:
+CAPCOM likewise sees an approved communication queue rather than direct authoritative subsystem truth.
 
-`station observations/reports → FLIGHT decision → CAPCOM crew-facing transmission`
+## Historical/presentation boundaries retained
 
-rather than:
-
-`hidden nominal simulation state → automatic GO`.
+- Apollo 13 MSK 1137 `TCP` percent is not silently equated to modeled `GQ6510P` chamber pressure in psi.
+- TELMU's documented **38–40 A** PC+2 burn-configuration figure remains a reference/configuration value, not fabricated live current telemetry.
+- GUIDO post-burn residuals are not substituted for a missing FIDO propagated trajectory solution.
+- INCO keeps link quality, voice, telemetry, ranging, and uplink as separate operational products.
+- Hidden product integrity never appears automatically in a player view.
+- Exact CRT/console layouts are not invented where the historical evidence is incomplete.
 
 ## Remaining bounded historical gaps
 
-The singular PC+2 150-psi ground “engine inlet pressure” rule remains intentionally `NOT_EVALUABLE`: separate LM-7 fuel (`GQ3611P`) and oxidizer (`GQ4111P`) interface-pressure measurements are known, but the historical ground selection/aggregation rule has not been established.
+The singular PC+2 150-psi ground **engine inlet pressure** criterion remains intentionally `NOT_EVALUABLE`: separate LM-7 fuel (`GQ3611P`) and oxidizer (`GQ4111P`) interface-pressure measurements are known, but the historical ground selection/aggregation rule has not been established.
 
-The onboard **77-percent thrust-monitor** criterion also remains `NOT_EVALUABLE`; primary sources confirm the rule but do not yet identify the exact percent-thrust crew display/signal.
+The onboard **77-percent thrust-monitor** criterion also remains `NOT_EVALUABLE`; the rule is documented but the exact crew percent-thrust indication/source remains unresolved.
 
-Exact console layouts, field coordinates, display-selection behavior, several routing/cadence details, detailed DPS transients, and a post-burn FIDO trajectory propagator remain unresolved where they do not yet affect a required player decision.
+Detailed DPS transients, exact display routing/cadence, and a post-burn FIDO trajectory propagator remain deferred until a concrete player/integration dependency requires them.
 
 ## Immediate priority
 
-The project has now crossed the planned research-to-integration transition.
+The project is now firmly in **playable integration**, not subsystem expansion.
 
-Next work is **not another station-display pass**. The current priorities are:
+The next architecture question is mission time. The current decision gate holds the session GET at the final-poll point until FLIGHT decides. Historical GET, however, did not stop. Before adding a real-time server clock, the implementation must explicitly define the relationship among:
 
-1. add a serializable session/player snapshot suitable for a future web/mobile client;
-2. surface readiness reports directly in the FLIGHT player view;
-3. surface pending/transmitted queue items in the CAPCOM view;
-4. add a deterministic scripted multi-station nominal playthrough through the session layer;
-5. then choose and implement the thin web/session transport and mobile presentation shell.
+- mission GET;
+- scenario-event eligibility;
+- player decision gates;
+- explicit simulation pause;
+- any future time acceleration.
 
-Further historical/subsystem research should be opened only when integration exposes a concrete player-information, decision, or validation gap.
+The next practical integration items are:
+
+1. resolve that mission-clock/gate policy rather than silently choosing one;
+2. add browser-side reconnect persistence or a lightweight reconnect credential;
+3. run the full domain/session/API suite when a runnable environment is available;
+4. exercise one already-modeled nonnominal branch through the HTTP/session path;
+5. only reopen historical research when one of those integration steps exposes a concrete information or decision gap.
 
 ## Apollo 13 station specifications
 
