@@ -27,7 +27,7 @@ See:
 - [PC+2 scenario-injection station-status addendum](docs/station-status/2026-09-12_pc2_scenario_injection.md)
 - [PC+2 CONTROL/inlet-pressure station-status addendum](docs/station-status/2026-09-12_pc2_inlet_pressure.md)
 - [PC+2 CONTROL/delta-P station-status addendum](docs/station-status/2026-09-12_pc2_delta_p.md)
-- [PC+2 TELMU/CONTROL inverter-warning addendum](docs/station-status/2026-09-12_pc2_inverter_warning.md)
+- [PC+2 TELMU/CONTROL/CAPCOM inverter-warning addendum](docs/station-status/2026-09-12_pc2_inverter_warning.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
 - [Simulation validation strategy](docs/SIMULATION_VALIDATION.md)
@@ -38,6 +38,7 @@ See:
 - [PC+2 scenario-injection progress continuation](docs/progress/2026-09-12_pc2_scenario_injection.md)
 - [PC+2 inlet-pressure progress continuation](docs/progress/2026-09-12_pc2_inlet_pressure.md)
 - [PC+2 delta-P/inverter progress continuation](docs/progress/2026-09-12_pc2_delta_p_and_inverter.md)
+- [PC+2 inverter action/report loop progress](docs/progress/2026-09-12_pc2_inverter_action_report_loop.md)
 - [Research resources](resources/README.md)
 - [PC+2 implementation source catalog](resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md)
 - [PC+2 inlet-pressure source addendum](resources/source-catalog/PC2_INLET_PRESSURE_SOURCES.md)
@@ -57,15 +58,19 @@ The framework-neutral Python prototype now includes:
 - an LM-7-family `GQ6510P` chamber-pressure observation path for CONTROL;
 - a fuel/oxidizer ΔP ground-product rule path that deliberately does not invent the unresolved LM-to-ground transformation;
 - a minimal timed scenario-injection layer that changes modeled source state/observations rather than diagnoses/outcomes;
-- a separate minimal operational-action layer for crew/controller actions, beginning with the inverter-switch action required by the PC+2 rule.
+- a separate operational-action layer for crew/controller actions;
+- a minimal procedural-communication layer separating CAPCOM instructions and crew completion reports from telemetry and physical state;
+- the first small end-to-end source-bounded contingency loop: inverter warning → CAPCOM instruction → crew switch action → completion report → distinct post-switch warning observation → rule evaluation.
 
-The source-bounded nonnominal validation paths remain deliberately narrow. Synthetic chamber-pressure and differential-pressure values test documented rule boundaries but are not asserted Apollo 13 failures.
+The source-bounded nonnominal validation paths remain deliberately narrow. Synthetic chamber-pressure, differential-pressure, and inverter-warning observations test documented rule boundaries and information flow but are not asserted Apollo 13 failures.
 
 The singular PC+2 150-psi ground “engine inlet pressure” rule remains intentionally `NOT_EVALUABLE`: the project knows the separate LM-7 fuel (`GQ3611P`) and oxidizer (`GQ4111P`) interface-pressure measurements but has not found enough primary evidence to choose a historical ground selection/aggregation rule.
 
-For the inverter criterion, primary technical evidence now supports a separate inverter caution observation and crew inverter-switch action. The caution reflects processed inverter voltage/frequency quality, and LM-5-and-later hardware—including Apollo 13 LM-7—suppressed the normal selection transient until valid processed data existed. The implementation therefore uses **warning still present after an explicit switch action** and does not invent a persistence timer or exact alternate-inverter identity.
+For the inverter criterion, the mission-specific air-ground rule read-up and crew readback establish the action ordering but not an inverter identity or dwell time. The evaluator now requires a **distinct post-switch warning observation**; carrying the original pre-switch warning through the switch action is not enough. The implementation does not invent an alternate-inverter number, switch/circuit-breaker sequence, or persistence timer.
 
 The project does **not** yet claim full spacecraft physics, RTCC dynamics, exact historical CRT timing, complete Apollo 13 telemetry/display routing, or historically reconstructed SimSup malfunction-command syntax.
+
+The next active research target is the onboard **77-percent thrust-monitor** PC+2 shutdown criterion, using primary LM crew/display and propulsion documentation first. If that path cannot be resolved efficiently, the next fallback is the attitude/rate criterion and its startup-transient wording conflict.
 
 ## Apollo 13 station specifications
 
