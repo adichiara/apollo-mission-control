@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>Apollo Mission Control — Validation Admin</title>
+  <title>Apollo Mission Control — Facilitator Console</title>
   <style>
     :root{color-scheme:dark;--bg:#070908;--panel:#111512;--panel2:#181d19;--line:#364039;--text:#d5ddd6;--muted:#8f9d92;--green:#98d49f;--amber:#e3c277;--red:#e5998f}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}header{position:sticky;top:0;padding:12px 14px;background:#070908f2;border-bottom:1px solid var(--line)}main{max-width:1000px;margin:auto;padding:12px;display:grid;gap:10px}.grid{display:grid;gap:10px}@media(min-width:760px){.grid.two{grid-template-columns:1fr 1fr}}.card{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:12px}h1{font-size:17px;margin:0}h2{font-size:14px;margin:0 0 8px}.meta{font-size:11px;color:var(--muted)}label{display:block;color:var(--muted);font-size:11px;margin:7px 0 3px}input,select,textarea,button{width:100%;border:1px solid var(--line);border-radius:4px;background:#0c100d;color:var(--text);font:inherit;padding:8px}textarea{min-height:65px}.buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:8px}.buttons.three{grid-template-columns:repeat(3,minmax(0,1fr))}.good{color:var(--green)}.warn{color:var(--amber)}.bad{color:var(--red)}pre{white-space:pre-wrap;overflow-wrap:anywhere}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 7px;margin:3px;font-size:11px}#error{display:none;color:var(--red)}
   </style>
 </head>
 <body>
-<header><h1>APOLLO MISSION CONTROL — VALIDATION ADMIN</h1><div class="meta">Development/SimSup harness. Not a normal player console and not an authentication boundary.</div><div id="status"></div></header>
+<header><h1>APOLLO MISSION CONTROL — FACILITATOR / SIMSUP</h1><div class="meta">Validation and exercise-control interface. Facilitator authority is separate from controller station identity.</div><div id="status"></div></header>
 <main>
   <div id="error" class="card"></div>
+  <section class="card"><h2>FACILITATOR AUTHORITY</h2><label>FACILITATOR TOKEN</label><input id="facilitatorToken" type="password" autocomplete="off" placeholder="APOLLO_FACILITATOR_TOKEN"><div class="buttons"><button onclick="saveToken()">USE FOR THIS TAB</button><button onclick="clearToken()">CLEAR</button></div><div class="meta">The token is kept only in sessionStorage for this browser tab and is sent in the X-Apollo-Facilitator header. It is not a controller identity.</div></section>
   <div class="grid two">
     <section class="card"><h2>SESSION</h2><div class="buttons"><button onclick="createSession()">CREATE / RESET</button><button class="good" onclick="post('/api/session/start')">START</button></div><div class="buttons"><button class="warn" onclick="post('/api/session/pause')">PAUSE</button><button onclick="post('/api/session/resume')">RESUME</button></div><label>TARGET GET</label><input id="targetGet" value="79:20:00"><div class="buttons"><button onclick="advanceTo()">ADVANCE TO GET</button><button onclick="advanceDelta(60)">+60 SEC</button></div><div class="meta">Realtime 1× pacing is active while RUNNING. Manual advancement is retained only for validation.</div></section>
     <section class="card"><h2>STATE INJECTION</h2><label>TARGET</label><input id="injTarget" value="dps_fuel_oxidizer_delta_p_psi"><label>VALUE</label><input id="injValue" value="26"><label>EVIDENCE CLASS</label><select id="injClass"><option value="synthetic_boundary">synthetic_boundary</option><option value="documented_historical">documented_historical</option><option value="source_bounded_hypothetical">source_bounded_hypothetical</option></select><label>PROVENANCE</label><textarea id="injProv">validation/admin synthetic boundary injection</textarea><button class="bad" style="margin-top:8px" onclick="inject()">APPLY INJECTION</button></section>
@@ -22,8 +23,13 @@
   <section class="card"><h2>AUDIT</h2><button onclick="loadAudit()">REFRESH AUDIT</button><pre id="audit"></pre></section>
 </main>
 <script>
+const TOKEN_KEY='apollo_facilitator_token';
 function err(x){const e=document.getElementById('error');e.style.display=x?'block':'none';e.textContent=x||''}
-async function api(path,options={}){const r=await fetch(path,{headers:{'Content-Type':'application/json'},...options});const b=await r.json().catch(()=>({}));if(!r.ok)throw new Error(b.detail||`${r.status} ${r.statusText}`);return b}
+function currentToken(){return sessionStorage.getItem(TOKEN_KEY)||''}
+function saveToken(){const v=document.getElementById('facilitatorToken').value.trim();if(v)sessionStorage.setItem(TOKEN_KEY,v);err('')}
+function clearToken(){sessionStorage.removeItem(TOKEN_KEY);document.getElementById('facilitatorToken').value=''}
+function facilitatorHeaders(){const token=currentToken();return token?{'X-Apollo-Facilitator':token}:{}}
+async function api(path,options={}){const headers={'Content-Type':'application/json',...facilitatorHeaders(),...(options.headers||{})};const r=await fetch(path,{...options,headers});const b=await r.json().catch(()=>({}));if(!r.ok)throw new Error(b.detail||`${r.status} ${r.statusText}`);return b}
 async function post(path,body){try{err('');const out=await api(path,{method:'POST',body:body===undefined?undefined:JSON.stringify(body)});await refreshStatus();return out}catch(e){err(e.message);throw e}}
 function getSeconds(v){if(!String(v).includes(':'))return Number(v);const p=String(v).split(':').map(Number);return p[0]*3600+p[1]*60+p[2]}
 function fmtGet(sec){if(sec==null)return'--';const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s=Math.floor(sec%60);return`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
@@ -38,6 +44,7 @@ async function crewReport(){await post('/api/session/crew/shutdown-report',{crew
 async function engineOff(){await post('/api/session/admin/vehicle/dps-engine-off',{cause:'crew_stop_pushbutton'})}
 async function shutdownEvidence(){try{const p=document.getElementById('controlPlayer').value;document.getElementById('evidence').textContent=JSON.stringify(await api(`/api/session/control/${encodeURIComponent(p)}/shutdown-evidence`),null,2)}catch(e){err(e.message)}}
 async function loadAudit(){try{document.getElementById('audit').textContent=JSON.stringify(await api('/api/session/audit'),null,2)}catch(e){err(e.message)}}
+const stored=currentToken();if(stored)document.getElementById('facilitatorToken').value=stored;
 setInterval(refreshStatus,1000);refreshStatus();
 </script>
 </body>
