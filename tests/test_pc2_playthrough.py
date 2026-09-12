@@ -32,7 +32,10 @@ class PC2PlaythroughTests(unittest.TestCase):
             self.assertTrue(latest[station].ready)
 
         kinds = [event.kind for event in session.audit_log]
-        self.assertIn("flight_go_no_go_poll_opened", kinds)
+        self.assertIn("decision_gate_opened", kinds)
+        gate_events = [event for event in session.audit_log if event.kind == "decision_gate_opened"]
+        self.assertEqual(gate_events[0].details["gate"], "flight_go")
+        self.assertFalse(gate_events[0].details["simulation_paused"])
         self.assertIn("flight_go_decision", kinds)
         self.assertIn("capcom_item_queued", kinds)
         self.assertIn("capcom_item_transmitted", kinds)
