@@ -1,7 +1,7 @@
 {
-  "schema_version": "0.1-research-fixture",
+  "schema_version": "0.2-research-fixture",
   "scenario_id": "apollo13_pc2_nominal",
-  "status": "source-backed nominal fixture; not yet executable",
+  "status": "source-backed nominal fixture used by executable prototype",
   "mission": "Apollo 13",
   "start_get_s": 285300.0,
   "start_get_hms": "77:55:00",
@@ -11,7 +11,8 @@
     "NASA Flight Control Division, Mission Operations Report — Apollo 13, 1970-04-28",
     "Apollo 13 Technical Air-to-Ground Voice Transcription",
     "Apollo 13 AC Electronics Guidance & Navigation Summary",
-    "Repository research notes 048-050"
+    "NASA TM X-66935 / REPT-70-FC13-47-ADD-1",
+    "Repository research notes 048-051"
   ],
   "historical_context_completed_before_start": {
     "free_return_restored": true,
@@ -52,23 +53,42 @@
     },
     "ullage": {
       "jets": 2,
-      "duration_s": 10.0
+      "duration_s": 10.0,
+      "command_start_get_hms": "79:27:28.30",
+      "basis": "manual ullage at TIG minus 10 seconds"
     },
-    "throttle_profile": [
-      {
-        "phase": "minimum",
-        "duration_s": 5.0
-      },
-      {
-        "phase": "40_percent",
-        "duration_s": 21.0
-      },
-      {
-        "phase": "maximum",
-        "duration_s": null,
-        "note": "remainder until guided cutoff"
-      }
-    ]
+    "throttle_profile": {
+      "basis": "final PC+2 maneuver PAD / crew procedure command profile",
+      "physical_engine_response_model": "deferred",
+      "segments": [
+        {
+          "phase": "minimum",
+          "command_start_get_hms": "79:27:38.30",
+          "duration_s": 5.0
+        },
+        {
+          "phase": "40_percent",
+          "command_start_get_hms": "79:27:43.30",
+          "duration_s": 21.0
+        },
+        {
+          "phase": "maximum",
+          "command_start_get_hms": "79:28:04.30",
+          "duration_s": null,
+          "note": "remainder until guided cutoff"
+        }
+      ],
+      "crew_voice_reports": [
+        {
+          "get_hms": "79:27:51",
+          "report": "40_percent"
+        },
+        {
+          "get_hms": "79:28:09",
+          "report": "100_percent"
+        }
+      ]
+    }
   },
   "return_products": {
     "landing_lat_deg": -21.65,
@@ -200,8 +220,28 @@
       "event": "p40_active_final_preburn"
     },
     {
+      "get_hms": "79:27:28.30",
+      "event": "manual_two_jet_ullage_begins"
+    },
+    {
       "get_hms": "79:27:38.30",
       "event": "dps_ignition"
+    },
+    {
+      "get_hms": "79:27:43.30",
+      "event": "throttle_command_40_percent"
+    },
+    {
+      "get_hms": "79:27:51",
+      "event": "crew_reports_40_percent"
+    },
+    {
+      "get_hms": "79:28:04.30",
+      "event": "throttle_command_maximum"
+    },
+    {
+      "get_hms": "79:28:09",
+      "event": "crew_reports_100_percent"
     },
     {
       "get_hms": "79:32:02.12",
@@ -219,6 +259,7 @@
   "deferred_not_blocking": [
     "exact RTCC Cartesian state vector at 77:55 GET",
     "exact nominal DPS pressure readings",
+    "detailed physical DPS throttle ramp/engine-response timing",
     "complete MSK 1123/1137 routing",
     "exact AGS ULL/ACT VEL ground transformation",
     "full LM consumables state",
