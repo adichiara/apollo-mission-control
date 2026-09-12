@@ -853,7 +853,7 @@ The simulator must preserve those origins rather than populate the CRT directly 
 
 ### Completed
 
-- Confirmed that the 1 February 1970 **LM-7 and Subsequent Apollo Operations Handbook** contains:
+- Confirmed that the 1 February 1970 changed **LM-7 and Subsequent Apollo Operations Handbook** contains:
   - AEA input/output signal tables;
   - **AEA Telemetry Word List, Table 2.1-7**;
   - PGNS downlink sequence;
@@ -874,7 +874,7 @@ The simulator must preserve those origins rather than populate the CRT directly 
 
 ### Next work
 
-1. Recover the February 1970 LM-7 Table 2.1-7 exact Flight Program 7 telemetry word list.
+1. Recover the LM-7 Table 2.1-7 exact Flight Program 7 telemetry word list.
 2. Compare it with the earlier FP6 list to identify software-version changes.
 3. Map AEA telemetry words to MSK 1123 fields and ground coordinate transformations.
 4. Use the Apollo 13 RTCC body-angle error as a future ground-processing validation case.
@@ -917,7 +917,7 @@ The simulator must preserve those origins rather than populate the CRT directly 
 ### Next work
 
 1. Search Apollo 13 indexed material for unresolved addresses in the 0325–0406 block.
-2. Recover the February 1970 Table 2.1-7.
+2. Recover the LM-7 Table 2.1-7.
 3. Map verified AGS telemetry words into the AGS fields on MSK 1123, keeping RTCC transformations separate.
 
 
@@ -1080,7 +1080,7 @@ The simulator must preserve those origins rather than populate the CRT directly 
 ### Next work
 
 1. Directly transcribe the Apollo 13 MSK 1123 velocity rows/masks from the mission-specific ASPO page.
-2. Recover the February 1970 LM-7 Table 2.1-7 Flight Program 7 telemetry list.
+2. Recover the LM-7 Table 2.1-7 Flight Program 7 telemetry list.
 3. Locate MCC/RTCC definitions selecting or transforming AGS VEL / DEL VEL / ULL / ACT VEL.
 4. Determine the runtime meaning, if any, of the AEA/LGC/PCM header boxes.
 
@@ -1090,8 +1090,8 @@ The simulator must preserve those origins rather than populate the CRT directly 
 ### Completed
 
 - Added research note 046 documenting recovery of the engineering structure of **Table 2.1-7 — Abort Electronics Assembly - Telemetry Word List**.
-- Confirmed the exact Apollo 13 **LM 7 and Subsequent** handbook edition is dated 1 February 1970 and contains Table 2.1-7, while preserving the current inability to render its very large page image in this environment.
-- Used a contemporary searchable **LM 10 and Subsequent** copy with the same 1 February 1970 basic date and a 15 June 1970 change date as explicit continuity evidence rather than silently treating it as Apollo 13 flight authority.
+- Corrected the handbook chronology: the Apollo 13 **LM 7 and Subsequent** volume is **Basic Date 15 December 1968 / Change Date 1 February 1970**; the searchable **LM 10 and Subsequent** continuity copy is **Basic Date 1 February 1970 / Change Date 15 June 1970**.
+- Used the searchable LM-10 table as explicit later-configuration continuity evidence rather than silently treating it as Apollo 13 flight authority.
 - Recovered distinct AEA telemetry products including:
   - present LM inertial velocity, telemetry IDs 34–36 octal;
   - compensated 20-ms body-axis incremental velocity, IDs 24–26;
@@ -1104,12 +1104,34 @@ The simulator must preserve those origins rather than populate the CRT directly 
 
 ### Evidence boundary
 
-The table now answers much of **what AEA velocity information existed in telemetry**, but not **which transmitted quantity and ground transformation populated each MSK 1123 row**. The June-changed searchable table also still requires row-by-row comparison against the exact LM-7 flight-edition page before its complete word list can be promoted to Apollo 13 mission-specific status.
+The table now answers much of **what AEA velocity information existed in telemetry**, but not **which transmitted quantity and ground transformation populated each MSK 1123 row**. The later LM-10 table still requires row-by-row comparison against the exact LM-7 flight-edition page before its complete word list can be promoted to Apollo 13 mission-specific status.
 
 ### Next work
 
-1. Directly recover/inspect the LM-7 Table 2.1-7 page and compare it against the searchable June-changed copy.
+1. Directly recover/inspect the LM-7 Table 2.1-7 page and compare it against the searchable LM-10 copy.
 2. Search MCC/RTCC/display-format material for AGS VEL, AGS DEL VEL, AGS ULL, and ACT VEL selection/transformation rules.
 3. Resolve which of the distinct incremental-velocity telemetry families feeds AGS DEL VEL.
 4. Resolve the engineering calculation behind AGS ULL and ACT VEL.
 5. Continue to keep telemetry membership, ground processing, and CRT formatting as separate evidence layers.
+
+
+## 2026-09-12 — AGS ullage criterion and source chronology correction
+
+### Completed
+
+- Added `resources/research/047_ags_ullage_threshold_and_handbook_chronology.md`.
+- Corrected the LM handbook chronology wherever the note-046 work had described the later LM-10 copy as sharing the LM-7 basic date.
+- Added primary Grumman AGS specification evidence that ullage qualification requires accumulated **+X-axis velocity increment greater than 0.2 ft/s in each 2-second computer cycle for three consecutive cycles**.
+- Cross-checked the later LM-10 handbook wording, which states the equivalent condition as average +X acceleration greater than **0.1 ft/s²** over the same 2-second cycle.
+- Narrowed the strongest physical candidate behind MSK 1123 **AGS ULL** to a velocity-valued quantity in the two-second +X ullage-test chain.
+- Preserved the evidence boundary: no source yet identifies the exact telemetry word or RTCC/display transformation used for AGS ULL.
+- Preserved **AGS ULL** and **ACT VEL** as separate display parameters; their similar accumulated-velocity language is not sufficient evidence to merge them.
+- Updated the roadmap, display reconstruction status, station research status, and source catalog.
+- GUIDO and CONTROL remain maturity **B**.
+
+### Next work
+
+1. Recover/directly inspect the Apollo 13 LM-7 Table 2.1-7 page image and compare it row-by-row with the later LM-10 table.
+2. Locate PHO/RTCC/display-format documentation mapping AEA telemetry into MSK 1123.
+3. Resolve the exact AGS DEL VEL source selection.
+4. Resolve the ground calculations for AGS ULL and ACT VEL.
