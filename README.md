@@ -27,6 +27,8 @@ The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation
 
 The domain/session model now includes source-backed PC+2 progression, declarative event prerequisites, station-specific products, shutdown/restart branches, explicit communication/action/physical/evidence layers, first-pass views for CONTROL/GUIDO/TELMU/FIDO-RETRO/INCO/FLIGHT/CAPCOM, one authoritative continuous-time session, browser rejoin, CAPCOM handoff, audit logging, and a complete source-bounded synthetic ΔP branch through fresh CONTROL evidence.
 
+Integrated validation has moved beyond isolated endpoint tests: the repository now includes an in-process multi-client contract test plus a destructive real-network smoke runner. Actual full-suite/deployed/mobile execution is still pending.
+
 ## Phone-accessible first playable shell
 
 The repository contains a thin **FastAPI + Uvicorn** transport with two browser surfaces:
@@ -74,6 +76,29 @@ Every step remains explicit. CAPCOM transmission does not imply crew receipt, cr
 
 No pressure magnitude is interpreted as a binary engine-off threshold.
 
+## Integrated validation
+
+Primary NASA simulation-training material supports validating flight controllers together in a mission environment while keeping simulation control distinct. The project uses that historical boundary without treating its modern HTTP/browser mechanics as Apollo hardware/software.
+
+Two validation artifacts now exist:
+
+- `tests/test_web_multiclient_integration.py` — independent FLIGHT, CONTROL, CAPCOM, GUIDO, and facilitator clients sharing one in-process authoritative session;
+- `scripts/pc2_multiclient_smoke.py` — destructive real-network smoke runner for a dedicated local or deployed validation server.
+
+The network runner checks simultaneous station polling, rejoin, explicit pause, facilitator/player authority isolation, the complete synthetic ΔP branch, fresh CONTROL evidence, and audit ordering.
+
+Example against a local server:
+
+```bash
+python scripts/pc2_multiclient_smoke.py http://127.0.0.1:8000
+```
+
+For an authorized deployment, set `APOLLO_FACILITATOR_TOKEN` or pass `--facilitator-token`.
+
+The validation pass also corrected the `/admin` injection evidence-class choices so they now match the server enum exactly.
+
+See research note `089_multiclient_integrated_validation_boundary.md`.
+
 ## Historical/presentation boundaries retained
 
 - Apollo 13 MSK 1137 `TCP` percent is not equated to modeled `GQ6510P` psi.
@@ -93,12 +118,12 @@ Detailed DPS transients, exact display routing/cadence, and a post-burn FIDO tra
 
 ## Immediate priority
 
-The next work is **runnable multi-client integration validation**:
+The next work is **execution of the integrated validation artifacts**:
 
 1. execute the full domain/session/API suite in a checked-out environment;
-2. run several station clients plus one facilitator console against one authoritative server;
-3. verify continuous GET, facilitator pause/resume, reload/rejoin, station isolation, and facilitator/player authority isolation;
-4. run the complete synthetic ΔP branch through the live interfaces;
+2. run `scripts/pc2_multiclient_smoke.py` against a dedicated local or Render validation instance;
+3. run several real phone/browser station clients plus one facilitator console against one authoritative server;
+4. verify continuous GET, facilitator pause/resume, reload/rejoin, station isolation, and facilitator/player authority isolation under actual network conditions;
 5. repair usability/integration problems exposed by actual realtime play.
 
 Further historical research should reopen only when integrated play exposes a concrete information, procedure, or decision gap.
