@@ -1,6 +1,6 @@
 # Apollo 13 Station Research Status
 
-Status: **Phase 1 working index**
+Status: **Phase 1 research-sufficient; scenario-focused refinement in progress**
 
 Purpose: track how far each Apollo 13-era station has been reconstructed and prevent workflow evidence from being mistaken for display/console evidence.
 
@@ -35,11 +35,15 @@ Purpose: track how far each Apollo 13-era station has been reconstructed and pre
 
 ## Current interpretation
 
-### Best first station implementation candidate
+Phase 1 has reached the project's research-sufficiency threshold. The maturity grades are not expected to reach A across the room before implementation starts.
 
-**EECOM**
+The active question is now narrower:
 
-It is the only station currently at maturity A because the Apollo 13 Review Board preserves:
+> What historically supported information and workflow does each station need for the selected Apollo 13 PC+2 vertical slice?
+
+### Reference-station evidence
+
+**EECOM** remains the only station currently at maturity A because the Apollo 13 Review Board preserves:
 
 - console anatomy;
 - two actual high-use CRT formats;
@@ -47,13 +51,20 @@ It is the only station currently at maturity A because the Apollo 13 Review Boar
 - update rate;
 - event/limit behavior.
 
-### Best next display-reconstruction targets
+That reference continues to validate the common station architecture even though EECOM is not a core PC+2 player position.
 
-1. **GUIDO/GNC** — Apollo 13 Guidance & Navigation Summary contains a mission-specific CRT section and is now inspected; field-level transcription and mapping remain pending.
-2. **INCO** — actual display ID MSK 1475 is known; layout still missing.
-3. **PROCEDURES** — actual display ID MSK 1503 is known; layout still missing.
-4. **TELMU/CONTROL** — simulator/output-table documentation may reveal LM telemetry and display structure.
-5. **FIDO/RETRO** — need RTCC/flight-dynamics display-format sources.
+### PC+2 display/product priorities
+
+The next display work should follow scenario need rather than generic station completeness:
+
+1. **CONTROL** — chamber/thrust, inlet and differential pressure, attitude/rate, gimbal/CES warnings, burn configuration.
+2. **GUIDO** — final load status, LGC/P40 state, PGNS target/residuals, AGS cross-check, guidance/computer warnings.
+3. **FIDO/RETRO** — final PC+2 target/return product and post-burn trajectory assessment.
+4. **TELMU** — burn-configuration power/current and inverter/electrical status needed by the shutdown rules.
+5. **INCO** — weak-link/AOS, S-band power, ranging, telemetry/uplink availability required during final preparation.
+6. **FLIGHT/CAPCOM** — readiness/polling and crew-report/decision path rather than an omniscient combined display.
+
+Complete station catalogs remain valuable expansion research, but they no longer outrank PC+2-required products.
 
 ## Phase 1 gap categories
 
@@ -99,17 +110,18 @@ Across stations, missing evidence now falls into a small number of repeated cate
 
 ## Phase 1 exit condition
 
-Phase 1 should not require every station to reach maturity A.
+Phase 1 does not require every station to reach maturity A.
 
-A reasonable research exit condition is:
+The working exit condition is now met for the Apollo 13 baseline:
 
-- all likely core player positions at B or better;
-- at least one systems station, one flight-dynamics/guidance station, and one communications/coordination station with enough display evidence to validate the common station architecture;
-- major mission-era nomenclature/configuration differences documented;
-- known source conflicts logged;
-- no player-count aggregation decisions made from role titles alone.
+- core player positions are B or better;
+- EECOM provides a systems-station display/console reference;
+- guidance/flight-dynamics and communications workflows have mission-specific evidence sufficient to validate common architecture;
+- major mission-era nomenclature/configuration differences are documented;
+- known source conflicts are logged;
+- unresolved exact-display details are explicitly separated from documented workflow.
 
-The project is approaching that point for Apollo 13, but exact display reconstruction remains the largest gap.
+Further historical reconstruction continues when a selected scenario, implementation dependency, or unusually high-value accessible source justifies it.
 
 
 ## 2026-09-11 — Source extraction and comparison status
@@ -250,3 +262,21 @@ This removes “what velocity products are actually available in the AEA telemet
 Research note 047 adds primary AGS specification evidence that ullage qualification is based on **accumulated +X-axis velocity increment over each 2-second computer cycle**, with the threshold required for three consecutive cycles. The inspected specification states a **0.2 ft/s** threshold; a later LM handbook expresses the equivalent condition as average +X acceleration greater than **0.1 ft/s²** over the same cycle.
 
 That makes a velocity-valued quantity in the two-second ullage-test chain the strongest current physical candidate behind the controller's **AGS ULL** measurement. It still does not identify the exact telemetry word or RTCC/display transformation. **AGS ULL** and **ACT VEL** remain distinct unresolved parameters, and GUIDO/CONTROL remain maturity **B**.
+
+
+## 2026-09-12 — PC+2 vertical-slice initialization readiness
+
+Research note 050 and `docs/scenarios/APOLLO13_PC2_PARAMETERS.md` now define a bounded nominal information contract beginning at **77:55:00 GET**.
+
+This does not promote any station maturity grade, because the grades measure historical station reconstruction rather than scenario implementability. It does, however, establish that the selected slice can proceed without resolving every station's full console catalog.
+
+Scenario-specific readiness now includes:
+
+- **FIDO/RETRO:** final LVLH maneuver PAD and return/landing products are documented; a complete RTCC Cartesian state vector and exact CRT layout are deferred until the trajectory propagator/display implementation actually requires them.
+- **GUIDO:** alignment acceptance, planned/executed IMU-coordinate velocity-to-be-gained, LGC/P40 state, warning conditions and post-burn residuals are documented strongly enough for the nominal slice; complete MSK 1123 routing remains deferred.
+- **CONTROL:** chamber/thrust, inlet-pressure and differential-pressure shutdown criteria, attitude/rate limits, gimbal/CES warning logic and nominal burn sequence are documented; exact nominal pressure readings are not invented from the thresholds.
+- **TELMU:** the burn-configuration load of approximately **38–40 A** and inverter/electrical shutdown relevance are sufficient for first-slice scope; the entire LM consumables model is not required yet.
+- **INCO:** the weak link at scenario start, subsequent S-band power-amplifier improvement, ranging requirement, and telemetry/uplink availability are scenario-relevant; MSK 1475's full layout is not a blocker.
+- **FLIGHT/CAPCOM:** the final GO/NO-GO and air-ground decision/readback path is documented and remains intentionally separate from raw subsystem state.
+
+All affected stations remain at their existing maturity grades. The next station research should be driven by the minimum PC+2 player-facing product set rather than by generic console completeness.
