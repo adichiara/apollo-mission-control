@@ -24,6 +24,10 @@ CONTROL remains maturity B. Its attitude/rate monitoring path is now implemented
 
 GUIDO remains B; attitude/rate products are not duplicated there without station-specific evidence.
 
+## Validation status
+
+A fresh repository-clone/test-suite execution was attempted after the commits. The container runtime returned a transient `ClientError` before the clone/test command executed, so the new tests are **committed but not recorded as executed/passing**. No test result is inferred from the runtime failure.
+
 ## Next documented stopping point
 
 With the major PC+2 shutdown-rule observations now either implemented or explicitly bounded as unresolved, the next useful implementation step is to add **observation timestamp/age behavior to scenario injections and rule evaluation**, so a controller rule cannot silently evaluate from an indefinitely carried-forward analog observation. Research should first determine whether any PC+2 rule/procedure supplies an explicit freshness requirement; if not, implement age metadata without inventing a historical stale threshold.
