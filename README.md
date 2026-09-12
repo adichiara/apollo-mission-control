@@ -25,6 +25,7 @@ See:
 - [PC+2 GUIDO/ISS-warning station-status addendum](docs/station-status/2026-09-12_pc2_iss_warning.md)
 - [PC+2 CONTROL/chamber-pressure station-status addendum](docs/station-status/2026-09-12_pc2_dps_chamber_pressure.md)
 - [PC+2 scenario-injection station-status addendum](docs/station-status/2026-09-12_pc2_scenario_injection.md)
+- [PC+2 CONTROL/inlet-pressure station-status addendum](docs/station-status/2026-09-12_pc2_inlet_pressure.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
 - [Simulation validation strategy](docs/SIMULATION_VALIDATION.md)
@@ -33,8 +34,10 @@ See:
 - [Progress log](docs/PROGRESS.md)
 - [PC+2 product/rule progress continuation](docs/progress/2026-09-12_pc2_product_projection_and_rules.md)
 - [PC+2 scenario-injection progress continuation](docs/progress/2026-09-12_pc2_scenario_injection.md)
+- [PC+2 inlet-pressure progress continuation](docs/progress/2026-09-12_pc2_inlet_pressure.md)
 - [Research resources](resources/README.md)
 - [PC+2 implementation source catalog](resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md)
+- [PC+2 inlet-pressure source addendum](resources/source-catalog/PC2_INLET_PRESSURE_SOURCES.md)
 - [Evidence verification audit](resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md)
 
 ## Current status
@@ -51,6 +54,8 @@ The framework-neutral Python prototype now includes:
 - a minimal timed scenario-injection layer that changes modeled source state rather than diagnoses/outcomes.
 
 The first timed nonnominal validation path uses a clearly labeled synthetic 80-psi chamber-pressure injection during the burn. That value/time are implementation test data, not an asserted Apollo 13 malfunction. The changed source observation flows through CONTROL and the documented 85-psi ground criterion without automatically stopping the engine or creating an abort state.
+
+The next CONTROL pressure pass established two additional LM-7 source measurements—`GQ3611P` fuel engine-interface pressure and `GQ4111P` oxidizer engine-interface pressure—but did **not** find enough evidence to collapse them into the singular PC+2 150-psi ground “engine inlet pressure” rule. That rule therefore remains intentionally `NOT_EVALUABLE` until the ground selection/aggregation logic is sourced.
 
 The project does **not** yet claim full spacecraft physics, RTCC dynamics, exact historical CRT timing, complete Apollo 13 telemetry/display routing, or historically reconstructed SimSup malfunction-command syntax.
 
