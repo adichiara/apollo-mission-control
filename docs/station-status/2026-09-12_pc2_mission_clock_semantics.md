@@ -2,48 +2,51 @@
 
 Date: 2026-09-12  
 Stations affected: **FLIGHT, CAPCOM, all reporting disciplines**  
-Maturity change: **none**
+Maturity change: **none**  
+Status: **historical source findings retained; original pause-policy section superseded by D-016**
 
 ## Historical result
 
-Primary-source review of the Apollo 13 Flight Control Division *Mission Operations Report* confirms that the final PC+2 readiness/GO and TIG are distinct timed events in GET. The same report states that PC+2 ignition time was **not time critical**, but does not provide a numeric allowable delay and does not indicate that GET stopped while controllers deliberated.
+Primary-source review of the Apollo 13 Flight Control Division *Mission Operations Report* confirms that the final PC+2 readiness/GO and TIG are distinct timed events in GET. The report states that PC+2 ignition time was **not time critical**, but does not provide a numeric allowable delay and does not indicate that GET stopped while controllers deliberated.
 
 Therefore no station is given an invented clock-control authority or timing margin.
 
-## Simulation boundary
+## Current simulation boundary
 
-The first playable PC+2 session now treats the final FLIGHT GO/NO-GO gate as an explicit **simulation pause**:
+Decision D-016 supersedes the earlier provisional pause-at-gate implementation.
 
-- FLIGHT still receives discipline readiness reports rather than hidden consolidated health;
-- reaching the gate pauses simulation progression with `pause_reason=decision_gate:flight_go`;
-- reporting disciplines may submit readiness while paused;
-- FLIGHT alone may clear the gate with GO;
-- NO-GO leaves the session paused;
+- FLIGHT receives discipline readiness reports rather than hidden consolidated health;
+- reaching the final poll opens the `flight_go` decision requirement but does **not** pause GET;
+- reporting disciplines may continue to report while mission time advances;
+- FLIGHT alone records the GO/NO-GO decision;
 - CAPCOM workflow remains downstream of FLIGHT authorization;
-- later source-timed events are not retroactively executed while the gate is unresolved.
+- nominal downstream events execute only if their prerequisites exist when their scheduled GET arrives;
+- an ineligible nominal event is recorded as missed and is not replayed retroactively after a late decision;
+- only an explicit game/session pause normally stops GET.
 
-This pause is a project playability device. It is not presented as historical Mission Control clock behavior.
+See `resources/research/084_continuous_mission_clock_architecture.md`.
 
 ## Station implications
 
 ### FLIGHT
 
-No maturity change. The implementation now makes the decision authority clearer: the historical GO is represented as an explicit player/controller decision with a bounded simulation hold, not as a hidden automatic state transition.
+No maturity change. FLIGHT decision authority is explicit, but the controller does not control mission time by withholding a decision.
 
 ### CAPCOM
 
-No maturity change. CAPCOM does not clear the gate and does not receive new subsystem truth. Crew-facing communication remains separate from the FLIGHT decision.
+No maturity change. CAPCOM does not clear the decision requirement and receives no new subsystem truth. Crew-facing communication remains separate from the FLIGHT decision.
 
 ### CONTROL / GUIDO / TELMU / FIDO-RETRO / INCO
 
-No maturity change. Their readiness reports can be submitted during the explicit simulation pause; this does not add new display evidence or change their historical product boundaries.
+No maturity change. Their reporting and station-information boundaries are unchanged; late reporting may now have operational consequences because GET continues.
 
 ## Sources
 
 - NASA Manned Spacecraft Center, Flight Control Division, *Mission Operations Report — Apollo 13*, 28 April 1970, NTRS 19710010485.
-- `resources/research/081_pc2_mission_clock_and_decision_gate_semantics.md`
-- `resources/source-catalog/PC2_SESSION_INTEGRATION_SOURCES.md`
+- `resources/research/081_pc2_mission_clock_and_decision_gate_semantics.md` — source findings plus superseded provisional policy.
+- `resources/research/084_continuous_mission_clock_architecture.md` — current implementation architecture.
+- `resources/source-catalog/PC2_SESSION_INTEGRATION_SOURCES.md`.
 
-## Next station-facing work
+## Current station-facing priority
 
-No further station-display research is opened by this result. The next work remains integration-oriented: browser rejoin persistence, runnable multi-client smoke validation, and then one already-modeled nonnominal branch through the same session/API path.
+No additional station-display research is opened by this result. Current work is runnable multi-client integration validation, including continuous GET, rejoin, information isolation, and facilitator/player authority isolation.
