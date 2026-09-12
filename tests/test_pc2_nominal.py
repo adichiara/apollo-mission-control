@@ -74,6 +74,17 @@ class PC2NominalTests(unittest.TestCase):
         self.assertIn("dps.chamber_pressure_psi", projections["CONTROL"].deferred_fields)
         self.assertNotIn("dps.chamber_pressure_psi", projections["CONTROL"].products)
 
+    def test_modeled_chamber_pressure_becomes_control_product(self):
+        state = run_nominal(self.fixture)
+        state.dps_chamber_pressure_psi = 100.0
+        control = project_controller_products(state, self.fixture)["CONTROL"]
+        self.assertNotIn("dps.chamber_pressure_psi", control.deferred_fields)
+        product = control.products["dps.chamber_pressure_psi"]
+        self.assertEqual(product.value, 100.0)
+        self.assertEqual(product.units, "psi")
+        self.assertEqual(product.validity, Validity.VALID)
+        self.assertIn("GQ6510P", product.provenance)
+
     def test_postburn_residual_is_unavailable_before_review(self):
         state = PC2State(get_s=self.fixture["start_get_s"])
         for event in build_events(self.fixture):
@@ -100,6 +111,23 @@ class PC2NominalTests(unittest.TestCase):
         evaluations = evaluate_pc2_shutdown_rules(products, self.fixture)
         for rule_id in ("ground_chamber_pressure", "crew_thrust_monitor", "ground_inlet_pressure", "crew_inlet_pressure", "fuel_oxidizer_delta_p", "attitude_error", "attitude_rate"):
             self.assertEqual(evaluations[rule_id].state, RuleState.NOT_EVALUABLE)
+
+    def test_modeled_safe_chamber_pressure_clears_ground_rule(self):
+        state = run_nominal(self.fixture)
+        state.dps_chamber_pressure_psi = 100.0
+        evaluations = evaluate_pc2_shutdown_rules(project_controller_products(state, self.fixture), self.fixture)
+        self.assertEqual(evaluations["ground_chamber_pressure"].state, RuleState.CLEAR)
+
+    def test_source_backed_low_chamber_pressure_rule_path(self):
+        state = run_nominal(self.fixture)
+        # Synthetic test value below the documented 85-psi ground criterion;
+        # not a claim about a historical Apollo 13 failure.
+        state.dps_chamber_pressure_psi = 80.0
+        products = project_controller_products(state, self.fixture)
+        evaluations = evaluate_pc2_shutdown_rules(products, self.fixture)
+        self.assertEqual(evaluations["ground_chamber_pressure"].state, RuleState.TRIGGERED)
+        self.assertIn("ground_chamber_pressure", [r.rule_id for r in triggered_rules(evaluations)])
+        self.assertFalse(state.shutdown_rule_triggers)
 
     def test_modeled_gimbal_warning_can_trigger_rule_without_commanding_abort(self):
         fixture = deepcopy(self.fixture)
