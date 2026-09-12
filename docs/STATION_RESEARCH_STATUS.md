@@ -289,3 +289,25 @@ Research note 051 freezes the first-slice procedure/command sequence relevant to
 The crew's later 40-percent and 100-percent voice reports remain separate communication events. This is important for station modeling because CONTROL should not receive a perfect throttle-state transition merely because the crew procedure commanded one; physical engine response, telemetry indication and crew report are different information layers.
 
 This improves scenario fidelity but does **not** resolve exact CONTROL CRT timing, telemetry-to-display routing, or detailed physical engine-response dynamics. CONTROL therefore remains maturity **B**.
+
+
+## 2026-09-12 — PC+2 controller-product projection and shutdown-rule boundary
+
+Research notes 052–053 now connect the research model to the executable information path without changing station maturity grades.
+
+The first station-specific product projection is implemented for **CONTROL, GUIDO, FIDO/RETRO, TELMU, INCO, FLIGHT, and CAPCOM**. Products carry validity, timestamp fields, source layer, and provenance. Critically, required historical measurements whose nominal numeric values have not yet been modeled are tracked as **implementation-deferred fields**, not falsely presented as unavailable Apollo telemetry.
+
+This preserves several station boundaries:
+
+- **FLIGHT** receives phase/decision context rather than a hidden all-systems health dashboard.
+- **CAPCOM** receives the maneuver-PAD/voice path and crew reports rather than authoritative subsystem state.
+- **CONTROL** receives modeled propulsion/control state and warnings, while exact chamber/inlet/delta-P and attitude/rate numerics remain deferred.
+- **GUIDO** receives LGC/P40, warning, load/target and residual products without collapsing them into CONTROL's hardware view.
+- **TELMU** distinguishes the documented 38–40 A burn-configuration expectation from an as-yet-unmodeled actual current measurement.
+- **INCO** retains the communications/ranging/uplink path rather than becoming a generic data-valid flag.
+
+The PC+2 Mission Rules have also been converted into a **partial derived audit evaluator**. Modeled warnings such as engine-gimbal, LGC, and CES DC can evaluate clear/triggered, while pressure, delta-P, attitude/rate, crew analog indications, positive ISS+program-alarm, and positive inverter-after-switch cases remain `not_evaluable` until their observation paths are genuinely modeled.
+
+A primary-source wording conflict is now logged rather than normalized: the Mission Operations Report places the startup-transient exception with the attitude-rate criterion, while the crew readback places it with attitude error. The exact scope remains unresolved.
+
+No station is promoted: this is implementation of documented information boundaries, not new exact console/display evidence. CONTROL, GUIDO, FIDO, RETRO, TELMU, INCO, FLIGHT and CAPCOM remain maturity **B**.
