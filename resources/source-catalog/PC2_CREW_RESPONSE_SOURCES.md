@@ -6,6 +6,8 @@ Status: active focused source supplement for the CAPCOM ground-call → crew com
 
 - **Publisher:** NASA / Flight Control Division
 - **Date:** 28 April 1970
+- **NTRS record:** 19710010485
+- **URL:** https://ntrs.nasa.gov/citations/19710010485
 - **Use:** Establishes the PC+2 shutdown criterion `fuel/oxidizer ΔP >25 psi (based on a ground call-out)` and separates listed-rule shutdowns from other premature shutdowns.
 - **Authority:** Primary mission-operations source.
 - **Boundary:** Does not specify response latency, exact crew wording, or hypothetical cockpit choreography for an actual ΔP exceedance.
@@ -34,9 +36,20 @@ Status: active focused source supplement for the CAPCOM ground-call → crew com
 - Crew command and physical engine response must remain distinct.
 - No exact response delay, unique cockpit sequence, engine-off delay, chamber-pressure decay curve, or binary telemetry confirmation threshold is sourced for the hypothetical ΔP branch.
 
+## HTTP integration boundary
+
+Research note 085 exposes the existing domain chain through the validation API without adding historical claims:
+
+- crew receipt endpoint;
+- crew shutdown-command endpoint;
+- explicit vehicle DPS engine-off endpoint at current authoritative GET.
+
+The HTTP layer does not synthesize timing or telemetry. The default receipt text is semantic validation metadata and is not represented as verbatim Apollo wording.
+
 ## Related repository notes
 
 - `068_pc2_delta_p_ground_callout_shutdown_loop.md`
 - `069_pc2_dps_shutdown_command_and_physical_response.md`
 - `070_pc2_dps_shutdown_confirmation_evidence.md`
 - `083_pc2_crew_response_after_ground_shutdown_call.md`
+- `085_pc2_http_crew_response_integration.md`
