@@ -14,7 +14,8 @@ Current supplements:
 
 - `source-catalog/PC2_IMPLEMENTATION_SOURCES.md` — sources used directly by the Apollo 13 PC+2 executable product-projection, shutdown-rule, and scenario-injection layers.
 - `source-catalog/PC2_INLET_PRESSURE_SOURCES.md` — focused source record for the unresolved singular inlet-pressure selection/aggregation question.
-- `source-catalog/PC2_INVERTER_WARNING_SOURCES.md` — focused source record for the inverter-caution and post-switch mission-rule path.
+- `source-catalog/PC2_INVERTER_WARNING_SOURCES.md` — focused source record for the inverter-caution, crew-switch, and post-switch mission-rule path.
+- `source-catalog/PC2_THRUST_MONITOR_SOURCES.md` — focused source record for the unresolved onboard 77-percent thrust-monitor indication and rejected unsupported mappings.
 
 ## Research rule
 
