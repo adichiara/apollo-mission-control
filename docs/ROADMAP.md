@@ -58,6 +58,7 @@ Key research chain:
 - `073_pc2_control_player_presentation_boundary.md`
 - `074_pc2_guido_player_presentation_boundary.md`
 - `075_pc2_telmu_player_presentation_boundary.md`
+- `076_pc2_fido_retro_player_presentation_boundary.md`
 
 Deliverables:
 
@@ -96,16 +97,19 @@ Current PC+2 checkpoint:
 - [x] first-pass player-facing **TELMU** presentation implemented from PC+2 power/configuration and inverter-contingency products
 - [x] documented 38–40 A burn-configuration load is explicitly rendered as a reference value, not fabricated live current telemetry
 - [x] TELMU inverter warning and switch action remain separate products/events; hidden integrity metadata is not exposed
-- [ ] build first-pass **FIDO/RETRO** player presentation around maneuver target, return consequences, solution status, and post-burn trajectory assessment
+- [x] first-pass player-facing **FIDO/RETRO** presentation implemented from the final maneuver PAD, return-plan monitor PAD, and ground-solution status
+- [x] final 77:52/78:00 PC+2 target/return products kept distinct from earlier preliminary alternatives
+- [x] deferred RTCC Cartesian state and post-burn propagated trajectory omitted rather than fabricated or shown as historical telemetry failures
+- [ ] build first-pass **INCO** player presentation for weak-link quality, voice/telemetry availability, uplink state, and ranging state
+- [ ] build minimum **FLIGHT** readiness/decision view and **CAPCOM** PAD/communications workflow view
 - [ ] determine singular PC+2 150-psi engine-inlet-pressure ground selection logic only if a direct source becomes readily available
-- [ ] map remaining required station products into first-pass player screens, using exact Apollo formats where available and explicitly labeled project renderings elsewhere
 - [ ] recover additional MCC/RTCC transforms only when player decisions require them
 
 Non-PC+2 display reconstruction remains deferred.
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **nominal event model + controller products + partial rules + failure/action/communication layers + shutdown/restart physical-response/evidence paths + CONTROL/GUIDO/TELMU presentation models implemented**
+**Status:** **nominal event model + controller products + partial rules + failure/action/communication layers + shutdown/restart physical-response/evidence paths + CONTROL/GUIDO/TELMU/FIDO-RETRO presentation models implemented**
 
 Completed:
 
@@ -139,13 +143,14 @@ Completed:
 - [x] first-pass CONTROL presentation preserves source/provenance/validity and hides internal integrity metadata
 - [x] first-pass GUIDO presentation preserves LGC/PGNS source boundaries, project-assessment semantics, and hidden-integrity separation
 - [x] first-pass TELMU presentation preserves power/configuration reference semantics, inverter action/observation separation, and hidden-integrity boundaries
+- [x] first-pass FIDO/RETRO presentation preserves final maneuver/return products while leaving unmodeled post-burn trajectory assessment explicit
 
 ### Immediate next work
 
-- [ ] implement the **first-pass FIDO/RETRO player-facing presentation** from the existing PC+2 target/return products
-- [ ] prioritize final maneuver target/PAD, expected perigee/return consequences, RTCC/solution status, and later post-burn trajectory assessment
-- [ ] do not invent an exact RTCC Cartesian state vector or historical CRT layout merely to make the presentation look complete
-- [ ] after FIDO/RETRO, continue only the remaining minimum station views needed for a playable session, then shift to integrated session orchestration rather than expanding subsystem research
+- [ ] implement the **first-pass INCO player-facing presentation** from the existing PC+2 communications projection
+- [ ] prioritize weak/good air-ground quality, voice and telemetry availability, uplink configuration, and ranging state
+- [ ] then implement minimum FLIGHT and CAPCOM views and shift to **integrated playable-session orchestration** rather than expanding subsystem research
+- [ ] do not create a post-burn FIDO trajectory solution merely to make the FIDO/RETRO screen complete
 - [ ] keep `crew_thrust_monitor` `NOT_EVALUABLE` unless a direct LM-7 source identifies the percent-thrust indication
 - [ ] keep singular 150-psi inlet-pressure aggregation deferred unless a direct source becomes cheaply available
 - [ ] determine minimum trajectory-state representation only when integrated trajectory behavior actually requires it
@@ -169,6 +174,7 @@ Important constraints:
 - MSK 1137 `TCP` percent is not aliased to GQ6510P psi without a sourced conversion;
 - GUIDO project assessment/load-status products are not claimed as verbatim CRT literals;
 - TELMU 38–40 A burn-configuration figure is a reference/planning value, not live measured current;
+- GUIDO residuals are not substituted for a FIDO post-burn propagated trajectory solution;
 - exact player display coordinates/routing are not invented where source coverage is incomplete;
 - synthetic boundary-test values/times are labeled non-historical;
 - injections, actions, communications, controller decisions, physical responses, controller products, and player presentation remain separate layers.
@@ -184,7 +190,7 @@ Current checkpoint:
 - validity/integrity degradation remains independent from observation age;
 - controller suspicion/rejection is explicit and never inferred automatically from hidden integrity;
 - shutdown/restart actions, physical responses, and controller evidence remain separate;
-- CONTROL, GUIDO, and TELMU presentation models consume only controller-visible products and preserve provenance;
+- CONTROL, GUIDO, TELMU, and FIDO/RETRO presentation models consume only controller-visible products and preserve provenance;
 - hidden product-integrity annotations do not leak into presentation;
 - deferred implementation gaps do not masquerade as telemetry failures;
 - network transport and exact display cadence remain future work where documented.
@@ -238,6 +244,8 @@ Scenario implementation rule: inject underlying conditions; do not announce diag
 **Goal:** central authoritative server, session/join, station assignment, phone clients, synchronized GET/state, reconnection, and server-controlled scenario state.
 
 Role aggregation remains deferred until station research supports it.
+
+**Near-term trigger:** after INCO, FLIGHT, and CAPCOM minimum views are present, begin integrated PC+2 session orchestration before additional subsystem/display research.
 
 ## Phase 9 — Communications
 
