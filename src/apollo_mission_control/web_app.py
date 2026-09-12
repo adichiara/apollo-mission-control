@@ -1,8 +1,8 @@
 """Thin FastAPI transport for the Apollo Mission Control PC+2 prototype.
 
 The simulation/domain layer remains framework-neutral. This module owns only
-HTTP request/response adaptation, an in-memory single-session registry, and
-static prototype delivery.
+HTTP request/response adaptation, an in-memory single-session registry, realtime
+wall-clock pacing, and static prototype delivery.
 """
 
 from __future__ import annotations
@@ -17,6 +17,7 @@ from pydantic import BaseModel, Field
 
 from .pc2_nominal import load_fixture
 from .pc2_session import PC2Session
+from .realtime_clock import RealtimeSessionClock
 from .scenario_injection import EvidenceClass, StateInjection
 
 
@@ -32,6 +33,7 @@ app = FastAPI(
 
 _lock = RLock()
 _session: PC2Session | None = None
+_clock: RealtimeSessionClock | None = None
 
 
 class JoinRequest(BaseModel):
@@ -75,6 +77,18 @@ def _require_session() -> PC2Session:
     if _session is None:
         raise HTTPException(status_code=409, detail="No PC+2 session has been created")
     return _session
+
+
+def _require_clock() -> RealtimeSessionClock:
+    if _clock is None:
+        raise HTTPException(status_code=409, detail="No PC+2 session clock has been created")
+    return _clock
+
+
+def _sync_session() -> PC2Session:
+    session = _require_session()
+    _require_clock().sync()
+    return session
 
 
 def _domain_call(call: Callable[[], Any]) -> Any:
@@ -123,23 +137,24 @@ def health() -> dict[str, str]:
 
 @app.post("/api/session/create")
 def create_session() -> dict[str, Any]:
-    global _session
+    global _session, _clock
     with _lock:
         fixture = load_fixture(FIXTURE_PATH)
         _session = PC2Session.create(fixture)
+        _clock = RealtimeSessionClock(_session)
         return _status_payload(_session)
 
 
 @app.get("/api/session/status")
 def session_status() -> dict[str, Any]:
     with _lock:
-        return _status_payload(_require_session())
+        return _status_payload(_sync_session())
 
 
 @app.post("/api/session/join")
 def join_session(request: JoinRequest) -> dict[str, Any]:
     with _lock:
-        session = _require_session()
+        session = _sync_session()
         _domain_call(lambda: _join_or_rejoin(session, request.player_id, request.station))
         return session.player_snapshot(request.player_id).to_dict()
 
@@ -149,14 +164,16 @@ def start_session() -> dict[str, Any]:
     with _lock:
         session = _require_session()
         _domain_call(session.start)
+        _require_clock().reanchor()
         return _status_payload(session)
 
 
 @app.post("/api/session/pause")
 def pause_session() -> dict[str, Any]:
     with _lock:
-        session = _require_session()
+        session = _sync_session()
         _domain_call(session.pause)
+        _require_clock().reanchor()
         return _status_payload(session)
 
 
@@ -165,14 +182,17 @@ def resume_session() -> dict[str, Any]:
     with _lock:
         session = _require_session()
         _domain_call(session.resume)
+        _require_clock().reanchor()
         return _status_payload(session)
 
 
 @app.post("/api/session/advance")
 def advance_session(request: AdvanceRequest) -> dict[str, Any]:
+    """Manual validation control retained alongside realtime pacing."""
     with _lock:
-        session = _require_session()
+        session = _sync_session()
         reached = _domain_call(lambda: session.advance_to(request.target_get_s))
+        _require_clock().reanchor()
         payload = _status_payload(session)
         payload["reached_get_s"] = reached
         return payload
@@ -182,7 +202,7 @@ def advance_session(request: AdvanceRequest) -> dict[str, Any]:
 def apply_injection(request: StateInjectionRequest) -> dict[str, Any]:
     """Prototype scenario-authoring/validation endpoint, not a player control."""
     with _lock:
-        session = _require_session()
+        session = _sync_session()
         injection = StateInjection(
             injection_id=request.injection_id,
             get_s=float(session.state.get_s),
@@ -198,14 +218,14 @@ def apply_injection(request: StateInjectionRequest) -> dict[str, Any]:
 @app.get("/api/session/player/{player_id}")
 def player_snapshot(player_id: str) -> dict[str, Any]:
     with _lock:
-        session = _require_session()
+        session = _sync_session()
         return _domain_call(lambda: session.player_snapshot(player_id).to_dict())
 
 
 @app.post("/api/session/player/{player_id}/readiness")
 def submit_readiness(player_id: str, request: ReadinessRequest) -> dict[str, Any]:
     with _lock:
-        session = _require_session()
+        session = _sync_session()
         report = _domain_call(
             lambda: session.submit_readiness(player_id, ready=request.ready, note=request.note)
         )
@@ -220,7 +240,7 @@ def submit_readiness(player_id: str, request: ReadinessRequest) -> dict[str, Any
 @app.post("/api/session/flight/{player_id}/decision")
 def flight_decision(player_id: str, request: FlightDecisionRequest) -> dict[str, Any]:
     with _lock:
-        session = _require_session()
+        session = _sync_session()
         _domain_call(lambda: session.record_flight_go(player_id, go=request.go, basis=request.basis))
         return session.player_snapshot(player_id).to_dict()
 
@@ -228,7 +248,7 @@ def flight_decision(player_id: str, request: FlightDecisionRequest) -> dict[str,
 @app.post("/api/session/flight/{player_id}/capcom")
 def queue_capcom(player_id: str, request: CapcomQueueRequest) -> dict[str, Any]:
     with _lock:
-        session = _require_session()
+        session = _sync_session()
         item = _domain_call(
             lambda: session.queue_capcom_instruction(
                 player_id,
@@ -253,7 +273,7 @@ def control_delta_p_callout(
     player_id: str, request: ControlDeltaPCalloutRequest
 ) -> dict[str, Any]:
     with _lock:
-        session = _require_session()
+        session = _sync_session()
         item = _domain_call(
             lambda: session.record_control_delta_p_callout(player_id, basis=request.basis)
         )
@@ -271,7 +291,7 @@ def control_delta_p_callout(
 @app.post("/api/session/capcom/{player_id}/transmit/{item_id}")
 def transmit_capcom(player_id: str, item_id: int) -> dict[str, Any]:
     with _lock:
-        session = _require_session()
+        session = _sync_session()
         item = _domain_call(lambda: session.transmit_capcom_item(player_id, item_id))
         return {
             "item_id": item.item_id,
@@ -286,7 +306,7 @@ def transmit_capcom(player_id: str, item_id: int) -> dict[str, Any]:
 def audit_log() -> list[dict[str, Any]]:
     """Prototype validation endpoint; not intended as a normal player view."""
     with _lock:
-        session = _require_session()
+        session = _sync_session()
         return [
             {
                 "sequence": event.sequence,
