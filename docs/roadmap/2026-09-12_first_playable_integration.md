@@ -1,135 +1,90 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — single-process playable integration core complete; transport/mobile shell is now the active priority**
+Status: **CURRENT — phone-accessible transport shell implemented; mission-clock/reconnect hardening is now the active priority**
 
 ## Completed presentation checkpoint
 
-The minimum first-slice player presentation set exists for:
-
-- CONTROL;
-- GUIDO;
-- TELMU;
-- FIDO/RETRO;
-- INCO;
-- FLIGHT;
-- CAPCOM.
-
-These remain implementation-oriented project renderings where exact historical CRT/console evidence is incomplete. They preserve controller-visible products, provenance, and information boundaries without exposing hidden simulator truth.
+Minimum first-slice player presentations exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM. They remain project renderings where exact historical CRT/console evidence is incomplete and preserve controller-visible information boundaries without exposing hidden simulator truth.
 
 ## Completed single-process session checkpoint
 
-### 1. Session authority — implemented
-
-- [x] one authoritative mission state;
-- [x] synchronized GET;
+- [x] one authoritative mission state and synchronized GET;
 - [x] deterministic historical scenario advancement;
-- [x] explicit start/pause/resume/complete state;
-- [x] chronological scenario/audit log.
-
-### 2. Station assignment and views — implemented
-
+- [x] start/pause/resume/complete lifecycle and audit log;
 - [x] unique logical player→station assignment;
-- [x] correct presentation builder selected by assignment;
-- [x] player snapshots contain only the assigned station presentation;
-- [x] serializable player-scoped snapshot DTO added.
+- [x] station-scoped presentation dispatch and serializable player snapshots;
+- [x] controller readiness reports surfaced to FLIGHT;
+- [x] final-poll FLIGHT GO/NO-GO decision gate;
+- [x] explicit FLIGHT-approved CAPCOM queue and CAPCOM transmission event;
+- [x] scripted seven-station nominal playthrough through post-burn power-down.
 
-Reconnection policy remains a future transport concern; authoritative session state is already independent of presentation instances.
+The deterministic historical validator still has its nominal timed GO event, but playable session orchestration intercepts that event so hidden nominal state cannot auto-authorize the burn.
 
-### 3. Controller reporting / FLIGHT integration — implemented
+## Completed first web/mobile transport checkpoint
 
-- [x] controller readiness-report event;
-- [x] readiness reports surfaced in the FLIGHT presentation;
-- [x] FLIGHT records GO/NO-GO explicitly;
-- [x] historical final poll opens a gameplay gate rather than automatically setting GO;
-- [x] NO-GO blocks advancement toward P40;
-- [x] GO clears the gate and permits progression.
+The first phone-accessible shell now uses **FastAPI + Uvicorn** as a thin adapter over the framework-neutral session model.
 
-### 4. FLIGHT → CAPCOM communication — implemented at minimum integration level
+Implemented:
 
-- [x] explicit FLIGHT-approved CAPCOM queue item;
-- [x] pending/transmitted queue state surfaced in CAPCOM presentation;
-- [x] CAPCOM transmission is an explicit session action;
-- [x] transmission does not directly mutate spacecraft truth.
+- [x] JSON API for create/status/join/start/pause/resume/advance/snapshot/readiness/FLIGHT decision/CAPCOM queue/transmit;
+- [x] prototype audit endpoint for validation;
+- [x] responsive dependency-free phone client;
+- [x] Render service configuration and health endpoint;
+- [x] Python runtime pin;
+- [x] API-level transport tests;
+- [x] same-player/same-station join is idempotent so a browser can rejoin an existing assignment;
+- [x] another player cannot take an occupied station;
+- [x] an existing player ID cannot silently switch stations.
 
-Specific procedure/readback semantics continue to use the existing procedural/action layers and can be connected incrementally.
+Current deployment architecture remains deliberately **single-process and in-memory**. Restart, redeploy, or platform spin-down loses the live session; multiple workers are not supported until shared state/persistence is deliberately designed.
 
-### 5. Scenario progression — nominal integrated path implemented
+## Active priority 1 — mission-clock semantics
 
-The single-process session can now run the source-backed nominal sequence through:
+Before replacing manual GET advancement with a realtime driver, resolve a gameplay/historical timing distinction exposed by integration:
 
-- final PAD transfer under weak communications;
-- communications improvement;
-- burn-configuration power-up;
-- ranging/computer support;
-- readiness / explicit FLIGHT GO;
-- P40 / ullage / DPS burn sequence;
-- nominal cutoff;
-- residual review;
-- power-down transition.
+- historical GET continues continuously;
+- the current prototype holds GET at the FLIGHT decision gate until GO;
+- holding GET is effectively a simulation pause, not historical mission behavior.
 
-A scripted multi-station integration harness exercises this path through the same public session operations intended for future clients. Its readiness notes/sequence are explicitly software validation fixtures, not claims about the exact historical spoken GO-poll roster.
+Do **not** silently implement a realtime clock that either:
 
-### 6. Audit / replay substrate — implemented at first level
+1. freezes historical GET at every pending decision without an explicit pause policy; or
+2. advances later historical events past an unresolved gate and then applies them retroactively without defined semantics.
 
-The session records:
+Next design work should explicitly separate, where necessary:
 
-- station assignments;
-- session lifecycle;
-- authoritative historical scenario events;
-- readiness reports;
-- FLIGHT decision gate and GO/NO-GO decision;
-- CAPCOM queue/transmission events;
-- session completion.
+- mission/session clock time;
+- scenario event eligibility;
+- explicit game pause state;
+- decision gates.
 
-Further action/failure-event unification remains future integration work, but the basic replay substrate now exists.
+Time acceleration and exact pause policy remain undecided project decisions.
 
-## Active priority — thin transport and mobile shell
+## Active priority 2 — reconnect/player identity hardening
 
-The next milestone should make the working single-process session reachable by actual browser/phone clients without redesigning the domain model.
+The HTTP API now permits idempotent same-player/same-station rejoin, which is enough to survive a browser refresh if the player reuses the same ID.
 
-### A. Transport/framework decision
+Still needed before a deployed playtest:
 
-Choose the thinnest production-compatible web stack that:
+- browser-side persistence of the local player/station choice or an equivalent rejoin mechanism;
+- a lightweight generated reconnect credential if the prototype must prevent another person from claiming the same player ID;
+- explicit behavior when the server itself restarts and in-memory assignments disappear.
 
-- can host on Render;
-- keeps one authoritative server-side session object;
-- provides simple JSON station snapshots/actions;
-- supports multiple phone clients;
-- permits later realtime push or polling without coupling simulation code to the web framework.
+This is prototype identity, not production authentication.
 
-### B. Minimum API surface
+## Active priority 3 — integration validation
 
-Target operations:
+When a runnable environment is available:
 
-- create/load PC+2 session;
-- join/assign station;
-- start/pause/resume session;
-- get player snapshot;
-- submit readiness;
-- record FLIGHT GO/NO-GO;
-- queue/transmit CAPCOM item;
-- advance/tick authoritative GET;
-- retrieve limited audit/replay data for validation.
-
-### C. Minimum phone interface
-
-- station identity and GET always visible;
-- render the existing station presentation model;
-- station-specific action controls only where implemented;
-- no omniscient cross-station dashboard;
-- responsive phone-first layout;
-- no attempt yet to reproduce every historical CRT pixel.
-
-### D. Integration validation
-
-- exercise seven logical station clients against one session;
+- execute the domain/session/API test suite;
+- exercise seven logical clients against one server process;
 - confirm information isolation;
 - confirm FLIGHT gate behavior;
 - confirm CAPCOM handoff behavior;
-- confirm reconnect does not alter mission state;
+- confirm rejoin does not alter mission state;
 - confirm nominal timeline reaches power-down;
-- then exercise one already-implemented nonnominal branch through the same transport/session path.
+- then route one already-implemented nonnominal branch through the same session/API path.
 
 ## Explicitly deferred until integration exposes a need
 
@@ -140,9 +95,9 @@ Target operations:
 - full RTCC trajectory propagator;
 - backroom/staff-support simulation;
 - low-player-count station aggregation;
-- production-scale persistence/authentication;
+- multi-session/durable production persistence;
 - historical SimSup operator UI.
 
 ## Current success criterion
 
-The next milestone is a **phone-accessible local/web prototype** in which multiple clients connect to one authoritative PC+2 session, each sees only its station products, FLIGHT controls the readiness gate, CAPCOM receives/transmits approved items, and the source-backed nominal scenario can be played through to post-burn power-down.
+The next milestone is a **rejoin-safe, phone-accessible local/web prototype with explicit mission-clock semantics**, in which several clients share one authoritative PC+2 session, each sees only its station information, FLIGHT controls the readiness decision, CAPCOM transmits approved items, and the nominal source-backed timeline can run through post-burn power-down without hidden automatic decisions.
