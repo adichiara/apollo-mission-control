@@ -32,20 +32,7 @@ Further historical work is demand-driven by integrated play or a concrete scenar
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, starting at approximately **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–086**, including:
-
-- controller actions/rules and initialization;
-- nominal event timeline and throttle/ullage profile;
-- controller-product projections;
-- shutdown/restart rules and evidence;
-- station presentation boundaries;
-- authoritative session integration;
-- web transport;
-- continuous mission-clock semantics;
-- ΔP nonnominal session path;
-- crew response;
-- HTTP crew-response integration;
-- fresh shutdown-evidence integration.
+The primary research chain now runs through notes **048–088**, including controller actions/rules, initialization, nominal timing, product projections, shutdown/restart behavior, station presentations, authoritative session integration, continuous mission time, the ΔP nonnominal path, crew/vehicle response, fresh controller evidence, player/admin UI separation, and facilitator authority.
 
 Current first-playable integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
@@ -55,25 +42,9 @@ Low-player-count station aggregation remains unresolved.
 
 **Status:** minimum PC+2 player-presentation checkpoint complete.
 
-Implemented first-pass player views:
+Implemented first-pass player views: CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM.
 
-- CONTROL;
-- GUIDO;
-- TELMU;
-- FIDO/RETRO;
-- INCO;
-- FLIGHT;
-- CAPCOM.
-
-Presentation rules remain conservative:
-
-- exact historical semantics are retained where sourced;
-- project renderings are labeled where exact CRT routing/layout is unresolved;
-- hidden product-integrity metadata is never exposed automatically;
-- missing implementation fields are not presented as telemetry failures;
-- `GQ6510P` psi is not falsely labeled as Apollo 13 MSK 1137 `TCP` percent;
-- TELMU's documented 38–40 A burn-configuration figure remains a reference value, not fabricated live telemetry;
-- GUIDO residuals are not substituted for a missing FIDO propagated trajectory solution.
+Presentation remains conservative: exact semantics are retained where sourced; project renderings are labeled where exact CRT routing/layout is unresolved; hidden integrity does not leak to players; missing fields are not presented as telemetry failures; `GQ6510P` psi is not mislabeled as MSK 1137 `TCP` percent; TELMU's 38–40 A burn figure remains a reference value; and GUIDO residuals are not substituted for a FIDO propagated trajectory solution.
 
 Further display archaeology is demand-driven.
 
@@ -81,45 +52,19 @@ Further display archaeology is demand-driven.
 
 **Status:** first playable authoritative model implemented; integration validation remains.
 
-Completed architecture:
-
-- framework-neutral PC+2 state/event model;
-- source/sample/receive/process/display metadata;
-- station-specific controller products;
-- shutdown-rule evaluation without a generic `burn_abort` abstraction;
-- scenario injection, operational action, communication, controller-decision, physical-response, and evidence layers kept distinct;
-- premature-shutdown/restart branch;
-- crew-command versus physical DPS response separation;
-- fresh controller evidence after shutdown/restart;
-- single-process authoritative `PC2Session`;
-- station assignment and station-scoped snapshots;
-- readiness reports and explicit FLIGHT decision state;
-- CAPCOM queue/transmission path;
-- browser rejoin persistence;
-- audit log.
+Completed architecture includes framework-neutral state/event logic, station-specific products, rule evaluation, distinct injection/action/communication/decision/physical-response/evidence layers, restart/shutdown branches, `PC2Session`, station-scoped snapshots, readiness/FLIGHT decisions, CAPCOM queue/transmission, browser rejoin, audit logging, and realtime wall-clock pacing.
 
 ### Continuous mission-time architecture
 
 Accepted decision **D-016** supersedes the earlier provisional decision-pause model.
 
-The engine is a continuously evolving mission:
-
-- GET advances while the session is `RUNNING`;
+- GET advances while `RUNNING`;
 - controller decisions do not stop GET;
-- only explicit game/session pause stops simulated time;
-- nominal events have declarative prerequisites;
-- an event whose prerequisites are missing at its nominal GET is recorded as missed;
-- missed nominal events are not replayed retroactively.
+- explicit game/session pause is the normal clock stop;
+- nominal events use declarative prerequisites;
+- ineligible nominal events are recorded as missed and are not replayed retroactively.
 
-Reusable implementation:
-
-- `event_eligibility.py`;
-- `pc2_event_rules.py`;
-- `realtime_clock.py`.
-
-The web layer now uses **1× monotonic wall-clock pacing**. Manual `/advance` remains validation/development infrastructure only.
-
-See research notes 081 and 084.
+Reusable implementation: `event_eligibility.py`, `pc2_event_rules.py`, and `realtime_clock.py`.
 
 ### First integrated nonnominal branch
 
@@ -127,19 +72,7 @@ The synthetic source-bounded PC+2 fuel/oxidizer ΔP branch now reaches controlle
 
 `source observation → CONTROL product/rule → CONTROL decision → CAPCOM queue/transmission → crew receipt → crew shutdown command → physical DPS response → crew report / fresh GQ6510P observation → CONTROL evidence assessment`
 
-Guardrails:
-
-- the synthetic 26 psi exercise is non-historical;
-- exact CONTROL→FLIGHT→CAPCOM routing is not claimed;
-- CAPCOM transmission does not imply crew receipt/compliance;
-- crew command does not imply physical response;
-- physical response does not synthesize telemetry;
-- pre-command chamber-pressure observations cannot count as response evidence;
-- no pressure magnitude is interpreted as a binary engine-off threshold;
-- CONTROL evidence assessment never inspects authoritative `engine_running` state;
-- no `engine_off_confirmed` truth flag is invented.
-
-See research notes 082, 083, 085, and 086.
+The 26 psi exercise is explicitly non-historical. No unsupported internal routing, automatic crew compliance, response timing, telemetry synthesis, binary chamber-pressure threshold, or hidden engine-off truth is added.
 
 ## Phase 5 — Mission Control data path
 
@@ -149,67 +82,44 @@ The project preserves:
 
 `spacecraft/source state → instrumentation/telemetry → communications/ground processing → controller products → controller interpretation → player presentation → controller decisions/communications`
 
-Current guarantees:
-
-- station projections enforce information boundaries;
-- source injections alter observations rather than announcing diagnoses;
-- validity, age, and hidden integrity remain separate concepts;
-- controller suspicion/rejection is explicit;
-- crew reports, telemetry evidence, physical state, and controller conclusions remain distinct;
-- HTTP transport remains a thin adapter over domain logic.
+Station projections enforce information boundaries; source injections alter observations rather than announce diagnoses; validity, age, and hidden integrity remain distinct; crew reports, telemetry, physical state, and controller conclusions remain separate.
 
 ## Phase 6 — Procedures and flight rules
 
 **Status:** PC+2 core rule set operational for the first slice.
 
-Implemented/evaluable:
+Implemented/evaluable: ISS-warning + program-alarm path, chamber-pressure rule with explicit observation, >25 psi ΔP ground callout, attitude criteria, inverter path, restart eligibility/sequence, crew STOP/off path, shutdown/restart evidence architecture, and final FLIGHT GO/NO-GO as a player decision.
 
-- ISS-warning + program-alarm shutdown path;
-- ground chamber-pressure rule when an explicit observation exists;
-- fuel/oxidizer ΔP >25 psi ground-callout rule;
-- attitude-error/rate criteria;
-- inverter-warning-after-switch path;
-- premature-shutdown restart eligibility and sequence;
-- crew STOP/off command path;
-- shutdown/restart evidence architecture;
-- final FLIGHT GO/NO-GO decision as a player/controller decision requirement.
-
-Intentionally unresolved / `NOT_EVALUABLE` where appropriate:
-
-- exact onboard 77-percent thrust indication;
-- singular 150-psi ground inlet-pressure selection/aggregation;
-- exact startup-transient time boundary;
-- exact alternate-inverter switch identity/details.
+Intentionally unresolved where appropriate: exact onboard 77-percent thrust indication, singular 150-psi inlet-pressure selection/aggregation, exact startup-transient boundary, and exact alternate-inverter details.
 
 ## Phase 7 — Simulation scenarios / SimSup
 
-**Status:** source-bounded scenario architecture implemented for first-slice validation.
+**Status:** source-bounded scenario architecture and first-playable facilitator authority implemented.
 
 Completed:
 
-- scenario evidence classes;
-- source-condition → dependent-effects architecture;
-- explicit timed/source-state injections;
-- separation of injections, operational actions, communications, controller decisions, physical responses, and evidence;
-- inverter contingency branch;
-- premature DPS shutdown/restart branch;
-- ground-call ΔP shutdown branch;
-- continuous-time nominal event processing;
-- HTTP validation path through crew response and controller evidence.
+- scenario evidence classes and explicit source-state injection;
+- separation of injections, actions, communications, decisions, physical responses, and evidence;
+- inverter, premature-shutdown/restart, and ΔP branches;
+- continuous-time event processing;
+- HTTP validation path through crew response and controller evidence;
+- ordinary player client separated from facilitator/validation client;
+- primary-source review of Simulation Supervisor / simulation-control role separation;
+- server-side facilitator credential protecting exercise-wide operations in configured deployments;
+- Render-generated deployment secret with no credential committed to source.
 
-A historical SimSup operator UI remains deferred.
+The facilitator credential is a modern software safety boundary, **not** a claim about Apollo-era authentication. See research note 088.
 
 ## Immediate next work
 
-The primary need is now **runnable integrated validation**, not additional low-value subsystem reconstruction.
+The primary need is now **runnable integrated validation**, not additional subsystem or authorization complexity.
 
 1. Execute the complete domain/session/API test suite in a runnable checked-out environment.
-2. Exercise several phone/browser clients against one authoritative server.
+2. Exercise several phone/browser station clients plus one facilitator console against one authoritative server.
 3. Run the complete synthetic ΔP branch through the live browser/API path.
-4. Verify realtime GET under concurrent polling/actions, explicit pause/resume, reload/rejoin, and station information isolation.
-5. Review the phone UI for continuous realtime operation.
-6. Separate validation/admin controls from normal player-facing controls before broader playtesting.
-7. Reopen historical research only when integrated play exposes a concrete missing information, procedure, or decision dependency.
+4. Verify realtime GET under concurrent polling/actions, explicit pause/resume, reload/rejoin, station information isolation, and facilitator/player authority isolation.
+5. Review the phone UI during continuous realtime play and repair usability issues exposed by actual multi-client operation.
+6. Reopen historical research only when integrated play exposes a concrete missing information, procedure, or decision dependency.
 
 ## Explicitly deferred
 
@@ -221,10 +131,12 @@ The primary need is now **runnable integrated validation**, not additional low-v
 - backroom/staff-support simulation;
 - low-player-count station aggregation;
 - multi-session/durable production persistence;
-- historical SimSup UI;
+- historically exact SimSup console UI;
+- named facilitator accounts or fine-grained admin permissions;
+- cryptographic player authentication;
 - numeric PC+2 allowable-delay/retargeting model without direct evidence;
 - time-acceleration controls.
 
 ## Validation status
 
-New domain/API tests are committed, including continuous-clock, declarative-event, crew-response, and shutdown-evidence tests. A fresh local execution attempt on 2026-09-12 failed before checkout because the execution environment could not resolve `github.com`; therefore the repository test suite is **not recorded as passing**.
+New domain/API tests are committed, including continuous-clock, declarative-event, crew-response, shutdown-evidence, client-role-separation, and facilitator-authority tests. The repository suite is **not recorded as passing** because this automation environment still lacks a runnable checked-out repository execution path.
