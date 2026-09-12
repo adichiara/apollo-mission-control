@@ -50,7 +50,7 @@ Research now follows the sufficiency rule in `docs/PROJECT_PRINCIPLES.md`: inacc
 
 ## Phase 2 — Select the first playable mission/scenario
 
-**Status:** **selected — Apollo 13 PC+2 preparation/execution**
+**Status:** **selected and initialized — Apollo 13 PC+2 preparation/execution**
 
 **Goal:** choose a specific mission and phase for the first implementation.
 
@@ -58,7 +58,7 @@ The reusable technical platform uses the Apollo 13-era MCC as its default resear
 
 ### Selected vertical slice
 
-**Apollo 13 PC+2 preparation and execution**, working interval approximately **74:00–80:00 GET**, centered on the DPS burn at about **79:27:38 GET**.
+**Apollo 13 PC+2 preparation and execution**, with the nominal first implementation starting at **77:55:00 GET** and running through immediate post-burn verification/power-down around 79:34–80:00 GET.
 
 Selection basis:
 
@@ -69,20 +69,24 @@ Selection basis:
 - bounded propulsion/guidance event rather than a continuously spreading compound failure;
 - sufficient documentation to validate controller information flow without first implementing the entire Apollo 13 accident.
 
-Decision: `docs/DECISIONS.md`, D-013.  
-Research comparison: `resources/research/048_first_vertical_slice_candidate_assessment.md`.
+The **77:55:00 GET** start is source-driven: communications are weak after AOS and the final P30 LM maneuver PAD begins at 77:55:24, leaving a real information-transfer problem, final updates, burn power-up, readiness work and the entire burn live for the players.
 
-### Remaining Phase 2 deliverables
+Decision: `docs/DECISIONS.md`, D-013.  
+Research comparison: `resources/research/048_first_vertical_slice_candidate_assessment.md`.  
+Initialization/validation: `resources/research/050_pc2_initialization_and_nominal_validation.md`.  
+Parameter specification: `docs/scenarios/APOLLO13_PC2_PARAMETERS.md`.
+
+### Phase 2 deliverables
 
 - [x] selected mission and mission-era profile
-- [x] selected mission interval at working-scope level
-- [ ] freeze exact scenario start state / start GET
-- [ ] define exact spacecraft/ground-system configuration required at initialization
-- [ ] create nominal PC+2 event timeline
-- [ ] assemble the scenario-specific primary-source package
-- [ ] identify the controller positions required for the first full-fidelity run
+- [x] selected mission interval
+- [x] freeze nominal scenario start at 77:55:00 GET
+- [x] define the minimum spacecraft/ground-system configuration required at initialization
+- [x] create a source-backed nominal PC+2 event timeline through immediate post-burn power-down
+- [x] assemble the core scenario-specific primary-source package
+- [ ] identify the controller positions required for the first full-fidelity multiplayer run and later low-player-count aggregation
 
-The first implementation should model only what PC+2 requires. Other Apollo 13 research gaps remain open but do not automatically block Phase 2/3/4 work.
+Phase 2 no longer depends on complete Apollo-wide display reconstruction. Research effort should follow the selected slice.
 
 ## Phase 3 — Display and console reconstruction
 
@@ -118,13 +122,17 @@ Deliverables:
 - [x] AEA Table 2.1-7 telemetry structure and engineering definitions recovered from a later contemporary handbook configuration, including distinct present-velocity, short-interval delta-V, sensed body-axis velocity-increment, DEDA, direction-cosine, and ullage-counter products.
 - [x] Handbook chronology corrected: Apollo 13 LM-7 is Basic Date 15 Dec 1968 / Change Date 1 Feb 1970; searchable LM-10 is Basic Date 1 Feb 1970 / Change Date 15 Jun 1970.
 - [x] AGS ullage qualification narrowed to a two-second accumulated +X velocity-increment test; equivalent later handbook wording expresses the same threshold as average acceleration over the cycle.
-- [ ] Directly compare the Apollo 13 LM-7 Table 2.1-7 page against the later searchable LM-10 table **if accessible without disproportionate archival effort**.
-- [ ] Recover MCC/RTCC rules that select/transform AEA telemetry into MSK 1123 AGS VEL / AGS DEL VEL / AGS ULL / ACT VEL **only where required by PC+2 station behavior**.
-- [ ] Establish PC+2-critical Apollo 13 field masks, validity behavior, and station display access before those specific displays are frozen.
+- [x] PC+2-critical information families separated into physical, onboard, telemetry/link, ground-derived and crew-report layers.
+- [ ] Identify the **smallest historical display/product set actually needed for PC+2** at GUIDO, CONTROL, FIDO/RETRO, TELMU, INCO, FLIGHT and CAPCOM.
+- [ ] Map only those PC+2-required products to the implementation parameter specification.
+- [ ] Directly compare the Apollo 13 LM-7 Table 2.1-7 page against the later searchable LM-10 table **only if it becomes necessary for a PC+2-required field and remains reasonably accessible**.
+- [ ] Recover MCC/RTCC rules for specific AEA-to-display transformations **only where required by PC+2 station behavior**.
 
-The telemetry evidence narrows the source candidates but does **not** by itself certify telemetry-word-to-CRT-field mappings. AGS ULL and ACT VEL remain separate unresolved display products. Non-PC+2 display details are now explicitly deferrable.
+The telemetry evidence narrows source candidates but does not certify every telemetry-word-to-CRT-field mapping. Non-PC+2 display details are explicitly deferred.
 
 ## Phase 4 — Authoritative simulation model
+
+**Status:** **parameter contract begun**
 
 **Goal:** produce the mission state from which historically appropriate telemetry can be derived.
 
@@ -133,15 +141,33 @@ Model only what the selected scenario requires initially, but preserve subsystem
 ### First-slice model priorities — PC+2
 
 - mission clock / PC+2 event timeline
-- docked CSM/LM configuration relevant to the burn
+- docked CSM/LM/SM configuration relevant to the burn
 - trajectory state and target solution
 - LM DPS thrust/chamber/inlet/propellant state
 - LM RCS / attitude-control state
 - PGNS/LGC guidance state and AGS backup/cross-check state
 - alignment / attitude-error state
-- electrical/consumables state needed for readiness and post-burn power-down
-- communications/uplink availability required for maneuver updates
+- electrical state needed for burn readiness and post-burn power-down
+- communications/uplink/ranging availability required for maneuver updates
 - telemetry/measurement state for documented shutdown criteria
+- crew readback/report events as a separate information source
+
+### Completed first-slice model work
+
+- [x] research-derived initialization contract at 77:55 GET
+- [x] stable implementation-oriented PC+2 parameter names and units
+- [x] explicit separation of PAD LVLH target, PGNS IMU Vg, physical burn result and guidance residuals
+- [x] nominal historical validation fixture including TIG, duration, cutoff, Vg and residuals
+- [x] explicit stop conditions for unavailable low-impact numeric detail
+
+### Immediate next work
+
+- [ ] define nominal event/state transitions from 77:55 through 79:34
+- [ ] define subsystem dependencies and derived-value equations only where the selected slice needs them
+- [ ] determine the minimum trajectory-state representation required for the first propagating implementation
+- [ ] add failure-propagation hooks without yet authoring speculative failure scenarios
+
+The exact Cartesian RTCC state vector at 77:55 is deliberately **not** being reverse-engineered from the maneuver PAD. It becomes an active research target only when the trajectory propagator requires it.
 
 Workstreams:
 
@@ -160,11 +186,12 @@ Workstreams:
 
 Deliverables:
 
-- documented parameter dictionary
-- units/ranges/update rates
-- subsystem dependencies
-- nominal-state validation cases
-- failure propagation tests
+- [x] first-slice documented parameter dictionary
+- [x] first-slice units and ownership/source layers
+- [x] nominal-state validation targets
+- [ ] update/sample behavior for each player-facing product
+- [ ] subsystem dependencies
+- [ ] failure propagation tests
 
 ## Phase 5 — Mission Control data path
 
@@ -182,6 +209,8 @@ Deliverables:
 - ground-computed values where documented
 - display refresh behavior
 
+**PC+2 requirement:** the nominal implementation must already preserve source layer, sample/receive time, validity and data age structurally, even if some nominal transport errors are initially zero.
+
 ## Phase 6 — Procedures and flight rules
 
 **Goal:** make controller documentation operational.
@@ -193,7 +222,7 @@ Deliverables:
 - distinguish verbatim historical material from project-produced indexes/guides
 - validate that the simulation exposes enough information for a controller to apply each implemented rule
 
-**Immediate priority:** PC+2 Mission Rules review, shutdown criteria, alignment verification, maneuver update/uplink procedure, DPS/RCS readiness, burn monitoring, and immediate post-burn power-down handoff.
+**Immediate priority:** PC+2 shutdown criteria, final maneuver PAD/readback, alignment state, maneuver update/uplink procedure, DPS/RCS readiness, burn monitoring, GO/NO-GO polling, and immediate post-burn power-down handoff.
 
 ## Phase 7 — Simulation scenarios / SimSup
 
@@ -250,6 +279,8 @@ Potential scope is intentionally undecided until researched:
 - recorded/simulated crew voice
 - headset/earbud support
 - loop selection behavior
+
+The PC+2 nominal start establishes one concrete communications requirement: a weak-but-usable air-ground link must be able to interfere with the final PAD/readback before improving after the S-band power-amplifier change.
 
 ## Phase 10 — Post-simulation review
 
