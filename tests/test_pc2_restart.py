@@ -22,7 +22,7 @@ from apollo_mission_control.shutdown_rules import RuleEvaluation, RuleState  # n
 
 
 class PC2RestartTests(unittest.TestCase):
-    def test_unexplained_early_stop_is_restart_eligible(self):
+    def test_positive_non_rule_cause_is_restart_eligible(self):
         evaluations = {
             "engine_gimbal_warning": RuleEvaluation(
                 "engine_gimbal_warning", RuleState.CLEAR, "CONTROL", "engine gimbal warning/light"
@@ -34,10 +34,25 @@ class PC2RestartTests(unittest.TestCase):
         result = evaluate_premature_shutdown_restart(
             evaluations,
             early_engine_stop_observed=True,
+            shutdown_cause_known_non_rule=True,
             noun97_flashing=True,
         )
         self.assertEqual(result.disposition, RestartDisposition.RESTART_ELIGIBLE)
         self.assertEqual(result.triggered_rule_ids, ())
+
+    def test_absence_of_trigger_is_not_enough_when_cause_is_unknown(self):
+        evaluations = {
+            "crew_thrust_monitor": RuleEvaluation(
+                "crew_thrust_monitor", RuleState.NOT_EVALUABLE, "CREW/CAPCOM", "onboard thrust monitor"
+            )
+        }
+        result = evaluate_premature_shutdown_restart(
+            evaluations,
+            early_engine_stop_observed=True,
+            noun97_flashing=True,
+        )
+        self.assertEqual(result.disposition, RestartDisposition.INSUFFICIENT_CONTEXT)
+        self.assertEqual(result.unresolved_rule_ids, ("crew_thrust_monitor",))
 
     def test_rule_caused_shutdown_is_not_restart_eligible(self):
         evaluations = {
@@ -48,6 +63,7 @@ class PC2RestartTests(unittest.TestCase):
         result = evaluate_premature_shutdown_restart(
             evaluations,
             early_engine_stop_observed=True,
+            shutdown_cause_known_non_rule=True,
             noun97_flashing=True,
         )
         self.assertEqual(result.disposition, RestartDisposition.DO_NOT_RESTART_RULE_SHUTDOWN)
