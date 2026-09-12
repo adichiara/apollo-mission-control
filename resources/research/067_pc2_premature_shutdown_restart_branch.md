@@ -23,7 +23,9 @@ premature DPS stop
         |
         +-- caused by listed shutdown criterion --> do not treat as restart contingency
         |
-        +-- not caused by listed criterion -------> restart procedure eligible
+        +-- affirmatively known non-rule cause ---> restart procedure eligible
+        |
+        +-- cause unresolved ----------------------> insufficient context; do not assume eligibility
 ```
 
 ## Important distinction from ignition-failure backup
@@ -46,11 +48,14 @@ Exact Luminary internal sequencing can be researched later only if needed for a 
 
 ## Implementation consequence
 
-A restart evaluator may use the existing shutdown-rule audit to distinguish:
+The restart evaluator distinguishes:
 
-- `RESTART_ELIGIBLE`: premature engine stop with no currently modeled listed shutdown criterion triggered;
+- `RESTART_ELIGIBLE`: premature engine stop whose cause is affirmatively classified as outside the listed shutdown criteria;
 - `DO_NOT_RESTART_RULE_SHUTDOWN`: one or more listed criteria are triggered;
+- `INSUFFICIENT_CONTEXT`: a premature stop occurred but the cause has not been established as non-rule;
 - `NOT_APPLICABLE`: no premature stop.
+
+This conservative distinction is necessary because several historical criteria remain intentionally `NOT_EVALUABLE` in the current model. The absence of a modeled trigger is **not** proof that the shutdown was unrelated to the rule set.
 
 This is a procedural/audit classification, not an automatic engine command.
 
