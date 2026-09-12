@@ -49,22 +49,33 @@ The first-slice FLIGHT interface should emphasize communication and decision int
 | Return-plan product | B | landing area / return timing consequences |
 | Post-burn trajectory solution status | B | determine whether burn achieved acceptable return state |
 
-### Minimum fields
+### Implemented first-pass player view
 
-- target TIG;
-- LVLH ΔV components;
-- resultant ΔV;
+The current FIDO/RETRO project rendering contains:
+
+- final target TIG;
+- final LVLH delta-V vector/resultant;
 - expected perigee;
-- predicted landing latitude/longitude;
-- predicted 0.05-g time / velocity / range-to-go;
-- solution validity/currentness;
-- post-burn solution pending/available state.
+- final PC+2 monitor-PAD return product with predicted landing coordinates, 0.05-g range-to-go, entry-interface velocity, and predicted 0.05-g GET;
+- current ground-solution status.
+
+The final maneuver values are tied to the approximately 77:52 GET P30 LM PAD, and the return values to the 78:00:58 GET monitor PAD. Earlier preliminary PC+2 alternatives are not mixed into the final first-slice product.
+
+### Critical implementation gap
+
+The executable model does not yet contain a propagated post-burn FIDO trajectory/landing solution. Therefore:
+
+- `ground.postburn.propagated_trajectory` remains deferred;
+- GUIDO post-burn residuals are not substituted for a FIDO trajectory assessment;
+- physical burn completion does not automatically imply an acceptable return trajectory;
+- no synthetic state vector or landing solution is created to fill the screen.
 
 ### Deferred
 
 - exact historical FIDO/RETRO CRT layout;
 - complete RTCC trajectory display catalog;
-- exact Cartesian RTCC state vector until required by the physics implementation.
+- exact Cartesian RTCC state vector until required by integrated trajectory behavior;
+- post-burn propagated trajectory until gameplay requires the trajectory layer.
 
 ---
 
@@ -262,12 +273,12 @@ This is required even when the first nominal run uses perfect communications aft
 1. CONTROL burn-monitor product — **first-pass rendering implemented**.
 2. GUIDO guidance/load/residual product — **first-pass rendering implemented**.
 3. TELMU power/configuration product — **first-pass rendering implemented**.
-4. FIDO/RETRO target and return product — **next presentation target**.
-5. INCO link/ranging product.
+4. FIDO/RETRO target and return product — **first-pass rendering implemented**.
+5. INCO link/ranging product — **next presentation target**.
 6. FLIGHT readiness/report view.
 7. CAPCOM PAD/voice workflow.
 
-After the remaining minimum station views exist, priority shifts to integrating them into a playable PC+2 session rather than expanding display research.
+After INCO, FLIGHT, and CAPCOM minimum views exist, priority shifts directly to integrating them into a playable PC+2 session rather than expanding display/subsystem research.
 
 ### Priority 2 — add only if required by usability/validation
 
@@ -296,10 +307,11 @@ This permits implementation to proceed without inventing archival details.
 ## Sources / repository basis
 
 - Apollo 13 *Mission Operations Report*, controller appendices and PC+2 chronology.
-- Apollo 13 Technical Air-to-Ground Voice Transcription.
+- Apollo 13 Technical Air-to-Ground Voice Transcription / Flight Journal.
 - Apollo 13 AC Electronics *Guidance & Navigation Summary*, MSK 1123/1137.
 - Apollo 13 TELMU Post Mission Report.
+- Apollo 13 FIDO and RETRO post-mission reports.
 - Apollo 13 Review Board Appendix B.
 - MIT R-567 LUMINARY 1C Section 2 — Data Links, Rev. 8.
 - Existing station specifications under `docs/stations/`.
-- Research notes 029–075.
+- Research notes 029–076.
