@@ -1,7 +1,7 @@
 # Apollo 13 PC+2 — integrated session-orchestration boundary
 
 Date: 2026-09-12  
-Status: **REVIEWED / IMPLEMENTED-PARTIAL — framework-neutral session core added; network transport, persistence, reconnect, and station-client delivery remain future work**
+Status: **REVIEWED / IMPLEMENTED-PARTIAL — authoritative single-process session now integrates scenario progression and station views; player-report/callout presentation and network delivery remain future work**
 
 ## Question
 
@@ -26,11 +26,11 @@ controller readiness report(s)
         -> CAPCOM crew-facing transmission
 ```
 
-The current evidence does **not** justify replacing that sequence with an automatically computed overall readiness boolean derived from authoritative subsystem state.
+The evidence does **not** justify replacing that sequence with an automatically computed overall readiness Boolean derived from authoritative subsystem state.
 
 ### During-burn continuation
 
-The record also shows continuing Mission Control assessment during the burn and CAPCOM transmitting crew-facing continuation calls (for example, a three-minute GO). This reinforces the same separation: controller/system assessment is not identical to the air-ground callout.
+The record also shows continuing Mission Control assessment during the burn and CAPCOM transmitting crew-facing continuation calls. This reinforces the same separation: controller/system assessment is not identical to the air-ground callout.
 
 ## Software boundary
 
@@ -38,11 +38,12 @@ This session layer is explicitly **project architecture**, not a reconstruction 
 
 It must own:
 
-- authoritative session GET;
+- authoritative session GET and scenario progression;
 - station/player assignment;
+- station-scoped presentation selection;
 - controller readiness reports;
 - explicit FLIGHT decisions;
-- queued controller/FLIGHT callouts requiring crew transmission;
+- queued FLIGHT/controller callouts requiring crew transmission;
 - CAPCOM-to-crew transmission events;
 - ordered audit/replay events.
 
@@ -56,18 +57,24 @@ It must **not**:
 
 ## Implemented core
 
-Added `src/apollo_mission_control/session_orchestration.py` with:
+The canonical implementation is `src/apollo_mission_control/pc2_session.py`.
 
-- `PC2Session`;
-- monotonic `synchronize_get()`;
-- unique current station assignment;
-- current readiness state per station plus full audit history;
-- explicit `record_flight_decision()`;
-- `queue_crew_callout()`;
-- distinct `capcom_transmit()`;
-- monotonically sequenced `SessionEvent` audit entries.
+It now:
 
-Added `tests/test_session_orchestration.py` to lock the critical information-flow boundaries.
+- owns the authoritative `PC2State` and deterministic scenario event stream;
+- supports CREATED / RUNNING / PAUSED / COMPLETE session states;
+- enforces unique station/player assignment;
+- selects the correct existing station presentation for the assigned player;
+- records controller readiness reports without deriving a GO automatically;
+- intercepts the nominal `final_go_no_go_poll` event at **79:17 GET** and converts it into an explicit `flight_go` decision gate;
+- permits only the assigned FLIGHT player to record the GO/NO-GO decision;
+- writes that explicit decision into `state.flight_go`, which is then available to the normal FLIGHT projection;
+- keeps a FLIGHT-approved CAPCOM queue distinct from actual CAPCOM transmission;
+- records ordered audit events for session lifecycle, scenario events, reports, decisions, and communications handoffs.
+
+`tests/test_pc2_session.py` locks the critical information-flow boundaries, including the requirement that the deterministic nominal event cannot silently set FLIGHT GO in playable orchestration.
+
+A smaller parallel session prototype created during this work was removed after the richer `pc2_session.py` implementation landed, leaving one canonical session model.
 
 ## Deliberately deferred
 
@@ -98,13 +105,14 @@ Those are subsequent implementation decisions. The framework-neutral domain boun
 
 ## Stop condition / next work
 
-The next integration item should connect this session state to the existing controller projections/presentations so that:
+The session now reaches farther than the original boundary: assigned clients can already obtain station-scoped views, and the explicit FLIGHT decision already drives the normal FLIGHT state/product path.
 
-1. station clients receive only their assigned station view;
-2. FLIGHT receives player-submitted readiness reports;
-3. FLIGHT's explicit decision updates the FLIGHT session product;
-4. a FLIGHT GO can be queued for CAPCOM rather than directly appearing to the crew;
-5. CAPCOM transmission records the crew-facing event;
-6. all of this remains replayable from the audit trail.
+The next integration item is therefore narrower:
 
-Only after that domain integration is stable should transport/reconnect implementation become the main task.
+1. surface player-submitted readiness reports in the FLIGHT player view as a project session product;
+2. surface pending approved callouts in the CAPCOM player view without exposing hidden subsystem state;
+3. connect CAPCOM transmission to the existing procedural-communication log;
+4. validate the nominal integrated PC+2 sequence through readiness poll, crew-facing GO, burn, shutdown report, residual review, and immediate power-down;
+5. then move to transport/reconnect/client delivery.
+
+Further display or subsystem research remains demand-driven by a concrete integration or player-decision dependency.
