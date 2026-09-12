@@ -16,10 +16,12 @@ from .capcom_presentation import build_pc2_capcom_presentation
 from .control_presentation import build_pc2_control_presentation
 from .controller_decisions import call_out_shutdown_criterion
 from .controller_products import project_controller_products
+from .event_eligibility import evaluate_event_eligibility
 from .fido_retro_presentation import build_pc2_fido_retro_presentation
 from .flight_presentation import build_pc2_flight_presentation
 from .guido_presentation import build_pc2_guido_presentation
 from .inco_presentation import build_pc2_inco_presentation
+from .pc2_event_rules import PC2_EVENT_RULES
 from .pc2_nominal import PC2State, SimEvent, apply_event, build_events
 from .scenario_injection import StateInjection, apply_state_injection
 from .shutdown_rules import RuleState, evaluate_pc2_shutdown_rules
@@ -186,46 +188,13 @@ class PC2Session:
             simulation_paused=False,
         )
 
-    def _event_eligibility(self, event: SimEvent) -> tuple[bool, str | None]:
-        """Return whether a source-timed nominal event is still executable.
-
-        GET is continuous. When players have not completed prerequisites by a
-        nominal event time, that nominal event is missed rather than freezing time
-        or being applied retroactively later.
-        """
-        name = event.name
-        if name == "p40_active_final_preburn" and not self.state.flight_go:
-            return False, "FLIGHT GO not recorded before nominal P40 milestone"
-        if name == "manual_two_jet_ullage_begins":
-            if not self.state.flight_go:
-                return False, "FLIGHT GO not recorded before nominal ullage milestone"
-            if not self.state.p40_active:
-                return False, "P40 not active before nominal ullage milestone"
-        if name == "dps_ignition":
-            if not self.state.flight_go:
-                return False, "FLIGHT GO not recorded before nominal TIG"
-            if not self.state.p40_active:
-                return False, "P40 not active before nominal TIG"
-            if not self.state.ullage_active:
-                return False, "required nominal ullage not active at TIG"
-        if name in {"throttle_command_40_percent", "crew_reports_40_percent", "throttle_command_maximum", "crew_reports_100_percent"}:
-            if not self.state.engine_running:
-                return False, "DPS engine not running"
-        if name == "guided_cutoff" and not self.state.engine_running:
-            return False, "DPS engine not running at nominal cutoff"
-        if name == "postburn_residual_review" and not self.state.cutoff_complete:
-            return False, "nominal burn cutoff did not occur"
-        if name == "lm_powerdown_transition" and not self.state.cutoff_complete:
-            return False, "nominal burn sequence did not reach cutoff"
-        return True, None
-
     def advance_to(self, target_get_s: float) -> float:
         """Advance authoritative mission GET continuously up to ``target_get_s``.
 
         Controller gates constrain actions and downstream event eligibility; they
         do not stop GET. Only an explicit session pause stops advancement.
 
-        Historical fixture events are nominal milestones. If their operational
+        Historical fixture events are nominal milestones. If their declared
         prerequisites are absent when their GET arrives, the event is recorded as
         missed and is not replayed retroactively after a late player decision.
         """
@@ -248,7 +217,11 @@ class PC2Session:
                 self._open_gate("flight_go", source_event=event.name)
                 continue
 
-            eligible, reason = self._event_eligibility(event)
+            eligible, reason = evaluate_event_eligibility(
+                self.state,
+                event.name,
+                PC2_EVENT_RULES,
+            )
             self.next_event_index += 1
             if not eligible:
                 self._audit(
