@@ -64,7 +64,7 @@ The first-slice FLIGHT interface should emphasize communication and decision int
 
 - exact historical FIDO/RETRO CRT layout;
 - complete RTCC trajectory display catalog;
-- exact Cartesian state vector until required by the physics implementation.
+- exact Cartesian RTCC state vector until required by the physics implementation.
 
 ---
 
@@ -156,24 +156,29 @@ For the implemented nonnominal branch, a threshold exceedance produces a CONTROL
 | Inverter/electrical warning state | B | shutdown-rule support |
 | Limited consumables context | B | ensure burn configuration does not compromise return plan |
 
-### First-slice fields
+### Implemented first-pass player view
 
-- LM power configuration;
-- current draw, including approximately 38–40 A burn-configuration state;
-- inverter warning/status;
-- power-down status;
-- only consumable quantities that can actually alter a PC+2 readiness decision.
+The current TELMU project rendering contains:
 
-### Current implementation boundary
+- LM power/configuration mode;
+- documented **38–40 A burn-configuration current reference**;
+- inverter warning state;
+- inverter-switch action state and action GET;
+- post-burn power-down transition.
 
-The controller-product layer currently has power mode/configuration, a documented expected burn-current range reference, inverter warning, inverter-switch action state, and power-down transition. Actual measured current remains deferred. The next presentation pass will turn these products into a clearly labeled TELMU project rendering without inventing an Apollo CRT.
+The 38–40 A figure is explicitly rendered as **BURN CONFIG CURRENT REF**. It is a documented expected/required configuration load from the Mission Operations Report, not live measured current telemetry.
+
+The inverter warning and inverter-switch action remain distinct. A switch action does not imply that the warning cleared, and a warning does not automatically expose a diagnosis.
 
 ### Deferred
 
-- complete TELMU consumables dashboard;
-- actual measured burn current until its source path is modeled;
-- full ECS/EMU modeling;
-- detailed water/O2/thermal state unless required by a later scenario branch.
+- actual measured burn current until its source/value path is modeled;
+- exact TELMU CRT/display layout and field labels;
+- complete consumables dashboard;
+- water/O2/CO2/LiOH lifetime presentation;
+- detailed battery and thermal state unless required by a later scenario branch.
+
+Deferred project fields are omitted rather than shown as failed historical telemetry.
 
 ---
 
@@ -256,13 +261,13 @@ This is required even when the first nominal run uses perfect communications aft
 
 1. CONTROL burn-monitor product — **first-pass rendering implemented**.
 2. GUIDO guidance/load/residual product — **first-pass rendering implemented**.
-3. TELMU power/configuration product — **next presentation target**.
-4. FIDO/RETRO target and return product.
+3. TELMU power/configuration product — **first-pass rendering implemented**.
+4. FIDO/RETRO target and return product — **next presentation target**.
 5. INCO link/ranging product.
 6. FLIGHT readiness/report view.
 7. CAPCOM PAD/voice workflow.
 
-The ordering after GUIDO is scenario-driven: TELMU moves ahead of FIDO/RETRO because the modeled inverter contingency already creates a concrete player decision dependency that needs presentation.
+After the remaining minimum station views exist, priority shifts to integrating them into a playable PC+2 session rather than expanding display research.
 
 ### Priority 2 — add only if required by usability/validation
 
@@ -293,6 +298,8 @@ This permits implementation to proceed without inventing archival details.
 - Apollo 13 *Mission Operations Report*, controller appendices and PC+2 chronology.
 - Apollo 13 Technical Air-to-Ground Voice Transcription.
 - Apollo 13 AC Electronics *Guidance & Navigation Summary*, MSK 1123/1137.
+- Apollo 13 TELMU Post Mission Report.
+- Apollo 13 Review Board Appendix B.
 - MIT R-567 LUMINARY 1C Section 2 — Data Links, Rev. 8.
 - Existing station specifications under `docs/stations/`.
-- Research notes 029–074.
+- Research notes 029–075.
