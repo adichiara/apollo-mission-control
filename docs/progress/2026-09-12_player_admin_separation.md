@@ -14,38 +14,27 @@ Date: 2026-09-12
 
 ## Player client boundary
 
-The normal `/` interface no longer exposes:
-
-- create/reset;
-- start/pause/resume;
-- manual GET advancement;
-- source injection;
-- direct crew-response validation controls;
-- direct physical engine-off response;
-- audit-log inspection.
-
-It retains only station join/rejoin, station products, and station-authorized actions.
+The normal `/` interface no longer exposes create/reset, lifecycle, manual GET advancement, source injection, direct crew/vehicle validation controls, or audit-log inspection. It retains station join/rejoin, station products, and station-authorized actions.
 
 ## Admin validation boundary
 
-`/admin` now gathers the development/SimSup operations needed to exercise the complete nonnominal chain independently:
+`/admin` gathers the development/SimSup operations needed to exercise the nonnominal chain: session lifecycle, manual validation time, source injection, crew receipt/shutdown/report, physical response, evidence assessment, and audit inspection.
 
-- session lifecycle;
-- manual validation time advancement;
-- source injection;
-- crew receipt/shutdown/report;
-- physical DPS response;
-- CONTROL shutdown-evidence assessment;
-- audit inspection.
+## Follow-up authorization — completed
 
-## Important limitation
+At the time of this UI split, the admin interface was **not yet** an authorization boundary. That limitation has now been resolved by research note **088** and decision **D-017**:
 
-This is **not yet an authorization boundary**. The separate admin UI reduces accidental player exposure but the underlying admin/validation API operations are not yet protected by facilitator credentials.
+- configured deployments require a separate facilitator credential for exercise-wide operations;
+- controller station identity remains independent of facilitator authority;
+- Render generates the deployment secret outside source control;
+- the `/admin` page sends the facilitator credential in a dedicated HTTP header.
+
+See `docs/progress/2026-09-12_facilitator_authority.md`.
 
 ## Test status
 
 Tests are committed but the full suite remains unverified in this automation environment because there is no runnable checked-out repository available through the GitHub connector.
 
-## Next stopping point
+## Current stopping point
 
-Define and implement the minimum server-side facilitator/admin authority needed to protect lifecycle, manual-time, injection, crew/vehicle validation, and audit operations without conflating facilitator authority with controller station identity.
+Runnable multi-client validation with one facilitator console and several station clients: continuous GET, pause/resume, reload/rejoin, station isolation, facilitator/player authority isolation, and the complete synthetic ΔP branch.
