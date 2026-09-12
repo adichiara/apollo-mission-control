@@ -20,15 +20,28 @@ class ProjectionSet:
     deferred_fields: tuple[str, ...] = ()
 
 
-def _live_product(state: PC2State, value: Any, *, units: str | None = None,
-                  source_layer: str, provenance: str,
-                  validity: Validity = Validity.VALID) -> Product:
+def _live_product(
+    state: PC2State,
+    value: Any,
+    *,
+    units: str | None = None,
+    source_layer: str,
+    provenance: str,
+    validity: Validity = Validity.VALID,
+    observed_get_s: float | None = None,
+) -> Product:
+    observed = state.get_s if observed_get_s is None else observed_get_s
     return Product(
-        value=value, units=units,
-        source_time_get=state.get_s, sample_time_get=state.get_s,
-        receive_time_get=state.get_s, process_time_get=state.get_s,
-        display_time_get=state.get_s, validity=validity,
-        provenance=provenance, source_layer=source_layer,
+        value=value,
+        units=units,
+        source_time_get=observed,
+        sample_time_get=observed,
+        receive_time_get=state.get_s,
+        process_time_get=state.get_s,
+        display_time_get=state.get_s,
+        validity=validity,
+        provenance=provenance,
+        source_layer=source_layer,
     )
 
 
@@ -68,33 +81,45 @@ def project_controller_products(state: PC2State, fixture: dict[str, Any]) -> dic
         control_deferred.insert(0, "dps.chamber_pressure_psi")
     else:
         control_products["dps.chamber_pressure_psi"] = _live_product(
-            state, state.dps_chamber_pressure_psi, units="psi",
+            state,
+            state.dps_chamber_pressure_psi,
+            units="psi",
             source_layer="measurement/telemetry",
             provenance="LM-7-family GQ6510P thrust-chamber-pressure measurement",
+            observed_get_s=state.dps_chamber_pressure_observed_get_s,
         )
     if state.dps_fuel_oxidizer_delta_p_psi is None:
         control_deferred.append("dps.fuel_oxidizer_delta_p_psi")
     else:
         control_products["dps.fuel_oxidizer_delta_p_psi"] = _live_product(
-            state, state.dps_fuel_oxidizer_delta_p_psi, units="psi",
+            state,
+            state.dps_fuel_oxidizer_delta_p_psi,
+            units="psi",
             source_layer="ground-derived/propulsion-monitoring",
             provenance="Apollo 13 PC+2 ground fuel/oxidizer delta-P product; exact LM-measurement transformation/routing unresolved",
+            observed_get_s=state.dps_fuel_oxidizer_delta_p_observed_get_s,
         )
     if state.attitude_error_xyz_deg is None:
         control_deferred.append("vehicle.attitude_error_xyz_deg")
     else:
         control_products["vehicle.attitude_error_xyz_deg"] = _live_product(
-            state, dict(state.attitude_error_xyz_deg), units="deg",
+            state,
+            dict(state.attitude_error_xyz_deg),
+            units="deg",
             source_layer="measurement/telemetry",
             provenance="Apollo 13 PC+2 CONTROL attitude-error observation family; exact LM-7 PCM/display routing unresolved",
+            observed_get_s=state.attitude_error_observed_get_s,
         )
     if state.body_rate_xyz_deg_s is None:
         control_deferred.append("vehicle.body_rate_xyz_deg_s")
     else:
         control_products["vehicle.body_rate_xyz_deg_s"] = _live_product(
-            state, dict(state.body_rate_xyz_deg_s), units="deg/s",
+            state,
+            dict(state.body_rate_xyz_deg_s),
+            units="deg/s",
             source_layer="measurement/telemetry",
             provenance="Apollo 13 PC+2 CONTROL angular-rate observation family; exact LM-7 PCM/display routing unresolved",
+            observed_get_s=state.body_rate_observed_get_s,
         )
     control = ProjectionSet("CONTROL", control_products, tuple(control_deferred))
 
@@ -132,7 +157,13 @@ def project_controller_products(state: PC2State, fixture: dict[str, Any]) -> dic
         {
             "lm.power.mode": _live_product(state, power_mode, source_layer="physical/configuration", provenance="pc2.state.lm.power.mode"),
             "lm.power.burn_configuration_expected_current_range_a": _reference_product(lm_power["burn_configuration_current_expected_range_a"], units="A", source_layer="mission-report/reference", provenance="pc2.fixture.lm_power.burn_configuration_current_expected_range_a"),
-            "lm.inverter_warning": _live_product(state, state.lm_inverter_warning, source_layer="onboard/telemetry", provenance="LM inverter caution from voltage/frequency caution-warning processing; exact PC+2 display route unresolved"),
+            "lm.inverter_warning": _live_product(
+                state,
+                state.lm_inverter_warning,
+                source_layer="onboard/telemetry",
+                provenance="LM inverter caution from voltage/frequency caution-warning processing; exact PC+2 display route unresolved",
+                observed_get_s=state.lm_inverter_warning_observed_get_s,
+            ),
             "lm.inverter_switch_attempted": _live_product(state, state.lm_inverter_switch_attempted, source_layer="crew/procedure-event", provenance="pc2.state.operational_action.switch_lm_inverter"),
             "lm.inverter_switch_attempt_get_s": _live_product(state, state.lm_inverter_switch_attempt_get_s, units="s GET", source_layer="crew/procedure-event", provenance="pc2.state.operational_action.switch_lm_inverter", validity=Validity.VALID if state.lm_inverter_switch_attempted else Validity.UNAVAILABLE),
             "lm.powerdown.started": _live_product(state, state.powerdown_started, source_layer="physical/configuration", provenance="pc2.state.lm.powerdown"),
