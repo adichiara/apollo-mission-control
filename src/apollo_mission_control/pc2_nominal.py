@@ -33,6 +33,15 @@ class Product:
     source_layer: str = ""
     provenance: str = ""
 
+    def age_at(self, get_s: float) -> float | None:
+        """Return observation age without assigning a historical stale policy."""
+        observed = self.sample_time_get
+        if observed is None:
+            observed = self.source_time_get
+        if observed is None:
+            return None
+        return max(0.0, float(get_s) - float(observed))
+
 
 @dataclass
 class SimEvent:
@@ -64,17 +73,22 @@ class PC2State:
     # Optional modeled observations. None means the project has not supplied a
     # numerical value; it is not a claim of telemetry/product loss.
     dps_chamber_pressure_psi: float | None = None
+    dps_chamber_pressure_observed_get_s: float | None = None
     # Ground-derived PC+2 fuel/oxidizer differential-pressure product. The
     # exact transformation from LM source pressure measurements is unresolved.
     dps_fuel_oxidizer_delta_p_psi: float | None = None
+    dps_fuel_oxidizer_delta_p_observed_get_s: float | None = None
     # Three-axis CONTROL-relevant guidance/control observations. The exact
     # LM-7 PCM assignments and CONTROL CRT fields remain unresolved; no nominal
     # time history is synthesized from the postflight maxima.
     attitude_error_xyz_deg: dict[str, float] | None = None
+    attitude_error_observed_get_s: float | None = None
     body_rate_xyz_deg_s: dict[str, float] | None = None
+    body_rate_observed_get_s: float | None = None
     # Runtime inverter caution observation. The exact PC+2 telemetry/display
     # route remains unresolved, but the caution-generation path is documented.
     lm_inverter_warning: bool = False
+    lm_inverter_warning_observed_get_s: float | None = None
     # Operational action state, kept separate from fault/scenario injection.
     lm_inverter_switch_attempted: bool = False
     lm_inverter_switch_attempt_get_s: float | None = None
