@@ -2,7 +2,7 @@
 
 Status: **implementation-oriented research specification — nominal vertical slice**  
 Scenario start: **77:55:00 GET**  
-Research basis: `resources/research/050_pc2_initialization_and_nominal_validation.md`, with later refinements in notes 051–054.
+Research basis: `resources/research/050_pc2_initialization_and_nominal_validation.md`, with later refinements in notes 051–055.
 
 ## Purpose
 
@@ -78,7 +78,7 @@ The nominal first pass may use zero transport error, but the fields should not b
 
 Historical nominal executed Vg values for validation are +742.21, -425.88, +91.04 ft/s in the GUIDO report.
 
-`pg_ns.iss.warning` is now source-backed as a distinct onboard warning signal with an instrumentation path. The project does **not** yet claim the exact Apollo 13 LM-7 telemetry word or GUIDO CRT field. The PC+2 shutdown criterion is conjunctive: ISS warning **plus** computer program alarm. See research note 054.
+`pg_ns.iss.warning` is source-backed as a distinct onboard warning signal with an instrumentation path. The project does **not** yet claim the exact Apollo 13 LM-7 telemetry word or GUIDO CRT field. The PC+2 shutdown criterion is conjunctive: ISS warning **plus** computer program alarm. See research note 054.
 
 ## AGS
 
@@ -98,8 +98,8 @@ Do not add a fabricated exact `ags.ullage_display` or `ags.act_vel` mapping unti
 | `dps.engine_running` | bool | — | false | CONTROL |
 | `dps.throttle_command_pct` | float | % | 0; profile minimum → 40 → max | CONTROL |
 | `dps.thrust_actual` | float | lbf | 0 preburn; modeled during burn | CONTROL |
-| `dps.chamber_pressure` | float | psi | safe nominal; exact baseline TBD | CONTROL |
-| `dps.inlet_pressure` | float | psi | safe nominal; exact baseline TBD | CONTROL |
+| `dps.chamber_pressure` | optional float | psi | exact nominal PC+2 value intentionally unfrozen; when modeled, measurement identity is LM-7-family `GQ6510P` | CONTROL |
+| `dps.inlet_pressure` | float | psi | safe nominal condition; exact baseline TBD | CONTROL |
 | `dps.fuel_oxidizer_delta_p` | float | psi | <25 nominal condition; exact baseline TBD | CONTROL |
 | `dps.engine_gimbal_warning` | bool | — | false | CONTROL |
 | `dps.gda_state` | enum | — | nominal | CONTROL |
@@ -114,7 +114,20 @@ Rule thresholds are separate configuration data:
 - onboard inlet-pressure threshold: approximately 160 psi;
 - fuel/oxidizer differential-pressure threshold: >25 psi, ground callout.
 
-Do not invent exact nominal pressure readings solely from these thresholds.
+### Chamber-pressure observation path
+
+Research note 055 establishes `GQ6510P` as the LM-7-family thrust-chamber-pressure measurement. This is sufficient to model an optional chamber-pressure observation reaching CONTROL and to evaluate the documented ground shutdown criterion when a numerical measurement is explicitly supplied.
+
+Important limits remain:
+
+- the nominal fixture still does **not** invent a PC+2 chamber-pressure trace;
+- `None` means the project has not supplied a numerical model value, not that historical telemetry is unavailable;
+- the exact Apollo 13 PCM/ground-conversion path and exact MSK 1137 `TCP` routing/update cadence remain unresolved;
+- the separate onboard 77-percent-thrust observation remains a distinct deferred path.
+
+For a modeled valid CONTROL observation, `dps.chamber_pressure <= 85 psi` triggers the ground chamber-pressure rule audit. The audit does not directly shut down the engine or issue a controller decision.
+
+Do not invent exact nominal pressure readings solely from shutdown thresholds.
 
 ## RCS and vehicle attitude
 
@@ -182,8 +195,8 @@ A deterministic nominal run should reproduce:
 
 ## Deferred numeric/state detail
 
-The exact RTCC Cartesian state vector at 77:55 GET remains intentionally unfrozen until the propagator requires it. Exact nominal DPS pressure values, exact LM-7 ISS-warning telemetry-word assignment, and exact GUIDO CRT placement also remain deferred rather than being reverse-engineered.
+The exact RTCC Cartesian state vector at 77:55 GET remains intentionally unfrozen until the propagator requires it. The exact nominal PC+2 chamber-pressure trace, exact LM-7 chamber-pressure ground/display routing, exact LM-7 ISS-warning telemetry-word assignment, and exact GUIDO CRT placement also remain deferred rather than being reverse-engineered.
 
 ## Sources
 
-Principal authority remains the NASA Flight Control Division *Mission Operations Report — Apollo 13* (28 April 1970), with technical air-ground transcription for communication chronology. See research notes 050–054 and `resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md` for implementation-specific provenance.
+Principal authority remains the NASA Flight Control Division *Mission Operations Report — Apollo 13* (28 April 1970), with technical air-ground transcription for communication chronology. See research notes 050–055 and `resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md` for implementation-specific provenance.
