@@ -43,6 +43,7 @@ Key research chain:
 - `058_pc2_fuel_oxidizer_delta_p_observation_path.md`
 - `059_pc2_inverter_warning_after_switch.md`
 - `060_pc2_inverter_contingency_action_report_loop.md`
+- `061_pc2_onboard_thrust_monitor_observation_path.md`
 
 Deliverables:
 
@@ -69,6 +70,7 @@ Current PC+2 checkpoint:
 - [x] LM-7-family `GQ3611P` and `GQ4111P` established as separate fuel/oxidizer engine-interface pressure measurements
 - [x] PC+2 fuel/oxidizer ΔP established as a distinct ground-only CONTROL rule product; exact computation/display routing remains unresolved
 - [x] inverter caution narrowed to processed AC voltage/frequency quality with LM-5-and-later selection-transient inhibit behavior; exact PC+2 telemetry/display route unresolved
+- [x] onboard 77-percent thrust rule separated from both P47 and the thrust-to-weight indicator; exact percent-thrust readout/source remains unresolved
 - [ ] determine the exact CONTROL ground product/selection logic behind the singular PC+2 150-psi “engine inlet pressure” criterion only if a direct source becomes readily available
 - [ ] map required products into first-pass station screens, using exact Apollo formats where available and explicitly labeled project renderings elsewhere
 - [ ] recover additional MCC/RTCC transforms only when PC+2 station behavior requires them
@@ -103,11 +105,12 @@ Completed:
 - [x] CAPCOM instruction and crew completion-report events represented separately from the inverter action and telemetry state
 - [x] inverter rule now requires a distinct post-switch warning observation; a pre-switch warning carried through the action is not enough
 - [x] first small end-to-end source-bounded decision/action loop implemented: warning → CAPCOM instruction → crew switch → completion report → post-switch warning → rule trigger, with no automatic cutoff/abort
+- [x] onboard 77-percent thrust-monitor research bounded the gap without fabricating a display/source: P47, thrust-to-weight indication, and ground chamber pressure are not treated as the crew percent-thrust readout
 
 Immediate next work:
 
-- [ ] research the **onboard thrust-monitor observation path for the 77-percent criterion** using primary LM crew/display documentation first; implement only if the indication semantics are defensible
-- [ ] if the thrust-monitor path cannot be resolved efficiently, research the attitude/rate criteria and the Mission Operations Report vs crew-readback startup-transient wording conflict
+- [ ] research the **attitude-error / attitude-rate shutdown criteria** and resolve, if possible, the startup-transient wording conflict between the Mission Operations Report and the crew-facing read-up/readback
+- [ ] keep `crew_thrust_monitor` `NOT_EVALUABLE` unless a direct LM-7 crew/display or DPS-control source identifies the percent-thrust indication
 - [ ] keep singular 150-psi inlet-pressure aggregation deferred unless a direct CONTROL/procedure/display source becomes cheaply available
 - [ ] add broader failure-propagation tests only where subsystem behavior is source-backed
 - [ ] determine minimum trajectory-state representation when a propagating trajectory implementation becomes necessary
@@ -118,6 +121,7 @@ Important constraints:
 - exact nominal PC+2 chamber-pressure and ΔP traces are not invented;
 - singular ground `dps_inlet_pressure_psi` is **not** invented from the two interface-pressure transducers;
 - fuel/oxidizer ΔP is not computed from those transducers until the historical ground transformation/sign convention is sourced;
+- onboard 77-percent thrust is not aliased to P47, thrust-to-weight indication, or ground chamber pressure;
 - no inverter persistence timer or exact alternate-inverter identity is invented;
 - the surviving LM-7 contingency-checklist catalog record does not by itself establish the missing inverter switch details;
 - detailed DPS ramp dynamics remain deferred;
@@ -136,6 +140,7 @@ Current checkpoint:
 - ΔP is intentionally represented as a ground-derived product because its exact LM-measurement transformation remains unresolved;
 - inverter warning is kept distinct from the crew switch action and from CAPCOM/crew procedural communications;
 - inverter rule evaluation now distinguishes pre-switch warning information from a genuinely later post-switch observation;
+- crew-side thrust monitoring remains a distinct information path from ground chamber-pressure telemetry even though the exact onboard percent readout is unresolved;
 - stale/missing/invalid behavior, network transport, and exact display cadence remain future work where documented.
 
 ## Phase 6 — Procedures and flight rules
@@ -151,9 +156,10 @@ PC+2 checkpoint:
 - [x] fuel/oxidizer ΔP >25 psi criterion evaluable when an explicit ground-derived product is supplied
 - [x] inverter-warning-after-switch criterion evaluable only from a distinct post-switch observation
 - [x] bounded inverter contingency action/report order recovered from the mission rule read-up and crew readback
+- [x] 77-percent onboard thrust criterion researched and deliberately left `NOT_EVALUABLE` because the exact percent-thrust readout/source is not yet established
 - [ ] exact alternate-inverter identity, switch/circuit-breaker positions, crew member, and any dwell time remain unresolved and are not invented
 - [ ] singular 150-psi ground inlet-pressure rule remains `NOT_EVALUABLE` until selection/aggregation semantics are sourced
-- [ ] crew analog thrust/inlet indications and attitude/rate criteria remain deferred
+- [ ] crew inlet indication and attitude/rate criteria remain deferred
 - [ ] startup-transient wording conflict remains unresolved rather than silently normalized
 
 ## Phase 7 — Simulation scenarios / SimSup
