@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — continuous-time HTTP chain now reaches physical DPS response; fresh controller evidence is next**
+Status: **CURRENT — continuous-time nonnominal chain now reaches fresh controller evidence; runnable integration validation is next**
 
 ## Completed presentation/session/web checkpoints
 
@@ -22,11 +22,14 @@ Status: **CURRENT — continuous-time HTTP chain now reaches physical DPS respon
 - [x] nominal downstream events can be missed when prerequisites are absent and are not replayed retroactively;
 - [x] reusable declarative event-eligibility layer replaces PC+2 session-specific prerequisite branching;
 - [x] 1× monotonic wall-clock pacing integrated with the web session;
-- [x] HTTP validation path now exposes crew receipt, crew shutdown command, and physical DPS engine-off response.
+- [x] HTTP validation path exposes crew receipt, crew shutdown command, and physical DPS engine-off response;
+- [x] explicit crew shutdown report exposed as controller-observable evidence;
+- [x] fresh post-command `GQ6510P` evidence integrated through the normal CONTROL product path;
+- [x] shutdown evidence aggregation exposed to CONTROL without an automatic engine-off verdict.
 
 The current deployment architecture remains single-process/in-memory. Restart or redeploy loses the live session; multiple workers/sessions remain deferred.
 
-See D-016, `resources/research/084_continuous_mission_clock_architecture.md`, and `resources/research/085_pc2_http_crew_response_integration.md`.
+See D-016 and research notes 084–086.
 
 ## Continuous-time engine boundary — implemented
 
@@ -42,13 +45,13 @@ At the approximately 79:17 GET poll:
 - ineligible nominal events are recorded as `scenario_event_missed` with a reason;
 - missed nominal events are not replayed automatically after a late GO.
 
-Prerequisites are now declared through the reusable event-eligibility layer rather than embedded as PC+2-specific session branches.
+Prerequisites are declared through the reusable event-eligibility layer rather than embedded as PC+2-specific session branches.
 
 The web layer uses a monotonic realtime driver fixed at 1× and synchronizes the authoritative session on API interaction. Manual `/advance` remains only as development/validation infrastructure.
 
-## First nonnominal session/API path — implemented through physical response
+## First nonnominal session/API path — implemented through controller evidence
 
-Primary Apollo 13 sources establish the PC+2 **fuel/oxidizer ΔP >25 psi** criterion as a **ground callout**, but do not establish the exact internal CONTROL→FLIGHT→CAPCOM routing, exact hypothetical response wording, or response latency.
+Primary Apollo 13 sources establish the PC+2 **fuel/oxidizer ΔP >25 psi** criterion as a **ground callout**, but do not establish the exact internal CONTROL→FLIGHT→CAPCOM routing, exact hypothetical response wording, response latency, or a binary ground engine-off threshold.
 
 Implemented without filling those gaps:
 
@@ -57,41 +60,40 @@ Implemented without filling those gaps:
 - [x] the existing common shutdown-rule evaluator determines whether the criterion is triggered;
 - [x] CONTROL must explicitly issue the shutdown callout decision;
 - [x] the callout enters the CAPCOM queue as `requested_by=CONTROL`;
-- [x] queue metadata explicitly states that internal Apollo routing is unresolved;
 - [x] CAPCOM must explicitly transmit the item;
 - [x] CAPCOM transmission does not imply crew receipt;
 - [x] explicit crew receipt is required before the crew shutdown command;
 - [x] crew shutdown command remains separate from physical engine response;
 - [x] explicit vehicle DPS engine-off response occurs at current authoritative GET;
-- [x] no response delay, chamber-pressure tailoff, or automatic shutdown-confirmation telemetry is synthesized;
-- [x] domain and HTTP tests cover communication → receipt → command → physical-response ordering.
+- [x] explicit crew shutdown report is a separate evidence channel;
+- [x] fresh post-command `GQ6510P` chamber-pressure observation is a separate evidence channel;
+- [x] pre-command pressure cannot count as shutdown-response evidence;
+- [x] CONTROL receives evidence availability only: `none`, `crew_reported`, `ground_pressure_observed`, or `corroborated`;
+- [x] no pressure magnitude is treated as a binary engine-off threshold;
+- [x] evidence assessment does not inspect hidden authoritative `engine_running` state.
 
-See research notes 082, 083, and 085.
+See research notes 082, 083, 085, and 086.
 
-## Active priority — fresh controller-observable shutdown evidence
+## Active priority — runnable integration validation and player-surface cleanup
 
-1. expose an explicit crew shutdown report as one evidence channel;
-2. feed a fresh post-command `GQ6510P` chamber-pressure observation through the existing controller product path;
-3. reuse `shutdown_confirmation.py` to report evidence availability (`NONE`, `CREW_REPORTED`, `GROUND_PRESSURE_OBSERVED`, `CORROBORATED`);
-4. do **not** create an automatic `engine_off_confirmed` verdict or pressure threshold;
-5. ensure pre-command chamber-pressure observations cannot count as shutdown evidence;
-6. then exercise the full ΔP branch end-to-end through controller-visible evidence.
+1. execute the full domain/session/API suite in a runnable checked-out environment;
+2. exercise several phone/browser clients against one authoritative server;
+3. run the complete synthetic ΔP branch through source observation → controller decision → CAPCOM → crew → vehicle → fresh controller evidence;
+4. verify realtime GET behavior under concurrent client polling/actions and explicit pause/resume;
+5. review the phone UI for continuous realtime operation;
+6. separate validation/admin controls from normal player-facing controls before broader playtesting;
+7. reopen historical research only if integrated play exposes a concrete missing decision dependency.
 
 ## Integration validation still required
 
-When a runnable repository environment is available:
-
-- execute the complete domain/session/API suite;
-- exercise several phone/browser clients against one server;
 - verify reload/rejoin does not change mission state;
 - verify station information isolation;
 - verify GET continues through pending controller decisions;
 - verify explicit pause is the only normal clock stop;
 - verify late decisions create missed-event consequences rather than retroactive event execution;
 - verify the nominal timeline reaches power-down when prerequisites are satisfied on time;
-- verify the ΔP nonnominal path through CONTROL and CAPCOM;
-- verify transmission → crew receipt → crew command → physical response ordering;
-- validate fresh shutdown evidence through the normal controller path.
+- verify the full ΔP nonnominal branch and evidence freshness boundaries;
+- verify CONTROL evidence never leaks authoritative physical truth.
 
 ## Explicitly deferred
 
@@ -109,4 +111,4 @@ When a runnable repository environment is available:
 
 ## Current success criterion
 
-A rejoin-safe phone-accessible prototype running a **continuous authoritative mission clock** in which player actions affect event eligibility and mission evolution, and a source-bounded nonnominal condition can move through **source observation → correct station information → controller decision → CAPCOM transmission → explicit crew receipt/action → physical response → fresh controller evidence**, with no hidden automatic decisions or invented historical routing.
+A rejoin-safe phone-accessible prototype running a **continuous authoritative mission clock** in which player actions affect event eligibility and mission evolution, and a source-bounded nonnominal condition can move through **source observation → correct station information → controller decision → CAPCOM transmission → explicit crew receipt/action → physical response → fresh controller evidence**, with no hidden automatic decisions, hidden physical-truth leaks, or invented historical routing.
