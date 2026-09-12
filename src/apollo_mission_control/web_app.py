@@ -82,6 +82,26 @@ def _status_payload(session: PC2Session) -> dict[str, Any]:
     }
 
 
+def _join_or_rejoin(session: PC2Session, player_id: str, station: str) -> None:
+    """Join a station or idempotently rejoin the player's existing assignment.
+
+    This is deliberately lightweight prototype identity, not authentication.
+    A repeated browser join with the same player ID and same station is allowed;
+    the same ID cannot switch stations, and another ID cannot take an occupied
+    station through this path.
+    """
+    normalized = station.upper()
+    existing = session.station_assignments.get(player_id)
+    if existing is not None:
+        if existing != normalized:
+            raise ValueError(
+                f"Player {player_id} is already assigned to {existing}; cannot rejoin as {normalized}"
+            )
+        session._audit("player_rejoined", "SESSION", player_id=player_id, station=normalized)
+        return
+    session.assign_station(player_id, normalized)
+
+
 @app.get("/api/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
@@ -106,7 +126,7 @@ def session_status() -> dict[str, Any]:
 def join_session(request: JoinRequest) -> dict[str, Any]:
     with _lock:
         session = _require_session()
-        _domain_call(lambda: session.assign_station(request.player_id, request.station))
+        _domain_call(lambda: _join_or_rejoin(session, request.player_id, request.station))
         return session.player_snapshot(request.player_id).to_dict()
 
 
