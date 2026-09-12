@@ -56,11 +56,65 @@ The updated tests are committed. A fresh container-backed test execution attempt
 
 GUIDO remains maturity **B**. Evidence improved from “rule requires an ISS warning” to “ISS warning is a distinct onboard warning with an instrumentation path,” but exact Apollo 13 LM-7 telemetry word, ground routing, and GUIDO CRT placement remain unresolved. No other station maturity grade changes.
 
-## Documented stopping point
+## 2026-09-12 continuation — DPS chamber-pressure observation path
 
-The first source-backed nonnominal rule path is now complete at the information/audit level. The next useful branch should be chosen by evidence value rather than convenience:
+### Primary-source finding
 
-1. research the **inverter-warning-after-switch** path if the LM electrical documentation can establish switch-attempt and warning-persistence state cleanly; or
-2. research one **DPS pressure** observation path if mission-era telemetry/calibration documentation can provide a defensible physical-to-ground measurement model without inventing nominal values.
+Research note `055_pc2_dps_chamber_pressure_observation_path.md` resolves the first analog propulsion shutdown-rule observation path.
 
-Do not add a narrative failure scenario until the underlying malfunction state and observation path are both documented strongly enough to avoid a scripted diagnosis.
+The evidence chain is now strong enough for a bounded implementation:
+
+1. the Apollo 13 Flight Control Division Mission Operations Report defines approximately **85 psi ground thrust-chamber pressure** as a PC+2 shutdown criterion, distinct from the crew/onboard approximately 77-percent-thrust criterion;
+2. the **LM-7/8/9 Elementary Functional Diagrams** identify `GQ6510P` as **PRESS, THRUST CHAMBER**, giving mission-era vehicle-family measurement identity for Apollo 13's LM-7;
+3. the Apollo 10 LM-4 DPS Final Flight Evaluation independently lists `GQ6510P` as engine thrust-chamber pressure and demonstrates its use as an actual propulsion flight measurement. Its LM-4 engineering range/sampling details are retained only as continuity evidence, not imported as Apollo 13 controller-display timing;
+4. Apollo 13 mission/post-mission propulsion documentation supports the existence of recorded DPS flight data through the contingency burns without supplying a reviewed exact nominal GQ6510P trace for every instant of PC+2.
+
+This is enough to represent a chamber-pressure measurement and rule observation without fabricating a historical normal reading.
+
+### Implementation completed
+
+- Added optional `PC2State.dps_chamber_pressure_psi`.
+- `None` explicitly means **the project has not supplied a numerical value**; it does not mean Apollo telemetry is unavailable.
+- CONTROL now receives `dps.chamber_pressure_psi` only when the simulation/test explicitly supplies a numerical observation.
+- The product carries `psi` units and LM-7-family `GQ6510P` provenance.
+- The shutdown-rule evaluator now handles the ground chamber-pressure criterion:
+  - no modeled measurement → `NOT_EVALUABLE`;
+  - modeled value >85 psi → `CLEAR`;
+  - modeled value <=85 psi → `TRIGGERED`.
+- Added a safe modeled-path test at 100 psi and a low-pressure rule-path test at 80 psi.
+- The 80-psi value is explicitly **synthetic boundary-test data**, not an Apollo 13 historical malfunction or reconstructed pressure trace.
+- A triggered chamber-pressure audit still does not stop the engine or mutate `state.shutdown_rule_triggers`.
+
+### Documentation/source maintenance
+
+- Added `resources/research/055_pc2_dps_chamber_pressure_observation_path.md`.
+- Updated `docs/scenarios/APOLLO13_PC2_PARAMETERS.md` to distinguish optional modeled GQ6510P observation from the intentionally unfrozen nominal PC+2 pressure trace.
+- Updated `resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md` with the LM-7/8/9 diagrams, Apollo 10 DPS flight evaluation, Apollo 13 Mission Report, and Apollo 13 Panel 3 Addendum 1.
+- Added `docs/station-status/2026-09-12_pc2_dps_chamber_pressure.md`.
+- Updated `docs/ROADMAP.md` through the new analog CONTROL rule path.
+
+### Station-status consequence
+
+CONTROL remains maturity **B**. We now have a defensible measurement identity and an executable ground-rule path, but exact Apollo 13 GQ6510P PCM assignment, ground conversion, certified MSK 1137 `TCP` routing/update cadence, nominal PC+2 trace, and separate onboard 77-percent-thrust indication remain unresolved.
+
+### Validation status
+
+A new container-backed test run was attempted after the commits. The runtime again returned a transient client error before clone/test execution. The repository therefore records the tests as **committed but not freshly executed**; no passing result is claimed.
+
+## Current documented stopping point
+
+The project now has two qualitatively different source-backed nonnominal rule paths:
+
+- a discrete conjunction: ISS warning + program alarm;
+- an analog propulsion measurement: CONTROL chamber pressure against the 85-psi ground criterion.
+
+That is sufficient to move the implementation boundary from hand-edited test observations toward a **minimal generic scenario/failure-injection object** that perturbs underlying modeled state/observations rather than setting diagnoses or rule outcomes directly.
+
+The next implementation pass should therefore:
+
+1. define the smallest generic injection structure needed to change an underlying observation/state at a specified mission time;
+2. prove that the same controller-product and shutdown-rule layers respond without special-case scenario logic;
+3. keep synthetic boundary fixtures explicitly labeled non-historical;
+4. defer narrative Apollo training/failure scenarios until a historically documented malfunction mechanism is selected and sourced.
+
+Additional rule-path research should be demand-driven from that architecture rather than performed merely to increase the number of implemented thresholds.
