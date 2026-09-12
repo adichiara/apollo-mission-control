@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Apollo Mission Control — Validation Admin</title>
+  <style>
+    :root{color-scheme:dark;--bg:#070908;--panel:#111512;--panel2:#181d19;--line:#364039;--text:#d5ddd6;--muted:#8f9d92;--green:#98d49f;--amber:#e3c277;--red:#e5998f}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}header{position:sticky;top:0;padding:12px 14px;background:#070908f2;border-bottom:1px solid var(--line)}main{max-width:1000px;margin:auto;padding:12px;display:grid;gap:10px}.grid{display:grid;gap:10px}@media(min-width:760px){.grid.two{grid-template-columns:1fr 1fr}}.card{background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:12px}h1{font-size:17px;margin:0}h2{font-size:14px;margin:0 0 8px}.meta{font-size:11px;color:var(--muted)}label{display:block;color:var(--muted);font-size:11px;margin:7px 0 3px}input,select,textarea,button{width:100%;border:1px solid var(--line);border-radius:4px;background:#0c100d;color:var(--text);font:inherit;padding:8px}textarea{min-height:65px}.buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:8px}.buttons.three{grid-template-columns:repeat(3,minmax(0,1fr))}.good{color:var(--green)}.warn{color:var(--amber)}.bad{color:var(--red)}pre{white-space:pre-wrap;overflow-wrap:anywhere}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:3px 7px;margin:3px;font-size:11px}#error{display:none;color:var(--red)}
+  </style>
+</head>
+<body>
+<header><h1>APOLLO MISSION CONTROL — VALIDATION ADMIN</h1><div class="meta">Development/SimSup harness. Not a normal player console and not an authentication boundary.</div><div id="status"></div></header>
+<main>
+  <div id="error" class="card"></div>
+  <div class="grid two">
+    <section class="card"><h2>SESSION</h2><div class="buttons"><button onclick="createSession()">CREATE / RESET</button><button class="good" onclick="post('/api/session/start')">START</button></div><div class="buttons"><button class="warn" onclick="post('/api/session/pause')">PAUSE</button><button onclick="post('/api/session/resume')">RESUME</button></div><label>TARGET GET</label><input id="targetGet" value="79:20:00"><div class="buttons"><button onclick="advanceTo()">ADVANCE TO GET</button><button onclick="advanceDelta(60)">+60 SEC</button></div><div class="meta">Realtime 1× pacing is active while RUNNING. Manual advancement is retained only for validation.</div></section>
+    <section class="card"><h2>STATE INJECTION</h2><label>TARGET</label><input id="injTarget" value="dps_fuel_oxidizer_delta_p_psi"><label>VALUE</label><input id="injValue" value="26"><label>EVIDENCE CLASS</label><select id="injClass"><option value="synthetic_boundary">synthetic_boundary</option><option value="documented_historical">documented_historical</option><option value="source_bounded_hypothetical">source_bounded_hypothetical</option></select><label>PROVENANCE</label><textarea id="injProv">validation/admin synthetic boundary injection</textarea><button class="bad" style="margin-top:8px" onclick="inject()">APPLY INJECTION</button></section>
+    <section class="card"><h2>CREW / VEHICLE RESPONSE</h2><label>CAPCOM ITEM ID</label><input id="itemId" type="number" value="1"><label>CREW ID</label><input id="crewId" value="CREW"><div class="buttons"><button onclick="crewReceipt()">RECORD RECEIPT</button><button class="bad" onclick="crewShutdown()">COMMAND DPS SHUTDOWN</button></div><div class="buttons"><button onclick="crewReport()">RECORD SHUTDOWN REPORT</button><button class="bad" onclick="engineOff()">APPLY ENGINE-OFF RESPONSE</button></div><div class="meta">These remain separate operations by design. No automatic latency or telemetry confirmation is inferred.</div></section>
+    <section class="card"><h2>CONTROL EVIDENCE</h2><label>CONTROL PLAYER ID</label><input id="controlPlayer" value="control"><button style="margin-top:8px" onclick="shutdownEvidence()">ASSESS SHUTDOWN EVIDENCE</button><pre id="evidence"></pre></section>
+  </div>
+  <section class="card"><h2>AUDIT</h2><button onclick="loadAudit()">REFRESH AUDIT</button><pre id="audit"></pre></section>
+</main>
+<script>
+function err(x){const e=document.getElementById('error');e.style.display=x?'block':'none';e.textContent=x||''}
+async function api(path,options={}){const r=await fetch(path,{headers:{'Content-Type':'application/json'},...options});const b=await r.json().catch(()=>({}));if(!r.ok)throw new Error(b.detail||`${r.status} ${r.statusText}`);return b}
+async function post(path,body){try{err('');const out=await api(path,{method:'POST',body:body===undefined?undefined:JSON.stringify(body)});await refreshStatus();return out}catch(e){err(e.message);throw e}}
+function getSeconds(v){if(!String(v).includes(':'))return Number(v);const p=String(v).split(':').map(Number);return p[0]*3600+p[1]*60+p[2]}
+function fmtGet(sec){if(sec==null)return'--';const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s=Math.floor(sec%60);return`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
+async function refreshStatus(){try{const s=await api('/api/session/status');document.getElementById('status').innerHTML=`<span class="pill">${s.status}</span><span class="pill">GET ${fmtGet(s.get_s)}</span><span class="pill">${s.phase}</span>${s.pending_gate?`<span class="pill">GATE ${s.pending_gate}</span>`:''}`;return s}catch{document.getElementById('status').innerHTML='<span class="pill">NO SESSION</span>'}}
+async function createSession(){await post('/api/session/create')}
+async function advanceTo(){await post('/api/session/advance',{target_get_s:getSeconds(document.getElementById('targetGet').value)})}
+async function advanceDelta(d){const s=await api('/api/session/status');await post('/api/session/advance',{target_get_s:Number(s.get_s)+d})}
+async function inject(){let v=document.getElementById('injValue').value;const n=Number(v);if(v!==''&&!Number.isNaN(n))v=n;await post('/api/session/admin/injection',{injection_id:`admin-${Date.now()}`,target:document.getElementById('injTarget').value,value:v,evidence_class:document.getElementById('injClass').value,provenance:document.getElementById('injProv').value})}
+async function crewReceipt(){const id=Number(document.getElementById('itemId').value);await post(`/api/session/crew/receipt/${id}`,{crew_id:document.getElementById('crewId').value,response:'received'})}
+async function crewShutdown(){const id=Number(document.getElementById('itemId').value);await post(`/api/session/crew/shutdown/${id}`,{crew_id:document.getElementById('crewId').value,provenance:'validation/admin crew shutdown command'})}
+async function crewReport(){await post('/api/session/crew/shutdown-report',{crew_id:document.getElementById('crewId').value})}
+async function engineOff(){await post('/api/session/admin/vehicle/dps-engine-off',{cause:'crew_stop_pushbutton'})}
+async function shutdownEvidence(){try{const p=document.getElementById('controlPlayer').value;document.getElementById('evidence').textContent=JSON.stringify(await api(`/api/session/control/${encodeURIComponent(p)}/shutdown-evidence`),null,2)}catch(e){err(e.message)}}
+async function loadAudit(){try{document.getElementById('audit').textContent=JSON.stringify(await api('/api/session/audit'),null,2)}catch(e){err(e.message)}}
+setInterval(refreshStatus,1000);refreshStatus();
+</script>
+</body>
+</html>
