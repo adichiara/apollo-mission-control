@@ -1,0 +1,228 @@
+{
+  "schema_version": "0.1-research-fixture",
+  "scenario_id": "apollo13_pc2_nominal",
+  "status": "source-backed nominal fixture; not yet executable",
+  "mission": "Apollo 13",
+  "start_get_s": 285300.0,
+  "start_get_hms": "77:55:00",
+  "end_target_get_hms": "79:34:00+",
+  "vehicle_configuration": "CSM+SM docked to LM",
+  "sources": [
+    "NASA Flight Control Division, Mission Operations Report — Apollo 13, 1970-04-28",
+    "Apollo 13 Technical Air-to-Ground Voice Transcription",
+    "Apollo 13 AC Electronics Guidance & Navigation Summary",
+    "Repository research notes 048-050"
+  ],
+  "historical_context_completed_before_start": {
+    "free_return_restored": true,
+    "lm_lifeboat_configuration": true,
+    "pc2_mission_rules_review_complete": true,
+    "platform_alignment_accepted": true,
+    "prior_alignment_error_estimate_deg": 0.33,
+    "alignment_acceptance_limit_deg": 1.0
+  },
+  "communications": {
+    "air_ground_available": true,
+    "air_ground_quality": "weak",
+    "voice_available": true,
+    "telemetry_available": true,
+    "uplink_available": "configuration_dependent",
+    "ranging_enabled": false,
+    "sband_power_amp_high": false,
+    "nominal_quality_improves_get_hms": "77:59:17"
+  },
+  "pc2_target": {
+    "tig_get_s": 286058.30,
+    "tig_get_hms": "79:27:38.30",
+    "pad_dv_lvlh_fps": {
+      "x": 833.0,
+      "y": -50.9,
+      "z": -213.9,
+      "resultant": 861.5
+    },
+    "expected_perigee_nmi": 20.5,
+    "pad_burn_duration_s": 264.0,
+    "burn_attitude_deg": {
+      "roll": 272.0,
+      "pitch": 81.0
+    },
+    "weights_lb": {
+      "csm": 62480,
+      "lm": 33452
+    },
+    "ullage": {
+      "jets": 2,
+      "duration_s": 10.0
+    },
+    "throttle_profile": [
+      {
+        "phase": "minimum",
+        "duration_s": 5.0
+      },
+      {
+        "phase": "40_percent",
+        "duration_s": 21.0
+      },
+      {
+        "phase": "maximum",
+        "duration_s": null,
+        "note": "remainder until guided cutoff"
+      }
+    ]
+  },
+  "return_products": {
+    "landing_lat_deg": -21.65,
+    "landing_lon_deg": -165.0,
+    "range_to_go_005g_nmi": 1163.5,
+    "velocity_005g_fps": 36292.0,
+    "get_005g_hms": "142:39:22"
+  },
+  "pgns": {
+    "lgc_operating": true,
+    "program": "preburn",
+    "program_alarm": null,
+    "lgc_warning": false,
+    "alignment_accepted": true,
+    "state_vector_load_status": "pending_final_verification",
+    "target_load_status": "pending_final_verification",
+    "planned_vg_imu_fps": {
+      "x": 743.08,
+      "y": -426.42,
+      "z": 90.84
+    },
+    "nominal_executed_vg_imu_fps": {
+      "x": 742.21,
+      "y": -425.88,
+      "z": 91.04
+    },
+    "nominal_postburn_residual_fps": {
+      "x": 1.0,
+      "y": 0.3,
+      "z": 0.0
+    }
+  },
+  "ags": {
+    "available": true,
+    "backup_role": "rate-command/rate-damping backup and cross-check",
+    "crosscheck_acceptable": true
+  },
+  "dps": {
+    "arm_state": "safe",
+    "engine_running": false,
+    "throttle_command_pct": 0.0,
+    "thrust_actual_lbf": 0.0,
+    "chamber_pressure_psi": null,
+    "inlet_pressure_psi": null,
+    "fuel_oxidizer_delta_p_psi": null,
+    "engine_gimbal_warning": false,
+    "gda_state": "nominal",
+    "regulator_state": "nominal_preburn",
+    "note": "nominal pressure readings intentionally left null; surviving first-slice evidence currently establishes shutdown thresholds, not exact baseline readings"
+  },
+  "vehicle_control": {
+    "attitude_error_deg": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "status": "placeholder nominal initialization; exact historical axis values not asserted"
+    },
+    "body_rate_deg_s": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0,
+      "status": "placeholder nominal initialization; exact historical axis values not asserted"
+    },
+    "ces_dc_failure": false
+  },
+  "lm_power": {
+    "mode": "low_power",
+    "burn_configuration_current_a": null,
+    "burn_configuration_current_expected_range_a": [38.0, 40.0],
+    "inverter_warning": false,
+    "powerdown_status": "not_started"
+  },
+  "shutdown_rules": {
+    "ground_chamber_pressure_min_psi": 85.0,
+    "crew_thrust_min_percent": 77.0,
+    "ground_inlet_pressure_min_psi": 150.0,
+    "crew_inlet_pressure_min_psi": 160.0,
+    "fuel_oxidizer_delta_p_max_psi": 25.0,
+    "fuel_oxidizer_delta_p_ground_callout_only": true,
+    "attitude_error_abs_max_deg": 10.0,
+    "body_rate_abs_max_deg_s": 10.0,
+    "startup_transient_exception": true,
+    "engine_gimbal_warning_shutdown": true,
+    "iss_warning_plus_program_alarm_shutdown": true,
+    "lgc_warning_shutdown": true,
+    "ces_dc_failure_shutdown": true,
+    "persistent_inverter_warning_shutdown": true
+  },
+  "nominal_validation": {
+    "planned_burn_duration_s": 263.69,
+    "actual_burn_duration_s": 263.82,
+    "planned_cutoff_get_hms": "79:32:01.99",
+    "actual_cutoff_get_s": 286322.12,
+    "actual_cutoff_get_hms": "79:32:02.12",
+    "shutdown_rule_triggers": [],
+    "postburn_powerdown_begins": true
+  },
+  "events": [
+    {
+      "get_hms": "77:55:00",
+      "event": "scenario_start_weak_link"
+    },
+    {
+      "get_hms": "77:55:24",
+      "event": "final_p30_lm_pad_readup_begins"
+    },
+    {
+      "get_hms": "77:59:17",
+      "event": "communications_loud_and_clear_after_sband_change"
+    },
+    {
+      "get_hms": "78:12:00~",
+      "event": "lm_burn_configuration_powerup"
+    },
+    {
+      "get_hms": "78:21:54",
+      "event": "ranging_switch_verification_requested"
+    },
+    {
+      "get_hms": "78:23:05",
+      "event": "computer_returned_to_crew"
+    },
+    {
+      "get_hms": "79:17:00~",
+      "event": "final_go_no_go_poll"
+    },
+    {
+      "get_hms": "79:23:00~",
+      "event": "p40_active_final_preburn"
+    },
+    {
+      "get_hms": "79:27:38.30",
+      "event": "dps_ignition"
+    },
+    {
+      "get_hms": "79:32:02.12",
+      "event": "guided_cutoff"
+    },
+    {
+      "get_hms": "79:32:41+",
+      "event": "postburn_residual_review"
+    },
+    {
+      "get_hms": "79:34:00~",
+      "event": "lm_powerdown_transition"
+    }
+  ],
+  "deferred_not_blocking": [
+    "exact RTCC Cartesian state vector at 77:55 GET",
+    "exact nominal DPS pressure readings",
+    "complete MSK 1123/1137 routing",
+    "exact AGS ULL/ACT VEL ground transformation",
+    "full LM consumables state",
+    "complete INCO look-angle display",
+    "complete FIDO/RETRO CRT catalog"
+  ]
+}
