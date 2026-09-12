@@ -72,7 +72,6 @@ def project_controller_products(state: PC2State, fixture: dict[str, Any]) -> dic
     }
     control_deferred = [
         "dps.inlet_pressure_psi",
-        "dps.fuel_oxidizer_delta_p_psi",
         "vehicle.attitude_error_xyz_deg",
         "vehicle.body_rate_xyz_deg_s",
     ]
@@ -86,6 +85,20 @@ def project_controller_products(state: PC2State, fixture: dict[str, Any]) -> dic
             units="psi",
             source_layer="measurement/telemetry",
             provenance="LM-7-family GQ6510P thrust-chamber-pressure measurement",
+        )
+
+    if state.dps_fuel_oxidizer_delta_p_psi is None:
+        control_deferred.append("dps.fuel_oxidizer_delta_p_psi")
+    else:
+        control_products["dps.fuel_oxidizer_delta_p_psi"] = _live_product(
+            state,
+            state.dps_fuel_oxidizer_delta_p_psi,
+            units="psi",
+            source_layer="ground-derived/propulsion-monitoring",
+            provenance=(
+                "Apollo 13 PC+2 ground fuel/oxidizer delta-P product; "
+                "exact LM-measurement transformation/routing unresolved"
+            ),
         )
 
     control = ProjectionSet(
