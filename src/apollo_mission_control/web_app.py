@@ -15,6 +15,11 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
+from .crew_response import (
+    apply_session_engine_off_response,
+    command_dps_shutdown_from_callout,
+    record_crew_receipt,
+)
 from .pc2_nominal import load_fixture
 from .pc2_session import PC2Session
 from .realtime_clock import RealtimeSessionClock
@@ -71,6 +76,27 @@ class StateInjectionRequest(BaseModel):
 
 class ControlDeltaPCalloutRequest(BaseModel):
     basis: str = Field(min_length=1, max_length=1000)
+
+
+class CrewReceiptRequest(BaseModel):
+    crew_id: str = Field(default="CREW", min_length=1, max_length=64)
+    response: str = Field(default="received", min_length=1, max_length=500)
+
+
+class CrewShutdownRequest(BaseModel):
+    crew_id: str = Field(default="CREW", min_length=1, max_length=64)
+    provenance: str = Field(
+        default=(
+            "Apollo 13 PC+2 ground-call shutdown rule; "
+            "exact cockpit choreography unresolved"
+        ),
+        min_length=1,
+        max_length=2000,
+    )
+
+
+class EngineOffResponseRequest(BaseModel):
+    cause: str = Field(default="crew_stop_pushbutton", min_length=1, max_length=128)
 
 
 def _require_session() -> PC2Session:
@@ -300,6 +326,65 @@ def transmit_capcom(player_id: str, item_id: int) -> dict[str, Any]:
             "transmitted": item.transmitted,
             "transmitted_get_s": item.transmitted_get_s,
         }
+
+
+@app.post("/api/session/crew/receipt/{item_id}")
+def crew_receipt(item_id: int, request: CrewReceiptRequest) -> dict[str, Any]:
+    """Validation harness operation: explicit crew receipt of a transmitted call.
+
+    ``response`` is semantic test metadata, not asserted as historical wording.
+    """
+    with _lock:
+        session = _sync_session()
+        return _domain_call(
+            lambda: record_crew_receipt(
+                session,
+                item_id,
+                crew_id=request.crew_id,
+                response=request.response,
+            )
+        )
+
+
+@app.post("/api/session/crew/shutdown/{item_id}")
+def crew_shutdown(item_id: int, request: CrewShutdownRequest) -> dict[str, Any]:
+    """Validation harness operation: explicit crew DPS shutdown command."""
+    with _lock:
+        session = _sync_session()
+        action = _domain_call(
+            lambda: command_dps_shutdown_from_callout(
+                session,
+                item_id,
+                crew_id=request.crew_id,
+                provenance=request.provenance,
+            )
+        )
+        return {
+            "action_id": action.action_id,
+            "get_s": action.get_s,
+            "actor": action.actor,
+            "action": action.action,
+            "parameters": action.parameters,
+            "provenance": action.provenance,
+        }
+
+
+@app.post("/api/session/admin/vehicle/dps-engine-off")
+def dps_engine_off_response(request: EngineOffResponseRequest) -> dict[str, Any]:
+    """Validation harness operation: explicit physical DPS engine-off response.
+
+    The synchronized current GET is used. This endpoint does not infer a response
+    delay, synthesize chamber pressure, or assert controller confirmation.
+    """
+    with _lock:
+        session = _sync_session()
+        return _domain_call(
+            lambda: apply_session_engine_off_response(
+                session,
+                get_s=float(session.state.get_s),
+                cause=request.cause,
+            )
+        )
 
 
 @app.get("/api/session/audit")
