@@ -26,6 +26,8 @@ See:
 - [PC+2 CONTROL/chamber-pressure station-status addendum](docs/station-status/2026-09-12_pc2_dps_chamber_pressure.md)
 - [PC+2 scenario-injection station-status addendum](docs/station-status/2026-09-12_pc2_scenario_injection.md)
 - [PC+2 CONTROL/inlet-pressure station-status addendum](docs/station-status/2026-09-12_pc2_inlet_pressure.md)
+- [PC+2 CONTROL/delta-P station-status addendum](docs/station-status/2026-09-12_pc2_delta_p.md)
+- [PC+2 TELMU/CONTROL inverter-warning addendum](docs/station-status/2026-09-12_pc2_inverter_warning.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
 - [Simulation validation strategy](docs/SIMULATION_VALIDATION.md)
@@ -35,9 +37,11 @@ See:
 - [PC+2 product/rule progress continuation](docs/progress/2026-09-12_pc2_product_projection_and_rules.md)
 - [PC+2 scenario-injection progress continuation](docs/progress/2026-09-12_pc2_scenario_injection.md)
 - [PC+2 inlet-pressure progress continuation](docs/progress/2026-09-12_pc2_inlet_pressure.md)
+- [PC+2 delta-P/inverter progress continuation](docs/progress/2026-09-12_pc2_delta_p_and_inverter.md)
 - [Research resources](resources/README.md)
 - [PC+2 implementation source catalog](resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md)
 - [PC+2 inlet-pressure source addendum](resources/source-catalog/PC2_INLET_PRESSURE_SOURCES.md)
+- [PC+2 inverter-warning source addendum](resources/source-catalog/PC2_INVERTER_WARNING_SOURCES.md)
 - [Evidence verification audit](resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md)
 
 ## Current status
@@ -51,11 +55,15 @@ The framework-neutral Python prototype now includes:
 - partial shutdown-rule evaluation;
 - a distinct ISS-warning + program-alarm rule path;
 - an LM-7-family `GQ6510P` chamber-pressure observation path for CONTROL;
-- a minimal timed scenario-injection layer that changes modeled source state rather than diagnoses/outcomes.
+- a fuel/oxidizer ΔP ground-product rule path that deliberately does not invent the unresolved LM-to-ground transformation;
+- a minimal timed scenario-injection layer that changes modeled source state/observations rather than diagnoses/outcomes;
+- a separate minimal operational-action layer for crew/controller actions, beginning with the inverter-switch action required by the PC+2 rule.
 
-The first timed nonnominal validation path uses a clearly labeled synthetic 80-psi chamber-pressure injection during the burn. That value/time are implementation test data, not an asserted Apollo 13 malfunction. The changed source observation flows through CONTROL and the documented 85-psi ground criterion without automatically stopping the engine or creating an abort state.
+The source-bounded nonnominal validation paths remain deliberately narrow. Synthetic chamber-pressure and differential-pressure values test documented rule boundaries but are not asserted Apollo 13 failures.
 
-The next CONTROL pressure pass established two additional LM-7 source measurements—`GQ3611P` fuel engine-interface pressure and `GQ4111P` oxidizer engine-interface pressure—but did **not** find enough evidence to collapse them into the singular PC+2 150-psi ground “engine inlet pressure” rule. That rule therefore remains intentionally `NOT_EVALUABLE` until the ground selection/aggregation logic is sourced.
+The singular PC+2 150-psi ground “engine inlet pressure” rule remains intentionally `NOT_EVALUABLE`: the project knows the separate LM-7 fuel (`GQ3611P`) and oxidizer (`GQ4111P`) interface-pressure measurements but has not found enough primary evidence to choose a historical ground selection/aggregation rule.
+
+For the inverter criterion, primary technical evidence now supports a separate inverter caution observation and crew inverter-switch action. The caution reflects processed inverter voltage/frequency quality, and LM-5-and-later hardware—including Apollo 13 LM-7—suppressed the normal selection transient until valid processed data existed. The implementation therefore uses **warning still present after an explicit switch action** and does not invent a persistence timer or exact alternate-inverter identity.
 
 The project does **not** yet claim full spacecraft physics, RTCC dynamics, exact historical CRT timing, complete Apollo 13 telemetry/display routing, or historically reconstructed SimSup malfunction-command syntax.
 
