@@ -17,11 +17,11 @@ Purpose: track how far each Apollo 13-era station has been reconstructed and pre
 | CAPCOM | B | `APOLLO13_CAPCOM.md` | official role + restored CAPCOM/air-ground audio | exact console/display/procedure staging |
 | FIDO | B | `APOLLO13_FIDO.md` | FIDO postflight report, RTCC/vector operations | exact trajectory displays / MSK |
 | RETRO | B | `APOLLO13_RETRO.md` | RETRO postflight report, RTE/entry products | exact return/entry displays / MSK |
-| GUIDO | B | `APOLLO13_GUIDO.md` | GUIDO report + LUMINARY 1C + 1123/1137 provenance + FP7 DEDA/AEA telemetry evidence | exact FP7 telemetry word map + MSK routing + console access |
+| GUIDO | B | `APOLLO13_GUIDO.md` | GUIDO report + LUMINARY 1C + 1123/1137 provenance + FP7 DEDA/AEA telemetry evidence | exact telemetry-to-MSK selection / RTCC transforms + console access |
 | EECOM | **A** | `APOLLO13_EECOM.md` | official console diagram + two real display formats | full display catalog / keyboard layouts |
 | GNC | B | `APOLLO13_GNC.md` | GNC report + earlier CRT continuity lead | 683 field transcription / source mapping |
 | TELMU | B | `APOLLO13_TELMU.md` | TELMU report, consumables/power chronology | exact LM systems displays |
-| CONTROL | B | `APOLLO13_CONTROL.md` | CONTROL report + 1123/1137 layouts + LGC/PCM provenance | remaining mission-specific routing/conversions + RTCC transforms + console workflow |
+| CONTROL | B | `APOLLO13_CONTROL.md` | CONTROL report + 1123/1137 layouts + LGC/PCM/AEA provenance | exact telemetry-to-MSK selection / RTCC transforms + console workflow |
 | INCO | B | `APOLLO13_INCO.md` | INCO report + comms paper; MSK 1475 known | actual look-angle/command display layouts |
 | PROCEDURES | B | `APOLLO13_PROCEDURES.md` | Procedures report; FCOH; MSK 1503 known | console/request/display workflow |
 | FAO | B | `APOLLO13_FAO.md` | FAO postflight report + revised flight plan | exact FAO/Ground Timeline displays |
@@ -234,3 +234,12 @@ Research note 045 separates five adjacent velocity-related rows using the Apollo
 A January 1970 MIT Instrumentation Laboratory report independently reproduces the 1123-style page as a **Typical Data Format for Ground Consoles**, including the AEA/LGC/PCM header and the same velocity rows. This strengthens the evidence that the page is a composite ground-monitoring product rather than a direct mirror of a single onboard source.
 
 The new evidence does **not** identify the exact Apollo 13 FP7 telemetry word or RTCC transformation feeding AGS VEL / DEL VEL / ULL, nor does it establish that the AEA/LGC/PCM header boxes were dynamic validity indicators. GUIDO and CONTROL therefore remain at maturity B.
+
+
+## 2026-09-11 — AEA telemetry-word-list recovery
+
+Research note 046 recovers Table 2.1-7's telemetry structure and engineering descriptions from a contemporary LMA790-3-LM copy sharing the Apollo 13 handbook's **1 February 1970 basic date**, while retaining its later **15 June 1970 change date** as an explicit continuity limitation.
+
+The telemetry list now independently confirms distinct products for present LM inertial velocity, compensated 20-ms body-axis incremental velocity, a dimensionless ullage counter, and a separate three-word sensed body-axis velocity-increment family. It also confirms DEDA-state and attitude-direction-cosine telemetry families.
+
+This removes “what velocity products are actually available in the AEA telemetry stream?” as the main uncertainty. The remaining high-value problem is **which telemetry product and ground transformation feeds each MSK 1123 row**. The exact LM-7 page still needs direct comparison with the June-changed searchable table. GUIDO and CONTROL remain maturity **B** because controller-facing selection, RTCC transformation, station access, and refresh behavior remain incomplete.
