@@ -1,14 +1,14 @@
 """First-pass player-facing CAPCOM presentation for Apollo 13 PC+2.
 
 CAPCOM is the normal operational air-ground voice path. This project rendering
-shows only crew-facing procedure/PAD material and received crew reports already
-represented in the common PC+2 projection layer.
+shows crew-facing procedure/PAD material, crew reports, and explicit approved
+queue items from the session layer without exposing hidden subsystem truth.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Iterable
 
 from .controller_products import ProjectionSet
 from .pc2_nominal import Product
@@ -33,11 +33,23 @@ class CapcomDisplayField:
 
 
 @dataclass(frozen=True)
+class CapcomQueueDisplayItem:
+    item_id: int
+    get_s: float
+    action: str
+    parameters: dict[str, Any]
+    basis: str
+    transmitted: bool
+    transmitted_get_s: float | None
+
+
+@dataclass(frozen=True)
 class CapcomPresentation:
     title: str
     notice: str
     source_basis: tuple[str, ...]
     fields: tuple[CapcomDisplayField, ...]
+    queue_items: tuple[CapcomQueueDisplayItem, ...] = ()
 
 
 def _field(
@@ -62,13 +74,16 @@ def _field(
     )
 
 
-def build_pc2_capcom_presentation(projection: ProjectionSet) -> CapcomPresentation:
+def build_pc2_capcom_presentation(
+    projection: ProjectionSet,
+    *,
+    queue_items: Iterable[dict[str, Any]] = (),
+) -> CapcomPresentation:
     """Build the minimum PC+2 CAPCOM communication/procedure view.
 
-    CAPCOM should not receive direct authoritative subsystem truth merely for UI
-    convenience. The view therefore contains the air-ground condition, final PAD
-    material, and crew-report stream. Controller callout queues can be added when
-    common session orchestration exposes them explicitly.
+    Queue items are explicitly approved session/communication objects. They are
+    not direct reads of subsystem state and transmission does not itself mutate
+    spacecraft truth.
     """
     if projection.station != "CAPCOM":
         raise ValueError("PC+2 CAPCOM presentation requires a CAPCOM projection")
@@ -98,6 +113,19 @@ def build_pc2_capcom_presentation(projection: ProjectionSet) -> CapcomPresentati
         if field is not None
     )
 
+    queue = tuple(
+        CapcomQueueDisplayItem(
+            item_id=int(item["item_id"]),
+            get_s=float(item["get_s"]),
+            action=str(item["action"]),
+            parameters=dict(item.get("parameters", {})),
+            basis=str(item.get("basis", "")),
+            transmitted=bool(item.get("transmitted", False)),
+            transmitted_get_s=None if item.get("transmitted_get_s") is None else float(item["transmitted_get_s"]),
+        )
+        for item in queue_items
+    )
+
     return CapcomPresentation(
         title="CAPCOM — PC+2 AIR-GROUND / PROCEDURE",
         notice=PROJECT_RENDERING_NOTICE,
@@ -106,4 +134,5 @@ def build_pc2_capcom_presentation(projection: ProjectionSet) -> CapcomPresentati
             "Apollo 13 Mission Operations Report — PC+2 chronology",
         ),
         fields=fields,
+        queue_items=queue,
     )
