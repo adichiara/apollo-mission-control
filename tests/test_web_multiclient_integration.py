@@ -174,7 +174,11 @@ class WebMultiClientIntegrationTests(unittest.TestCase):
         # CAPCOM observes the queued item through its own player snapshot; the
         # CONTROL snapshot does not receive the CAPCOM queue representation.
         capcom_view = self.capcom.get("/api/session/player/capcom").json()
-        queued = [q for q in capcom_view["presentation"]["queue_items"] if q["item_id"] == item_id]
+        queued = [
+            item
+            for item in capcom_view["presentation"]["queue_items"]
+            if item["item_id"] == item_id
+        ]
         self.assertEqual(len(queued), 1)
         self.assertFalse(queued[0]["transmitted"])
         self.assertNotIn(
@@ -252,10 +256,10 @@ class WebMultiClientIntegrationTests(unittest.TestCase):
             "state_injection_applied",
             "controller_shutdown_callout_decision",
             "capcom_item_transmitted",
-            "crew_call_receipt",
-            "operational_action",
-            "dps_physical_response",
-            "crew_shutdown_report",
+            "crew_capcom_item_received",
+            "crew_dps_shutdown_commanded",
+            "dps_engine_off_physical_response",
+            "crew_dps_shutdown_reported",
         ]
         positions = [kinds.index(kind) for kind in ordered]
         self.assertEqual(positions, sorted(positions))
