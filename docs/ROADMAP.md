@@ -39,6 +39,7 @@ Key research chain:
 - `054_pc2_iss_warning_observation_path.md`
 - `055_pc2_dps_chamber_pressure_observation_path.md`
 - `056_pc2_scenario_injection_architecture.md`
+- `057_pc2_dps_inlet_pressure_observation_path.md`
 
 Deliverables:
 
@@ -62,6 +63,8 @@ Current PC+2 checkpoint:
 - [x] products mapped to station-specific projections with validity/source/provenance metadata
 - [x] ISS warning established as a distinct onboard warning signal; exact LM-7 telemetry word/CRT placement unresolved
 - [x] LM-7-family `GQ6510P` established as DPS thrust-chamber-pressure measurement; exact Apollo 13 ground/display routing unresolved
+- [x] LM-7-family `GQ3611P` and `GQ4111P` established as separate fuel/oxidizer engine-interface pressure measurements
+- [ ] determine the exact CONTROL ground product/selection logic behind the singular PC+2 150-psi “engine inlet pressure” criterion
 - [ ] map required products into first-pass station screens, using exact Apollo formats where available and explicitly labeled project renderings elsewhere
 - [ ] recover additional MCC/RTCC transforms only when PC+2 station behavior requires them
 
@@ -87,11 +90,13 @@ Completed:
 - [x] chamber-pressure analog rule path using LM-7-family `GQ6510P`
 - [x] first generic timed scenario-injection object
 - [x] first timed source-bounded nonnominal case: synthetic 80-psi chamber-pressure injection flows through CONTROL and the historical 85-psi rule without commanding cutoff/abort
+- [x] next inlet-pressure source-state research pass: two LM-7 interface measurements identified, unsupported singular ground aggregation deliberately left unresolved
 
 Immediate next work:
 
+- [ ] seek direct CONTROL/display/procedure evidence for how `GQ3611P` and `GQ4111P` fed the singular 150-psi ground inlet-pressure rule
+- [ ] if that mapping is not cheaply recoverable, research fuel/oxidizer differential-pressure computation or another rule path rather than infer
 - [ ] migrate another researched warning/measurement from nominal fixture constants into explicit runtime source state before making it injectable
-- [ ] research/model the next PC+2 observation path only as needed: likely inlet pressure, fuel/oxidizer differential pressure, onboard thrust indication, or inverter-after-switch
 - [ ] add broader failure-propagation tests only where subsystem behavior is source-backed
 - [ ] determine minimum trajectory-state representation when a propagating trajectory implementation becomes necessary
 
@@ -99,6 +104,7 @@ Important constraints:
 
 - exact RTCC Cartesian state vector at 77:55 remains intentionally unfrozen;
 - exact nominal PC+2 chamber-pressure trace is not invented;
+- singular ground `dps_inlet_pressure_psi` is **not** invented from the two interface-pressure transducers;
 - detailed DPS ramp dynamics remain deferred;
 - synthetic boundary-test values are labeled non-historical;
 - scenario injection changes source state, not diagnoses, rule results, or controller decisions.
@@ -111,6 +117,7 @@ Current checkpoint:
 
 - station projections enforce information boundaries for the modeled PC+2 subset;
 - the first injection path proves that a changed source observation can flow through CONTROL and the rule evaluator without special-case scenario logic;
+- inlet-pressure research now exposes a concrete unresolved ground-processing/display selection problem rather than hiding it behind one generic value;
 - stale/missing/invalid behavior, network transport, and exact display cadence remain future work where documented.
 
 ## Phase 6 — Procedures and flight rules
@@ -122,7 +129,9 @@ PC+2 checkpoint:
 - [x] rule ownership and core shutdown criteria mapped
 - [x] conjunctive ISS-warning/program-alarm criterion evaluable
 - [x] ground chamber-pressure criterion evaluable when a numerical source observation is supplied
-- [ ] inlet/differential pressure, crew analog indications, attitude/rate, and positive inverter-after-switch remain deferred
+- [x] fuel and oxidizer LM-7 engine-interface pressure measurement identities established
+- [ ] singular 150-psi ground inlet-pressure rule remains `NOT_EVALUABLE` until selection/aggregation semantics are sourced
+- [ ] differential pressure, crew analog indications, attitude/rate, and positive inverter-after-switch remain deferred
 - [ ] startup-transient wording conflict remains unresolved rather than silently normalized
 
 ## Phase 7 — Simulation scenarios / SimSup
