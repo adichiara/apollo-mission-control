@@ -1236,3 +1236,42 @@ The first deterministic run should reproduce at least:
 2. Add controller-product projection objects from authoritative state, carrying validity and provenance.
 3. Add shutdown-rule evaluation as independent controller-observable conditions rather than a precomputed burn-abort flag.
 4. Add the first nonnominal test only after the nominal path is deterministic and internally consistent.
+
+
+## 2026-09-12 — PC+2 ullage and commanded throttle chronology
+
+### Completed
+
+- Added `resources/research/051_pc2_ullage_and_throttle_profile.md`.
+- Verified from the final PC+2 maneuver instructions and air-ground record that the first-slice commanded procedure is:
+  - manual two-jet ullage beginning at **TIG−10 s**;
+  - minimum throttle at ignition;
+  - 40-percent command at **TIG+5 s**;
+  - 21 seconds at 40 percent;
+  - maximum throttle for the remainder of the burn.
+- Converted that into explicit nominal event times:
+  - 79:27:28.30 — manual two-jet ullage begins;
+  - 79:27:38.30 — ignition / minimum-throttle segment;
+  - 79:27:43.30 — 40-percent command;
+  - 79:28:04.30 — maximum-thrust command.
+- Preserved the crew's later **79:27:51** 40-percent and **79:28:09** 100-percent reports as separate communication events rather than using them as physical transition timestamps.
+- Reviewed NASA TM X-66935 / REPT-70-FC13-47-ADD-1 as a more detailed postflight propulsion source. Its rounded segment timing/timing convention is useful for future engine-response modeling but is not substituted into the high-precision Flight Control Division TIG/cutoff validation contract without reconciliation.
+- Updated `data/scenarios/apollo13_pc2_nominal.json` to schema 0.2 with explicit ullage/throttle/voice events.
+- Updated `src/apollo_mission_control/pc2_nominal.py` to represent ullage, throttle commands and crew-report events separately.
+- Expanded `tests/test_pc2_nominal.py` to validate commanded-profile timing and the separation between command and voice-report chronology.
+- Updated the PC+2 state-machine document, roadmap, CONTROL station-status note, and primary source catalog.
+
+### Evidence boundary
+
+The executable prototype currently models **commanded/procedural throttle phases**, not a fully sourced physical DPS transient. Command, engine response, telemetry indication and crew voice report remain separate layers. Detailed ramp/lag dynamics are deferred until a controller decision, transient model, or failure case requires them.
+
+### Validation note
+
+The test suite was expanded in this pass, but local test execution could not be completed because the container-backed repository checkout failed in the tool environment. No claim is made here that the updated tests were executed successfully.
+
+### Next work
+
+1. Add controller-product projection objects from authoritative state with sample/receive time, validity, age and provenance.
+2. Implement independent shutdown-rule evaluation over controller-observable conditions rather than a precomputed `burn_abort` flag.
+3. Add the first nonnominal validation case only after the nominal information/rule path is complete.
+4. Defer the minimum numerical trajectory-state implementation until the first propagator actually requires it.
