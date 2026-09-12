@@ -20,7 +20,7 @@ Current supplements:
 - `source-catalog/PC2_FRESHNESS_SOURCES.md` — focused source record for observation age, data validity, and the unresolved absence of a PC+2-specific stale-data threshold.
 - `source-catalog/PC2_RESTART_SOURCES.md` — mission-specific sources for the premature DPS shutdown/restart branch and the distinction between rule-caused shutdown and restart-eligible unexplained shutdown.
 - `source-catalog/PC2_DPS_RESTART_RESPONSE_SOURCES.md` — mission-specific and contemporary sources for separating an eligible restart procedure from the successful physical engine-on response.
-- `source-catalog/PC2_DELTA_P_CALLOUT_SOURCES.md` — mission-specific sources for the ground-only fuel/oxidizer ΔP >25 psi shutdown callout and crew-response path.
+- `source-catalog/PC2_DELTA_P_CALLOUT_SOURCES.md` — mission-specific sources for the ground-only fuel/oxidizer ΔP >25 psi shutdown callout, first playable CONTROL→CAPCOM integration boundary, and explicit unresolved-routing limits.
 - `source-catalog/PC2_DPS_SHUTDOWN_RESPONSE_SOURCES.md` — contemporary LM sources for crew STOP-pushbutton control, engine-off command routing, and DPS valve-response semantics.
 - `source-catalog/PC2_DPS_SHUTDOWN_CONFIRMATION_SOURCES.md` — mission-specific and contemporary evidence for crew voice shutdown report plus fresh GQ6510P chamber-pressure observation as distinct response-evidence channels, without an invented engine-off threshold.
 - `source-catalog/PC2_CONTROL_PRESENTATION_SOURCES.md` — mission-specific Apollo 13 MSK 1123/1137 and PC+2 operational sources constraining the first player-facing CONTROL rendering.
@@ -32,6 +32,11 @@ Current supplements:
 - `source-catalog/PC2_SESSION_INTEGRATION_SOURCES.md` — historical/state-machine sources governing the first authoritative playable-session orchestration layer.
 - `source-catalog/WEB_TRANSPORT_SOURCES.md` — current Render/FastAPI platform documentation supporting the first phone-accessible transport and deployment shell.
 - `source-catalog/APOLLO13_GROUND_PRODUCT_INTEGRITY_SOURCES.md` — mission-specific sources for the post-MCC-5 RTCC/AGS body-angle processing error and the distinction between product availability/validity and hidden data integrity.
+
+Latest scenario-integration research:
+
+- `research/081_pc2_mission_clock_and_decision_gate_semantics.md` — separates historical GET from the first-slice explicit simulation-pause policy.
+- `research/082_pc2_delta_p_session_integration_boundary.md` — carries the documented >25-psi ground-callout rule through CONTROL decision and CAPCOM transmission without inventing internal routing or automatic crew/vehicle response.
 
 ## Research rule
 
