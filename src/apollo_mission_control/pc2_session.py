@@ -156,6 +156,11 @@ class PC2Session:
         self._audit("session_started", "SESSION")
 
     def pause(self) -> None:
+        """Explicitly pause simulated mission time.
+
+        Controller decisions do not pause GET. This method represents an actual
+        game/session pause requested by the players or operator.
+        """
         if self.status != SessionStatus.RUNNING:
             raise ValueError("Only a running session can be paused")
         self.status = SessionStatus.PAUSED
@@ -165,38 +170,64 @@ class PC2Session:
     def resume(self) -> None:
         if self.status != SessionStatus.PAUSED:
             raise ValueError("Only a paused session can be resumed")
-        if self.pending_gate is not None:
-            raise ValueError("Cannot resume while a controller decision gate is pending")
         prior_reason = self.pause_reason
         self.status = SessionStatus.RUNNING
         self.pause_reason = None
         self._audit("session_resumed", "SESSION", prior_reason=prior_reason)
 
-    def _pause_for_gate(self, gate: str, *, source_event: str) -> None:
-        """Pause simulation time explicitly while a controller decision is pending.
-
-        Apollo GET did not historically stop. This is a project playability policy:
-        the simulation is explicitly paused so source-backed downstream event times
-        are not applied retroactively while players deliberate.
-        """
+    def _open_gate(self, gate: str, *, source_event: str) -> None:
+        """Open a controller decision gate without stopping mission time."""
         self.pending_gate = gate
-        self.status = SessionStatus.PAUSED
-        self.pause_reason = f"decision_gate:{gate}"
         self._audit(
             "decision_gate_opened",
             "SESSION",
             gate=gate,
             source_event=source_event,
-            simulation_paused=True,
+            simulation_paused=False,
         )
 
-    def advance_to(self, target_get_s: float) -> float:
-        """Advance authoritative scenario time up to target GET.
+    def _event_eligibility(self, event: SimEvent) -> tuple[bool, str | None]:
+        """Return whether a source-timed nominal event is still executable.
 
-        Timed historical events are applied only while the simulation is RUNNING.
-        A controller decision gate explicitly pauses the simulation; it is not a
-        claim that historical Apollo GET stopped. This prevents later historical
-        events from being applied retroactively while a player decision is pending.
+        GET is continuous. When players have not completed prerequisites by a
+        nominal event time, that nominal event is missed rather than freezing time
+        or being applied retroactively later.
+        """
+        name = event.name
+        if name == "p40_active_final_preburn" and not self.state.flight_go:
+            return False, "FLIGHT GO not recorded before nominal P40 milestone"
+        if name == "manual_two_jet_ullage_begins":
+            if not self.state.flight_go:
+                return False, "FLIGHT GO not recorded before nominal ullage milestone"
+            if not self.state.p40_active:
+                return False, "P40 not active before nominal ullage milestone"
+        if name == "dps_ignition":
+            if not self.state.flight_go:
+                return False, "FLIGHT GO not recorded before nominal TIG"
+            if not self.state.p40_active:
+                return False, "P40 not active before nominal TIG"
+            if not self.state.ullage_active:
+                return False, "required nominal ullage not active at TIG"
+        if name in {"throttle_command_40_percent", "crew_reports_40_percent", "throttle_command_maximum", "crew_reports_100_percent"}:
+            if not self.state.engine_running:
+                return False, "DPS engine not running"
+        if name == "guided_cutoff" and not self.state.engine_running:
+            return False, "DPS engine not running at nominal cutoff"
+        if name == "postburn_residual_review" and not self.state.cutoff_complete:
+            return False, "nominal burn cutoff did not occur"
+        if name == "lm_powerdown_transition" and not self.state.cutoff_complete:
+            return False, "nominal burn sequence did not reach cutoff"
+        return True, None
+
+    def advance_to(self, target_get_s: float) -> float:
+        """Advance authoritative mission GET continuously up to ``target_get_s``.
+
+        Controller gates constrain actions and downstream event eligibility; they
+        do not stop GET. Only an explicit session pause stops advancement.
+
+        Historical fixture events are nominal milestones. If their operational
+        prerequisites are absent when their GET arrives, the event is recorded as
+        missed and is not replayed retroactively after a late player decision.
         """
         if self.status != SessionStatus.RUNNING:
             raise ValueError("Session must be running to advance")
@@ -209,15 +240,27 @@ class PC2Session:
             if event.get_s > target:
                 break
 
+            self.state.get_s = event.get_s
+
             if event.name == "final_go_no_go_poll":
-                self.state.get_s = event.get_s
                 self.state.phase = "pc2_final_readiness"
                 self.next_event_index += 1
-                self._pause_for_gate("flight_go", source_event=event.name)
-                return float(self.state.get_s)
+                self._open_gate("flight_go", source_event=event.name)
+                continue
+
+            eligible, reason = self._event_eligibility(event)
+            self.next_event_index += 1
+            if not eligible:
+                self._audit(
+                    "scenario_event_missed",
+                    "SESSION",
+                    event=event.name,
+                    reason=reason,
+                    pending_gate=self.pending_gate,
+                )
+                continue
 
             apply_event(self.state, event, self.fixture)
-            self.next_event_index += 1
             self._audit("scenario_event_applied", "SESSION", event=event.name)
 
         self.state.get_s = target
@@ -354,10 +397,6 @@ class PC2Session:
         if go:
             self.state.phase = "pc2_go_for_burn"
             self.pending_gate = None
-            if self.pause_reason == "decision_gate:flight_go":
-                self.status = SessionStatus.RUNNING
-                self.pause_reason = None
-                self._audit("session_resumed_after_decision", "SESSION", gate="flight_go")
         else:
             self.state.phase = "pc2_final_readiness"
 
