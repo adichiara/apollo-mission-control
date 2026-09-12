@@ -46,6 +46,7 @@ Key research chain:
 - `061_pc2_onboard_thrust_monitor_observation_path.md`
 - `062_pc2_attitude_error_rate_shutdown_path.md`
 - `063_pc2_attitude_projection_and_rule_integration.md`
+- `064_pc2_observation_age_and_freshness.md`
 
 Deliverables:
 
@@ -74,6 +75,7 @@ Current PC+2 checkpoint:
 - [x] inverter caution narrowed to processed AC voltage/frequency quality with LM-5-and-later selection-transient inhibit behavior; exact PC+2 telemetry/display route unresolved
 - [x] onboard 77-percent thrust rule separated from both P47 and the thrust-to-weight indicator; exact percent-thrust readout/source remains unresolved
 - [x] attitude-error and angular-rate observations established as separate PC+2 CONTROL monitoring families and wired into CONTROL projection when modeled; exact LM-7 PCM/display routing remains unresolved
+- [x] observation/sample time separated from later display/evaluation time; no unsupported generic stale threshold applied
 - [ ] determine the exact CONTROL ground product/selection logic behind the singular PC+2 150-psi “engine inlet pressure” criterion only if a direct source becomes readily available
 - [ ] map required products into first-pass station screens, using exact Apollo formats where available and explicitly labeled project renderings elsewhere
 - [ ] recover additional MCC/RTCC transforms only when PC+2 station behavior requires them
@@ -82,7 +84,7 @@ Non-PC+2 display reconstruction remains deferred.
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **nominal event + product projection + partial rules + source injections + controller/crew action loop + integrated attitude/rate rule path implemented**
+**Status:** **nominal event + product projection + partial rules + source injections + controller/crew action loop + attitude/rate + observation-age semantics implemented**
 
 Completed:
 
@@ -104,20 +106,22 @@ Completed:
 - [x] fuel/oxidizer ΔP rule path modeled as an optional **ground-derived** observation without inventing a GQ3611P/GQ4111P subtraction or sign convention
 - [x] source-bounded ΔP boundary tests defined at 26 psi (triggered) and exactly 25 psi (clear)
 - [x] inverter caution and inverter-switch action represented as separate state/event classes
-- [x] first generic operational-action object implemented with `switch_lm_inverter`
+- [x] generic operational-action object implemented with `switch_lm_inverter`
 - [x] CAPCOM instruction and crew completion-report events represented separately from the inverter action and telemetry state
-- [x] inverter rule now requires a distinct post-switch warning observation; a pre-switch warning carried through the action is not enough
+- [x] inverter rule requires a distinct post-switch warning observation; a pre-switch warning carried through the action is not enough
 - [x] first small end-to-end source-bounded decision/action loop implemented: warning → CAPCOM instruction → crew switch → completion report → post-switch warning → rule trigger, with no automatic cutoff/abort
-- [x] onboard 77-percent thrust-monitor research bounded the gap without fabricating a display/source: P47, thrust-to-weight indication, and ground chamber pressure are not treated as the crew percent-thrust readout
-- [x] attitude-error/rate rule conflict researched: operational implementation follows the contemporaneous CAPCOM read-up + Haise readback (startup exception on attitude error), while the postflight Mission Operations Report contradiction remains documented
+- [x] onboard 77-percent thrust-monitor research bounded the gap without fabricating a display/source
+- [x] attitude-error/rate rule conflict researched; operational implementation follows the contemporaneous CAPCOM read-up + Haise readback while preserving contradictory postflight wording
 - [x] source-bounded attitude-monitoring helper and boundary tests added; historical PC+2 validation envelope is ~7 deg maximum roll error and <1 deg/s rates
-- [x] optional attitude-error/rate observations now flow through the common CONTROL projection into the shutdown-rule audit
+- [x] optional attitude-error/rate observations flow through the common CONTROL projection into the shutdown-rule audit
 - [x] Apollo 13 Review Board appendices independently confirm the postflight rule wording but supply no startup-transient duration; no clock boundary is invented
+- [x] PC+2 primary-source review found no generic analog-observation stale timeout or persistence count
+- [x] state/projection model now preserves original observation timestamps for carried-forward analog values
+- [x] rule audit records observation age without automatically assigning `STALE` or suppressing threshold evaluation
 
 Immediate next work:
 
-- [ ] research whether PC+2 flight rules/procedures define any explicit observation freshness or confirmation requirement for analog shutdown criteria; if none is found, keep freshness threshold unresolved
-- [ ] add observation-age semantics to source injections/products/rule audit so an indefinitely carried-forward analog observation cannot silently masquerade as current data
+- [ ] research and implement the first source-backed **data-validity degradation path** relevant to PC+2 (loss/freeze/questionable telemetry or a documented ground-processing validity problem), preferably using an Apollo 13 mission-specific example
 - [ ] keep `crew_thrust_monitor` `NOT_EVALUABLE` unless a direct LM-7 crew/display or DPS-control source identifies the percent-thrust indication
 - [ ] keep singular 150-psi inlet-pressure aggregation deferred unless a direct CONTROL/procedure/display source becomes cheaply available
 - [ ] add broader failure-propagation tests only where subsystem behavior is source-backed
@@ -134,6 +138,7 @@ Important constraints:
 - the startup-transient exception follows the contemporaneous crew-facing rule for implementation, but its exact time boundary is not guessed;
 - the Mission Operations Report and Apollo 13 Review Board postflight wording remain recorded as conflicting primary evidence;
 - exact LM-7 attitude-error/rate PCM assignments and CONTROL CRT fields remain unresolved;
+- no generic PC+2 stale-data timeout is invented; age and validity remain separate semantics;
 - detailed DPS ramp dynamics remain deferred;
 - synthetic boundary-test values/times are labeled non-historical;
 - scenario injection changes source state/observations, operational actions record what crew/controllers do, and procedural communications record instructions/reports; none directly sets diagnoses or outcomes.
@@ -151,8 +156,10 @@ Current checkpoint:
 - inverter warning is kept distinct from the crew switch action and from CAPCOM/crew procedural communications;
 - inverter rule evaluation distinguishes pre-switch warning information from a genuinely later post-switch observation;
 - crew-side thrust monitoring remains a distinct information path from ground chamber-pressure telemetry even though the exact onboard percent readout is unresolved;
-- attitude error and angular rate are separate CONTROL observations and now participate in the common rule audit when supplied;
-- the next data-path refinement is observation age/freshness, without inventing a historical stale threshold;
+- attitude error and angular rate are separate CONTROL observations and participate in the common rule audit when supplied;
+- source/sample time now remains distinct from receive/process/display time when an observation is carried forward;
+- no numeric stale threshold is asserted without primary evidence;
+- the next data-path refinement is source-backed validity degradation rather than fabricated expiration timing;
 - network transport and exact display cadence remain future work where documented.
 
 ## Phase 6 — Procedures and flight rules
@@ -171,8 +178,8 @@ PC+2 checkpoint:
 - [x] 77-percent onboard thrust criterion researched and deliberately left `NOT_EVALUABLE` because the exact percent-thrust readout/source is not yet established
 - [x] attitude-error/rate thresholds and operational exception allocation resolved for implementation from contemporaneous read-up/readback; postflight-report contradiction preserved
 - [x] attitude-error/rate observations integrated into the common CONTROL product/rule path
+- [x] analog-observation freshness question researched; no generic PC+2 time threshold found, so age is exposed without a fabricated stale rule
 - [ ] exact startup-transient time boundary remains unresolved and is not inferred from throttle-phase timing
-- [ ] explicit analog-observation freshness/confirmation requirements remain to be researched before defining stale-rule behavior
 - [ ] exact alternate-inverter identity, switch/circuit-breaker positions, crew member, and any dwell time remain unresolved and are not invented
 - [ ] singular 150-psi ground inlet-pressure rule remains `NOT_EVALUABLE` until selection/aggregation semantics are sourced
 - [ ] crew inlet indication remains deferred
@@ -205,7 +212,7 @@ Role aggregation remains deferred until station research supports it.
 
 **Goal:** reproduce enough Flight/discipline/air-ground communication structure to affect controller work.
 
-The PC+2 start already requires a weak-but-usable link that interferes with final PAD/readback before improving after the S-band amplifier change.
+The PC+2 start requires a weak-but-usable link that interferes with final PAD/readback before improving after the S-band amplifier change.
 
 The inverter contingency supplies a second concrete communication requirement: an approved crew-facing procedure instruction and crew completion report must remain distinct from spacecraft telemetry and operational action state.
 
