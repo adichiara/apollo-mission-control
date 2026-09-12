@@ -137,24 +137,34 @@ The in-memory prototype is not considered durable production infrastructure. Pro
 
 See `resources/research/080_web_transport_selection.md` and `resources/source-catalog/WEB_TRANSPORT_SOURCES.md`.
 
-## D-015 — Blocking controller gates are explicit simulation pauses
+## D-015 — Blocking controller gates pause the simulation
 
-**Status:** Accepted for the deterministic first playable slice  
+**Status:** Superseded by D-016  
 **Date:** 2026-09-12
 
-When a blocking controller decision gate is reached, the first playable simulator explicitly enters a **simulation pause** rather than pretending historical Apollo GET stopped or allowing later source-timed events to pass the unresolved decision.
+This provisional rule paused simulated GET while a blocking controller decision was pending. It was rejected after explicit project review because it conflated controller readiness with mission time and made the engine scene/gate-driven rather than continuously evolving.
 
-For the PC+2 FLIGHT GO/NO-GO gate:
+The historical-source findings in `081_pc2_mission_clock_and_decision_gate_semantics.md` remain useful, but its former implementation policy is superseded.
 
-- reaching the gate pauses the simulation and records a machine-readable pause reason;
-- controller reports and the required FLIGHT decision may still be submitted while paused;
-- manual resume cannot bypass the pending decision;
-- FLIGHT GO clears the gate and resumes the simulation;
-- NO-GO leaves the gate/pause active.
+## D-016 — Continuous mission clock; gates affect eligibility, not time
 
-This is a project playability rule, **not** an assertion about historical Apollo clock behavior. The Apollo 13 Mission Operations Report states that PC+2 ignition time was not time critical but supplies no numeric delay tolerance, so no delay margin or retargeting rule is invented.
+**Status:** Accepted  
+**Date:** 2026-09-12
 
-See `resources/research/081_pc2_mission_clock_and_decision_gate_semantics.md`.
+The simulation engine uses a **continuous running mission clock**.
+
+- GET advances whenever the session is running.
+- A controller decision, unresolved procedure, or missing authorization does **not** stop GET.
+- Only an explicit game/session pause stops simulated mission time.
+- Timed scenario entries are nominal milestones, not mandatory scene transitions.
+- When a nominal event's operational prerequisites are absent at its scheduled GET, that event is recorded as missed/ineligible rather than executed anyway or replayed retroactively later.
+- Player decisions may therefore be late, and lateness can change the mission state without an artificial score or timeout mechanic.
+
+For PC+2, the final FLIGHT GO/NO-GO poll opens a decision requirement while GET continues. If GO is not recorded before later nominal prerequisites such as P40, ullage, or TIG, those nominal milestones may be missed. A later GO does not automatically rewind or replay them.
+
+This establishes the engine as a **continuously evolving mission in which players intervene**, rather than a sequence of gated scenes.
+
+See `resources/research/082_continuous_mission_clock_architecture.md`.
 
 ## Not yet decided
 
@@ -167,6 +177,6 @@ The following are deliberately not decisions:
 - degree of RTCC/CCATS/MSFN emulation beyond what the first scenario requires
 - degree of Staff Support Room simulation
 - voice-loop implementation
-- time acceleration / realtime pacing policy beyond the explicit decision-pause rule
+- time acceleration / realtime pacing multiplier
 - scenario-selection UI
 - post-simulation evaluation format
