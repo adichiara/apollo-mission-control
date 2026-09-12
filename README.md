@@ -30,6 +30,7 @@ The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation
 The framework-neutral domain model now includes:
 
 - source-backed nominal PC+2 event/state progression;
+- reusable declarative event prerequisites;
 - station-specific controller-product projections;
 - partial shutdown-rule evaluation;
 - source-bounded scenario injection/action/communication layers;
@@ -43,17 +44,23 @@ The framework-neutral domain model now includes:
 
 The repository contains a thin **FastAPI + Uvicorn** transport and a dependency-free phone-first browser interface.
 
-Implemented transport operations include:
+Implemented transport/session behavior includes:
 
 - create/reset PC+2 session;
 - join or rejoin a logical station;
 - start/pause/resume;
+- 1× monotonic wall-clock GET pacing while RUNNING;
 - retrieve station-scoped player snapshots;
 - submit readiness reports;
 - record FLIGHT GO/NO-GO;
 - queue FLIGHT-approved CAPCOM items;
 - transmit those items as CAPCOM;
-- manually advance GET for integration testing;
+- inject source-bounded validation observations;
+- record CONTROL ΔP shutdown callout decisions;
+- explicitly record crew receipt of a transmitted shutdown call;
+- explicitly record the crew DPS shutdown command;
+- explicitly apply the physical DPS engine-off response at current authoritative GET;
+- retain manual GET advancement only for integration/validation;
 - inspect a prototype audit endpoint.
 
 Deployment scaffolding is included for Render via `render.yaml`, with Python pinned through `.python-version`.
@@ -92,6 +99,16 @@ See:
 
 CAPCOM continues to see an approved communication queue rather than direct authoritative subsystem truth.
 
+## First nonnominal end-to-end chain
+
+The source-bounded synthetic ΔP branch now reaches physical response through the session/API:
+
+`source observation → CONTROL product/rule → CONTROL decision → CAPCOM queue/transmission → crew receipt → crew shutdown command → physical DPS response`
+
+Every step remains explicit. CAPCOM transmission does not imply crew receipt, crew command does not imply physical engine shutdown, and physical response does not fabricate controller evidence.
+
+The current HTTP boundary is documented in `resources/research/085_pc2_http_crew_response_integration.md`.
+
 ## Historical/presentation boundaries retained
 
 - Apollo 13 MSK 1137 `TCP` percent is not silently equated to modeled `GQ6510P` chamber pressure in psi.
@@ -113,13 +130,13 @@ Detailed DPS transients, exact display routing/cadence, and a post-burn FIDO tra
 
 The project is now firmly in **playable integration**, not subsystem expansion.
 
-The continuous-clock architecture is resolved. The next integration items are:
+The continuous clock, declarative event prerequisites, realtime 1× pacing, and HTTP crew-response chain are implemented. The next integration items are:
 
-1. generalize nominal-event prerequisites so scenario dependencies are declarative rather than hard-coded in PC+2 session logic;
-2. expose crew receipt, crew shutdown command, and explicit physical response through the HTTP validation interface;
-3. reconnect physical shutdown to the existing fresh controller-evidence path without inventing a confirmation threshold;
+1. expose an explicit crew shutdown report as one controller-observable evidence channel;
+2. feed a fresh post-command `GQ6510P` chamber-pressure observation through the existing controller path;
+3. reuse `shutdown_confirmation.py` to aggregate evidence without inventing a pressure threshold or automatic `engine_off_confirmed` verdict;
 4. run the full domain/session/API suite and multi-client HTTP/mobile smoke path in a runnable checked-out environment;
-5. replace manual GET advancement with a realtime pacing driver while preserving explicit game pause as the only clock stop.
+5. review the phone UI for continuous realtime operation and keep manual `/advance` as development-only infrastructure.
 
 Further historical research should reopen only when those integration steps expose a concrete information, procedure, or decision gap.
 
