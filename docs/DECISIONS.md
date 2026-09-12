@@ -28,11 +28,7 @@ The experience may be played for enjoyment, but operational screens and workflow
 **Status:** Accepted  
 **Date:** 2026-09-11
 
-Primary goal: accomplish mission objectives.
-
-If that becomes infeasible, controllers pursue the best valid alternate/contingency outcome, with safe return of the astronauts the ultimate priority.
-
-Abort is phase- and condition-dependent, not a generic success mechanic.
+Primary goal: accomplish mission objectives. If that becomes infeasible, controllers pursue the best valid alternate/contingency outcome, with safe return of the astronauts the ultimate priority. Abort is phase- and condition-dependent, not a generic success mechanic.
 
 ## D-005 — In-person cooperative play
 
@@ -81,70 +77,35 @@ Production deployment target is Render.
 **Status:** Clarified  
 **Date:** 2026-09-11
 
-Apollo hard-copy workflows remain a historical research topic, but the simulation will not assume a formalized paper-delivery mechanic.
-
-Because play is in person, players may naturally write, pass, or share paper when useful, using whatever materials are available. The amount of printed/dynamic paper should not be increased merely for atmosphere and may ultimately be minimized where that does not remove historically important information.
-
-No decision has yet been made about which historical hard-copy products, if any, must be reproduced during live play.
+Apollo hard-copy workflows remain a historical research topic, but the simulation will not assume a formalized paper-delivery mechanic. Players may naturally write, pass, or share paper when useful. No decision has yet been made about which historical hard-copy products, if any, must be reproduced during live play.
 
 ## D-012 — Apollo 13-era MCC as default technical baseline
 
 **Status:** Accepted in principle  
 **Date:** 2026-09-11
 
-Use the Apollo 13-era Mission Control configuration as the default technical/research baseline for the reusable simulation platform because it represents a later, mature Apollo lunar-mission configuration and is unusually well documented.
-
-This does **not** mean Apollo 13-specific details are automatically shown in earlier scenarios.
-
-Each mission/scenario must support a mission-specific historical profile that can override, remove, or rename later features where contemporary documentation shows a difference. Known example: Apollo 11 uses the LM systems call sign **TELCOM**, while Apollo 13 mission documentation uses **TELMU**.
-
-Therefore:
-
-- shared simulation machinery should favor the later Apollo-compatible superset where practical;
-- visible station nomenclature, available displays, procedures, spacecraft/ground configuration, rules, and capabilities remain mission-specific;
-- an Apollo 11 scenario should reproduce Apollo 11 where a documented difference exists rather than presenting the Apollo 13 configuration unchanged.
+Use the Apollo 13-era Mission Control configuration as the default technical/research baseline for the reusable simulation platform. Mission-specific profiles still override later features where contemporary documentation shows a difference; an Apollo 11 scenario must reproduce Apollo 11 rather than blindly expose Apollo 13-era nomenclature or capabilities.
 
 ## D-013 — First vertical slice: Apollo 13 PC+2
 
 **Status:** Accepted as first implementation target  
 **Date:** 2026-09-11
 
-The first playable vertical slice will center on **Apollo 13 PC+2 preparation and execution**, using a working interval of approximately **74:00–80:00 GET** and the historical DPS burn at about **79:27:38 GET**.
-
-This interval is selected because it combines strong primary-source coverage, substantial interaction among multiple controller disciplines, explicit maneuver/shutdown rules, compatibility with the Apollo 13-era baseline, and a more bounded initial physical model than either the oxygen-tank accident onset or Apollo 11 powered descent.
-
-The vertical slice should model only the state and information required for the selected interval rather than treating unresolved details elsewhere in Apollo 13 as prerequisites.
-
-Research note `048_first_vertical_slice_candidate_assessment.md` records the candidate comparison and evidence basis.
-
-The Apollo 13 oxygen-tank accident remains a priority expansion scenario. Apollo 11 powered descent is the strongest early candidate for validating mission-profile portability.
+The first playable vertical slice centers on **Apollo 13 PC+2 preparation and execution**, using a working interval of approximately **74:00–80:00 GET** and the historical DPS burn at about **79:27:38 GET**. Research note `048_first_vertical_slice_candidate_assessment.md` records the evidence basis.
 
 ## D-014 — First playable web transport: FastAPI + Uvicorn
 
 **Status:** Accepted for first playable prototype  
 **Date:** 2026-09-12
 
-Use **FastAPI + Uvicorn** as the first web transport for exposing the framework-neutral Mission Control session model to phone/browser clients and deploying the prototype on Render.
-
-This is a transport decision, not a simulation-domain decision:
-
-- historical/session logic remains in framework-neutral Python modules;
-- FastAPI adapts HTTP requests/responses to the domain API;
-- ASGI preserves a later path to realtime/WebSocket transport if playtesting requires it;
-- the first server is deliberately **single-process and in-memory** so one authoritative session object owns live state.
-
-The in-memory prototype is not considered durable production infrastructure. Process restart, redeploy, or platform spin-down can lose the active session, and multiple workers would create divergent state unless shared persistence/session coordination is added.
-
-See `resources/research/080_web_transport_selection.md` and `resources/source-catalog/WEB_TRANSPORT_SOURCES.md`.
+Use **FastAPI + Uvicorn** as the first web transport while retaining framework-neutral domain logic. The initial server is deliberately single-process and in-memory. See `resources/research/080_web_transport_selection.md`.
 
 ## D-015 — Blocking controller gates pause the simulation
 
 **Status:** Superseded by D-016  
 **Date:** 2026-09-12
 
-This provisional rule paused simulated GET while a blocking controller decision was pending. It was rejected after explicit project review because it conflated controller readiness with mission time and made the engine scene/gate-driven rather than continuously evolving.
-
-The historical-source findings in `081_pc2_mission_clock_and_decision_gate_semantics.md` remain useful, but its former implementation policy is superseded.
+This provisional rule was rejected because it conflated controller readiness with mission time.
 
 ## D-016 — Continuous mission clock; gates affect eligibility, not time
 
@@ -154,29 +115,48 @@ The historical-source findings in `081_pc2_mission_clock_and_decision_gate_seman
 The simulation engine uses a **continuous running mission clock**.
 
 - GET advances whenever the session is running.
-- A controller decision, unresolved procedure, or missing authorization does **not** stop GET.
+- Controller decisions and missing authorizations do not stop GET.
 - Only an explicit game/session pause stops simulated mission time.
-- Timed scenario entries are nominal milestones, not mandatory scene transitions.
-- When a nominal event's operational prerequisites are absent at its scheduled GET, that event is recorded as missed/ineligible rather than executed anyway or replayed retroactively later.
-- Player decisions may therefore be late, and lateness can change the mission state without an artificial score or timeout mechanic.
-
-For PC+2, the final FLIGHT GO/NO-GO poll opens a decision requirement while GET continues. If GO is not recorded before later nominal prerequisites such as P40, ullage, or TIG, those nominal milestones may be missed. A later GO does not automatically rewind or replay them.
-
-This establishes the engine as a **continuously evolving mission in which players intervene**, rather than a sequence of gated scenes.
+- Timed scenario entries are nominal milestones with prerequisites, not mandatory scene transitions.
+- Ineligible nominal events are recorded as missed and are not replayed retroactively.
 
 See `resources/research/084_continuous_mission_clock_architecture.md`.
+
+## D-017 — Facilitator/SimSup authority is separate from controller identity
+
+**Status:** Accepted for first playable prototype  
+**Date:** 2026-09-12
+
+Whole-exercise authority is distinct from Mission Control station identity.
+
+Primary NASA simulation sources support an organizational distinction between the Simulation Supervisor/simulation-control organization and the flight controllers being trained. The project therefore protects exercise-wide operations with a separate facilitator credential rather than granting them through any controller station.
+
+Protected operations include:
+
+- session create/reset and lifecycle control;
+- manual validation GET advancement;
+- source/state injection;
+- validation-harness crew/vehicle response operations;
+- global audit-log access.
+
+FLIGHT, CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, and CAPCOM remain controller identities with only their station-authorized actions.
+
+The credential mechanism (`APOLLO_FACILITATOR_TOKEN` / `X-Apollo-Facilitator`) is a modern software safety measure, **not** a claim about Apollo-era authentication. Render deployments generate the secret through deployment configuration rather than storing it in source.
+
+See `resources/research/088_facilitator_authority_boundary.md`.
 
 ## Not yet decided
 
 The following are deliberately not decisions:
 
-- minimum player count
-- exact controller combinations by player count
-- durable session persistence/storage architecture
-- realtime push mechanism (polling vs SSE/WebSockets)
-- degree of RTCC/CCATS/MSFN emulation beyond what the first scenario requires
-- degree of Staff Support Room simulation
-- voice-loop implementation
-- time acceleration / realtime pacing multiplier
-- scenario-selection UI
-- post-simulation evaluation format
+- minimum player count;
+- exact controller combinations by player count;
+- durable session persistence/storage architecture;
+- realtime push mechanism (polling vs SSE/WebSockets);
+- degree of RTCC/CCATS/MSFN emulation beyond what the first scenario requires;
+- degree of Staff Support Room simulation;
+- voice-loop implementation;
+- time acceleration / realtime pacing multiplier;
+- scenario-selection UI;
+- post-simulation evaluation format;
+- named facilitator accounts or fine-grained facilitator permissions.
