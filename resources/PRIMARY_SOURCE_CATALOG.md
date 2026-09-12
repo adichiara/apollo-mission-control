@@ -621,7 +621,8 @@ NASA/contractor bibliography records identify:
 
 - **Document:** LMA790-3-LM
 - **Title:** Apollo Operations Handbook, Lunar Module LM 7 and Subsequent, Volume I — Subsystems Data
-- **Date:** 1970-02-01
+- **Basic date:** 1968-12-15
+- **Change date:** 1970-02-01
 - **Prepared for:** NASA / Flight Crew Support Division
 - **Apollo 13 relevance:** LM-7 is Apollo 13's lunar module.
 - **Status:** REVIEWED-PARTIAL through mission-specific searchable archival indexing; high-resolution original scan is too large for the current web PDF reader.
@@ -634,7 +635,8 @@ NASA/contractor bibliography records identify:
   - 2.1-37 — DEDA Output List
   - 2.1-38 — DEDA Accessible Constants
 - **Use:** Mission-specific/preflight evidence for the Apollo 13 AEA/AGS telemetry and DEDA architecture.
-- **Current limitation:** the exact LM-7 page image for Table 2.1-7 still needs direct row-by-row inspection; do not silently substitute the June-changed LM-10 searchable copy as flight authority.
+- **Current limitation:** the exact LM-7 page image for Table 2.1-7 still needs direct row-by-row inspection; do not silently substitute the later LM-10 searchable copy as flight authority.
+- **Research records:** `research/046_aea_telemetry_word_list_recovery.md`, `research/047_ags_ullage_threshold_and_handbook_chronology.md`.
 
 ### Apollo Operations Handbook — LM 10 and Subsequent, Table 2.1-7 continuity copy
 
@@ -648,9 +650,20 @@ NASA/contractor bibliography records identify:
 - **Original scan:** https://www.ibiblio.org/apollo/Documents/LMA790-3-LM10-ApolloOperationsHandbookLunarModuleLM10AndSubsequent-Volume1-SubsystemsData.pdf
 - **Independent mirror:** https://apollojournals.org/alsj/LM10HandbookVol1.pdf
 - **Status:** REVIEWED-DETAILED through indexed/searchable table text; large PDF cannot be rendered by the current web reader.
-- **Use:** Strong same-basic-date continuity evidence for the 50-word AEA telemetry product. Explicitly exposes present LM inertial velocity, compensated 20-ms delta-V, DEDA state, direction cosines, the telemetry ullage counter, and sensed body-axis velocity increments.
-- **Critical caution:** This copy was changed after Apollo 13. It constrains the telemetry architecture and candidate source families but does not certify every row as unchanged in LM-7/Flight Program 7.
+- **Use:** Later-configuration continuity evidence for the 50-word AEA telemetry product. Explicitly exposes present LM inertial velocity, compensated 20-ms delta-V, DEDA state, direction cosines, the telemetry ullage counter, and sensed body-axis velocity increments.
+- **Critical caution:** This is not a same-basic-date copy of the LM-7 handbook and was changed after Apollo 13. It constrains the telemetry architecture and candidate source families but does not certify every row as unchanged in LM-7/Flight Program 7.
 - **Research record:** `research/046_aea_telemetry_word_list_recovery.md`.
+
+### Grumman Abort Guidance Section Specification — ullage criterion
+
+- **Title family:** Specification, Abort Guidance Section
+- **Organization:** Grumman Aircraft Engineering Corporation
+- **Public scan:** https://www.ibiblio.org/apollo/Documents/Specification%2C%20Abort%20Guidance%20Section.pdf
+- **Status:** REVIEWED-PARTIAL for engine-on/off and ullage-detection requirements.
+- **Use:** Primary AGS behavior evidence. The inspected specification requires accumulated +X-axis velocity increment to exceed **0.2 ft/s in each 2-second computer cycle for three consecutive cycles** to establish ullage; failure of the criterion resets the condition.
+- **Cross-check:** The later LM-10 handbook expresses the equivalent physical criterion as average +X acceleration greater than **0.1 ft/s²** for three consecutive 2-second cycles.
+- **Caution:** This constrains the AGS ullage algorithm/physics; it does not establish the exact Apollo 13 FP7 constant, telemetry word, or MSK 1123 ground-display transformation.
+- **Research record:** `research/047_ags_ullage_threshold_and_handbook_chronology.md`.
 
 
 ### Delco/AC Electronics Apollo 12 Guidance & Navigation Summary — cross-mission MSK 1123 reference
