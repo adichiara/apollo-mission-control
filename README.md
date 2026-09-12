@@ -63,7 +63,7 @@ The executable view groups modeled products into LGC/guidance status, alignment/
 
 ### First-pass TELMU presentation
 
-Mission-specific Apollo 13 operations evidence records LM power-up beginning around **78:12 GET**, an approximately **38–40 A** requirement to maintain the PC+2 burn configuration, and LM power-down beginning around **79:34 GET** after the burn. The PC+2 rules also require shutdown if an inverter warning remains after switching inverters. citeturn414771search33turn171528search32
+Mission-specific Apollo 13 operations evidence records LM power-up beginning around **78:12 GET**, an approximately **38–40 A** requirement to maintain the PC+2 burn configuration, and LM power-down beginning around **79:34 GET** after the burn. The PC+2 rules also require shutdown if an inverter warning remains after switching inverters.
 
 The TELMU project rendering therefore presents:
 
@@ -73,7 +73,7 @@ The TELMU project rendering therefore presents:
 - inverter-switch action and event time;
 - post-burn power-down transition.
 
-Exact TELMU CRT layout, measured-current telemetry routing, and inverter-display routing remain unresolved and are not invented. The broader Apollo 13 TELMU consumables/lifetime problem is intentionally deferred because it is not required for the bounded PC+2 maneuver slice. The TELMU Post Mission Report confirms that electrical configuration/current management was central to the station's contingency role. citeturn171528search33
+Exact TELMU CRT layout, measured-current telemetry routing, and inverter-display routing remain unresolved and are not invented. The broader Apollo 13 TELMU consumables/lifetime problem is intentionally deferred because it is not required for the bounded PC+2 maneuver slice. The TELMU Post Mission Report confirms that electrical configuration/current management was central to the station's contingency role.
 
 ### Remaining bounded gaps
 
