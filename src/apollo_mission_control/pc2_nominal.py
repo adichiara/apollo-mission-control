@@ -1,0 +1,190 @@
+"""Minimal Apollo 13 PC+2 nominal domain prototype.
+
+This module validates scenario/event architecture only. It does not yet claim
+full spacecraft physics, RTCC dynamics, or historical CRT timing fidelity.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from enum import Enum
+from pathlib import Path
+import json
+from typing import Any
+
+
+class Validity(str, Enum):
+    VALID = "valid"
+    STALE = "stale"
+    INVALID = "invalid"
+    UNAVAILABLE = "unavailable"
+
+
+@dataclass
+class Product:
+    value: Any
+    units: str | None = None
+    source_time_get: float | None = None
+    sample_time_get: float | None = None
+    receive_time_get: float | None = None
+    process_time_get: float | None = None
+    display_time_get: float | None = None
+    validity: Validity = Validity.VALID
+    provenance: str = ""
+
+
+@dataclass
+class SimEvent:
+    get_s: float
+    name: str
+
+
+@dataclass
+class PC2State:
+    get_s: float
+    phase: str = "pc2_final_pad_link_weak"
+    comm_quality: str = "weak"
+    pad_transfer_complete: bool = False
+    burn_powered: bool = False
+    ranging_enabled: bool = False
+    computer_with_crew: bool = False
+    flight_go: bool = False
+    p40_active: bool = False
+    ullage_active: bool = False
+    engine_running: bool = False
+    throttle_phase: str = "off"
+    cutoff_complete: bool = False
+    residual_review_complete: bool = False
+    powerdown_started: bool = False
+    shutdown_rule_triggers: list[str] = field(default_factory=list)
+
+
+def hms_to_seconds(value: str) -> float:
+    raw = value.rstrip("~+")
+    h, m, s = raw.split(":")
+    return int(h) * 3600 + int(m) * 60 + float(s)
+
+
+def load_fixture(path: str | Path) -> dict[str, Any]:
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def build_events(fixture: dict[str, Any]) -> list[SimEvent]:
+    events = []
+    for item in fixture["events"]:
+        get_hms = item["get_hms"]
+        # Approximate (~) and open-ended (+) source times remain explicit in
+        # the fixture; their nominal ordering is usable for this prototype.
+        events.append(SimEvent(hms_to_seconds(get_hms), item["event"]))
+    return sorted(events, key=lambda e: e.get_s)
+
+
+def apply_event(state: PC2State, event: SimEvent, fixture: dict[str, Any]) -> None:
+    state.get_s = event.get_s
+    name = event.name
+
+    if name == "scenario_start_weak_link":
+        state.phase = "pc2_final_pad_link_weak"
+        state.comm_quality = "weak"
+    elif name == "final_p30_lm_pad_readup_begins":
+        state.phase = "pc2_final_pad_transfer"
+    elif name == "communications_loud_and_clear_after_sband_change":
+        state.comm_quality = "good"
+        state.pad_transfer_complete = True
+    elif name == "lm_burn_configuration_powerup":
+        state.phase = "pc2_burn_configuration_powerup"
+        state.burn_powered = True
+    elif name == "ranging_switch_verification_requested":
+        state.phase = "pc2_final_ground_computer_support"
+        state.ranging_enabled = True
+    elif name == "computer_returned_to_crew":
+        state.computer_with_crew = True
+        state.phase = "pc2_final_readiness"
+    elif name == "final_go_no_go_poll":
+        # This prototype records the historical nominal decision. Future
+        # multiplayer code must derive this from controller reports.
+        state.flight_go = True
+        state.phase = "pc2_go_for_burn"
+    elif name == "p40_active_final_preburn":
+        state.p40_active = True
+        state.phase = "pc2_p40_preignition"
+    elif name == "dps_ignition":
+        state.ullage_active = False
+        state.engine_running = True
+        state.throttle_phase = "minimum"
+        state.phase = "pc2_dps_start_minimum_thrust"
+    elif name == "guided_cutoff":
+        state.engine_running = False
+        state.throttle_phase = "off"
+        state.cutoff_complete = True
+        state.phase = "pc2_guided_cutoff"
+    elif name == "postburn_residual_review":
+        state.residual_review_complete = True
+        state.phase = "pc2_residual_review"
+    elif name == "lm_powerdown_transition":
+        state.powerdown_started = True
+        state.phase = "pc2_postburn_powerdown"
+
+
+def run_nominal(fixture: dict[str, Any]) -> PC2State:
+    state = PC2State(get_s=float(fixture["start_get_s"]))
+
+    for event in build_events(fixture):
+        apply_event(state, event, fixture)
+
+    return state
+
+
+def validate_nominal(fixture: dict[str, Any], final_state: PC2State) -> list[str]:
+    errors: list[str] = []
+    expected = fixture["nominal_validation"]
+
+    actual_cutoff = float(expected["actual_cutoff_get_s"])
+    guided_cutoff_events = [
+        e for e in build_events(fixture) if e.name == "guided_cutoff"
+    ]
+    if len(guided_cutoff_events) != 1:
+        errors.append("Expected exactly one guided_cutoff event.")
+    elif abs(guided_cutoff_events[0].get_s - actual_cutoff) > 1e-6:
+        errors.append("Guided cutoff event does not match historical fixture.")
+
+    if final_state.shutdown_rule_triggers:
+        errors.append("Nominal run triggered a shutdown rule.")
+    if not final_state.cutoff_complete:
+        errors.append("Nominal run never reached guided cutoff.")
+    if not final_state.residual_review_complete:
+        errors.append("Nominal run never reached residual review.")
+    if not final_state.powerdown_started:
+        errors.append("Nominal run never entered post-burn powerdown.")
+
+    pgns = fixture["pgns"]
+    residual = pgns["nominal_postburn_residual_fps"]
+    if residual != {"x": 1.0, "y": 0.3, "z": 0.0}:
+        errors.append("Historical PGNS residual fixture changed unexpectedly.")
+
+    return errors
+
+
+def main() -> int:
+    root = Path(__file__).resolve().parents[2]
+    fixture_path = root / "data" / "scenarios" / "apollo13_pc2_nominal.json"
+    fixture = load_fixture(fixture_path)
+    final_state = run_nominal(fixture)
+    errors = validate_nominal(fixture, final_state)
+
+    if errors:
+        for error in errors:
+            print(f"ERROR: {error}")
+        return 1
+
+    print(
+        "PC+2 nominal fixture validated:",
+        f"final_phase={final_state.phase}",
+        f"GET={final_state.get_s:.2f}",
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
