@@ -1,7 +1,12 @@
-import unittest
 from dataclasses import dataclass
+from pathlib import Path
+import sys
+import unittest
 
-from apollo_mission_control.event_eligibility import (
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from apollo_mission_control.event_eligibility import (  # noqa: E402
     EventEligibilityRule,
     StateRequirement,
     evaluate_event_eligibility,
