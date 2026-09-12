@@ -40,26 +40,31 @@ Research/decision record:
 - `resources/research/081_pc2_mission_clock_and_decision_gate_semantics.md` retains the primary-source findings and marks the pause policy superseded;
 - `resources/research/084_continuous_mission_clock_architecture.md` documents the current engine architecture.
 
-### PC+2 behavior
+## First nonnominal web/session path — now reaches physical response
 
-At the historical final-poll point, `flight_go` becomes pending but the session remains RUNNING.
-
-If GO arrives before the required nominal P40 milestone, the nominal sequence may continue. If GO is late, missed milestones are not replayed. P40, ullage, ignition, throttle, cutoff, residual, and power-down nominal events now depend on declared authoritative-state prerequisites.
-
-This changes the engine from a sequence of gated scenes into a continuously evolving mission in which player timing can itself create consequences.
-
-## First nonnominal web/session path
-
-The source-bounded synthetic ΔP path remains implemented through:
+The source-bounded synthetic ΔP path now runs through the HTTP/session validation interface as:
 
 1. explicit source-state injection;
 2. normal CONTROL projection/presentation;
 3. common shutdown-rule evaluation;
 4. explicit CONTROL callout decision;
 5. CAPCOM queue;
-6. explicit CAPCOM transmission.
+6. explicit CAPCOM transmission;
+7. explicit crew receipt;
+8. explicit crew DPS shutdown command;
+9. explicit physical DPS engine-off response.
 
-Crew receipt/command/physical-response continuation is already modeled at the domain layer and remains the next HTTP exposure target.
+New transport operations:
+
+- `POST /api/session/crew/receipt/{item_id}`;
+- `POST /api/session/crew/shutdown/{item_id}`;
+- `POST /api/session/admin/vehicle/dps-engine-off`.
+
+The transport calls the existing `crew_response.py` domain operations and does not collapse any layer. The physical response uses synchronized current authoritative GET; no fixed delay is inferred. The receipt endpoint's default `received` value is semantic test metadata, not claimed Apollo wording.
+
+Primary-source boundary was rechecked against the Apollo 13 mission-operations record and NASA air-ground transcript. Those sources support a ground-call shutdown relationship but do not provide a hypothetical exceedance response latency, exact response wording, unique crewmember assignment, or engine-off delay.
+
+See `resources/research/085_pc2_http_crew_response_integration.md` and `resources/source-catalog/PC2_CREW_RESPONSE_SOURCES.md`.
 
 ## Deployment boundary
 
@@ -69,16 +74,15 @@ Realtime pacing is currently fixed at **1×**. Time acceleration remains undecid
 
 ## Test status
 
-The new domain/API tests are committed. A fresh execution attempt on 2026-09-12 again failed before checkout because the runtime could not resolve `github.com`; therefore the full suite is **not recorded as passing**.
+`tests/test_web_crew_response.py` is committed and validates the HTTP ordering/guardrails. The full repository suite is still **not recorded as passing** because this automation environment has not provided a runnable checked-out repository execution path.
 
 ## Current stopping point
 
-The engine now has the intended continuous-time foundation.
+The next integration boundary is **fresh controller-observable shutdown evidence**:
 
-Next integration work:
-
-1. expose explicit crew receipt, crew DPS shutdown command, and supplied-time physical DPS response through the HTTP validation interface;
-2. reconnect physical shutdown to fresh controller evidence without inventing a pressure threshold or response latency;
-3. smoke-test multi-client realtime behavior when a runnable environment is available;
-4. review the phone UI now that GET advances automatically rather than through manual advancement;
-5. keep manual `/advance` only as a development/validation control, not normal gameplay.
+1. expose an explicit crew shutdown report as an independent evidence channel;
+2. use a fresh post-command `GQ6510P` chamber-pressure observation through the existing controller product path;
+3. expose/assess the existing `shutdown_confirmation.py` evidence aggregation without creating an `engine_off_confirmed` truth flag or pressure threshold;
+4. smoke-test multi-client realtime behavior when a runnable environment is available;
+5. review the phone UI now that GET advances automatically rather than through manual advancement;
+6. keep manual `/advance` only as a development/validation control, not normal gameplay.
