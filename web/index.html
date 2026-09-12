@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Apollo Mission Control — PC+2</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070908;
+      --panel: #111512;
+      --panel2: #181d19;
+      --line: #364039;
+      --text: #d5ddd6;
+      --muted: #8f9d92;
+      --green: #98d49f;
+      --amber: #e3c277;
+      --red: #e5998f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      padding: 12px 14px;
+      background: rgba(7,9,8,.96);
+      border-bottom: 1px solid var(--line);
+    }
+    h1 { margin: 0; font-size: 17px; font-weight: 700; letter-spacing: .04em; }
+    .sub { color: var(--muted); font-size: 12px; margin-top: 3px; }
+    main { max-width: 860px; margin: auto; padding: 12px; }
+    .grid { display: grid; gap: 10px; }
+    @media (min-width: 720px) { .grid.two { grid-template-columns: 1fr 1fr; } }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 5px; padding: 12px; }
+    .card h2, .card h3 { margin: 0 0 9px; font-size: 14px; letter-spacing: .05em; }
+    label { display: block; color: var(--muted); font-size: 11px; margin: 7px 0 3px; }
+    input, select, textarea, button {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: #0c100d;
+      color: var(--text);
+      font: inherit;
+      padding: 9px;
+    }
+    textarea { min-height: 64px; resize: vertical; }
+    button { cursor: pointer; background: var(--panel2); }
+    button:hover { border-color: var(--green); }
+    button.good { color: var(--green); }
+    button.warn { color: var(--amber); }
+    button.bad { color: var(--red); }
+    .buttons { display: grid; gap: 7px; grid-template-columns: repeat(2, minmax(0,1fr)); margin-top: 8px; }
+    .buttons.three { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .statusline { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+    .pill { border: 1px solid var(--line); background: var(--panel2); padding: 3px 7px; border-radius: 999px; font-size: 11px; }
+    .notice { color: var(--amber); border-left: 3px solid var(--amber); padding: 7px 9px; background: #18150d; margin: 8px 0 12px; font-size: 12px; }
+    .section { border-top: 1px solid var(--line); padding-top: 10px; margin-top: 10px; }
+    .field { display: grid; grid-template-columns: minmax(100px, 1fr) minmax(120px, 1.4fr); gap: 8px; padding: 6px 0; border-bottom: 1px dotted #263028; }
+    .field .label { color: var(--muted); }
+    .field .value { overflow-wrap: anywhere; }
+    .meta { color: var(--muted); font-size: 10px; margin-top: 2px; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; font: inherit; }
+    .queue { border: 1px solid var(--line); padding: 8px; margin: 7px 0; background: #0d110e; }
+    .ready { color: var(--green); }
+    .notready { color: var(--red); }
+    #error { display:none; color: var(--red); white-space: pre-wrap; margin: 8px 0; }
+    .hidden { display:none !important; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>APOLLO MISSION CONTROL — PC+2</h1>
+  <div class="sub">first playable integration prototype</div>
+  <div id="statusline" class="statusline"></div>
+</header>
+<main class="grid">
+  <div id="error" class="card"></div>
+
+  <div class="grid two">
+    <section class="card">
+      <h2>SESSION / STATION</h2>
+      <label for="player">PLAYER ID</label>
+      <input id="player" value="player1" autocomplete="off">
+      <label for="station">STATION</label>
+      <select id="station">
+        <option>CONTROL</option><option>GUIDO</option><option>TELMU</option>
+        <option>FIDO_RETRO</option><option>INCO</option><option>FLIGHT</option><option>CAPCOM</option>
+      </select>
+      <div class="buttons">
+        <button onclick="createSession()">CREATE / RESET</button>
+        <button onclick="joinStation()">JOIN STATION</button>
+      </div>
+      <div class="buttons three">
+        <button class="good" onclick="post('/api/session/start')">START</button>
+        <button class="warn" onclick="post('/api/session/pause')">PAUSE</button>
+        <button onclick="post('/api/session/resume')">RESUME</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>PROTOTYPE TIME CONTROL</h2>
+      <label for="targetGet">TARGET GET (HH:MM:SS or seconds)</label>
+      <input id="targetGet" value="77:56:00">
+      <button style="margin-top:8px" onclick="advanceToInput()">ADVANCE TO GET</button>
+      <div class="buttons">
+        <button onclick="advanceDelta(60)">+ 60 SEC</button>
+        <button onclick="advanceDelta(300)">+ 5 MIN</button>
+      </div>
+      <div class="meta">Manual advancement is a temporary integration control. A real-time driver is not implemented yet.</div>
+    </section>
+  </div>
+
+  <section id="actions" class="card hidden">
+    <h2>STATION ACTIONS</h2>
+    <label for="readinessNote">READINESS NOTE</label>
+    <input id="readinessNote" placeholder="optional controller note">
+    <div class="buttons">
+      <button class="good" onclick="submitReadiness(true)">REPORT READY</button>
+      <button class="bad" onclick="submitReadiness(false)">REPORT NOT READY</button>
+    </div>
+
+    <div id="flightActions" class="section hidden">
+      <h3>FLIGHT DECISION</h3>
+      <label for="flightBasis">DECISION BASIS</label>
+      <textarea id="flightBasis">controller reports</textarea>
+      <div class="buttons">
+        <button class="good" onclick="flightDecision(true)">GO</button>
+        <button class="bad" onclick="flightDecision(false)">NO-GO</button>
+      </div>
+      <h3 style="margin-top:14px">CAPCOM QUEUE</h3>
+      <label for="capcomAction">ACTION</label>
+      <input id="capcomAction" value="continue_pc2_burn_sequence">
+      <label for="capcomBasis">BASIS</label>
+      <input id="capcomBasis" value="FLIGHT approved">
+      <button style="margin-top:8px" onclick="queueCapcom()">QUEUE FOR CAPCOM</button>
+    </div>
+  </section>
+
+  <section id="display" class="card">
+    <h2>NO STATION JOINED</h2>
+    <div class="meta">Create a session and join a station to begin.</div>
+  </section>
+</main>
+<script>
+let playerId = null;
+let station = null;
+let snapshot = null;
+let pollHandle = null;
+
+function showError(err) {
+  const el = document.getElementById('error');
+  el.style.display = err ? 'block' : 'none';
+  el.textContent = err || '';
+}
+async function api(path, options={}) {
+  const res = await fetch(path, {headers:{'Content-Type':'application/json'}, ...options});
+  const body = await res.json().catch(()=>({}));
+  if (!res.ok) throw new Error(body.detail || `${res.status} ${res.statusText}`);
+  return body;
+}
+async function post(path, body) {
+  try { showError(''); const result = await api(path,{method:'POST',body: body===undefined ? undefined : JSON.stringify(body)}); await refreshAll(); return result; }
+  catch(e){ showError(e.message); }
+}
+function getSeconds(value) {
+  if (!String(value).includes(':')) return Number(value);
+  const p = String(value).split(':').map(Number);
+  if (p.length !== 3 || p.some(Number.isNaN)) throw new Error('Use HH:MM:SS');
+  return p[0]*3600 + p[1]*60 + p[2];
+}
+function fmtGet(sec) {
+  if (sec === undefined || sec === null) return '--:--:--';
+  const h=Math.floor(sec/3600), m=Math.floor((sec%3600)/60), s=sec%60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${s.toFixed(0).padStart(2,'0')}`;
+}
+async function createSession() {
+  try {
+    showError('');
+    await api('/api/session/create',{method:'POST'});
+    playerId=null; station=null; snapshot=null;
+    document.getElementById('actions').classList.add('hidden');
+    renderEmpty('SESSION CREATED — JOIN A STATION');
+    await refreshStatus();
+  } catch(e){ showError(e.message); }
+}
+async function joinStation() {
+  try {
+    showError('');
+    const p=document.getElementById('player').value.trim();
+    const s=document.getElementById('station').value;
+    snapshot=await api('/api/session/join',{method:'POST',body:JSON.stringify({player_id:p,station:s})});
+    playerId=p; station=s;
+    document.getElementById('actions').classList.remove('hidden');
+    document.getElementById('flightActions').classList.toggle('hidden', station!=='FLIGHT');
+    renderSnapshot(snapshot);
+    if (pollHandle) clearInterval(pollHandle);
+    pollHandle=setInterval(refreshSnapshot,1000);
+    await refreshStatus();
+  } catch(e){ showError(e.message); }
+}
+async function refreshStatus() {
+  try {
+    const s=await api('/api/session/status');
+    const el=document.getElementById('statusline');
+    el.innerHTML=`<span class="pill">${esc(s.status)}</span><span class="pill">GET ${fmtGet(s.get_s)}</span><span class="pill">${esc(s.phase)}</span>${s.pending_gate?`<span class="pill">GATE ${esc(s.pending_gate)}</span>`:''}${station?`<span class="pill">${esc(station)}</span>`:''}`;
+    return s;
+  } catch(e) { document.getElementById('statusline').innerHTML=''; }
+}
+async function refreshSnapshot() {
+  if (!playerId) return;
+  try { snapshot=await api(`/api/session/player/${encodeURIComponent(playerId)}`); renderSnapshot(snapshot); await refreshStatus(); }
+  catch(e){ showError(e.message); }
+}
+async function refreshAll(){ await refreshStatus(); await refreshSnapshot(); }
+async function advanceToInput() {
+  try { const target=getSeconds(document.getElementById('targetGet').value); await post('/api/session/advance',{target_get_s:target}); }
+  catch(e){ showError(e.message); }
+}
+async function advanceDelta(delta) {
+  try {
+    const s=await api('/api/session/status');
+    await post('/api/session/advance',{target_get_s:Number(s.get_s)+delta});
+  } catch(e){ showError(e.message); }
+}
+async function submitReadiness(ready) {
+  if(!playerId) return;
+  await post(`/api/session/player/${encodeURIComponent(playerId)}/readiness`,{ready,note:document.getElementById('readinessNote').value});
+}
+async function flightDecision(go) {
+  if(!playerId) return;
+  await post(`/api/session/flight/${encodeURIComponent(playerId)}/decision`,{go,basis:document.getElementById('flightBasis').value});
+}
+async function queueCapcom() {
+  if(!playerId) return;
+  await post(`/api/session/flight/${encodeURIComponent(playerId)}/capcom`,{action:document.getElementById('capcomAction').value,parameters:{},basis:document.getElementById('capcomBasis').value});
+}
+async function transmitItem(id) {
+  if(!playerId) return;
+  await post(`/api/session/capcom/${encodeURIComponent(playerId)}/transmit/${id}`);
+}
+function esc(x) {
+  return String(x ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function val(v) {
+  if (v===null || v===undefined) return '—';
+  if (typeof v==='object') return `<pre>${esc(JSON.stringify(v,null,2))}</pre>`;
+  return esc(v);
+}
+function fieldHtml(f) {
+  const unit=f.units?` ${esc(f.units)}`:'';
+  return `<div class="field"><div class="label">${esc(f.label)}</div><div class="value">${val(f.value)}${unit}<div class="meta">${esc(f.validity)} · ${esc(f.source_layer)}</div></div></div>`;
+}
+function renderSnapshot(s) {
+  const p=s.presentation;
+  let html=`<h2>${esc(p.title)}</h2><div class="notice">${esc(p.notice)}</div>`;
+  if (p.sections) {
+    for (const sec of p.sections) html+=`<div class="section"><h3>${esc(sec.title)}</h3>${(sec.fields||[]).map(fieldHtml).join('')}</div>`;
+  } else if (p.fields) html+=p.fields.map(fieldHtml).join('');
+  if (p.readiness_reports && p.readiness_reports.length) {
+    html+=`<div class="section"><h3>READINESS REPORTS</h3>`;
+    for(const r of p.readiness_reports) html+=`<div class="queue"><b>${esc(r.station)}</b> <span class="${r.ready?'ready':'notready'}">${r.ready?'READY':'NOT READY'}</span><div>${esc(r.note)}</div><div class="meta">GET ${fmtGet(r.get_s)}</div></div>`;
+    html+='</div>';
+  }
+  if (p.queue_items && p.queue_items.length) {
+    html+=`<div class="section"><h3>APPROVED CAPCOM QUEUE</h3>`;
+    for(const q of p.queue_items) {
+      html+=`<div class="queue"><b>${esc(q.action)}</b><div>${esc(q.basis)}</div><div class="meta">queued GET ${fmtGet(q.get_s)} · ${q.transmitted?'TRANSMITTED':'PENDING'}</div>${station==='CAPCOM'&&!q.transmitted?`<button style="margin-top:7px" onclick="transmitItem(${q.item_id})">TRANSMIT</button>`:''}</div>`;
+    }
+    html+='</div>';
+  }
+  document.getElementById('display').innerHTML=html;
+}
+function renderEmpty(title){ document.getElementById('display').innerHTML=`<h2>${esc(title)}</h2>`; }
+refreshStatus();
+</script>
+</body>
+</html>
