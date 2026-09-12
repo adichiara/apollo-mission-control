@@ -9,6 +9,32 @@ Convert the already-researched PC+2 domain model and station presentations into 
 
 This is primarily an implementation/architecture note. Historical behavior is inherited from the existing mission-specific research chain and state-machine documentation.
 
+## Primary-source ordering boundary — readiness, FLIGHT decision, CAPCOM transmission
+
+The contemporaneous PC+2 record gives a useful operational ordering constraint for the session model:
+
+- at approximately **78:57 GET**, Flight Director Gene Kranz tells the team he will go around the room near minus 10 minutes for a final GO/NO-GO;
+- at approximately **79:17 GET**, the Flight Director is reported as going around the room for team status and the control room is reported GO for the burn;
+- at **79:18:15 GET**, CAPCOM tells the crew that they are GO for the burn;
+- the crew acknowledges at approximately **79:18:20 GET**.
+
+The software therefore preserves three separate events:
+
+```text
+controller readiness report(s)
+        -> FLIGHT decision
+        -> CAPCOM crew-facing transmission
+```
+
+The reviewed evidence does not justify an automatically computed overall GO derived from hidden authoritative subsystem state, nor does a FLIGHT decision automatically constitute a crew transmission.
+
+The same separation is visible during the burn, when Mission Control continues assessing the maneuver and CAPCOM carries crew-facing continuation calls.
+
+Primary basis:
+
+- Apollo 13 Technical Air-to-Ground Voice Transcription, final PC+2 preparation/burn interval (`AS13_TEC.PDF` in NASA's mission transcript collection);
+- NASA Flight Control Division, *Mission Operations Report — Apollo 13*, 28 April 1970.
+
 ## First implemented session responsibilities
 
 `PC2Session` now owns:
@@ -145,6 +171,7 @@ Continue integration rather than returning to subsystem archaeology:
 1. add a thin session-facing snapshot/API DTO independent of Python presentation dataclasses;
 2. add explicit readiness-report visibility to FLIGHT;
 3. expose CAPCOM pending/transmitted queue state to the CAPCOM view;
-4. add a deterministic session driver for the nominal PC+2 timeline;
-5. run an end-to-end scripted multi-station playthrough against the single-process session;
-6. only then choose/implement the web framework and mobile presentation shell.
+4. connect CAPCOM transmission to the existing procedural-communication log;
+5. add a deterministic session driver for the nominal PC+2 timeline;
+6. run an end-to-end scripted multi-station playthrough against the single-process session;
+7. only then choose/implement the web framework and mobile presentation shell.
