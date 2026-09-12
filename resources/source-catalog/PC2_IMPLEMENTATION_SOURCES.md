@@ -23,8 +23,8 @@ This supplement exists so implementation-specific additions can remain small and
 - **Date:** 1970-04-28
 - **URL:** https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf
 - **Status:** IMPLEMENTATION-SOURCE / REVIEWED-DETAILED for PC+2
-- **Use in current implementation:** controller responsibilities, PC+2 chronology, maneuver parameters, shutdown criteria, ground/onboard threshold distinctions, ground-only differential-pressure callout, and conditional engine-restart rule.
-- **Research records:** `resources/research/049_pc2_controller_action_and_rule_matrix.md`, `050_pc2_initialization_and_nominal_validation.md`, `051_pc2_ullage_and_throttle_profile.md`, `052_pc2_controller_product_projection.md`, `053_pc2_shutdown_rule_evaluation.md`.
+- **Use in current implementation:** controller responsibilities, PC+2 chronology, maneuver parameters, shutdown criteria, ground/onboard threshold distinctions, ground-only differential-pressure callout, conditional engine-restart rule, and the conjunctive ISS-warning + program-alarm criterion.
+- **Research records:** `resources/research/049_pc2_controller_action_and_rule_matrix.md` through `054_pc2_iss_warning_observation_path.md`.
 
 ## Apollo 13 Technical Air-to-Ground Voice Transcription — PC+2 interval
 
@@ -35,6 +35,27 @@ This supplement exists so implementation-specific additions can remain small and
 - **Use in current implementation:** distinguishes crew readbacks/reports from physical spacecraft event time; confirms crew-side shutdown thresholds, ground-only delta-P callout, warning combinations, and restart procedure.
 - **Important conflict preserved:** crew readback attaches the startup-transient exception to attitude error, while the Mission Operations Report wording attaches it to attitude rate. The implementation does not silently choose between them.
 - **Research record:** `resources/research/053_pc2_shutdown_rule_evaluation.md`.
+
+## Apollo Operations Handbook — Lunar Module, GN&CS
+
+- **Title family:** *Apollo Operations Handbook, Lunar Module, Volume I — Subsystems Data*
+- **Organization:** Grumman
+- **Document family:** LMA790-3-LM
+- **Public searchable copy:** LM-10 and subsequent, Basic Date 1970-02-01
+- **URL:** https://www.ibiblio.org/apollo/Documents/LMA790-3-LM10-ApolloOperationsHandbookLunarModuleLM10AndSubsequent-Volume1-SubsystemsData-SearchableText.pdf
+- **Status:** IMPLEMENTATION-SOURCE / REVIEWED-PARTIAL
+- **Current use:** GN&CS Figure 2.1-33 shows distinct `ISS WARNING SIGNAL` and `LGC WARNING SIGNAL` paths from the display/keyboard assembly to the Instrumentation Subsystem. This supports modeling ISS warning as a discrete onboard/telemetry observation rather than a generic guidance-health diagnosis.
+- **Configuration caution:** Apollo 13 flew LM-7. The later searchable LM-10 copy is used only for signal-path architecture consistent with Apollo 13 mission-rule wording; it is not used to assert exact LM-7 telemetry-word assignment or GUIDO CRT placement.
+- **Research record:** `resources/research/054_pc2_iss_warning_observation_path.md`.
+
+## LUMINARY PGNCS functional-description material
+
+- **Public document:** `sundance_functional_description_vol1.pdf` in the Virtual AGC document collection
+- **URL:** https://www.ibiblio.org/apollo/Documents/sundance_functional_description_vol1.pdf
+- **Status:** IMPLEMENTATION-SOURCE / REVIEWED-PARTIAL
+- **Current use:** contemporary LM PGNCS caution/warning description supports treating ISS warning and LGC warning as distinct onboard indications and describes ISS warning as being under LGC program control.
+- **Caution:** not used to assign a hypothetical PC+2 failure mechanism or program-alarm number.
+- **Research record:** `resources/research/054_pc2_iss_warning_observation_path.md`.
 
 ## Apollo Experience Report — Real-Time Display System
 
