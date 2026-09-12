@@ -23,18 +23,19 @@ See:
 - [Voice communications baseline](docs/VOICE_COMMUNICATIONS_BASELINE.md)
 - [Apollo 13 station baseline](docs/APOLLO13_STATION_BASELINE.md)
 - [Station research status](docs/STATION_RESEARCH_STATUS.md)
-- [PC+2 ΔP callout station-status addendum](docs/station-status/2026-09-12_pc2_delta_p_callout.md)
+- [PC+2 DPS shutdown-response station-status addendum](docs/station-status/2026-09-12_pc2_dps_shutdown_response.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
 - [Simulation validation strategy](docs/SIMULATION_VALIDATION.md)
 - [Decisions](docs/DECISIONS.md)
 - [Open questions](docs/OPEN_QUESTIONS.md)
 - [Progress log](docs/PROGRESS.md)
-- [PC+2 ΔP callout progress](docs/progress/2026-09-12_pc2_delta_p_callout.md)
+- [PC+2 DPS shutdown-response progress](docs/progress/2026-09-12_pc2_dps_shutdown_response.md)
 - [Research resources](resources/README.md)
 - [PC+2 implementation source catalog](resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md)
 - [PC+2 restart source catalog](resources/source-catalog/PC2_RESTART_SOURCES.md)
 - [PC+2 ΔP callout source catalog](resources/source-catalog/PC2_DELTA_P_CALLOUT_SOURCES.md)
+- [PC+2 DPS shutdown-response source catalog](resources/source-catalog/PC2_DPS_SHUTDOWN_RESPONSE_SOURCES.md)
 - [Apollo 13 ground-product integrity sources](resources/source-catalog/APOLLO13_GROUND_PRODUCT_INTEGRITY_SOURCES.md)
 - [Evidence verification audit](resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md)
 
@@ -42,27 +43,35 @@ See:
 
 The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation and execution**.
 
-The framework-neutral Python prototype includes source-backed nominal event/state progression, station-specific product projections, partial shutdown-rule evaluation, narrow source-bounded scenario injections, controller/crew action and communication layers, the inverter contingency loop, integrated attitude-error/rate monitoring, explicit observation-age semantics, hidden ground-product integrity, explicit controller product-rejection events, and the premature-shutdown restart branch.
+The framework-neutral Python prototype includes source-backed nominal event/state progression, station-specific product projections, partial shutdown-rule evaluation, narrow source-bounded scenario injections, controller/crew action and communication layers, the inverter contingency loop, integrated attitude-error/rate monitoring, explicit observation-age semantics, hidden ground-product integrity, explicit controller product-rejection events, the premature-shutdown restart branch, and the ground-only ΔP shutdown branch through physical DPS engine-off response.
 
 ### Ground-only ΔP shutdown callout
 
-The latest PC+2 pass implements the first shutdown path in which a decisive observation exists only on the ground.
-
 Primary mission documentation states that fuel/oxidizer differential pressure greater than **25 psi** was a PC+2 shutdown criterion and specifically required a **ground callout**. The contemporaneous air-to-ground rules exchange confirms that the crew understood they were to shut down for that condition.
 
-The implementation now separates:
+The implementation separates:
 
 - the ground-derived ΔP product;
 - CONTROL threshold assessment and callout decision;
 - CAPCOM's ground-to-crew callout;
-- the crew's DPS shutdown command;
-- physical engine response.
+- the crew's descent-engine STOP action;
+- physical engine-off response;
+- later controller-observable confirmation.
 
 Exactly 25 psi remains clear; a synthetic 26 psi case exercises the triggered path. The 26 psi value is a software boundary test, not a historical Apollo 13 measurement.
 
-The crew shutdown command does **not** automatically set `engine_running=False`. The reviewed sources do not yet justify collapsing cockpit command and vehicle response into one state transition.
+### DPS shutdown command and physical response
 
-The code also does not invent an exact CONTROL→FLIGHT→CAPCOM approval sequence, exact callout wording, or exact cockpit shutdown switch/button sequence.
+Contemporary LM systems documentation establishes that either crew descent-engine STOP pushbutton can initiate the engine-off command. Engine on/off commands actuate the descent-engine pilot valves, which in turn command closure of the fuel and oxidizer shutoff valves.
+
+The prototype therefore now keeps the STOP input and the vehicle response as separate events. The STOP action alone does **not** set `engine_running=False`; the source-backed vehicle-response event does. This permits future sourced failures in which a correct crew command does not produce the expected engine response.
+
+The physical-response helper deliberately does **not** invent:
+
+- an exact LM-7 STOP-to-zero-thrust delay;
+- a chamber-pressure tailoff curve;
+- a fresh GQ6510P value;
+- an automatic controller-visible shutdown confirmation.
 
 ### Premature shutdown / restart branch
 
@@ -82,7 +91,7 @@ For the **attitude-error / attitude-rate** criteria, the project preserves the p
 
 The project does **not** yet claim full spacecraft physics, RTCC dynamics, exact historical CRT timing, complete Apollo 13 telemetry/display routing, a generic historical stale-data timeout, detailed DPS restart/shutdown transients, or historically reconstructed SimSup malfunction-command syntax.
 
-The next implementation target is the **crew DPS shutdown command → physical engine shutdown/confirmation** boundary. That work should proceed only if primary LM/DPS sources establish a useful control/response/indication chain economically; otherwise the project should move to the next high-value PC+2 decision path rather than infer missing hardware behavior.
+The next implementation target is the minimum **controller-observable engine-shutdown confirmation** path. Research should prefer the already-documented `GQ6510P` chamber-pressure path or a directly sourced engine-thrusting indication, without fabricating a shutdown delay or pressure trace. If that confirmation route cannot be recovered economically, it should remain unresolved and work should move to the next high-value PC+2 dependency.
 
 ## Apollo 13 station specifications
 
