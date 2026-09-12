@@ -1,11 +1,11 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — presentation research checkpoint complete; integration is now the active priority**
+Status: **CURRENT — single-process playable integration core complete; transport/mobile shell is now the active priority**
 
 ## Completed presentation checkpoint
 
-The minimum first-slice player presentation set now exists for:
+The minimum first-slice player presentation set exists for:
 
 - CONTROL;
 - GUIDO;
@@ -15,69 +15,121 @@ The minimum first-slice player presentation set now exists for:
 - FLIGHT;
 - CAPCOM.
 
-These are intentionally implementation-oriented project renderings where exact historical CRT/console evidence is incomplete. They preserve controller-visible products, provenance, and information boundaries without exposing hidden simulator truth.
+These remain implementation-oriented project renderings where exact historical CRT/console evidence is incomplete. They preserve controller-visible products, provenance, and information boundaries without exposing hidden simulator truth.
 
-## Active priority — playable session orchestration
+## Completed single-process session checkpoint
 
-Build the smallest end-to-end session capable of running the Apollo 13 PC+2 slice from 77:55 GET through post-burn verification/power-down.
+### 1. Session authority — implemented
 
-### 1. Session authority
+- [x] one authoritative mission state;
+- [x] synchronized GET;
+- [x] deterministic historical scenario advancement;
+- [x] explicit start/pause/resume/complete state;
+- [x] chronological scenario/audit log.
 
-- one authoritative mission state;
-- synchronized GET;
-- deterministic scenario advancement;
-- explicit pause/start/end state;
-- scenario event/audit log.
+### 2. Station assignment and views — implemented
 
-### 2. Station assignment and views
+- [x] unique logical player→station assignment;
+- [x] correct presentation builder selected by assignment;
+- [x] player snapshots contain only the assigned station presentation;
+- [x] serializable player-scoped snapshot DTO added.
 
-- assign/join a station;
-- select the correct presentation builder for that station;
-- do not give one player products belonging to another station;
-- reconnect without altering authoritative mission state.
+Reconnection policy remains a future transport concern; authoritative session state is already independent of presentation instances.
 
-### 3. Controller reporting / FLIGHT integration
+### 3. Controller reporting / FLIGHT integration — implemented
 
-- controller readiness report event;
-- FLIGHT receives reports, not hidden subsystem status;
-- FLIGHT records GO/NO-GO decision explicitly;
-- no automatic GO merely because the authoritative state is nominal.
+- [x] controller readiness-report event;
+- [x] readiness reports surfaced in the FLIGHT presentation;
+- [x] FLIGHT records GO/NO-GO explicitly;
+- [x] historical final poll opens a gameplay gate rather than automatically setting GO;
+- [x] NO-GO blocks advancement toward P40;
+- [x] GO clears the gate and permits progression.
 
-### 4. FLIGHT → CAPCOM → crew communication
+### 4. FLIGHT → CAPCOM communication — implemented at minimum integration level
 
-- explicit callout/instruction request from FLIGHT or a discipline;
-- CAPCOM receives an approved queue item;
-- CAPCOM transmits it to the crew;
-- crew response/readback is a separate communication event;
-- communications quality can affect transfer without mutating hidden target state.
+- [x] explicit FLIGHT-approved CAPCOM queue item;
+- [x] pending/transmitted queue state surfaced in CAPCOM presentation;
+- [x] CAPCOM transmission is an explicit session action;
+- [x] transmission does not directly mutate spacecraft truth.
 
-### 5. Scenario progression
+Specific procedure/readback semantics continue to use the existing procedural/action layers and can be connected incrementally.
 
-Support at minimum:
+### 5. Scenario progression — nominal integrated path implemented
+
+The single-process session can now run the source-backed nominal sequence through:
 
 - final PAD transfer under weak communications;
 - communications improvement;
 - burn-configuration power-up;
 - ranging/computer support;
-- readiness / GO;
+- readiness / explicit FLIGHT GO;
 - P40 / ullage / DPS burn sequence;
-- controller monitoring;
-- nominal cutoff and residual review;
+- nominal cutoff;
+- residual review;
 - power-down transition.
 
-Existing nonnominal branches should plug into the same orchestration rather than use a separate scenario engine.
+A scripted multi-station integration harness exercises this path through the same public session operations intended for future clients. Its readiness notes/sequence are explicitly software validation fixtures, not claims about the exact historical spoken GO-poll roster.
 
-### 6. Audit / replay
+### 6. Audit / replay substrate — implemented at first level
 
-Record enough information to reconstruct:
+The session records:
 
-- authoritative state changes;
-- controller-visible products;
-- controller decisions/reports;
-- CAPCOM/crew communications;
-- crew operational actions;
-- physical responses;
-- injected nonnominal conditions.
+- station assignments;
+- session lifecycle;
+- authoritative historical scenario events;
+- readiness reports;
+- FLIGHT decision gate and GO/NO-GO decision;
+- CAPCOM queue/transmission events;
+- session completion.
+
+Further action/failure-event unification remains future integration work, but the basic replay substrate now exists.
+
+## Active priority — thin transport and mobile shell
+
+The next milestone should make the working single-process session reachable by actual browser/phone clients without redesigning the domain model.
+
+### A. Transport/framework decision
+
+Choose the thinnest production-compatible web stack that:
+
+- can host on Render;
+- keeps one authoritative server-side session object;
+- provides simple JSON station snapshots/actions;
+- supports multiple phone clients;
+- permits later realtime push or polling without coupling simulation code to the web framework.
+
+### B. Minimum API surface
+
+Target operations:
+
+- create/load PC+2 session;
+- join/assign station;
+- start/pause/resume session;
+- get player snapshot;
+- submit readiness;
+- record FLIGHT GO/NO-GO;
+- queue/transmit CAPCOM item;
+- advance/tick authoritative GET;
+- retrieve limited audit/replay data for validation.
+
+### C. Minimum phone interface
+
+- station identity and GET always visible;
+- render the existing station presentation model;
+- station-specific action controls only where implemented;
+- no omniscient cross-station dashboard;
+- responsive phone-first layout;
+- no attempt yet to reproduce every historical CRT pixel.
+
+### D. Integration validation
+
+- exercise seven logical station clients against one session;
+- confirm information isolation;
+- confirm FLIGHT gate behavior;
+- confirm CAPCOM handoff behavior;
+- confirm reconnect does not alter mission state;
+- confirm nominal timeline reaches power-down;
+- then exercise one already-implemented nonnominal branch through the same transport/session path.
 
 ## Explicitly deferred until integration exposes a need
 
@@ -88,8 +140,9 @@ Record enough information to reconstruct:
 - full RTCC trajectory propagator;
 - backroom/staff-support simulation;
 - low-player-count station aggregation;
-- production framework/deployment implementation beyond the framework-neutral domain model.
+- production-scale persistence/authentication;
+- historical SimSup operator UI.
 
-## Success criterion
+## Current success criterion
 
-The next milestone is not another research note. It is a **single-process playable prototype** in which multiple logical station clients can observe their own PC+2 products, submit reports/actions, and advance one authoritative session through the nominal timeline with an inspectable event log.
+The next milestone is a **phone-accessible local/web prototype** in which multiple clients connect to one authoritative PC+2 session, each sees only its station products, FLIGHT controls the readiness gate, CAPCOM receives/transmits approved items, and the source-backed nominal scenario can be played through to post-burn power-down.
