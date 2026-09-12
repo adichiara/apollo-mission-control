@@ -62,17 +62,36 @@ def project_controller_products(state: PC2State, fixture: dict[str, Any]) -> dic
     if state.powerdown_started:
         power_mode = "powerdown_transition"
 
+    control_products = {
+        "dps.engine_running": _live_product(state, state.engine_running, source_layer="physical/control", provenance="pc2.state.dps.engine_running"),
+        "dps.throttle_command_phase": _live_product(state, state.throttle_phase, source_layer="command", provenance="pc2.state.dps.throttle_command"),
+        "rcs.ullage_active": _live_product(state, state.ullage_active, source_layer="physical/control", provenance="pc2.state.rcs.ullage"),
+        "rcs.ullage_jets_count": _live_product(state, state.ullage_jets_count, source_layer="physical/control", provenance="pc2.state.rcs.ullage"),
+        "dps.engine_gimbal_warning": _live_product(state, dps["engine_gimbal_warning"], source_layer="onboard/telemetry", provenance="pc2.fixture.dps.engine_gimbal_warning"),
+        "ces.dc_failure": _live_product(state, vehicle_control["ces_dc_failure"], source_layer="onboard/telemetry", provenance="pc2.fixture.vehicle_control.ces_dc_failure"),
+    }
+    control_deferred = [
+        "dps.inlet_pressure_psi",
+        "dps.fuel_oxidizer_delta_p_psi",
+        "vehicle.attitude_error_xyz_deg",
+        "vehicle.body_rate_xyz_deg_s",
+    ]
+    if state.dps_chamber_pressure_psi is None:
+        # Project-model gap, not a claim that Apollo telemetry was unavailable.
+        control_deferred.insert(0, "dps.chamber_pressure_psi")
+    else:
+        control_products["dps.chamber_pressure_psi"] = _live_product(
+            state,
+            state.dps_chamber_pressure_psi,
+            units="psi",
+            source_layer="measurement/telemetry",
+            provenance="LM-7-family GQ6510P thrust-chamber-pressure measurement",
+        )
+
     control = ProjectionSet(
         station="CONTROL",
-        products={
-            "dps.engine_running": _live_product(state, state.engine_running, source_layer="physical/control", provenance="pc2.state.dps.engine_running"),
-            "dps.throttle_command_phase": _live_product(state, state.throttle_phase, source_layer="command", provenance="pc2.state.dps.throttle_command"),
-            "rcs.ullage_active": _live_product(state, state.ullage_active, source_layer="physical/control", provenance="pc2.state.rcs.ullage"),
-            "rcs.ullage_jets_count": _live_product(state, state.ullage_jets_count, source_layer="physical/control", provenance="pc2.state.rcs.ullage"),
-            "dps.engine_gimbal_warning": _live_product(state, dps["engine_gimbal_warning"], source_layer="onboard/telemetry", provenance="pc2.fixture.dps.engine_gimbal_warning"),
-            "ces.dc_failure": _live_product(state, vehicle_control["ces_dc_failure"], source_layer="onboard/telemetry", provenance="pc2.fixture.vehicle_control.ces_dc_failure"),
-        },
-        deferred_fields=("dps.chamber_pressure_psi", "dps.inlet_pressure_psi", "dps.fuel_oxidizer_delta_p_psi", "vehicle.attitude_error_xyz_deg", "vehicle.body_rate_xyz_deg_s"),
+        products=control_products,
+        deferred_fields=tuple(control_deferred),
     )
 
     guido = ProjectionSet(
