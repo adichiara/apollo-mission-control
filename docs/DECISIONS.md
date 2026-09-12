@@ -76,22 +76,6 @@ A central server owns the live mission state. Player devices are station clients
 
 Production deployment target is Render.
 
-## Not yet decided
-
-The following are deliberately not decisions:
-
-- first Apollo mission/mission phase
-- minimum player count
-- exact controller combinations by player count
-- exact technical stack
-- degree of RTCC/CCATS/MSFN emulation
-- degree of Staff Support Room simulation
-- voice-loop implementation
-- time acceleration
-- scenario-selection UI
-- post-simulation evaluation format
-
-
 ## D-011 — Paper exchange is not a formal subsystem
 
 **Status:** Clarified  
@@ -120,4 +104,31 @@ Therefore:
 - visible station nomenclature, available displays, procedures, spacecraft/ground configuration, rules, and capabilities remain mission-specific;
 - an Apollo 11 scenario should reproduce Apollo 11 where a documented difference exists rather than presenting the Apollo 13 configuration unchanged.
 
-The first playable mission/scenario remains undecided.
+## D-013 — First vertical slice: Apollo 13 PC+2
+
+**Status:** Accepted as first implementation target  
+**Date:** 2026-09-11
+
+The first playable vertical slice will center on **Apollo 13 PC+2 preparation and execution**, using a working interval of approximately **74:00–80:00 GET** and the historical DPS burn at about **79:27:38 GET**.
+
+This interval is selected because it combines strong primary-source coverage, substantial interaction among multiple controller disciplines, explicit maneuver/shutdown rules, compatibility with the Apollo 13-era baseline, and a more bounded initial physical model than either the oxygen-tank accident onset or Apollo 11 powered descent.
+
+The vertical slice should model only the state and information required for the selected interval rather than treating unresolved details elsewhere in Apollo 13 as prerequisites.
+
+Research note `048_first_vertical_slice_candidate_assessment.md` records the candidate comparison and evidence basis.
+
+The Apollo 13 oxygen-tank accident remains a priority expansion scenario. Apollo 11 powered descent is the strongest early candidate for validating mission-profile portability.
+
+## Not yet decided
+
+The following are deliberately not decisions:
+
+- minimum player count
+- exact controller combinations by player count
+- exact technical stack
+- degree of RTCC/CCATS/MSFN emulation beyond what the first scenario requires
+- degree of Staff Support Room simulation
+- voice-loop implementation
+- time acceleration
+- scenario-selection UI
+- post-simulation evaluation format
