@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — phone-accessible transport shell implemented; mission-clock/reconnect hardening is now the active priority**
+Status: **CURRENT — mission-clock semantics resolved; rejoin persistence and executable smoke validation are now active**
 
 ## Completed presentation checkpoint
 
@@ -23,7 +23,7 @@ The deterministic historical validator still has its nominal timed GO event, but
 
 ## Completed first web/mobile transport checkpoint
 
-The first phone-accessible shell now uses **FastAPI + Uvicorn** as a thin adapter over the framework-neutral session model.
+The first phone-accessible shell uses **FastAPI + Uvicorn** as a thin adapter over the framework-neutral session model.
 
 Implemented:
 
@@ -33,54 +33,53 @@ Implemented:
 - [x] Render service configuration and health endpoint;
 - [x] Python runtime pin;
 - [x] API-level transport tests;
-- [x] same-player/same-station join is idempotent so a browser can rejoin an existing assignment;
-- [x] another player cannot take an occupied station;
-- [x] an existing player ID cannot silently switch stations.
+- [x] same-player/same-station join is idempotent;
+- [x] assignment conflicts and station switching are rejected.
 
 Current deployment architecture remains deliberately **single-process and in-memory**. Restart, redeploy, or platform spin-down loses the live session; multiple workers are not supported until shared state/persistence is deliberately designed.
 
-## Active priority 1 — mission-clock semantics
+## Mission-clock / decision-gate semantics — resolved
 
-Before replacing manual GET advancement with a realtime driver, resolve a gameplay/historical timing distinction exposed by integration:
+Primary-source review confirms two important boundaries:
 
-- historical GET continues continuously;
-- the current prototype holds GET at the FLIGHT decision gate until GO;
-- holding GET is effectively a simulation pause, not historical mission behavior.
+- Apollo GET is a mission time reference; the reviewed sources do not say it stopped for controller deliberation.
+- The Apollo 13 Mission Operations Report explicitly says PC+2 ignition time was **not time critical**, but supplies no numerical delay tolerance.
 
-Do **not** silently implement a realtime clock that either:
+Therefore the project does not invent a historical clock stop or a delay margin.
 
-1. freezes historical GET at every pending decision without an explicit pause policy; or
-2. advances later historical events past an unresolved gate and then applies them retroactively without defined semantics.
+For the first deterministic playable slice:
 
-Next design work should explicitly separate, where necessary:
+- [x] a blocking controller decision gate explicitly pauses the **simulation**;
+- [x] the pause is machine-readable (`decision_gate:flight_go`);
+- [x] manual resume cannot bypass an unresolved gate;
+- [x] FLIGHT GO clears the gate and resumes the simulation;
+- [x] NO-GO leaves the gate/pause active;
+- [x] later source-timed events are not applied retroactively while players deliberate;
+- [x] API/player snapshots expose the pause reason so clients can distinguish a gameplay pause from ordinary running GET.
 
-- mission/session clock time;
-- scenario event eligibility;
-- explicit game pause state;
-- decision gates.
+This is a **project playability policy**, not a claim that Apollo GET historically stopped. See `resources/research/081_pc2_mission_clock_and_decision_gate_semantics.md`.
 
-Time acceleration and exact pause policy remain undecided project decisions.
+A future realtime/nonnominal timing model may separate wall-clock time, mission time, and event eligibility more fully, but no such complexity is added until gameplay requires it.
 
-## Active priority 2 — reconnect/player identity hardening
+## Active priority 1 — reconnect/player identity hardening
 
-The HTTP API now permits idempotent same-player/same-station rejoin, which is enough to survive a browser refresh if the player reuses the same ID.
+The HTTP API permits idempotent same-player/same-station rejoin. Still needed before a deployed playtest:
 
-Still needed before a deployed playtest:
+- browser-side persistence of local player/station choice or equivalent automatic rejoin;
+- lightweight reconnect credential only if needed to prevent casual player-ID collision;
+- explicit server-restart behavior while the architecture remains in-memory.
 
-- browser-side persistence of the local player/station choice or an equivalent rejoin mechanism;
-- a lightweight generated reconnect credential if the prototype must prevent another person from claiming the same player ID;
-- explicit behavior when the server itself restarts and in-memory assignments disappear.
+This remains prototype identity, not production authentication.
 
-This is prototype identity, not production authentication.
-
-## Active priority 3 — integration validation
+## Active priority 2 — integration validation
 
 When a runnable environment is available:
 
 - execute the domain/session/API test suite;
 - exercise seven logical clients against one server process;
 - confirm information isolation;
-- confirm FLIGHT gate behavior;
+- confirm explicit decision-pause behavior;
+- confirm FLIGHT gate behavior and automatic resume after GO;
 - confirm CAPCOM handoff behavior;
 - confirm rejoin does not alter mission state;
 - confirm nominal timeline reaches power-down;
@@ -96,8 +95,9 @@ When a runnable environment is available:
 - backroom/staff-support simulation;
 - low-player-count station aggregation;
 - multi-session/durable production persistence;
-- historical SimSup operator UI.
+- historical SimSup operator UI;
+- numeric PC+2 allowable-delay model or retargeting logic without direct evidence.
 
 ## Current success criterion
 
-The next milestone is a **rejoin-safe, phone-accessible local/web prototype with explicit mission-clock semantics**, in which several clients share one authoritative PC+2 session, each sees only its station information, FLIGHT controls the readiness decision, CAPCOM transmits approved items, and the nominal source-backed timeline can run through post-burn power-down without hidden automatic decisions.
+The next milestone is a **rejoin-safe, phone-accessible local/web prototype** in which several clients share one authoritative PC+2 session, each sees only its station information, controller-decision holds are explicit simulation pauses, FLIGHT controls the readiness decision, CAPCOM transmits approved items, and the nominal source-backed timeline can run through post-burn power-down without hidden automatic decisions.
