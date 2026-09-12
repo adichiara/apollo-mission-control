@@ -22,7 +22,12 @@ class OperationalAction:
     provenance: str
 
 
-_ALLOWED_ACTIONS = {"switch_lm_inverter"}
+_ALLOWED_ACTIONS = {
+    "switch_lm_inverter",
+    "restart_manual_ullage",
+    "press_engine_start",
+    "descent_engine_command_override_on",
+}
 
 
 def apply_operational_action(state: PC2State, action: OperationalAction) -> None:
@@ -38,3 +43,15 @@ def apply_operational_action(state: PC2State, action: OperationalAction) -> None
         # PC+2, so this records only that a switch attempt occurred.
         state.lm_inverter_switch_attempted = True
         state.lm_inverter_switch_attempt_get_s = action.get_s
+    elif action.action == "restart_manual_ullage":
+        # Record the historical restart action without assuming RCS performance.
+        state.restart_manual_ullage_attempted = True
+        state.restart_manual_ullage_get_s = action.get_s
+    elif action.action == "press_engine_start":
+        # The crew command is distinct from whether the DPS actually restarts.
+        state.engine_start_push_attempted = True
+        state.engine_start_push_get_s = action.get_s
+    elif action.action == "descent_engine_command_override_on":
+        # Again, command state is not aliased to physical engine response.
+        state.descent_engine_command_override_on = True
+        state.descent_engine_command_override_get_s = action.get_s
