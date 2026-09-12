@@ -26,6 +26,7 @@ See:
 - [Station research status](docs/STATION_RESEARCH_STATUS.md)
 - [PC+2 CONTROL presentation station-status addendum](docs/station-status/2026-09-12_pc2_control_presentation.md)
 - [PC+2 GUIDO presentation station-status addendum](docs/station-status/2026-09-12_pc2_guido_presentation.md)
+- [PC+2 TELMU presentation station-status addendum](docs/station-status/2026-09-12_pc2_telmu_presentation.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
 - [Simulation validation strategy](docs/SIMULATION_VALIDATION.md)
@@ -34,17 +35,19 @@ See:
 - [Progress log](docs/PROGRESS.md)
 - [PC+2 CONTROL presentation progress](docs/progress/2026-09-12_pc2_control_presentation.md)
 - [PC+2 GUIDO presentation progress](docs/progress/2026-09-12_pc2_guido_presentation.md)
+- [PC+2 TELMU presentation progress](docs/progress/2026-09-12_pc2_telmu_presentation.md)
 - [Research resources](resources/README.md)
 - [PC+2 implementation source catalog](resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md)
 - [PC+2 CONTROL presentation source catalog](resources/source-catalog/PC2_CONTROL_PRESENTATION_SOURCES.md)
 - [PC+2 GUIDO presentation source catalog](resources/source-catalog/PC2_GUIDO_PRESENTATION_SOURCES.md)
+- [PC+2 TELMU presentation source catalog](resources/source-catalog/PC2_TELMU_PRESENTATION_SOURCES.md)
 - [Evidence verification audit](resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md)
 
 ## Current status
 
 The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation and execution**.
 
-The framework-neutral Python prototype now includes the source-backed nominal event/state model, station-specific product projections, partial shutdown-rule evaluation, scenario injection/action/communication layers, product-integrity handling, premature-shutdown/restart response paths, and first-pass player-facing CONTROL and GUIDO presentation models.
+The framework-neutral Python prototype includes the source-backed nominal event/state model, station-specific product projections, partial shutdown-rule evaluation, scenario injection/action/communication layers, product-integrity handling, premature-shutdown/restart response paths, and first-pass player-facing CONTROL, GUIDO, and TELMU presentation models.
 
 ### First-pass CONTROL presentation
 
@@ -54,15 +57,23 @@ A critical fidelity boundary is preserved: Apollo 13 MSK 1137 defines `TCP` as c
 
 ### First-pass GUIDO presentation
 
-The GUIDO rendering uses the same discipline. Apollo 13 MSK 1123/1137 plus the mission-era LUMINARY 1C R-567 data-link documentation directly support program/computer state, alarm/status families, upload verification, and guidance/velocity-change information in the Mission Control data path.
+The GUIDO rendering uses the same discipline. Apollo 13 MSK 1123/1137 plus mission-era LUMINARY 1C R-567 data-link documentation support program/computer state, alarm/status families, upload verification, and guidance/velocity-change information in the Mission Control data path.
 
-The executable view groups modeled products into:
+The executable view groups modeled products into LGC/guidance status, alignment/load status, and maneuver/residual information. Project assessment products are not claimed as verbatim CRT literals; hidden integrity metadata is not shown; and deferred implementation gaps are not portrayed as telemetry failures.
 
-- LGC / guidance status;
-- alignment / load status;
-- maneuver / residual.
+### First-pass TELMU presentation
 
-`PROGRAM` and alarm/status families have direct historical analogues. Other items such as project `LGC` operating state, alignment acceptance, load-verification state, planned Vg, and postburn residual are presented as sourced **project products** where exact CRT literal/routing is incomplete. Hidden integrity metadata is not shown, and deferred `vg_remaining` / `dv_gained` implementation gaps are not portrayed as telemetry failures.
+Mission-specific Apollo 13 operations evidence records LM power-up beginning around **78:12 GET**, an approximately **38–40 A** requirement to maintain the PC+2 burn configuration, and LM power-down beginning around **79:34 GET** after the burn. The PC+2 rules also require shutdown if an inverter warning remains after switching inverters. citeturn414771search33turn171528search32
+
+The TELMU project rendering therefore presents:
+
+- power/configuration mode;
+- **BURN CONFIG CURRENT REF** — explicitly a documented reference range, not live measured current;
+- inverter warning;
+- inverter-switch action and event time;
+- post-burn power-down transition.
+
+Exact TELMU CRT layout, measured-current telemetry routing, and inverter-display routing remain unresolved and are not invented. The broader Apollo 13 TELMU consumables/lifetime problem is intentionally deferred because it is not required for the bounded PC+2 maneuver slice. The TELMU Post Mission Report confirms that electrical configuration/current management was central to the station's contingency role. citeturn171528search33
 
 ### Remaining bounded gaps
 
@@ -70,9 +81,9 @@ The singular PC+2 150-psi ground “engine inlet pressure” rule remains intent
 
 The onboard **77-percent thrust-monitor** criterion also remains `NOT_EVALUABLE`; primary sources confirm the rule but do not yet identify the exact percent-thrust crew display/signal.
 
-Exact CONTROL/GUIDO CRT selection behavior, field coordinates, refresh cadence, GQ6510P-to-`TCP` conversion, and several field-routing details remain unresolved and are not invented.
+Exact CONTROL/GUIDO/TELMU CRT selection behavior, field coordinates, refresh cadence, and several field-routing details remain unresolved and are not invented.
 
-The next implementation target is the **first-pass player-facing TELMU presentation**, using the already-modeled PC+2 power configuration, expected-current reference, inverter warning/action state, and post-burn power-down transition. Exact Apollo display terminology/formatting will again be used only where primary evidence supports it.
+The next implementation target is the **first-pass FIDO/RETRO player presentation**: final PC+2 target/PAD, return consequences, ground solution status, and post-burn trajectory assessment. After the remaining minimum station views exist, project emphasis shifts to integrating them into a playable PC+2 session rather than expanding subsystem research.
 
 ## Apollo 13 station specifications
 
