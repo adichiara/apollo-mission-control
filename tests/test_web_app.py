@@ -63,7 +63,7 @@ class WebAppTests(unittest.TestCase):
         audit = self.client.get("/api/session/audit").json()
         self.assertIn("player_rejoined", [event["kind"] for event in audit])
 
-    def test_flight_gate_is_explicit_pause_then_resumes_on_go(self):
+    def test_flight_gate_does_not_pause_get_and_go_can_clear_it(self):
         for player_id, station in (
             ("flight", "FLIGHT"),
             ("control", "CONTROL"),
@@ -79,8 +79,9 @@ class WebAppTests(unittest.TestCase):
         advance = self.client.post("/api/session/advance", json={"target_get_s": 285600.0})
         self.assertEqual(advance.status_code, 200)
         self.assertEqual(advance.json()["pending_gate"], "flight_go")
-        self.assertEqual(advance.json()["status"], "paused")
-        self.assertEqual(advance.json()["pause_reason"], "decision_gate:flight_go")
+        self.assertEqual(advance.json()["status"], "running")
+        self.assertIsNone(advance.json()["pause_reason"])
+        self.assertEqual(advance.json()["reached_get_s"], 285600.0)
 
         readiness = self.client.post(
             "/api/session/player/control/readiness",
@@ -90,7 +91,7 @@ class WebAppTests(unittest.TestCase):
 
         flight_snapshot = self.client.get("/api/session/player/flight").json()
         self.assertEqual(len(flight_snapshot["presentation"]["readiness_reports"]), 1)
-        self.assertEqual(flight_snapshot["pause_reason"], "decision_gate:flight_go")
+        self.assertIsNone(flight_snapshot["pause_reason"])
 
         decision = self.client.post(
             "/api/session/flight/flight/decision",
@@ -99,7 +100,6 @@ class WebAppTests(unittest.TestCase):
         self.assertEqual(decision.status_code, 200)
         self.assertIsNone(decision.json()["pending_gate"])
         self.assertEqual(decision.json()["session_status"], "running")
-        self.assertIsNone(decision.json()["pause_reason"])
 
         queued = self.client.post(
             "/api/session/flight/flight/capcom",
@@ -115,6 +115,25 @@ class WebAppTests(unittest.TestCase):
         transmitted = self.client.post(f"/api/session/capcom/capcom/transmit/{item_id}")
         self.assertEqual(transmitted.status_code, 200)
         self.assertTrue(transmitted.json()["transmitted"])
+
+    def test_late_unresolved_go_misses_nominal_p40_without_freezing_clock(self):
+        self.client.post(
+            "/api/session/join",
+            json={"player_id": "flight", "station": "FLIGHT"},
+        )
+        self.client.post("/api/session/start")
+
+        advance = self.client.post(
+            "/api/session/advance",
+            json={"target_get_s": 79 * 3600 + 24 * 60},
+        )
+        self.assertEqual(advance.status_code, 200)
+        self.assertEqual(advance.json()["status"], "running")
+        self.assertEqual(advance.json()["pending_gate"], "flight_go")
+
+        audit = self.client.get("/api/session/audit").json()
+        missed = [e for e in audit if e["kind"] == "scenario_event_missed"]
+        self.assertTrue(any(e["details"].get("event") == "p40_active_final_preburn" for e in missed))
 
     def test_station_assignment_conflict_returns_400(self):
         first = self.client.post(
