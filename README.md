@@ -14,6 +14,7 @@ See:
 
 - [Project principles](docs/PROJECT_PRINCIPLES.md)
 - [Roadmap](docs/ROADMAP.md)
+- [PC+2 restart-response roadmap addendum](docs/roadmap/2026-09-12_pc2_restart_response.md)
 - [Ground-product integrity roadmap addendum](docs/roadmap/2026-09-12_ground_product_integrity.md)
 - [Simulation architecture](docs/SIMULATION_ARCHITECTURE.md)
 - [Flight-control organization baseline](docs/FLIGHT_CONTROL_ORGANIZATION.md)
@@ -23,17 +24,18 @@ See:
 - [Voice communications baseline](docs/VOICE_COMMUNICATIONS_BASELINE.md)
 - [Apollo 13 station baseline](docs/APOLLO13_STATION_BASELINE.md)
 - [Station research status](docs/STATION_RESEARCH_STATUS.md)
-- [PC+2 DPS shutdown-confirmation station-status addendum](docs/station-status/2026-09-12_pc2_dps_shutdown_confirmation.md)
+- [PC+2 DPS restart-response station-status addendum](docs/station-status/2026-09-12_pc2_dps_restart_response.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
 - [Simulation validation strategy](docs/SIMULATION_VALIDATION.md)
 - [Decisions](docs/DECISIONS.md)
 - [Open questions](docs/OPEN_QUESTIONS.md)
 - [Progress log](docs/PROGRESS.md)
-- [PC+2 DPS shutdown-confirmation progress](docs/progress/2026-09-12_pc2_dps_shutdown_confirmation.md)
+- [PC+2 DPS restart-response progress](docs/progress/2026-09-12_pc2_dps_restart_response.md)
 - [Research resources](resources/README.md)
 - [PC+2 implementation source catalog](resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md)
 - [PC+2 restart source catalog](resources/source-catalog/PC2_RESTART_SOURCES.md)
+- [PC+2 DPS restart-response source catalog](resources/source-catalog/PC2_DPS_RESTART_RESPONSE_SOURCES.md)
 - [PC+2 ΔP callout source catalog](resources/source-catalog/PC2_DELTA_P_CALLOUT_SOURCES.md)
 - [PC+2 DPS shutdown-response source catalog](resources/source-catalog/PC2_DPS_SHUTDOWN_RESPONSE_SOURCES.md)
 - [PC+2 DPS shutdown-confirmation source catalog](resources/source-catalog/PC2_DPS_SHUTDOWN_CONFIRMATION_SOURCES.md)
@@ -44,52 +46,44 @@ See:
 
 The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation and execution**.
 
-The framework-neutral Python prototype includes source-backed nominal event/state progression, station-specific product projections, partial shutdown-rule evaluation, narrow source-bounded scenario injections, controller/crew action and communication layers, the inverter contingency loop, integrated attitude-error/rate monitoring, explicit observation-age semantics, hidden ground-product integrity, explicit controller product-rejection events, the premature-shutdown restart branch, and the ground-only ΔP shutdown branch through physical DPS engine-off response and controller-observable evidence channels.
+The framework-neutral Python prototype includes source-backed nominal event/state progression, station-specific product projections, partial shutdown-rule evaluation, narrow source-bounded scenario injections, controller/crew action and communication layers, the inverter contingency loop, integrated attitude-error/rate monitoring, explicit observation-age semantics, hidden ground-product integrity, explicit controller product-rejection events, the premature-shutdown restart branch, the ground-only ΔP shutdown branch through physical DPS engine-off response and controller-observable evidence channels, and a separate successful DPS restart physical-response event.
+
+### Premature shutdown / physical restart response
+
+The PC+2 restart path now preserves four separate concepts:
+
+- restart eligibility;
+- crew execution of PRO / manual ullage / Engine Start / Descent Engine Command Override;
+- actual physical engine restart;
+- later controller-observable confirmation.
+
+Contemporary LM subsystem documentation supports the physical engine-on chain: engine-on command → pilot valves open → propellant shutoff valves open → propellant flow/combustion. The physical-response helper therefore may set `engine_running=True` only after a `RESTART_ELIGIBLE` classification and completion of the modeled restart actions.
+
+It deliberately does **not** invent an LM-7 restart delay, restart thrust setting, chamber-pressure rise curve, restart success probability, or automatic ground confirmation. The crew commands alone still do not start the engine.
 
 ### DPS shutdown confirmation evidence
 
-The latest research pass bounded the minimum Mission Control evidence available after DPS shutdown without inventing an `ENGINE OFF` telemetry flag.
-
-Primary mission documentation already establishes thrust chamber pressure as a ground-observed PC+2 rule quantity. Contemporary LM documentation identifies `GQ6510P` as thrust chamber pressure, and Apollo 10 raw DPS data show that measurement responding through shutdown. The Apollo 10 trace is used only for measurement-behavior continuity; its timing and numerical values are not imported into Apollo 13.
-
-The actual Apollo 13 PC+2 voice sequence also includes Lovell reporting **“Shutdown”**, immediately acknowledged by CAPCOM. The implementation therefore keeps two independent controller-observable evidence channels:
-
-- the crew shutdown report;
-- a fresh, post-command `GQ6510P` chamber-pressure observation when one is supplied.
-
-The new evidence aggregator can report `NONE`, `CREW_REPORTED`, `GROUND_PRESSURE_OBSERVED`, or `CORROBORATED`. It does **not** convert any particular chamber-pressure value into an authoritative `engine_off_confirmed` state because no reviewed source defines such a threshold.
+The minimum Mission Control evidence after DPS shutdown remains bounded without inventing an `ENGINE OFF` telemetry flag. The model keeps independent crew-report and fresh post-command `GQ6510P` chamber-pressure channels and does not convert any pressure value into an authoritative binary engine-off threshold.
 
 ### Ground-only ΔP shutdown callout
 
-Primary mission documentation states that fuel/oxidizer differential pressure greater than **25 psi** was a PC+2 shutdown criterion and specifically required a **ground callout**. The implementation separates the ground-derived ΔP product, CONTROL assessment, CAPCOM callout, crew STOP action, physical engine response, and later evidence.
-
-Exactly 25 psi remains clear; a synthetic 26 psi case exercises the triggered path. The 26 psi value is a software boundary test, not a historical Apollo 13 measurement.
-
-### DPS shutdown command and physical response
-
-Contemporary LM systems documentation establishes that either crew descent-engine STOP pushbutton can initiate the engine-off command. Engine on/off commands actuate the descent-engine pilot valves, which in turn command closure of the fuel and oxidizer shutoff valves.
-
-The STOP input and vehicle response remain separate events. The physical-response helper does not invent an exact LM-7 STOP-to-zero-thrust delay, chamber-pressure tailoff curve, or fresh telemetry value.
-
-### Premature shutdown / restart branch
-
-A separate implemented branch preserves the documented distinction between a **rule-caused shutdown** and an **unexplained premature DPS stop**. Restart applies only when the early shutdown cause is affirmatively outside the listed shutdown criteria; a ΔP-triggered shutdown therefore does not enter the generic restart branch.
+Fuel/oxidizer differential pressure greater than **25 psi** is represented as a PC+2 ground-only shutdown criterion requiring a ground callout before crew action. Exactly 25 psi remains clear; synthetic values above the threshold are labeled non-historical test fixtures.
 
 ### Ground-product integrity
 
-A separate Apollo 13 post-MCC-5 case established that RTCC could incorrectly process AGS body angles while the spacecraft attitude was satisfactory. The reusable data path therefore distinguishes visible product validity/availability, hidden simulator integrity, and explicit controller detection/rejection. Hidden integrity never auto-diagnoses a product for the player.
+A separate Apollo 13 post-MCC-5 case established that RTCC could incorrectly process AGS body angles while spacecraft attitude was satisfactory. The reusable data path therefore distinguishes visible product validity/availability, hidden simulator integrity, and explicit controller detection/rejection. Hidden integrity never auto-diagnoses a product for the player.
 
 ### Remaining bounded gaps
 
-The singular PC+2 150-psi ground “engine inlet pressure” rule remains intentionally `NOT_EVALUABLE`: the project knows the separate LM-7 fuel (`GQ3611P`) and oxidizer (`GQ4111P`) interface-pressure measurements but has not found enough primary evidence to choose a historical ground selection/aggregation rule.
+The singular PC+2 150-psi ground “engine inlet pressure” rule remains intentionally `NOT_EVALUABLE`: separate LM-7 fuel (`GQ3611P`) and oxidizer (`GQ4111P`) interface-pressure measurements are known, but the historical ground selection/aggregation rule has not been established.
 
 The onboard **77-percent thrust-monitor** criterion also remains `NOT_EVALUABLE`; primary sources confirm the rule but do not yet identify the exact percent-thrust crew display/signal.
 
-For the **attitude-error / attitude-rate** criteria, the project preserves the primary-source discrepancy between the contemporaneous crew-facing read-up and the postflight wording. The operational implementation follows the rule actually transmitted and confirmed by the crew, while the exact duration of “startup transient” remains unresolved and is not inferred from throttle timing.
+For the **attitude-error / attitude-rate** criteria, the project preserves the primary-source discrepancy between the contemporaneous crew-facing read-up and postflight wording. The operational implementation follows the rule actually transmitted and confirmed by the crew, while the exact duration of “startup transient” remains unresolved.
 
 The project does **not** yet claim full spacecraft physics, RTCC dynamics, exact historical CRT timing, complete Apollo 13 telemetry/display routing, a generic historical stale-data timeout, detailed DPS restart/shutdown transients, or historically reconstructed SimSup malfunction-command syntax.
 
-The next implementation target is the **restart command → physical DPS re-ignition response** boundary for an eligible unexplained premature shutdown. The existing PC+2 restart procedure and contemporary LM start-control documentation should be used, while restart timing, pressure buildup, or success must remain unresolved unless directly supported.
+The next implementation target is the minimum source-backed **controller-observable evidence of successful restart**. Existing chamber-pressure paths may be reused where justified, but no restart-specific pressure threshold or crew report will be invented. If a mission-specific confirmation rule cannot be recovered economically, the project will preserve fresh GQ6510P as generic propulsion evidence and move to the next player-relevant PC+2 dependency.
 
 ## Apollo 13 station specifications
 
