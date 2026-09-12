@@ -32,7 +32,9 @@ See:
 - [Open questions](docs/OPEN_QUESTIONS.md)
 - [Progress log](docs/PROGRESS.md)
 - [PC+2 DPS shutdown-confirmation progress](docs/progress/2026-09-12_pc2_dps_shutdown_confirmation.md)
+- [Source mirroring policy](docs/SOURCE_MIRRORING.md) — proposed
 - [Research resources](resources/README.md)
+- [Primary-source mirror manifest](resources/primary-sources/manifest.json)
 - [PC+2 implementation source catalog](resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md)
 - [PC+2 restart source catalog](resources/source-catalog/PC2_RESTART_SOURCES.md)
 - [PC+2 ΔP callout source catalog](resources/source-catalog/PC2_DELTA_P_CALLOUT_SOURCES.md)

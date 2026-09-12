@@ -1,0 +1,282 @@
+{
+  "schema": 1,
+  "comment": "Retrieval and integrity manifest. Document METADATA (titles, report numbers, dates, authors, evidence status) lives in resources/PRIMARY_SOURCE_CATALOG.md and resources/source-catalog/*.md, which remain the provenance authority. This file records only what is needed to fetch a document and prove the bytes have not changed. Seeded from the Apollo 13 PC+2 dependency set plus the structural sources the baseline documents rest on; extend as later scenarios require documents. See docs/SOURCE_MIRRORING.md for the tiering rule.",
+  "storage": "resources/primary-sources/files",
+  "documents": [
+    {
+      "id": "a13-mission-operations-report",
+      "title": "Mission Operations Report - Apollo 13 (controller appendices A-N)",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf",
+        "https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/a13-mission-ops-report-19700428.pdf",
+        "https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf"
+      ],
+      "note": "Most-cited document in the repository. The three URLs are cited across seven files; confirm on fetch whether they are the same document. NASA's 'Post Launch Mission Operations Report' is a distinct publication and is not this document."
+    },
+    {
+      "id": "a13-review-board-appendix-a",
+      "title": "Report of Apollo 13 Review Board, Appendix A - Baseline Data",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://ntrs.nasa.gov/api/citations/19700078804/downloads/19700078804.pdf",
+        "https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/a13-review-report-app-a-19700078804.pdf"
+      ],
+      "note": "Part A4 is the MOCR/SSR organisational basis for notes 003 and 004. Also the source of the unresolved 'LM/TELCOM' nomenclature conflict."
+    },
+    {
+      "id": "a13-review-board-appendices-b-e",
+      "title": "Report of Apollo 13 Review Board, Appendices B-E",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://ntrs.nasa.gov/api/citations/19700078726/downloads/19700078726.pdf",
+        "https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/a13-review-report-app-b-c-d-e-19700078726.pdf"
+      ],
+      "note": "Figures B7-7/B7-8/B7-9 are the EECOM console and display evidence. Needed to verify the panel-3 limit-light counts, the 30-second limit-sense finding, and the OCR'd parameter codes in stations/APOLLO13_EECOM.md."
+    },
+    {
+      "id": "as-508-mcc-msfn-configuration",
+      "title": "AS-508 MCC/MSFN Mission Configuration / System Description",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://ntrs.nasa.gov/api/citations/19700024253/downloads/19700024253.pdf",
+        "https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/as-508-mcc-msfn-config.pdf",
+        "https://history.nasa.gov/alsj/AS-508-MCC-MSFN-Config.pdf"
+      ],
+      "note": "Source for the HSD Format 30 characteristics and the Apollo 13-era ground-system baseline."
+    },
+    {
+      "id": "a13-panel3-flight-operations-final-report",
+      "title": "MSC Apollo 13 Investigation Team, Panel 3 - Flight Operations and Network, Final Report",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://ntrs.nasa.gov/api/citations/19710010485/downloads/19710010485.pdf"
+      ],
+      "note": "Parent report containing the Mission Operations Report. NTRS 19710010485."
+    },
+    {
+      "id": "a13-lm-emergency-systems-analysis",
+      "title": "Analysis of Apollo 13 LM systems during emergency operation (Panel 3 Addendum 1)",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://ntrs.nasa.gov/api/citations/19710010487/downloads/19710010487.pdf"
+      ]
+    },
+    {
+      "id": "a13-mission-report",
+      "title": "Apollo 13 Mission Report",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://ntrs.nasa.gov/api/citations/19710003598/downloads/19710003598.pdf"
+      ],
+      "note": "MSC-02680. Cited by stations/APOLLO13_TELMU.md sections 7.2.3-7.2.5 but absent from the main source catalog as of the 2026-09-12 audit."
+    },
+    {
+      "id": "r-567-sec2-rev8-luminary-1c-data-links",
+      "title": "R-567 Section 2 Rev 8 - LUMINARY 1C Data Links (GSOP)",
+      "tier": "full",
+      "rights": "nasa-contract",
+      "urls": [
+        "https://www.ibiblio.org/apollo/NARA-SW/R-567-sec2-rev8.pdf"
+      ],
+      "note": "Apollo 13's flown LM AGC program. Needed to settle the P21/P27 program-number error in stations/APOLLO13_GUIDO.md and note 016."
+    },
+    {
+      "id": "a13-simulator-discrepancy-reports",
+      "title": "Apollo 13 Simulation Discrepancy Reports",
+      "tier": "full",
+      "rights": "third-party-scan-of-us-gov",
+      "urls": [
+        "https://www.ibiblio.org/apollo/Documents/apollo_13_simulator_discrepencies.pdf"
+      ],
+      "note": "Filename misspelling is upstream; preserved so the URL resolves."
+    },
+    {
+      "id": "lm-789-elementary-functional-diagrams",
+      "title": "LM-7/8/9 Elementary Functional Diagrams",
+      "tier": "full",
+      "rights": "third-party-scan-of-us-gov",
+      "urls": [
+        "https://www.ibiblio.org/apollo/Documents/lm-7%2C8%2C9_elementary_functional_diagrams.pdf"
+      ],
+      "note": "LM-7 is the Apollo 13 vehicle. Source for the GQ-series telemetry measurement identifiers used by the PC+2 rule paths."
+    },
+    {
+      "id": "a13-pao-transcript",
+      "title": "Apollo 13 PAO Mission Commentary Transcript",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf-hr/a13-pao-transcript.pdf"
+      ]
+    },
+    {
+      "id": "a11-flight-mission-rules",
+      "title": "Apollo 11 Flight Mission Rules, AS-506/CSM-107/LM-5",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11MissionRules.pdf",
+        "https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11missionrules.pdf"
+      ],
+      "note": "Two casings are cited in the repository; one is likely wrong. Resolve on fetch."
+    },
+    {
+      "id": "a10-lm4-dps-final-flight-evaluation",
+      "title": "Apollo 10 LM-4 DPS Final Flight Evaluation (TRW)",
+      "tier": "full",
+      "rights": "nasa-contract",
+      "urls": [
+        "https://www.nasa.gov/wp-content/uploads/static/history/afj/ap10fj/pdf/19690026326_a10-lm4-dps-final-flight-eval-trw-19690808.pdf"
+      ],
+      "note": "Cross-mission DPS behaviour used by the PC+2 throttle/ullage work."
+    },
+    {
+      "id": "sundance-functional-description-vol1",
+      "title": "Sundance Functional Description, Volume 1",
+      "tier": "full",
+      "rights": "nasa-contract",
+      "urls": [
+        "https://www.ibiblio.org/apollo/Documents/sundance_functional_description_vol1.pdf"
+      ]
+    },
+    {
+      "id": "aer-real-time-display-system",
+      "title": "Apollo Experience Report - Real-Time Display System (TN D-8316)",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://ntrs.nasa.gov/api/citations/19760024152/downloads/19760024152.pdf"
+      ]
+    },
+    {
+      "id": "aer-flight-control-data-needs",
+      "title": "Apollo Experience Report - Flight-Control Data Needs and Terminal Display Devices (TN D-7685)",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://ntrs.nasa.gov/api/citations/19740015284/downloads/19740015284.pdf"
+      ],
+      "note": "Source of the 28-to-36 computer-driven TV channel claim and the display-request vs channel-attach distinction in CONTROLLER_INFORMATION_WORKFLOW.md, which the 2026-09-12 audit found asserted from a catalog entry still marked IDENTIFIED."
+    },
+    {
+      "id": "nasa-sp-287-what-made-apollo-a-success",
+      "title": "What Made Apollo a Success? (NASA SP-287)",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://ntrs.nasa.gov/api/citations/19720005243/downloads/19720005243.pdf"
+      ]
+    },
+    {
+      "id": "haer-tx-109-c-apollo-mission-control",
+      "title": "Apollo Mission Control, HAER TX-109-C",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://www.nasa.gov/wp-content/uploads/2025/09/apollomc-habshaer.pdf"
+      ],
+      "note": "Needed to verify the 1044.9 display-requests-per-hour figure and the PHO-TN401 footnote. Cited by three documents but absent from the main source catalog as of the 2026-09-12 audit."
+    },
+    {
+      "id": "msc-simulator-operations-1968",
+      "title": "MSC Flight Crew Operations Branch - Simulator Operations (McCafferty, 1968)",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://www.ibiblio.org/apollo/Documents/msc_simulator_operations.pdf"
+      ]
+    },
+    {
+      "id": "miller-early-days-of-simulation",
+      "title": "The Early Days of Simulation and Operations (Harold G. Miller)",
+      "tier": "full",
+      "rights": "us-gov",
+      "urls": [
+        "https://www.nasa.gov/wp-content/uploads/2025/08/millerhg-paper.pdf",
+        "https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/MillerHG/MillerHG_paper.pdf"
+      ],
+      "note": "Needed to settle whether the Honeycutt recollection and the pre-Apollo-11 program-alarm simulation are the same run."
+    },
+    {
+      "id": "itc-1970-telemetry-and-communications-to-apollo-flight-controllers",
+      "title": "Telemetry and Communications to Apollo Flight Controllers (Glines and Lazzaro, ITC 1970)",
+      "tier": "full",
+      "rights": "unclear",
+      "urls": [
+        "https://repository.arizona.edu/bitstream/10150/607014/1/ITC_1970_70-11-5.pdf"
+      ],
+      "note": "Conference proceedings, not a NASA publication; rights unverified. Cited in the repository as 'R. W. Winkelman et al., Telemetry and Communications to Apollo', which the 2026-09-12 audit found to be the wrong author and a truncated title. Reclassify to link-only if the repository's terms are restrictive."
+    },
+    {
+      "id": "ac-electronics-a13-guidance-navigation-summary",
+      "title": "AC Electronics - Apollo 13 Guidance & Navigation Summary",
+      "tier": "pages",
+      "rights": "nasa-contract",
+      "urls": [
+        "https://apollojournals.org/afj/ap13fj/a13-documents.html"
+      ],
+      "pages": "ASPO 45 CRT Displays section - the MSK 683/966/1123/1137 display definitions",
+      "note": "244 MB scan; whole-document mirroring is not viable and is not needed. The index URL is a landing page, so the direct scan URL must be recorded here before fetch can work. The project reports this section has now been inspected directly; extracting the pages makes that inspection reviewable."
+    },
+    {
+      "id": "lma790-3-lm10-apollo-operations-handbook-vol1",
+      "title": "LMA790-3-LM10 Apollo Operations Handbook, LM-10 and subsequent, Vol 1 - Subsystems Data",
+      "tier": "pages",
+      "rights": "third-party-scan-of-us-gov",
+      "urls": [
+        "https://www.ibiblio.org/apollo/Documents/LMA790-3-LM10-ApolloOperationsHandbookLunarModuleLM10AndSubsequent-Volume1-SubsystemsData-SearchableText.pdf"
+      ],
+      "pages": "DPS and RCS subsystem sections supporting the PC+2 inlet-pressure, chamber-pressure and STOP-pushbutton evidence",
+      "note": "Cited in the repository under both ibiblio.org and www.ibiblio.org. LM-10 is a later vehicle than Apollo 13's LM-7; the chronology caveat in the station specs must survive extraction."
+    },
+    {
+      "id": "pho-fam001-mcc-houston-familiarization-manual",
+      "title": "Familiarization Manual - Mission Control Center Houston (PHO-FAM001, 1967)",
+      "tier": "pages",
+      "rights": "nasa-contract",
+      "urls": [
+        "https://www.ibiblio.org/apollo/Documents/Familiarization%20Manual%20Mission%20Control%20Center%20Houston.pdf"
+      ],
+      "pages": "Voice Communications Subsystem section and keyset illustrations",
+      "note": "Primary technical source for note 009 and VOICE_COMMUNICATIONS_BASELINE.md, but absent from the main source catalog as of the 2026-09-12 audit."
+    },
+    {
+      "id": "nasm-apollo-fgc-software-collection-hamilton",
+      "title": "Smithsonian NASM.1986.0158 - Apollo Flight Guidance Computer Software Collection (Hamilton)",
+      "tier": "link-only",
+      "rights": "unclear",
+      "urls": [
+        "https://www.si.edu/object/archives/sova-nasm-1986-0158"
+      ],
+      "note": "Archival finding aid, not a document. Corroborates the existence of the Apollo 13 G&N Summary; no claim should rest on it alone."
+    },
+    {
+      "id": "earlyspaceflight-universal-csm-console-handbook-d5",
+      "title": "Universal CSM Console Handbook section D5 - Real-Time Commanding (transcription)",
+      "tier": "link-only",
+      "rights": "unclear",
+      "urls": [
+        "https://www.earlyspaceflight.nl/Mission_Management/JSC/MCC/Command_Subsystem/RealTimeCommanding.html"
+      ],
+      "note": "Third-party transcription used as a discovery aid. The original May 1969 handbook has not been located."
+    },
+    {
+      "id": "mcc-operational-configuration-as15-pho-tr155",
+      "title": "PHO-TR155 MCC Operational Configuration, Apollo 15 (1971-03-26)",
+      "tier": "link-only",
+      "rights": "unclear",
+      "urls": [
+        "https://klabs.org/history/history_docs/jsc_t/mcc_operational_configuration_as15.pdf"
+      ],
+      "note": "Adjacent-mission edition of the document the project lists as a very high priority target (H-2 Revision C, 1970-03-06, existence confirmed via PHO-TR474). Lead surfaced 2026-09-12 but not yet opened; promote to full once retrieved and its rights basis is established. Values must not be carried across missions."
+    }
+  ]
+}
