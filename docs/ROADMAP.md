@@ -51,6 +51,7 @@ Key research chain:
 - `066_controller_product_rejection_decision_event.md`
 - `067_pc2_premature_shutdown_restart_branch.md`
 - `068_pc2_delta_p_ground_callout_shutdown_loop.md`
+- `069_pc2_dps_shutdown_command_and_physical_response.md`
 
 Deliverables:
 
@@ -88,7 +89,7 @@ Non-PC+2 display reconstruction remains deferred.
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **nominal event model + controller products + partial rules + failure/action/communication layers + restart and ground-callout branches implemented**
+**Status:** **nominal event model + controller products + partial rules + failure/action/communication layers + restart/callout/engine-off response branches implemented**
 
 Completed:
 
@@ -121,13 +122,16 @@ Completed:
 - [x] restart actions recorded without forcing `engine_running=True`
 - [x] failure-to-ignite backup kept distinct from in-burn premature shutdown/restart
 - [x] ground-only fuel/oxidizer ΔP >25 psi path implemented as CONTROL decision → CAPCOM callout → crew shutdown command
-- [x] crew shutdown command recorded without forcing `engine_running=False`
 - [x] exact CONTROL→FLIGHT→CAPCOM approval sequence deliberately left unresolved rather than invented
+- [x] contemporary LM STOP-pushbutton control recovered for manual descent-engine shutdown
+- [x] crew STOP input separated from engine-off physical response
+- [x] engine-off response records off-discrete/pilot-valve/shutoff-valve consequences without inventing shutdown timing or pressure tailoff
 
 ### Immediate next work
 
-- [ ] research the **crew DPS shutdown command → physical engine shutdown/confirmation** boundary using primary LM/DPS sources; implement only if the response/indication chain is recoverable without deep low-value hardware archaeology
-- [ ] if that boundary is not cheaply recoverable, move to the next PC+2 controller decision path rather than infer it
+- [ ] determine the minimum source-backed **controller-observable engine-shutdown confirmation** path; prefer already-documented GQ6510P chamber pressure or a directly sourced engine-thrusting indication
+- [ ] do not synthesize an exact shutdown delay or chamber-pressure trace merely to close the loop
+- [ ] if confirmation routing cannot be recovered cheaply, move to the next PC+2 decision dependency
 - [ ] keep `crew_thrust_monitor` `NOT_EVALUABLE` unless a direct LM-7 source identifies the percent-thrust indication
 - [ ] keep singular 150-psi inlet-pressure aggregation deferred unless a direct source becomes cheaply available
 - [ ] add broader failure-propagation tests only where subsystem behavior is source-backed
@@ -148,10 +152,12 @@ Important constraints:
 - detailed DPS restart/transient dynamics remain deferred;
 - Noun 97 is retained as a procedural cue without inventing a detailed LGC state machine;
 - restart eligibility does not imply restart success;
-- exact ΔP ground-call wording, internal voice-loop approval sequence, and cockpit shutdown control are not invented;
-- crew shutdown command does not imply physical engine shutdown until a source-backed vehicle-response path is modeled;
+- exact ΔP ground-call wording and internal voice-loop approval sequence are not invented;
+- manual shutdown is represented by the documented STOP pushbutton architecture, but exact LM-7 transient timing, acting crew member, and controller-confirmation latency remain unresolved;
+- crew STOP action does not imply physical engine shutdown until an explicit vehicle-response event occurs;
+- physical engine-off response does not automatically fabricate a new chamber-pressure observation;
 - synthetic boundary-test values/times are labeled non-historical;
-- scenario injection changes source state/observations, operational actions record crew/controller actions, procedural communications record instructions/reports, and controller decisions record interpretations; none directly scripts diagnosis/outcome.
+- scenario injection changes source state/observations, operational actions record crew/controller actions, procedural communications record instructions/reports, controller decisions record interpretations, and physical-response helpers represent sourced vehicle consequences; none directly scripts diagnosis/outcome.
 
 ## Phase 5 — Mission Control data path
 
@@ -169,8 +175,9 @@ Current checkpoint:
 - validity/integrity degradation is independent from observation age;
 - controller suspicion/rejection is explicit and never inferred automatically from hidden integrity;
 - premature shutdown restart eligibility is derived from rule state but crew restart actions do not force physical engine response;
-- the ground-only ΔP path now crosses CONTROL decision, CAPCOM communication, and crew command without collapsing those layers;
-- the next data-path refinement is physical response/confirmation after a crew DPS shutdown command, if source support is economical;
+- the ground-only ΔP path crosses CONTROL decision, CAPCOM communication, and crew command without collapsing those layers;
+- manual STOP input and physical DPS engine-off response are now separate source-backed events;
+- the next data-path refinement is controller-visible confirmation of shutdown rather than command-state inference;
 - network transport and exact display cadence remain future work where documented.
 
 ## Phase 6 — Procedures and flight rules
@@ -184,6 +191,7 @@ PC+2 checkpoint:
 - [x] ground chamber-pressure criterion evaluable when a numerical source observation is supplied
 - [x] fuel/oxidizer ΔP >25 psi criterion evaluable when an explicit ground-derived product is supplied
 - [x] fuel/oxidizer ΔP ground-only callout propagated to a crew shutdown-command action
+- [x] contemporary LM manual shutdown control identified as either crew STOP pushbutton
 - [x] inverter-warning-after-switch criterion evaluable only from a distinct post-switch observation
 - [x] bounded inverter contingency action/report order recovered
 - [x] 77-percent onboard thrust criterion researched and deliberately left `NOT_EVALUABLE`
@@ -195,7 +203,7 @@ PC+2 checkpoint:
 - [ ] exact alternate-inverter identity, switch/circuit-breaker positions, crew member, and dwell time remain unresolved
 - [ ] singular 150-psi ground inlet-pressure rule remains `NOT_EVALUABLE`
 - [ ] crew inlet indication remains deferred
-- [ ] exact cockpit DPS shutdown control sequence for the ground-only ΔP criterion remains unresolved
+- [ ] exact LM-7 STOP-to-zero-thrust transient and ground confirmation latency remain unresolved
 
 ## Phase 7 — Simulation scenarios / SimSup
 
@@ -212,7 +220,8 @@ Current checkpoint:
 - [x] synthetic rule-boundary fixtures clearly distinguished from historical Apollo cases
 - [x] first source-bounded multi-layer contingency loop implemented for inverter warning
 - [x] premature-shutdown restart branch modeled without scripting restart success
-- [x] first ground-only shutdown callout loop implemented for ΔP >25 psi without scripting physical engine response
+- [x] first ground-only shutdown callout loop implemented for ΔP >25 psi
+- [x] crew STOP command and physical engine-off response separated so future command-response failures can be represented when sourced
 - [ ] documented nonnominal Apollo training case reconstructed only when source detail is sufficient
 - [ ] historical SimSup/operator interface deferred
 
@@ -235,7 +244,8 @@ Established requirements:
 - crew-facing Mission Rules read-up/readback is operational evidence;
 - premature-shutdown restart procedure can be pre-briefed before ignition rather than invented as an emergency ground decision;
 - fuel/oxidizer ΔP >25 psi requires a ground-to-crew callout before the crew shutdown response;
-- exact hypothetical internal CONTROL→FLIGHT→CAPCOM routing is not asserted without stronger evidence.
+- exact hypothetical internal CONTROL→FLIGHT→CAPCOM routing is not asserted without stronger evidence;
+- crew action acknowledgement and ground confirmation of physical engine response remain distinct concepts.
 
 ## Phase 10 — Post-simulation review
 
