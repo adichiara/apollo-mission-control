@@ -634,7 +634,23 @@ NASA/contractor bibliography records identify:
   - 2.1-37 — DEDA Output List
   - 2.1-38 — DEDA Accessible Constants
 - **Use:** Mission-specific/preflight evidence for the Apollo 13 AEA/AGS telemetry and DEDA architecture.
-- **Current limitation:** exact Table 2.1-7 Flight Program 7 word-to-memory contents still need direct extraction; do not substitute an earlier FP6 table.
+- **Current limitation:** the exact LM-7 page image for Table 2.1-7 still needs direct row-by-row inspection; do not silently substitute the June-changed LM-10 searchable copy as flight authority.
+
+### Apollo Operations Handbook — LM 10 and Subsequent, Table 2.1-7 continuity copy
+
+- **Document:** LMA790-3-LM
+- **Title:** Apollo Operations Handbook, Lunar Module LM 10 and Subsequent, Volume I — Subsystems Data
+- **Basic date:** 1970-02-01
+- **Change date:** 1970-06-15
+- **Relevant pages:** 2.1-97–2.1-98
+- **Table:** 2.1-7 — Abort Electronics Assembly - Telemetry Word List
+- **Searchable scan:** https://www.ibiblio.org/apollo/Documents/LMA790-3-LM10-ApolloOperationsHandbookLunarModuleLM10AndSubsequent-Volume1-SubsystemsData-SearchableText.pdf
+- **Original scan:** https://www.ibiblio.org/apollo/Documents/LMA790-3-LM10-ApolloOperationsHandbookLunarModuleLM10AndSubsequent-Volume1-SubsystemsData.pdf
+- **Independent mirror:** https://apollojournals.org/alsj/LM10HandbookVol1.pdf
+- **Status:** REVIEWED-DETAILED through indexed/searchable table text; large PDF cannot be rendered by the current web reader.
+- **Use:** Strong same-basic-date continuity evidence for the 50-word AEA telemetry product. Explicitly exposes present LM inertial velocity, compensated 20-ms delta-V, DEDA state, direction cosines, the telemetry ullage counter, and sensed body-axis velocity increments.
+- **Critical caution:** This copy was changed after Apollo 13. It constrains the telemetry architecture and candidate source families but does not certify every row as unchanged in LM-7/Flight Program 7.
+- **Research record:** `research/046_aea_telemetry_word_list_recovery.md`.
 
 
 ### Delco/AC Electronics Apollo 12 Guidance & Navigation Summary — cross-mission MSK 1123 reference
