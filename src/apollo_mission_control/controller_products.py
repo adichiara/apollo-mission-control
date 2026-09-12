@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from .pc2_nominal import PC2State, Product, Validity
+from .product_integrity import IntegrityAnnotatedProduct, ProductIntegrity, annotate_product
 
 
 @dataclass
@@ -18,6 +19,26 @@ class ProjectionSet:
     station: str
     products: dict[str, Product] = field(default_factory=dict)
     deferred_fields: tuple[str, ...] = ()
+    integrity_annotations: dict[str, IntegrityAnnotatedProduct] = field(default_factory=dict)
+
+    def annotate_integrity(
+        self,
+        product_name: str,
+        *,
+        integrity: ProductIntegrity = ProductIntegrity.CORRECT,
+        integrity_reason: str = "",
+        controller_detected_problem: bool = False,
+    ) -> IntegrityAnnotatedProduct:
+        """Attach hidden integrity metadata without changing player-visible products."""
+        product = self.products[product_name]
+        annotated = annotate_product(
+            product,
+            integrity=integrity,
+            integrity_reason=integrity_reason,
+            controller_detected_problem=controller_detected_problem,
+        )
+        self.integrity_annotations[product_name] = annotated
+        return annotated
 
 
 def _live_product(
