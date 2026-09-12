@@ -232,3 +232,18 @@ Apollo 11 PDF 205–207 and Apollo 13 PDF 188–190 show changed attitude rows, 
 Research note 045 uses Apollo 11/12 display-definition pages to separate the meanings and masks of AGS VEL, LGC DEL VEL, AGS DEL VEL, AGS ULL, and ACT VEL. A January 1970 MIT Instrumentation Laboratory report independently reproduces the 1123-style page as a **Typical Data Format for Ground Consoles**, visibly including the AEA/LGC/PCM header and those same field families.
 
 This strengthens the composite-ground-product interpretation of MSK 1123 but does not resolve the exact Apollo 13 field routing. The AEA/LGC/PCM boxes are also **not** yet documented as dynamic validity/status indicators; their runtime behavior remains unresolved.
+
+
+## 2026-09-11 — AEA telemetry-word-list recovery
+
+Research note 046 recovers the engineering structure of **Table 2.1-7 — Abort Electronics Assembly - Telemetry Word List** from a contemporary LMA790-3-LM handbook copy with the same 1 February 1970 basic date as the Apollo 13 LM-7 handbook. The searchable copy carries a later 15 June 1970 change date, so its rows are retained as strong continuity evidence until the exact LM-7 page is directly compared.
+
+The table explicitly separates:
+
+- present LM inertial velocity — three telemetry words / IDs 34–36 octal;
+- compensated 20-ms body-axis incremental velocity — IDs 24–26;
+- a separate **ullage counter for telemetry** — ID 37, dimensionless;
+- a second three-word family of sensed velocity increments along the LM body axes — IDs 60–62;
+- DEDA state, direction cosines, timing, and other AGS quantities.
+
+This materially narrows the MSK 1123 source candidates and independently confirms that **AGS ULL cannot simply display the telemetry ullage counter**, because the CRT field is a velocity-unit measurement. It still does not tell us which incremental-velocity family feeds AGS DEL VEL, what ground calculation produces AGS ULL or ACT VEL, or whether AGS VEL is transformed before display. Those remain explicit RTCC/display-routing gaps.
