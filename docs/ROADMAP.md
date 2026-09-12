@@ -123,8 +123,8 @@ Deliverables:
 - [x] Handbook chronology corrected: Apollo 13 LM-7 is Basic Date 15 Dec 1968 / Change Date 1 Feb 1970; searchable LM-10 is Basic Date 1 Feb 1970 / Change Date 15 Jun 1970.
 - [x] AGS ullage qualification narrowed to a two-second accumulated +X velocity-increment test; equivalent later handbook wording expresses the same threshold as average acceleration over the cycle.
 - [x] PC+2-critical information families separated into physical, onboard, telemetry/link, ground-derived and crew-report layers.
-- [ ] Identify the **smallest historical display/product set actually needed for PC+2** at GUIDO, CONTROL, FIDO/RETRO, TELMU, INCO, FLIGHT and CAPCOM.
-- [ ] Map only those PC+2-required products to the implementation parameter specification.
+- [x] Identify the **smallest historical display/product set actually needed for PC+2** at GUIDO, CONTROL, FIDO/RETRO, TELMU, INCO, FLIGHT and CAPCOM (`APOLLO13_PC2_PLAYER_PRODUCTS.md`).
+- [ ] Map those minimum products into first-pass station screens, using exact Apollo formats where available and explicitly labeled project renderings where presentation evidence is incomplete.
 - [ ] Directly compare the Apollo 13 LM-7 Table 2.1-7 page against the later searchable LM-10 table **only if it becomes necessary for a PC+2-required field and remains reasonably accessible**.
 - [ ] Recover MCC/RTCC rules for specific AEA-to-display transformations **only where required by PC+2 station behavior**.
 
@@ -132,7 +132,7 @@ The telemetry evidence narrows source candidates but does not certify every tele
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **parameter contract begun**
+**Status:** **parameter contract and nominal state machine defined**
 
 **Goal:** produce the mission state from which historically appropriate telemetry can be derived.
 
@@ -159,13 +159,15 @@ Model only what the selected scenario requires initially, but preserve subsystem
 - [x] explicit separation of PAD LVLH target, PGNS IMU Vg, physical burn result and guidance residuals
 - [x] nominal historical validation fixture including TIG, duration, cutoff, Vg and residuals
 - [x] explicit stop conditions for unavailable low-impact numeric detail
+- [x] nominal state-transition model from weak-link final PAD transfer through post-burn power-down (`APOLLO13_PC2_STATE_MACHINE.md`)
+- [x] failure-transition hooks identified at the level of documented conditions without authoring speculative failure scripts
 
 ### Immediate next work
 
-- [ ] define nominal event/state transitions from 77:55 through 79:34
 - [ ] define subsystem dependencies and derived-value equations only where the selected slice needs them
 - [ ] determine the minimum trajectory-state representation required for the first propagating implementation
-- [ ] add failure-propagation hooks without yet authoring speculative failure scenarios
+- [ ] define update/sample cadence for the minimum player-facing products
+- [ ] convert the nominal state machine and parameter contract into the first implementation schema/data fixtures
 
 The exact Cartesian RTCC state vector at 77:55 is deliberately **not** being reverse-engineered from the maneuver PAD. It becomes an active research target only when the trajectory propagator requires it.
 
