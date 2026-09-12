@@ -63,7 +63,7 @@ class WebAppTests(unittest.TestCase):
         audit = self.client.get("/api/session/audit").json()
         self.assertIn("player_rejoined", [event["kind"] for event in audit])
 
-    def test_flight_gate_readiness_and_capcom_handoff_over_api(self):
+    def test_flight_gate_is_explicit_pause_then_resumes_on_go(self):
         for player_id, station in (
             ("flight", "FLIGHT"),
             ("control", "CONTROL"),
@@ -76,11 +76,11 @@ class WebAppTests(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
 
         self.client.post("/api/session/start")
-        # 79:20 GET is after the historical final-poll event; playable session
-        # must stop at the 79:17 decision gate.
         advance = self.client.post("/api/session/advance", json={"target_get_s": 285600.0})
         self.assertEqual(advance.status_code, 200)
         self.assertEqual(advance.json()["pending_gate"], "flight_go")
+        self.assertEqual(advance.json()["status"], "paused")
+        self.assertEqual(advance.json()["pause_reason"], "decision_gate:flight_go")
 
         readiness = self.client.post(
             "/api/session/player/control/readiness",
@@ -90,6 +90,7 @@ class WebAppTests(unittest.TestCase):
 
         flight_snapshot = self.client.get("/api/session/player/flight").json()
         self.assertEqual(len(flight_snapshot["presentation"]["readiness_reports"]), 1)
+        self.assertEqual(flight_snapshot["pause_reason"], "decision_gate:flight_go")
 
         decision = self.client.post(
             "/api/session/flight/flight/decision",
@@ -97,6 +98,8 @@ class WebAppTests(unittest.TestCase):
         )
         self.assertEqual(decision.status_code, 200)
         self.assertIsNone(decision.json()["pending_gate"])
+        self.assertEqual(decision.json()["session_status"], "running")
+        self.assertIsNone(decision.json()["pause_reason"])
 
         queued = self.client.post(
             "/api/session/flight/flight/capcom",
