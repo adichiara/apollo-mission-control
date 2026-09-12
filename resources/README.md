@@ -32,6 +32,7 @@ Current supplements:
 - `source-catalog/PC2_FLIGHT_CAPCOM_PRESENTATION_SOURCES.md` — mission-specific Flight Director and air-ground communication sources constraining the first FLIGHT and CAPCOM renderings.
 - `source-catalog/PC2_SESSION_INTEGRATION_SOURCES.md` — historical/state-machine sources governing the first authoritative playable-session orchestration layer.
 - `source-catalog/WEB_TRANSPORT_SOURCES.md` — current Render/FastAPI platform documentation supporting the first phone-accessible transport and deployment shell.
+- `source-catalog/FACILITATOR_AUTHORITY_SOURCES.md` — primary NASA simulation-control sources plus current Render secret-management sources supporting the facilitator/controller authority boundary.
 - `source-catalog/APOLLO13_GROUND_PRODUCT_INTEGRITY_SOURCES.md` — mission-specific sources for the post-MCC-5 RTCC/AGS body-angle processing error and the distinction between product availability/validity and hidden data integrity.
 
 Latest scenario-integration research:
@@ -42,7 +43,8 @@ Latest scenario-integration research:
 - `research/084_continuous_mission_clock_architecture.md` — current architecture: GET continues through controller decisions, explicit pause is the only normal clock stop, and nominal milestones whose prerequisites are absent are missed rather than replayed later.
 - `research/085_pc2_http_crew_response_integration.md` — exposes the source-bounded crew receipt → command → physical-response chain through HTTP while preserving continuous GET and avoiding invented response timing.
 - `research/086_pc2_shutdown_evidence_http_integration.md` — exposes crew-report and fresh GQ6510P evidence through CONTROL without leaking physical truth or inventing an engine-off threshold.
-- `research/087_player_admin_client_separation.md` — separates ordinary station UI from validation/SimSup controls while explicitly leaving server-side facilitator authorization as the next boundary.
+- `research/087_player_admin_client_separation.md` — separates ordinary station UI from validation/SimSup controls.
+- `research/088_facilitator_authority_boundary.md` — uses primary NASA simulation-control evidence to keep facilitator/SimSup authority separate from controller stations, with a modern server-side credential for exercise-wide operations.
 
 ## Research rule
 
