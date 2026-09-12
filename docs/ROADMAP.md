@@ -52,6 +52,7 @@ Key research chain:
 - `067_pc2_premature_shutdown_restart_branch.md`
 - `068_pc2_delta_p_ground_callout_shutdown_loop.md`
 - `069_pc2_dps_shutdown_command_and_physical_response.md`
+- `070_pc2_dps_shutdown_confirmation_evidence.md`
 
 Deliverables:
 
@@ -81,6 +82,7 @@ Current PC+2 checkpoint:
 - [x] onboard 77-percent thrust rule separated from both P47 and the thrust-to-weight indicator; exact percent-thrust readout/source remains unresolved
 - [x] attitude-error and angular-rate observations established as separate PC+2 CONTROL monitoring families; exact LM-7 PCM/display routing remains unresolved
 - [x] observation/sample time separated from later display/evaluation time; no unsupported generic stale threshold applied
+- [x] minimum shutdown-response evidence channels bounded: crew voice report plus fresh post-command GQ6510P observation, with no invented engine-off pressure threshold
 - [ ] determine singular PC+2 150-psi engine-inlet-pressure ground selection logic only if a direct source becomes readily available
 - [ ] map required products into first-pass station screens, using exact Apollo formats where available and explicitly labeled project renderings elsewhere
 - [ ] recover additional MCC/RTCC transforms only when PC+2 station behavior requires them
@@ -89,7 +91,7 @@ Non-PC+2 display reconstruction remains deferred.
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **nominal event model + controller products + partial rules + failure/action/communication layers + restart/callout/engine-off response branches implemented**
+**Status:** **nominal event model + controller products + partial rules + failure/action/communication layers + restart/callout/engine-off response + shutdown evidence channels implemented**
 
 Completed:
 
@@ -126,12 +128,15 @@ Completed:
 - [x] contemporary LM STOP-pushbutton control recovered for manual descent-engine shutdown
 - [x] crew STOP input separated from engine-off physical response
 - [x] engine-off response records off-discrete/pilot-valve/shutoff-valve consequences without inventing shutdown timing or pressure tailoff
+- [x] actual PC+2 crew “Shutdown” report represented as a separate communication event
+- [x] fresh post-command GQ6510P chamber-pressure observation represented as an independent ground evidence channel
+- [x] shutdown evidence aggregator reports `NONE`, `CREW_REPORTED`, `GROUND_PRESSURE_OBSERVED`, or `CORROBORATED` without inventing a binary engine-off threshold
 
 ### Immediate next work
 
-- [ ] determine the minimum source-backed **controller-observable engine-shutdown confirmation** path; prefer already-documented GQ6510P chamber pressure or a directly sourced engine-thrusting indication
-- [ ] do not synthesize an exact shutdown delay or chamber-pressure trace merely to close the loop
-- [ ] if confirmation routing cannot be recovered cheaply, move to the next PC+2 decision dependency
+- [ ] research and implement the **restart command → physical DPS re-ignition response** boundary for an eligible unexplained premature shutdown
+- [ ] do not infer restart success merely because PRO/ullage/Engine Start/command override actions were performed
+- [ ] do not synthesize exact restart timing or chamber-pressure buildup unless primary/contemporary sources support it
 - [ ] keep `crew_thrust_monitor` `NOT_EVALUABLE` unless a direct LM-7 source identifies the percent-thrust indication
 - [ ] keep singular 150-psi inlet-pressure aggregation deferred unless a direct source becomes cheaply available
 - [ ] add broader failure-propagation tests only where subsystem behavior is source-backed
@@ -156,6 +161,8 @@ Important constraints:
 - manual shutdown is represented by the documented STOP pushbutton architecture, but exact LM-7 transient timing, acting crew member, and controller-confirmation latency remain unresolved;
 - crew STOP action does not imply physical engine shutdown until an explicit vehicle-response event occurs;
 - physical engine-off response does not automatically fabricate a new chamber-pressure observation;
+- a crew “Shutdown” report and a post-command chamber-pressure observation are evidence channels, not authoritative engine-state truth;
+- no chamber-pressure value is treated as a formal Apollo 13 `engine off` threshold without direct evidence;
 - synthetic boundary-test values/times are labeled non-historical;
 - scenario injection changes source state/observations, operational actions record crew/controller actions, procedural communications record instructions/reports, controller decisions record interpretations, and physical-response helpers represent sourced vehicle consequences; none directly scripts diagnosis/outcome.
 
@@ -176,8 +183,10 @@ Current checkpoint:
 - controller suspicion/rejection is explicit and never inferred automatically from hidden integrity;
 - premature shutdown restart eligibility is derived from rule state but crew restart actions do not force physical engine response;
 - the ground-only ΔP path crosses CONTROL decision, CAPCOM communication, and crew command without collapsing those layers;
-- manual STOP input and physical DPS engine-off response are now separate source-backed events;
-- the next data-path refinement is controller-visible confirmation of shutdown rather than command-state inference;
+- manual STOP input and physical DPS engine-off response are separate source-backed events;
+- controller-observable shutdown evidence now has independent crew-report and fresh chamber-pressure channels;
+- no unsourced binary ground-confirmation threshold is imposed;
+- the next data-path refinement is the physical restart response after an eligible premature shutdown;
 - network transport and exact display cadence remain future work where documented.
 
 ## Phase 6 — Procedures and flight rules
@@ -192,6 +201,7 @@ PC+2 checkpoint:
 - [x] fuel/oxidizer ΔP >25 psi criterion evaluable when an explicit ground-derived product is supplied
 - [x] fuel/oxidizer ΔP ground-only callout propagated to a crew shutdown-command action
 - [x] contemporary LM manual shutdown control identified as either crew STOP pushbutton
+- [x] minimum controller-observable shutdown evidence represented without inventing an engine-off threshold
 - [x] inverter-warning-after-switch criterion evaluable only from a distinct post-switch observation
 - [x] bounded inverter contingency action/report order recovered
 - [x] 77-percent onboard thrust criterion researched and deliberately left `NOT_EVALUABLE`
@@ -203,7 +213,8 @@ PC+2 checkpoint:
 - [ ] exact alternate-inverter identity, switch/circuit-breaker positions, crew member, and dwell time remain unresolved
 - [ ] singular 150-psi ground inlet-pressure rule remains `NOT_EVALUABLE`
 - [ ] crew inlet indication remains deferred
-- [ ] exact LM-7 STOP-to-zero-thrust transient and ground confirmation latency remain unresolved
+- [ ] exact LM-7 STOP-to-zero-thrust transient remains unresolved
+- [ ] exact restart-command-to-reignition transient remains unresolved
 
 ## Phase 7 — Simulation scenarios / SimSup
 
@@ -222,6 +233,7 @@ Current checkpoint:
 - [x] premature-shutdown restart branch modeled without scripting restart success
 - [x] first ground-only shutdown callout loop implemented for ΔP >25 psi
 - [x] crew STOP command and physical engine-off response separated so future command-response failures can be represented when sourced
+- [x] shutdown evidence channels separated from authoritative physical state
 - [ ] documented nonnominal Apollo training case reconstructed only when source detail is sufficient
 - [ ] historical SimSup/operator interface deferred
 
@@ -245,7 +257,8 @@ Established requirements:
 - premature-shutdown restart procedure can be pre-briefed before ignition rather than invented as an emergency ground decision;
 - fuel/oxidizer ΔP >25 psi requires a ground-to-crew callout before the crew shutdown response;
 - exact hypothetical internal CONTROL→FLIGHT→CAPCOM routing is not asserted without stronger evidence;
-- crew action acknowledgement and ground confirmation of physical engine response remain distinct concepts.
+- crew action acknowledgement and ground confirmation of physical engine response remain distinct concepts;
+- the actual PC+2 crew “Shutdown” report is a mission-specific voice evidence channel and is not collapsed into engine state.
 
 ## Phase 10 — Post-simulation review
 
