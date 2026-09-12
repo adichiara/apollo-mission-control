@@ -48,11 +48,27 @@ def evaluate_pc2_shutdown_rules(
 
     results: dict[str, RuleEvaluation] = {}
 
-    # Numeric propulsion/control criteria are historically documented, but the
-    # nominal executable model intentionally does not invent safe readings.
-    results["ground_chamber_pressure"] = deferred(
-        "ground_chamber_pressure", "CONTROL", "ground chamber pressure <= 85 psi"
-    )
+    # Ground chamber pressure is the first modeled analog propulsion criterion.
+    # If no numerical observation has been supplied, this remains a project-model
+    # gap rather than being falsely cleared or rendered as telemetry unavailable.
+    chamber_product = control.products.get("dps.chamber_pressure_psi")
+    if chamber_product is None:
+        results["ground_chamber_pressure"] = deferred(
+            "ground_chamber_pressure", "CONTROL", "ground chamber pressure <= 85 psi"
+        )
+    else:
+        chamber_pressure = float(chamber_product.value)
+        threshold = float(fixture["shutdown_rules"]["ground_chamber_pressure_min_psi"])
+        results["ground_chamber_pressure"] = RuleEvaluation(
+            "ground_chamber_pressure",
+            RuleState.TRIGGERED if chamber_pressure <= threshold else RuleState.CLEAR,
+            "CONTROL",
+            "ground chamber pressure <= 85 psi",
+            observation={"pressure_psi": chamber_pressure, "threshold_psi": threshold},
+        )
+
+    # Remaining numeric criteria are documented, but the executable model does
+    # not yet invent or assume the required observations.
     results["crew_thrust_monitor"] = deferred(
         "crew_thrust_monitor", "CREW/CAPCOM", "onboard thrust monitor <= 77 percent"
     )
