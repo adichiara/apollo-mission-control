@@ -56,6 +56,7 @@ Key research chain:
 - `071_pc2_dps_restart_physical_response.md`
 - `072_pc2_restart_controller_evidence.md`
 - `073_pc2_control_player_presentation_boundary.md`
+- `074_pc2_guido_player_presentation_boundary.md`
 
 Deliverables:
 
@@ -88,7 +89,10 @@ Current PC+2 checkpoint:
 - [x] first-pass player-facing **CONTROL** presentation implemented as an explicitly labeled project rendering
 - [x] Apollo 13 MSK 1137 `TCP` percent semantics kept distinct from modeled `GQ6510P` psi; no unsupported conversion/alias
 - [x] deferred CONTROL fields omitted rather than presented as historical telemetry failures
-- [ ] build first-pass **GUIDO** player presentation using exact Apollo terminology only where semantics/units are directly supported
+- [x] first-pass player-facing **GUIDO** presentation implemented from controller-visible PC+2 products
+- [x] GUIDO presentation preserves exact Apollo terminology only where semantics are supportable and labels assessment/load products as project renderings rather than asserted CRT literals
+- [x] deferred GUIDO `vg_remaining` / `dv_gained` fields remain implementation gaps rather than simulated telemetry failures
+- [ ] build first-pass **TELMU** player presentation around PC+2 power/configuration and inverter contingency products
 - [ ] determine singular PC+2 150-psi engine-inlet-pressure ground selection logic only if a direct source becomes readily available
 - [ ] map remaining required station products into first-pass player screens, using exact Apollo formats where available and explicitly labeled project renderings elsewhere
 - [ ] recover additional MCC/RTCC transforms only when player decisions require them
@@ -97,7 +101,7 @@ Non-PC+2 display reconstruction remains deferred.
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **nominal event model + controller products + partial rules + failure/action/communication layers + shutdown/restart physical-response/evidence paths + first CONTROL presentation implemented**
+**Status:** **nominal event model + controller products + partial rules + failure/action/communication layers + shutdown/restart physical-response/evidence paths + CONTROL/GUIDO presentation models implemented**
 
 Completed:
 
@@ -129,11 +133,13 @@ Completed:
 - [x] crew STOP input separated from physical engine-off response
 - [x] shutdown evidence keeps crew report and fresh GQ6510P observation distinct from authoritative physical state
 - [x] first-pass CONTROL presentation preserves source/provenance/validity and hides internal integrity metadata
+- [x] first-pass GUIDO presentation preserves LGC/PGNS source boundaries, project-assessment semantics, and hidden-integrity separation
 
 ### Immediate next work
 
-- [ ] implement the **first-pass GUIDO player-facing presentation** from the existing PC+2 product projection
-- [ ] use MSK 1123/1137 historical labels only where modeled semantics and units match the source definitions
+- [ ] implement the **first-pass TELMU player-facing presentation** from the existing PC+2 product projection
+- [ ] prioritize burn-configuration power mode/current reference, inverter warning/action state, and post-burn power-down transition
+- [ ] use exact Apollo display terminology only where modeled semantics and units match the source evidence
 - [ ] do not expose hidden integrity metadata or convert implementation gaps into simulated telemetry failures
 - [ ] keep `crew_thrust_monitor` `NOT_EVALUABLE` unless a direct LM-7 source identifies the percent-thrust indication
 - [ ] keep singular 150-psi inlet-pressure aggregation deferred unless a direct source becomes cheaply available
@@ -157,6 +163,7 @@ Important constraints:
 - physical response does not automatically fabricate telemetry evidence;
 - no chamber-pressure value is treated as a formal binary engine-on/off threshold without direct evidence;
 - MSK 1137 `TCP` percent is not aliased to GQ6510P psi without a sourced conversion;
+- GUIDO project assessment/load-status products are not claimed as verbatim CRT literals;
 - exact player display coordinates/routing are not invented where source coverage is incomplete;
 - synthetic boundary-test values/times are labeled non-historical;
 - injections, actions, communications, controller decisions, physical responses, controller products, and player presentation remain separate layers.
@@ -172,7 +179,7 @@ Current checkpoint:
 - validity/integrity degradation remains independent from observation age;
 - controller suspicion/rejection is explicit and never inferred automatically from hidden integrity;
 - shutdown/restart actions, physical responses, and controller evidence remain separate;
-- first CONTROL presentation consumes only controller-visible products and preserves their provenance;
+- CONTROL and GUIDO presentation models consume only controller-visible products and preserve provenance;
 - hidden product-integrity annotations do not leak into presentation;
 - deferred implementation gaps do not masquerade as telemetry failures;
 - network transport and exact display cadence remain future work where documented.
