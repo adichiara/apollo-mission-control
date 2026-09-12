@@ -73,7 +73,7 @@ The documented MCC organization reinforces the existing separation between physi
 
 1. Reconstruct physical console/display capabilities and controller display-request workflow.
 2. Identify mission-specific display formats for the likely Apollo 11 LM activation/descent interval.
-3. Begin mapping controller positions to actual displays, parameters, and support-room inputs.
+3. Begin mapping controller positions to actual displays/parameters and support-room inputs.
 4. Research voice-loop topology using primary Apollo documentation/audio.
 5. Continue searching for integrated-simulation / SimSup scenario documentation.
 
@@ -147,7 +147,6 @@ A generic "retro terminal" is no longer an acceptable historical stand-in for th
 - reconstruct voice-loop topology
 - identify which dynamic products were hard copy versus CRT
 - locate console-handbook material for the Apollo 11 CSM and LM systems positions
-
 
 ## 2026-09-11 — Phase 1: Voice communications, pass 1
 
@@ -297,7 +296,6 @@ Not enough evidence yet exists to claim a complete Apollo 13 EECOM console recre
 2. Locate H-2 PHO-TR155 Revision C.
 3. Confirm Apollo 13 GNC display numbers/layouts.
 4. Locate exact GNC console panel configuration.
-
 
 ## 2026-09-11 — Phase 1: Detailed LM CONTROL and TELMU reconstruction
 
@@ -897,7 +895,6 @@ The simulator must preserve those origins rather than populate the CRT directly 
 - Preserved the source-quality boundary: the large PDF still could not be rendered, so this is indexed-text verification rather than page-image verification.
 - The AGS research target is now narrower: recover the **Flight Program 7 AEA telemetry word list** and connect it to MSK 1123.
 
-
 ## 2026-09-11 — FP7 telemetry continuity matrix
 
 ### Completed
@@ -1135,3 +1132,88 @@ The table now answers much of **what AEA velocity information existed in telemet
 2. Locate PHO/RTCC/display-format documentation mapping AEA telemetry into MSK 1123.
 3. Resolve the exact AGS DEL VEL source selection.
 4. Resolve the ground calculations for AGS ULL and ACT VEL.
+
+
+## 2026-09-12 — Research sufficiency and first vertical-slice selection
+
+### Completed
+
+- Formalized a research-sufficiency rule so inaccessible, repeatedly searched, or low-impact historical gaps can be logged and deferred rather than blocking the project indefinitely.
+- Determined that Phase 1 is **research-sufficient to proceed**, not historically exhaustive.
+- Compared three first-slice candidates:
+  - Apollo 13 oxygen-tank accident/immediate stabilization;
+  - Apollo 13 PC+2 preparation/execution;
+  - Apollo 11 powered descent.
+- Selected **Apollo 13 PC+2 preparation/execution** as the first vertical slice because it provides the strongest current combination of primary-source coverage, meaningful controller interaction, bounded model scope, explicit decision criteria, and compatibility with the Apollo 13-era technical baseline.
+- Recorded the choice as D-013.
+- Added a controller action/rule matrix focused on PC+2 rather than continuing generic display archaeology.
+- Deferred exact non-critical MSK 1123/1137 routing unless a PC+2 implementation dependency requires it.
+
+### New/updated documents
+
+- `resources/research/048_first_vertical_slice_candidate_assessment.md`
+- `resources/research/049_pc2_controller_action_and_rule_matrix.md`
+- `docs/scenarios/APOLLO13_PC2_VERTICAL_SLICE.md`
+- `docs/PROJECT_PRINCIPLES.md`
+- `docs/DECISIONS.md`
+- `docs/ROADMAP.md`
+- `docs/OPEN_QUESTIONS.md`
+- `docs/SIMULATION_SCENARIO_RESEARCH.md`
+
+### Architecture consequence
+
+The active research question is no longer “can every Apollo 13 controller station be reconstructed completely?” It is now “what state, information products, rules and interactions are required to make the selected PC+2 slice historically operable?”
+
+
+## 2026-09-12 — PC+2 initialization and nominal parameter contract
+
+### Completed
+
+- Used the Apollo 13 Mission Operations Report and technical air-ground chronology to freeze the nominal first-slice start at **77:55:00 GET**.
+- Chose that boundary because the final P30 LM maneuver PAD begins at **77:55:24** while the air-ground link is still weak, preserving a real communications/readback task rather than beginning after all maneuver data are already established.
+- Documented the final PC+2 maneuver PAD:
+  - TIG 79:27:38.30 GET;
+  - LVLH ΔV +833.0 / -50.9 / -213.9 ft/s;
+  - resultant ΔV 861.5 ft/s;
+  - expected perigee 20.5 nmi;
+  - burn attitude 272° roll / 81° pitch;
+  - two-jet, 10-second ullage;
+  - documented throttle sequence.
+- Preserved a critical frame distinction: the crew maneuver PAD's LVLH components are not the same quantities as GUIDO's PGNS/IMU velocity-to-be-gained values.
+- Added planned/executed PGNS Vg and post-burn residuals as historical validation targets.
+- Documented initial communications behavior: weak link after AOS, S-band power-amplifier increase, ranging/uplink availability, and crew reports as a separate information source from telemetry.
+- Built the first implementation-oriented parameter dictionary, including mission, ground-trajectory, PGNS/LGC, AGS, DPS, RCS/attitude, electrical and communications state.
+- Added source-layer, validity, sample/receive-time and data-age requirements so the nominal model does not structurally collapse physical state into perfect controller data.
+- Explicitly declined to invent:
+  - an exact RTCC Cartesian state vector at 77:55 before the trajectory propagator requires it;
+  - exact nominal propulsion pressures where current sources provide only shutdown thresholds;
+  - full consumables or noncritical MSK fields not needed for PC+2.
+
+### New/updated documents
+
+- `resources/research/050_pc2_initialization_and_nominal_validation.md`
+- `docs/scenarios/APOLLO13_PC2_PARAMETERS.md`
+- `docs/scenarios/APOLLO13_PC2_VERTICAL_SLICE.md`
+- `docs/ROADMAP.md`
+- `docs/STATION_RESEARCH_STATUS.md`
+- `resources/PRIMARY_SOURCE_CATALOG.md`
+
+### Nominal validation targets
+
+The first deterministic run should reproduce at least:
+
+- ignition: 79:27:38.30 GET;
+- actual burn duration: 263.82 s;
+- actual guided cutoff: 79:32:02.12 GET;
+- target resultant ΔV: 861.5 ft/s;
+- executed PGNS Vg approximately +742.21 / -425.88 / +91.04 ft/s;
+- post-burn residuals approximately +1.0 / +0.3 / 0.0 ft/s;
+- no shutdown-rule trigger in the nominal case;
+- transition into LM power-down after burn verification.
+
+### Next work
+
+1. Define the nominal event/state transition model from 77:55 through 79:34.
+2. Identify the smallest historical player-facing display/product set required by GUIDO, CONTROL, FIDO/RETRO, TELMU, INCO, FLIGHT and CAPCOM.
+3. Map only those products onto the new parameter/source layers.
+4. Determine the minimum numerical trajectory-state representation needed when the first propagator is implemented.
