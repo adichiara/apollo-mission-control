@@ -5,9 +5,14 @@ This directory is the provenance layer for the simulation.
 ## Structure
 
 - `PRIMARY_SOURCE_CATALOG.md` — master index of identified source documents.
+- `source-catalog/` — small implementation/scenario-specific catalog supplements that are part of the active source index and should be folded into the master catalog during comprehensive catalog maintenance.
 - `research/` — project research notes derived from sources.
 - `audits/` — dated verification reports and file-by-file evidence ledgers.
 - `primary-sources/` — reserved for local copies of primary documents when the project decides that mirroring is appropriate and legally/permanently practical.
+
+Current supplement:
+
+- `source-catalog/PC2_IMPLEMENTATION_SOURCES.md` — sources used directly by the Apollo 13 PC+2 executable product-projection and shutdown-rule layers.
 
 ## Research rule
 
