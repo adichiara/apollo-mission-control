@@ -69,6 +69,7 @@ class PlayerSessionSnapshot:
     session_status: str
     mission_phase: str
     pending_gate: str | None
+    pause_reason: str | None
     presentation: dict[str, Any]
 
     def to_dict(self) -> dict[str, Any]:
@@ -94,6 +95,7 @@ class PC2Session:
     status: SessionStatus = SessionStatus.CREATED
     next_event_index: int = 0
     pending_gate: str | None = None
+    pause_reason: str | None = None
     station_assignments: dict[str, str] = field(default_factory=dict)
     readiness_reports: list[ReadinessReport] = field(default_factory=list)
     capcom_queue: list[CapcomQueueItem] = field(default_factory=list)
@@ -146,36 +148,57 @@ class PC2Session:
         if self.status != SessionStatus.CREATED:
             raise ValueError("Session can only be started once")
         self.status = SessionStatus.RUNNING
+        self.pause_reason = None
         self._audit("session_started", "SESSION")
 
     def pause(self) -> None:
         if self.status != SessionStatus.RUNNING:
             raise ValueError("Only a running session can be paused")
         self.status = SessionStatus.PAUSED
-        self._audit("session_paused", "SESSION")
+        self.pause_reason = "manual"
+        self._audit("session_paused", "SESSION", reason=self.pause_reason)
 
     def resume(self) -> None:
         if self.status != SessionStatus.PAUSED:
             raise ValueError("Only a paused session can be resumed")
+        if self.pending_gate is not None:
+            raise ValueError("Cannot resume while a controller decision gate is pending")
+        prior_reason = self.pause_reason
         self.status = SessionStatus.RUNNING
-        self._audit("session_resumed", "SESSION")
+        self.pause_reason = None
+        self._audit("session_resumed", "SESSION", prior_reason=prior_reason)
+
+    def _pause_for_gate(self, gate: str, *, source_event: str) -> None:
+        """Pause simulation time explicitly while a controller decision is pending.
+
+        Apollo GET did not historically stop. This is a project playability policy:
+        the simulation is explicitly paused so source-backed downstream event times
+        are not applied retroactively while players deliberate.
+        """
+        self.pending_gate = gate
+        self.status = SessionStatus.PAUSED
+        self.pause_reason = f"decision_gate:{gate}"
+        self._audit(
+            "decision_gate_opened",
+            "SESSION",
+            gate=gate,
+            source_event=source_event,
+            simulation_paused=True,
+        )
 
     def advance_to(self, target_get_s: float) -> float:
         """Advance authoritative scenario time up to target GET.
 
-        The deterministic nominal fixture historically contains a timed
-        `final_go_no_go_poll` event that sets FLIGHT GO automatically. That is
-        retained in the validation model but deliberately intercepted here. In
-        playable orchestration the poll opens a decision gate; only an explicit
-        FLIGHT player decision can clear it.
+        Timed historical events are applied only while the simulation is RUNNING.
+        A controller decision gate explicitly pauses the simulation; it is not a
+        claim that historical Apollo GET stopped. This prevents later historical
+        events from being applied retroactively while a player decision is pending.
         """
         if self.status != SessionStatus.RUNNING:
             raise ValueError("Session must be running to advance")
         target = float(target_get_s)
         if target < self.state.get_s:
             raise ValueError("Session time cannot move backward")
-        if self.pending_gate is not None:
-            return float(self.state.get_s)
 
         while self.next_event_index < len(self.events):
             event = self.events[self.next_event_index]
@@ -185,20 +208,19 @@ class PC2Session:
             if event.name == "final_go_no_go_poll":
                 self.state.get_s = event.get_s
                 self.state.phase = "pc2_final_readiness"
-                self.pending_gate = "flight_go"
                 self.next_event_index += 1
-                self._audit("flight_go_no_go_poll_opened", "SESSION", source_event=event.name)
+                self._pause_for_gate("flight_go", source_event=event.name)
                 return float(self.state.get_s)
 
             apply_event(self.state, event, self.fixture)
             self.next_event_index += 1
             self._audit("scenario_event_applied", "SESSION", event=event.name)
 
-        if self.pending_gate is None:
-            self.state.get_s = target
+        self.state.get_s = target
 
         if self.next_event_index >= len(self.events):
             self.status = SessionStatus.COMPLETE
+            self.pause_reason = None
             self._audit("session_completed", "SESSION")
 
         return float(self.state.get_s)
@@ -254,6 +276,7 @@ class PC2Session:
             session_status=self.status.value,
             mission_phase=self.state.phase,
             pending_gate=self.pending_gate,
+            pause_reason=self.pause_reason,
             presentation=asdict(view),
         )
 
@@ -304,6 +327,10 @@ class PC2Session:
         if go:
             self.state.phase = "pc2_go_for_burn"
             self.pending_gate = None
+            if self.pause_reason == "decision_gate:flight_go":
+                self.status = SessionStatus.RUNNING
+                self.pause_reason = None
+                self._audit("session_resumed_after_decision", "SESSION", gate="flight_go")
         else:
             self.state.phase = "pc2_final_readiness"
 
