@@ -36,9 +36,10 @@ Current supplements:
 
 Latest scenario-integration research:
 
-- `research/081_pc2_mission_clock_and_decision_gate_semantics.md` — separates historical GET from the first-slice explicit simulation-pause policy.
+- `research/081_pc2_mission_clock_and_decision_gate_semantics.md` — primary-source GET findings plus the explicitly superseded provisional pause-gate policy.
 - `research/082_pc2_delta_p_session_integration_boundary.md` — carries the documented >25-psi ground-callout rule through CONTROL decision and CAPCOM transmission without inventing internal routing or automatic crew/vehicle response.
 - `research/083_pc2_crew_response_after_ground_shutdown_call.md` — extends that branch through explicit crew receipt, crew shutdown command, and a separate physical DPS engine-off response without inventing timing or telemetry confirmation.
+- `research/084_continuous_mission_clock_architecture.md` — current architecture: GET continues through controller decisions, explicit pause is the only normal clock stop, and nominal milestones whose prerequisites are absent are missed rather than replayed later.
 
 ## Research rule
 
