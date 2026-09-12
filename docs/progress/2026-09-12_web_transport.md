@@ -18,6 +18,30 @@ Date: 2026-09-12
 - Preserved assignment protection: a rejoining player cannot switch stations and another player cannot take an occupied station.
 - Added API tests for the rejoin behavior.
 
+## Mission-clock boundary resolved
+
+Primary-source review was completed before changing timing behavior.
+
+The Apollo 13 Flight Control Division *Mission Operations Report* establishes the source-backed PC+2 sequence and explicitly states that PC+2 ignition time was **not time critical**, while still recording the actual GO/TIG/power-down chronology in GET. The source does not say GET stopped while controllers deliberated and does not give a numeric allowable delay.
+
+Implementation policy for the deterministic first slice is therefore explicit:
+
+- blocking controller gates pause the **simulation**, not historical Apollo GET;
+- the final FLIGHT gate now sets session status `PAUSED` with `pause_reason=decision_gate:flight_go`;
+- manual resume cannot bypass a pending gate;
+- FLIGHT GO clears the gate and automatically resumes;
+- NO-GO remains paused;
+- later source-timed events are not silently applied retroactively;
+- the API/player snapshot exposes the pause reason.
+
+Added:
+
+- `resources/research/081_pc2_mission_clock_and_decision_gate_semantics.md`;
+- updated `PC2_SESSION_INTEGRATION_SOURCES.md`;
+- updated `pc2_session.py`, `web_app.py`, and their tests.
+
+No delay tolerance or retargeting rule was invented from the phrase “not time critical.”
+
 ## Phone-client checkpoint
 
 The prototype client can:
@@ -32,7 +56,7 @@ The prototype client can:
 - transmit approved items as CAPCOM;
 - manually advance GET for integration testing.
 
-Manual GET advancement is temporary development infrastructure, not a final mission-time design.
+Manual GET advancement remains temporary development infrastructure. A realtime driver can now be designed against explicit pause semantics rather than an ambiguous frozen clock.
 
 ## Deployment boundary
 
@@ -49,27 +73,15 @@ This is accepted for the first workflow/playability milestone only.
 
 ## Test status
 
-Transport/domain tests are committed. A full-suite execution is still not recorded as passing because the available runtime has repeatedly failed DNS resolution for `github.com` before a fresh clone/test run can begin.
+The new timing/domain/API tests are committed. A full-suite execution is still not recorded as passing because the available execution runtime has not provided a usable checked-out repository environment for running the suite.
 
 ## Current stopping point
 
-The highest-value unresolved integration issue is now **mission-clock semantics at decision gates**.
+The mission-clock / decision-gate ambiguity is resolved for the first deterministic slice.
 
-The current playable session freezes authoritative GET when the historical final GO/NO-GO poll opens and resumes only after FLIGHT records GO. That is convenient for a prototype but is not historical behavior: mission GET itself continued.
+The highest-value next work is now:
 
-Before implementing a real-time server driver, explicitly define the relationship among:
-
-- historical/session GET;
-- scenario-event eligibility;
-- pending controller decisions;
-- explicit simulation pause;
-- any future time acceleration.
-
-Do not silently turn every decision gate into a historical clock stop, and do not apply later timed events retroactively without defined semantics.
-
-## Next work
-
-1. Define and implement the mission-clock / event-gate model.
-2. Add browser-side local persistence or another lightweight mechanism so the client can automatically reattempt its same-player/same-station rejoin after reload.
-3. Smoke-test the HTTP/mobile path when a runnable environment becomes available.
-4. Then exercise one already-modeled nonnominal branch through the web/session layer.
+1. browser-side persistence of player ID/station and automatic same-player/same-station rejoin after reload;
+2. runnable HTTP/mobile smoke validation;
+3. then route one already-modeled nonnominal branch through the web/session layer;
+4. introduce a realtime driver only after the smoke path is stable, using the explicit pause policy rather than inventing delayed-event semantics.
