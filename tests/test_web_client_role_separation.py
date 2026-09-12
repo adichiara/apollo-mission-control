@@ -22,16 +22,38 @@ class WebClientRoleSeparationTests(unittest.TestCase):
         self.assertNotIn("APPLY INJECTION", page.text)
         self.assertNotIn("APPLY ENGINE-OFF RESPONSE", page.text)
         self.assertNotIn("REFRESH AUDIT", page.text)
+        self.assertNotIn("FACILITATOR TOKEN", page.text)
 
-    def test_admin_console_contains_validation_controls(self):
+    def test_admin_console_contains_authorized_validation_controls(self):
         page = self.client.get("/admin")
         self.assertEqual(page.status_code, 200)
-        self.assertIn("VALIDATION ADMIN", page.text)
+        self.assertIn("FACILITATOR / SIMSUP", page.text)
+        self.assertIn("FACILITATOR AUTHORITY", page.text)
+        self.assertIn("FACILITATOR TOKEN", page.text)
+        self.assertIn("X-Apollo-Facilitator", page.text)
         self.assertIn("CREATE / RESET", page.text)
         self.assertIn("APPLY INJECTION", page.text)
         self.assertIn("APPLY ENGINE-OFF RESPONSE", page.text)
         self.assertIn("REFRESH AUDIT", page.text)
-        self.assertIn("not an authentication boundary", page.text)
+        self.assertNotIn("not an authentication boundary", page.text)
+
+    def test_admin_injection_options_match_server_evidence_class_values(self):
+        page = self.client.get("/admin")
+        self.assertEqual(page.status_code, 200)
+        for value in (
+            "historical_event",
+            "documented_simulation_case",
+            "source_bounded_test",
+            "project_hypothetical",
+        ):
+            self.assertIn(f'value="{value}"', page.text)
+
+        for stale_value in (
+            "synthetic_boundary",
+            "documented_historical",
+            "source_bounded_hypothetical",
+        ):
+            self.assertNotIn(f'value="{stale_value}"', page.text)
 
 
 if __name__ == "__main__":
