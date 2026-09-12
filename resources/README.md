@@ -41,6 +41,7 @@ Latest scenario-integration research:
 - `research/083_pc2_crew_response_after_ground_shutdown_call.md` — extends that branch through explicit crew receipt, crew shutdown command, and a separate physical DPS engine-off response without inventing timing or telemetry confirmation.
 - `research/084_continuous_mission_clock_architecture.md` — current architecture: GET continues through controller decisions, explicit pause is the only normal clock stop, and nominal milestones whose prerequisites are absent are missed rather than replayed later.
 - `research/085_pc2_http_crew_response_integration.md` — exposes the source-bounded crew receipt → command → physical-response chain through HTTP while preserving continuous GET and avoiding invented response timing.
+- `research/086_pc2_shutdown_evidence_http_integration.md` — exposes crew-report and fresh GQ6510P evidence through CONTROL without leaking physical truth or inventing an engine-off threshold.
 
 ## Research rule
 
