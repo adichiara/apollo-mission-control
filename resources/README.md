@@ -23,7 +23,7 @@ Current supplements:
 - `source-catalog/PC2_DELTA_P_CALLOUT_SOURCES.md` — mission-specific sources for the ground-only fuel/oxidizer ΔP >25 psi shutdown callout, first playable CONTROL→CAPCOM integration boundary, and explicit unresolved-routing limits.
 - `source-catalog/PC2_DPS_SHUTDOWN_RESPONSE_SOURCES.md` — contemporary LM sources for crew STOP-pushbutton control, engine-off command routing, and DPS valve-response semantics.
 - `source-catalog/PC2_DPS_SHUTDOWN_CONFIRMATION_SOURCES.md` — mission-specific and contemporary evidence for crew voice shutdown report plus fresh GQ6510P chamber-pressure observation as distinct response-evidence channels, without an invented engine-off threshold.
-- `source-catalog/PC2_CREW_RESPONSE_SOURCES.md` — primary-source supplement for CAPCOM ground-call receipt, explicit crew shutdown command, and separation from physical DPS response.
+- `source-catalog/PC2_CREW_RESPONSE_SOURCES.md` — primary-source supplement for CAPCOM ground-call receipt, explicit crew shutdown command, physical DPS response separation, and its HTTP validation exposure.
 - `source-catalog/PC2_CONTROL_PRESENTATION_SOURCES.md` — mission-specific Apollo 13 MSK 1123/1137 and PC+2 operational sources constraining the first player-facing CONTROL rendering.
 - `source-catalog/PC2_GUIDO_PRESENTATION_SOURCES.md` — mission-specific Apollo 13 MSK 1123/1137, LUMINARY 1C R-567, and PC+2 operational sources constraining the first player-facing GUIDO rendering.
 - `source-catalog/PC2_TELMU_PRESENTATION_SOURCES.md` — mission-specific PC+2 chronology, TELMU post-mission, Review Board, and inverter-rule sources constraining the first player-facing TELMU rendering.
@@ -40,6 +40,7 @@ Latest scenario-integration research:
 - `research/082_pc2_delta_p_session_integration_boundary.md` — carries the documented >25-psi ground-callout rule through CONTROL decision and CAPCOM transmission without inventing internal routing or automatic crew/vehicle response.
 - `research/083_pc2_crew_response_after_ground_shutdown_call.md` — extends that branch through explicit crew receipt, crew shutdown command, and a separate physical DPS engine-off response without inventing timing or telemetry confirmation.
 - `research/084_continuous_mission_clock_architecture.md` — current architecture: GET continues through controller decisions, explicit pause is the only normal clock stop, and nominal milestones whose prerequisites are absent are missed rather than replayed later.
+- `research/085_pc2_http_crew_response_integration.md` — exposes the source-bounded crew receipt → command → physical-response chain through HTTP while preserving continuous GET and avoiding invented response timing.
 
 ## Research rule
 
