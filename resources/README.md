@@ -27,6 +27,9 @@ Current supplements:
 - `source-catalog/PC2_GUIDO_PRESENTATION_SOURCES.md` — mission-specific Apollo 13 MSK 1123/1137, LUMINARY 1C R-567, and PC+2 operational sources constraining the first player-facing GUIDO rendering.
 - `source-catalog/PC2_TELMU_PRESENTATION_SOURCES.md` — mission-specific PC+2 chronology, TELMU post-mission, Review Board, and inverter-rule sources constraining the first player-facing TELMU rendering.
 - `source-catalog/PC2_FIDO_RETRO_PRESENTATION_SOURCES.md` — final PC+2 maneuver/monitor PAD plus mission-specific FIDO/RETRO sources constraining the first target/return player rendering.
+- `source-catalog/PC2_INCO_PRESENTATION_SOURCES.md` — mission-specific communications and ranging evidence constraining the first player-facing INCO rendering.
+- `source-catalog/PC2_FLIGHT_CAPCOM_PRESENTATION_SOURCES.md` — mission-specific Flight Director and air-ground communication sources constraining the first FLIGHT and CAPCOM renderings.
+- `source-catalog/PC2_SESSION_INTEGRATION_SOURCES.md` — historical/state-machine sources governing the first authoritative playable-session orchestration layer.
 - `source-catalog/APOLLO13_GROUND_PRODUCT_INTEGRITY_SOURCES.md` — mission-specific sources for the post-MCC-5 RTCC/AGS body-angle processing error and the distinction between product availability/validity and hidden data integrity.
 
 ## Research rule
