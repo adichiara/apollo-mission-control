@@ -133,6 +133,8 @@ MSK 1123 and 1137 are mission-specific Apollo 13 CRTs and can supply much of the
 
 The fuel/oxidizer ΔP rule is a **ground callout only**. The CONTROL product therefore must expose that ground measurement independently of crew indications.
 
+For the implemented nonnominal branch, a threshold exceedance produces a CONTROL callout decision, followed by a distinct CAPCOM→crew communication event and a distinct crew shutdown command. The exact hypothetical CONTROL→FLIGHT→CAPCOM internal voice-loop sequence is not asserted because the reviewed PC+2 sources do not document it.
+
 ### Deferred
 
 - complete propulsion telemetry catalog;
@@ -201,9 +203,11 @@ The fuel/oxidizer ΔP rule is a **ground callout only**. The CONTROL product the
 | Air-ground voice channel | C | sole normal operational crew communication path |
 | Maneuver PAD / procedure text | C | transmit final target and rules |
 | Crew readback/response stream | C | verify transfer and receive onboard observations |
-| FLIGHT-directed callout queue | C | communicate GO/shutdown/procedure decisions |
+| Ground/FLIGHT callout queue | C | communicate GO/shutdown/procedure decisions whose crew-facing transmission is required |
 
 CAPCOM should not have direct authoritative access to hidden subsystem state merely to make the interface easier.
+
+For the fuel/oxidizer ΔP rule, CAPCOM carries the ground shutdown callout to the crew, but the implementation does not invent an exact internal approval sequence between CONTROL and FLIGHT before that transmission.
 
 ---
 
@@ -279,4 +283,4 @@ This permits implementation to proceed without inventing archival details.
 - Apollo 13 Technical Air-to-Ground Voice Transcription.
 - Apollo 13 AC Electronics *Guidance & Navigation Summary*, MSK 1123/1137.
 - Existing station specifications under `docs/stations/`.
-- Research notes 029–050.
+- Research notes 029–068.
