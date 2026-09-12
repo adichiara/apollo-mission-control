@@ -69,7 +69,7 @@ class CrewResponseIntegrationTests(unittest.TestCase):
         self.assertTrue(session.state.crew_dps_shutdown_commanded)
         self.assertTrue(session.state.engine_running)
 
-        response_get = session.state.get_s + 1.0
+        response_get = session.state.get_s
         response = apply_session_engine_off_response(session, get_s=response_get)
         self.assertFalse(session.state.engine_running)
         self.assertEqual(response["get_s"], response_get)
@@ -78,6 +78,13 @@ class CrewResponseIntegrationTests(unittest.TestCase):
         self.assertLess(kinds.index("capcom_item_transmitted"), kinds.index("crew_capcom_item_received"))
         self.assertLess(kinds.index("crew_capcom_item_received"), kinds.index("crew_dps_shutdown_commanded"))
         self.assertLess(kinds.index("crew_dps_shutdown_commanded"), kinds.index("dps_engine_off_physical_response"))
+
+    def test_physical_response_cannot_skip_authoritative_session_time(self):
+        session, item = self._transmitted_delta_p_callout()
+        record_crew_receipt(session, item.item_id)
+        command_dps_shutdown_from_callout(session, item.item_id)
+        with self.assertRaises(ValueError):
+            apply_session_engine_off_response(session, get_s=session.state.get_s + 1.0)
 
 
 if __name__ == "__main__":
