@@ -38,6 +38,12 @@ _ALLOWED_STATE_TARGETS = {
     "lm_inverter_warning",
 }
 
+_OBSERVATION_TIME_FIELDS = {
+    "dps_chamber_pressure_psi": "dps_chamber_pressure_observed_get_s",
+    "dps_fuel_oxidizer_delta_p_psi": "dps_fuel_oxidizer_delta_p_observed_get_s",
+    "lm_inverter_warning": "lm_inverter_warning_observed_get_s",
+}
+
 
 def apply_state_injection(state: PC2State, injection: StateInjection) -> None:
     """Apply one whitelisted state mutation without deriving any outcome."""
@@ -47,13 +53,9 @@ def apply_state_injection(state: PC2State, injection: StateInjection) -> None:
 
     state.get_s = injection.get_s
     setattr(state, injection.target, injection.value)
-
-    if injection.target == "lm_inverter_warning":
-        # Timestamp the observation separately from the switch action. This is
-        # required by the PC+2 wording: the positive criterion is a warning
-        # that remains after an inverter switch, not merely a warning that
-        # existed before the action.
-        state.lm_inverter_warning_observed_get_s = injection.get_s
+    observed_field = _OBSERVATION_TIME_FIELDS.get(injection.target)
+    if observed_field is not None:
+        setattr(state, observed_field, injection.get_s)
 
 
 def run_with_injections(
