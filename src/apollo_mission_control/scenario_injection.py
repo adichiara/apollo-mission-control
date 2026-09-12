@@ -34,6 +34,7 @@ class StateInjection:
 # source-state representation has been researched and modeled.
 _ALLOWED_STATE_TARGETS = {
     "dps_chamber_pressure_psi",
+    "dps_fuel_oxidizer_delta_p_psi",
 }
 
 
