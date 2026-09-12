@@ -44,7 +44,7 @@ The presentation layer follows a common rule: when exact Apollo display evidence
 
 **TELMU** presents power/configuration mode, the documented **38–40 A burn-configuration current reference**, inverter warning/action state, and post-burn power-down transition. The 38–40 A value is explicitly a reference/configuration figure rather than fabricated live current telemetry.
 
-**FIDO/RETRO** now presents the final PC+2 maneuver target and return-plan products. The final P30 LM PAD read around 77:52 GET gives TIG 79:27:38.30, LVLH delta-V +833.0/-50.9/-213.9 fps, resultant 861.5 fps, and expected perigee 20.5 nmi. The final monitor PAD at 78:00:58 gives the selected mid-Pacific return values: latitude -21.65 degrees, longitude -165.00 degrees, range-to-go 1163.5 nmi, entry-interface velocity 36,292 fps, and predicted 0.05-g GET 142:39:22. citeturn145241search0turn283347search32
+**FIDO/RETRO** now presents the final PC+2 maneuver target and return-plan products. The final P30 LM PAD read around 77:52 GET gives TIG 79:27:38.30, LVLH delta-V +833.0/-50.9/-213.9 fps, resultant 861.5 fps, and expected perigee 20.5 nmi. The final monitor PAD at 78:00:58 gives the selected mid-Pacific return values: latitude -21.65 degrees, longitude -165.00 degrees, range-to-go 1163.5 nmi, entry-interface velocity 36,292 fps, and predicted 0.05-g GET 142:39:22.
 
 A deliberate gap remains: there is not yet an executable **post-burn FIDO propagated trajectory assessment**. GUIDO residuals are not substituted for that product, and physical burn completion does not automatically mean the return trajectory is satisfactory. The trajectory layer will be added only when integrated gameplay requires it.
 
