@@ -14,6 +14,7 @@ See:
 
 - [Project principles](docs/PROJECT_PRINCIPLES.md)
 - [Roadmap](docs/ROADMAP.md)
+- [Ground-product integrity roadmap addendum](docs/roadmap/2026-09-12_ground_product_integrity.md)
 - [Simulation architecture](docs/SIMULATION_ARCHITECTURE.md)
 - [Flight-control organization baseline](docs/FLIGHT_CONTROL_ORGANIZATION.md)
 - [Display-system baseline](docs/DISPLAY_SYSTEM_BASELINE.md)
@@ -22,38 +23,38 @@ See:
 - [Voice communications baseline](docs/VOICE_COMMUNICATIONS_BASELINE.md)
 - [Apollo 13 station baseline](docs/APOLLO13_STATION_BASELINE.md)
 - [Station research status](docs/STATION_RESEARCH_STATUS.md)
-- [PC+2 observation-freshness station-status addendum](docs/station-status/2026-09-12_pc2_observation_freshness.md)
+- [Ground-product integrity station-status addendum](docs/station-status/2026-09-12_ground_product_integrity.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
 - [Simulation validation strategy](docs/SIMULATION_VALIDATION.md)
 - [Decisions](docs/DECISIONS.md)
 - [Open questions](docs/OPEN_QUESTIONS.md)
 - [Progress log](docs/PROGRESS.md)
-- [PC+2 observation-freshness progress](docs/progress/2026-09-12_pc2_observation_freshness.md)
+- [Ground-product integrity progress](docs/progress/2026-09-12_ground_product_integrity.md)
 - [Research resources](resources/README.md)
 - [PC+2 implementation source catalog](resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md)
-- [PC+2 observation-age/freshness source catalog](resources/source-catalog/PC2_FRESHNESS_SOURCES.md)
+- [Apollo 13 ground-product integrity sources](resources/source-catalog/APOLLO13_GROUND_PRODUCT_INTEGRITY_SOURCES.md)
 - [Evidence verification audit](resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md)
 
 ## Current status
 
 The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation and execution**.
 
-The framework-neutral Python prototype now includes source-backed nominal event/state progression, station-specific product projections, partial shutdown-rule evaluation, narrow source-bounded scenario injections, controller/crew action and communication layers, the inverter contingency loop, and integrated attitude-error/rate monitoring.
+The framework-neutral Python prototype includes source-backed nominal event/state progression, station-specific product projections, partial shutdown-rule evaluation, narrow source-bounded scenario injections, controller/crew action and communication layers, the inverter contingency loop, integrated attitude-error/rate monitoring, and explicit observation-age semantics.
 
-### Observation age and freshness
+### Ground-product integrity
 
-The latest pass researched whether the PC+2 rules or contemporaneous crew-facing procedure define a generic time-based freshness requirement for analog shutdown observations. No such threshold was found in the reviewed mission-specific primary sources.
+The latest pass used a mission-specific Apollo 13 case from after MCC-5 to validate a deeper Mission Control data-path behavior: the RTCC incorrectly processed AGS body angles even though the spacecraft attitude was satisfactory. Mission Control discarded the improper ground readout and accepted the independent FDAI reference.
 
-The implementation therefore now:
+The implementation now distinguishes:
 
-- preserves an observation/sample timestamp separately from receive/process/display time;
-- keeps an injected chamber-pressure or differential-pressure value tied to the GET at which it was observed rather than re-stamping it as current on every later projection;
-- exposes observation age in the shutdown-rule audit;
-- does **not** automatically mark a product stale after an invented number of seconds;
-- preserves source-specific confirmation rules where they are actually documented, such as requiring a distinct inverter-warning observation after the crew switch action.
+- **product validity/availability** — whether a product is present/current/declared usable;
+- **product integrity** — hidden simulator truth about whether the product correctly represents its source state;
+- **controller detection/rejection** — a separate decision/audit event rather than an automatic diagnostic.
 
-This fixes an important information-model problem without claiming more historical specificity than the sources support.
+This matters because the historical bad RTCC product was not documented as carrying an automatic `INVALID` label. A wrong value can therefore remain present and apparently valid until controllers identify the inconsistency through independent evidence.
+
+The post-MCC-5 event itself is **not** inserted into the PC+2 nominal timeline. It is an architecture validation case for the reusable Mission Control data path.
 
 ### Remaining bounded gaps
 
@@ -65,7 +66,7 @@ For the **attitude-error / attitude-rate** criteria, the project preserves the p
 
 The project does **not** yet claim full spacecraft physics, RTCC dynamics, exact historical CRT timing, complete Apollo 13 telemetry/display routing, a generic historical stale-data timeout, or historically reconstructed SimSup malfunction-command syntax.
 
-The next implementation target is a **source-backed data-validity degradation path** relevant to PC+2—preferably a documented Apollo 13 example of lost, frozen, questionable, or incorrectly processed data—so validity can be exercised independently from observation age without inventing behavior.
+The next implementation target is to integrate product-integrity annotations into the common station/audit path without exposing hidden integrity to players, and to represent controller suspicion/rejection as an explicit event. After that, PC+2-specific nonnominal work can resume where primary evidence supports it.
 
 ## Apollo 13 station specifications
 
