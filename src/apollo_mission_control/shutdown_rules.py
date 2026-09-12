@@ -106,13 +106,14 @@ def evaluate_pc2_shutdown_rules(
         inverter_state = RuleState.CLEAR
     elif not switch_attempted or switch_get is None:
         inverter_state = RuleState.NOT_EVALUABLE
-    elif warning_observed_get is None or warning_observed_get < float(switch_get):
-        # A warning observed only before the switch is not the documented
-        # positive criterion. A current post-switch observation is required.
+    elif warning_observed_get is None or warning_observed_get <= float(switch_get):
+        # A warning whose represented observation time is only pre-switch or
+        # coincident with the switch does not establish the documented
+        # post-switch criterion. A distinct later observation is required.
         inverter_state = RuleState.NOT_EVALUABLE
     else:
-        # No invented persistence timer. The documented criterion is satisfied
-        # once a distinct post-switch observation still shows the warning.
+        # No invented persistence timer. Any distinct post-switch observation
+        # that still shows the warning satisfies the documented criterion.
         inverter_state = RuleState.TRIGGERED
 
     results["persistent_inverter_warning"] = RuleEvaluation(
