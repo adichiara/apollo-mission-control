@@ -1,8 +1,9 @@
 """Authoritative single-process session orchestration for the Apollo 13 PC+2 slice.
 
 This module is intentionally framework-neutral. It joins the existing domain
-model, controller projections, player presentations, controller reporting, and
-communications into one authoritative session without adding network/UI policy.
+model, controller projections, player presentations, controller reporting,
+communications, and selected source-bounded nonnominal workflows into one
+authoritative session without adding network/UI policy.
 """
 
 from __future__ import annotations
@@ -13,12 +14,15 @@ from typing import Any
 
 from .capcom_presentation import build_pc2_capcom_presentation
 from .control_presentation import build_pc2_control_presentation
+from .controller_decisions import call_out_shutdown_criterion
 from .controller_products import project_controller_products
 from .fido_retro_presentation import build_pc2_fido_retro_presentation
 from .flight_presentation import build_pc2_flight_presentation
 from .guido_presentation import build_pc2_guido_presentation
 from .inco_presentation import build_pc2_inco_presentation
 from .pc2_nominal import PC2State, SimEvent, apply_event, build_events
+from .scenario_injection import StateInjection, apply_state_injection
+from .shutdown_rules import RuleState, evaluate_pc2_shutdown_rules
 from .telmu_presentation import build_pc2_telmu_presentation
 
 
@@ -225,6 +229,28 @@ class PC2Session:
 
         return float(self.state.get_s)
 
+    def apply_session_injection(self, injection: StateInjection) -> None:
+        """Apply an explicit source-state injection at the current session GET.
+
+        This is a scenario-authoring / validation operation, not a controller
+        action. It changes only the whitelisted source observation represented by
+        ``StateInjection`` and does not evaluate a rule or announce a diagnosis.
+        """
+        if self.status != SessionStatus.RUNNING:
+            raise ValueError("Session must be running to apply a scenario injection")
+        if abs(float(injection.get_s) - float(self.state.get_s)) > 1e-6:
+            raise ValueError("Session injection GET must equal the current authoritative GET")
+        apply_state_injection(self.state, injection)
+        self._audit(
+            "state_injection_applied",
+            "SIMSUP",
+            injection_id=injection.injection_id,
+            target=injection.target,
+            value=injection.value,
+            evidence_class=injection.evidence_class.value,
+            provenance=injection.provenance,
+        )
+
     def _readiness_payload(self) -> list[dict[str, Any]]:
         return [
             {
@@ -241,6 +267,7 @@ class PC2Session:
             {
                 "item_id": item.item_id,
                 "get_s": item.get_s,
+                "requested_by": item.requested_by,
                 "action": item.action,
                 "parameters": dict(item.parameters),
                 "basis": item.basis,
@@ -334,6 +361,34 @@ class PC2Session:
         else:
             self.state.phase = "pc2_final_readiness"
 
+    def _queue_capcom_item(
+        self,
+        *,
+        requested_by: str,
+        action: str,
+        parameters: dict[str, Any] | None,
+        basis: str,
+    ) -> CapcomQueueItem:
+        item = CapcomQueueItem(
+            item_id=self._next_capcom_item_id,
+            get_s=float(self.state.get_s),
+            requested_by=requested_by,
+            action=action,
+            parameters=dict(parameters or {}),
+            basis=basis,
+        )
+        self._next_capcom_item_id += 1
+        self.capcom_queue.append(item)
+        self._audit(
+            "capcom_item_queued",
+            requested_by,
+            item_id=item.item_id,
+            action=action,
+            parameters=item.parameters,
+            basis=basis,
+        )
+        return item
+
     def queue_capcom_instruction(
         self,
         flight_player_id: str,
@@ -343,26 +398,58 @@ class PC2Session:
         basis: str,
     ) -> CapcomQueueItem:
         if self.station_for(flight_player_id) != "FLIGHT":
-            raise ValueError("Only FLIGHT can approve an item into the CAPCOM queue in this prototype")
-        item = CapcomQueueItem(
-            item_id=self._next_capcom_item_id,
-            get_s=float(self.state.get_s),
+            raise ValueError("Only FLIGHT can approve this generic CAPCOM queue operation")
+        return self._queue_capcom_item(
             requested_by="FLIGHT",
             action=action,
-            parameters=dict(parameters or {}),
+            parameters=parameters,
             basis=basis,
         )
-        self._next_capcom_item_id += 1
-        self.capcom_queue.append(item)
+
+    def record_control_delta_p_callout(self, control_player_id: str, *, basis: str) -> CapcomQueueItem:
+        """Record CONTROL's ground-only ΔP shutdown callout decision.
+
+        Primary Apollo 13 sources establish that fuel/oxidizer differential
+        pressure greater than 25 psi was a ground-callout shutdown criterion.
+        They do not establish an exact internal CONTROL→FLIGHT→CAPCOM approval
+        sequence. The CAPCOM queue used here is therefore a project transport
+        mechanism, not a claim about historical loop routing.
+        """
+        if self.station_for(control_player_id) != "CONTROL":
+            raise ValueError("Only the CONTROL player can issue the PC+2 delta-P ground callout")
+
+        projections = project_controller_products(self.state, self.fixture)
+        rules = evaluate_pc2_shutdown_rules(projections, self.fixture)
+        rule = rules["fuel_oxidizer_delta_p"]
+        if rule.state != RuleState.TRIGGERED:
+            raise ValueError("Fuel/oxidizer delta-P shutdown criterion is not currently triggered")
+
+        decision = call_out_shutdown_criterion(
+            get_s=self.state.get_s,
+            station="CONTROL",
+            product_name="dps.fuel_oxidizer_delta_p_psi",
+            basis=basis,
+        )
         self._audit(
-            "capcom_item_queued",
-            "FLIGHT",
-            item_id=item.item_id,
-            action=action,
-            parameters=item.parameters,
+            "controller_shutdown_callout_decision",
+            "CONTROL",
+            player_id=control_player_id,
+            product_name=decision.product_name,
+            decision=decision.decision.value,
+            basis=decision.basis,
+        )
+
+        product = projections["CONTROL"].products["dps.fuel_oxidizer_delta_p_psi"]
+        return self._queue_capcom_item(
+            requested_by="CONTROL",
+            action="callout_dps_shutdown_criterion",
+            parameters={
+                "criterion": "fuel_oxidizer_delta_p",
+                "observed_delta_p_psi": product.value,
+                "routing_note": "project CAPCOM queue; exact internal Apollo routing unresolved",
+            },
             basis=basis,
         )
-        return item
 
     def transmit_capcom_item(self, capcom_player_id: str, item_id: int) -> CapcomQueueItem:
         if self.station_for(capcom_player_id) != "CAPCOM":
@@ -379,6 +466,7 @@ class PC2Session:
             "CAPCOM",
             player_id=capcom_player_id,
             item_id=item.item_id,
+            requested_by=item.requested_by,
             action=item.action,
             parameters=item.parameters,
         )
