@@ -2,7 +2,7 @@
 
 Status: **implementation-oriented research specification — nominal vertical slice**  
 Scenario start: **77:55:00 GET**  
-Research basis: `resources/research/050_pc2_initialization_and_nominal_validation.md`
+Research basis: `resources/research/050_pc2_initialization_and_nominal_validation.md`, with later refinements in notes 051–054.
 
 ## Purpose
 
@@ -60,7 +60,8 @@ The nominal first pass may use zero transport error, but the fields should not b
 |---|---|---|---|---|
 | `pg_ns.lgc.operating` | bool | — | true | GUIDO |
 | `pg_ns.lgc.program` | int/enum | — | preburn state; transitions to P40 | GUIDO |
-| `pg_ns.lgc.program_alarm` | optional int | — | none | GUIDO |
+| `pg_ns.lgc.program_alarm` | optional code | — | none | GUIDO |
+| `pg_ns.iss.warning` | bool | — | false | GUIDO |
 | `pg_ns.lgc.warning` | bool | — | false | GUIDO |
 | `pg_ns.alignment.accepted` | bool | — | true | GUIDO/FLIGHT |
 | `pg_ns.alignment.error_estimate_deg` | float | deg | prior Sun check ~0.33; accepted <1 | GUIDO |
@@ -76,6 +77,8 @@ The nominal first pass may use zero transport error, but the fields should not b
 | `pg_ns.residual_z` | float | ft/s | nominal final 0.0 | GUIDO |
 
 Historical nominal executed Vg values for validation are +742.21, -425.88, +91.04 ft/s in the GUIDO report.
+
+`pg_ns.iss.warning` is now source-backed as a distinct onboard warning signal with an instrumentation path. The project does **not** yet claim the exact Apollo 13 LM-7 telemetry word or GUIDO CRT field. The PC+2 shutdown criterion is conjunctive: ISS warning **plus** computer program alarm. See research note 054.
 
 ## AGS
 
@@ -93,11 +96,11 @@ Do not add a fabricated exact `ags.ullage_display` or `ags.act_vel` mapping unti
 |---|---|---|---|---|
 | `dps.arm_state` | enum | — | `safe` at start | CONTROL |
 | `dps.engine_running` | bool | — | false | CONTROL |
-| `dps.throttle_command_pct` | float | % | 0; profile 10/minimum → 40 → max | CONTROL |
+| `dps.throttle_command_pct` | float | % | 0; profile minimum → 40 → max | CONTROL |
 | `dps.thrust_actual` | float | lbf | 0 preburn; modeled during burn | CONTROL |
 | `dps.chamber_pressure` | float | psi | safe nominal; exact baseline TBD | CONTROL |
 | `dps.inlet_pressure` | float | psi | safe nominal; exact baseline TBD | CONTROL |
-| `dps.fuel_oxidizer_delta_p` | float | psi | <25 nominal | CONTROL |
+| `dps.fuel_oxidizer_delta_p` | float | psi | <25 nominal condition; exact baseline TBD | CONTROL |
 | `dps.engine_gimbal_warning` | bool | — | false | CONTROL |
 | `dps.gda_state` | enum | — | nominal | CONTROL |
 | `dps.regulator_1_state` | enum | — | nominal pre-cutoff sequence | CONTROL |
@@ -121,14 +124,11 @@ Do not invent exact nominal pressure readings solely from these thresholds.
 | `rcs.ullage_active` | bool | — | false preburn | CONTROL |
 | `rcs.ullage_jets_count` | int | — | 2 when commanded | CONTROL |
 | `rcs.ullage_duration_s` | float | s | 10 | CONTROL |
-| `vehicle.attitude_error_xyz` | vector | deg | within shutdown limits | CONTROL/GUIDO |
-| `vehicle.body_rate_xyz` | vector | deg/s | within shutdown limits | CONTROL |
+| `vehicle.attitude_error_xyz` | vector | deg | within shutdown limits; exact values TBD | CONTROL/GUIDO |
+| `vehicle.body_rate_xyz` | vector | deg/s | within shutdown limits; exact values TBD | CONTROL |
 | `ces.dc_failure` | bool | — | false | CONTROL |
 
-Shutdown limits outside startup transients:
-
-- attitude error: approximately ±10°;
-- body rate: approximately ±10°/s.
+The sources agree on approximately ±10° attitude error and ±10°/s rate limits but conflict on which wording receives the startup-transient exception. The implementation preserves that conflict rather than choosing one interpretation.
 
 ## Electrical / LM burn configuration
 
@@ -157,20 +157,11 @@ Telemetry-facing products should carry validity and age independently of physica
 
 ## Crew-report events
 
-Crew voice is a distinct source channel. At minimum the event model should support:
-
-- PAD readback/confirmation;
-- burn-rule readback;
-- ignition/throttle reports;
-- shutdown report;
-- post-burn residual report;
-- requests for power-down instructions.
-
-These must not be generated as direct truth-state notifications to controllers.
+Crew voice is a distinct source channel. At minimum the event model supports PAD readback, burn-rule readback, ignition/throttle reports, shutdown report, post-burn residual report, and requests for power-down instructions. These are not direct truth-state notifications.
 
 ## Nominal validation fixture
 
-A deterministic nominal run should satisfy:
+A deterministic nominal run should reproduce:
 
 | Validation target | Historical value |
 |---|---:|
@@ -189,10 +180,10 @@ A deterministic nominal run should satisfy:
 | shutdown-rule triggers | none |
 | post-burn transition | power-down begins immediately after verification |
 
-## Deferred numeric state
+## Deferred numeric/state detail
 
-The exact RTCC Cartesian state vector at 77:55 GET is intentionally not frozen here. It should be added when the trajectory propagator is implemented from an appropriate Apollo trajectory source. Reverse-engineering a state vector from the maneuver PAD would create unnecessary unsupported precision.
+The exact RTCC Cartesian state vector at 77:55 GET remains intentionally unfrozen until the propagator requires it. Exact nominal DPS pressure values, exact LM-7 ISS-warning telemetry-word assignment, and exact GUIDO CRT placement also remain deferred rather than being reverse-engineered.
 
 ## Sources
 
-See research note 050 for source discussion. Principal authority is the NASA Flight Control Division *Mission Operations Report — Apollo 13* (28 April 1970), with the technical air-ground transcript used for final PAD and communication chronology.
+Principal authority remains the NASA Flight Control Division *Mission Operations Report — Apollo 13* (28 April 1970), with technical air-ground transcription for communication chronology. See research notes 050–054 and `resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md` for implementation-specific provenance.
