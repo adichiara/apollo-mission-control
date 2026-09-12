@@ -49,6 +49,7 @@ Key records:
 - `resources/research/052_pc2_controller_product_projection.md`
 - `resources/research/053_pc2_shutdown_rule_evaluation.md`
 - `resources/research/054_pc2_iss_warning_observation_path.md`
+- `resources/research/055_pc2_dps_chamber_pressure_observation_path.md`
 - `docs/scenarios/APOLLO13_PC2_PARAMETERS.md`
 
 ### Phase 2 deliverables
@@ -78,6 +79,7 @@ Research/catalog scope includes operational display formats, typography/geometry
 - [x] Minimum historical product set identified for GUIDO, CONTROL, FIDO/RETRO, TELMU, INCO, FLIGHT, and CAPCOM.
 - [x] Current modeled products mapped into station-specific projection sets with validity/source/provenance metadata.
 - [x] ISS warning established as a distinct onboard warning signal with an instrumentation path; exact Apollo 13 LM-7 telemetry word and GUIDO CRT placement remain unresolved.
+- [x] LM-7-family `GQ6510P` established as the DPS thrust-chamber-pressure measurement used by the first analog CONTROL rule path; exact MSK 1137 `TCP` routing/ground conversion remains provisional.
 - [ ] Map products into first-pass station screens, using exact Apollo formats where available and explicitly labeled project renderings where presentation evidence is incomplete.
 - [ ] Compare Apollo 13 LM-7 Table 2.1-7 directly with later searchable LM-10 table only if a PC+2 dependency makes it worthwhile.
 - [ ] Recover MCC/RTCC transformation rules only where PC+2 station behavior requires them.
@@ -105,6 +107,8 @@ The telemetry evidence narrows source candidates but does not certify every tele
 - [x] independent source-backed shutdown-rule audit evaluator without a generic `burn_abort` state
 - [x] first deferred shutdown-rule observation path modeled: distinct ISS warning signal projected to GUIDO
 - [x] first source-backed nonnominal rule-path validation case: ISS warning + program alarm triggers the documented conjunctive criterion without automatically commanding shutdown
+- [x] first analog propulsion observation path modeled: LM-7-family `GQ6510P` chamber pressure projected to CONTROL when a numerical value is explicitly supplied
+- [x] second source-backed nonnominal rule-path validation case: modeled chamber pressure at/below the documented 85-psi ground threshold triggers the audit without automatically commanding shutdown
 
 ### Immediate next work
 
@@ -116,8 +120,9 @@ The telemetry evidence narrows source candidates but does not certify every tele
 - [x] implement independent shutdown-rule evaluation limited to modeled observations
 - [x] model first deferred shutdown-rule observation path from defensible primary-source evidence
 - [x] add first source-backed nonnominal validation case at the rule-path level
-- [ ] research and model the next highest-value deferred rule path only where source support is adequate; current candidates are inverter-after-switch logic or one propulsion-pressure observation path
-- [ ] introduce scenario/failure injection objects only after at least one underlying failure condition can be represented without a scripted diagnosis
+- [x] research and model one propulsion-pressure observation path from primary/mission-era evidence without inventing nominal values
+- [ ] introduce a minimal generic scenario/failure-injection object that perturbs underlying state/observations rather than setting diagnoses; keep synthetic rule-boundary fixtures explicitly non-historical
+- [ ] research another deferred rule path only when needed by that injection architecture or first playable CONTROL workflow; likely candidates are the separate onboard thrust indication, inlet/differential pressure, or inverter-after-switch logic
 
 The exact Cartesian RTCC state vector at 77:55 is deliberately not reverse-engineered from the maneuver PAD. It becomes an active target only when the propagator requires it.
 
@@ -125,7 +130,9 @@ Detailed DPS engine-response/ramp dynamics remain deferred. The prototype models
 
 The projection implementation does not expose required-but-unmodeled values as simulated `unavailable` telemetry. They remain implementation gaps.
 
-The ISS-warning work resolves the previously deferred positive ISS+program-alarm observation path while preserving two important limits: no exact LM-7 telemetry word or GUIDO CRT field is claimed, and no hypothetical failure mechanism/program-alarm number is invented. See research note 054.
+The ISS-warning work resolves the positive ISS+program-alarm observation path while preserving two important limits: no exact LM-7 telemetry word or GUIDO CRT field is claimed, and no hypothetical failure mechanism/program-alarm number is invented. See research note 054.
+
+The chamber-pressure work similarly resolves a real LM-7-family measurement identity and CONTROL rule path without inventing the nominal PC+2 pressure trace, exact MSK 1137 routing, or a malfunction mechanism. See research note 055.
 
 ### Phase 4 deliverables
 
@@ -138,6 +145,7 @@ The ISS-warning work resolves the previously deferred positive ISS+program-alarm
 - [x] controller-product projection layer
 - [x] partial shutdown-rule evaluation + validation tests
 - [x] first source-backed nonnominal rule-path validation case
+- [x] first source-backed analog propulsion rule-path validation case
 - [ ] broader failure propagation tests
 
 ## Phase 5 — Mission Control data path
@@ -156,7 +164,7 @@ Deliverables:
 - ground-computed values where documented
 - display refresh behavior
 
-**Current checkpoint:** `controller_products.py` enforces station boundaries for the modeled PC+2 subset. It is an information-projection layer, not yet a complete telemetry/network simulator. The ISS-warning path now provides the first explicitly researched discrete warning flowing from onboard warning state toward a controller product.
+**Current checkpoint:** `controller_products.py` enforces station boundaries for the modeled PC+2 subset. It is an information-projection layer, not yet a complete telemetry/network simulator. The ISS-warning path supplies a researched discrete warning; the chamber-pressure path now supplies the first explicitly researched analog propulsion measurement that becomes a CONTROL product only when numerically modeled.
 
 ## Phase 6 — Procedures and flight rules
 
@@ -169,7 +177,7 @@ Deliverables:
 - distinguish verbatim historical material from project-created guides
 - validate that simulation exposes enough information for each implemented rule
 
-**PC+2 checkpoint:** the evaluator can audit modeled discrete warning criteria without issuing a shutdown command. ISS warning + program alarm is now fully evaluable as a conjunction. Pressure, differential-pressure, attitude/rate, crew analog indications, and positive inverter-after-switch remain deferred where required observations are not modeled. The startup-transient wording conflict remains unresolved.
+**PC+2 checkpoint:** the evaluator can audit modeled discrete warning criteria without issuing a shutdown command. ISS warning + program alarm is fully evaluable as a conjunction. Ground chamber pressure is now evaluable whenever a modeled CONTROL measurement is present and remains `not_evaluable` when the project has not supplied a numerical value. Inlet/differential pressure, attitude/rate, crew analog indications, and positive inverter-after-switch remain deferred. The startup-transient wording conflict remains unresolved.
 
 ## Phase 7 — Simulation scenarios / SimSup
 
@@ -187,7 +195,7 @@ Deliverables:
 - documented nonnominal run(s)
 - SimSup/operator interface if appropriate
 
-The current ISS-warning + program-alarm test is a **rule-path validation case**, not yet a narrative/documented Apollo training scenario.
+The current ISS-warning + program-alarm and low-chamber-pressure tests are **rule-path validation fixtures**, not narrative/documented Apollo training scenarios. Synthetic boundary values are explicitly labeled as test data and do not imply historical Apollo 13 malfunctions.
 
 ## Phase 8 — Multi-player session layer
 
