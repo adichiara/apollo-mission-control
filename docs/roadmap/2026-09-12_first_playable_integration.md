@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — browser rejoin and first nonnominal web/session path implemented; crew-response integration is next**
+Status: **CURRENT — browser rejoin, first nonnominal web/session path, and explicit crew-response domain chain implemented; HTTP crew-response exposure is next**
 
 ## Completed presentation/session/web checkpoints
 
@@ -39,17 +39,31 @@ Implemented without filling those gaps:
 
 See `resources/research/082_pc2_delta_p_session_integration_boundary.md`.
 
-## Active priority — crew-response boundary
+## Crew-response domain boundary — implemented
 
-Research and integrate the next stage without collapsing layers:
+Primary-source review confirms the ground-call → crew-shutdown relationship but does not supply a response latency or unique hypothetical cockpit sequence for an actual ΔP exceedance.
 
-1. crew receipt/response to a transmitted shutdown callout must be an explicit communication/operational event;
-2. crew DPS shutdown command must use the existing operational-action model;
-3. crew command must remain separate from physical engine response;
-4. physical DPS shutdown must remain separate from crew report and fresh controller evidence;
-5. do not invent exact response delay, exact cockpit sequence, or a binary chamber-pressure confirmation threshold.
+Implemented as distinct layers:
 
-The existing research/implementation for command, physical response, and shutdown confirmation should be reused rather than replaced by a special-case scenario script.
+- [x] CAPCOM transmission does not imply receipt;
+- [x] crew receipt/acknowledgment is an explicit audit event;
+- [x] crew DPS shutdown command requires prior receipt;
+- [x] crew command reuses the existing operational-action model;
+- [x] crew command does not directly set physical engine-off state;
+- [x] physical DPS engine-off response reuses the existing vehicle-response helper;
+- [x] physical-response GET is supplied by the caller rather than inferred from an invented delay;
+- [x] no chamber-pressure tailoff or automatic shutdown-confirmation telemetry is synthesized;
+- [x] integration tests cover communication → receipt → command → physical-response ordering.
+
+See `resources/research/083_pc2_crew_response_after_ground_shutdown_call.md`.
+
+## Active priority — expose crew response and reconnect evidence
+
+1. expose explicit crew receipt and crew DPS shutdown command through the HTTP validation interface;
+2. expose an explicit scenario/vehicle physical-response operation without inventing timing;
+3. reuse the existing shutdown-confirmation architecture after physical engine-off;
+4. require fresh controller evidence rather than treating physical state as automatically player-visible;
+5. do not invent exact response delay, cockpit choreography, pressure tailoff, or a binary chamber-pressure confirmation threshold.
 
 ## Integration validation still required
 
@@ -62,7 +76,8 @@ When a runnable repository environment is available:
 - verify decision-gate pause/resume behavior;
 - verify the nominal timeline reaches power-down;
 - verify the ΔP nonnominal path through CONTROL and CAPCOM;
-- then validate the crew-command/physical-response continuation.
+- verify communication → crew receipt → crew command → physical response ordering;
+- then validate fresh shutdown evidence through the normal controller path.
 
 ## Explicitly deferred
 
@@ -79,4 +94,4 @@ When a runnable repository environment is available:
 
 ## Current success criterion
 
-A rejoin-safe phone-accessible prototype in which a source-bounded nonnominal condition can move through **source observation → correct station information → controller decision → CAPCOM transmission → explicit crew action → physical response/evidence**, with no hidden automatic decisions or invented historical routing.
+A rejoin-safe phone-accessible prototype in which a source-bounded nonnominal condition can move through **source observation → correct station information → controller decision → CAPCOM transmission → explicit crew receipt/action → physical response → fresh controller evidence**, with no hidden automatic decisions or invented historical routing.
