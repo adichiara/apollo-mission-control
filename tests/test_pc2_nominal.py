@@ -1,3 +1,4 @@
+from copy import deepcopy
 from pathlib import Path
 import sys
 import unittest
@@ -17,6 +18,11 @@ from apollo_mission_control.pc2_nominal import (  # noqa: E402
     load_fixture,
     run_nominal,
     validate_nominal,
+)
+from apollo_mission_control.shutdown_rules import (  # noqa: E402
+    RuleState,
+    evaluate_pc2_shutdown_rules,
+    triggered_rules,
 )
 
 
@@ -116,6 +122,71 @@ class PC2NominalTests(unittest.TestCase):
         residual = products["GUIDO"].products["pg_ns.postburn_residual"]
         self.assertEqual(residual.validity, Validity.VALID)
         self.assertEqual(residual.value, {"x": 1.0, "y": 0.3, "z": 0.0})
+
+    def test_nominal_rule_audit_has_no_triggered_rules(self):
+        state = run_nominal(self.fixture)
+        products = project_controller_products(state, self.fixture)
+        evaluations = evaluate_pc2_shutdown_rules(products, self.fixture)
+        self.assertEqual(triggered_rules(evaluations), [])
+        self.assertEqual(
+            evaluations["engine_gimbal_warning"].state,
+            RuleState.CLEAR,
+        )
+        self.assertEqual(evaluations["lgc_warning"].state, RuleState.CLEAR)
+        self.assertEqual(evaluations["ces_dc_failure"].state, RuleState.CLEAR)
+
+    def test_unmodeled_numeric_rules_are_not_falsely_cleared(self):
+        state = run_nominal(self.fixture)
+        products = project_controller_products(state, self.fixture)
+        evaluations = evaluate_pc2_shutdown_rules(products, self.fixture)
+        for rule_id in (
+            "ground_chamber_pressure",
+            "crew_thrust_monitor",
+            "ground_inlet_pressure",
+            "crew_inlet_pressure",
+            "fuel_oxidizer_delta_p",
+            "attitude_error",
+            "attitude_rate",
+        ):
+            self.assertEqual(evaluations[rule_id].state, RuleState.NOT_EVALUABLE)
+
+    def test_modeled_gimbal_warning_can_trigger_rule_without_commanding_abort(self):
+        fixture = deepcopy(self.fixture)
+        fixture["dps"]["engine_gimbal_warning"] = True
+        state = run_nominal(fixture)
+        products = project_controller_products(state, fixture)
+        evaluations = evaluate_pc2_shutdown_rules(products, fixture)
+        self.assertEqual(
+            evaluations["engine_gimbal_warning"].state,
+            RuleState.TRIGGERED,
+        )
+        self.assertEqual(
+            [item.rule_id for item in triggered_rules(evaluations)],
+            ["engine_gimbal_warning"],
+        )
+        self.assertFalse(state.shutdown_rule_triggers)
+
+    def test_positive_program_alarm_needs_distinct_iss_warning_state(self):
+        fixture = deepcopy(self.fixture)
+        fixture["pgns"]["program_alarm"] = 1202
+        state = run_nominal(fixture)
+        products = project_controller_products(state, fixture)
+        evaluations = evaluate_pc2_shutdown_rules(products, fixture)
+        self.assertEqual(
+            evaluations["iss_warning_plus_program_alarm"].state,
+            RuleState.NOT_EVALUABLE,
+        )
+
+    def test_inverter_warning_positive_case_requires_switch_attempt_state(self):
+        fixture = deepcopy(self.fixture)
+        fixture["lm_power"]["inverter_warning"] = True
+        state = run_nominal(fixture)
+        products = project_controller_products(state, fixture)
+        evaluations = evaluate_pc2_shutdown_rules(products, fixture)
+        self.assertEqual(
+            evaluations["persistent_inverter_warning"].state,
+            RuleState.NOT_EVALUABLE,
+        )
 
 
 if __name__ == "__main__":
