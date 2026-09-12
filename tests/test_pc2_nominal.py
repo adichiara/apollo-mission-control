@@ -7,6 +7,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from apollo_mission_control.pc2_nominal import (  # noqa: E402
     build_events,
+    hms_to_seconds,
     load_fixture,
     run_nominal,
     validate_nominal,
@@ -29,6 +30,31 @@ class PC2NominalTests(unittest.TestCase):
         events = {event.name: event.get_s for event in build_events(self.fixture)}
         self.assertAlmostEqual(events["dps_ignition"], 286058.30)
         self.assertAlmostEqual(events["guided_cutoff"], 286322.12)
+
+    def test_ullage_and_commanded_throttle_profile(self):
+        events = {event.name: event.get_s for event in build_events(self.fixture)}
+        tig = self.fixture["pc2_target"]["tig_get_s"]
+        self.assertAlmostEqual(events["manual_two_jet_ullage_begins"], tig - 10.0)
+        self.assertAlmostEqual(events["throttle_command_40_percent"], tig + 5.0)
+        self.assertAlmostEqual(events["throttle_command_maximum"], tig + 26.0)
+
+    def test_crew_reports_remain_separate_from_commands(self):
+        state = run_nominal(self.fixture)
+        reports = [(report.get_s, report.report) for report in state.crew_reports]
+        self.assertEqual(
+            reports,
+            [
+                (hms_to_seconds("79:27:51"), "40_percent"),
+                (hms_to_seconds("79:28:09"), "100_percent"),
+            ],
+        )
+        events = {event.name: event.get_s for event in build_events(self.fixture)}
+        self.assertGreater(
+            reports[0][0], events["throttle_command_40_percent"]
+        )
+        self.assertGreater(
+            reports[1][0], events["throttle_command_maximum"]
+        )
 
     def test_nominal_run_reaches_powerdown(self):
         state = run_nominal(self.fixture)
