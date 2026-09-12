@@ -1,7 +1,7 @@
 # 081 — Apollo 13 PC+2 mission-clock and decision-gate semantics
 
 Date: 2026-09-12  
-Status: **IMPLEMENTATION BOUNDARY RESOLVED**
+Status: **SOURCE FINDINGS RETAINED / IMPLEMENTATION POLICY SUPERSEDED BY D-016**
 
 ## Question
 
@@ -47,44 +47,21 @@ The reviewed sources do not establish:
 
 The statement that PC+2 ignition time was not time critical must therefore **not** be converted into an invented delay tolerance.
 
-## Project decision
+## Superseded project policy
 
-For the first playable deterministic PC+2 slice, a blocking controller decision gate is represented as an **explicit simulation pause**.
+An earlier implementation decision used an explicit simulation pause at blocking controller gates. That policy was provisional and has been superseded by **D-016** after project review.
 
-This means:
+The source findings above remain valid. What changed is the simulator architecture chosen in response to them.
 
-1. historical/source-backed GET advances only while session status is `RUNNING`;
-2. reaching the final FLIGHT GO/NO-GO gate sets session status to `PAUSED`;
-3. the pause carries an explicit machine-readable reason (`decision_gate:flight_go`);
-4. the player may continue to submit readiness information and make the required decision while paused;
-5. manual resume cannot bypass an unresolved decision gate;
-6. FLIGHT `GO` clears the gate and automatically returns the session to `RUNNING`;
-7. `NO-GO` keeps the gate and pause active;
-8. later historical events are not silently applied while the gate is unresolved.
+## Current policy
 
-This is a **simulation/playability policy**, not a claim that historical Apollo GET stopped.
+See `082_continuous_mission_clock_architecture.md`.
 
-## Why this is the minimum-safe policy
+The current rule is:
 
-Allowing GET to continue while the gate blocks event execution immediately creates a second unresolved question: what should happen when nominal timed events such as P40, ullage, and TIG become overdue before FLIGHT clears the gate?
+- GET advances continuously while the session is running;
+- controller decisions do not stop time;
+- only an explicit game/session pause stops GET;
+- nominal timed events whose prerequisites are absent are missed rather than automatically executed or replayed later.
 
-The primary sources support neither automatic retroactive execution nor a specific retiming rule. Explicit simulation pause therefore preserves the source-backed nominal sequence without inventing a delay model.
-
-A later realtime/nonnominal timing model may replace this with separate wall-clock, mission-time, and event-eligibility clocks, but that should be introduced only when gameplay actually requires delayed execution rather than deliberation pause.
-
-## Implementation
-
-- `src/apollo_mission_control/pc2_session.py`
-  - adds `pause_reason`;
-  - final GO poll opens an explicit decision pause;
-  - manual resume is blocked while a gate is pending;
-  - GO automatically resumes the decision pause;
-  - NO-GO remains paused.
-- `src/apollo_mission_control/web_app.py`
-  - exposes `pause_reason` through status responses.
-- `tests/test_pc2_session.py`
-- `tests/test_web_app.py`
-
-## Next boundary
-
-With clock/gate semantics explicit, the next integration task is browser-side rejoin persistence followed by a runnable HTTP/mobile smoke test and then one already-modeled nonnominal branch through the same session/API path.
+This makes the mission clock independent of controller-decision state and establishes the engine as a continuously evolving simulation rather than a sequence of gated scenes.
