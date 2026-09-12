@@ -40,6 +40,12 @@ class SimEvent:
 
 
 @dataclass
+class CrewReport:
+    get_s: float
+    report: str
+
+
+@dataclass
 class PC2State:
     get_s: float
     phase: str = "pc2_final_pad_link_weak"
@@ -51,8 +57,10 @@ class PC2State:
     flight_go: bool = False
     p40_active: bool = False
     ullage_active: bool = False
+    ullage_jets_count: int = 0
     engine_running: bool = False
     throttle_phase: str = "off"
+    crew_reports: list[CrewReport] = field(default_factory=list)
     cutoff_complete: bool = False
     residual_review_complete: bool = False
     powerdown_started: bool = False
@@ -109,11 +117,26 @@ def apply_event(state: PC2State, event: SimEvent, fixture: dict[str, Any]) -> No
     elif name == "p40_active_final_preburn":
         state.p40_active = True
         state.phase = "pc2_p40_preignition"
+    elif name == "manual_two_jet_ullage_begins":
+        state.ullage_active = True
+        state.ullage_jets_count = int(fixture["pc2_target"]["ullage"]["jets"])
+        state.phase = "pc2_ullage"
     elif name == "dps_ignition":
         state.ullage_active = False
+        state.ullage_jets_count = 0
         state.engine_running = True
         state.throttle_phase = "minimum"
         state.phase = "pc2_dps_start_minimum_thrust"
+    elif name == "throttle_command_40_percent":
+        state.throttle_phase = "40_percent"
+        state.phase = "pc2_40_percent_thrust"
+    elif name == "crew_reports_40_percent":
+        state.crew_reports.append(CrewReport(event.get_s, "40_percent"))
+    elif name == "throttle_command_maximum":
+        state.throttle_phase = "maximum"
+        state.phase = "pc2_full_thrust"
+    elif name == "crew_reports_100_percent":
+        state.crew_reports.append(CrewReport(event.get_s, "100_percent"))
     elif name == "guided_cutoff":
         state.engine_running = False
         state.throttle_phase = "off"
@@ -139,15 +162,26 @@ def run_nominal(fixture: dict[str, Any]) -> PC2State:
 def validate_nominal(fixture: dict[str, Any], final_state: PC2State) -> list[str]:
     errors: list[str] = []
     expected = fixture["nominal_validation"]
+    events = {event.name: event.get_s for event in build_events(fixture)}
 
     actual_cutoff = float(expected["actual_cutoff_get_s"])
-    guided_cutoff_events = [
-        e for e in build_events(fixture) if e.name == "guided_cutoff"
-    ]
-    if len(guided_cutoff_events) != 1:
+    if "guided_cutoff" not in events:
         errors.append("Expected exactly one guided_cutoff event.")
-    elif abs(guided_cutoff_events[0].get_s - actual_cutoff) > 1e-6:
+    elif abs(events["guided_cutoff"] - actual_cutoff) > 1e-6:
         errors.append("Guided cutoff event does not match historical fixture.")
+
+    tig = float(fixture["pc2_target"]["tig_get_s"])
+    expected_profile = {
+        "manual_two_jet_ullage_begins": tig - 10.0,
+        "dps_ignition": tig,
+        "throttle_command_40_percent": tig + 5.0,
+        "throttle_command_maximum": tig + 26.0,
+    }
+    for event_name, expected_time in expected_profile.items():
+        if event_name not in events:
+            errors.append(f"Missing required nominal event: {event_name}.")
+        elif abs(events[event_name] - expected_time) > 1e-6:
+            errors.append(f"Unexpected timing for nominal event: {event_name}.")
 
     if final_state.shutdown_rule_triggers:
         errors.append("Nominal run triggered a shutdown rule.")
@@ -157,6 +191,14 @@ def validate_nominal(fixture: dict[str, Any], final_state: PC2State) -> list[str
         errors.append("Nominal run never reached residual review.")
     if not final_state.powerdown_started:
         errors.append("Nominal run never entered post-burn powerdown.")
+
+    reports = [(report.get_s, report.report) for report in final_state.crew_reports]
+    expected_reports = [
+        (hms_to_seconds("79:27:51"), "40_percent"),
+        (hms_to_seconds("79:28:09"), "100_percent"),
+    ]
+    if reports != expected_reports:
+        errors.append("Crew throttle reports do not match the nominal voice chronology.")
 
     pgns = fixture["pgns"]
     residual = pgns["nominal_postburn_residual_fps"]
