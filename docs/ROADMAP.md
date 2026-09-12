@@ -22,7 +22,7 @@ Core Apollo 13 front-room positions are at B or better, with EECOM at A. Exact d
 
 Further historical work is demand-driven by the PC+2 slice or unusually high-value sources.
 
-## Phase 2 — Select the first playable mission/scenario
+## Phase 2 — First playable mission/scenario
 
 **Status:** **selected and initialized — Apollo 13 PC+2 preparation/execution**
 
@@ -49,6 +49,7 @@ Key research chain:
 - `064_pc2_observation_age_and_freshness.md`
 - `065_apollo13_ground_product_integrity_failure.md`
 - `066_controller_product_rejection_decision_event.md`
+- `067_pc2_premature_shutdown_restart_branch.md`
 
 Deliverables:
 
@@ -74,11 +75,11 @@ Current PC+2 checkpoint:
 - [x] LM-7-family `GQ6510P` established as DPS thrust-chamber-pressure measurement; exact Apollo 13 ground/display routing unresolved
 - [x] LM-7-family `GQ3611P` and `GQ4111P` established as separate fuel/oxidizer engine-interface pressure measurements
 - [x] PC+2 fuel/oxidizer ΔP established as a distinct ground-only CONTROL rule product; exact computation/display routing remains unresolved
-- [x] inverter caution narrowed to processed AC voltage/frequency quality with LM-5-and-later selection-transient inhibit behavior; exact PC+2 telemetry/display route unresolved
+- [x] inverter caution narrowed to processed AC voltage/frequency quality; exact PC+2 telemetry/display route unresolved
 - [x] onboard 77-percent thrust rule separated from both P47 and the thrust-to-weight indicator; exact percent-thrust readout/source remains unresolved
-- [x] attitude-error and angular-rate observations established as separate PC+2 CONTROL monitoring families and wired into CONTROL projection when modeled; exact LM-7 PCM/display routing remains unresolved
+- [x] attitude-error and angular-rate observations established as separate CONTROL monitoring families; exact LM-7 PCM/display routing remains unresolved
 - [x] observation/sample time separated from later display/evaluation time; no unsupported generic stale threshold applied
-- [ ] determine the exact CONTROL ground product/selection logic behind the singular PC+2 150-psi “engine inlet pressure” criterion only if a direct source becomes readily available
+- [ ] determine singular PC+2 150-psi engine-inlet-pressure ground selection logic only if a direct source becomes readily available
 - [ ] map required products into first-pass station screens, using exact Apollo formats where available and explicitly labeled project renderings elsewhere
 - [ ] recover additional MCC/RTCC transforms only when PC+2 station behavior requires them
 
@@ -86,7 +87,7 @@ Non-PC+2 display reconstruction remains deferred.
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **nominal event + product projection + partial rules + source injections + controller/crew action loop + attitude/rate + observation-age semantics implemented**
+**Status:** **nominal event model + controller products + partial rules + failure/action/communication layers + restart branch implemented**
 
 Completed:
 
@@ -97,75 +98,72 @@ Completed:
 - [x] framework-neutral Python prototype/tests
 - [x] two-jet ullage and minimum/40-percent/maximum commanded throttle phases
 - [x] crew throttle reports separated from command/physical event timing
-- [x] update/sample semantics with explicit source/sample/receive/process/display metadata
+- [x] source/sample/receive/process/display metadata
 - [x] station-specific controller-product projection layer
 - [x] shutdown-rule evaluator that never creates a generic `burn_abort`
 - [x] ISS-warning + program-alarm rule path
 - [x] chamber-pressure analog rule path using LM-7-family `GQ6510P`
 - [x] generic timed scenario-injection object
-- [x] timed source-bounded chamber-pressure test: synthetic 80 psi flows through CONTROL and the historical 85-psi rule without commanding cutoff/abort
-- [x] inlet-pressure source-state research: two LM-7 interface measurements identified, unsupported singular ground aggregation deliberately left unresolved
-- [x] fuel/oxidizer ΔP rule path modeled as an optional **ground-derived** observation without inventing a GQ3611P/GQ4111P subtraction or sign convention
-- [x] source-bounded ΔP boundary tests defined at 26 psi (triggered) and exactly 25 psi (clear)
-- [x] inverter caution and inverter-switch action represented as separate state/event classes
-- [x] generic operational-action object implemented with `switch_lm_inverter`
-- [x] CAPCOM instruction and crew completion-report events represented separately from the inverter action and telemetry state
-- [x] inverter rule requires a distinct post-switch warning observation; a pre-switch warning carried through the action is not enough
-- [x] first small end-to-end source-bounded decision/action loop implemented: warning → CAPCOM instruction → crew switch → completion report → post-switch warning → rule trigger, with no automatic cutoff/abort
-- [x] onboard 77-percent thrust-monitor research bounded the gap without fabricating a display/source
-- [x] attitude-error/rate rule conflict researched; operational implementation follows the contemporaneous CAPCOM read-up + Haise readback while preserving contradictory postflight wording
-- [x] source-bounded attitude-monitoring helper and boundary tests added; historical PC+2 validation envelope is ~7 deg maximum roll error and <1 deg/s rates
-- [x] optional attitude-error/rate observations flow through the common CONTROL projection into the shutdown-rule audit
-- [x] Apollo 13 Review Board appendices independently confirm the postflight rule wording but supply no startup-transient duration; no clock boundary is invented
-- [x] PC+2 primary-source review found no generic analog-observation stale timeout or persistence count
-- [x] state/projection model now preserves original observation timestamps for carried-forward analog values
-- [x] rule audit records observation age without automatically assigning `STALE` or suppressing threshold evaluation
-- [x] source-backed ground-product integrity path modeled from the Apollo 13 post-MCC-5 AGS/RTCC processing error
+- [x] source-bounded chamber-pressure and ΔP boundary tests
+- [x] inlet-pressure source-state research bounded without inventing singular aggregation
+- [x] fuel/oxidizer ΔP modeled as optional ground-derived observation
+- [x] inverter caution, operational switch action, CAPCOM instruction, crew completion report, and distinct post-switch re-observation
+- [x] onboard 77-percent thrust-monitor research bounded without fabricating a display/source
+- [x] attitude-error/rate conflict researched; implementation follows contemporaneous crew-facing rule while preserving contradictory postflight wording
+- [x] attitude-error/rate observations integrated into common CONTROL rule path
+- [x] observation age preserved without invented stale timeout
+- [x] source-backed wrong-but-present ground-product integrity path
 - [x] hidden product integrity separated from player-visible validity/availability
-- [x] controller product rejection represented as an explicit decision/audit event rather than an automatic integrity consequence
+- [x] explicit controller product-rejection decision events
+- [x] premature DPS shutdown restart eligibility separated from rule-caused shutdown
+- [x] PC+2 restart procedure represented as crew-facing PRO → manual ullage → Engine Start → command override sequence
+- [x] restart actions recorded without forcing `engine_running=True`
+- [x] failure-to-ignite backup kept distinct from in-burn premature shutdown/restart
 
-Immediate next work:
+### Immediate next work
 
-- [ ] return to PC+2-specific nonnominal behavior and select the next source-backed controller decision path that exercises already-modeled products
-- [ ] keep `crew_thrust_monitor` `NOT_EVALUABLE` unless a direct LM-7 crew/display or DPS-control source identifies the percent-thrust indication
-- [ ] keep singular 150-psi inlet-pressure aggregation deferred unless a direct CONTROL/procedure/display source becomes cheaply available
+- [ ] research and implement **ground-only fuel/oxidizer ΔP shutdown callout → crew shutdown action**
+- [ ] preserve CONTROL → FLIGHT/CAPCOM/crew information boundaries without inventing a specific voice cadence or unnecessary approval step
+- [ ] keep `crew_thrust_monitor` `NOT_EVALUABLE` unless a direct LM-7 source identifies the percent-thrust indication
+- [ ] keep singular 150-psi inlet-pressure aggregation deferred unless a direct source becomes cheaply available
 - [ ] add broader failure-propagation tests only where subsystem behavior is source-backed
-- [ ] determine minimum trajectory-state representation when a propagating trajectory implementation becomes necessary
+- [ ] determine minimum trajectory-state representation when propagating trajectory implementation becomes necessary
 
 Important constraints:
 
 - exact RTCC Cartesian state vector at 77:55 remains intentionally unfrozen;
 - exact nominal PC+2 chamber-pressure and ΔP traces are not invented;
-- singular ground `dps_inlet_pressure_psi` is **not** invented from the two interface-pressure transducers;
-- fuel/oxidizer ΔP is not computed from those transducers until the historical ground transformation/sign convention is sourced;
+- singular ground inlet pressure is not synthesized from GQ3611P/GQ4111P;
+- fuel/oxidizer ΔP is not computed from those transducers until the historical transformation/sign convention is sourced;
 - onboard 77-percent thrust is not aliased to P47, thrust-to-weight indication, or ground chamber pressure;
 - no inverter persistence timer or exact alternate-inverter identity is invented;
-- the startup-transient exception follows the contemporaneous crew-facing rule for implementation, but its exact time boundary is not guessed;
-- the Mission Operations Report and Apollo 13 Review Board postflight wording remain recorded as conflicting primary evidence;
+- startup-transient duration is not inferred from throttle timing;
+- conflicting primary wording on attitude-rate/error exception remains recorded;
 - exact LM-7 attitude-error/rate PCM assignments and CONTROL CRT fields remain unresolved;
-- no generic PC+2 stale-data timeout is invented; age and validity remain separate semantics;
-- detailed DPS ramp dynamics remain deferred;
+- no generic stale-data timeout is invented;
+- detailed DPS restart/transient dynamics remain deferred;
+- Noun 97 is retained as a procedural cue without inventing a detailed LGC state machine;
+- restart eligibility does not imply restart success;
 - synthetic boundary-test values/times are labeled non-historical;
-- scenario injection changes source state/observations, operational actions record what crew/controllers do, and procedural communications record instructions/reports; none directly sets diagnoses or outcomes.
+- scenario injection changes source state/observations, operational actions record crew/controller actions, procedural communications record instructions/reports, and controller decisions record interpretations; none directly scripts diagnosis/outcome.
 
 ## Phase 5 — Mission Control data path
 
-**Goal:** preserve spacecraft state → instrumentation/telemetry → communications/ground processing → controller products.
+**Goal:** preserve spacecraft state → instrumentation/telemetry → communications/ground processing → controller products → controller interpretation.
 
 Current checkpoint:
 
 - station projections enforce information boundaries for the modeled PC+2 subset;
-- source injections prove that changed observations can flow through CONTROL and the rule evaluator without special-case scenario logic;
-- inlet-pressure research exposes a concrete unresolved selection/aggregation problem rather than hiding it behind one generic value;
-- ΔP is intentionally represented as a ground-derived product because its exact LM-measurement transformation remains unresolved;
-- inverter warning is kept distinct from the crew switch action and from CAPCOM/crew procedural communications;
-- inverter rule evaluation distinguishes pre-switch warning information from a genuinely later post-switch observation;
-- crew-side thrust monitoring remains a distinct information path from ground chamber-pressure telemetry even though the exact onboard percent readout is unresolved;
-- attitude error and angular rate are separate CONTROL observations and participate in the common rule audit when supplied;
-- source/sample time now remains distinct from receive/process/display time when an observation is carried forward;
-- no numeric stale threshold is asserted without primary evidence;
-- source-backed validity/integrity degradation is now represented independently from observation age;
-- controller suspicion/rejection is an explicit decision event and is never inferred automatically from hidden integrity;
+- source injections can alter observations without special-case scenario diagnoses;
+- ΔP is intentionally a ground-derived product because its exact LM-measurement transformation remains unresolved;
+- crew-visible and ground-only rule paths remain distinct;
+- inverter warning is distinct from crew switch action and communications;
+- attitude error/rate are separate CONTROL observations;
+- source/sample time remains distinct from receive/process/display time;
+- validity/integrity degradation is independent from observation age;
+- controller suspicion/rejection is explicit and never inferred automatically from hidden integrity;
+- premature shutdown restart eligibility is derived from rule state but crew restart actions do not force physical engine response;
+- the next data-path refinement is the ground-only ΔP callout chain;
 - network transport and exact display cadence remain future work where documented.
 
 ## Phase 6 — Procedures and flight rules
@@ -177,18 +175,19 @@ PC+2 checkpoint:
 - [x] rule ownership and core shutdown criteria mapped
 - [x] conjunctive ISS-warning/program-alarm criterion evaluable
 - [x] ground chamber-pressure criterion evaluable when a numerical source observation is supplied
-- [x] fuel and oxidizer LM-7 engine-interface pressure measurement identities established
 - [x] fuel/oxidizer ΔP >25 psi criterion evaluable when an explicit ground-derived product is supplied
 - [x] inverter-warning-after-switch criterion evaluable only from a distinct post-switch observation
-- [x] bounded inverter contingency action/report order recovered from the mission rule read-up and crew readback
-- [x] 77-percent onboard thrust criterion researched and deliberately left `NOT_EVALUABLE` because the exact percent-thrust readout/source is not yet established
-- [x] attitude-error/rate thresholds and operational exception allocation resolved for implementation from contemporaneous read-up/readback; postflight-report contradiction preserved
-- [x] attitude-error/rate observations integrated into the common CONTROL product/rule path
-- [x] analog-observation freshness question researched; no generic PC+2 time threshold found, so age is exposed without a fabricated stale rule
-- [ ] exact startup-transient time boundary remains unresolved and is not inferred from throttle-phase timing
-- [ ] exact alternate-inverter identity, switch/circuit-breaker positions, crew member, and any dwell time remain unresolved and are not invented
-- [ ] singular 150-psi ground inlet-pressure rule remains `NOT_EVALUABLE` until selection/aggregation semantics are sourced
+- [x] bounded inverter contingency action/report order recovered
+- [x] 77-percent onboard thrust criterion researched and deliberately left `NOT_EVALUABLE`
+- [x] attitude-error/rate thresholds and operational exception allocation resolved for implementation from contemporaneous read-up/readback
+- [x] analog-observation freshness question researched; no generic PC+2 time threshold found
+- [x] premature-shutdown restart rule recovered and implemented as a separate branch
+- [x] contemporaneous restart sequence recovered: flashing Noun 97 → PRO → ullage → Engine Start → Descent Engine Command Override
+- [ ] exact startup-transient time boundary remains unresolved
+- [ ] exact alternate-inverter identity, switch/circuit-breaker positions, crew member, and dwell time remain unresolved
+- [ ] singular 150-psi ground inlet-pressure rule remains `NOT_EVALUABLE`
 - [ ] crew inlet indication remains deferred
+- [ ] ground-only ΔP callout communication/action path remains to be implemented
 
 ## Phase 7 — Simulation scenarios / SimSup
 
@@ -197,12 +196,14 @@ PC+2 checkpoint:
 Current checkpoint:
 
 - [x] scenario evidence levels defined
-- [x] primary-source simulator evidence supports source-condition → dependent-effects architecture
+- [x] source-condition → dependent-effects architecture established
 - [x] generic timed injection contract implemented for researched source/ground-product state
-- [x] operational actions structurally separated from malfunction injections
-- [x] procedural communications structurally separated from both injections and actions
-- [x] synthetic rule-boundary fixtures clearly distinguished from historical Apollo training cases
-- [x] first source-bounded multi-layer contingency loop exercises injection → communication → action → re-observation → rule evaluation without scripting outcome
+- [x] operational actions separated from malfunction injections
+- [x] procedural communications separated from injections/actions
+- [x] controller decisions separated from hidden integrity metadata
+- [x] synthetic rule-boundary fixtures clearly distinguished from historical Apollo cases
+- [x] first source-bounded multi-layer contingency loop implemented for inverter warning
+- [x] premature-shutdown restart branch modeled without scripting restart success
 - [ ] documented nonnominal Apollo training case reconstructed only when source detail is sufficient
 - [ ] historical SimSup/operator interface deferred
 
@@ -218,11 +219,13 @@ Role aggregation remains deferred until station research supports it.
 
 **Goal:** reproduce enough Flight/discipline/air-ground communication structure to affect controller work.
 
-The PC+2 start requires a weak-but-usable link that interferes with final PAD/readback before improving after the S-band amplifier change.
+Established requirements:
 
-The inverter contingency supplies a second concrete communication requirement: an approved crew-facing procedure instruction and crew completion report must remain distinct from spacecraft telemetry and operational action state.
-
-The attitude/rate rule research supplies a third: crew-facing rule transmission/readback is itself operational evidence and can control how ambiguous postflight summaries are interpreted for the simulation.
+- weak-but-usable link can interfere with final PAD/readback before improving;
+- inverter contingency instructions/reports remain distinct from telemetry and action state;
+- crew-facing Mission Rules read-up/readback is operational evidence;
+- premature-shutdown restart procedure can be pre-briefed before ignition rather than invented as an emergency ground decision;
+- next target is the explicit ground-only ΔP callout path.
 
 ## Phase 10 — Post-simulation review
 
