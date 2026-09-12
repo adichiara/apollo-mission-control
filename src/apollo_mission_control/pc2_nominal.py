@@ -100,6 +100,11 @@ class PC2State:
     engine_start_push_get_s: float | None = None
     descent_engine_command_override_on: bool = False
     descent_engine_command_override_get_s: float | None = None
+    # Ground-callout shutdown action. The mission rule establishes that the
+    # crew should shut down for fuel/oxidizer Delta-P >25 psi after a ground
+    # callout, but the exact cockpit control sequence is not asserted here.
+    crew_dps_shutdown_commanded: bool = False
+    crew_dps_shutdown_command_get_s: float | None = None
     crew_reports: list[CrewReport] = field(default_factory=list)
     cutoff_complete: bool = False
     residual_review_complete: bool = False
