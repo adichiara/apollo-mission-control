@@ -22,206 +22,129 @@ This roadmap deliberately separates historical reconstruction from software simp
 
 **Goal:** understand the actual organization and information flow before assigning game roles.
 
-Research:
+Research includes MOCR/SSR organization, controller positions, console equipment, voice loops, display/request mechanisms, RTCC/CCATS/MSFN information flow, mission-phase staffing, and handover practice.
 
-- MOCR organization by mission/era
-- Staff Support Rooms and backroom relationships
-- controller positions and responsibilities
-- console equipment
-- voice loops
-- display request mechanisms
-- RTCC / CCATS / display-control information flow
-- Manned Space Flight Network interfaces
-- mission phase changes in staffing/responsibility
-- shift/hand-over practices where relevant
+**Current interpretation:** Apollo 13 core front-room positions are at B or better, with EECOM at A, and the common telemetry/ground-processing/display architecture is sufficiently established to support a bounded vertical slice. Exact console/display reconstruction remains incomplete for many stations but is no longer a prerequisite when missing detail does not affect the selected scenario.
 
-Deliverables:
-
-- controller responsibility matrix
-- documented MOCR layout(s)
-- role-to-data/display map
-- role-to-backroom/communications map
-- terminology glossary
-- unresolved historical questions list
-
-**Current interpretation:** Apollo 13 core front-room positions are at B or better, with EECOM at A, and the common telemetry/ground-processing/display architecture is sufficiently established to support a bounded vertical slice. Exact console/display reconstruction remains incomplete for many stations but is no longer a prerequisite for moving forward when the missing detail does not affect the selected scenario.
-
-Research now follows the sufficiency rule in `docs/PROJECT_PRINCIPLES.md`: inaccessible or low-impact gaps are logged and deferred rather than allowed to block broader progress.
+Research follows the sufficiency rule in `docs/PROJECT_PRINCIPLES.md`: inaccessible or low-impact gaps are logged and deferred rather than allowed to block broader progress.
 
 ## Phase 2 — Select the first playable mission/scenario
 
 **Status:** **selected and initialized — Apollo 13 PC+2 preparation/execution**
 
-**Goal:** choose a specific mission and phase for the first implementation.
-
 The reusable technical platform uses the Apollo 13-era MCC as its default research/implementation baseline, with mission-specific historical profiles layered over it.
 
 ### Selected vertical slice
 
-**Apollo 13 PC+2 preparation and execution**, with the nominal first implementation starting at **77:55:00 GET** and running through immediate post-burn verification/power-down around 79:34–80:00 GET.
+**Apollo 13 PC+2 preparation and execution**, starting at **77:55:00 GET** and running through immediate post-burn verification/power-down around 79:34–80:00 GET.
 
-Selection basis:
+The start is source-driven: communications are weak after AOS and the final P30 LM maneuver PAD begins at 77:55:24, leaving target transfer, final updates, burn power-up, readiness work, and the burn live for players.
 
-- strong surviving primary documentation;
-- explicit mission rules and burn-shutdown criteria;
-- meaningful interaction across FLIGHT, FIDO/RETRO, GUIDO, CONTROL, TELMU, INCO, FAO/PROCEDURES and CAPCOM;
-- direct compatibility with the Apollo 13-era technical baseline;
-- bounded propulsion/guidance event rather than a continuously spreading compound failure;
-- sufficient documentation to validate controller information flow without first implementing the entire Apollo 13 accident.
+Key records:
 
-The **77:55:00 GET** start is source-driven: communications are weak after AOS and the final P30 LM maneuver PAD begins at 77:55:24, leaving a real information-transfer problem, final updates, burn power-up, readiness work and the entire burn live for the players.
-
-Decision: `docs/DECISIONS.md`, D-013.  
-Research comparison: `resources/research/048_first_vertical_slice_candidate_assessment.md`.  
-Initialization/validation: `resources/research/050_pc2_initialization_and_nominal_validation.md`.  
-Ullage/throttle implementation research: `resources/research/051_pc2_ullage_and_throttle_profile.md`.  
-Controller-product projection research: `resources/research/052_pc2_controller_product_projection.md`.  
-Shutdown-rule evaluation research: `resources/research/053_pc2_shutdown_rule_evaluation.md`.  
-Parameter specification: `docs/scenarios/APOLLO13_PC2_PARAMETERS.md`.
+- `resources/research/048_first_vertical_slice_candidate_assessment.md`
+- `resources/research/049_pc2_controller_action_and_rule_matrix.md`
+- `resources/research/050_pc2_initialization_and_nominal_validation.md`
+- `resources/research/051_pc2_ullage_and_throttle_profile.md`
+- `resources/research/052_pc2_controller_product_projection.md`
+- `resources/research/053_pc2_shutdown_rule_evaluation.md`
+- `resources/research/054_pc2_iss_warning_observation_path.md`
+- `docs/scenarios/APOLLO13_PC2_PARAMETERS.md`
 
 ### Phase 2 deliverables
 
 - [x] selected mission and mission-era profile
 - [x] selected mission interval
 - [x] freeze nominal scenario start at 77:55:00 GET
-- [x] define the minimum spacecraft/ground-system configuration required at initialization
-- [x] create a source-backed nominal PC+2 event timeline through immediate post-burn power-down
-- [x] assemble the core scenario-specific primary-source package
-- [ ] identify the controller positions required for the first full-fidelity multiplayer run and later low-player-count aggregation
-
-Phase 2 no longer depends on complete Apollo-wide display reconstruction. Research effort should follow the selected slice.
+- [x] define minimum spacecraft/ground-system initialization
+- [x] create source-backed nominal event timeline through immediate post-burn power-down
+- [x] assemble core scenario-specific primary-source package
+- [ ] identify controller positions required for first full-fidelity multiplayer run and later low-player-count aggregation
 
 ## Phase 3 — Display and console reconstruction
 
-**Goal:** reproduce the information presentation used by controllers.
+**Goal:** reproduce controller information presentation where source evidence permits it.
 
-Research and catalog:
-
-- operational display formats
-- formatting rules
-- character sets and typography
-- CRT geometry and field layout
-- update rates where documented
-- display request/selection workflow
-- field meaning and display mask/precision, tracked separately from source-path evidence and mission-to-mission continuity
-- field provenance (raw telemetry vs onboard-computed vs ground-derived)
-- ground transformation/calculation path for derived CRT values
-- validation cases for incorrect ground-derived products even when raw telemetry/spacecraft state are valid
-- plot/tabular formats
-- console controls relevant to play
-- hard-copy products where relevant
-
-Deliverables:
-
-- display format specification
-- reusable historical display renderer
-- controller-specific display catalog for the selected baseline
-- authenticity comparison against source photographs/manuals
+Research/catalog scope includes operational display formats, typography/geometry, field layout, update rates, display selection, provenance, ground calculations, plots/tables, console controls, and hard-copy products.
 
 ### Current research checkpoint — Apollo 13 LM guidance/control displays
 
 - [x] Mission-specific MSK 1123 and 1137 layouts identified and inspected.
 - [x] Major LGC, PCM, AEA/AGS, and ground-derived source classes separated.
-- [x] AEA Table 2.1-7 telemetry structure and engineering definitions recovered from a later contemporary handbook configuration, including distinct present-velocity, short-interval delta-V, sensed body-axis velocity-increment, DEDA, direction-cosine, and ullage-counter products.
-- [x] Handbook chronology corrected: Apollo 13 LM-7 is Basic Date 15 Dec 1968 / Change Date 1 Feb 1970; searchable LM-10 is Basic Date 1 Feb 1970 / Change Date 15 Jun 1970.
-- [x] AGS ullage qualification narrowed to a two-second accumulated +X velocity-increment test; equivalent later handbook wording expresses the same threshold as average acceleration over the cycle.
-- [x] PC+2-critical information families separated into physical, onboard, telemetry/link, ground-derived and crew-report layers.
-- [x] Identify the **smallest historical display/product set actually needed for PC+2** at GUIDO, CONTROL, FIDO/RETRO, TELMU, INCO, FLIGHT and CAPCOM (`APOLLO13_PC2_PLAYER_PRODUCTS.md`).
-- [x] Map the currently modeled minimum products into station-specific projection sets with validity, source-layer and provenance metadata; unmodeled historical fields remain separate implementation gaps rather than simulated telemetry failures.
-- [ ] Map those products into first-pass station screens, using exact Apollo formats where available and explicitly labeled project renderings where presentation evidence is incomplete.
-- [ ] Directly compare the Apollo 13 LM-7 Table 2.1-7 page against the later searchable LM-10 table **only if it becomes necessary for a PC+2-required field and remains reasonably accessible**.
-- [ ] Recover MCC/RTCC rules for specific AEA-to-display transformations **only where required by PC+2 station behavior**.
+- [x] AEA Table 2.1-7 telemetry structure and engineering definitions recovered from later contemporary handbook configuration.
+- [x] Handbook chronology corrected: Apollo 13 LM-7 versus later searchable LM-10 configuration is explicitly tracked.
+- [x] AGS ullage qualification narrowed to a two-second accumulated +X velocity-increment test.
+- [x] PC+2-critical information families separated into physical, onboard, telemetry/link, ground-derived, and crew-report layers.
+- [x] Minimum historical product set identified for GUIDO, CONTROL, FIDO/RETRO, TELMU, INCO, FLIGHT, and CAPCOM.
+- [x] Current modeled products mapped into station-specific projection sets with validity/source/provenance metadata.
+- [x] ISS warning established as a distinct onboard warning signal with an instrumentation path; exact Apollo 13 LM-7 telemetry word and GUIDO CRT placement remain unresolved.
+- [ ] Map products into first-pass station screens, using exact Apollo formats where available and explicitly labeled project renderings where presentation evidence is incomplete.
+- [ ] Compare Apollo 13 LM-7 Table 2.1-7 directly with later searchable LM-10 table only if a PC+2 dependency makes it worthwhile.
+- [ ] Recover MCC/RTCC transformation rules only where PC+2 station behavior requires them.
 
-The telemetry evidence narrows source candidates but does not certify every telemetry-word-to-CRT-field mapping. Non-PC+2 display details are explicitly deferred.
+The telemetry evidence narrows source candidates but does not certify every telemetry-word-to-CRT-field mapping. Non-PC+2 display details remain deferred.
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **nominal event + controller-product + partial rule model in progress**
+**Status:** **nominal event + controller-product + partial rule/non-nominal validation model in progress**
 
-**Goal:** produce the mission state from which historically appropriate telemetry can be derived.
-
-Model only what the selected scenario requires initially, but preserve subsystem boundaries.
-
-### First-slice model priorities — PC+2
-
-- mission clock / PC+2 event timeline
-- docked CSM/LM/SM configuration relevant to the burn
-- trajectory state and target solution
-- LM DPS thrust/chamber/inlet/propellant state
-- LM RCS / attitude-control state
-- PGNS/LGC guidance state and AGS backup/cross-check state
-- alignment / attitude-error state
-- electrical state needed for burn readiness and post-burn power-down
-- communications/uplink/ranging availability required for maneuver updates
-- telemetry/measurement state for documented shutdown criteria
-- crew readback/report events as a separate information source
+**Goal:** produce mission state from which historically appropriate telemetry/products can be derived while preserving subsystem boundaries.
 
 ### Completed first-slice model work
 
 - [x] research-derived initialization contract at 77:55 GET
 - [x] stable implementation-oriented PC+2 parameter names and units
-- [x] explicit separation of PAD LVLH target, PGNS IMU Vg, physical burn result and guidance residuals
-- [x] nominal historical validation fixture including TIG, duration, cutoff, Vg and residuals
+- [x] separation of PAD LVLH target, PGNS IMU Vg, physical burn result, and guidance residuals
+- [x] nominal historical validation fixture including TIG, duration, cutoff, Vg, and residuals
 - [x] explicit stop conditions for unavailable low-impact numeric detail
-- [x] nominal state-transition model from weak-link final PAD transfer through post-burn power-down (`APOLLO13_PC2_STATE_MACHINE.md`)
-- [x] failure-transition hooks identified at the level of documented conditions without authoring speculative failure scripts
+- [x] nominal state-transition model through post-burn power-down
+- [x] source-level failure-transition hooks without speculative failure scripts
 - [x] framework-neutral Python nominal event prototype and validation tests
-- [x] explicit two-jet ullage, minimum/40-percent/maximum commanded throttle phases, and separate crew throttle-report events
-- [x] first station-specific controller-product projection layer with explicit validity, timing metadata, source layers, provenance, and implementation-gap separation
-- [x] partial source-backed shutdown-rule audit evaluator; unsupported observation paths remain explicitly `not_evaluable`
+- [x] two-jet ullage and minimum/40-percent/maximum commanded throttle phases separated from crew throttle reports
+- [x] station-specific controller-product projection layer with timing, validity, source layer, and provenance
+- [x] independent source-backed shutdown-rule audit evaluator without a generic `burn_abort` state
+- [x] first deferred shutdown-rule observation path modeled: distinct ISS warning signal projected to GUIDO
+- [x] first source-backed nonnominal rule-path validation case: ISS warning + program alarm triggers the documented conjunctive criterion without automatically commanding shutdown
 
 ### Immediate next work
 
-- [x] define subsystem dependencies; derived-value equations remain limited to sourced/required behavior
-- [ ] determine the minimum trajectory-state representation required for the first propagating implementation
-- [x] define update/sample semantics for the minimum player-facing products; exact CRT cadence remains unresolved where unsupported
-- [x] convert the nominal state machine and parameter contract into the first implementation schema/data fixture
+- [x] define subsystem dependencies; derived equations remain limited to sourced/required behavior
+- [ ] determine minimum trajectory-state representation required for the first propagating implementation
+- [x] define update/sample semantics for minimum player-facing products; exact CRT cadence remains unresolved where unsupported
+- [x] convert nominal state machine/parameter contract into first implementation schema/data fixture
 - [x] add controller-product projections from authoritative state with validity/provenance metadata
-- [x] implement independent shutdown-rule evaluation without a precomputed `burn_abort` state, limited to observation paths currently modeled
-- [ ] model the first deferred shutdown-rule observation path only when a defensible source/state representation is available
-- [ ] add the first nonnominal validation case only when its underlying condition and controller observation path are source-backed
+- [x] implement independent shutdown-rule evaluation limited to modeled observations
+- [x] model first deferred shutdown-rule observation path from defensible primary-source evidence
+- [x] add first source-backed nonnominal validation case at the rule-path level
+- [ ] research and model the next highest-value deferred rule path only where source support is adequate; current candidates are inverter-after-switch logic or one propulsion-pressure observation path
+- [ ] introduce scenario/failure injection objects only after at least one underlying failure condition can be represented without a scripted diagnosis
 
-The exact Cartesian RTCC state vector at 77:55 is deliberately **not** being reverse-engineered from the maneuver PAD. It becomes an active research target only when the trajectory propagator requires it.
+The exact Cartesian RTCC state vector at 77:55 is deliberately not reverse-engineered from the maneuver PAD. It becomes an active target only when the propagator requires it.
 
-Detailed DPS engine-response/ramp dynamics are also deferred. The nominal prototype currently models the source-backed **commanded** throttle profile and preserves later crew reports as separate communication events. See research note 051.
+Detailed DPS engine-response/ramp dynamics remain deferred. The prototype models the source-backed commanded throttle profile and separate crew reports.
 
-The first projection implementation intentionally does not expose required-but-unmodeled numeric fields (for example exact nominal DPS pressure readings) as `unavailable` telemetry. Those are tracked as implementation gaps so research incompleteness cannot masquerade as a historical data-path failure. See research note 052.
+The projection implementation does not expose required-but-unmodeled values as simulated `unavailable` telemetry. They remain implementation gaps.
 
-The rule evaluator follows the same boundary. Pressure, differential-pressure, attitude/rate, crew analog indications, positive ISS+program-alarm, and positive inverter-after-switch cases are not assumed clear merely because the executable model lacks their observations. See research note 053.
+The ISS-warning work resolves the previously deferred positive ISS+program-alarm observation path while preserving two important limits: no exact LM-7 telemetry word or GUIDO CRT field is claimed, and no hypothetical failure mechanism/program-alarm number is invented. See research note 054.
 
-Workstreams:
-
-- mission clock and event timeline
-- spacecraft configuration/state
-- trajectory/navigation state
-- propulsion
-- electrical power
-- environmental/consumables
-- guidance/navigation/control
-- communications/instrumentation
-- crew state where required
-- ground network state where required
-- sensor/instrumentation behavior
-- telemetry generation and processing
-
-Deliverables:
+### Phase 4 deliverables
 
 - [x] first-slice documented parameter dictionary
-- [x] first-slice units and ownership/source layers
+- [x] units and ownership/source layers
 - [x] nominal-state validation targets
-- [x] update/sample behavior contract for first-slice products, with exact historical CRT cadence left unresolved where unsupported
-- [x] first-slice subsystem dependency contract
-- [x] first executable nominal event fixture/state model
+- [x] update/sample behavior contract
+- [x] subsystem dependency contract
+- [x] executable nominal event fixture/state model
 - [x] controller-product projection layer
-- [x] partial shutdown-rule evaluation + validation tests committed
-- [ ] first source-backed nonnominal validation case
+- [x] partial shutdown-rule evaluation + validation tests
+- [x] first source-backed nonnominal rule-path validation case
 - [ ] broader failure propagation tests
 
 ## Phase 5 — Mission Control data path
 
 **Goal:** separate physical state from what controllers actually receive.
 
-High-level path to research and reproduce:
+Conceptual path:
 
 spacecraft state → instrumentation/telemetry → communications/network → ground processing → controller-accessible displays/products
 
@@ -233,9 +156,7 @@ Deliverables:
 - ground-computed values where documented
 - display refresh behavior
 
-**PC+2 requirement:** the nominal implementation must already preserve source layer, sample/receive time, validity and data age structurally, even if some nominal transport errors are initially zero.
-
-**Current implementation checkpoint:** `controller_products.py` now enforces station boundaries for the modeled PC+2 subset. It is an information-projection layer, not yet a complete telemetry/network simulator.
+**Current checkpoint:** `controller_products.py` enforces station boundaries for the modeled PC+2 subset. It is an information-projection layer, not yet a complete telemetry/network simulator. The ISS-warning path now provides the first explicitly researched discrete warning flowing from onboard warning state toward a controller product.
 
 ## Phase 6 — Procedures and flight rules
 
@@ -245,26 +166,18 @@ Deliverables:
 - map rules to responsible positions
 - identify supporting procedures/tables
 - produce print-oriented controller packets
-- distinguish verbatim historical material from project-produced indexes/guides
-- validate that the simulation exposes enough information for a controller to apply each implemented rule
+- distinguish verbatim historical material from project-created guides
+- validate that simulation exposes enough information for each implemented rule
 
-**Immediate priority:** PC+2 shutdown criteria, final maneuver PAD/readback, alignment state, maneuver update/uplink procedure, DPS/RCS readiness, burn monitoring, GO/NO-GO polling, and immediate post-burn power-down handoff.
-
-**Current PC+2 rule checkpoint:** the evaluator can audit modeled discrete warning criteria without issuing a shutdown command. Rules requiring unmodeled analog observations remain explicitly `not_evaluable`; a primary-source wording conflict over the startup-transient exception for attitude error/rate remains unresolved rather than guessed.
+**PC+2 checkpoint:** the evaluator can audit modeled discrete warning criteria without issuing a shutdown command. ISS warning + program alarm is now fully evaluable as a conjunction. Pressure, differential-pressure, attitude/rate, crew analog indications, and positive inverter-after-switch remain deferred where required observations are not modeled. The startup-transient wording conflict remains unresolved.
 
 ## Phase 7 — Simulation scenarios / SimSup
 
 **Goal:** reproduce training behavior from documented simulation practice.
 
-Research before authoring:
+Research before authoring includes simulator/MCC integration, Simulation Supervisor responsibilities, malfunction insertion, and documented training cases.
 
-- Apollo simulator integration with MCC
-- Simulation Supervisor responsibilities
-- documented malfunction insertion methods
-- documented training cases/exercises
-- mission-specific simulation records where available
-
-Scenario implementation should inject underlying conditions/failures rather than simply announce diagnoses.
+Scenario implementation should inject underlying conditions/failures rather than announce diagnoses.
 
 Deliverables:
 
@@ -274,65 +187,37 @@ Deliverables:
 - documented nonnominal run(s)
 - SimSup/operator interface if appropriate
 
+The current ISS-warning + program-alarm test is a **rule-path validation case**, not yet a narrative/documented Apollo training scenario.
+
 ## Phase 8 — Multi-player session layer
 
 **Goal:** support in-person cooperative operation without changing historical information unnecessarily.
 
-Required capabilities:
+Required capabilities include central authoritative server, session/join, station assignment, phone clients, synchronized mission time/state, reconnection, and server-controlled scenario state.
 
-- central authoritative server
-- session/join mechanism
-- station assignment
-- phone-based station clients
-- synchronized mission time/state
-- reconnection handling
-- server-controlled scenario state
-
-Then determine, from the controller research:
-
-- minimum viable player count
-- role aggregation for each supported player count
-- which positions should never be combined
-- which responsibilities can be omitted only for certain mission phases
+Role aggregation decisions remain deferred until station research supports them.
 
 ## Phase 9 — Communications
 
-**Goal:** reproduce enough of the voice structure to affect controller work.
+**Goal:** reproduce enough voice structure to affect controller work.
 
-Potential scope is intentionally undecided until researched:
+Potential scope includes Flight loop, discipline/backroom loops, air-to-ground/CAPCOM path, crew voice, and headset/loop behavior.
 
-- Flight loop
-- discipline/backroom loops
-- air-to-ground/CAPCOM path
-- recorded/simulated crew voice
-- headset/earbud support
-- loop selection behavior
-
-The PC+2 nominal start establishes one concrete communications requirement: a weak-but-usable air-ground link must be able to interfere with the final PAD/readback before improving after the S-band power-amplifier change.
+The PC+2 nominal start already requires a weak-but-usable air-ground link that can interfere with final PAD/readback before improving after the S-band power-amplifier change.
 
 ## Phase 10 — Post-simulation review
 
-**Goal:** support learning/replay without adding a game layer during operation.
+**Goal:** support learning/replay without an in-play score layer.
 
-Possible review material, only where objectively derivable:
-
-- mission outcome
-- timeline of commands/decisions
-- system evolution
-- flight-rule/procedure references
-- communications timeline
-- comparison with historical case where applicable
-
-Do not introduce an arbitrary numerical score unless there is a later explicit project decision to do so.
+Potential outputs include mission outcome, command/decision timeline, system evolution, rule/procedure references, communications timeline, and historical comparison.
 
 ## Phase 11 — Expansion
 
 After the vertical slice is validated:
 
 - Apollo 13 oxygen-tank accident / immediate stabilization
-- Apollo 11 powered descent as a mission-profile portability test
-- additional mission phases
-- additional Apollo missions/configurations
+- Apollo 11 powered descent as mission-profile portability test
+- additional mission phases/missions/configurations
 - larger controller complements
 - Staff Support Room roles if practical
 - additional documented simulation cases
@@ -340,7 +225,7 @@ After the vertical slice is validated:
 
 ## Validation approach
 
-Apollo 13 readiness documentation shows a layered verification process rather than reliance on one end-to-end exercise. The project will follow the same broad pattern:
+The project uses layered verification:
 
 1. component/source fidelity;
 2. subsystem closed-loop validation;
