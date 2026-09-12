@@ -27,9 +27,26 @@ Status: active source supplement for the PC+2 premature-shutdown/restart branch.
 - **Use:** Separates the earlier no-ignition backup procedure from the later in-burn premature-shutdown restart instruction and provides convenient chronology.
 - **Implementation rule:** Governing historical claims remain tied to the NASA Mission Operations Report and NASA mission transcript.
 
+## 4. Apollo Operations Handbook — Lunar Module LM10 and Subsequent, Volume I
+
+- **Document:** LMA790-3-LM, 1 February 1970
+- **Source class:** PRIMARY/CONTEMPORARY subsystem documentation
+- **Use:** Establishes common LM DPS restartability and the manual engine-on path: START/engine-on command → pilot valves open → propellant shutoff valves open → propellant flow/combustion. Also documents the command-override alternate-voltage role.
+- **Implementation consequence:** Supports a separate successful physical-response event after an eligible restart procedure.
+- **Limitation:** Does not justify an Apollo 13 LM-7 restart transient, exact restart thrust level, pressure buildup, or success probability.
+
 ## Research record
 
 - `resources/research/067_pc2_premature_shutdown_restart_branch.md`
+- `resources/research/071_pc2_dps_restart_physical_response.md`
+
+## Implementation follow-through
+
+- `src/apollo_mission_control/restart_logic.py` — restart eligibility only.
+- `src/apollo_mission_control/operational_actions.py` — crew actions only.
+- `src/apollo_mission_control/dps_restart_response.py` — explicit successful physical response.
+- `tests/test_pc2_restart.py`
+- `tests/test_pc2_restart_response.py`
 
 ## Evidence rule
 
@@ -38,6 +55,7 @@ Do not equate:
 - failure to ignite at TIG with premature shutdown after ignition;
 - restart eligibility with successful restart;
 - crew restart action with physical DPS response;
+- physical restart with known thrust level or automatic telemetry confirmation;
 - absence of a modeled triggered rule with proof that no historical fault existed.
 
 Synthetic tests may exercise the branch, but their failure cause/timing must be labeled non-historical unless directly sourced.
