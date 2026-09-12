@@ -47,6 +47,8 @@ Key research chain:
 - `062_pc2_attitude_error_rate_shutdown_path.md`
 - `063_pc2_attitude_projection_and_rule_integration.md`
 - `064_pc2_observation_age_and_freshness.md`
+- `065_apollo13_ground_product_integrity_failure.md`
+- `066_controller_product_rejection_decision_event.md`
 
 Deliverables:
 
@@ -118,10 +120,13 @@ Completed:
 - [x] PC+2 primary-source review found no generic analog-observation stale timeout or persistence count
 - [x] state/projection model now preserves original observation timestamps for carried-forward analog values
 - [x] rule audit records observation age without automatically assigning `STALE` or suppressing threshold evaluation
+- [x] source-backed ground-product integrity path modeled from the Apollo 13 post-MCC-5 AGS/RTCC processing error
+- [x] hidden product integrity separated from player-visible validity/availability
+- [x] controller product rejection represented as an explicit decision/audit event rather than an automatic integrity consequence
 
 Immediate next work:
 
-- [ ] research and implement the first source-backed **data-validity degradation path** relevant to PC+2 (loss/freeze/questionable telemetry or a documented ground-processing validity problem), preferably using an Apollo 13 mission-specific example
+- [ ] return to PC+2-specific nonnominal behavior and select the next source-backed controller decision path that exercises already-modeled products
 - [ ] keep `crew_thrust_monitor` `NOT_EVALUABLE` unless a direct LM-7 crew/display or DPS-control source identifies the percent-thrust indication
 - [ ] keep singular 150-psi inlet-pressure aggregation deferred unless a direct CONTROL/procedure/display source becomes cheaply available
 - [ ] add broader failure-propagation tests only where subsystem behavior is source-backed
@@ -159,7 +164,8 @@ Current checkpoint:
 - attitude error and angular rate are separate CONTROL observations and participate in the common rule audit when supplied;
 - source/sample time now remains distinct from receive/process/display time when an observation is carried forward;
 - no numeric stale threshold is asserted without primary evidence;
-- the next data-path refinement is source-backed validity degradation rather than fabricated expiration timing;
+- source-backed validity/integrity degradation is now represented independently from observation age;
+- controller suspicion/rejection is an explicit decision event and is never inferred automatically from hidden integrity;
 - network transport and exact display cadence remain future work where documented.
 
 ## Phase 6 — Procedures and flight rules
