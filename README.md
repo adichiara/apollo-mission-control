@@ -38,7 +38,7 @@ See:
 
 ## Current status
 
-Foundation/research phase. No simulation code has been committed yet.
+Research has progressed into the first implementation-oriented vertical slice: **Apollo 13 PC+2 preparation and execution**. A framework-neutral Python nominal domain prototype and validation tests are now committed under `src/` and `tests/`. The current code validates scenario/event architecture and source-backed nominal fixtures; it does **not** yet claim full spacecraft physics, RTCC dynamics, or historical CRT timing fidelity.
 
 
 ## Apollo 13 station specifications
