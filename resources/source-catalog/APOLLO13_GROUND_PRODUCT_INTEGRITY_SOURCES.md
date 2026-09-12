@@ -40,3 +40,9 @@ For implementation, do not equate:
 - an independent confirming cue with a hidden diagnostic flag.
 
 Product integrity is internal simulation/audit metadata unless a historical system explicitly exposed a validity/quality indication to the controller.
+
+## Implementation follow-through — explicit controller decision layer
+
+Research note `resources/research/066_controller_product_rejection_decision_event.md` records the implementation consequence of the same primary case: rejection is a controller decision/audit event, not an automatic result of hidden integrity metadata.
+
+This does not add a new historical claim; it preserves the source-supported separation between a bad RTCC product, an independent FDAI reference, and Mission Control's decision to disregard the bad readout.
