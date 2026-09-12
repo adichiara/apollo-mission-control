@@ -48,9 +48,6 @@ def evaluate_pc2_shutdown_rules(
 
     results: dict[str, RuleEvaluation] = {}
 
-    # Ground chamber pressure is the first modeled analog propulsion criterion.
-    # If no numerical observation has been supplied, this remains a project-model
-    # gap rather than being falsely cleared or rendered as telemetry unavailable.
     chamber_product = control.products.get("dps.chamber_pressure_psi")
     if chamber_product is None:
         results["ground_chamber_pressure"] = deferred(
@@ -67,8 +64,6 @@ def evaluate_pc2_shutdown_rules(
             observation={"pressure_psi": chamber_pressure, "threshold_psi": threshold},
         )
 
-    # Remaining numeric criteria are documented, but the executable model does
-    # not yet invent or assume the required observations.
     results["crew_thrust_monitor"] = deferred(
         "crew_thrust_monitor", "CREW/CAPCOM", "onboard thrust monitor <= 77 percent"
     )
@@ -78,11 +73,25 @@ def evaluate_pc2_shutdown_rules(
     results["crew_inlet_pressure"] = deferred(
         "crew_inlet_pressure", "CREW/CAPCOM", "onboard engine inlet pressure <= 160 psi"
     )
-    results["fuel_oxidizer_delta_p"] = deferred(
-        "fuel_oxidizer_delta_p",
-        "CONTROL",
-        "fuel/oxidizer differential pressure > 25 psi; ground callout only",
-    )
+
+    delta_p_product = control.products.get("dps.fuel_oxidizer_delta_p_psi")
+    if delta_p_product is None:
+        results["fuel_oxidizer_delta_p"] = deferred(
+            "fuel_oxidizer_delta_p",
+            "CONTROL",
+            "fuel/oxidizer differential pressure > 25 psi; ground callout only",
+        )
+    else:
+        delta_p = float(delta_p_product.value)
+        threshold = float(fixture["shutdown_rules"]["fuel_oxidizer_delta_p_max_psi"])
+        results["fuel_oxidizer_delta_p"] = RuleEvaluation(
+            "fuel_oxidizer_delta_p",
+            RuleState.TRIGGERED if delta_p > threshold else RuleState.CLEAR,
+            "CONTROL",
+            "fuel/oxidizer differential pressure > 25 psi; ground callout only",
+            observation={"delta_p_psi": delta_p, "threshold_psi": threshold},
+        )
+
     results["attitude_error"] = deferred(
         "attitude_error",
         "CONTROL/GUIDO",
@@ -137,8 +146,6 @@ def evaluate_pc2_shutdown_rules(
         inverter_state = RuleState.CLEAR
         inverter_observation: Any = {"warning": False}
     else:
-        # Positive criterion depends on warning persistence after an inverter
-        # switch attempt, which is intentionally not inferred.
         inverter_state = RuleState.NOT_EVALUABLE
         inverter_observation = {"warning": True, "switch_attempted": None}
     results["persistent_inverter_warning"] = RuleEvaluation(
