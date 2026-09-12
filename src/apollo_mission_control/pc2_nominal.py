@@ -92,6 +92,14 @@ class PC2State:
     # Operational action state, kept separate from fault/scenario injection.
     lm_inverter_switch_attempted: bool = False
     lm_inverter_switch_attempt_get_s: float | None = None
+    # Source-backed PC+2 premature-shutdown restart actions. These fields record
+    # crew actions/commands only; they do not force a successful engine restart.
+    restart_manual_ullage_attempted: bool = False
+    restart_manual_ullage_get_s: float | None = None
+    engine_start_push_attempted: bool = False
+    engine_start_push_get_s: float | None = None
+    descent_engine_command_override_on: bool = False
+    descent_engine_command_override_get_s: float | None = None
     crew_reports: list[CrewReport] = field(default_factory=list)
     cutoff_complete: bool = False
     residual_review_complete: bool = False
