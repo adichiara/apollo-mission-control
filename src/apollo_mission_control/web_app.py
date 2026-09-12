@@ -29,7 +29,6 @@ from .session_shutdown_evidence import (
     record_crew_shutdown_report,
 )
 
-
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE_PATH = ROOT / "data" / "scenarios" / "apollo13_pc2_nominal.json"
 WEB_ROOT = ROOT / "web"
@@ -145,13 +144,7 @@ def _status_payload(session: PC2Session) -> dict[str, Any]:
 
 
 def _join_or_rejoin(session: PC2Session, player_id: str, station: str) -> None:
-    """Join a station or idempotently rejoin the player's existing assignment.
-
-    This is deliberately lightweight prototype identity, not authentication.
-    A repeated browser join with the same player ID and same station is allowed;
-    the same ID cannot switch stations, and another ID cannot take an occupied
-    station through this path.
-    """
+    """Join a station or idempotently rejoin the player's existing assignment."""
     normalized = station.upper()
     existing = session.station_assignments.get(player_id)
     if existing is not None:
@@ -303,9 +296,7 @@ def queue_capcom(player_id: str, request: CapcomQueueRequest) -> dict[str, Any]:
 
 
 @app.post("/api/session/control/{player_id}/delta-p-callout")
-def control_delta_p_callout(
-    player_id: str, request: ControlDeltaPCalloutRequest
-) -> dict[str, Any]:
+def control_delta_p_callout(player_id: str, request: ControlDeltaPCalloutRequest) -> dict[str, Any]:
     with _lock:
         session = _sync_session()
         item = _domain_call(
@@ -348,10 +339,6 @@ def transmit_capcom(player_id: str, item_id: int) -> dict[str, Any]:
 
 @app.post("/api/session/crew/receipt/{item_id}")
 def crew_receipt(item_id: int, request: CrewReceiptRequest) -> dict[str, Any]:
-    """Validation harness operation: explicit crew receipt of a transmitted call.
-
-    ``response`` is semantic test metadata, not asserted as historical wording.
-    """
     with _lock:
         session = _sync_session()
         return _domain_call(
@@ -366,7 +353,6 @@ def crew_receipt(item_id: int, request: CrewReceiptRequest) -> dict[str, Any]:
 
 @app.post("/api/session/crew/shutdown/{item_id}")
 def crew_shutdown(item_id: int, request: CrewShutdownRequest) -> dict[str, Any]:
-    """Validation harness operation: explicit crew DPS shutdown command."""
     with _lock:
         session = _sync_session()
         action = _domain_call(
@@ -389,21 +375,13 @@ def crew_shutdown(item_id: int, request: CrewShutdownRequest) -> dict[str, Any]:
 
 @app.post("/api/session/crew/shutdown-report")
 def crew_shutdown_report(request: CrewShutdownReportRequest) -> dict[str, Any]:
-    """Record the crew-report evidence channel without asserting physical truth."""
     with _lock:
         session = _sync_session()
-        return _domain_call(
-            lambda: record_crew_shutdown_report(session, crew_id=request.crew_id)
-        )
+        return _domain_call(lambda: record_crew_shutdown_report(session, crew_id=request.crew_id))
 
 
 @app.post("/api/session/admin/vehicle/dps-engine-off")
 def dps_engine_off_response(request: EngineOffResponseRequest) -> dict[str, Any]:
-    """Validation harness operation: explicit physical DPS engine-off response.
-
-    The synchronized current GET is used. This endpoint does not infer a response
-    delay, synthesize chamber pressure, or assert controller confirmation.
-    """
     with _lock:
         session = _sync_session()
         return _domain_call(
@@ -417,7 +395,6 @@ def dps_engine_off_response(request: EngineOffResponseRequest) -> dict[str, Any]
 
 @app.get("/api/session/audit")
 def audit_log() -> list[dict[str, Any]]:
-    """Prototype validation endpoint; not intended as a normal player view."""
     with _lock:
         session = _sync_session()
         return [
@@ -435,3 +412,9 @@ def audit_log() -> list[dict[str, Any]]:
 @app.get("/", include_in_schema=False)
 def index() -> FileResponse:
     return FileResponse(WEB_ROOT / "index.html")
+
+
+@app.get("/admin", include_in_schema=False)
+def admin_console() -> FileResponse:
+    """Development/SimSup validation console; not an authorization boundary."""
+    return FileResponse(WEB_ROOT / "admin.html")
