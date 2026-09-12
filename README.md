@@ -31,6 +31,7 @@ See:
 - [Open questions](docs/OPEN_QUESTIONS.md)
 - [Progress log](docs/PROGRESS.md)
 - [Ground-product integrity progress](docs/progress/2026-09-12_ground_product_integrity.md)
+- [Product-integrity integration progress](docs/progress/2026-09-12_product_integrity_integration.md)
 - [Research resources](resources/README.md)
 - [PC+2 implementation source catalog](resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md)
 - [Apollo 13 ground-product integrity sources](resources/source-catalog/APOLLO13_GROUND_PRODUCT_INTEGRITY_SOURCES.md)
@@ -66,7 +67,9 @@ For the **attitude-error / attitude-rate** criteria, the project preserves the p
 
 The project does **not** yet claim full spacecraft physics, RTCC dynamics, exact historical CRT timing, complete Apollo 13 telemetry/display routing, a generic historical stale-data timeout, or historically reconstructed SimSup malfunction-command syntax.
 
-The next implementation target is to integrate product-integrity annotations into the common station/audit path without exposing hidden integrity to players, and to represent controller suspicion/rejection as an explicit event. After that, PC+2-specific nonnominal work can resume where primary evidence supports it.
+Product-integrity annotations are now integrated into the common station projection structure without entering the ordinary player-visible product map. Controller suspicion/rejection is also represented as an explicit decision/audit event with a stated basis and optional independent reference; hidden simulator integrity never auto-diagnoses a product for the player.
+
+The next implementation target returns to **PC+2-specific nonnominal behavior**, selecting the next primary-source-backed controller decision path that can exercise already-modeled products without reopening low-value display archaeology.
 
 ## Apollo 13 station specifications
 
