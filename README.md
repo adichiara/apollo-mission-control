@@ -23,6 +23,7 @@ See:
 - [Voice communications baseline](docs/VOICE_COMMUNICATIONS_BASELINE.md)
 - [Apollo 13 station baseline](docs/APOLLO13_STATION_BASELINE.md)
 - [Station research status](docs/STATION_RESEARCH_STATUS.md)
+- [PC+2 GUIDO/ISS-warning station-status addendum](docs/station-status/2026-09-12_pc2_iss_warning.md)
 - [Apollo 13 EECOM station specification](docs/stations/APOLLO13_EECOM.md)
 - [Apollo 13 GNC station specification](docs/stations/APOLLO13_GNC.md)
 - [Apollo 13 CONTROL station specification](docs/stations/APOLLO13_CONTROL.md)
@@ -39,8 +40,9 @@ See:
 
 ## Current status
 
-Research has progressed into the first implementation-oriented vertical slice: **Apollo 13 PC+2 preparation and execution**. The framework-neutral Python prototype now includes the nominal event model, station-specific controller-product projections, and a partial source-backed shutdown-rule audit layer. Required-but-unmodeled observations remain explicit implementation gaps rather than fabricated telemetry or assumed-safe values. The project still does **not** claim full spacecraft physics, RTCC dynamics, exact historical CRT timing, or complete rule-path coverage.
+Research has progressed into the first implementation-oriented vertical slice: **Apollo 13 PC+2 preparation and execution**. The framework-neutral Python prototype includes the nominal event model, station-specific controller-product projections, and a partial source-backed shutdown-rule audit layer. The first deferred positive rule path is now modeled from primary evidence: a distinct ISS warning observation combined with a program alarm can trigger the documented conjunctive PC+2 criterion without automatically commanding a shutdown. Required-but-unmodeled analog observations remain explicit implementation gaps rather than fabricated telemetry or assumed-safe values.
 
+The project still does **not** claim full spacecraft physics, RTCC dynamics, exact historical CRT timing, exact Apollo 13 LM-7 ISS-warning telemetry-word/CRT placement, or complete rule-path coverage.
 
 ## Apollo 13 station specifications
 
