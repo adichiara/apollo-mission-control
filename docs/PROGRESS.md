@@ -1217,3 +1217,22 @@ The first deterministic run should reproduce at least:
 2. Identify the smallest historical player-facing display/product set required by GUIDO, CONTROL, FIDO/RETRO, TELMU, INCO, FLIGHT and CAPCOM.
 3. Map only those products onto the new parameter/source layers.
 4. Determine the minimum numerical trajectory-state representation needed when the first propagator is implemented.
+
+
+## 2026-09-12 — PC+2 executable nominal prototype
+
+### Completed
+
+- Added `docs/scenarios/APOLLO13_PC2_UPDATE_SEMANTICS.md` defining source/sample/receive/process/display timestamps, validity, and provenance without inventing unsupported CRT refresh rates.
+- Added `src/apollo_mission_control/pc2_nominal.py`, a standard-library-only nominal domain prototype.
+- Added `tests/test_pc2_nominal.py` with validation for event ordering, historical TIG/cutoff timing, nominal progression through residual review/power-down, and zero nominal shutdown-rule triggers.
+- Kept the prototype explicitly bounded: it validates scenario/event architecture and the research fixture, not full spacecraft physics or RTCC dynamics.
+- Preserved unsupported nominal engineering values as null/TBD rather than fabricating them.
+- Confirmed that exact PC+2 GUIDO/CONTROL CRT refresh cadence remains unresolved and non-blocking.
+
+### Next work
+
+1. Add explicit throttle-phase events (minimum, 40 percent, maximum) and pre-ignition ullage transition to the nominal event fixture/state machine.
+2. Add controller-product projection objects from authoritative state, carrying validity and provenance.
+3. Add shutdown-rule evaluation as independent controller-observable conditions rather than a precomputed burn-abort flag.
+4. Add the first nonnominal test only after the nominal path is deterministic and internally consistent.
