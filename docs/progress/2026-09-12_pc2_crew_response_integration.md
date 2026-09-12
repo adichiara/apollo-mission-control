@@ -2,19 +2,33 @@
 
 Date: 2026-09-12
 
-## Completed
+## Completed domain boundary
 
-- Researched the next unresolved boundary after CAPCOM transmission using the Apollo 13 Mission Operations Report, Apollo 13 technical air-ground transcript, and existing contemporary LM handbook research.
+- Researched the boundary after CAPCOM transmission using the Apollo 13 Mission Operations Report, Apollo 13 technical air-ground transcript, and contemporary LM operations research.
 - Confirmed that the >25 psi fuel/oxidizer differential-pressure rule was a ground-call shutdown criterion briefed to the crew before PC+2.
 - Confirmed that the sources do not justify automatic crew compliance, an exact response delay, exact hypothetical response wording, or a unique cockpit choreography.
 - Added `src/apollo_mission_control/crew_response.py`.
 - Added explicit crew receipt as a communication/operational event.
 - Reused the existing `OperationalAction(action="command_dps_shutdown")` path for crew shutdown command.
 - Preserved crew command as distinct from physical DPS response.
-- Reused `dps_response.apply_engine_off_response(...)` for the explicit vehicle response; response GET must be supplied rather than invented.
+- Reused `dps_response.apply_engine_off_response(...)` for the explicit vehicle response; response GET must be the current authoritative GET rather than an invented delay.
 - Preserved chamber-pressure/controller evidence as a separate downstream layer.
 - Added `tests/test_pc2_session_crew_response.py` covering transmission, receipt, command, response, and audit ordering.
 - Added research note 083 and `PC2_CREW_RESPONSE_SOURCES.md`.
+
+## HTTP integration — completed
+
+The same chain is now exposed through the validation transport without adding automation between layers:
+
+- `POST /api/session/crew/receipt/{item_id}` records explicit crew receipt of an already-transmitted DPS shutdown callout;
+- `POST /api/session/crew/shutdown/{item_id}` records the explicit crew shutdown command and requires prior receipt;
+- `POST /api/session/admin/vehicle/dps-engine-off` applies the explicit physical response at synchronized current GET and requires the prior crew command.
+
+The default receipt string `received` is semantic test metadata, not historical wording.
+
+`tests/test_web_crew_response.py` covers endpoint guardrails and audit ordering.
+
+Research note 085 documents this transport boundary.
 
 ## Fidelity decisions
 
@@ -37,8 +51,12 @@ The synthetic 26 psi case remains explicitly non-historical.
 
 ## Validation status
 
-The new tests were committed but are **not recorded as executed/passing in this run** because this automation environment does not provide a checked-out runnable repository through the GitHub connector.
+The tests are committed but the full suite is **not recorded as executed/passing** because this automation environment does not provide a checked-out runnable repository through the GitHub connector.
 
 ## Next stopping point
 
-Expose the explicit crew receipt/command/physical-response path through the HTTP validation interface, then connect the engine-off state to the existing controller-evidence/confirmation architecture while preserving fresh observation requirements and avoiding an invented binary chamber-pressure threshold.
+Connect the physical engine-off response to the existing source-bounded controller-evidence architecture:
+
+- explicit crew shutdown report as one evidence channel;
+- fresh post-command `GQ6510P` chamber-pressure observation as an independent channel;
+- evidence aggregation through `shutdown_confirmation.py` without inventing a pressure threshold or automatic `engine_off_confirmed` state.
