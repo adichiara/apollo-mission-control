@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.2-research-fixture",
+  "schema_version": "0.3-research-fixture",
   "scenario_id": "apollo13_pc2_nominal",
   "status": "source-backed nominal fixture used by executable prototype",
   "mission": "Apollo 13",
@@ -12,7 +12,8 @@
     "Apollo 13 Technical Air-to-Ground Voice Transcription",
     "Apollo 13 AC Electronics Guidance & Navigation Summary",
     "NASA TM X-66935 / REPT-70-FC13-47-ADD-1",
-    "Repository research notes 048-051"
+    "Apollo Operations Handbook LM GN&CS Figure 2.1-33",
+    "Repository research notes 048-054"
   ],
   "historical_context_completed_before_start": {
     "free_return_restored": true,
@@ -35,22 +36,11 @@
   "pc2_target": {
     "tig_get_s": 286058.30,
     "tig_get_hms": "79:27:38.30",
-    "pad_dv_lvlh_fps": {
-      "x": 833.0,
-      "y": -50.9,
-      "z": -213.9,
-      "resultant": 861.5
-    },
+    "pad_dv_lvlh_fps": {"x": 833.0, "y": -50.9, "z": -213.9, "resultant": 861.5},
     "expected_perigee_nmi": 20.5,
     "pad_burn_duration_s": 264.0,
-    "burn_attitude_deg": {
-      "roll": 272.0,
-      "pitch": 81.0
-    },
-    "weights_lb": {
-      "csm": 62480,
-      "lm": 33452
-    },
+    "burn_attitude_deg": {"roll": 272.0, "pitch": 81.0},
+    "weights_lb": {"csm": 62480, "lm": 33452},
     "ullage": {
       "jets": 2,
       "duration_s": 10.0,
@@ -61,32 +51,13 @@
       "basis": "final PC+2 maneuver PAD / crew procedure command profile",
       "physical_engine_response_model": "deferred",
       "segments": [
-        {
-          "phase": "minimum",
-          "command_start_get_hms": "79:27:38.30",
-          "duration_s": 5.0
-        },
-        {
-          "phase": "40_percent",
-          "command_start_get_hms": "79:27:43.30",
-          "duration_s": 21.0
-        },
-        {
-          "phase": "maximum",
-          "command_start_get_hms": "79:28:04.30",
-          "duration_s": null,
-          "note": "remainder until guided cutoff"
-        }
+        {"phase": "minimum", "command_start_get_hms": "79:27:38.30", "duration_s": 5.0},
+        {"phase": "40_percent", "command_start_get_hms": "79:27:43.30", "duration_s": 21.0},
+        {"phase": "maximum", "command_start_get_hms": "79:28:04.30", "duration_s": null, "note": "remainder until guided cutoff"}
       ],
       "crew_voice_reports": [
-        {
-          "get_hms": "79:27:51",
-          "report": "40_percent"
-        },
-        {
-          "get_hms": "79:28:09",
-          "report": "100_percent"
-        }
+        {"get_hms": "79:27:51", "report": "40_percent"},
+        {"get_hms": "79:28:09", "report": "100_percent"}
       ]
     }
   },
@@ -101,25 +72,14 @@
     "lgc_operating": true,
     "program": "preburn",
     "program_alarm": null,
+    "iss_warning": false,
     "lgc_warning": false,
     "alignment_accepted": true,
     "state_vector_load_status": "pending_final_verification",
     "target_load_status": "pending_final_verification",
-    "planned_vg_imu_fps": {
-      "x": 743.08,
-      "y": -426.42,
-      "z": 90.84
-    },
-    "nominal_executed_vg_imu_fps": {
-      "x": 742.21,
-      "y": -425.88,
-      "z": 91.04
-    },
-    "nominal_postburn_residual_fps": {
-      "x": 1.0,
-      "y": 0.3,
-      "z": 0.0
-    }
+    "planned_vg_imu_fps": {"x": 743.08, "y": -426.42, "z": 90.84},
+    "nominal_executed_vg_imu_fps": {"x": 742.21, "y": -425.88, "z": 91.04},
+    "nominal_postburn_residual_fps": {"x": 1.0, "y": 0.3, "z": 0.0}
   },
   "ags": {
     "available": true,
@@ -140,18 +100,8 @@
     "note": "nominal pressure readings intentionally left null; surviving first-slice evidence currently establishes shutdown thresholds, not exact baseline readings"
   },
   "vehicle_control": {
-    "attitude_error_deg": {
-      "x": null,
-      "y": null,
-      "z": null,
-      "status": "within documented shutdown limits; exact historical axis values not asserted"
-    },
-    "body_rate_deg_s": {
-      "x": null,
-      "y": null,
-      "z": null,
-      "status": "within documented shutdown limits; exact historical axis values not asserted"
-    },
+    "attitude_error_deg": {"x": null, "y": null, "z": null, "status": "within documented shutdown limits; exact historical axis values not asserted"},
+    "body_rate_deg_s": {"x": null, "y": null, "z": null, "status": "within documented shutdown limits; exact historical axis values not asserted"},
     "ces_dc_failure": false
   },
   "lm_power": {
@@ -187,80 +137,30 @@
     "postburn_powerdown_begins": true
   },
   "events": [
-    {
-      "get_hms": "77:55:00",
-      "event": "scenario_start_weak_link"
-    },
-    {
-      "get_hms": "77:55:24",
-      "event": "final_p30_lm_pad_readup_begins"
-    },
-    {
-      "get_hms": "77:59:17",
-      "event": "communications_loud_and_clear_after_sband_change"
-    },
-    {
-      "get_hms": "78:12:00~",
-      "event": "lm_burn_configuration_powerup"
-    },
-    {
-      "get_hms": "78:21:54",
-      "event": "ranging_switch_verification_requested"
-    },
-    {
-      "get_hms": "78:23:05",
-      "event": "computer_returned_to_crew"
-    },
-    {
-      "get_hms": "79:17:00~",
-      "event": "final_go_no_go_poll"
-    },
-    {
-      "get_hms": "79:23:00~",
-      "event": "p40_active_final_preburn"
-    },
-    {
-      "get_hms": "79:27:28.30",
-      "event": "manual_two_jet_ullage_begins"
-    },
-    {
-      "get_hms": "79:27:38.30",
-      "event": "dps_ignition"
-    },
-    {
-      "get_hms": "79:27:43.30",
-      "event": "throttle_command_40_percent"
-    },
-    {
-      "get_hms": "79:27:51",
-      "event": "crew_reports_40_percent"
-    },
-    {
-      "get_hms": "79:28:04.30",
-      "event": "throttle_command_maximum"
-    },
-    {
-      "get_hms": "79:28:09",
-      "event": "crew_reports_100_percent"
-    },
-    {
-      "get_hms": "79:32:02.12",
-      "event": "guided_cutoff"
-    },
-    {
-      "get_hms": "79:32:41+",
-      "event": "postburn_residual_review"
-    },
-    {
-      "get_hms": "79:34:00~",
-      "event": "lm_powerdown_transition"
-    }
+    {"get_hms": "77:55:00", "event": "scenario_start_weak_link"},
+    {"get_hms": "77:55:24", "event": "final_p30_lm_pad_readup_begins"},
+    {"get_hms": "77:59:17", "event": "communications_loud_and_clear_after_sband_change"},
+    {"get_hms": "78:12:00~", "event": "lm_burn_configuration_powerup"},
+    {"get_hms": "78:21:54", "event": "ranging_switch_verification_requested"},
+    {"get_hms": "78:23:05", "event": "computer_returned_to_crew"},
+    {"get_hms": "79:17:00~", "event": "final_go_no_go_poll"},
+    {"get_hms": "79:23:00~", "event": "p40_active_final_preburn"},
+    {"get_hms": "79:27:28.30", "event": "manual_two_jet_ullage_begins"},
+    {"get_hms": "79:27:38.30", "event": "dps_ignition"},
+    {"get_hms": "79:27:43.30", "event": "throttle_command_40_percent"},
+    {"get_hms": "79:27:51", "event": "crew_reports_40_percent"},
+    {"get_hms": "79:28:04.30", "event": "throttle_command_maximum"},
+    {"get_hms": "79:28:09", "event": "crew_reports_100_percent"},
+    {"get_hms": "79:32:02.12", "event": "guided_cutoff"},
+    {"get_hms": "79:32:41+", "event": "postburn_residual_review"},
+    {"get_hms": "79:34:00~", "event": "lm_powerdown_transition"}
   ],
   "deferred_not_blocking": [
     "exact RTCC Cartesian state vector at 77:55 GET",
     "exact nominal DPS pressure readings",
     "detailed physical DPS throttle ramp/engine-response timing",
     "complete MSK 1123/1137 routing",
+    "exact Apollo 13 LM-7 ISS-warning telemetry word and GUIDO CRT placement",
     "exact AGS ULL/ACT VEL ground transformation",
     "full LM consumables state",
     "complete INCO look-angle display",
