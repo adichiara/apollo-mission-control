@@ -164,8 +164,11 @@ The simulator should not require exact second-by-second cockpit switch choreogra
 
 ### S7 — `pc2_ullage`
 
-Historical maneuver specification:
+**Entry:** **79:27:28.30 GET**, ten seconds before TIG.
 
+Historical commanded/procedural profile:
+
+- manual ullage;
 - two RCS jets;
 - 10 seconds.
 
@@ -185,12 +188,12 @@ Required model behavior:
 
 ### S8 — `pc2_dps_start_minimum_thrust`
 
-**Entry:** TIG 79:27:38.30 GET.
+**Entry:** TIG **79:27:38.30 GET**.
 
-Historical planned profile:
+Historical commanded/procedural profile:
 
-- initial minimum-thrust period approximately 5 s;
-- crew reports the engine burning and 40-percent thrust shortly after ignition.
+- minimum-throttle segment begins at ignition;
+- after 5 seconds, at **79:27:43.30**, the procedure commands 40-percent throttle.
 
 Required monitoring begins immediately:
 
@@ -206,31 +209,44 @@ Required monitoring begins immediately:
 
 Startup transients must be treated separately from steady-state attitude/rate limits where historically specified.
 
+The commanded throttle state is not the same thing as exact physical engine response or the crew's later voice report.
+
 ---
 
 ### S9 — `pc2_40_percent_thrust`
 
-Historical profile:
+**Commanded entry:** **79:27:43.30 GET**, TIG + 5 seconds.
 
-- approximately 21 s at 40% after the minimum-thrust start segment.
+Historical commanded profile:
+
+- 21 seconds at 40 percent;
+- command to maximum thrust at **79:28:04.30 GET**.
 
 Historical air-ground record:
 
-- crew reports 40% thrust after ignition.
+- at **79:27:51**, Lovell reports that the engine is burning at 40 percent.
 
 Required model behavior:
 
 - commanded and actual thrust remain separate values;
+- the 79:27:51 crew report is a communication event, not the authoritative throttle-transition timestamp;
 - controller-visible measurements can differ from true state if a later telemetry/sensor failure is injected.
 
 ---
 
 ### S10 — `pc2_full_thrust`
 
+**Commanded entry:** **79:28:04.30 GET**.
+
 Historical evidence:
 
-- crew reports 100% thrust shortly after the 40% phase;
-- burn continues at maximum thrust for the principal ΔV accumulation.
+- final maneuver instructions call for maximum thrust for the remainder of the burn;
+- at **79:28:09**, Lovell reports 100-percent thrust.
+
+Required model behavior:
+
+- the maximum-thrust command, physical engine response, telemetry indication, and crew voice report remain distinct layers;
+- detailed physical DPS ramp/lag dynamics are deferred until required by a controller decision or failure case.
 
 Controllers continue applying the same shutdown criteria throughout the burn.
 
@@ -322,6 +338,26 @@ This is the initial endpoint of the first implementation. Subsequent PTC establi
 
 ---
 
+## Command / physical / information timing boundary
+
+The first executable model must preserve the following distinction during the throttle sequence:
+
+```text
+crew procedure / throttle command
+        ↓
+engine physical response
+        ↓
+telemetry / onboard indication
+        ↓
+crew voice report / ground interpretation
+```
+
+The currently frozen 79:27:43.30 and 79:28:04.30 events are **command/procedure milestones** derived from the final maneuver instructions. They are not claims that the physical engine reached exactly 40 or 100 percent at those instants.
+
+A NASA postflight LM-systems analysis contains a more detailed physical throttle/ramp description, but its rounded segment timing and timing convention are not yet reconciled with the higher-precision Flight Control Division TIG/cutoff validation values. Detailed engine-response timing therefore remains deferred. See `resources/research/051_pc2_ullage_and_throttle_profile.md`.
+
+---
+
 ## Failure-transition architecture
 
 The nominal chain above must not be implemented as an unconditional timer sequence.
@@ -356,20 +392,22 @@ A deterministic nominal run must satisfy:
 4. complete final ranging/uplink support and return computer control to crew;
 5. reach a controller-derived GO state;
 6. enter P40 before ignition;
-7. perform two-jet, 10-s ullage;
-8. ignite at 79:27:38.30 GET;
-9. progress through minimum/40%/full-thrust profile;
-10. trigger none of the documented shutdown conditions;
-11. cut off at 79:32:02.12 GET;
-12. produce the documented small PGNS residuals within validation tolerance;
-13. enter post-burn verification and power-down transition.
+7. begin manual two-jet ullage at 79:27:28.30 and sustain it to TIG;
+8. ignite/minimum-throttle command at 79:27:38.30;
+9. command 40 percent at 79:27:43.30 and maximum at 79:28:04.30;
+10. preserve the later 79:27:51 and 79:28:09 crew throttle reports as separate communication events;
+11. trigger none of the documented shutdown conditions;
+12. cut off at 79:32:02.12 GET;
+13. produce the documented small PGNS residuals within validation tolerance;
+14. enter post-burn verification and power-down transition.
 
 ## Sources
 
 Primary authority:
 
 - NASA Flight Control Division, *Mission Operations Report — Apollo 13*, 28 April 1970, especially Flight Director, GUIDO, CONTROL, FIDO/RETRO and systems-controller sections.
-- Apollo 13 Technical Air-to-Ground Voice Transcription, for communication/readback timing.
+- Apollo 13 Technical Air-to-Ground Voice Transcription, for final PAD/procedure and communication/readback timing.
+- NASA TM X-66935 / REPT-70-FC13-47-ADD-1, *Analysis of Apollo 13 lunar module systems during emergency operation following command service module oxygen tank explosion*, for later physical DPS-response refinement.
 
 Navigation aid / corrected transcript:
 
