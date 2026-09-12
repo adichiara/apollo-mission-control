@@ -21,20 +21,31 @@ This supplement exists so implementation-specific additions can remain small and
 
 - **Organization:** NASA Flight Control Division, Manned Spacecraft Center
 - **Date:** 1970-04-28
-- **URL:** https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf
+- **URL:** https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/a13-mission-ops-report-19700428.pdf
 - **Status:** IMPLEMENTATION-SOURCE / REVIEWED-DETAILED for PC+2
-- **Use:** controller responsibilities, PC+2 chronology, maneuver parameters, shutdown criteria, ground/onboard threshold distinctions, simulation-support categories, ground-only differential-pressure callout, conditional engine-restart rule, conjunctive ISS-warning + program-alarm criterion, and approximately 85-psi ground chamber-pressure criterion.
-- **Research records:** `resources/research/049_pc2_controller_action_and_rule_matrix.md` through `056_pc2_scenario_injection_architecture.md`.
+- **Use:** controller responsibilities, PC+2 chronology, maneuver parameters, shutdown criteria, ground/onboard threshold distinctions, simulation-support categories, ground-only differential-pressure callout, conditional engine-restart rule, conjunctive ISS-warning + program-alarm criterion, approximately 85-psi ground chamber-pressure criterion, singular 150-psi ground inlet-pressure criterion, and >25-psi fuel/oxidizer differential-pressure criterion.
+- **Research records:** `resources/research/049_pc2_controller_action_and_rule_matrix.md` through `058_pc2_fuel_oxidizer_delta_p_observation_path.md`.
 
-## Apollo 13 Technical Air-to-Ground Voice Transcription — PC+2 interval
+## Apollo 13 Technical/PAO Air-to-Ground Transcription — PC+2 interval
 
-- **Source:** NASA technical air-to-ground transcription preserved through the Apollo 13 Flight Journal collection
-- **Index:** https://apollojournals.org/afj/ap13fj/a13-documents.html
-- **PC+2 navigation:** https://www.apollojournals.org/afj/ap13fj/12day4-approach-moon.html
+- **Source:** NASA Apollo 13 air-ground/PAO transcription
+- **NASA PDF:** https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf-hr/a13-pao-transcript.pdf
+- **Navigation copy:** https://www.apollojournals.org/afj/ap13fj/12day4-approach-moon.html
 - **Status:** IMPLEMENTATION-SOURCE / REVIEWED-DETAILED for relevant intervals
-- **Use:** separates crew reports from physical event time; confirms crew-side thresholds, ground-only delta-P callout, warning combinations, and restart procedure.
+- **Use:** separates crew reports from physical event time; confirms crew-side thresholds, the >25-psi fuel/oxidizer ΔP criterion as a ground-only callout, warning combinations, and restart procedure.
 - **Conflict preserved:** crew readback attaches the startup-transient exception to attitude error, while the Mission Operations Report wording attaches it to attitude rate.
-- **Research record:** `resources/research/053_pc2_shutdown_rule_evaluation.md`.
+- **Research records:** `resources/research/053_pc2_shutdown_rule_evaluation.md`, `058_pc2_fuel_oxidizer_delta_p_observation_path.md`.
+
+## Apollo 11 Final Flight Mission Rules
+
+- **Organization:** NASA Manned Spacecraft Center
+- **Mission:** Apollo 11
+- **Relevant revision:** 3 Jul 1969 LOI rule summary
+- **URL:** https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11MissionRules.pdf
+- **Status:** CONTINUITY / RULE-FAMILY EVIDENCE
+- **Use:** contemporary LOI Mode I rule-family evidence. The revised LOI rule treats fuel-oxidizer ΔP as a distinct propulsion criterion and requires confirmation by chamber-pressure drop.
+- **Caution:** Apollo 11's 20-psi threshold and confirmation logic are **not** imported into Apollo 13 PC+2. Apollo 13 mission-specific sources establish the applicable >25-psi ground-callout criterion.
+- **Research record:** `resources/research/058_pc2_fuel_oxidizer_delta_p_observation_path.md`.
 
 ## Apollo 13 Simulator Discrepancy Reports — LUM 131 Rev. 8
 
@@ -52,9 +63,9 @@ This supplement exists so implementation-specific additions can remain small and
 - **Vehicle family:** LM-7 / LM-8 / LM-9; Apollo 13 flew LM-7
 - **Public scan:** https://www.ibiblio.org/apollo/Documents/lm-7%2C8%2C9_elementary_functional_diagrams.pdf
 - **Status:** IMPLEMENTATION-SOURCE / REVIEWED-PARTIAL
-- **Use:** mission-era vehicle-family measurement identity for `GQ6510P — PRESS, THRUST CHAMBER`.
-- **Caution:** does not prove exact Apollo 13 PCM word, ground engineering conversion, MSK 1137 `TCP` routing, or display cadence.
-- **Research records:** `resources/research/034_apollo13_msk1137_non_lgc_telemetry.md`, `055_pc2_dps_chamber_pressure_observation_path.md`.
+- **Use:** mission-era vehicle-family measurement identities for `GQ6510P — PRESS, THRUST CHAMBER`, `GQ3611P — PRESS ENGINE INTERFACE FUEL`, and `GQ4111P — PRESS, ENGINE INTERFACE OXID`.
+- **Caution:** does not by itself prove exact Apollo 13 PCM words, ground engineering conversions, CONTROL display routing, or the transformation used to form the PC+2 fuel/oxidizer ΔP product.
+- **Research records:** `resources/research/034_apollo13_msk1137_non_lgc_telemetry.md`, `055_pc2_dps_chamber_pressure_observation_path.md`, `057_pc2_dps_inlet_pressure_observation_path.md`, `058_pc2_fuel_oxidizer_delta_p_observation_path.md`.
 
 ## Apollo 10 LM-4 Descent Propulsion System Final Flight Evaluation
 
