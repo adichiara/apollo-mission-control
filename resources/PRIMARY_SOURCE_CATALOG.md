@@ -257,11 +257,25 @@ The following source classes are specifically needed and should be added as they
 
 - **Title:** Mission Operations Report — Apollo 13
 - **Date:** 1970-04-28
-- **Source:** NASA
+- **Source:** NASA Flight Control Division
 - **URL:** https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf
-- **Status:** REVIEWED-PARTIAL
+- **Status:** REVIEWED-DETAILED for the PC+2 vertical-slice interval; REVIEWED-PARTIAL elsewhere
 - **Use:** Controller-by-controller post-mission operational reports; appendices include BSE, RETRO, FIDO, GUIDO, EECOM, GNC, TELMU, CONTROL, INCO, PROCEDURES, FAO, SURGEON, recovery, and network operations.
+- **PC+2 implementation use:** Flight Director pages around III-24–III-26 preserve the final preparation, Mission Rules review, burn-configuration power/current, ignition and power-down chronology; RETRO Appendix B preserves planned/actual TIG, duration and cutoff; GUIDO Appendix D preserves alignment assessment and planned/executed IMU-coordinate velocity-to-be-gained.
 - **Important evidence:** Apollo 13 documentation explicitly uses **TELMU**, demonstrating a mission-era nomenclature difference from Apollo 11 TELCOM.
+- **Timing caution:** computed maneuver times in this report are used for physical/guidance validation; crew voice timestamps are treated separately as communication events.
+- **Research record:** `research/050_pc2_initialization_and_nominal_validation.md`.
+
+### Apollo 13 Technical Air-to-Ground Voice Transcription — PC+2 interval
+
+- **Mission:** Apollo 13
+- **Source:** NASA technical air-to-ground transcription, preserved in the Apollo 13 Flight Journal mission-document collection.
+- **Document index:** https://apollojournals.org/afj/ap13fj/a13-documents.html
+- **Navigation aid:** https://www.apollojournals.org/afj/ap13fj/13day4-leaving-moon.html
+- **Status:** REVIEWED-DETAILED for approximately 77:55–79:34 GET through the preserved transcript/Flight Journal chronology.
+- **Use:** Final P30 maneuver-PAD transfer beginning at 77:55:24, weak-link/readback behavior, S-band power-amplifier change, ranging/uplink chronology, final readiness polling, ignition/throttle/shutdown voice reports, and post-burn residual/readback workflow.
+- **Important distinction:** voice timestamps record communication/report events and can lag the underlying physical spacecraft event. They should not override Mission Operations Report computed TIG/cutoff values for physics validation.
+- **Research record:** `research/050_pc2_initialization_and_nominal_validation.md`.
 
 
 ### The Early Days of Simulation and Operations
