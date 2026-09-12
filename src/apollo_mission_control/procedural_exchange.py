@@ -27,7 +27,7 @@ class ProcedureExchangeLog:
     events: list[ProcedureCommunication] = field(default_factory=list)
 
     def record(self, event: ProcedureCommunication) -> None:
-        if event.kind not in {"instruction", "completion_report", "readback"}:
+        if event.kind not in {"instruction", "completion_report", "readback", "callout"}:
             raise ValueError(f"Unsupported procedure communication kind: {event.kind}")
         self.events.append(event)
         self.events.sort(key=lambda item: item.get_s)
@@ -117,6 +117,39 @@ def record_pc2_restart_instruction(
                     "engine_start_push",
                     "descent_engine_command_override_on",
                 ]
+            },
+            provenance=provenance,
+        )
+    )
+
+
+def record_delta_p_shutdown_callout(
+    log: ProcedureExchangeLog,
+    *,
+    event_id: str,
+    get_s: float,
+    delta_p_psi: float,
+    provenance: str,
+) -> None:
+    """Record the PC+2 ground-only fuel/oxidizer Delta-P shutdown callout.
+
+    The mission rule states that Delta-P greater than 25 psi requires a ground
+    call to the crew and that the crew should shut down. CAPCOM is modeled as
+    the air-ground sender; the exact CONTROL/FLIGHT internal voice-loop sequence
+    and exact spoken wording are deliberately not asserted.
+    """
+    log.record(
+        ProcedureCommunication(
+            event_id=event_id,
+            get_s=get_s,
+            sender="CAPCOM",
+            recipient="CREW",
+            kind="callout",
+            action="shutdown_dps_for_fuel_oxidizer_delta_p",
+            parameters={
+                "delta_p_psi": float(delta_p_psi),
+                "criterion_psi": 25.0,
+                "origin_discipline": "CONTROL",
             },
             provenance=provenance,
         )
