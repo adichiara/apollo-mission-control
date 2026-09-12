@@ -36,6 +36,7 @@ class CapcomDisplayField:
 class CapcomQueueDisplayItem:
     item_id: int
     get_s: float
+    requested_by: str
     action: str
     parameters: dict[str, Any]
     basis: str
@@ -117,6 +118,7 @@ def build_pc2_capcom_presentation(
         CapcomQueueDisplayItem(
             item_id=int(item["item_id"]),
             get_s=float(item["get_s"]),
+            requested_by=str(item.get("requested_by", "")),
             action=str(item["action"]),
             parameters=dict(item.get("parameters", {})),
             basis=str(item.get("basis", "")),
