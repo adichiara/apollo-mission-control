@@ -1,64 +1,43 @@
 # Roadmap addendum — player/admin separation and facilitator authority
 
 Date: 2026-09-12  
-Status: **CURRENT — player/admin UI separation complete; server-side facilitator authority is next**
+Status: **COMPLETE FOR FIRST PLAYABLE — UI separation and server-side facilitator authority implemented**
 
 ## Completed
 
 - [x] normal `/` client reduced to station join/rejoin, station products, and station-authorized actions;
 - [x] validation/SimSup operations moved to separate `/admin` console;
 - [x] manual time, injection, crew-response validation, vehicle response, and audit tools removed from normal player UI;
-- [x] `/admin` explicitly labeled as a validation harness rather than a player station;
-- [x] regression tests added for player/admin UI separation;
-- [x] continuous mission clock and realtime pacing preserved unchanged by the UI split.
+- [x] primary NASA simulation sources reviewed for Simulation Supervisor / simulation-control role separation;
+- [x] facilitator authority kept distinct from controller station identity;
+- [x] create/reset, lifecycle, manual validation GET, source injection, validation crew/vehicle operations, and audit access protected when a facilitator token is configured;
+- [x] `/admin` supplies `X-Apollo-Facilitator` without exposing the credential to normal player UI;
+- [x] Render deployment generates `APOLLO_FACILITATOR_TOKEN` outside source control;
+- [x] Render fails closed if facilitator authorization is unexpectedly absent;
+- [x] regression tests added for UI and authority separation;
+- [x] continuous mission clock/realtime pacing preserved unchanged.
 
-## Active priority — server-side facilitator authority
+## Historical boundary
 
-The current UI split is not security. The next implementation should establish a small capability boundary so normal station clients cannot call facilitator/validation operations merely by knowing endpoint paths.
+Primary NASA simulation material places Simulation Supervisor/simulation-control functions outside the flight-controller station organization. That supports the project authority separation.
 
-### Minimum protected operation set
+The HTTP token itself is a modern software mechanism and is not claimed as historical Apollo authentication.
 
-Protect at least:
+See research note `088_facilitator_authority_boundary.md` and decision D-017.
 
-- create/reset session;
-- start/pause/resume;
-- manual validation GET advancement;
-- scenario/source injection;
-- explicit crew-response validation operations where these remain facilitator-driven;
-- explicit vehicle-response validation operations;
-- audit/replay inspection intended for facilitation/validation.
+## Controller boundaries preserved
 
-### Preserve controller boundaries
-
-Do **not** turn facilitator authority into a super-controller player role.
-
-Controller operations should remain tied to station identity:
-
-- readiness reports;
-- FLIGHT GO/NO-GO;
-- CONTROL ground callout/evidence assessment;
-- CAPCOM transmission.
-
-Facilitator authority governs session/scenario administration, not hidden omniscient access inside normal controller presentations.
-
-### Keep SimSup distinct where useful
-
-The prototype may initially use one facilitator/admin capability, but architecture should leave room to distinguish:
-
-- ordinary session administration;
-- SimSup/scenario injection;
-- validation-only direct physical-response controls.
-
-Do not expose those distinctions to players unless future play requires them.
+Facilitator credentials do not grant or replace controller station identity. Readiness reports, FLIGHT decisions, CONTROL operations, CAPCOM transmission, and station-scoped information remain governed by station assignment.
 
 ## Deferred
 
 - production account system;
-- internet-facing identity management;
+- named/persistent facilitator identities;
+- fine-grained facilitator permissions;
+- cryptographic player authentication;
 - multiple concurrent session ownership;
-- persistent facilitator accounts;
 - organization/team permissions.
 
-## Success criterion
+## Next milestone
 
-A player using the normal client can perform only station-authorized operations. Facilitator/validation endpoints reject requests without the required server-side capability, while the `/admin` console can supply that capability and operate the same authoritative continuous-time session.
+Runnable multi-client integration validation: several player station clients plus one facilitator console against one authoritative continuously running session, including the full synthetic ΔP branch and authority-isolation checks.
