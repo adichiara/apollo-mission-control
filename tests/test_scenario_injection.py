@@ -57,6 +57,56 @@ class ScenarioInjectionTests(unittest.TestCase):
         self.assertEqual(state.shutdown_rule_triggers, [])
         self.assertTrue(state.engine_running)
 
+    def test_delta_p_above_25_triggers_ground_rule_without_commanding_cutoff(self):
+        injection = StateInjection(
+            injection_id="test-high-fuel-oxidizer-delta-p",
+            get_s=hms_to_seconds("79:29:00"),
+            target="dps_fuel_oxidizer_delta_p_psi",
+            value=26.0,
+            evidence_class=EvidenceClass.SOURCE_BOUNDED_TEST,
+            provenance=(
+                "Synthetic ground-product boundary test above the documented "
+                "25-psi PC+2 criterion; not historical telemetry."
+            ),
+        )
+        state = run_with_injections(
+            self.fixture,
+            [injection],
+            stop_get_s=hms_to_seconds("79:29:00"),
+        )
+        products = project_controller_products(state, self.fixture)
+        evaluations = evaluate_pc2_shutdown_rules(products, self.fixture)
+
+        self.assertEqual(
+            products["CONTROL"].products["dps.fuel_oxidizer_delta_p_psi"].value,
+            26.0,
+        )
+        self.assertEqual(
+            evaluations["fuel_oxidizer_delta_p"].state,
+            RuleState.TRIGGERED,
+        )
+        self.assertTrue(state.engine_running)
+        self.assertFalse(state.cutoff_complete)
+        self.assertEqual(state.shutdown_rule_triggers, [])
+
+    def test_delta_p_exactly_25_is_clear_because_rule_is_greater_than(self):
+        injection = StateInjection(
+            injection_id="test-delta-p-threshold",
+            get_s=hms_to_seconds("79:29:00"),
+            target="dps_fuel_oxidizer_delta_p_psi",
+            value=25.0,
+            evidence_class=EvidenceClass.SOURCE_BOUNDED_TEST,
+            provenance="Synthetic exact-boundary implementation test.",
+        )
+        state = run_with_injections(
+            self.fixture,
+            [injection],
+            stop_get_s=hms_to_seconds("79:29:00"),
+        )
+        products = project_controller_products(state, self.fixture)
+        evaluations = evaluate_pc2_shutdown_rules(products, self.fixture)
+        self.assertEqual(evaluations["fuel_oxidizer_delta_p"].state, RuleState.CLEAR)
+
     def test_injection_does_not_script_cutoff_or_abort(self):
         injection = StateInjection(
             injection_id="test-low-chamber-pressure",
