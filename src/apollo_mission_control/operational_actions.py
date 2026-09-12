@@ -28,6 +28,7 @@ _ALLOWED_ACTIONS = {
     "press_engine_start",
     "descent_engine_command_override_on",
     "command_dps_shutdown",
+    "press_engine_stop",
 }
 
 
@@ -56,10 +57,9 @@ def apply_operational_action(state: PC2State, action: OperationalAction) -> None
         # Again, command state is not aliased to physical engine response.
         state.descent_engine_command_override_on = True
         state.descent_engine_command_override_get_s = action.get_s
-    elif action.action == "command_dps_shutdown":
-        # The PC+2 rules establish that the crew should shut down after a
-        # qualifying ground-only Delta-P callout. The exact cockpit control
-        # sequence is not established by the reviewed sources, so this records
-        # the crew command without forcing engine_running=False.
+    elif action.action in {"command_dps_shutdown", "press_engine_stop"}:
+        # Contemporary LM handbooks establish that either crew STOP pushbutton
+        # initiates the descent-engine off command. Recording the push/command
+        # remains separate from subsequent valve/engine physical response.
         state.crew_dps_shutdown_commanded = True
         state.crew_dps_shutdown_command_get_s = action.get_s
