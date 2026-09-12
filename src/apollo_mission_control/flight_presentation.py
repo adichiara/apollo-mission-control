@@ -8,7 +8,7 @@ consolidated subsystem-health verdict.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, Iterable
 
 from .controller_products import ProjectionSet
 from .pc2_nominal import Product
@@ -33,11 +33,20 @@ class FlightDisplayField:
 
 
 @dataclass(frozen=True)
+class FlightReadinessItem:
+    get_s: float
+    station: str
+    ready: bool
+    note: str
+
+
+@dataclass(frozen=True)
 class FlightPresentation:
     title: str
     notice: str
     source_basis: tuple[str, ...]
     fields: tuple[FlightDisplayField, ...]
+    readiness_reports: tuple[FlightReadinessItem, ...] = ()
 
 
 def _field(
@@ -62,13 +71,17 @@ def _field(
     )
 
 
-def build_pc2_flight_presentation(projection: ProjectionSet) -> FlightPresentation:
+def build_pc2_flight_presentation(
+    projection: ProjectionSet,
+    *,
+    readiness_reports: Iterable[dict[str, Any]] = (),
+) -> FlightPresentation:
     """Build the minimum PC+2 FLIGHT decision view.
 
     The historical workflow has FLIGHT integrate controller readiness and make
-    the GO/NO-GO decision. The current common projection does not yet model the
-    individual readiness-report stream, so that deferred implementation field is
-    omitted rather than replaced with an omniscient readiness summary.
+    the GO/NO-GO decision. Readiness reports passed here are explicit controller
+    communications from the session layer, not a calculated subsystem-health
+    summary and not hidden simulator truth.
     """
     if projection.station != "FLIGHT":
         raise ValueError("PC+2 FLIGHT presentation requires a FLIGHT projection")
@@ -92,6 +105,16 @@ def build_pc2_flight_presentation(projection: ProjectionSet) -> FlightPresentati
         if field is not None
     )
 
+    reports = tuple(
+        FlightReadinessItem(
+            get_s=float(item["get_s"]),
+            station=str(item["station"]),
+            ready=bool(item["ready"]),
+            note=str(item.get("note", "")),
+        )
+        for item in readiness_reports
+    )
+
     return FlightPresentation(
         title="FLIGHT — PC+2 DECISION STATUS",
         notice=PROJECT_RENDERING_NOTICE,
@@ -100,4 +123,5 @@ def build_pc2_flight_presentation(projection: ProjectionSet) -> FlightPresentati
             "Apollo 13 PC+2 state-machine research",
         ),
         fields=fields,
+        readiness_reports=reports,
     )
