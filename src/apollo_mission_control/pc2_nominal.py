@@ -61,9 +61,12 @@ class PC2State:
     ullage_jets_count: int = 0
     engine_running: bool = False
     throttle_phase: str = "off"
-    # Optional modeled observation. None means the project has not supplied a
-    # numerical chamber-pressure value; it is not a claim of telemetry loss.
+    # Optional modeled observations. None means the project has not supplied a
+    # numerical value; it is not a claim of telemetry/product loss.
     dps_chamber_pressure_psi: float | None = None
+    # Ground-derived PC+2 fuel/oxidizer differential-pressure product. The
+    # exact transformation from LM source pressure measurements is unresolved.
+    dps_fuel_oxidizer_delta_p_psi: float | None = None
     crew_reports: list[CrewReport] = field(default_factory=list)
     cutoff_complete: bool = False
     residual_review_complete: bool = False
