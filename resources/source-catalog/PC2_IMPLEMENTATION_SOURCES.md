@@ -23,8 +23,9 @@ This supplement exists so implementation-specific additions can remain small and
 - **Date:** 1970-04-28
 - **URL:** https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/a13-mission-ops-report-19700428.pdf
 - **Status:** IMPLEMENTATION-SOURCE / REVIEWED-DETAILED for PC+2
-- **Use:** controller responsibilities, PC+2 chronology, maneuver parameters, shutdown criteria, ground/onboard threshold distinctions, simulation-support categories, ground-only differential-pressure callout, conditional engine-restart rule, conjunctive ISS-warning + program-alarm criterion, approximately 85-psi ground chamber-pressure criterion, singular 150-psi ground inlet-pressure criterion, and >25-psi fuel/oxidizer differential-pressure criterion.
-- **Research records:** `resources/research/049_pc2_controller_action_and_rule_matrix.md` through `058_pc2_fuel_oxidizer_delta_p_observation_path.md`.
+- **Use:** controller responsibilities, PC+2 chronology, maneuver parameters, shutdown criteria, ground/onboard threshold distinctions, simulation-support categories, ground-only differential-pressure callout, conditional engine-restart rule, conjunctive ISS-warning + program-alarm criterion, approximately 85-psi ground chamber-pressure criterion, singular 150-psi ground inlet-pressure criterion, >25-psi fuel/oxidizer differential-pressure criterion, and postflight CONTROL evidence that PC+2 maximum attitude error was about 7 deg in roll with rates below 1 deg/s.
+- **Attitude-rule discrepancy:** the postflight summary places the startup-transient exception on attitude rate; the contemporaneous crew-facing rule places it on attitude error. Both are preserved.
+- **Research records:** `resources/research/049_pc2_controller_action_and_rule_matrix.md` through `062_pc2_attitude_error_rate_shutdown_path.md`.
 
 ## Apollo 13 Technical/PAO Air-to-Ground Transcription — PC+2 interval
 
@@ -32,9 +33,9 @@ This supplement exists so implementation-specific additions can remain small and
 - **NASA PDF:** https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf-hr/a13-pao-transcript.pdf
 - **Navigation copy:** https://www.apollojournals.org/afj/ap13fj/12day4-approach-moon.html
 - **Status:** IMPLEMENTATION-SOURCE / REVIEWED-DETAILED for relevant intervals
-- **Use:** separates crew reports from physical event time; confirms crew-side thresholds, the >25-psi fuel/oxidizer ΔP criterion as a ground-only callout, warning combinations, and restart procedure.
-- **Conflict preserved:** crew readback attaches the startup-transient exception to attitude error, while the Mission Operations Report wording attaches it to attitude rate.
-- **Research records:** `resources/research/053_pc2_shutdown_rule_evaluation.md`, `058_pc2_fuel_oxidizer_delta_p_observation_path.md`.
+- **Use:** separates crew reports from physical event time; confirms crew-side thresholds, the >25-psi fuel/oxidizer ΔP criterion as a ground-only callout, warning combinations, restart procedure, and the operational attitude/rate rule transmitted to the crew.
+- **Attitude rule:** CAPCOM read-up at 76:30:31 GET and Haise readback at 76:37:13 GET both attach the startup-transient exception to ±10 deg attitude error and give ±10 deg/s rate with no stated exception.
+- **Research records:** `resources/research/053_pc2_shutdown_rule_evaluation.md`, `058_pc2_fuel_oxidizer_delta_p_observation_path.md`, `062_pc2_attitude_error_rate_shutdown_path.md`.
 
 ## Apollo 11 Final Flight Mission Rules
 
@@ -43,9 +44,9 @@ This supplement exists so implementation-specific additions can remain small and
 - **Relevant revision:** 3 Jul 1969 LOI rule summary
 - **URL:** https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11MissionRules.pdf
 - **Status:** CONTINUITY / RULE-FAMILY EVIDENCE
-- **Use:** contemporary LOI Mode I rule-family evidence. The revised LOI rule treats fuel-oxidizer ΔP as a distinct propulsion criterion and requires confirmation by chamber-pressure drop.
-- **Caution:** Apollo 11's 20-psi threshold and confirmation logic are **not** imported into Apollo 13 PC+2. Apollo 13 mission-specific sources establish the applicable >25-psi ground-callout criterion.
-- **Research record:** `resources/research/058_pc2_fuel_oxidizer_delta_p_observation_path.md`.
+- **Use:** contemporary LOI Mode I rule-family evidence and LM guidance/control measurement-family continuity.
+- **Caution:** Apollo 11 thresholds, confirmation logic, and exact channel assignments are not automatically imported into Apollo 13 PC+2.
+- **Research records:** `resources/research/058_pc2_fuel_oxidizer_delta_p_observation_path.md`, `062_pc2_attitude_error_rate_shutdown_path.md`.
 
 ## Apollo 13 Simulator Discrepancy Reports — LUM 131 Rev. 8
 
@@ -87,8 +88,8 @@ This supplement exists so implementation-specific additions can remain small and
 - **Report:** NASA-TM-X-66449 / MSC-02680
 - **URL:** https://ntrs.nasa.gov/citations/19710003598
 - **Status:** IMPLEMENTATION-SOURCE / REVIEWED-PARTIAL
-- **Use:** supports normal descent-propulsion operation apart from the supercritical-helium anomaly; does not supply an exact nominal PC+2 chamber-pressure trace.
-- **Research record:** `resources/research/055_pc2_dps_chamber_pressure_observation_path.md`.
+- **Use:** supports normal descent-propulsion and guidance/control operation; does not supply an exact nominal PC+2 pressure or attitude/rate trace.
+- **Research records:** `resources/research/055_pc2_dps_chamber_pressure_observation_path.md`, `062_pc2_attitude_error_rate_shutdown_path.md`.
 
 ## Apollo 13 Investigation Team, Panel 3 — Addendum 1
 
@@ -109,9 +110,9 @@ This supplement exists so implementation-specific additions can remain small and
 - **Searchable continuity copy:** LM-10 and subsequent, Basic Date 1970-02-01
 - **URL:** https://www.ibiblio.org/apollo/Documents/LMA790-3-LM10-ApolloOperationsHandbookLunarModuleLM10AndSubsequent-Volume1-SubsystemsData-SearchableText.pdf
 - **Status:** IMPLEMENTATION-SOURCE / REVIEWED-PARTIAL
-- **Use:** GN&CS Figure 2.1-33 shows distinct `ISS WARNING SIGNAL` and `LGC WARNING SIGNAL` paths to the Instrumentation Subsystem.
-- **Configuration caution:** Apollo 13 flew LM-7; not used to assert exact LM-7 telemetry-word assignment or GUIDO CRT placement.
-- **Research record:** `resources/research/054_pc2_iss_warning_observation_path.md`.
+- **Use:** GN&CS Figure 2.1-33 shows distinct `ISS WARNING SIGNAL` and `LGC WARNING SIGNAL` paths; later contemporary LM material also supports separate attitude-error and rate signal families.
+- **Configuration caution:** Apollo 13 flew LM-7; not used to assert exact LM-7 telemetry-word assignment or GUIDO/CONTROL CRT placement.
+- **Research records:** `resources/research/054_pc2_iss_warning_observation_path.md`, `062_pc2_attitude_error_rate_shutdown_path.md`.
 
 ## LUMINARY PGNCS functional-description material
 
@@ -121,6 +122,18 @@ This supplement exists so implementation-specific additions can remain small and
 - **Use:** supports treating ISS and LGC warnings as distinct onboard indications and describes ISS warning as under LGC program control.
 - **Caution:** not used to invent a PC+2 failure mechanism or program-alarm number.
 - **Research record:** `resources/research/054_pc2_iss_warning_observation_path.md`.
+
+## Apollo Experience Report — Engineering and Analysis Mission Support
+
+- **Author:** R. W. Fricke, Jr.
+- **NASA document ID:** 19750018953
+- **Report:** NASA-TN-D-7993 / JSC-S-438
+- **Publication date:** 1975-07-01
+- **URL:** https://ntrs.nasa.gov/citations/19750018953
+- **Status:** CONTINUITY / TELEMETRY-DISPLAY SUPPORT
+- **Use:** retrospective Apollo-wide tables identify separate LM attitude-error and RGA-rate measurement families and show these families associated with MSK 1123/1137 display masks.
+- **Caution:** retrospective Apollo-wide evidence; not used to certify exact Apollo 13 LM-7 PCM assignment, calibration, or display cadence.
+- **Research record:** `resources/research/062_pc2_attitude_error_rate_shutdown_path.md`.
 
 ## Apollo Experience Report — Real-Time Display System
 
