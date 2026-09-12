@@ -1,6 +1,6 @@
 # Apollo 13 PC+2 — Minimum Player-Facing Product Set
 
-Status: **implementation-oriented scope definition**  
+Status: **minimum first-slice presentation set implemented**  
 Purpose: define the smallest historically defensible set of controller-facing information products required for the first PC+2 vertical slice.
 
 ## Principle
@@ -15,7 +15,7 @@ Each product is classified as:
 - **B — historical product semantics documented, exact presentation incomplete**;
 - **C — communication/report workflow documented, no dedicated display required for the slice**.
 
-Where exact format evidence is incomplete, the first implementation may use a restrained period-appropriate tabular presentation, clearly marked in provenance as a project rendering of documented information rather than a claimed historical CRT transcription.
+Where exact format evidence is incomplete, the first implementation uses a restrained project rendering of documented information rather than claiming an exact historical CRT transcription.
 
 ---
 
@@ -30,11 +30,22 @@ Where exact format evidence is incomplete, the first implementation may use a re
 | Mission Rules / PC+2 shutdown-rule reference | C | decision authority |
 | CAPCOM/crew report stream | C | receive crew-side observations and confirmations |
 
-### Explicitly excluded
+### Implemented first-pass player view
+
+The current FLIGHT project rendering contains:
+
+- mission phase / scenario orientation;
+- explicit GO-for-burn decision state.
 
 FLIGHT does **not** receive an omniscient consolidated subsystem-health dashboard.
 
-The first-slice FLIGHT interface should emphasize communication and decision integration rather than data density.
+The common session layer now records controller readiness reports and blocks scenario progression at the historical final poll until the assigned FLIGHT player explicitly records GO. The readiness-report list itself is the next session-to-presentation integration item rather than a hidden calculated summary.
+
+### Deferred
+
+- direct rendering of readiness reports in the FLIGHT presentation;
+- exact historical FLIGHT console layout;
+- later discipline assessment/callout workflows not yet required by the first nominal integration run.
 
 ---
 
@@ -204,18 +215,23 @@ Deferred project fields are omitted rather than shown as failed historical telem
 | Uplink/command path state | B | support final guidance updates |
 | Ranging state | B | support FIDO/trajectory solution |
 
-### First-slice fields
+### Implemented first-pass player view
 
-- voice available / quality;
-- telemetry available / validity / age;
-- uplink available;
-- ranging enabled/confirmed;
-- S-band power-amplifier state or resulting link-quality state.
+The current INCO project rendering contains:
+
+- air-ground link quality;
+- voice availability;
+- telemetry availability;
+- ranging enabled/confirmed state;
+- uplink state.
+
+These are kept separate rather than collapsed into one communications `GO` flag. The 78:21:54 ranging-verification request is preserved as an explicit operational dependency.
 
 ### Deferred
 
-- exact MSK 1475 look-angle layout;
-- detailed antenna-geometry product unless a communications failure case is added.
+- exact MSK 1475/look-angle layout;
+- detailed antenna geometry;
+- detailed RF/S-band configuration unless a future communications failure case requires it.
 
 ---
 
@@ -230,9 +246,24 @@ Deferred project fields are omitted rather than shown as failed historical telem
 | Crew readback/response stream | C | verify transfer and receive onboard observations |
 | Ground/FLIGHT callout queue | C | communicate GO/shutdown/procedure decisions whose crew-facing transmission is required |
 
-CAPCOM should not have direct authoritative access to hidden subsystem state merely to make the interface easier.
+### Implemented first-pass player view
 
-For the fuel/oxidizer ΔP rule, CAPCOM carries the ground shutdown callout to the crew, but the implementation does not invent an exact internal approval sequence between CONTROL and FLIGHT before that transmission.
+The current CAPCOM project rendering contains:
+
+- air-ground quality;
+- final PC+2 maneuver/procedure PAD;
+- crew-report stream.
+
+CAPCOM has no direct authoritative subsystem dashboard.
+
+The new session layer also contains an explicit FLIGHT-approved CAPCOM queue and a separate CAPCOM transmission event. Surfacing that queue directly in the CAPCOM presentation is the next integration step.
+
+### Deferred
+
+- queue UI/presentation;
+- explicit readback-state UI;
+- exact historical CAPCOM console layout;
+- unsourced internal controller-loop routing.
 
 ---
 
@@ -266,27 +297,38 @@ This is required even when the first nominal run uses perfect communications aft
 
 ---
 
-## First implementation display priority
+## Minimum presentation checkpoint
 
-### Priority 1
+### Implemented
 
-1. CONTROL burn-monitor product — **first-pass rendering implemented**.
-2. GUIDO guidance/load/residual product — **first-pass rendering implemented**.
-3. TELMU power/configuration product — **first-pass rendering implemented**.
-4. FIDO/RETRO target and return product — **first-pass rendering implemented**.
-5. INCO link/ranging product — **next presentation target**.
-6. FLIGHT readiness/report view.
-7. CAPCOM PAD/voice workflow.
+1. CONTROL burn-monitor product.
+2. GUIDO guidance/load/residual product.
+3. TELMU power/configuration product.
+4. FIDO/RETRO target and return product.
+5. INCO link/ranging product.
+6. FLIGHT decision view.
+7. CAPCOM PAD/voice/report view.
 
-After INCO, FLIGHT, and CAPCOM minimum views exist, priority shifts directly to integrating them into a playable PC+2 session rather than expanding display/subsystem research.
+The minimum first-slice presentation set is therefore **complete enough for integrated playtesting**.
 
-### Priority 2 — add only if required by usability/validation
+### Active priority — integration
+
+Do not add more display fields simply because historical material exists. Current implementation priority is:
+
+1. session/player snapshot serialization;
+2. readiness reports visible to FLIGHT;
+3. CAPCOM pending/transmitted queue visible to CAPCOM;
+4. scripted multi-station nominal playthrough;
+5. transport/mobile shell.
+
+### Add only if required by usability/validation
 
 - additional MSK 1123/1137 fields;
 - secondary trajectory displays;
 - detailed consumables pages;
 - antenna look-angle page;
-- full DEDA/status panels.
+- full DEDA/status panels;
+- exact console coordinates/format reconstruction.
 
 ---
 
@@ -308,10 +350,11 @@ This permits implementation to proceed without inventing archival details.
 
 - Apollo 13 *Mission Operations Report*, controller appendices and PC+2 chronology.
 - Apollo 13 Technical Air-to-Ground Voice Transcription / Flight Journal.
+- Apollo 13 Mission Report communications sections.
 - Apollo 13 AC Electronics *Guidance & Navigation Summary*, MSK 1123/1137.
 - Apollo 13 TELMU Post Mission Report.
 - Apollo 13 FIDO and RETRO post-mission reports.
 - Apollo 13 Review Board Appendix B.
 - MIT R-567 LUMINARY 1C Section 2 — Data Links, Rev. 8.
 - Existing station specifications under `docs/stations/`.
-- Research notes 029–076.
+- Research notes 029–079.
