@@ -86,3 +86,38 @@ def record_inverter_switch_completion(
             provenance=provenance,
         )
     )
+
+
+def record_pc2_restart_instruction(
+    log: ProcedureExchangeLog,
+    *,
+    event_id: str,
+    get_s: float,
+    provenance: str,
+) -> None:
+    """Record the documented PC+2 premature-shutdown restart sequence.
+
+    The contemporaneous read-up gives the sequence as PRO, manual ullage,
+    Engine Start push, and Descent Engine Command Override on. Recording the
+    instruction does not imply that a restart is authorized for a rule-caused
+    shutdown or that the engine actually restarts.
+    """
+    log.record(
+        ProcedureCommunication(
+            event_id=event_id,
+            get_s=get_s,
+            sender="CAPCOM",
+            recipient="CREW",
+            kind="instruction",
+            action="pc2_premature_shutdown_restart",
+            parameters={
+                "sequence": [
+                    "proceed_noun_97",
+                    "manual_ullage",
+                    "engine_start_push",
+                    "descent_engine_command_override_on",
+                ]
+            },
+            provenance=provenance,
+        )
+    )
