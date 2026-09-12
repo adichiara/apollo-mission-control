@@ -19,18 +19,19 @@ Broad station/display expansion is no longer the immediate priority.
 ## Session integration — current checkpoint
 
 - [x] define framework-neutral authoritative session core
-- [x] monotonic synchronized GET
-- [x] station/player assignment
-- [x] per-station readiness reports
-- [x] explicit FLIGHT decision event
-- [x] queued callout distinct from CAPCOM crew transmission
+- [x] bind the session to authoritative PC+2 state and deterministic scenario events
+- [x] monotonic forward GET and session lifecycle
+- [x] unique station/player assignment
+- [x] station-scoped view selection from existing controller projections/presentations
+- [x] per-station readiness reports with audit history
+- [x] intercept the nominal 79:17 GO/NO-GO event as an explicit player gate
+- [x] explicit FLIGHT decision drives normal `state.flight_go` / FLIGHT product state
+- [x] queued FLIGHT callout remains distinct from CAPCOM crew transmission
 - [x] ordered audit/replay events
 - [ ] project readiness reports into FLIGHT player information
-- [ ] project pending crew callouts into CAPCOM player information
-- [ ] connect session FLIGHT decision to existing `flight.go_for_burn` product
+- [ ] project pending approved callouts into CAPCOM player information
 - [ ] connect CAPCOM transmission to the existing procedural communication log
-- [ ] provide one session snapshot that selects the correct station presentation for each assigned player
-- [ ] validate nominal PC+2 sequence through readiness poll, crew GO, burn, shutdown report, and immediate post-burn transition
+- [ ] validate nominal PC+2 sequence through readiness poll, crew-facing GO, burn, shutdown report, residual review, and immediate post-burn transition
 
 ## After domain integration
 
@@ -57,4 +58,4 @@ The transport framework remains intentionally undecided until the domain/session
 
 ## Next item
 
-Implement the **session-to-station product bridge**. This is the next unresolved item and should be completed before researching additional display detail or choosing a web framework.
+Implement the remaining **session-derived FLIGHT/CAPCOM product bridge**: readiness reports for FLIGHT, pending approved callouts for CAPCOM, and CAPCOM transmission into the existing procedural-communication log. Then run the first fully integrated nominal PC+2 session validation before selecting a network framework.
