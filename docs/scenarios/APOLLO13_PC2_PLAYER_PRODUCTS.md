@@ -81,26 +81,36 @@ The first-slice FLIGHT interface should emphasize communication and decision int
 
 ### Historical display basis
 
-MSK 1123 and 1137 are mission-specific Apollo 13 CRTs and can supply much of the visual language for GUIDO/CONTROL. Their complete field routing is not required for the first slice.
+MSK 1123 and 1137 are mission-specific Apollo 13 CRTs and supply much of the visual/terminology basis for GUIDO/CONTROL. R-567 LUMINARY 1C Section 2 independently establishes program-dependent LGC downlinks and update-verification behavior. Complete field routing is not required for the first slice.
 
-### First-slice fields
+### Implemented first-pass player view
 
-- LGC operating/program state;
-- program alarm / LGC warning;
-- alignment accepted / error estimate;
+The current GUIDO project rendering contains:
+
+- LGC operating state;
+- active program / P40 state;
+- program alarm;
+- ISS warning;
+- LGC warning/status;
+- alignment accepted assessment;
 - state-vector load status;
 - target-load status;
-- PGNS Vg components;
-- Vg remaining / ΔV gained as needed for burn monitoring;
-- AGS available / cross-check acceptable;
-- attitude error/rate information needed at the GUIDO boundary;
-- post-burn residuals.
+- planned PGNS Vg;
+- post-burn residual product when available.
+
+`PROGRAM` and alarm/status information have direct Apollo display/downlink analogues. Alignment/load verification, planned Vg, LGC-operating boolean, and the postburn residual product are not claimed to be verbatim CRT literals where exact routing/format remains incomplete.
 
 ### Deferred
 
+- `vg_remaining` / `dv_gained` until their modeled source paths are justified;
+- AGS backup/cross-check presentation until the required PC+2 value path is modeled;
+- exact attitude/rate duplication at the GUIDO boundary where CONTROL already owns the operational shutdown observation;
 - noncritical MSK 1123 velocity rows;
 - exact AGS ULL / ACT VEL routing unless a later failure case requires them;
-- full DEDA-status reproduction.
+- full DEDA-status reproduction;
+- exact CRT coordinates/request behavior/refresh cadence.
+
+Deferred project fields are not shown as failed historical telemetry.
 
 ---
 
@@ -115,30 +125,24 @@ MSK 1123 and 1137 are mission-specific Apollo 13 CRTs and can supply much of the
 | Attitude/rate monitor | A/B | detect shutdown criteria |
 | Warning/event indications | B | gimbal/CES/control failures |
 
-### First-slice fields
+### Implemented first-pass player view
 
-- DPS engine running/state;
-- throttle command / actual thrust representation;
-- chamber pressure or documented ground thrust indication;
-- inlet pressure;
-- fuel/oxidizer differential pressure;
-- GDA/gimbal warning/state;
-- attitude error;
-- body rates;
-- CES DC failure;
-- RCS ullage state;
-- regulator/control configuration needed by the burn sequence.
+The current CONTROL project rendering groups modeled products into burn/propulsion, attitude/control, and ullage information. It preserves source/provenance/validity and does not expose hidden integrity metadata.
+
+Apollo 13 MSK 1137 `TCP` is chamber pressure expressed in percent. The modeled `GQ6510P` path is in psi, so it is shown as project `CHAMBER P` rather than falsely relabeled or converted to `TCP`.
 
 ### Critical historical distinction
 
-The fuel/oxidizer ΔP rule is a **ground callout only**. The CONTROL product therefore must expose that ground measurement independently of crew indications.
+The fuel/oxidizer ΔP rule is a **ground callout only**. The CONTROL product therefore exposes that ground measurement independently of crew indications when modeled.
 
 For the implemented nonnominal branch, a threshold exceedance produces a CONTROL callout decision, followed by a distinct CAPCOM→crew communication event and a distinct crew shutdown command. The exact hypothetical CONTROL→FLIGHT→CAPCOM internal voice-loop sequence is not asserted because the reviewed PC+2 sources do not document it.
 
 ### Deferred
 
+- singular ground inlet-pressure product until its selection/aggregation semantics are sourced;
 - complete propulsion telemetry catalog;
-- exact normal numeric pressure baselines where surviving evidence currently provides only shutdown thresholds.
+- exact normal numeric pressure baselines where surviving evidence currently provides only shutdown thresholds;
+- exact CRT routing/coordinates/refresh cadence.
 
 ---
 
@@ -160,9 +164,14 @@ For the implemented nonnominal branch, a threshold exceedance produces a CONTROL
 - power-down status;
 - only consumable quantities that can actually alter a PC+2 readiness decision.
 
+### Current implementation boundary
+
+The controller-product layer currently has power mode/configuration, a documented expected burn-current range reference, inverter warning, inverter-switch action state, and power-down transition. Actual measured current remains deferred. The next presentation pass will turn these products into a clearly labeled TELMU project rendering without inventing an Apollo CRT.
+
 ### Deferred
 
 - complete TELMU consumables dashboard;
+- actual measured burn current until its source path is modeled;
 - full ECS/EMU modeling;
 - detailed water/O2/thermal state unless required by a later scenario branch.
 
@@ -243,15 +252,17 @@ This is required even when the first nominal run uses perfect communications aft
 
 ## First implementation display priority
 
-### Priority 1 — build first
+### Priority 1
 
-1. CONTROL burn-monitor product.
-2. GUIDO guidance/load/residual product.
-3. FIDO/RETRO target and return product.
-4. INCO link/ranging product.
-5. TELMU power/configuration product.
+1. CONTROL burn-monitor product — **first-pass rendering implemented**.
+2. GUIDO guidance/load/residual product — **first-pass rendering implemented**.
+3. TELMU power/configuration product — **next presentation target**.
+4. FIDO/RETRO target and return product.
+5. INCO link/ranging product.
 6. FLIGHT readiness/report view.
 7. CAPCOM PAD/voice workflow.
+
+The ordering after GUIDO is scenario-driven: TELMU moves ahead of FIDO/RETRO because the modeled inverter contingency already creates a concrete player decision dependency that needs presentation.
 
 ### Priority 2 — add only if required by usability/validation
 
@@ -269,7 +280,7 @@ For an exact historical display, preserve its documented layout and labeling.
 
 For a product whose semantics are known but exact screen is not, use a neutral project rendering that:
 
-- uses historical terminology and units;
+- uses historical terminology and units only where equivalence is justified;
 - does not add diagnosis or modern alert semantics;
 - does not claim to be an exact Apollo screen;
 - preserves source/validity distinctions;
@@ -282,5 +293,6 @@ This permits implementation to proceed without inventing archival details.
 - Apollo 13 *Mission Operations Report*, controller appendices and PC+2 chronology.
 - Apollo 13 Technical Air-to-Ground Voice Transcription.
 - Apollo 13 AC Electronics *Guidance & Navigation Summary*, MSK 1123/1137.
+- MIT R-567 LUMINARY 1C Section 2 — Data Links, Rev. 8.
 - Existing station specifications under `docs/stations/`.
-- Research notes 029–068.
+- Research notes 029–074.
