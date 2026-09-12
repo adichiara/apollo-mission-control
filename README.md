@@ -25,6 +25,7 @@ See:
 - [Station research status](docs/STATION_RESEARCH_STATUS.md)
 - [PC+2 DPS shutdown-confirmation station-status addendum](docs/station-status/2026-09-12_pc2_dps_shutdown_confirmation.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
+- [Gameplay model](docs/GAMEPLAY_MODEL.md) — design proposal, not accepted
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
 - [Simulation validation strategy](docs/SIMULATION_VALIDATION.md)
 - [Decisions](docs/DECISIONS.md)
