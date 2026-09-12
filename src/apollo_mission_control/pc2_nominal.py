@@ -67,6 +67,11 @@ class PC2State:
     # Ground-derived PC+2 fuel/oxidizer differential-pressure product. The
     # exact transformation from LM source pressure measurements is unresolved.
     dps_fuel_oxidizer_delta_p_psi: float | None = None
+    # Three-axis CONTROL-relevant guidance/control observations. The exact
+    # LM-7 PCM assignments and CONTROL CRT fields remain unresolved; no nominal
+    # time history is synthesized from the postflight maxima.
+    attitude_error_xyz_deg: dict[str, float] | None = None
+    body_rate_xyz_deg_s: dict[str, float] | None = None
     # Runtime inverter caution observation. The exact PC+2 telemetry/display
     # route remains unresolved, but the caution-generation path is documented.
     lm_inverter_warning: bool = False
