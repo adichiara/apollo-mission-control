@@ -59,6 +59,9 @@ Key research chain:
 - `074_pc2_guido_player_presentation_boundary.md`
 - `075_pc2_telmu_player_presentation_boundary.md`
 - `076_pc2_fido_retro_player_presentation_boundary.md`
+- `077_pc2_inco_player_presentation_boundary.md`
+- `078_pc2_flight_capcom_player_presentation_boundary.md`
+- `079_pc2_first_playable_session_boundary.md`
 
 Deliverables:
 
@@ -68,11 +71,14 @@ Deliverables:
 - [x] minimum initialization defined
 - [x] nominal event timeline through immediate power-down
 - [x] core scenario-specific primary-source package
-- [ ] full-fidelity player-position set and later low-player-count aggregation
+- [x] minimum first-slice player-facing station set
+- [ ] low-player-count station aggregation
 
 ## Phase 3 — Display and console reconstruction
 
 **Goal:** reproduce controller information presentation where source evidence permits it.
+
+**Status:** **minimum PC+2 first-slice presentation checkpoint complete**
 
 Current PC+2 checkpoint:
 
@@ -89,27 +95,23 @@ Current PC+2 checkpoint:
 - [x] observation/sample time separated from later display/evaluation time; no unsupported generic stale threshold applied
 - [x] minimum shutdown/restart evidence channels bounded without invented binary confirmation thresholds
 - [x] first-pass player-facing **CONTROL** presentation implemented as an explicitly labeled project rendering
-- [x] Apollo 13 MSK 1137 `TCP` percent semantics kept distinct from modeled `GQ6510P` psi; no unsupported conversion/alias
-- [x] deferred CONTROL fields omitted rather than presented as historical telemetry failures
 - [x] first-pass player-facing **GUIDO** presentation implemented from controller-visible PC+2 products
-- [x] GUIDO presentation preserves exact Apollo terminology only where semantics are supportable and labels assessment/load products as project renderings rather than asserted CRT literals
-- [x] deferred GUIDO `vg_remaining` / `dv_gained` fields remain implementation gaps rather than simulated telemetry failures
 - [x] first-pass player-facing **TELMU** presentation implemented from PC+2 power/configuration and inverter-contingency products
-- [x] documented 38–40 A burn-configuration load is explicitly rendered as a reference value, not fabricated live current telemetry
-- [x] TELMU inverter warning and switch action remain separate products/events; hidden integrity metadata is not exposed
+- [x] documented 38–40 A burn-configuration load explicitly rendered as a reference value, not fabricated live current telemetry
 - [x] first-pass player-facing **FIDO/RETRO** presentation implemented from the final maneuver PAD, return-plan monitor PAD, and ground-solution status
-- [x] final 77:52/78:00 PC+2 target/return products kept distinct from earlier preliminary alternatives
-- [x] deferred RTCC Cartesian state and post-burn propagated trajectory omitted rather than fabricated or shown as historical telemetry failures
-- [ ] build first-pass **INCO** player presentation for weak-link quality, voice/telemetry availability, uplink state, and ranging state
-- [ ] build minimum **FLIGHT** readiness/decision view and **CAPCOM** PAD/communications workflow view
+- [x] final PC+2 target/return products kept distinct from earlier preliminary alternatives
+- [x] deferred RTCC Cartesian state and post-burn propagated trajectory omitted rather than fabricated
+- [x] first-pass player-facing **INCO** presentation implemented from separate link-quality, voice, telemetry, ranging, and uplink products
+- [x] first-pass player-facing **FLIGHT** decision view implemented without an omniscient subsystem-health dashboard
+- [x] first-pass player-facing **CAPCOM** communications/procedure view implemented without direct hidden subsystem truth
 - [ ] determine singular PC+2 150-psi engine-inlet-pressure ground selection logic only if a direct source becomes readily available
 - [ ] recover additional MCC/RTCC transforms only when player decisions require them
 
-Non-PC+2 display reconstruction remains deferred.
+**Research stop rule:** further display reconstruction is demand-driven by integration/usability/decision requirements. Do not expand CRT archaeology merely for completeness.
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **nominal event model + controller products + partial rules + failure/action/communication layers + shutdown/restart physical-response/evidence paths + CONTROL/GUIDO/TELMU/FIDO-RETRO presentation models implemented**
+**Status:** **nominal event model + controller products + partial rules + failure/action/communication layers + shutdown/restart physical-response/evidence paths + minimum station presentation set + first authoritative session core implemented**
 
 Completed:
 
@@ -140,17 +142,20 @@ Completed:
 - [x] ground-only fuel/oxidizer ΔP >25 psi path implemented as CONTROL decision → CAPCOM callout → crew shutdown command
 - [x] crew STOP input separated from physical engine-off response
 - [x] shutdown evidence keeps crew report and fresh GQ6510P observation distinct from authoritative physical state
-- [x] first-pass CONTROL presentation preserves source/provenance/validity and hides internal integrity metadata
-- [x] first-pass GUIDO presentation preserves LGC/PGNS source boundaries, project-assessment semantics, and hidden-integrity separation
-- [x] first-pass TELMU presentation preserves power/configuration reference semantics, inverter action/observation separation, and hidden-integrity boundaries
-- [x] first-pass FIDO/RETRO presentation preserves final maneuver/return products while leaving unmodeled post-burn trajectory assessment explicit
+- [x] minimum player-facing presentation set implemented for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM
+- [x] single-process authoritative `PC2Session` owns state, GET, historical event progression, station assignment, station-scoped views, readiness reports, FLIGHT GO gating, CAPCOM handoff, pause/resume, and audit events
+- [x] playable session intercepts the historical final-poll fixture event instead of auto-setting FLIGHT GO
+- [x] NO-GO holds progression at final readiness; explicit FLIGHT GO clears the gate
 
 ### Immediate next work
 
-- [ ] implement the **first-pass INCO player-facing presentation** from the existing PC+2 communications projection
-- [ ] prioritize weak/good air-ground quality, voice and telemetry availability, uplink configuration, and ranging state
-- [ ] then implement minimum FLIGHT and CAPCOM views and shift to **integrated playable-session orchestration** rather than expanding subsystem research
-- [ ] do not create a post-burn FIDO trajectory solution merely to make the FIDO/RETRO screen complete
+- [ ] add a serializable **session/player snapshot DTO** suitable for a future web/mobile client
+- [ ] surface controller readiness reports directly in the FLIGHT player view
+- [ ] surface pending/transmitted CAPCOM queue items in the CAPCOM player view
+- [ ] add a deterministic scripted **multi-station nominal playthrough** through the session layer
+- [ ] validate station information isolation and audit-event ordering end-to-end
+- [ ] then select/implement the thin web/session transport and mobile presentation shell
+- [ ] do not create a post-burn FIDO trajectory solution merely to make the screen complete
 - [ ] keep `crew_thrust_monitor` `NOT_EVALUABLE` unless a direct LM-7 source identifies the percent-thrust indication
 - [ ] keep singular 150-psi inlet-pressure aggregation deferred unless a direct source becomes cheaply available
 - [ ] determine minimum trajectory-state representation only when integrated trajectory behavior actually requires it
@@ -175,13 +180,16 @@ Important constraints:
 - GUIDO project assessment/load-status products are not claimed as verbatim CRT literals;
 - TELMU 38–40 A burn-configuration figure is a reference/planning value, not live measured current;
 - GUIDO residuals are not substituted for a FIDO post-burn propagated trajectory solution;
+- INCO communications subchannels are not collapsed into a hidden communications-health verdict;
+- FLIGHT GO is a player/controller decision in session play, not a consequence of hidden nominal state;
+- CAPCOM queued/transmitted messages do not directly mutate authoritative vehicle state;
 - exact player display coordinates/routing are not invented where source coverage is incomplete;
 - synthetic boundary-test values/times are labeled non-historical;
-- injections, actions, communications, controller decisions, physical responses, controller products, and player presentation remain separate layers.
+- injections, actions, communications, controller decisions, physical responses, controller products, player presentation, and session orchestration remain separate layers.
 
 ## Phase 5 — Mission Control data path
 
-**Goal:** preserve spacecraft state → instrumentation/telemetry → communications/ground processing → controller products → controller interpretation → player presentation.
+**Goal:** preserve spacecraft state → instrumentation/telemetry → communications/ground processing → controller products → controller interpretation → player presentation → session decisions/communications.
 
 Current checkpoint:
 
@@ -190,9 +198,12 @@ Current checkpoint:
 - validity/integrity degradation remains independent from observation age;
 - controller suspicion/rejection is explicit and never inferred automatically from hidden integrity;
 - shutdown/restart actions, physical responses, and controller evidence remain separate;
-- CONTROL, GUIDO, TELMU, and FIDO/RETRO presentation models consume only controller-visible products and preserve provenance;
+- all minimum station presentation models consume only controller-visible products and preserve provenance;
 - hidden product-integrity annotations do not leak into presentation;
 - deferred implementation gaps do not masquerade as telemetry failures;
+- session station assignment selects only the assigned station's projection/presentation;
+- controller readiness reports and FLIGHT decisions are session events, not spacecraft state;
+- FLIGHT→CAPCOM queueing and CAPCOM transmission are separate audit events;
 - network transport and exact display cadence remain future work where documented.
 
 ## Phase 6 — Procedures and flight rules
@@ -212,6 +223,7 @@ PC+2 checkpoint:
 - [x] premature-shutdown restart rule and contemporaneous restart sequence recovered
 - [x] 77-percent onboard thrust criterion deliberately remains `NOT_EVALUABLE`
 - [x] attitude-error/rate thresholds and operational exception allocation resolved from contemporaneous read-up/readback
+- [x] final GO/NO-GO decision is now represented as an explicit playable-session FLIGHT gate
 - [ ] exact startup-transient time boundary remains unresolved
 - [ ] exact alternate-inverter identity/switch details remain unresolved
 - [ ] singular 150-psi ground inlet-pressure rule remains `NOT_EVALUABLE`
@@ -234,6 +246,7 @@ Current checkpoint:
 - [x] premature-shutdown restart branch modeled without scripting restart success
 - [x] ground-only ΔP shutdown callout loop implemented
 - [x] command/physical-response/evidence boundaries established for DPS shutdown and restart
+- [x] nominal timed scenario events now run inside an authoritative session that can pause at player decision gates
 - [ ] documented nonnominal Apollo training case reconstructed only when source detail is sufficient
 - [ ] historical SimSup/operator interface deferred
 
@@ -241,17 +254,40 @@ Scenario implementation rule: inject underlying conditions; do not announce diag
 
 ## Phase 8 — Multi-player session layer
 
+**Status:** **single-process authoritative prototype implemented; network/web layer pending**
+
 **Goal:** central authoritative server, session/join, station assignment, phone clients, synchronized GET/state, reconnection, and server-controlled scenario state.
 
-Role aggregation remains deferred until station research supports it.
+Completed first prototype:
 
-**Near-term trigger:** after INCO, FLIGHT, and CAPCOM minimum views are present, begin integrated PC+2 session orchestration before additional subsystem/display research.
+- [x] authoritative session state and synchronized GET
+- [x] unique player→station assignment
+- [x] station-scoped presentation dispatch
+- [x] readiness-report events
+- [x] explicit FLIGHT GO/NO-GO gate at the historical final poll
+- [x] FLIGHT→CAPCOM approved-message queue
+- [x] explicit CAPCOM transmission event
+- [x] pause/resume
+- [x] chronological audit log
+
+Immediate next integration:
+
+- [ ] serializable session/player snapshot DTO
+- [ ] readiness reports visible in FLIGHT presentation
+- [ ] CAPCOM queue visible in CAPCOM presentation
+- [ ] scripted multi-station nominal playthrough
+- [ ] framework/transport selection
+- [ ] session creation/join endpoint
+- [ ] reconnection semantics
+- [ ] phone/mobile shell
+
+Role aggregation remains deferred until the seven-station first-slice workflow has been validated.
 
 ## Phase 9 — Communications
 
 **Goal:** reproduce enough Flight/discipline/air-ground communication structure to affect controller work.
 
-Established requirements include weak-link effects on PAD/readback, inverter contingency instructions/reports, crew-facing Mission Rules read-up/readback, restart procedure briefing, ground-only ΔP callout, and separation of crew reports from physical/telemetry truth.
+Established requirements include weak-link effects on PAD/readback, inverter contingency instructions/reports, crew-facing Mission Rules read-up/readback, restart procedure briefing, ground-only ΔP callout, separation of crew reports from physical/telemetry truth, and explicit FLIGHT→CAPCOM handoff.
 
 Exact hypothetical internal voice-loop routing is not asserted without stronger evidence.
 
@@ -260,6 +296,8 @@ Exact hypothetical internal voice-loop routing is not asserted without stronger 
 **Goal:** support replay/learning without an in-play score layer.
 
 Potential outputs: objective outcome, commands/decisions, system evolution, rules/procedures, communications timeline, historical comparison.
+
+The session audit log is now the initial implementation substrate for this phase.
 
 ## Phase 11 — Expansion
 
