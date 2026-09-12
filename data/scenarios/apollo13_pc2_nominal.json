@@ -3,7 +3,7 @@
   "scenario_id": "apollo13_pc2_nominal",
   "status": "source-backed nominal fixture used by executable prototype",
   "mission": "Apollo 13",
-  "start_get_s": 285300.0,
+  "start_get_s": 280500.0,
   "start_get_hms": "77:55:00",
   "end_target_get_hms": "79:34:00+",
   "vehicle_configuration": "CSM+SM docked to LM",
