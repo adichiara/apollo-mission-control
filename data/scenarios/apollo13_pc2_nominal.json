@@ -121,16 +121,16 @@
   },
   "vehicle_control": {
     "attitude_error_deg": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0,
-      "status": "placeholder nominal initialization; exact historical axis values not asserted"
+      "x": null,
+      "y": null,
+      "z": null,
+      "status": "within documented shutdown limits; exact historical axis values not asserted"
     },
     "body_rate_deg_s": {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 0.0,
-      "status": "placeholder nominal initialization; exact historical axis values not asserted"
+      "x": null,
+      "y": null,
+      "z": null,
+      "status": "within documented shutdown limits; exact historical axis values not asserted"
     },
     "ces_dc_failure": false
   },
