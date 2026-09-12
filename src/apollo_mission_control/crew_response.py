@@ -38,13 +38,7 @@ def record_crew_receipt(
     crew_id: str = "CREW",
     response: str = "received",
 ) -> dict[str, Any]:
-    """Record explicit crew receipt/readback state without commanding the engine.
-
-    The Apollo 13 PC+2 rules briefing establishes that the >25 psi differential
-    pressure criterion was a ground call and that the crew was to shut down if a
-    listed criterion occurred. It does not establish a response delay for a
-    hypothetical exceedance, so receipt is recorded at the session's current GET.
-    """
+    """Record explicit crew receipt/readback state without commanding the engine."""
     item = _transmitted_shutdown_callout(session, item_id)
     event = session._audit(
         "crew_capcom_item_received",
@@ -63,11 +57,7 @@ def command_dps_shutdown_from_callout(
     crew_id: str = "CREW",
     provenance: str = "Apollo 13 PC+2 ground-call shutdown rule; exact cockpit choreography unresolved",
 ) -> OperationalAction:
-    """Record the crew DPS shutdown command after an explicit transmitted call.
-
-    This applies the existing operational-action model only. It does not set
-    ``engine_running`` false; physical engine response remains a separate event.
-    """
+    """Record the crew DPS shutdown command after an explicit transmitted call."""
     item = _transmitted_shutdown_callout(session, item_id)
     receipt_exists = any(
         event.kind == "crew_capcom_item_received"
@@ -106,15 +96,17 @@ def apply_session_engine_off_response(
     get_s: float,
     cause: str = "crew_stop_pushbutton",
 ) -> dict[str, Any]:
-    """Apply an explicit physical DPS-off response after a crew command.
+    """Apply an explicit physical DPS-off response at authoritative session GET.
 
-    The caller must supply the response GET. No LM-7 response delay is invented.
-    No chamber-pressure decay or controller confirmation is synthesized.
+    The caller chooses the response time by advancing the session clock first.
+    This helper refuses to advance time itself, preventing a physical response
+    from silently skipping scheduled scenario events. No LM-7 response delay,
+    chamber-pressure decay, or controller confirmation is synthesized.
     """
     if not session.state.crew_dps_shutdown_commanded:
         raise ValueError("Physical DPS shutdown response requires a prior crew shutdown command")
-    if float(get_s) < float(session.state.get_s):
-        raise ValueError("Physical response GET cannot precede current session GET")
+    if abs(float(get_s) - float(session.state.get_s)) > 1e-6:
+        raise ValueError("Physical response GET must equal the current authoritative session GET")
 
     response = apply_engine_off_response(session.state, get_s=float(get_s), cause=cause)
     session._audit(
