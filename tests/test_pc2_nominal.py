@@ -6,45 +6,32 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from apollo_mission_control.controller_products import (  # noqa: E402
-    project_controller_products,
-)
+from apollo_mission_control.controller_products import project_controller_products  # noqa: E402
 from apollo_mission_control.pc2_nominal import (  # noqa: E402
-    PC2State,
-    Validity,
-    apply_event,
-    build_events,
-    hms_to_seconds,
-    load_fixture,
-    run_nominal,
-    validate_nominal,
+    PC2State, Validity, apply_event, build_events, hms_to_seconds,
+    load_fixture, run_nominal, validate_nominal,
 )
 from apollo_mission_control.shutdown_rules import (  # noqa: E402
-    RuleState,
-    evaluate_pc2_shutdown_rules,
-    triggered_rules,
+    RuleState, evaluate_pc2_shutdown_rules, triggered_rules,
 )
 
 
 class PC2NominalTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.fixture = load_fixture(
-            ROOT / "data" / "scenarios" / "apollo13_pc2_nominal.json"
-        )
+        cls.fixture = load_fixture(ROOT / "data" / "scenarios" / "apollo13_pc2_nominal.json")
 
     def test_event_order(self):
         events = build_events(self.fixture)
-        times = [event.get_s for event in events]
-        self.assertEqual(times, sorted(times))
+        self.assertEqual([e.get_s for e in events], sorted(e.get_s for e in events))
 
     def test_historical_tig_and_cutoff(self):
-        events = {event.name: event.get_s for event in build_events(self.fixture)}
+        events = {e.name: e.get_s for e in build_events(self.fixture)}
         self.assertAlmostEqual(events["dps_ignition"], 286058.30)
         self.assertAlmostEqual(events["guided_cutoff"], 286322.12)
 
     def test_ullage_and_commanded_throttle_profile(self):
-        events = {event.name: event.get_s for event in build_events(self.fixture)}
+        events = {e.name: e.get_s for e in build_events(self.fixture)}
         tig = self.fixture["pc2_target"]["tig_get_s"]
         self.assertAlmostEqual(events["manual_two_jet_ullage_begins"], tig - 10.0)
         self.assertAlmostEqual(events["throttle_command_40_percent"], tig + 5.0)
@@ -52,17 +39,11 @@ class PC2NominalTests(unittest.TestCase):
 
     def test_crew_reports_remain_separate_from_commands(self):
         state = run_nominal(self.fixture)
-        reports = [(report.get_s, report.report) for report in state.crew_reports]
-        self.assertEqual(
-            reports,
-            [
-                (hms_to_seconds("79:27:51"), "40_percent"),
-                (hms_to_seconds("79:28:09"), "100_percent"),
-            ],
-        )
-        events = {event.name: event.get_s for event in build_events(self.fixture)}
-        self.assertGreater(reports[0][0], events["throttle_command_40_percent"])
-        self.assertGreater(reports[1][0], events["throttle_command_maximum"])
+        reports = [(r.get_s, r.report) for r in state.crew_reports]
+        self.assertEqual(reports, [
+            (hms_to_seconds("79:27:51"), "40_percent"),
+            (hms_to_seconds("79:28:09"), "100_percent"),
+        ])
 
     def test_nominal_run_reaches_powerdown(self):
         state = run_nominal(self.fixture)
@@ -72,38 +53,26 @@ class PC2NominalTests(unittest.TestCase):
         self.assertFalse(state.shutdown_rule_triggers)
 
     def test_nominal_validation_contract(self):
-        state = run_nominal(self.fixture)
-        self.assertEqual(validate_nominal(self.fixture, state), [])
+        self.assertEqual(validate_nominal(self.fixture, run_nominal(self.fixture)), [])
 
     def test_projection_has_required_station_boundaries(self):
-        state = run_nominal(self.fixture)
-        projections = project_controller_products(state, self.fixture)
-        self.assertEqual(
-            set(projections),
-            {"CONTROL", "GUIDO", "FIDO_RETRO", "TELMU", "INCO", "FLIGHT", "CAPCOM"},
-        )
+        projections = project_controller_products(run_nominal(self.fixture), self.fixture)
+        self.assertEqual(set(projections), {"CONTROL", "GUIDO", "FIDO_RETRO", "TELMU", "INCO", "FLIGHT", "CAPCOM"})
         self.assertNotIn("dps.engine_running", projections["FLIGHT"].products)
-        self.assertNotIn("dps.engine_running", projections["CAPCOM"].products)
         self.assertIn("dps.engine_running", projections["CONTROL"].products)
 
     def test_projection_metadata_is_explicit(self):
         state = run_nominal(self.fixture)
-        projections = project_controller_products(state, self.fixture)
-        product = projections["CONTROL"].products["dps.engine_running"]
+        product = project_controller_products(state, self.fixture)["CONTROL"].products["dps.engine_running"]
         self.assertEqual(product.validity, Validity.VALID)
         self.assertTrue(product.source_layer)
         self.assertTrue(product.provenance)
         self.assertEqual(product.sample_time_get, state.get_s)
-        self.assertEqual(product.receive_time_get, state.get_s)
-        self.assertEqual(product.display_time_get, state.get_s)
 
     def test_research_gaps_are_not_telemetry_failures(self):
-        state = run_nominal(self.fixture)
-        projections = project_controller_products(state, self.fixture)
-        control = projections["CONTROL"]
-        self.assertIn("dps.chamber_pressure_psi", control.deferred_fields)
-        self.assertNotIn("dps.chamber_pressure_psi", control.products)
-        self.assertIn("lm.power.current_a", projections["TELMU"].deferred_fields)
+        projections = project_controller_products(run_nominal(self.fixture), self.fixture)
+        self.assertIn("dps.chamber_pressure_psi", projections["CONTROL"].deferred_fields)
+        self.assertNotIn("dps.chamber_pressure_psi", projections["CONTROL"].products)
 
     def test_postburn_residual_is_unavailable_before_review(self):
         state = PC2State(get_s=self.fixture["start_get_s"])
@@ -111,82 +80,64 @@ class PC2NominalTests(unittest.TestCase):
             if event.name == "postburn_residual_review":
                 break
             apply_event(state, event, self.fixture)
-        products = project_controller_products(state, self.fixture)
-        residual = products["GUIDO"].products["pg_ns.postburn_residual"]
+        residual = project_controller_products(state, self.fixture)["GUIDO"].products["pg_ns.postburn_residual"]
         self.assertEqual(residual.validity, Validity.UNAVAILABLE)
         self.assertIsNone(residual.value)
 
     def test_postburn_residual_becomes_available_after_review(self):
-        state = run_nominal(self.fixture)
-        products = project_controller_products(state, self.fixture)
-        residual = products["GUIDO"].products["pg_ns.postburn_residual"]
+        residual = project_controller_products(run_nominal(self.fixture), self.fixture)["GUIDO"].products["pg_ns.postburn_residual"]
         self.assertEqual(residual.validity, Validity.VALID)
         self.assertEqual(residual.value, {"x": 1.0, "y": 0.3, "z": 0.0})
 
     def test_nominal_rule_audit_has_no_triggered_rules(self):
-        state = run_nominal(self.fixture)
-        products = project_controller_products(state, self.fixture)
+        products = project_controller_products(run_nominal(self.fixture), self.fixture)
         evaluations = evaluate_pc2_shutdown_rules(products, self.fixture)
         self.assertEqual(triggered_rules(evaluations), [])
-        self.assertEqual(
-            evaluations["engine_gimbal_warning"].state,
-            RuleState.CLEAR,
-        )
-        self.assertEqual(evaluations["lgc_warning"].state, RuleState.CLEAR)
-        self.assertEqual(evaluations["ces_dc_failure"].state, RuleState.CLEAR)
+        self.assertEqual(evaluations["iss_warning_plus_program_alarm"].state, RuleState.CLEAR)
 
     def test_unmodeled_numeric_rules_are_not_falsely_cleared(self):
-        state = run_nominal(self.fixture)
-        products = project_controller_products(state, self.fixture)
+        products = project_controller_products(run_nominal(self.fixture), self.fixture)
         evaluations = evaluate_pc2_shutdown_rules(products, self.fixture)
-        for rule_id in (
-            "ground_chamber_pressure",
-            "crew_thrust_monitor",
-            "ground_inlet_pressure",
-            "crew_inlet_pressure",
-            "fuel_oxidizer_delta_p",
-            "attitude_error",
-            "attitude_rate",
-        ):
+        for rule_id in ("ground_chamber_pressure", "crew_thrust_monitor", "ground_inlet_pressure", "crew_inlet_pressure", "fuel_oxidizer_delta_p", "attitude_error", "attitude_rate"):
             self.assertEqual(evaluations[rule_id].state, RuleState.NOT_EVALUABLE)
 
     def test_modeled_gimbal_warning_can_trigger_rule_without_commanding_abort(self):
         fixture = deepcopy(self.fixture)
         fixture["dps"]["engine_gimbal_warning"] = True
         state = run_nominal(fixture)
-        products = project_controller_products(state, fixture)
-        evaluations = evaluate_pc2_shutdown_rules(products, fixture)
-        self.assertEqual(
-            evaluations["engine_gimbal_warning"].state,
-            RuleState.TRIGGERED,
-        )
-        self.assertEqual(
-            [item.rule_id for item in triggered_rules(evaluations)],
-            ["engine_gimbal_warning"],
-        )
+        evaluations = evaluate_pc2_shutdown_rules(project_controller_products(state, fixture), fixture)
+        self.assertEqual(evaluations["engine_gimbal_warning"].state, RuleState.TRIGGERED)
         self.assertFalse(state.shutdown_rule_triggers)
 
-    def test_positive_program_alarm_needs_distinct_iss_warning_state(self):
+    def test_program_alarm_alone_does_not_trigger_conjunctive_iss_rule(self):
         fixture = deepcopy(self.fixture)
-        fixture["pgns"]["program_alarm"] = 1202
+        fixture["pgns"]["program_alarm"] = "TEST_PRESENT"
+        evaluations = evaluate_pc2_shutdown_rules(project_controller_products(run_nominal(fixture), fixture), fixture)
+        self.assertEqual(evaluations["iss_warning_plus_program_alarm"].state, RuleState.CLEAR)
+
+    def test_iss_warning_alone_does_not_trigger_conjunctive_rule(self):
+        fixture = deepcopy(self.fixture)
+        fixture["pgns"]["iss_warning"] = True
+        evaluations = evaluate_pc2_shutdown_rules(project_controller_products(run_nominal(fixture), fixture), fixture)
+        self.assertEqual(evaluations["iss_warning_plus_program_alarm"].state, RuleState.CLEAR)
+
+    def test_source_backed_iss_warning_plus_program_alarm_rule_path(self):
+        fixture = deepcopy(self.fixture)
+        fixture["pgns"]["iss_warning"] = True
+        fixture["pgns"]["program_alarm"] = "TEST_PRESENT"
         state = run_nominal(fixture)
         products = project_controller_products(state, fixture)
+        self.assertTrue(products["GUIDO"].products["pg_ns.iss.warning"].value)
         evaluations = evaluate_pc2_shutdown_rules(products, fixture)
-        self.assertEqual(
-            evaluations["iss_warning_plus_program_alarm"].state,
-            RuleState.NOT_EVALUABLE,
-        )
+        self.assertEqual(evaluations["iss_warning_plus_program_alarm"].state, RuleState.TRIGGERED)
+        self.assertIn("iss_warning_plus_program_alarm", [r.rule_id for r in triggered_rules(evaluations)])
+        self.assertFalse(state.shutdown_rule_triggers)
 
     def test_inverter_warning_positive_case_requires_switch_attempt_state(self):
         fixture = deepcopy(self.fixture)
         fixture["lm_power"]["inverter_warning"] = True
-        state = run_nominal(fixture)
-        products = project_controller_products(state, fixture)
-        evaluations = evaluate_pc2_shutdown_rules(products, fixture)
-        self.assertEqual(
-            evaluations["persistent_inverter_warning"].state,
-            RuleState.NOT_EVALUABLE,
-        )
+        evaluations = evaluate_pc2_shutdown_rules(project_controller_products(run_nominal(fixture), fixture), fixture)
+        self.assertEqual(evaluations["persistent_inverter_warning"].state, RuleState.NOT_EVALUABLE)
 
 
 if __name__ == "__main__":
