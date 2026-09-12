@@ -119,16 +119,35 @@ Research note `048_first_vertical_slice_candidate_assessment.md` records the can
 
 The Apollo 13 oxygen-tank accident remains a priority expansion scenario. Apollo 11 powered descent is the strongest early candidate for validating mission-profile portability.
 
+## D-014 — First playable web transport: FastAPI + Uvicorn
+
+**Status:** Accepted for first playable prototype  
+**Date:** 2026-09-12
+
+Use **FastAPI + Uvicorn** as the first web transport for exposing the framework-neutral Mission Control session model to phone/browser clients and deploying the prototype on Render.
+
+This is a transport decision, not a simulation-domain decision:
+
+- historical/session logic remains in framework-neutral Python modules;
+- FastAPI adapts HTTP requests/responses to the domain API;
+- ASGI preserves a later path to realtime/WebSocket transport if playtesting requires it;
+- the first server is deliberately **single-process and in-memory** so one authoritative session object owns live state.
+
+The in-memory prototype is not considered durable production infrastructure. Process restart, redeploy, or platform spin-down can lose the active session, and multiple workers would create divergent state unless shared persistence/session coordination is added.
+
+See `resources/research/080_web_transport_selection.md` and `resources/source-catalog/WEB_TRANSPORT_SOURCES.md`.
+
 ## Not yet decided
 
 The following are deliberately not decisions:
 
 - minimum player count
 - exact controller combinations by player count
-- exact technical stack
+- durable session persistence/storage architecture
+- realtime push mechanism (polling vs SSE/WebSockets)
 - degree of RTCC/CCATS/MSFN emulation beyond what the first scenario requires
 - degree of Staff Support Room simulation
 - voice-loop implementation
-- time acceleration
+- time acceleration / real-time clock policy
 - scenario-selection UI
 - post-simulation evaluation format
