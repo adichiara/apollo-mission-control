@@ -9,8 +9,8 @@ Research notes 037–045 identified the missing **Table 2.1-7, Abort Electronics
 
 This pass recovers the table's telemetry-word structure and engineering descriptions from contemporary Apollo Operations Handbook copies while preserving the distinction between:
 
-1. the exact Apollo 13 **LM 7 and Subsequent** handbook edition dated 1 February 1970;
-2. a publicly searchable **LM 10 and Subsequent** Volume I copy carrying the same 1 February 1970 basic date but a 15 June 1970 change date; and
+1. the exact Apollo 13 **LM 7 and Subsequent** handbook, **Basic Date 15 December 1968 / Change Date 1 February 1970**;
+2. a publicly searchable **LM 10 and Subsequent** Volume I copy, **Basic Date 1 February 1970 / Change Date 15 June 1970**; and
 3. adjacent-program AGS source/code evidence.
 
 The result materially narrows the field-to-source problem, but it does **not** justify assigning a specific telemetry word to an MSK 1123 row without MCC/RTCC/display-routing evidence.
@@ -22,10 +22,11 @@ The result materially narrows the field-to-source problem, but it does **not** j
 The Apollo 13 Flight Journal indexes:
 
 - **LMA790-3-LM, Apollo Operations Handbook, Lunar Module LM 7 and Subsequent, Volume I — Subsystems Data**;
-- change date **1 February 1970**;
+- **Basic Date 15 December 1968**;
+- **Change Date 1 February 1970**;
 - Table **2.1-7 — Abort Electronics Assembly - Telemetry Word List** in the GN&C section.
 
-A searchable index of the LM-7 edition also exposes the table title in the list of tables.
+The Smithsonian catalog independently identifies the same LM-7-and-subsequent volume dated 1 February 1970, and a searchable index copy exposes the basic/change dates and the table title in the list of tables.
 
 The high-resolution LM-7 scan is too large for the current web PDF reader, so this pass does not claim direct page-image verification of every LM-7 table row.
 
@@ -40,7 +41,7 @@ A searchable LMA790-3-LM **LM 10 and Subsequent** Volume I copy has:
 - Table **2.1-7 — Abort Electronics Assembly - Telemetry Word List**;
 - pages **2.1-97 through 2.1-98**.
 
-This is a later changed copy and therefore is **continuity evidence**, not by itself proof that every row was identical in Apollo 13's April 1970 LM-7 flight configuration.
+This is a later configuration and therefore is **continuity evidence**, not by itself proof that every row was identical in Apollo 13's April 1970 LM-7 flight configuration.
 
 Nevertheless, it recovers the engineering structure that earlier notes had only reconstructed from FP6/FP8 source listings.
 
@@ -93,6 +94,8 @@ It is a count/status quantity rather than a velocity engineering value.
 This independently confirms the conclusion in research note 042:
 
 > **MSK 1123 AGS ULL, which is displayed in ft/s, cannot simply be a direct rendering of the telemetry ullage counter.**
+
+Research note 047 further constrains the physical ullage test: the AGS specification defines qualification from accumulated +X velocity increments over consecutive 2-second cycles.
 
 ### Sensed body-axis velocity increments
 
@@ -164,7 +167,7 @@ The velocity-related CRT rows must **not** be collapsed into one generic AGS vel
 
 This pass does **not** establish:
 
-- that every row of the 15 June 1970 changed LM-10 table was unchanged from the Apollo 13 LM-7 flight edition;
+- that every row of the LM-10 table was unchanged from the Apollo 13 LM-7 flight edition;
 - the exact Flight Program 7 memory address behind every telemetry ID;
 - which of the two transmitted incremental-velocity families feeds **AGS DEL VEL**;
 - the exact engineering quantity used for **AGS ULL**;
@@ -182,7 +185,7 @@ Those remain MCC/RTCC/display-processing questions.
 For Apollo 13 implementation:
 
 - treat the **LM-7 handbook** as the mission-specific authority when its pages can be directly verified;
-- use the LM-10 searchable table as a **same-basic-date / later-change continuity source**;
+- use the LM-10 searchable table as a **later-configuration continuity source**, not a same-basic-date substitute;
 - use the Apollo 13 G&N Dictionary for mission-specific Flight Program 7 variable/address semantics;
 - use FP6/FP8 source listings only as adjacent-program continuity evidence;
 - do not promote a telemetry-word-to-MSK-field mapping until a controller/display/RTCC source supports it.
@@ -193,8 +196,9 @@ For Apollo 13 implementation:
 
 ### Mission-specific anchor
 
-- *Apollo Operations Handbook, Lunar Module LM 7 and Subsequent, Volume I — Subsystems Data*, LMA790-3-LM, 1 February 1970.
+- *Apollo Operations Handbook, Lunar Module LM 7 and Subsequent, Volume I — Subsystems Data*, LMA790-3-LM, Basic Date 15 December 1968, Change Date 1 February 1970.
 - Apollo 13 Flight Journal document index: https://apollojournals.org/afj/ap13fj/a13-documents.html
+- Smithsonian catalog record: https://www.si.edu/object/archives/components/sova-nasm-xxxx-0093-ref859
 - Search-index copy of the LM-7 edition: https://www.scribd.com/document/942911911/a13-Lm-Aoh-v1-Lm7-Subs-300ppi
 
 ### Contemporary searchable continuity copy
@@ -208,13 +212,13 @@ For Apollo 13 implementation:
 
 - Apollo 13 G&N Dictionary, 25 March 1970.
 - Flight Program 6 and Flight Program 8 AGS source listings.
-- Research notes 037–045.
+- Research notes 037–045 and 047.
 
 ---
 
 ## Next work
 
-1. Recover/directly inspect the LM-7 page image for Table 2.1-7 and compare it row-by-row with the June-changed searchable table.
+1. Recover/directly inspect the LM-7 page image for Table 2.1-7 and compare it row-by-row with the later LM-10 table.
 2. Locate MCC/RTCC/display-format documentation that maps telemetry IDs into MSK 1123.
 3. Resolve **AGS DEL VEL** selection between the distinct incremental-velocity families.
 4. Resolve the ground calculation for **AGS ULL** and **ACT VEL**.
