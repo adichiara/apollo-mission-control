@@ -33,12 +33,13 @@ See:
 - [Decisions](docs/DECISIONS.md)
 - [Open questions](docs/OPEN_QUESTIONS.md)
 - [Progress log](docs/PROGRESS.md)
+- [Current progress continuation — PC+2 product projection and rules](docs/progress/2026-09-12_pc2_product_projection_and_rules.md)
 - [Research resources](resources/README.md)
 - [Evidence verification audit](resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md)
 
 ## Current status
 
-Research has progressed into the first implementation-oriented vertical slice: **Apollo 13 PC+2 preparation and execution**. A framework-neutral Python nominal domain prototype and validation tests are now committed under `src/` and `tests/`. The current code validates scenario/event architecture and source-backed nominal fixtures; it does **not** yet claim full spacecraft physics, RTCC dynamics, or historical CRT timing fidelity.
+Research has progressed into the first implementation-oriented vertical slice: **Apollo 13 PC+2 preparation and execution**. The framework-neutral Python prototype now includes the nominal event model, station-specific controller-product projections, and a partial source-backed shutdown-rule audit layer. Required-but-unmodeled observations remain explicit implementation gaps rather than fabricated telemetry or assumed-safe values. The project still does **not** claim full spacecraft physics, RTCC dynamics, exact historical CRT timing, or complete rule-path coverage.
 
 
 ## Apollo 13 station specifications
