@@ -51,24 +51,16 @@ def evaluate_pc2_shutdown_rules(
     # Numeric propulsion/control criteria are historically documented, but the
     # nominal executable model intentionally does not invent safe readings.
     results["ground_chamber_pressure"] = deferred(
-        "ground_chamber_pressure",
-        "CONTROL",
-        "ground chamber pressure <= 85 psi",
+        "ground_chamber_pressure", "CONTROL", "ground chamber pressure <= 85 psi"
     )
     results["crew_thrust_monitor"] = deferred(
-        "crew_thrust_monitor",
-        "CREW/CAPCOM",
-        "onboard thrust monitor <= 77 percent",
+        "crew_thrust_monitor", "CREW/CAPCOM", "onboard thrust monitor <= 77 percent"
     )
     results["ground_inlet_pressure"] = deferred(
-        "ground_inlet_pressure",
-        "CONTROL",
-        "ground engine inlet pressure <= 150 psi",
+        "ground_inlet_pressure", "CONTROL", "ground engine inlet pressure <= 150 psi"
     )
     results["crew_inlet_pressure"] = deferred(
-        "crew_inlet_pressure",
-        "CREW/CAPCOM",
-        "onboard engine inlet pressure <= 160 psi",
+        "crew_inlet_pressure", "CREW/CAPCOM", "onboard engine inlet pressure <= 160 psi"
     )
     results["fuel_oxidizer_delta_p"] = deferred(
         "fuel_oxidizer_delta_p",
@@ -96,20 +88,14 @@ def evaluate_pc2_shutdown_rules(
     )
 
     program_alarm = guido.products["pg_ns.lgc.program_alarm"].value
-    if program_alarm is None:
-        iss_program_state = RuleState.CLEAR
-        iss_program_observation: Any = {"program_alarm": None}
-    else:
-        # The documented rule requires inertial-reference/ISS warning PLUS a
-        # program alarm. Distinct ISS warning state is not modeled yet.
-        iss_program_state = RuleState.NOT_EVALUABLE
-        iss_program_observation = {"program_alarm": program_alarm, "iss_warning": None}
+    iss_warning = guido.products["pg_ns.iss.warning"].value
+    iss_program_triggered = bool(iss_warning) and program_alarm is not None
     results["iss_warning_plus_program_alarm"] = RuleEvaluation(
         "iss_warning_plus_program_alarm",
-        iss_program_state,
+        RuleState.TRIGGERED if iss_program_triggered else RuleState.CLEAR,
         "GUIDO",
         "inertial-reference/ISS warning plus computer program alarm",
-        observation=iss_program_observation,
+        observation={"program_alarm": program_alarm, "iss_warning": iss_warning},
     )
 
     lgc_warning = guido.products["pg_ns.lgc.warning"].value
