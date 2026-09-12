@@ -61,6 +61,9 @@ class PC2State:
     ullage_jets_count: int = 0
     engine_running: bool = False
     throttle_phase: str = "off"
+    # Optional modeled observation. None means the project has not supplied a
+    # numerical chamber-pressure value; it is not a claim of telemetry loss.
+    dps_chamber_pressure_psi: float | None = None
     crew_reports: list[CrewReport] = field(default_factory=list)
     cutoff_complete: bool = False
     residual_review_complete: bool = False
