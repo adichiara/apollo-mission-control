@@ -137,6 +137,25 @@ The in-memory prototype is not considered durable production infrastructure. Pro
 
 See `resources/research/080_web_transport_selection.md` and `resources/source-catalog/WEB_TRANSPORT_SOURCES.md`.
 
+## D-015 — Blocking controller gates are explicit simulation pauses
+
+**Status:** Accepted for the deterministic first playable slice  
+**Date:** 2026-09-12
+
+When a blocking controller decision gate is reached, the first playable simulator explicitly enters a **simulation pause** rather than pretending historical Apollo GET stopped or allowing later source-timed events to pass the unresolved decision.
+
+For the PC+2 FLIGHT GO/NO-GO gate:
+
+- reaching the gate pauses the simulation and records a machine-readable pause reason;
+- controller reports and the required FLIGHT decision may still be submitted while paused;
+- manual resume cannot bypass the pending decision;
+- FLIGHT GO clears the gate and resumes the simulation;
+- NO-GO leaves the gate/pause active.
+
+This is a project playability rule, **not** an assertion about historical Apollo clock behavior. The Apollo 13 Mission Operations Report states that PC+2 ignition time was not time critical but supplies no numeric delay tolerance, so no delay margin or retargeting rule is invented.
+
+See `resources/research/081_pc2_mission_clock_and_decision_gate_semantics.md`.
+
 ## Not yet decided
 
 The following are deliberately not decisions:
@@ -148,6 +167,6 @@ The following are deliberately not decisions:
 - degree of RTCC/CCATS/MSFN emulation beyond what the first scenario requires
 - degree of Staff Support Room simulation
 - voice-loop implementation
-- time acceleration / real-time clock policy
+- time acceleration / realtime pacing policy beyond the explicit decision-pause rule
 - scenario-selection UI
 - post-simulation evaluation format
