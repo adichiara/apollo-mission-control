@@ -33,6 +33,7 @@ Current supplements:
 - `source-catalog/PC2_SESSION_INTEGRATION_SOURCES.md` — historical/state-machine sources governing the first authoritative playable-session orchestration layer.
 - `source-catalog/WEB_TRANSPORT_SOURCES.md` — current Render/FastAPI platform documentation supporting the first phone-accessible transport and deployment shell.
 - `source-catalog/FACILITATOR_AUTHORITY_SOURCES.md` — primary NASA simulation-control sources plus current Render secret-management sources supporting the facilitator/controller authority boundary.
+- `source-catalog/INTEGRATED_SIMULATION_VALIDATION_SOURCES.md` — primary NASA simulation-training sources supporting integrated multi-station validation with a distinct simulation-control function, without treating HTTP/browser mechanics as historical.
 - `source-catalog/APOLLO13_GROUND_PRODUCT_INTEGRITY_SOURCES.md` — mission-specific sources for the post-MCC-5 RTCC/AGS body-angle processing error and the distinction between product availability/validity and hidden data integrity.
 
 Latest scenario-integration research:
@@ -45,6 +46,7 @@ Latest scenario-integration research:
 - `research/086_pc2_shutdown_evidence_http_integration.md` — exposes crew-report and fresh GQ6510P evidence through CONTROL without leaking physical truth or inventing an engine-off threshold.
 - `research/087_player_admin_client_separation.md` — separates ordinary station UI from validation/SimSup controls.
 - `research/088_facilitator_authority_boundary.md` — uses primary NASA simulation-control evidence to keep facilitator/SimSup authority separate from controller stations, with a modern server-side credential for exercise-wide operations.
+- `research/089_multiclient_integrated_validation_boundary.md` — establishes source-bounded integrated validation across several controller clients and a distinct facilitator, and records the automated/network smoke artifacts and defects found during the first validation pass.
 
 ## Research rule
 
