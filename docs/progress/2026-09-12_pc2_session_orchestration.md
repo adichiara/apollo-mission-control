@@ -8,8 +8,8 @@ Date: 2026-09-12
 - Researched the next integration boundary against the contemporaneous Apollo 13 PC+2 record.
 - Preserved the documented sequence of controller readiness -> FLIGHT decision -> CAPCOM crew-facing GO rather than computing or transmitting GO automatically.
 - Reconciled concurrent implementation work around the richer canonical `src/apollo_mission_control/pc2_session.py`; removed the smaller duplicate session prototype and its tests.
-- Added research note `079_pc2_session_orchestration_boundary.md`.
-- Added `PC2_SESSION_ORCHESTRATION_SOURCES.md`.
+- Consolidated the primary-source chronology into canonical research note `079_pc2_first_playable_session_boundary.md`.
+- Retained `PC2_SESSION_INTEGRATION_SOURCES.md` as the single session-integration source supplement and removed the duplicate supplement.
 
 ## Implemented session behavior
 
