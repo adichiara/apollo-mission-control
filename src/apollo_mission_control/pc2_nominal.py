@@ -67,6 +67,12 @@ class PC2State:
     # Ground-derived PC+2 fuel/oxidizer differential-pressure product. The
     # exact transformation from LM source pressure measurements is unresolved.
     dps_fuel_oxidizer_delta_p_psi: float | None = None
+    # Runtime inverter caution observation. The exact PC+2 telemetry/display
+    # route remains unresolved, but the caution-generation path is documented.
+    lm_inverter_warning: bool = False
+    # Operational action state, kept separate from fault/scenario injection.
+    lm_inverter_switch_attempted: bool = False
+    lm_inverter_switch_attempt_get_s: float | None = None
     crew_reports: list[CrewReport] = field(default_factory=list)
     cutoff_complete: bool = False
     residual_review_complete: bool = False
@@ -89,8 +95,6 @@ def build_events(fixture: dict[str, Any]) -> list[SimEvent]:
     events = []
     for item in fixture["events"]:
         get_hms = item["get_hms"]
-        # Approximate (~) and open-ended (+) source times remain explicit in
-        # the fixture; their nominal ordering is usable for this prototype.
         events.append(SimEvent(hms_to_seconds(get_hms), item["event"]))
     return sorted(events, key=lambda e: e.get_s)
 
@@ -117,8 +121,6 @@ def apply_event(state: PC2State, event: SimEvent, fixture: dict[str, Any]) -> No
         state.computer_with_crew = True
         state.phase = "pc2_final_readiness"
     elif name == "final_go_no_go_poll":
-        # This prototype records the historical nominal decision. Future
-        # multiplayer code must derive this from controller reports.
         state.flight_go = True
         state.phase = "pc2_go_for_burn"
     elif name == "p40_active_final_preburn":
@@ -158,11 +160,12 @@ def apply_event(state: PC2State, event: SimEvent, fixture: dict[str, Any]) -> No
 
 
 def run_nominal(fixture: dict[str, Any]) -> PC2State:
-    state = PC2State(get_s=float(fixture["start_get_s"]))
-
+    state = PC2State(
+        get_s=float(fixture["start_get_s"]),
+        lm_inverter_warning=bool(fixture["lm_power"]["inverter_warning"]),
+    )
     for event in build_events(fixture):
         apply_event(state, event, fixture)
-
     return state
 
 
@@ -221,17 +224,11 @@ def main() -> int:
     fixture = load_fixture(fixture_path)
     final_state = run_nominal(fixture)
     errors = validate_nominal(fixture, final_state)
-
     if errors:
         for error in errors:
             print(f"ERROR: {error}")
         return 1
-
-    print(
-        "PC+2 nominal fixture validated:",
-        f"final_phase={final_state.phase}",
-        f"GET={final_state.get_s:.2f}",
-    )
+    print("PC+2 nominal fixture validated:", f"final_phase={final_state.phase}", f"GET={final_state.get_s:.2f}")
     return 0
 
 
