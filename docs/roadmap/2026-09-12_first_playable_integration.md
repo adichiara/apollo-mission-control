@@ -1,103 +1,82 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — mission-clock semantics resolved; rejoin persistence and executable smoke validation are now active**
+Status: **CURRENT — browser rejoin and first nonnominal web/session path implemented; crew-response integration is next**
 
-## Completed presentation checkpoint
+## Completed presentation/session/web checkpoints
 
-Minimum first-slice player presentations exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM. They remain project renderings where exact historical CRT/console evidence is incomplete and preserve controller-visible information boundaries without exposing hidden simulator truth.
-
-## Completed single-process session checkpoint
-
+- [x] minimum player presentations for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, CAPCOM;
 - [x] one authoritative mission state and synchronized GET;
-- [x] deterministic historical scenario advancement;
-- [x] start/pause/resume/complete lifecycle and audit log;
-- [x] unique logical player→station assignment;
-- [x] station-scoped presentation dispatch and serializable player snapshots;
-- [x] controller readiness reports surfaced to FLIGHT;
-- [x] final-poll FLIGHT GO/NO-GO decision gate;
-- [x] explicit FLIGHT-approved CAPCOM queue and CAPCOM transmission event;
-- [x] scripted seven-station nominal playthrough through post-burn power-down.
+- [x] deterministic scenario advancement, lifecycle, and audit log;
+- [x] unique station assignment and station-scoped snapshots;
+- [x] readiness reports surfaced to FLIGHT;
+- [x] explicit FLIGHT GO/NO-GO decision gate;
+- [x] explicit FLIGHT/CAPCOM queue and transmission path;
+- [x] scripted nominal seven-station playthrough;
+- [x] FastAPI/Uvicorn JSON transport and phone client;
+- [x] Render configuration and health endpoint;
+- [x] idempotent same-player/same-station server rejoin;
+- [x] browser `localStorage` persistence of prototype player/station identity and automatic rejoin after reload;
+- [x] explicit simulation-pause semantics for blocking decision gates (research note 081).
 
-The deterministic historical validator still has its nominal timed GO event, but playable session orchestration intercepts that event so hidden nominal state cannot auto-authorize the burn.
+The current deployment architecture remains single-process/in-memory. Restart or redeploy loses the live session; multiple workers/sessions remain deferred.
 
-## Completed first web/mobile transport checkpoint
+## First nonnominal session/API path — implemented through CAPCOM transmission
 
-The first phone-accessible shell uses **FastAPI + Uvicorn** as a thin adapter over the framework-neutral session model.
+Primary Apollo 13 sources establish the PC+2 **fuel/oxidizer ΔP >25 psi** criterion as a **ground callout**, but do not establish the exact internal CONTROL→FLIGHT→CAPCOM routing or exact call wording.
 
-Implemented:
+Implemented without filling those gaps:
 
-- [x] JSON API for create/status/join/start/pause/resume/advance/snapshot/readiness/FLIGHT decision/CAPCOM queue/transmit;
-- [x] prototype audit endpoint for validation;
-- [x] responsive dependency-free phone client;
-- [x] Render service configuration and health endpoint;
-- [x] Python runtime pin;
-- [x] API-level transport tests;
-- [x] same-player/same-station join is idempotent;
-- [x] assignment conflicts and station switching are rejected.
+- [x] explicit source-state injection through the existing whitelisted scenario-injection model;
+- [x] CONTROL receives the ground-derived ΔP through the normal product/presentation path;
+- [x] the existing common shutdown-rule evaluator determines whether the criterion is triggered;
+- [x] CONTROL must explicitly issue the shutdown callout decision;
+- [x] the callout enters the CAPCOM queue as `requested_by=CONTROL`;
+- [x] queue metadata explicitly states that internal Apollo routing is unresolved;
+- [x] CAPCOM must explicitly transmit the item;
+- [x] transmission does **not** automatically create crew compliance or physical engine shutdown;
+- [x] session/API tests cover the synthetic 26-psi threshold case and exact 25-psi non-trigger boundary.
 
-Current deployment architecture remains deliberately **single-process and in-memory**. Restart, redeploy, or platform spin-down loses the live session; multiple workers are not supported until shared state/persistence is deliberately designed.
+See `resources/research/082_pc2_delta_p_session_integration_boundary.md`.
 
-## Mission-clock / decision-gate semantics — resolved
+## Active priority — crew-response boundary
 
-Primary-source review confirms two important boundaries:
+Research and integrate the next stage without collapsing layers:
 
-- Apollo GET is a mission time reference; the reviewed sources do not say it stopped for controller deliberation.
-- The Apollo 13 Mission Operations Report explicitly says PC+2 ignition time was **not time critical**, but supplies no numerical delay tolerance.
+1. crew receipt/response to a transmitted shutdown callout must be an explicit communication/operational event;
+2. crew DPS shutdown command must use the existing operational-action model;
+3. crew command must remain separate from physical engine response;
+4. physical DPS shutdown must remain separate from crew report and fresh controller evidence;
+5. do not invent exact response delay, exact cockpit sequence, or a binary chamber-pressure confirmation threshold.
 
-Therefore the project does not invent a historical clock stop or a delay margin.
+The existing research/implementation for command, physical response, and shutdown confirmation should be reused rather than replaced by a special-case scenario script.
 
-For the first deterministic playable slice:
+## Integration validation still required
 
-- [x] a blocking controller decision gate explicitly pauses the **simulation**;
-- [x] the pause is machine-readable (`decision_gate:flight_go`);
-- [x] manual resume cannot bypass an unresolved gate;
-- [x] FLIGHT GO clears the gate and resumes the simulation;
-- [x] NO-GO leaves the gate/pause active;
-- [x] later source-timed events are not applied retroactively while players deliberate;
-- [x] API/player snapshots expose the pause reason so clients can distinguish a gameplay pause from ordinary running GET.
+When a runnable repository environment is available:
 
-This is a **project playability policy**, not a claim that Apollo GET historically stopped. See `resources/research/081_pc2_mission_clock_and_decision_gate_semantics.md`.
+- execute the complete domain/session/API suite;
+- exercise several phone/browser clients against one server;
+- verify reload/rejoin does not change mission state;
+- verify station information isolation;
+- verify decision-gate pause/resume behavior;
+- verify the nominal timeline reaches power-down;
+- verify the ΔP nonnominal path through CONTROL and CAPCOM;
+- then validate the crew-command/physical-response continuation.
 
-A future realtime/nonnominal timing model may separate wall-clock time, mission time, and event eligibility more fully, but no such complexity is added until gameplay requires it.
-
-## Active priority 1 — reconnect/player identity hardening
-
-The HTTP API permits idempotent same-player/same-station rejoin. Still needed before a deployed playtest:
-
-- browser-side persistence of local player/station choice or equivalent automatic rejoin;
-- lightweight reconnect credential only if needed to prevent casual player-ID collision;
-- explicit server-restart behavior while the architecture remains in-memory.
-
-This remains prototype identity, not production authentication.
-
-## Active priority 2 — integration validation
-
-When a runnable environment is available:
-
-- execute the domain/session/API test suite;
-- exercise seven logical clients against one server process;
-- confirm information isolation;
-- confirm explicit decision-pause behavior;
-- confirm FLIGHT gate behavior and automatic resume after GO;
-- confirm CAPCOM handoff behavior;
-- confirm rejoin does not alter mission state;
-- confirm nominal timeline reaches power-down;
-- then route one already-implemented nonnominal branch through the same session/API path.
-
-## Explicitly deferred until integration exposes a need
+## Explicitly deferred
 
 - exact console pixel/character reconstruction;
 - singular 150-psi inlet-pressure aggregation;
 - exact onboard 77-percent thrust indication;
-- detailed DPS transient dynamics;
+- detailed DPS transient timing;
 - full RTCC trajectory propagator;
 - backroom/staff-support simulation;
 - low-player-count station aggregation;
 - multi-session/durable production persistence;
-- historical SimSup operator UI;
-- numeric PC+2 allowable-delay model or retargeting logic without direct evidence.
+- historical SimSup UI;
+- numeric PC+2 allowable-delay/retargeting model without direct evidence.
 
 ## Current success criterion
 
-The next milestone is a **rejoin-safe, phone-accessible local/web prototype** in which several clients share one authoritative PC+2 session, each sees only its station information, controller-decision holds are explicit simulation pauses, FLIGHT controls the readiness decision, CAPCOM transmits approved items, and the nominal source-backed timeline can run through post-burn power-down without hidden automatic decisions.
+A rejoin-safe phone-accessible prototype in which a source-bounded nonnominal condition can move through **source observation → correct station information → controller decision → CAPCOM transmission → explicit crew action → physical response/evidence**, with no hidden automatic decisions or invented historical routing.
