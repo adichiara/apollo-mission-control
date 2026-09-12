@@ -74,6 +74,7 @@ The **77:55:00 GET** start is source-driven: communications are weak after AOS a
 Decision: `docs/DECISIONS.md`, D-013.  
 Research comparison: `resources/research/048_first_vertical_slice_candidate_assessment.md`.  
 Initialization/validation: `resources/research/050_pc2_initialization_and_nominal_validation.md`.  
+Ullage/throttle implementation research: `resources/research/051_pc2_ullage_and_throttle_profile.md`.  
 Parameter specification: `docs/scenarios/APOLLO13_PC2_PARAMETERS.md`.
 
 ### Phase 2 deliverables
@@ -132,7 +133,7 @@ The telemetry evidence narrows source candidates but does not certify every tele
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **parameter contract and nominal state machine defined**
+**Status:** **nominal executable event model in progress**
 
 **Goal:** produce the mission state from which historically appropriate telemetry can be derived.
 
@@ -161,15 +162,22 @@ Model only what the selected scenario requires initially, but preserve subsystem
 - [x] explicit stop conditions for unavailable low-impact numeric detail
 - [x] nominal state-transition model from weak-link final PAD transfer through post-burn power-down (`APOLLO13_PC2_STATE_MACHINE.md`)
 - [x] failure-transition hooks identified at the level of documented conditions without authoring speculative failure scripts
+- [x] framework-neutral Python nominal event prototype and validation tests
+- [x] explicit two-jet ullage, minimum/40-percent/maximum commanded throttle phases, and separate crew throttle-report events
 
 ### Immediate next work
 
 - [x] define subsystem dependencies; derived-value equations remain limited to sourced/required behavior
 - [ ] determine the minimum trajectory-state representation required for the first propagating implementation
-- [ ] define update/sample cadence for the minimum player-facing products
-- [ ] convert the nominal state machine and parameter contract into the first implementation schema/data fixtures
+- [x] define update/sample semantics for the minimum player-facing products; exact CRT cadence remains unresolved where unsupported
+- [x] convert the nominal state machine and parameter contract into the first implementation schema/data fixture
+- [ ] add controller-product projections from authoritative state with validity/provenance metadata
+- [ ] implement independent shutdown-rule evaluation without a precomputed `burn_abort` state
+- [ ] add first nonnominal validation case only after the nominal product/rule path is complete
 
 The exact Cartesian RTCC state vector at 77:55 is deliberately **not** being reverse-engineered from the maneuver PAD. It becomes an active research target only when the trajectory propagator requires it.
+
+Detailed DPS engine-response/ramp dynamics are also deferred. The nominal prototype currently models the source-backed **commanded** throttle profile and preserves later crew reports as separate communication events. See research note 051.
 
 Workstreams:
 
@@ -193,6 +201,9 @@ Deliverables:
 - [x] nominal-state validation targets
 - [x] update/sample behavior contract for first-slice products, with exact historical CRT cadence left unresolved where unsupported
 - [x] first-slice subsystem dependency contract
+- [x] first executable nominal event fixture/state model
+- [ ] controller-product projection layer
+- [ ] shutdown-rule evaluation tests
 - [ ] failure propagation tests
 
 ## Phase 5 — Mission Control data path
