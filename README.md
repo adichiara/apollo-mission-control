@@ -36,12 +36,12 @@ The framework-neutral domain model now includes:
 - hidden product-integrity handling and explicit controller interpretation events;
 - premature-shutdown/restart branches with command, physical-response, and controller-evidence boundaries kept separate;
 - first-pass presentation models for **CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM**;
-- one authoritative session layer with station assignment, synchronized GET, readiness reports, FLIGHT decision gating, CAPCOM handoff, player-scoped snapshots, and audit logging;
+- one authoritative session layer with station assignment, synchronized GET, readiness reports, FLIGHT decision gating, CAPCOM handoff, player-scoped snapshots, explicit pause reasons, and audit logging;
 - a scripted seven-station nominal integration playthrough through post-burn power-down.
 
 ## Phone-accessible first playable shell
 
-The repository now also contains a thin **FastAPI + Uvicorn** transport and a dependency-free phone-first browser interface.
+The repository contains a thin **FastAPI + Uvicorn** transport and a dependency-free phone-first browser interface.
 
 Implemented transport operations include:
 
@@ -66,13 +66,28 @@ A browser/client may repeat the same player ID + station assignment to rejoin it
 
 This is lightweight prototype identity, not authentication.
 
-## Critical gameplay boundary: FLIGHT GO
+## Critical gameplay boundary: FLIGHT GO and mission time
 
-The older deterministic nominal validator automatically reaches historical GO at the final-poll timestamp. The playable session does not.
+The playable session does not auto-authorize the PC+2 burn from hidden nominal state.
 
-At approximately **79:17 GET**, session progression reaches the final readiness gate. The assigned FLIGHT player must explicitly record GO before the scenario can proceed toward P40. FLIGHT sees explicit controller readiness reports rather than a hidden consolidated subsystem-health verdict.
+Primary-source review also resolved the ambiguity in what should happen to mission timing while FLIGHT deliberates:
 
-CAPCOM likewise sees an approved communication queue rather than direct authoritative subsystem truth.
+- Apollo GET is a mission time reference; the reviewed sources do not say it stopped for a pending controller decision.
+- The Apollo 13 Flight Control Division report says PC+2 ignition time was **not time critical**, but provides no numeric allowable delay.
+
+The deterministic first playable slice therefore uses an explicit **simulation pause** at the blocking FLIGHT decision gate. At approximately **79:17 GET**:
+
+- session status becomes `paused`;
+- `pause_reason` becomes `decision_gate:flight_go`;
+- controller readiness reports may still be submitted;
+- manual resume cannot bypass the gate;
+- FLIGHT GO clears the gate and resumes the simulation;
+- NO-GO keeps the pause active;
+- later historical events are not applied retroactively while the gate is unresolved.
+
+This is a project playability policy, **not** a claim that historical Apollo GET stopped. No delay tolerance or retargeting rule is invented from “not time critical.” See `resources/research/081_pc2_mission_clock_and_decision_gate_semantics.md`.
+
+CAPCOM continues to see an approved communication queue rather than direct authoritative subsystem truth.
 
 ## Historical/presentation boundaries retained
 
@@ -95,21 +110,13 @@ Detailed DPS transients, exact display routing/cadence, and a post-burn FIDO tra
 
 The project is now firmly in **playable integration**, not subsystem expansion.
 
-The next architecture question is mission time. The current decision gate holds the session GET at the final-poll point until FLIGHT decides. Historical GET, however, did not stop. Before adding a real-time server clock, the implementation must explicitly define the relationship among:
+The mission-clock/gate ambiguity is resolved for the deterministic first slice. The next practical integration items are:
 
-- mission GET;
-- scenario-event eligibility;
-- player decision gates;
-- explicit simulation pause;
-- any future time acceleration.
-
-The next practical integration items are:
-
-1. resolve that mission-clock/gate policy rather than silently choosing one;
-2. add browser-side reconnect persistence or a lightweight reconnect credential;
-3. run the full domain/session/API suite when a runnable environment is available;
-4. exercise one already-modeled nonnominal branch through the HTTP/session path;
-5. only reopen historical research when one of those integration steps exposes a concrete information or decision gap.
+1. persist player ID/station in the browser and automatically attempt same-player/same-station rejoin after reload;
+2. run the full domain/session/API suite and multi-client HTTP/mobile smoke path in a runnable checked-out environment;
+3. exercise one already-modeled nonnominal branch through the HTTP/session path;
+4. add realtime pacing only after smoke validation, using the explicit simulation-pause policy;
+5. reopen historical research only when one of those steps exposes a concrete information or decision gap.
 
 ## Apollo 13 station specifications
 
