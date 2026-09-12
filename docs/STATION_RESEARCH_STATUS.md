@@ -181,7 +181,7 @@ This confirms that ground-processing validity must be modeled separately from sp
 
 Research notes 038–039 now constrain the missing Apollo 13 AEA telemetry list much more tightly.
 
-The surviving FP6 and FP8 source listings both place their 50-word telemetry block at octal addresses **0325–0406**. Their symbols agree at 49 of 50 positions; address 0371 differs. The Apollo 13 G&N Dictionary independently supplies direct or partial mission-specific meaning for 25 of those 50 candidate addresses, including navigation vectors, time, velocity, selector state, and delta-V monitor words.
+The surviving FP6 and FP8 source listings both place their 50-word telemetry block at octal addresses **0325–0406**. Their symbols agree at 49 of 50 positions; address **0371** differs. The Apollo 13 G&N Dictionary independently supplies direct or partial mission-specific meaning for 25 of those 50 candidate addresses, including navigation vectors, time, velocity, selector state, and delta-V monitor words.
 
 This is still **not** treated as a certified Apollo 13 Table 2.1-7. The remaining authority target is the February 1970 LM-7 handbook telemetry table. GUIDO/CONTROL maturity remains B.
 
@@ -238,8 +238,15 @@ The new evidence does **not** identify the exact Apollo 13 FP7 telemetry word or
 
 ## 2026-09-11 — AEA telemetry-word-list recovery
 
-Research note 046 recovers Table 2.1-7's telemetry structure and engineering descriptions from a contemporary LMA790-3-LM copy sharing the Apollo 13 handbook's **1 February 1970 basic date**, while retaining its later **15 June 1970 change date** as an explicit continuity limitation.
+Research note 046 recovers Table 2.1-7's telemetry structure and engineering descriptions from a later contemporary LMA790-3-LM configuration. The source chronology is now explicit: Apollo 13's **LM-7 and Subsequent** handbook is Basic Date **15 December 1968**, Change Date **1 February 1970**; the searchable **LM-10 and Subsequent** copy is Basic Date **1 February 1970**, Change Date **15 June 1970**. The LM-10 table is therefore retained as continuity evidence until the exact LM-7 page is directly compared.
 
-The telemetry list now independently confirms distinct products for present LM inertial velocity, compensated 20-ms body-axis incremental velocity, a dimensionless ullage counter, and a separate three-word sensed body-axis velocity-increment family. It also confirms DEDA-state and attitude-direction-cosine telemetry families.
+The telemetry list independently confirms distinct products for present LM inertial velocity, compensated 20-ms body-axis incremental velocity, a dimensionless ullage counter, and a separate three-word sensed body-axis velocity-increment family. It also confirms DEDA-state and attitude-direction-cosine telemetry families.
 
-This removes “what velocity products are actually available in the AEA telemetry stream?” as the main uncertainty. The remaining high-value problem is **which telemetry product and ground transformation feeds each MSK 1123 row**. The exact LM-7 page still needs direct comparison with the June-changed searchable table. GUIDO and CONTROL remain maturity **B** because controller-facing selection, RTCC transformation, station access, and refresh behavior remain incomplete.
+This removes “what velocity products are actually available in the AEA telemetry stream?” as the main uncertainty. The remaining high-value problem is **which telemetry product and ground transformation feeds each MSK 1123 row**. GUIDO and CONTROL remain maturity **B** because controller-facing selection, RTCC transformation, station access, and refresh behavior remain incomplete.
+
+
+## 2026-09-12 — AGS ullage test narrowed
+
+Research note 047 adds primary AGS specification evidence that ullage qualification is based on **accumulated +X-axis velocity increment over each 2-second computer cycle**, with the threshold required for three consecutive cycles. The inspected specification states a **0.2 ft/s** threshold; a later LM handbook expresses the equivalent condition as average +X acceleration greater than **0.1 ft/s²** over the same cycle.
+
+That makes a velocity-valued quantity in the two-second ullage-test chain the strongest current physical candidate behind the controller's **AGS ULL** measurement. It still does not identify the exact telemetry word or RTCC/display transformation. **AGS ULL** and **ACT VEL** remain distinct unresolved parameters, and GUIDO/CONTROL remain maturity **B**.
