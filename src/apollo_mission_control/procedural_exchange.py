@@ -154,3 +154,30 @@ def record_delta_p_shutdown_callout(
             provenance=provenance,
         )
     )
+
+
+def record_dps_shutdown_report(
+    log: ProcedureExchangeLog,
+    *,
+    event_id: str,
+    get_s: float,
+    provenance: str,
+) -> None:
+    """Record a crew report that DPS shutdown has occurred.
+
+    Apollo 13's actual PC+2 cutoff included Lovell reporting "Shutdown" and
+    CAPCOM acknowledging it. This event records the semantic report only; it
+    does not set engine state or certify that ground telemetry confirms it.
+    """
+    log.record(
+        ProcedureCommunication(
+            event_id=event_id,
+            get_s=get_s,
+            sender="CREW",
+            recipient="CAPCOM",
+            kind="completion_report",
+            action="dps_shutdown",
+            parameters={"reported_state": "shutdown"},
+            provenance=provenance,
+        )
+    )
