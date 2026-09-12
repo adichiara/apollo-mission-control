@@ -35,6 +35,7 @@ class StateInjection:
 _ALLOWED_STATE_TARGETS = {
     "dps_chamber_pressure_psi",
     "dps_fuel_oxidizer_delta_p_psi",
+    "lm_inverter_warning",
 }
 
 
@@ -46,6 +47,13 @@ def apply_state_injection(state: PC2State, injection: StateInjection) -> None:
 
     state.get_s = injection.get_s
     setattr(state, injection.target, injection.value)
+
+    if injection.target == "lm_inverter_warning":
+        # Timestamp the observation separately from the switch action. This is
+        # required by the PC+2 wording: the positive criterion is a warning
+        # that remains after an inverter switch, not merely a warning that
+        # existed before the action.
+        state.lm_inverter_warning_observed_get_s = injection.get_s
 
 
 def run_with_injections(
