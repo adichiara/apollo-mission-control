@@ -2,7 +2,7 @@
 
 Status: **implementation-oriented research specification — nominal vertical slice**  
 Scenario start: **77:55:00 GET**  
-Research basis: `resources/research/050_pc2_initialization_and_nominal_validation.md`, with later refinements in notes 051–055.
+Research basis: `resources/research/050_pc2_initialization_and_nominal_validation.md`, with later refinements through research note 062.
 
 ## Purpose
 
@@ -137,11 +137,30 @@ Do not invent exact nominal pressure readings solely from shutdown thresholds.
 | `rcs.ullage_active` | bool | — | false preburn | CONTROL |
 | `rcs.ullage_jets_count` | int | — | 2 when commanded | CONTROL |
 | `rcs.ullage_duration_s` | float | s | 10 | CONTROL |
-| `vehicle.attitude_error_xyz` | vector | deg | within shutdown limits; exact values TBD | CONTROL/GUIDO |
-| `vehicle.body_rate_xyz` | vector | deg/s | within shutdown limits; exact values TBD | CONTROL |
+| `vehicle.attitude_error_xyz` | optional vector | deg | exact time history unfrozen; PC+2 postflight maximum about 7 deg in roll | CONTROL |
+| `vehicle.body_rate_xyz` | optional vector | deg/s | exact time history unfrozen; PC+2 rates reported below 1 deg/s | CONTROL |
+| `vehicle.startup_transient_exception_active` | optional bool/context | — | unresolved unless separately established; never inferred from guessed elapsed time | rule context |
 | `ces.dc_failure` | bool | — | false | CONTROL |
 
-The sources agree on approximately ±10° attitude error and ±10°/s rate limits but conflict on which wording receives the startup-transient exception. The implementation preserves that conflict rather than choosing one interpretation.
+### Attitude-error / rate rule interpretation
+
+Research note 062 resolves the implementation precedence while preserving the historical documentation conflict:
+
+- CAPCOM's contemporaneous rule read-up and Haise's readback both specify **attitude error ±10 deg except for startup transient**, followed by **rate ±10 deg/s** with no stated exception;
+- the postflight Mission Operations Report attaches “except start transients” to the rate clause instead.
+
+The simulator follows the contemporaneous operational instruction actually transmitted/read back for rule evaluation, but does **not** assert that the postflight report is definitively wrong.
+
+Implementation rules:
+
+- if a modeled attitude-error vector is supplied, use maximum absolute axis magnitude against 10 deg;
+- if a modeled body-rate vector is supplied, use maximum absolute axis magnitude against 10 deg/s;
+- an over-limit attitude error may be `NOT_APPLICABLE` only when a separately established startup-transient context is explicitly active;
+- if startup-transient applicability is unknown, an over-limit attitude error must not be silently cleared;
+- the rate rule has no startup exception in the contemporaneous crew-facing rule;
+- no exact startup-transient duration is currently sourced, so it is **not** equated automatically with the five-second minimum-thrust segment.
+
+Apollo-wide LM instrumentation evidence supports distinct three-axis attitude-error and RGA-rate measurement families, but exact Apollo 13 LM-7 PCM assignments, engineering conversions, and CONTROL CRT fields remain deferred.
 
 ## Electrical / LM burn configuration
 
@@ -190,13 +209,15 @@ A deterministic nominal run should reproduce:
 | final residual X | +1.0 ft/s |
 | final residual Y | +0.3 ft/s |
 | final residual Z | 0.0 ft/s |
+| maximum PC+2 attitude error | approximately 7 deg in roll (validation envelope, not reconstructed trace) |
+| maximum PC+2 rate | below 1 deg/s (validation envelope, not reconstructed trace) |
 | shutdown-rule triggers | none |
 | post-burn transition | power-down begins immediately after verification |
 
 ## Deferred numeric/state detail
 
-The exact RTCC Cartesian state vector at 77:55 GET remains intentionally unfrozen until the propagator requires it. The exact nominal PC+2 chamber-pressure trace, exact LM-7 chamber-pressure ground/display routing, exact LM-7 ISS-warning telemetry-word assignment, and exact GUIDO CRT placement also remain deferred rather than being reverse-engineered.
+The exact RTCC Cartesian state vector at 77:55 GET remains intentionally unfrozen until the propagator requires it. The exact nominal PC+2 chamber-pressure trace, attitude/rate time histories, startup-transient duration, exact LM-7 attitude/rate telemetry routing, exact LM-7 chamber-pressure ground/display routing, exact LM-7 ISS-warning telemetry-word assignment, and exact GUIDO CRT placement remain deferred rather than being reverse-engineered.
 
 ## Sources
 
-Principal authority remains the NASA Flight Control Division *Mission Operations Report — Apollo 13* (28 April 1970), with technical air-ground transcription for communication chronology. See research notes 050–055 and `resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md` for implementation-specific provenance.
+Principal authority remains the NASA Flight Control Division *Mission Operations Report — Apollo 13* (28 April 1970), with technical air-ground transcription for the crew-facing rule and communication chronology. See research notes 050–062 and `resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md` for implementation-specific provenance.
