@@ -7,7 +7,7 @@ communications into one authoritative session without adding network/UI policy.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import Any
 
@@ -57,6 +57,22 @@ class CapcomQueueItem:
     basis: str
     transmitted: bool = False
     transmitted_get_s: float | None = None
+
+
+@dataclass(frozen=True)
+class PlayerSessionSnapshot:
+    """Serializable player-scoped session snapshot for a future client/API."""
+
+    player_id: str
+    station: str
+    get_s: float
+    session_status: str
+    mission_phase: str
+    pending_gate: str | None
+    presentation: dict[str, Any]
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
 
 
 _PRESENTATION_BUILDERS = {
@@ -187,10 +203,59 @@ class PC2Session:
 
         return float(self.state.get_s)
 
+    def _readiness_payload(self) -> list[dict[str, Any]]:
+        return [
+            {
+                "get_s": report.get_s,
+                "station": report.station,
+                "ready": report.ready,
+                "note": report.note,
+            }
+            for report in self.readiness_reports
+        ]
+
+    def _capcom_queue_payload(self) -> list[dict[str, Any]]:
+        return [
+            {
+                "item_id": item.item_id,
+                "get_s": item.get_s,
+                "action": item.action,
+                "parameters": dict(item.parameters),
+                "basis": item.basis,
+                "transmitted": item.transmitted,
+                "transmitted_get_s": item.transmitted_get_s,
+            }
+            for item in self.capcom_queue
+        ]
+
     def get_station_view(self, player_id: str) -> Any:
         station = self.station_for(player_id)
         projections = project_controller_products(self.state, self.fixture)
-        return _PRESENTATION_BUILDERS[station](projections[station])
+        projection = projections[station]
+        if station == "FLIGHT":
+            return build_pc2_flight_presentation(
+                projection,
+                readiness_reports=self._readiness_payload(),
+            )
+        if station == "CAPCOM":
+            return build_pc2_capcom_presentation(
+                projection,
+                queue_items=self._capcom_queue_payload(),
+            )
+        return _PRESENTATION_BUILDERS[station](projection)
+
+    def player_snapshot(self, player_id: str) -> PlayerSessionSnapshot:
+        station = self.station_for(player_id)
+        view = self.get_station_view(player_id)
+        return PlayerSessionSnapshot(
+            player_id=player_id,
+            station=station,
+            get_s=float(self.state.get_s),
+            session_status=self.status.value,
+            mission_phase=self.state.phase,
+            pending_gate=self.pending_gate,
+            presentation=asdict(view),
+        )
 
     def submit_readiness(self, player_id: str, *, ready: bool, note: str = "") -> ReadinessReport:
         station = self.station_for(player_id)
