@@ -101,12 +101,14 @@ Deliverables:
 
 - [x] Mission-specific MSK 1123 and 1137 layouts identified and inspected.
 - [x] Major LGC, PCM, AEA/AGS, and ground-derived source classes separated.
-- [x] AEA Table 2.1-7 telemetry structure and engineering definitions recovered from contemporary handbook copies, including distinct present-velocity, short-interval delta-V, sensed body-axis velocity-increment, DEDA, direction-cosine, and ullage-counter products.
-- [ ] Directly compare the Apollo 13 LM-7 Table 2.1-7 page against the later searchable same-basic-date handbook copy.
+- [x] AEA Table 2.1-7 telemetry structure and engineering definitions recovered from a later contemporary handbook configuration, including distinct present-velocity, short-interval delta-V, sensed body-axis velocity-increment, DEDA, direction-cosine, and ullage-counter products.
+- [x] Handbook chronology corrected: Apollo 13 LM-7 is Basic Date 15 Dec 1968 / Change Date 1 Feb 1970; searchable LM-10 is Basic Date 1 Feb 1970 / Change Date 15 Jun 1970.
+- [x] AGS ullage qualification narrowed to a two-second accumulated +X velocity-increment test; equivalent later handbook wording expresses the same threshold as average acceleration over the cycle.
+- [ ] Directly compare the Apollo 13 LM-7 Table 2.1-7 page against the later searchable LM-10 table.
 - [ ] Recover MCC/RTCC rules that select/transform AEA telemetry into MSK 1123 AGS VEL / AGS DEL VEL / AGS ULL / ACT VEL.
 - [ ] Establish exact Apollo 13 field masks, refresh/validity behavior, and station display-access workflow before implementation is frozen.
 
-The telemetry table narrows the source candidates but does **not** by itself certify telemetry-word-to-CRT-field mappings.
+The telemetry evidence narrows the source candidates but does **not** by itself certify telemetry-word-to-CRT-field mappings. AGS ULL and ACT VEL remain separate unresolved display products.
 
 ## Phase 4 — Authoritative simulation model
 
