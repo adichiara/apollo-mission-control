@@ -2,79 +2,83 @@
 
 Date: 2026-09-12
 
-## Completed
+## Completed transport foundation
 
 - Selected **FastAPI + Uvicorn** as the first playable transport shell while keeping the simulation/session domain framework-neutral.
 - Added `src/apollo_mission_control/web_app.py` and a phone-first dependency-free client at `web/index.html`.
 - Added `requirements.txt`, `.python-version`, `render.yaml`, and API tests.
 - Recorded transport decision **D-014**.
-- Exposed JSON operations for session creation/status, station join, lifecycle, GET advancement, station-scoped snapshots, readiness, FLIGHT decision, CAPCOM queue/transmission, and prototype audit access.
+- Exposed JSON operations for session creation/status, station join, lifecycle, station-scoped snapshots, readiness, FLIGHT decision, CAPCOM queue/transmission, scenario validation operations, and prototype audit access.
 - Added idempotent same-player/same-station rejoin while preserving station-assignment protection.
-- Resolved the mission-clock/decision-gate boundary in research note 081: blocking decision gates explicitly pause the simulation; this is not a claim that historical Apollo GET stopped.
+- Browser client persists prototype player/station identity and attempts automatic rejoin after reload.
 
-## Browser rejoin checkpoint — completed
+## Continuous mission clock — implemented
 
-The phone client now:
+The former provisional decision-gate pause policy has been superseded.
 
-- stores only the prototype `player_id` and station in browser `localStorage`;
-- restores those form values after reload;
-- attempts the existing idempotent same-player/same-station rejoin automatically when a server session exists;
-- restarts station polling after successful rejoin;
-- clears the stored identity when the local prototype creates/resets the server session.
+Accepted decision **D-016** establishes:
 
-This remains convenience identity only, not authentication or durable server persistence.
+- GET runs continuously while the session is `RUNNING`;
+- controller decisions and missing authorization do not stop mission time;
+- only explicit game/session pause stops GET;
+- nominal timeline entries are event opportunities with prerequisites rather than unconditional scene transitions;
+- a nominal event whose prerequisites are absent at its GET is recorded as missed and is not replayed retroactively.
 
-## First nonnominal web/session path — completed through CAPCOM transmission
+Implementation changes:
 
-Primary-source review was kept ahead of integration. The Apollo 13 Flight Control Division *Mission Operations Report* and Technical Air-To-Ground Voice Transcription establish the PC+2 fuel/oxidizer differential-pressure criterion as **>25 psi, ground callout**. They do not establish exact internal CONTROL→FLIGHT→CAPCOM routing, exact call wording, or an actual Apollo 13 exceedance.
+- `src/apollo_mission_control/event_eligibility.py` — reusable declarative state-requirement evaluator;
+- `src/apollo_mission_control/pc2_event_rules.py` — PC+2 nominal event prerequisites;
+- `src/apollo_mission_control/pc2_session.py` — continuous GET plus `scenario_event_missed` audit behavior;
+- `src/apollo_mission_control/realtime_clock.py` — 1× monotonic wall-clock pacing adapter;
+- `src/apollo_mission_control/web_app.py` — synchronizes the authoritative session to wall-clock time on API interactions;
+- `tests/test_event_eligibility.py`;
+- `tests/test_realtime_clock.py`;
+- updated session/API clock tests.
 
-The authoritative session/API can now exercise a synthetic source-bounded threshold case through:
+Research/decision record:
 
-1. explicit SimSup/source injection of `dps_fuel_oxidizer_delta_p_psi`;
+- `resources/research/081_pc2_mission_clock_and_decision_gate_semantics.md` retains the primary-source findings and marks the pause policy superseded;
+- `resources/research/084_continuous_mission_clock_architecture.md` documents the current engine architecture.
+
+### PC+2 behavior
+
+At the historical final-poll point, `flight_go` becomes pending but the session remains RUNNING.
+
+If GO arrives before the required nominal P40 milestone, the nominal sequence may continue. If GO is late, missed milestones are not replayed. P40, ullage, ignition, throttle, cutoff, residual, and power-down nominal events now depend on declared authoritative-state prerequisites.
+
+This changes the engine from a sequence of gated scenes into a continuously evolving mission in which player timing can itself create consequences.
+
+## First nonnominal web/session path
+
+The source-bounded synthetic ΔP path remains implemented through:
+
+1. explicit source-state injection;
 2. normal CONTROL projection/presentation;
-3. existing common shutdown-rule evaluation;
-4. explicit CONTROL `CALL_OUT_SHUTDOWN_CRITERION` decision;
-5. CAPCOM queue item marked `requested_by=CONTROL`;
+3. common shutdown-rule evaluation;
+4. explicit CONTROL callout decision;
+5. CAPCOM queue;
 6. explicit CAPCOM transmission.
 
-The CAPCOM queue is explicitly a **project routing abstraction**, not a claim that the reviewed sources prove a particular internal Apollo voice-loop/approval sequence.
-
-Separation remains strict:
-
-- injection does not announce a diagnosis;
-- triggered rule does not automatically create a controller decision;
-- CONTROL callout does not automatically transmit;
-- CAPCOM transmission does not automatically create crew compliance;
-- no engine shutdown is forced by the communication path.
-
-Added:
-
-- `resources/research/082_pc2_delta_p_session_integration_boundary.md`;
-- updated `PC2_DELTA_P_CALLOUT_SOURCES.md`;
-- `tests/test_pc2_session_delta_p_integration.py`;
-- `tests/test_web_delta_p_integration.py`;
-- CONTROL browser callout control;
-- prototype `/api/session/admin/injection` endpoint for scenario-authoring/validation only;
-- `/api/session/control/{player_id}/delta-p-callout` player action.
-
-The synthetic 26-psi test value is explicitly non-historical and exists only to cross the documented >25-psi boundary.
+Crew receipt/command/physical-response continuation is already modeled at the domain layer and remains the next HTTP exposure target.
 
 ## Deployment boundary
 
 The current server still holds one authoritative session in process memory. One worker is required; restart/redeploy/spin-down loses a live game; durable persistence and multiple concurrent sessions remain deferred.
 
+Realtime pacing is currently fixed at **1×**. Time acceleration remains undecided and is not exposed as a player control.
+
 ## Test status
 
-The new domain/API tests are committed. A full-suite execution is still not recorded as passing because this automation environment does not provide a checked-out repository runtime for executing the suite.
+The new domain/API tests are committed. A fresh execution attempt on 2026-09-12 again failed before checkout because the runtime could not resolve `github.com`; therefore the full suite is **not recorded as passing**.
 
 ## Current stopping point
 
-The browser-rejoin item and first nonnominal session/API path are now implemented.
+The engine now has the intended continuous-time foundation.
 
-The next source-sensitive integration boundary is **crew response after a transmitted ground shutdown callout**:
+Next integration work:
 
-1. represent explicit crew receipt/response as a communication/operational event rather than automatic compliance;
-2. route an explicit crew DPS shutdown command into the already-modeled command → physical DPS response → controller-evidence chain;
-3. do not invent exact response delay, cockpit sequence, or physical shutdown timing;
-4. then perform runnable HTTP/mobile smoke validation when an executable environment is available;
-5. introduce a realtime driver only after this path is stable.
+1. expose explicit crew receipt, crew DPS shutdown command, and supplied-time physical DPS response through the HTTP validation interface;
+2. reconnect physical shutdown to fresh controller evidence without inventing a pressure threshold or response latency;
+3. smoke-test multi-client realtime behavior when a runnable environment is available;
+4. review the phone UI now that GET advances automatically rather than through manual advancement;
+5. keep manual `/advance` only as a development/validation control, not normal gameplay.
