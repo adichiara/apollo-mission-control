@@ -32,7 +32,7 @@ Further historical work is demand-driven by integrated play or a concrete scenar
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, starting at approximately **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–088**, including controller actions/rules, initialization, nominal timing, product projections, shutdown/restart behavior, station presentations, authoritative session integration, continuous mission time, the ΔP nonnominal path, crew/vehicle response, fresh controller evidence, player/admin UI separation, and facilitator authority.
+The primary research chain now runs through notes **048–089**, including controller actions/rules, initialization, nominal timing, product projections, shutdown/restart behavior, station presentations, authoritative session integration, continuous mission time, the ΔP nonnominal path, crew/vehicle response, fresh controller evidence, player/admin UI separation, facilitator authority, and integrated multi-client validation boundaries.
 
 Current first-playable integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
@@ -50,9 +50,9 @@ Further display archaeology is demand-driven.
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** first playable authoritative model implemented; integration validation remains.
+**Status:** first playable authoritative model implemented; automated multi-client validation coverage added; live execution remains.
 
-Completed architecture includes framework-neutral state/event logic, station-specific products, rule evaluation, distinct injection/action/communication/decision/physical-response/evidence layers, restart/shutdown branches, `PC2Session`, station-scoped snapshots, readiness/FLIGHT decisions, CAPCOM queue/transmission, browser rejoin, audit logging, and realtime wall-clock pacing.
+Completed architecture includes framework-neutral state/event logic, station-specific products, rule evaluation, distinct injection/action/communication/decision/physical-response/evidence layers, restart/shutdown branches, `PC2Session`, station-scoped snapshots, readiness/FLIGHT decisions, CAPCOM queue/transmission, browser rejoin, audit logging, realtime wall-clock pacing, and a multi-client HTTP contract harness.
 
 ### Continuous mission-time architecture
 
@@ -74,6 +74,14 @@ The synthetic source-bounded PC+2 fuel/oxidizer ΔP branch now reaches controlle
 
 The 26 psi exercise is explicitly non-historical. No unsupported internal routing, automatic crew compliance, response timing, telemetry synthesis, binary chamber-pressure threshold, or hidden engine-off truth is added.
 
+### Multi-client validation artifacts
+
+`tests/test_web_multiclient_integration.py` now checks several independent station clients plus facilitator authority against one authoritative in-process session.
+
+`scripts/pc2_multiclient_smoke.py` provides a destructive real-network smoke path for a dedicated local/Render validation instance. It exercises simultaneous HTTP station polling, rejoin, pause/resume, authority isolation, the complete synthetic ΔP branch, controller evidence, and audit ordering.
+
+These artifacts are not a claim that deployed/mobile validation has already passed.
+
 ## Phase 5 — Mission Control data path
 
 **Status:** first-slice architecture established.
@@ -94,7 +102,7 @@ Intentionally unresolved where appropriate: exact onboard 77-percent thrust indi
 
 ## Phase 7 — Simulation scenarios / SimSup
 
-**Status:** source-bounded scenario architecture and first-playable facilitator authority implemented.
+**Status:** source-bounded scenario architecture, facilitator authority, and integrated validation harness implemented.
 
 Completed:
 
@@ -106,19 +114,21 @@ Completed:
 - ordinary player client separated from facilitator/validation client;
 - primary-source review of Simulation Supervisor / simulation-control role separation;
 - server-side facilitator credential protecting exercise-wide operations in configured deployments;
-- Render-generated deployment secret with no credential committed to source.
+- Render-generated deployment secret with no credential committed to source;
+- primary-source review supporting integrated controller simulation validation;
+- in-process multi-client contract coverage and a real-network smoke runner.
 
-The facilitator credential is a modern software safety boundary, **not** a claim about Apollo-era authentication. See research note 088.
+The facilitator credential is a modern software safety boundary, **not** a claim about Apollo-era authentication. Integrated HTTP/browser validation mechanics are likewise modern infrastructure. See research notes 088–089.
 
 ## Immediate next work
 
-The primary need is now **runnable integrated validation**, not additional subsystem or authorization complexity.
+The primary need is now **execution of the integrated validation artifacts**, not additional subsystem or authorization complexity.
 
 1. Execute the complete domain/session/API test suite in a runnable checked-out environment.
-2. Exercise several phone/browser station clients plus one facilitator console against one authoritative server.
-3. Run the complete synthetic ΔP branch through the live browser/API path.
-4. Verify realtime GET under concurrent polling/actions, explicit pause/resume, reload/rejoin, station information isolation, and facilitator/player authority isolation.
-5. Review the phone UI during continuous realtime play and repair usability issues exposed by actual multi-client operation.
+2. Run `scripts/pc2_multiclient_smoke.py` against a dedicated local or Render validation deployment.
+3. Exercise several real phone/browser station clients plus one facilitator console against that same authoritative server.
+4. Verify continuous GET, explicit facilitator pause/resume, reload/rejoin, station information isolation, and facilitator/player authority isolation under actual network conditions.
+5. Review the phone UI during continuous realtime play and repair usability issues exposed by live multi-client operation.
 6. Reopen historical research only when integrated play exposes a concrete missing information, procedure, or decision dependency.
 
 ## Explicitly deferred
@@ -139,4 +149,6 @@ The primary need is now **runnable integrated validation**, not additional subsy
 
 ## Validation status
 
-New domain/API tests are committed, including continuous-clock, declarative-event, crew-response, shutdown-evidence, client-role-separation, and facilitator-authority tests. The repository suite is **not recorded as passing** because this automation environment still lacks a runnable checked-out repository execution path.
+Domain/API tests now include continuous-clock, declarative-event, crew-response, shutdown-evidence, client-role-separation, facilitator-authority, and multi-client integration coverage. The validation pass also repaired a stale admin-role UI test and invalid `/admin` evidence-class option values.
+
+The repository suite is **not recorded as passing** because this automation environment still cannot resolve `github.com` from its execution container and therefore cannot obtain a runnable checkout. The real-network smoke runner is likewise committed but not recorded as executed against a dedicated deployment.
