@@ -1,8 +1,8 @@
 # Apollo Simulation Scenario Research Baseline
 
-Status: **Phase 1 research baseline**
+Status: **Phase 2 selection baseline — first vertical slice selected; historical SimSup-case research continues separately**
 
-Purpose: identify documented Apollo simulation types and known injected-problem cases before designing any scenario system.
+Purpose: identify documented Apollo simulation types and known injected-problem cases before designing the broader scenario system, while keeping the first playable slice grounded in a well-documented actual mission event.
 
 The project goal is to base scenarios on actual Apollo simulation practice wherever surviving documentation permits.
 
@@ -43,7 +43,7 @@ The report explicitly lists simulation activity including:
 - communications/remoting tests
 - tracking/telemetry loading and data-flow tests
 
-These names are historically documented categories. They are not yet scenario definitions.
+These names are historically documented categories. They are not scenario definitions.
 
 ## 2. Apollo simulation philosophy
 
@@ -134,21 +134,25 @@ Useful for research planning, not enough to author a scenario.
 
 Do not use unless the project explicitly decides to author a hypothetical scenario later.
 
-## 7. Initial scenario-research priorities
+## 7. Scenario-research priorities after first-slice selection
 
-1. Apollo 11 lunar-descent program-alarm simulation.
-2. Apollo 13 LM activation/descent simulation records.
-3. Apollo 13 descent-abort simulations.
-4. Apollo 13 ascent simulations.
-5. Apollo 13 launch-abort simulations.
-6. Apollo 13 reentry simulations.
+Historical SimSup-case research remains valuable, but it no longer blocks the first nominal implementation.
+
+Priority order:
+
+1. PC+2 nominal vertical-slice model and validation.
+2. PC+2 nonnominal variants only where a failure can be tied to documented subsystem behavior and flight rules.
+3. Apollo 11 lunar-descent program-alarm simulation.
+4. Apollo 13 LM activation/descent simulation records.
+5. Apollo 13 descent-abort and ascent simulations.
+6. Apollo 13 reentry / launch-abort simulations.
 7. FIDO/BSE math-model cases.
 8. LOI/DOI and TEI simulations.
 9. Any surviving SimSup scripts/case sheets from JSC archives.
 
 ## 8. Important distinction
 
-A real-flight event is not automatically a simulator scenario.
+A real-flight event is not automatically a historical simulator exercise.
 
 For example, the Apollo 13 oxygen-tank accident is an excellent historical contingency to simulate, but the project should distinguish:
 
@@ -157,20 +161,9 @@ For example, the Apollo 13 oxygen-tank accident is an excellent historical conti
 
 Both may eventually be valuable, but they have different historical provenance.
 
-## Sources
+The selected first vertical slice, **Apollo 13 PC+2 preparation/execution**, is explicitly a reconstruction of an **actual flight event**, not a claim that the exact PC+2 sequence existed as a documented preflight SimSup case.
 
-1. Apollo 13 Mission Operations Report, especially Network Operations premission support/simulation schedule.  
-   https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf
-
-2. Harold G. Miller, *The Early Days of Simulation and Operations*, NASA historical paper, 2013.  
-   https://www.nasa.gov/wp-content/uploads/2025/08/millerhg-paper.pdf
-
-3. Apollo 11 Technical Crew Debriefing / Lunar Surface Journal materials concerning simulator use and program alarms.  
-   https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11tcdb.html
-
-4. Apollo 11 Lunar Surface Journal program-alarm materials.  
-   https://history.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11.1201-fm.html
-
+That distinction should remain visible in scenario metadata.
 
 ## 9. Apollo 13 simulator discrepancy reports
 
@@ -189,3 +182,58 @@ They nevertheless provide valuable constraints on how the simulator should repre
 
 Source:
 https://www.ibiblio.org/apollo/Documents/apollo_13_simulator_discrepencies.pdf
+
+## 10. Selected first vertical slice — Apollo 13 PC+2
+
+Decision D-013 selects Apollo 13 PC+2 preparation and execution as the first playable vertical slice.
+
+Working scope:
+
+- historical context: approximately 74:00–80:00 GET;
+- recommended playable start currently near 77:55–78:00 GET, pending final action-sequence mapping;
+- DPS ignition: 79:27:38.30 GET;
+- immediate endpoint: burn verification and initiation of post-burn LM power-down.
+
+Why this supersedes further broad scenario hunting for now:
+
+- strong primary-source chronology and controller reports;
+- explicit burn/shutdown rules;
+- meaningful multi-station interaction;
+- bounded propulsion/guidance event;
+- direct compatibility with the Apollo 13-era platform baseline;
+- sufficient evidence to validate the project's information-path architecture without implementing the entire oxygen-tank accident first.
+
+See:
+
+- `docs/scenarios/APOLLO13_PC2_VERTICAL_SLICE.md`
+- `resources/research/048_first_vertical_slice_candidate_assessment.md`
+- `resources/research/049_pc2_controller_action_and_rule_matrix.md`
+
+## 11. Research sufficiency rule for scenario work
+
+Do not delay the vertical slice to resolve an archival detail unless it materially changes:
+
+- a controller's available information;
+- a procedure or decision rule;
+- simulation state evolution;
+- a validation target;
+- player-role interaction.
+
+Missing exact console legends, noncritical CRT fields, complete backroom staffing, or other low-impact details remain cataloged but deferred until implementation proves them necessary.
+
+## Sources
+
+1. Apollo 13 Mission Operations Report, especially Network Operations premission support/simulation schedule and controller appendices.  
+   https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf
+
+2. Harold G. Miller, *The Early Days of Simulation and Operations*, NASA historical paper, 2013.  
+   https://www.nasa.gov/wp-content/uploads/2025/08/millerhg-paper.pdf
+
+3. Apollo 11 Technical Crew Debriefing / Lunar Surface Journal materials concerning simulator use and program alarms.  
+   https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11tcdb.html
+
+4. Apollo 11 Lunar Surface Journal program-alarm materials.  
+   https://history.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11.1201-fm.html
+
+5. Apollo 13 Flight Journal, Day 4 PC+2 chronology.  
+   https://www.apollojournals.org/afj/ap13fj/12day4-approach-moon.html
