@@ -25,6 +25,7 @@ See:
 - [Apollo 13 station baseline](docs/APOLLO13_STATION_BASELINE.md)
 - [Station research status](docs/STATION_RESEARCH_STATUS.md)
 - [PC+2 DPS restart-response station-status addendum](docs/station-status/2026-09-12_pc2_dps_restart_response.md)
+- [PC+2 restart-evidence station-status addendum](docs/station-status/2026-09-12_pc2_restart_controller_evidence.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
 - [Simulation validation strategy](docs/SIMULATION_VALIDATION.md)
@@ -32,6 +33,7 @@ See:
 - [Open questions](docs/OPEN_QUESTIONS.md)
 - [Progress log](docs/PROGRESS.md)
 - [PC+2 DPS restart-response progress](docs/progress/2026-09-12_pc2_dps_restart_response.md)
+- [PC+2 restart-evidence progress](docs/progress/2026-09-12_pc2_restart_controller_evidence.md)
 - [Research resources](resources/README.md)
 - [PC+2 implementation source catalog](resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md)
 - [PC+2 restart source catalog](resources/source-catalog/PC2_RESTART_SOURCES.md)
@@ -55,11 +57,17 @@ The PC+2 restart path now preserves four separate concepts:
 - restart eligibility;
 - crew execution of PRO / manual ullage / Engine Start / Descent Engine Command Override;
 - actual physical engine restart;
-- later controller-observable confirmation.
+- later controller-observable evidence.
 
 Contemporary LM subsystem documentation supports the physical engine-on chain: engine-on command → pilot valves open → propellant shutoff valves open → propellant flow/combustion. The physical-response helper therefore may set `engine_running=True` only after a `RESTART_ELIGIBLE` classification and completion of the modeled restart actions.
 
 It deliberately does **not** invent an LM-7 restart delay, restart thrust setting, chamber-pressure rise curve, restart success probability, or automatic ground confirmation. The crew commands alone still do not start the engine.
+
+### Controller evidence after restart
+
+Follow-up research found no primary/contemporary support for a special `RESTART CONFIRMED` ground discrete, restart-only chamber-pressure threshold, required crew success report, or fixed confirmation latency.
+
+A fresh post-restart `GQ6510P` thrust-chamber-pressure observation therefore reuses the common CONTROL product path already modeled for burn monitoring and shutdown-rule evaluation. Physical restart does not fabricate that observation, and an older pre-restart sample cannot be reused as fresh evidence.
 
 ### DPS shutdown confirmation evidence
 
@@ -83,7 +91,7 @@ For the **attitude-error / attitude-rate** criteria, the project preserves the p
 
 The project does **not** yet claim full spacecraft physics, RTCC dynamics, exact historical CRT timing, complete Apollo 13 telemetry/display routing, a generic historical stale-data timeout, detailed DPS restart/shutdown transients, or historically reconstructed SimSup malfunction-command syntax.
 
-The next implementation target is the minimum source-backed **controller-observable evidence of successful restart**. Existing chamber-pressure paths may be reused where justified, but no restart-specific pressure threshold or crew report will be invented. If a mission-specific confirmation rule cannot be recovered economically, the project will preserve fresh GQ6510P as generic propulsion evidence and move to the next player-relevant PC+2 dependency.
+The current stopping point now moves away from DPS transient detail to the **first-pass player-facing CONTROL information presentation** for PC+2. Already-researched products should be mapped into a usable controller screen using exact Apollo structures where directly sourced; where exact routing/layout remains unresolved, the project rendering must be labeled as such rather than presented as a historical CRT reconstruction.
 
 ## Apollo 13 station specifications
 
