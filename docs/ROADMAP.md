@@ -18,6 +18,8 @@ This roadmap deliberately separates historical reconstruction from software simp
 
 ## Phase 1 — Reconstruct Apollo Mission Control
 
+**Status:** **research-sufficient to proceed; not historically exhaustive**
+
 **Goal:** understand the actual organization and information flow before assigning game roles.
 
 Research:
@@ -42,33 +44,45 @@ Deliverables:
 - terminology glossary
 - unresolved historical questions list
 
-**Important:** minimum player count and role aggregation are not decided until this work shows what would actually be combined or lost.
+**Current interpretation:** Apollo 13 core front-room positions are at B or better, with EECOM at A, and the common telemetry/ground-processing/display architecture is sufficiently established to support a bounded vertical slice. Exact console/display reconstruction remains incomplete for many stations but is no longer a prerequisite for moving forward when the missing detail does not affect the selected scenario.
+
+Research now follows the sufficiency rule in `docs/PROJECT_PRINCIPLES.md`: inaccessible or low-impact gaps are logged and deferred rather than allowed to block broader progress.
 
 ## Phase 2 — Select the first playable mission/scenario
 
+**Status:** **selected — Apollo 13 PC+2 preparation/execution**
+
 **Goal:** choose a specific mission and phase for the first implementation.
 
-The reusable technical platform currently uses the Apollo 13-era MCC as its default research/implementation baseline, with mission-specific historical profiles layered over it. Phase 2 therefore selects the **first playable scenario**, not a single permanent historical configuration for the whole project.
+The reusable technical platform uses the Apollo 13-era MCC as its default research/implementation baseline, with mission-specific historical profiles layered over it.
 
-Candidate selection criteria:
+### Selected vertical slice
 
-- quality of surviving documentation
-- availability of mission rules and procedures
-- availability of controller/display information
-- availability of transcripts/audio
-- availability of simulator or malfunction records
-- mission-specific scenario interaction among several controller disciplines
-- manageable first implementation scope
+**Apollo 13 PC+2 preparation and execution**, working interval approximately **74:00–80:00 GET**, centered on the DPS burn at about **79:27:38 GET**.
 
-Deliverables:
+Selection basis:
 
-- selected mission and mission-era profile
-- exact spacecraft/ground-system configuration for that scenario
-- selected mission interval
-- nominal timeline
-- source package for that interval
+- strong surviving primary documentation;
+- explicit mission rules and burn-shutdown criteria;
+- meaningful interaction across FLIGHT, FIDO/RETRO, GUIDO, CONTROL, TELMU, INCO, FAO/PROCEDURES and CAPCOM;
+- direct compatibility with the Apollo 13-era technical baseline;
+- bounded propulsion/guidance event rather than a continuously spreading compound failure;
+- sufficient documentation to validate controller information flow without first implementing the entire Apollo 13 accident.
 
-No candidate is considered selected until recorded in `docs/DECISIONS.md`.
+Decision: `docs/DECISIONS.md`, D-013.  
+Research comparison: `resources/research/048_first_vertical_slice_candidate_assessment.md`.
+
+### Remaining Phase 2 deliverables
+
+- [x] selected mission and mission-era profile
+- [x] selected mission interval at working-scope level
+- [ ] freeze exact scenario start state / start GET
+- [ ] define exact spacecraft/ground-system configuration required at initialization
+- [ ] create nominal PC+2 event timeline
+- [ ] assemble the scenario-specific primary-source package
+- [ ] identify the controller positions required for the first full-fidelity run
+
+The first implementation should model only what PC+2 requires. Other Apollo 13 research gaps remain open but do not automatically block Phase 2/3/4 work.
 
 ## Phase 3 — Display and console reconstruction
 
@@ -104,17 +118,30 @@ Deliverables:
 - [x] AEA Table 2.1-7 telemetry structure and engineering definitions recovered from a later contemporary handbook configuration, including distinct present-velocity, short-interval delta-V, sensed body-axis velocity-increment, DEDA, direction-cosine, and ullage-counter products.
 - [x] Handbook chronology corrected: Apollo 13 LM-7 is Basic Date 15 Dec 1968 / Change Date 1 Feb 1970; searchable LM-10 is Basic Date 1 Feb 1970 / Change Date 15 Jun 1970.
 - [x] AGS ullage qualification narrowed to a two-second accumulated +X velocity-increment test; equivalent later handbook wording expresses the same threshold as average acceleration over the cycle.
-- [ ] Directly compare the Apollo 13 LM-7 Table 2.1-7 page against the later searchable LM-10 table.
-- [ ] Recover MCC/RTCC rules that select/transform AEA telemetry into MSK 1123 AGS VEL / AGS DEL VEL / AGS ULL / ACT VEL.
-- [ ] Establish exact Apollo 13 field masks, refresh/validity behavior, and station display-access workflow before implementation is frozen.
+- [ ] Directly compare the Apollo 13 LM-7 Table 2.1-7 page against the later searchable LM-10 table **if accessible without disproportionate archival effort**.
+- [ ] Recover MCC/RTCC rules that select/transform AEA telemetry into MSK 1123 AGS VEL / AGS DEL VEL / AGS ULL / ACT VEL **only where required by PC+2 station behavior**.
+- [ ] Establish PC+2-critical Apollo 13 field masks, validity behavior, and station display access before those specific displays are frozen.
 
-The telemetry evidence narrows the source candidates but does **not** by itself certify telemetry-word-to-CRT-field mappings. AGS ULL and ACT VEL remain separate unresolved display products.
+The telemetry evidence narrows the source candidates but does **not** by itself certify telemetry-word-to-CRT-field mappings. AGS ULL and ACT VEL remain separate unresolved display products. Non-PC+2 display details are now explicitly deferrable.
 
 ## Phase 4 — Authoritative simulation model
 
 **Goal:** produce the mission state from which historically appropriate telemetry can be derived.
 
 Model only what the selected scenario requires initially, but preserve subsystem boundaries.
+
+### First-slice model priorities — PC+2
+
+- mission clock / PC+2 event timeline
+- docked CSM/LM configuration relevant to the burn
+- trajectory state and target solution
+- LM DPS thrust/chamber/inlet/propellant state
+- LM RCS / attitude-control state
+- PGNS/LGC guidance state and AGS backup/cross-check state
+- alignment / attitude-error state
+- electrical/consumables state needed for readiness and post-burn power-down
+- communications/uplink availability required for maneuver updates
+- telemetry/measurement state for documented shutdown criteria
 
 Workstreams:
 
@@ -165,6 +192,8 @@ Deliverables:
 - produce print-oriented controller packets
 - distinguish verbatim historical material from project-produced indexes/guides
 - validate that the simulation exposes enough information for a controller to apply each implemented rule
+
+**Immediate priority:** PC+2 Mission Rules review, shutdown criteria, alignment verification, maneuver update/uplink procedure, DPS/RCS readiness, burn monitoring, and immediate post-burn power-down handoff.
 
 ## Phase 7 — Simulation scenarios / SimSup
 
@@ -241,13 +270,14 @@ Do not introduce an arbitrary numerical score unless there is a later explicit p
 
 After the vertical slice is validated:
 
+- Apollo 13 oxygen-tank accident / immediate stabilization
+- Apollo 11 powered descent as a mission-profile portability test
 - additional mission phases
 - additional Apollo missions/configurations
 - larger controller complements
 - Staff Support Room roles if practical
 - additional documented simulation cases
 - deeper ground-system fidelity
-
 
 ## Validation approach
 
