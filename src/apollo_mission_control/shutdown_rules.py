@@ -12,6 +12,7 @@ from typing import Any
 
 from .attitude_monitoring import evaluate_attitude_error, evaluate_attitude_rate
 from .controller_products import ProjectionSet
+from .pc2_nominal import Product
 
 
 class RuleState(str, Enum):
@@ -30,6 +31,12 @@ class RuleEvaluation:
     observation: Any = None
 
 
+def _observation_age(product: Product | None) -> float | None:
+    if product is None or product.display_time_get is None:
+        return None
+    return product.age_at(product.display_time_get)
+
+
 def evaluate_pc2_shutdown_rules(
     projections: dict[str, ProjectionSet],
     fixture: dict[str, Any],
@@ -39,9 +46,10 @@ def evaluate_pc2_shutdown_rules(
     """Evaluate only PC+2 criteria supported by currently modeled observations.
 
     Missing project-model values produce NOT_EVALUABLE, not CLEAR and not a
-    simulated telemetry failure. The attitude-error startup exception requires
-    explicit context; this function never derives it from throttle phase or
-    seconds since ignition because no reviewed source defines that boundary.
+    simulated telemetry failure. Observation age is reported but no generic
+    age-based stale cutoff is applied because no reviewed PC+2 source defines
+    one. The attitude-error startup exception requires explicit context; this
+    function never derives it from throttle phase or seconds since ignition.
     """
     control = projections["CONTROL"]
     guido = projections["GUIDO"]
@@ -61,7 +69,7 @@ def evaluate_pc2_shutdown_rules(
         results["ground_chamber_pressure"] = RuleEvaluation(
             "ground_chamber_pressure", RuleState.TRIGGERED if chamber_pressure <= threshold else RuleState.CLEAR,
             "CONTROL", "ground chamber pressure <= 85 psi",
-            observation={"pressure_psi": chamber_pressure, "threshold_psi": threshold},
+            observation={"pressure_psi": chamber_pressure, "threshold_psi": threshold, "observation_age_s": _observation_age(chamber_product)},
         )
 
     results["crew_thrust_monitor"] = deferred("crew_thrust_monitor", "CREW/CAPCOM", "onboard thrust monitor <= 77 percent")
@@ -77,7 +85,7 @@ def evaluate_pc2_shutdown_rules(
         results["fuel_oxidizer_delta_p"] = RuleEvaluation(
             "fuel_oxidizer_delta_p", RuleState.TRIGGERED if delta_p > threshold else RuleState.CLEAR,
             "CONTROL", "fuel/oxidizer differential pressure > 25 psi; ground callout only",
-            observation={"delta_p_psi": delta_p, "threshold_psi": threshold},
+            observation={"delta_p_psi": delta_p, "threshold_psi": threshold, "observation_age_s": _observation_age(delta_p_product)},
         )
 
     attitude_error_product = control.products.get("vehicle.attitude_error_xyz_deg")
@@ -96,6 +104,7 @@ def evaluate_pc2_shutdown_rules(
             "max_abs_deg": attitude_error.max_abs_value,
             "threshold_deg": attitude_error.threshold,
             "startup_transient_exception_active": startup_transient_exception_active,
+            "observation_age_s": _observation_age(attitude_error_product),
         },
     )
 
@@ -113,26 +122,32 @@ def evaluate_pc2_shutdown_rules(
             "vector_deg_s": attitude_rate.vector,
             "max_abs_deg_s": attitude_rate.max_abs_value,
             "threshold_deg_s": attitude_rate.threshold,
+            "observation_age_s": _observation_age(attitude_rate_product),
         },
     )
 
-    gimbal = control.products["dps.engine_gimbal_warning"].value
-    results["engine_gimbal_warning"] = RuleEvaluation("engine_gimbal_warning", RuleState.TRIGGERED if gimbal else RuleState.CLEAR, "CONTROL", "engine gimbal warning/light", observation=gimbal)
+    gimbal_product = control.products["dps.engine_gimbal_warning"]
+    gimbal = gimbal_product.value
+    results["engine_gimbal_warning"] = RuleEvaluation("engine_gimbal_warning", RuleState.TRIGGERED if gimbal else RuleState.CLEAR, "CONTROL", "engine gimbal warning/light", observation={"warning": gimbal, "observation_age_s": _observation_age(gimbal_product)})
 
-    program_alarm = guido.products["pg_ns.lgc.program_alarm"].value
-    iss_warning = guido.products["pg_ns.iss.warning"].value
+    program_alarm_product = guido.products["pg_ns.lgc.program_alarm"]
+    iss_warning_product = guido.products["pg_ns.iss.warning"]
+    program_alarm = program_alarm_product.value
+    iss_warning = iss_warning_product.value
     results["iss_warning_plus_program_alarm"] = RuleEvaluation(
         "iss_warning_plus_program_alarm",
         RuleState.TRIGGERED if bool(iss_warning) and program_alarm is not None else RuleState.CLEAR,
         "GUIDO", "inertial-reference/ISS warning plus computer program alarm",
-        observation={"program_alarm": program_alarm, "iss_warning": iss_warning},
+        observation={"program_alarm": program_alarm, "iss_warning": iss_warning, "iss_observation_age_s": _observation_age(iss_warning_product), "program_alarm_observation_age_s": _observation_age(program_alarm_product)},
     )
 
-    lgc_warning = guido.products["pg_ns.lgc.warning"].value
-    results["lgc_warning"] = RuleEvaluation("lgc_warning", RuleState.TRIGGERED if lgc_warning else RuleState.CLEAR, "GUIDO", "LM guidance computer warning", observation=lgc_warning)
+    lgc_warning_product = guido.products["pg_ns.lgc.warning"]
+    lgc_warning = lgc_warning_product.value
+    results["lgc_warning"] = RuleEvaluation("lgc_warning", RuleState.TRIGGERED if lgc_warning else RuleState.CLEAR, "GUIDO", "LM guidance computer warning", observation={"warning": lgc_warning, "observation_age_s": _observation_age(lgc_warning_product)})
 
-    ces_failure = control.products["ces.dc_failure"].value
-    results["ces_dc_failure"] = RuleEvaluation("ces_dc_failure", RuleState.TRIGGERED if ces_failure else RuleState.CLEAR, "CONTROL", "control electronics system DC power failure", observation=ces_failure)
+    ces_product = control.products["ces.dc_failure"]
+    ces_failure = ces_product.value
+    results["ces_dc_failure"] = RuleEvaluation("ces_dc_failure", RuleState.TRIGGERED if ces_failure else RuleState.CLEAR, "CONTROL", "control electronics system DC power failure", observation={"failure": ces_failure, "observation_age_s": _observation_age(ces_product)})
 
     inverter_product = telmu.products["lm.inverter_warning"]
     inverter_warning = bool(inverter_product.value)
@@ -155,6 +170,7 @@ def evaluate_pc2_shutdown_rules(
         observation={
             "warning": inverter_warning,
             "warning_observed_get_s": warning_observed_get,
+            "warning_observation_age_s": _observation_age(inverter_product),
             "switch_attempted": switch_attempted,
             "switch_get_s": switch_get,
         },
