@@ -40,6 +40,29 @@ class WebAppTests(unittest.TestCase):
         self.assertEqual(body["presentation"]["title"], "INCO — PC+2 COMMUNICATIONS SUPPORT")
         self.assertNotIn("audit_log", body)
 
+    def test_same_player_can_rejoin_same_station_but_not_switch(self):
+        first = self.client.post(
+            "/api/session/join",
+            json={"player_id": "inco", "station": "INCO"},
+        )
+        self.assertEqual(first.status_code, 200)
+
+        rejoin = self.client.post(
+            "/api/session/join",
+            json={"player_id": "inco", "station": "INCO"},
+        )
+        self.assertEqual(rejoin.status_code, 200)
+        self.assertEqual(rejoin.json()["station"], "INCO")
+
+        switch = self.client.post(
+            "/api/session/join",
+            json={"player_id": "inco", "station": "GUIDO"},
+        )
+        self.assertEqual(switch.status_code, 400)
+
+        audit = self.client.get("/api/session/audit").json()
+        self.assertIn("player_rejoined", [event["kind"] for event in audit])
+
     def test_flight_gate_readiness_and_capcom_handoff_over_api(self):
         for player_id, station in (
             ("flight", "FLIGHT"),
