@@ -25,6 +25,7 @@ See:
 - [Apollo 13 station baseline](docs/APOLLO13_STATION_BASELINE.md)
 - [Station research status](docs/STATION_RESEARCH_STATUS.md)
 - [PC+2 CONTROL presentation station-status addendum](docs/station-status/2026-09-12_pc2_control_presentation.md)
+- [PC+2 GUIDO presentation station-status addendum](docs/station-status/2026-09-12_pc2_guido_presentation.md)
 - [Mission profile model](docs/MISSION_PROFILE_MODEL.md)
 - [Simulation scenario research](docs/SIMULATION_SCENARIO_RESEARCH.md)
 - [Simulation validation strategy](docs/SIMULATION_VALIDATION.md)
@@ -32,30 +33,36 @@ See:
 - [Open questions](docs/OPEN_QUESTIONS.md)
 - [Progress log](docs/PROGRESS.md)
 - [PC+2 CONTROL presentation progress](docs/progress/2026-09-12_pc2_control_presentation.md)
+- [PC+2 GUIDO presentation progress](docs/progress/2026-09-12_pc2_guido_presentation.md)
 - [Research resources](resources/README.md)
 - [PC+2 implementation source catalog](resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md)
 - [PC+2 CONTROL presentation source catalog](resources/source-catalog/PC2_CONTROL_PRESENTATION_SOURCES.md)
+- [PC+2 GUIDO presentation source catalog](resources/source-catalog/PC2_GUIDO_PRESENTATION_SOURCES.md)
 - [Evidence verification audit](resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md)
 
 ## Current status
 
 The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation and execution**.
 
-The framework-neutral Python prototype now includes the source-backed nominal event/state model, station-specific product projections, partial shutdown-rule evaluation, scenario injection/action/communication layers, product-integrity handling, premature-shutdown/restart response paths, and the first player-facing CONTROL presentation model.
+The framework-neutral Python prototype now includes the source-backed nominal event/state model, station-specific product projections, partial shutdown-rule evaluation, scenario injection/action/communication layers, product-integrity handling, premature-shutdown/restart response paths, and first-pass player-facing CONTROL and GUIDO presentation models.
 
 ### First-pass CONTROL presentation
 
-The mission-specific Apollo 13 AC Electronics source directly documents **MSK 1123 — LM GUID, CONTROL AND PROP RT** and **MSK 1137 — LM powered-descent/control**. These sources now constrain the first player-facing CONTROL display, but the executable screen is deliberately labeled as a **project rendering**, not an exact Apollo CRT transcription.
+The mission-specific Apollo 13 AC Electronics source directly documents **MSK 1123 — LM GUID, CONTROL AND PROP RT** and **MSK 1137 — LM powered-descent/control**. These sources constrain the first player-facing CONTROL display, but the executable screen is deliberately labeled as a **project rendering**, not an exact Apollo CRT transcription.
 
 A critical fidelity boundary is preserved: Apollo 13 MSK 1137 defines `TCP` as chamber pressure in **percent**, while the implemented PC+2 measurement path uses LM-7-family `GQ6510P` thrust-chamber pressure in **psi**. The player view therefore shows the sourced psi quantity as `CHAMBER P`; it does not falsely relabel or convert it to historical `TCP`.
 
-The first CONTROL rendering groups already-modeled information into:
+### First-pass GUIDO presentation
 
-- burn / propulsion;
-- attitude / control;
-- ullage.
+The GUIDO rendering uses the same discipline. Apollo 13 MSK 1123/1137 plus the mission-era LUMINARY 1C R-567 data-link documentation directly support program/computer state, alarm/status families, upload verification, and guidance/velocity-change information in the Mission Control data path.
 
-Per-field value, units, validity, source layer, and provenance are retained. Deferred project gaps such as the unresolved singular inlet-pressure product are omitted rather than shown as historical telemetry failures. Hidden integrity metadata is likewise not exposed to the player.
+The executable view groups modeled products into:
+
+- LGC / guidance status;
+- alignment / load status;
+- maneuver / residual.
+
+`PROGRAM` and alarm/status families have direct historical analogues. Other items such as project `LGC` operating state, alignment acceptance, load-verification state, planned Vg, and postburn residual are presented as sourced **project products** where exact CRT literal/routing is incomplete. Hidden integrity metadata is not shown, and deferred `vg_remaining` / `dv_gained` implementation gaps are not portrayed as telemetry failures.
 
 ### Remaining bounded gaps
 
@@ -63,9 +70,9 @@ The singular PC+2 150-psi ground “engine inlet pressure” rule remains intent
 
 The onboard **77-percent thrust-monitor** criterion also remains `NOT_EVALUABLE`; primary sources confirm the rule but do not yet identify the exact percent-thrust crew display/signal.
 
-Exact CONTROL CRT selection behavior, field coordinates, GQ6510P-to-`TCP` engineering conversion, refresh cadence, and exact display placement for several modeled PC+2 rule products remain unresolved and are not invented.
+Exact CONTROL/GUIDO CRT selection behavior, field coordinates, refresh cadence, GQ6510P-to-`TCP` conversion, and several field-routing details remain unresolved and are not invented.
 
-The next implementation target is the **first-pass player-facing GUIDO presentation**, applying the same evidence discipline while taking advantage of the stronger LGC/PGNS provenance already recovered for MSK 1123/1137.
+The next implementation target is the **first-pass player-facing TELMU presentation**, using the already-modeled PC+2 power configuration, expected-current reference, inverter warning/action state, and post-burn power-down transition. Exact Apollo display terminology/formatting will again be used only where primary evidence supports it.
 
 ## Apollo 13 station specifications
 
