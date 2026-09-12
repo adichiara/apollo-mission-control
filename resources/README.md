@@ -10,9 +10,11 @@ This directory is the provenance layer for the simulation.
 - `audits/` — dated verification reports and file-by-file evidence ledgers.
 - `primary-sources/` — reserved for local copies of primary documents when the project decides that mirroring is appropriate and legally/permanently practical.
 
-Current supplement:
+Current supplements:
 
-- `source-catalog/PC2_IMPLEMENTATION_SOURCES.md` — sources used directly by the Apollo 13 PC+2 executable product-projection and shutdown-rule layers.
+- `source-catalog/PC2_IMPLEMENTATION_SOURCES.md` — sources used directly by the Apollo 13 PC+2 executable product-projection, shutdown-rule, and scenario-injection layers.
+- `source-catalog/PC2_INLET_PRESSURE_SOURCES.md` — focused source record for the unresolved singular inlet-pressure selection/aggregation question.
+- `source-catalog/PC2_INVERTER_WARNING_SOURCES.md` — focused source record for the inverter-caution and post-switch mission-rule path.
 
 ## Research rule
 
