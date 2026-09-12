@@ -30,7 +30,23 @@ First establish the real workflow, information, responsibilities, and complexity
 
 Any simplification that changes documented Apollo behavior should be recorded in the decisions log.
 
-## 4. The simulation should not feel game-like
+## 4. Research to sufficiency, not exhaustion
+
+Historical research is complete enough for a feature or phase when the evidence establishes the behavior that materially affects controller work and the remaining gaps can be isolated explicitly.
+
+Do not keep drilling into one topic merely because some archival detail remains unresolved. Move on when one or more of these conditions applies:
+
+- the next evidence appears to require inaccessible or obscure archival material;
+- repeated searches are returning the same sources rather than new evidence;
+- the unresolved detail has little effect on player decisions or simulation behavior;
+- the uncertainty can be represented honestly as unresolved without forcing invented behavior;
+- another project area has substantially higher expected value.
+
+A blocked detail should be logged with the best known evidence, its likely implementation impact, and the source that would resolve it if later found.
+
+Research may return to a deferred gap when implementation reveals that it is actually consequential.
+
+## 5. The simulation should not feel game-like
 
 The software should present the controller's work rather than an external game layer.
 
@@ -47,23 +63,23 @@ Avoid, unless historically justified:
 
 Player skill should come from understanding the station, interpreting data, applying rules and procedures, making decisions, and communicating effectively.
 
-## 5. Mission outcome hierarchy
+## 6. Mission outcome hierarchy
 
 The objective is mission success. If mission objectives can no longer be achieved, the priority becomes the best historically valid alternate/contingency outcome and ultimately safe return of the astronauts.
 
 An abort is a mission-control action available only where the spacecraft state, mission phase, procedures, and rules make it applicable. It is not a generic success condition.
 
-## 6. Information boundaries matter
+## 7. Information boundaries matter
 
 A controller should receive the information historically available to that role, through historically appropriate displays and communications to the extent practical.
 
 The underlying authoritative simulation state is not itself a player display.
 
-## 7. Paper documentation is part of the interface
+## 8. Paper documentation is part of the interface
 
 Printed station references are intended to be functional working documents, not props. Flight rules, procedures, tables, and controller references should be based on the corresponding historical sources.
 
-## 8. Provenance is part of implementation
+## 9. Provenance is part of implementation
 
 Research notes should identify the source and, where possible, document/page/section used to justify an implementation.
 
