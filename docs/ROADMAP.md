@@ -75,6 +75,7 @@ Decision: `docs/DECISIONS.md`, D-013.
 Research comparison: `resources/research/048_first_vertical_slice_candidate_assessment.md`.  
 Initialization/validation: `resources/research/050_pc2_initialization_and_nominal_validation.md`.  
 Ullage/throttle implementation research: `resources/research/051_pc2_ullage_and_throttle_profile.md`.  
+Controller-product projection research: `resources/research/052_pc2_controller_product_projection.md`.  
 Parameter specification: `docs/scenarios/APOLLO13_PC2_PARAMETERS.md`.
 
 ### Phase 2 deliverables
@@ -125,7 +126,8 @@ Deliverables:
 - [x] AGS ullage qualification narrowed to a two-second accumulated +X velocity-increment test; equivalent later handbook wording expresses the same threshold as average acceleration over the cycle.
 - [x] PC+2-critical information families separated into physical, onboard, telemetry/link, ground-derived and crew-report layers.
 - [x] Identify the **smallest historical display/product set actually needed for PC+2** at GUIDO, CONTROL, FIDO/RETRO, TELMU, INCO, FLIGHT and CAPCOM (`APOLLO13_PC2_PLAYER_PRODUCTS.md`).
-- [ ] Map those minimum products into first-pass station screens, using exact Apollo formats where available and explicitly labeled project renderings where presentation evidence is incomplete.
+- [x] Map the currently modeled minimum products into station-specific projection sets with validity, source-layer and provenance metadata; unmodeled historical fields remain separate implementation gaps rather than simulated telemetry failures.
+- [ ] Map those products into first-pass station screens, using exact Apollo formats where available and explicitly labeled project renderings where presentation evidence is incomplete.
 - [ ] Directly compare the Apollo 13 LM-7 Table 2.1-7 page against the later searchable LM-10 table **only if it becomes necessary for a PC+2-required field and remains reasonably accessible**.
 - [ ] Recover MCC/RTCC rules for specific AEA-to-display transformations **only where required by PC+2 station behavior**.
 
@@ -133,7 +135,7 @@ The telemetry evidence narrows source candidates but does not certify every tele
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** **nominal executable event model in progress**
+**Status:** **nominal event + controller-product model in progress**
 
 **Goal:** produce the mission state from which historically appropriate telemetry can be derived.
 
@@ -164,6 +166,7 @@ Model only what the selected scenario requires initially, but preserve subsystem
 - [x] failure-transition hooks identified at the level of documented conditions without authoring speculative failure scripts
 - [x] framework-neutral Python nominal event prototype and validation tests
 - [x] explicit two-jet ullage, minimum/40-percent/maximum commanded throttle phases, and separate crew throttle-report events
+- [x] first station-specific controller-product projection layer with explicit validity, timing metadata, source layers, provenance, and implementation-gap separation
 
 ### Immediate next work
 
@@ -171,13 +174,15 @@ Model only what the selected scenario requires initially, but preserve subsystem
 - [ ] determine the minimum trajectory-state representation required for the first propagating implementation
 - [x] define update/sample semantics for the minimum player-facing products; exact CRT cadence remains unresolved where unsupported
 - [x] convert the nominal state machine and parameter contract into the first implementation schema/data fixture
-- [ ] add controller-product projections from authoritative state with validity/provenance metadata
+- [x] add controller-product projections from authoritative state with validity/provenance metadata
 - [ ] implement independent shutdown-rule evaluation without a precomputed `burn_abort` state
 - [ ] add first nonnominal validation case only after the nominal product/rule path is complete
 
 The exact Cartesian RTCC state vector at 77:55 is deliberately **not** being reverse-engineered from the maneuver PAD. It becomes an active research target only when the trajectory propagator requires it.
 
 Detailed DPS engine-response/ramp dynamics are also deferred. The nominal prototype currently models the source-backed **commanded** throttle profile and preserves later crew reports as separate communication events. See research note 051.
+
+The first projection implementation intentionally does not expose required-but-unmodeled numeric fields (for example exact nominal DPS pressure readings) as `unavailable` telemetry. Those are tracked as implementation gaps so research incompleteness cannot masquerade as a historical data-path failure. See research note 052.
 
 Workstreams:
 
@@ -202,7 +207,7 @@ Deliverables:
 - [x] update/sample behavior contract for first-slice products, with exact historical CRT cadence left unresolved where unsupported
 - [x] first-slice subsystem dependency contract
 - [x] first executable nominal event fixture/state model
-- [ ] controller-product projection layer
+- [x] controller-product projection layer
 - [ ] shutdown-rule evaluation tests
 - [ ] failure propagation tests
 
@@ -223,6 +228,8 @@ Deliverables:
 - display refresh behavior
 
 **PC+2 requirement:** the nominal implementation must already preserve source layer, sample/receive time, validity and data age structurally, even if some nominal transport errors are initially zero.
+
+**Current implementation checkpoint:** `controller_products.py` now enforces station boundaries for the modeled PC+2 subset. It is an information-projection layer, not yet a complete telemetry/network simulator.
 
 ## Phase 6 — Procedures and flight rules
 
