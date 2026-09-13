@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — repository-side validation preparation/reference material complete; physical human/device execution remains**
+Status: **CURRENT — repository-side validation preparation/reference material and final-load staging complete; physical human/device execution remains**
 
 ## Completed checkpoints
 
@@ -29,17 +29,30 @@ Status: **CURRENT — repository-side validation preparation/reference material 
 - [x] primary-source review of the four-player boundary, with no sub-five-player PC+2 mode approved at current fidelity;
 - [x] structured live-play evidence-capture and debrief package with a dedicated run report template;
 - [x] reproducible, scenario-blind pre-run player-preparation package grounded in Apollo controller-training/rule/procedure evidence;
-- [x] first-run player reference packet with separate common, original-station, rule/criterion, nominal-phase, and modern-client sections.
+- [x] first-run player reference packet with separate common, original-station, rule/criterion, nominal-phase, and modern-client sections;
+- [x] primary-source review of the final PC+2 state-vector/target-load/uplink sequence;
+- [x] staged final-solution/load/uplink state and station-scoped products replacing the collapsed final-verification flag;
+- [x] staged final-load regression coverage passing GitHub Actions run 118.
 
 The deployment remains single-process/in-memory. Restart/redeploy loses the live session; multiple workers/sessions and durable persistence remain deferred.
 
-See decisions D-016–D-018 and research notes 084–097.
+See decisions D-016–D-018 and research notes 084–099.
 
 ## Continuous-time engine boundary
 
 At the approximately 79:17 GET final poll, `flight_go` becomes pending while the session remains RUNNING. GET continues. Downstream nominal events execute only if prerequisites are present at their scheduled times; otherwise they are recorded as missed and are not replayed after a late decision.
 
 Manual `/advance` remains validation infrastructure only. Normal runtime pacing is 1× monotonic wall-clock time.
+
+## Final PC+2 load boundary
+
+Research notes 098–099 now carry the final state-vector/target-load work into the executable model:
+
+`FIDO/RTCC final solution → GUIDO load readiness/consistency → INCO uplink configuration → CAPCOM/crew configuration → state-vector + target-load transmission → load complete / computer returned to crew`
+
+The model distinguishes `preliminary` → `final_ready` → `final_stable` ground-solution state and `preliminary_loaded` → `final_pending` → `transmitting` → `final_loaded` state-vector/target-load status. The earlier approximately 75:35 load is completed context before the scenario begins; ranging remains a separate final-preparation dependency.
+
+The approximate final-preparation event anchors do **not** claim exact transmission duration. Exact Cartesian vector contents, RTCC/CCATS command internals, controller keying, and byte/word load contents remain deliberately unfrozen.
 
 ## First nonnominal branch
 
@@ -57,7 +70,7 @@ The normal `/` client contains station-authorized controller operations only. `/
 
 `tests/test_web_multiclient_integration.py` protects the in-process contract for shared state, station isolation, rejoin, occupied-station protection, facilitator isolation, pause semantics, and ΔP ordering.
 
-`scripts/pc2_multiclient_smoke.py` exercises those boundaries over real TCP/HTTP and simultaneous polling. Pre-compact CI has passed both the suite and network smoke.
+`scripts/pc2_multiclient_smoke.py` exercises those boundaries over real TCP/HTTP and simultaneous polling. Pre-compact CI has passed both the suite and network smoke. GitHub Actions run 118 also passed the staged final-load regression coverage.
 
 ## Live-device / human-play boundary
 
@@ -102,7 +115,7 @@ This is a simulator-design boundary, not a historical minimum-staffing claim.
 3. execute identity/rejoin/authority/isolation checks from `PC2_LIVE_PLAYTEST_PROTOCOL.md`;
 4. record incidents directly in `PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` with preparation/station/build/GET/audit provenance;
 5. complete nominal PC+2 without hidden facilitator coaching;
-6. assess FLIGHT/CAPCOM handoff, station readability, and reference-packet findability/clarity;
+6. assess FLIGHT/CAPCOM handoff, station readability, reference-packet findability/clarity, and the staged final-load handoff across FIDO/RETRO, GUIDO, INCO, CAPCOM, and FLIGHT;
 7. execute the synthetic ΔP run after nominal coordination is coherent.
 
 ### B. Execute five-player compact human validation
@@ -127,6 +140,7 @@ Reopen historical work only for concrete information/procedure/authority depende
 - exact onboard 77-percent thrust indication;
 - detailed DPS transient timing;
 - full RTCC trajectory propagator;
+- exact PC+2 RTCC Cartesian vector contents, RTCC/CCATS load-keying, and exact final-load transmission duration;
 - backroom/staff-support simulation;
 - sub-five-player PC+2 mode unless the boundary is explicitly reopened;
 - multi-session/durable production persistence;
@@ -138,4 +152,4 @@ Reopen historical work only for concrete information/procedure/authority depende
 
 ## Current success criterion
 
-A rejoin-safe, phone-accessible, continuously running authoritative mission in which prepared station players receive only their operational information/actions, can consult a source-bounded scenario-blind reference packet, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior. Compact mode must preserve the same boundaries while allowing one modern player to operate several separately identified original stations. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries; the repository now includes the preparation, reference, evidence-capture, and debrief package needed to make those claims traceable.
+A rejoin-safe, phone-accessible, continuously running authoritative mission in which prepared station players receive only their operational information/actions, can consult a source-bounded scenario-blind reference packet, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior. The nominal preparation path must likewise preserve the staged source-bounded final-solution/load/uplink workflow without invented RTCC internals. Compact mode must preserve the same boundaries while allowing one modern player to operate several separately identified original stations. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries; the repository now includes the preparation, reference, evidence-capture, debrief, and final-load workflow needed to make those claims traceable.
