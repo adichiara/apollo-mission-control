@@ -210,6 +210,25 @@ The nominal PC+2 run has no newly invented historical instrumentation failure. A
 
 See `resources/research/104_pc2_sensor_telemetry_failure_scope.md` and `resources/source-catalog/PC2_OBSERVATION_FAILURE_SOURCES.md`.
 
+## D-021 — PC+2 crew actions use an explicit scenario-authored external actor
+
+**Status:** Accepted for the current first playable  
+**Date:** 2026-09-13
+
+The PC+2 Mission Control vertical slice does not add a separate human spacecraft-crew player. Crew activity is represented outside the controller station set as explicit scenario-authored receipt/action steps.
+
+The causal/communication chain remains:
+
+`controller evidence → controller decision → CAPCOM message → crew receipt → crew action → spacecraft response → telemetry / crew report → controller evidence`
+
+A controller conclusion does not automatically mutate crew or spacecraft state. Nominal crew steps may be deterministic when the sourced operational sequence is known and crew discretion is not the mechanic being tested, but the project does not infer that Apollo astronauts behaved mechanically.
+
+Nonnominal crew behavior requires a historical source or explicit synthetic labeling. Do not invent reaction-time distributions, misunderstanding/noncompliance probabilities, random crew-error rates, or hidden crew decisions merely to add difficulty.
+
+Reopen this boundary when a later scenario materially depends on astronaut discretion, manual flying skill, competing onboard workload, ambiguous crew observations, or detailed checklist execution.
+
+See `resources/research/105_pc2_crew_action_representation_boundary.md` and `resources/source-catalog/PC2_CREW_ACTION_REPRESENTATION_SOURCES.md`.
+
 ## Not yet decided
 
 The following are deliberately not decisions:
