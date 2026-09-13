@@ -1,7 +1,7 @@
 # 093 — Compact HTTP/browser integration boundary
 
 Date: 2026-09-13  
-Status: **IMPLEMENTED — transport/client support added; physical five-player validation still pending**
+Status: **IMPLEMENTED / AUTOMATED VALIDATION PASS — physical five-player validation still pending**
 
 ## Question
 
@@ -58,7 +58,7 @@ A compact player navigates between original-station tabs. The active original ca
 
 No merged synthetic presentation was created.
 
-## Tests added
+## Tests and validation
 
 `tests/test_web_compact_roles.py` covers:
 
@@ -68,18 +68,21 @@ No merged synthetic presentation was created.
 - cross-bundle station conflicts;
 - CONTROL authority under compact ownership.
 
-`tests/test_web_client_contract.py` now checks compact role definitions, v2 persistence, join-set transport, substation switching, and active-station readiness attribution.
+`tests/test_web_client_contract.py` checks compact role definitions, v2 persistence, join-set transport, substation switching, and active-station readiness attribution.
+
+The first compact CI attempt exposed a test-design error: a successful CONTROL ownership check had been incorrectly expected to produce shutdown evidence before any crew shutdown command existed. The regression test was corrected to preserve the distinction between authorization and evidence availability.
+
+GitHub Actions run 59 on commit `ae569dff997c17b0f67546ea452f1706d34b693d` then completed successfully. Automated compact HTTP/browser validation is therefore recorded as passing.
 
 ## Remaining validation
 
-Repository-level implementation is complete, but the compact configuration is not yet recorded as human-play validated.
+Repository-level implementation and automated validation are complete, but the compact configuration is not yet recorded as human-play validated.
 
 Next compact-specific validation:
 
-1. run CI against this head;
-2. exercise five simultaneous browser/phone players using the approved compact configuration;
-3. verify that switching between TELMU/CONTROL and GUIDO/FIDO-RETRO is legible under time pressure;
-4. verify that readiness/actions remain correctly attributed in the facilitator audit;
-5. log usability defects separately from historical/research defects.
+1. exercise five simultaneous browser/phone players using the approved compact configuration;
+2. verify that switching between TELMU/CONTROL and GUIDO/FIDO-RETRO is legible under time pressure;
+3. verify that readiness/actions remain correctly attributed in the facilitator audit;
+4. log usability defects separately from historical/research defects.
 
 The broader seven-seat live-device protocol remains the canonical physical validation requirement for the full station model.
