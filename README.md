@@ -17,6 +17,7 @@ See:
 - [Current first-playable integration roadmap](docs/roadmap/2026-09-12_first_playable_integration.md)
 - [Decisions](docs/DECISIONS.md)
 - [Simulation architecture](docs/SIMULATION_ARCHITECTURE.md)
+- [Gameplay model](docs/GAMEPLAY_MODEL.md) — design proposal, not accepted
 - [PC+2 player products](docs/scenarios/APOLLO13_PC2_PLAYER_PRODUCTS.md)
 - [PC+2 player preparation](docs/testing/PC2_PLAYER_PREPARATION.md)
 - [PC+2 player reference packet](docs/testing/PC2_PLAYER_REFERENCE_PACKET.md)
