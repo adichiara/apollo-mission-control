@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — compact HTTP/browser integration implemented; live-device execution remains**
+Status: **CURRENT — compact HTTP/browser integration implemented; sub-five-player boundary researched; live-device execution remains**
 
 ## Completed checkpoints
 
@@ -25,11 +25,12 @@ Status: **CURRENT — compact HTTP/browser integration implemented; live-device 
 - [x] HTTP station-set join/rejoin with legacy single-station compatibility;
 - [x] generic player snapshot polling for single- and multi-station players;
 - [x] compact browser persistence, legacy identity migration, and original-call-sign substation navigation;
-- [x] compact HTTP/browser regression coverage.
+- [x] compact HTTP/browser regression coverage;
+- [x] primary-source review of the four-player boundary, with no sub-five-player PC+2 mode approved at current fidelity.
 
 The deployment remains single-process/in-memory. Restart/redeploy loses the live session; multiple workers/sessions and durable persistence remain deferred.
 
-See decisions D-016–D-018 and research notes 084–093.
+See decisions D-016–D-018 and research notes 084–094.
 
 ## Continuous-time engine boundary
 
@@ -63,7 +64,7 @@ The nominal PC+2 run comes first. The synthetic ΔP branch follows only after no
 
 ## Compact five-player boundary
 
-Research notes 091–093 define and implement the approved compact project configuration without claiming a historical five-person Apollo team:
+Research notes 091–094 define and constrain the compact project configuration without claiming a historical five-person Apollo team:
 
 - FLIGHT;
 - CAPCOM;
@@ -79,16 +80,13 @@ Implemented end-to-end shape:
 
 The browser explicitly labels compact roles as simulator conveniences, preserves original call signs in station tabs and action surfaces, persists station sets and the active substation, and migrates legacy single-station identity. No synthetic `LM_SYSTEMS` or `FLIGHT_DYNAMICS` authoritative station exists.
 
-Four-player-or-smaller aggregation remains unresolved.
+Research note 094 resolves the previously open general four-player question for this scenario/fidelity target: **five players are the minimum supported PC+2 configuration**. CAPCOM and INCO remain distinct because crew-facing voice authority and communications-system monitoring/troubleshooting are separately documented functions, and communications/data-path reasoning is active in the selected PC+2 window. Silent INCO omission/automation is therefore not accepted merely to reduce player count.
+
+This is a simulator-design boundary, not a historical minimum-staffing claim.
 
 ## Active priorities
 
-### A. Confirm current-head automation
-
-1. confirm GitHub Actions passes the compact HTTP/browser head;
-2. if a regression appears, repair it before recording the compact implementation as automatically validated.
-
-### B. Execute live multi-device validation
+### A. Execute live multi-device validation
 
 1. run one facilitator console plus separate real-phone/browser clients against one dedicated server;
 2. execute identity/rejoin/authority/isolation checks from `PC2_LIVE_PLAYTEST_PROTOCOL.md`;
@@ -96,7 +94,7 @@ Four-player-or-smaller aggregation remains unresolved.
 4. assess FLIGHT/CAPCOM handoff and station readability;
 5. execute the synthetic ΔP run after nominal coordination is coherent.
 
-### C. Execute five-player compact human validation
+### B. Execute five-player compact human validation
 
 1. use FLIGHT, CAPCOM, LM SYSTEMS, FLIGHT DYNAMICS, and INCO clients simultaneously;
 2. observe TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure;
@@ -104,7 +102,9 @@ Four-player-or-smaller aggregation remains unresolved.
 4. inspect audit output for original-station provenance and isolation;
 5. classify usability defects separately from historical/research defects.
 
-Reopen historical research only for concrete information/procedure/authority dependencies exposed by validation.
+### C. Reopen research only from evidence
+
+Reopen historical work only for concrete information/procedure/authority dependencies exposed by validation. Reopen sub-five-player design only if live testing demonstrates a real need, a different scenario removes a station dependency, stronger primary evidence supports another pairing, or an explicitly lower-fidelity accessibility mode is deliberately chosen.
 
 ## Explicitly deferred
 
@@ -114,7 +114,7 @@ Reopen historical research only for concrete information/procedure/authority dep
 - detailed DPS transient timing;
 - full RTCC trajectory propagator;
 - backroom/staff-support simulation;
-- four-player-or-smaller station aggregation;
+- sub-five-player PC+2 mode unless the boundary is explicitly reopened;
 - multi-session/durable production persistence;
 - historically exact SimSup console UI;
 - named/fine-grained facilitator accounts;
@@ -124,4 +124,4 @@ Reopen historical research only for concrete information/procedure/authority dep
 
 ## Current success criterion
 
-A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior. Compact mode must preserve the same boundaries while allowing one modern player to operate several separately identified original stations. Automated current-head validation and physical human/device execution remain the next PASS boundaries.
+A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior. Compact mode must preserve the same boundaries while allowing one modern player to operate several separately identified original stations. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries.
