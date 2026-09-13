@@ -32,11 +32,23 @@ Further historical work is demand-driven by integrated play or a concrete scenar
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, starting at approximately **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–090**, including controller actions/rules, initialization, nominal timing, product projections, shutdown/restart behavior, station presentations, authoritative session integration, continuous mission time, the ΔP nonnominal path, crew/vehicle response, fresh controller evidence, player/admin UI separation, facilitator authority, integrated multi-client validation, and the live-device/human-play validation boundary.
+The primary research chain now runs through notes **048–091**, including controller actions/rules, initialization, nominal timing, product projections, shutdown/restart behavior, station presentations, authoritative session integration, continuous mission time, the ΔP nonnominal path, crew/vehicle response, fresh controller evidence, player/admin UI separation, facilitator authority, integrated multi-client validation, live-device/human-play validation, and low-player-count station aggregation.
 
 Current first-playable integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
-Low-player-count station aggregation remains unresolved.
+### Player-count boundary
+
+The full first-playable configuration remains seven station players: FLIGHT, CAPCOM, CONTROL, TELMU, GUIDO, FIDO/RETRO, and INCO.
+
+Research note **091** and decision **D-018** now define the first compact configuration as **five players**:
+
+- FLIGHT;
+- CAPCOM;
+- LM SYSTEMS = TELMU + CONTROL;
+- FLIGHT DYNAMICS = GUIDO + FIDO/RETRO;
+- INCO.
+
+This is a project usability adaptation constrained by Apollo organizational evidence, not a claim about historical PC+2 staffing. Original station products/actions/readiness/audit identities must remain distinct under any bundled player UI. Four-player-or-smaller aggregation remains unresolved.
 
 ## Phase 3 — Display and console reconstruction
 
@@ -86,6 +98,14 @@ GitHub Actions launches a dedicated ephemeral Uvicorn server with facilitator au
 
 Research note 090 and `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` define the remaining physical validation as a structured integrated mission rehearsal. Apollo/NASA sources support combined crew/controller mission-environment simulation and decisionmaking/procedure readiness, but do not establish mobile UI, browser reload, HTTP latency, or token-authentication criteria. Those remain explicitly modern project concerns.
 
+### Compact-role architecture — researched, implementation pending
+
+Decision D-018 requires future compact mode to map one player to a set of original stations rather than create synthetic domain stations that erase provenance. The preferred shape is:
+
+`player → assigned original station set → station-scoped snapshots/actions/readiness → bundled player presentation`
+
+This code path has not yet been implemented and does not replace the seven-seat physical validation baseline.
+
 ## Phase 5 — Mission Control data path
 
 **Status:** first-slice architecture established.
@@ -123,19 +143,21 @@ Completed:
 - in-process multi-client contract coverage;
 - real-network multi-client smoke execution in CI;
 - primary-source review supporting integrated live crew/controller rehearsal;
-- structured nominal + synthetic ΔP real-device/human-play protocol.
+- structured nominal + synthetic ΔP real-device/human-play protocol;
+- primary-source review constraining the first five-player compact-role configuration.
 
-The facilitator credential is a modern software safety boundary, **not** a claim about Apollo-era authentication. Integrated HTTP/browser validation mechanics are likewise modern infrastructure. See research notes 088–090.
+The facilitator credential is a modern software safety boundary, **not** a claim about Apollo-era authentication. Integrated HTTP/browser validation mechanics and bundled-player roles are likewise modern project adaptations. See research notes 088–091.
 
 ## Immediate next work
 
-The automated runnable-validation and protocol-definition boundaries are closed. The primary need is **physical multi-device/human execution**.
+The automated runnable-validation, live-play protocol, and first compact-role research boundaries are closed. The primary validation need remains **physical multi-device/human execution** of the full station model; compact-mode implementation can proceed separately without changing that PASS criterion.
 
 1. Execute `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` with separate real phone/browser clients for at least FLIGHT, CONTROL, CAPCOM, and GUIDO plus one facilitator console.
 2. Run the nominal PC+2 sequence first, including identity/rejoin/isolation checks, continuous GET, readiness, FLIGHT decision, and FLIGHT→CAPCOM handoff without hidden facilitator coaching.
 3. Repair blocking phone/network/station-presentation defects and add regression coverage where reproducible.
 4. Run the existing synthetic ΔP branch only after nominal coordination is coherent.
-5. Reopen historical research only when play exposes a concrete missing information, procedure, authority, or terminology dependency.
+5. Implement D-018 compact assignments by allowing a player to own multiple original stations while preserving station-scoped authority and provenance; target five-player mode first.
+6. Reopen historical research only when play or compact-mode implementation exposes a concrete missing information, procedure, authority, or terminology dependency.
 
 ## Explicitly deferred
 
@@ -145,7 +167,7 @@ The automated runnable-validation and protocol-definition boundaries are closed.
 - detailed DPS transient timing;
 - full RTCC trajectory propagator;
 - backroom/staff-support simulation;
-- low-player-count station aggregation;
+- four-player-or-smaller station aggregation;
 - multi-session/durable production persistence;
 - historically exact SimSup console UI;
 - named facilitator accounts or fine-grained admin permissions;
@@ -157,4 +179,4 @@ The automated runnable-validation and protocol-definition boundaries are closed.
 
 Domain/API tests include continuous-clock, declarative-event, crew-response, shutdown-evidence, client-role-separation, facilitator-authority, and multi-client integration coverage. The validation pass also repaired a stale admin-role UI test and invalid `/admin` evidence-class option values.
 
-As of 2026-09-12, GitHub Actions successfully executes the complete unit/integration suite, the real-network multi-client smoke against an ephemeral authorized Uvicorn server, and the documentation audit. A source-bounded physical playtest protocol is now documented. Remaining validation is actual multi-device/mobile and human-play execution; no PASS claim for that boundary is recorded yet.
+As of 2026-09-12, GitHub Actions successfully executes the complete unit/integration suite, the real-network multi-client smoke against an ephemeral authorized Uvicorn server, and the documentation audit. A source-bounded physical playtest protocol is documented, and the first five-player compact configuration is now source-constrained at the design level. Remaining validation is actual multi-device/mobile and human-play execution; no PASS claim for that boundary is recorded yet.
