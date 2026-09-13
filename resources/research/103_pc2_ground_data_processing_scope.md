@@ -14,7 +14,7 @@ This note resolves open question 13 for the current PC+2 slice. It does **not** 
 1. **Report of Apollo 13 Review Board, Appendix A — Baseline Data: Apollo 13 Flight Systems and Operations**, June 1970.  
    NTRS: https://ntrs.nasa.gov/citations/19700078804  
    Relevant material: Mission Support Areas, CCATS, RTCC, pp. A-133–A-137 (PDF pages approximately 164–168).  
-   Provenance note: the NTRS record/document identity is established here; this note does not assert the previously cited `NASA-TM-X-66473` designation because that report-number attribution has not yet been independently confirmed.
+   Provenance note: the NTRS record/document identity is established; the exact NASA TM-X designation remains unconfirmed and is therefore omitted.
 2. **Apollo MCC/MSFN Mission Configuration — Command, Communication, Telemetry, Tracking**, NASA-TM-X-64290, March 1970.  
    NTRS: https://ntrs.nasa.gov/citations/19700024253  
    Relevant material: MCC/MSFN architecture and RTCC general description.
