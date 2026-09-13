@@ -26,9 +26,10 @@ Status: **CURRENT — repository-side preparation and source-bounded scope work 
 - [x] primary-source review of LM subsystem dependencies and explicit decision-relevant spacecraft-physics boundary;
 - [x] primary-source review of MSFN/CCATS/RTCC support functions and explicit decision-relevant ground-data-processing boundary;
 - [x] primary-source review of LM instrumentation failure experience and explicit layered observation-failure boundary with no random first-playable faults;
-- [x] primary-source review of ground-to-crew procedure execution and explicit scenario-authored crew-action boundary with no separate first-playable crew player.
+- [x] primary-source review of ground-to-crew procedure execution and explicit scenario-authored crew-action boundary with no separate first-playable crew player;
+- [x] follow-up primary-source review of the 150-psi DPS inlet-pressure rule lineage, narrowing the leading candidate to fuel inlet / `GQ3611P` without asserting an Apollo 13-specific exact mapping.
 
-See decisions D-016–D-021 and research notes 084–105.
+See decisions D-016–D-021 and research notes 084–106.
 
 ## Continuous-time engine boundary
 
@@ -135,6 +136,26 @@ For the current slice:
 
 Reopen this boundary when a selected scenario materially depends on astronaut discretion, manual flying, onboard workload, ambiguous crew observations, or detailed checklist execution.
 
+## Inlet-pressure rule-lineage boundary
+
+Research note **106** revisits the deliberately unresolved 150-psi ground inlet-pressure criterion without changing the executable model.
+
+Apollo 13 CAPCOM explicitly told the crew that the PC+2 shutdown rules should be similar to **LOI Mode I abort with tight limits**. A surviving Apollo 10 DPS mission rule in that lineage states:
+
+- fuel inlet pressure <120 psi below 65% throttle;
+- **fuel inlet pressure <150 psi above 65% throttle**.
+
+Apollo 13 PC+2 spent most of its duration at maximum thrust after short 12.6% and 40% segments. LM-7-family data identify `GQ3611P` as engine-interface fuel pressure and `GQ4111P` as the separate oxidizer value.
+
+This makes fuel inlet / `GQ3611P` the leading historical candidate for the Apollo 13 150-psi ground criterion. It does **not** prove an Apollo 13-specific mapping because the reviewed Apollo 13 mission report continues to use generic “engine inlet pressure” wording and no exact CONTROL display/routing page has been recovered.
+
+Therefore:
+
+- keep the 150-psi ground rule `NOT_EVALUABLE`;
+- do not invent minimum/average/either-side aggregation;
+- do not create a synthetic combined `dps_inlet_pressure_psi`;
+- if `GQ3611P` is ever adopted before stronger evidence appears, label it explicitly as a lineage-based approximation.
+
 ## First nonnominal branch
 
 The synthetic PC+2 fuel/oxidizer ΔP path remains:
@@ -149,7 +170,7 @@ The normal `/` client contains station-authorized controller operations only. `/
 
 ## Live-device / human-play boundary
 
-Research notes 090 and 095–105 plus the testing protocol/preparation/reference/report files define the remaining physical validation. Players receive source-bounded station responsibilities/rules/procedures while remaining blind to nonnominal branch timing/content, hidden state, another station's private evidence, and intended diagnosis.
+Research notes 090 and 095–106 plus the testing protocol/preparation/reference/report files define the remaining physical validation. Players receive source-bounded station responsibilities/rules/procedures while remaining blind to nonnominal branch timing/content, hidden state, another station's private evidence, and intended diagnosis.
 
 Nominal PC+2 comes first and must continue through the immediate post-burn transition; synthetic ΔP follows only after nominal coordination is coherent. Observation faults beyond the authored synthetic branch and unsourced crew delays/errors must not be improvised during play.
 
@@ -187,7 +208,7 @@ Research note 100 resolves open question 19 for the current first playable. Apol
 1. use FLIGHT, CAPCOM, LM SYSTEMS, FLIGHT DYNAMICS, and INCO simultaneously;
 2. practice substation switching before timed play without scenario-specific disclosure;
 3. provide separate original-station reference sheets;
-4. observe TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure;
+4. observe TELMU↔CONTROL and GUIDO↔FIDO-RETRO switching under time pressure;
 5. verify readiness/action attribution and audit provenance stay tied to original stations;
 6. classify usability/instruction defects separately from historical/research defects.
 
@@ -195,10 +216,12 @@ Research note 100 resolves open question 19 for the current first playable. Apol
 
 Reopen historical, physical-model, observation-integrity, crew-action, or ground-processing work only for concrete information/procedure/authority/support/causal/data-path/crew-discretion dependencies exposed by validation. Player difficulty alone is not sufficient.
 
+Note 106 is retained as a bounded archival refinement discovered during repository continuation; it does not change the physical-validation priority or authorize additional first-playable mechanics.
+
 ## Explicitly deferred
 
 - exact console pixel/character reconstruction;
-- singular 150-psi inlet-pressure aggregation;
+- Apollo 13-specific proof that the 150-psi ground criterion maps directly to fuel-interface measurement `GQ3611P`; fuel inlet is now the leading lineage-supported candidate;
 - exact onboard 77-percent thrust indication;
 - detailed DPS transient timing beyond selected branch needs;
 - full six-degree-of-freedom spacecraft/orbital propagation;
