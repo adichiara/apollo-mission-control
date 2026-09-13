@@ -32,6 +32,9 @@ Current supplements:
 - `source-catalog/PC2_FLIGHT_CAPCOM_PRESENTATION_SOURCES.md` — mission-specific Flight Director and air-ground communication sources constraining the first FLIGHT and CAPCOM renderings.
 - `source-catalog/PC2_SESSION_INTEGRATION_SOURCES.md` — historical/state-machine sources governing the first authoritative playable-session orchestration layer.
 - `source-catalog/PC2_FINAL_LOAD_UPLINK_SOURCES.md` — mission-specific primary evidence for the staged final PC+2 state-vector/target-load/uplink workflow across Flight Dynamics, GUIDO, INCO, CAPCOM/crew, and FLIGHT, with exact vector and ground-command internals explicitly deferred.
+- `source-catalog/PC2_POSTBURN_SOURCES.md` — primary Apollo 13 evidence for the immediate post-PC+2 maneuver assessment, initial LM power-down, retained communications/guidance functions, and PTC-preparation boundary.
+- `source-catalog/PC2_SPACECRAFT_MODEL_SCOPE_SOURCES.md` — primary Apollo/NASA LM subsystem sources constraining the amount of spacecraft physics required by the first playable and supporting the decision-relevant causal-fidelity rule.
+- `source-catalog/PC2_GROUND_DATA_PROCESSING_SOURCES.md` — Apollo 13 Review Board and March 1970 MCC/MSFN sources constraining MSFN/CCATS/RTCC behavior to decision-relevant tracking, telemetry, trajectory, display, and command/load services rather than full ground-computer emulation.
 - `source-catalog/PC2_BACKROOM_SUPPORT_SOURCES.md` — Apollo 13 primary evidence for Staff Support Room/backroom functions and the first-playable rule that omits separate backroom players without pretending the historical support structure did not exist.
 - `source-catalog/WEB_TRANSPORT_SOURCES.md` — current Render/FastAPI platform documentation supporting the first phone-accessible transport and deployment shell.
 - `source-catalog/FACILITATOR_AUTHORITY_SOURCES.md` — primary NASA simulation-control sources plus current Render secret-management sources supporting the facilitator/controller authority boundary.
@@ -62,6 +65,9 @@ Latest scenario-integration research:
 - `research/098_pc2_final_state_vector_target_load_uplink.md` — resolves the first-playable final-load workflow into a source-backed staged FIDO/GUIDO/INCO/CAPCOM/crew/FLIGHT process while leaving exact vector contents, RTCC/CCATS internals, controller keying, and transmission duration unfrozen.
 - `research/099_pc2_final_load_staged_implementation.md` — carries note 098 into executable solution/load/uplink states and station-scoped products while preserving the same explicit evidence limits.
 - `research/100_pc2_backroom_staff_support_boundary.md` — documents Apollo 13 SSR support and resolves the current first-playable boundary: backrooms remain acknowledged but non-playable until a scenario exposes a concrete support-product dependency.
+- `research/101_pc2_immediate_postburn_verification_powerdown.md` — establishes the source-backed immediate post-PC+2 sequence through maneuver assessment, initial LM power-down, and PTC preparation without inventing console keying or full PTC dynamics.
+- `research/102_pc2_spacecraft_physical_model_scope.md` — resolves how much spacecraft physics the first playable needs: causal DPS, guidance/control, electrical availability, communications, and observation-integrity state only where a sourced player decision or selected failure mechanism depends on it.
+- `research/103_pc2_ground_data_processing_scope.md` — resolves how much MSFN/CCATS/RTCC behavior the first playable needs: functional tracking/telemetry/trajectory/display/load services and data-quality consequences only where a sourced player decision depends on them; internal ground-computer emulation remains deferred.
 
 ## Research rule
 

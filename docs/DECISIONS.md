@@ -168,12 +168,30 @@ FLIGHT and CAPCOM stay independent in the recommended compact mode because their
 
 Physical five-player human/device validation is still required before compact mode is recorded as play-validated.
 
-See:
+See research notes 091–094 and `resources/source-catalog/PC2_LOW_PLAYER_COUNT_SOURCES.md`.
 
-- `resources/research/091_low_player_count_station_aggregation_boundary.md`
-- `resources/research/092_multi_station_player_ownership.md`
-- `resources/research/093_compact_http_browser_integration.md`
-- `resources/source-catalog/PC2_LOW_PLAYER_COUNT_SOURCES.md`
+## D-019 — PC+2 spacecraft physics uses decision-relevant causal fidelity
+
+**Status:** Accepted for the current first playable  
+**Date:** 2026-09-13
+
+The Apollo 13 PC+2 first playable does not attempt complete LM/CSM physical emulation. A spacecraft mechanism is modeled when it is required to generate sourced player information, enforce a sourced rule/procedure, or support a selected failure branch.
+
+Required causal domains are:
+
+- DPS/maneuver state;
+- guidance/attitude/control state;
+- coarse electrical configuration and equipment availability;
+- communications/uplink/ranging availability;
+- instrumentation/observation validity and freshness.
+
+Full ECS/CSM subsystem physics, full six-degree-of-freedom propagation, pulse-level RCS dynamics, detailed battery/wiring physics, RF propagation/modulation, complete LM instrumentation, and internal RTCC/CCATS emulation remain deferred until a sourced controller decision or selected failure mechanism depends on them.
+
+This is a scope boundary, not permission to invent or collapse unresolved historical mechanisms. The required chain is:
+
+`historical/player decision dependency → physical cause → sensed/processed observation → station product/action`
+
+See `resources/research/102_pc2_spacecraft_physical_model_scope.md` and `resources/source-catalog/PC2_SPACECRAFT_MODEL_SCOPE_SOURCES.md`.
 
 ## Not yet decided
 
