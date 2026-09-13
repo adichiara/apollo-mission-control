@@ -34,7 +34,7 @@ The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation
 
 The model now includes source-backed PC+2 progression, continuous mission time, station-specific products, shutdown/restart branches, explicit communication/action/physical/evidence layers, first-pass views for CONTROL/GUIDO/TELMU/FIDO-RETRO/INCO/FLIGHT/CAPCOM, browser rejoin, CAPCOM handoff, audit logging, the source-bounded synthetic ΔP branch through fresh CONTROL evidence, facilitator authority, automated multi-client validation, end-to-end compact station-set ownership through the HTTP/browser layer, a structured live-play evidence/debrief package, a reproducible scenario-blind player-preparation package, a source-constrained first-run player reference packet, a source-bounded staged final state-vector/target-load/uplink workflow, a source-bounded immediate post-burn closure, decision-relevant spacecraft and ground-processing scope, a layered observation-failure boundary, and an explicit scenario-authored crew-action boundary.
 
-Research note 106 narrows the 150-psi ground inlet-pressure gap toward fuel inlet / `GQ3611P` without asserting an Apollo 13-specific exact mapping. Research note **107** now identifies the crew percent-thrust instrument family as the LM panel-1 **CMD THRUST / ENG THRUST** indicator. The ENG scale is the source-backed actual-engine-thrust percent indication; the exact point at which the 77-percent shutdown rule becomes applicable after the commanded 12.6-percent/40-percent startup segments remains unresolved.
+Research note 106 narrows the 150-psi ground inlet-pressure gap toward fuel inlet / `GQ3611P` without asserting an Apollo 13-specific exact mapping. Research note 107 identifies the crew percent-thrust instrument family as the LM panel-1 **CMD THRUST / ENG THRUST** indicator. Research note **108** now bounds the 77-percent criterion's first-playable applicability: it is inactive during the intentionally commanded low-thrust startup and becomes applicable on entry to maximum/full throttle. The Apollo 13 Technical Crew Debriefing fixes that nominal transition at **burn +26 seconds**. This gate is explicitly a lineage-based historical inference rather than a verbatim recovered Apollo 13 rule qualifier, and it does not synthesize a crew ENG THRUST value from hidden engine state.
 
 The compact HTTP/browser path and staged final-load regression coverage are recorded as passing automated CI. The remaining major validation boundary is real-device/browser and human-play execution.
 
@@ -137,13 +137,13 @@ Research notes 102–105 constrain the causal/data-integrity/crew-action model. 
 - Hidden product integrity never appears automatically in a player view.
 - Exact CRT/console layouts are not invented where evidence is incomplete.
 - For the 150-psi ground inlet-pressure rule, fuel inlet / `GQ3611P` is the leading rule-lineage candidate, but it is not represented as an Apollo 13-specific proven mapping.
-- The 77-percent onboard rule is associated with the LM CMD/ENG THRUST instrument family; ENG THRUST is the actual-thrust percent scale. The crew indication remains distinct from ground chamber-pressure telemetry.
+- The 77-percent onboard rule is associated with the LM CMD/ENG THRUST instrument family; ENG THRUST is the actual-thrust percent scale. During nominal PC+2, first-playable applicability begins at the sourced full-throttle transition at burn +26 seconds; the crew indication remains distinct from ground chamber-pressure telemetry and from hidden engine state.
 
 ## Remaining bounded historical gaps
 
 The singular PC+2 150-psi ground engine-inlet-pressure criterion remains `NOT_EVALUABLE`. Research note 106 narrows the lineage substantially: Apollo 13 explicitly related the PC+2 rules to LOI Mode I abort philosophy, surviving Apollo 10 DPS rules use **fuel inlet pressure <150 psi above 65% throttle**, and LM-7 identifies `GQ3611P` as engine-interface fuel pressure. However, no recovered Apollo 13-specific rule/display/routing source explicitly ties the PC+2 150-psi ground criterion to `GQ3611P`. Minimum, average, either-side, and synthetic combined inlet-pressure interpretations remain unsupported.
 
-Research note 107 closes the broader onboard-instrument identity gap: the percent-thrust crew indication is constrained to the panel-1 CMD THRUST / ENG THRUST instrument, with **ENG THRUST** the actual-engine-thrust percent scale. The narrower unresolved issue is the exact activation point for the 77-percent shutdown criterion during the deliberately commanded 12.6-percent and 40-percent startup segments. The executable rule therefore remains `NOT_EVALUABLE` until a source-bounded crew observation/applicability state exists.
+Research notes 107–108 close the broader onboard-instrument and first-playable startup-applicability gaps. The percent-thrust crew indication is constrained to the panel-1 CMD THRUST / ENG THRUST instrument, with **ENG THRUST** the actual-engine-thrust percent scale. The criterion is inactive during the commanded 12.6-percent/40-percent startup and becomes applicable on entry to maximum/full throttle, which the crew debrief places at burn +26 seconds. The exact Apollo 13 mission-rule qualifier has not been recovered, so that gate remains explicitly labeled a lineage-based approximation. The rule still requires a scenario-authored crew-visible ENG THRUST observation; hidden engine state is not converted into a gauge value.
 
 Detailed DPS transients, exact display routing/cadence, exact final-load RTCC/CCATS internals, and a post-burn FIDO trajectory propagator remain deferred until a concrete dependency requires them. Generic/random telemetry-failure probabilities, durations, bias/noise distributions, correlations, recovery times, and unsourced crew-error behavior are not invented.
 
@@ -157,7 +157,7 @@ Detailed DPS transients, exact display routing/cadence, exact final-load RTCC/CC
 6. Repair reproducible network/mobile/presentation/instruction defects and add regression coverage.
 7. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, terminology, player-count dependency, causal spacecraft mechanism, observation-integrity failure, crew-discretion dependency, or ground-data-path dependency.
 
-Research notes 106–107 are bounded archival refinements and do not change that priority ordering.
+Research notes 106–108 are bounded archival refinements and do not change that priority ordering.
 
 ## Apollo 13 station specifications
 
