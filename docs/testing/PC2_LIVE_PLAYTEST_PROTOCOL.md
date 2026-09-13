@@ -1,11 +1,25 @@
 # PC+2 live multi-device playtest protocol
 
 Date: 2026-09-12  
-Status: **READY FOR PHYSICAL EXECUTION — structured evidence/debrief package added 2026-09-13**
+Status: **READY FOR PHYSICAL EXECUTION — structured evidence/debrief and reproducible player preparation added 2026-09-13**
 
 Purpose: close the remaining first-playable boundary with actual phones/browsers and human operators while keeping historical findings distinct from modern browser/mobile usability findings.
 
-Use `PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` for each run. Research note 095 defines the evidence/debrief boundary.
+Use `PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` for each run. Research notes 095 and 096 define the evidence/debrief and player-preparation boundaries.
+
+## Required player preparation
+
+Before a run used for first-playable validation, use `PC2_PLAYER_PREPARATION.md` rather than an ad hoc oral briefing.
+
+For every participant record that:
+
+- [ ] the common briefing was reviewed;
+- [ ] station-specific responsibilities, products, actions, and relevant rules/procedures were available;
+- [ ] basic client-operation checks were completed;
+- [ ] compact players, if used, practiced one substation switch and could identify the active original station;
+- [ ] the briefing did **not** reveal whether/when a nonnominal branch would occur, hidden state, another station's private evidence, or the intended diagnosis/decision.
+
+Players may consult their assigned rules/procedures during timed play. The validation target is use of available operational information and judgment, not memorization.
 
 ## Minimum setup
 
@@ -67,8 +81,10 @@ Defect classes:
 - `SIMULATION_BEHAVIOR` — modeled state/action/evidence behavior is wrong or incomplete;
 - `STATION_PRESENTATION` — correct information exists but is unclear/poorly organized;
 - `NETWORK_CLIENT` — latency/reconnect/browser behavior;
-- `PLAYER_INSTRUCTION` — player lacks project instructions/training, not mission information;
+- `PLAYER_INSTRUCTION` — required project preparation/instructions were absent or insufficient, not mission information;
 - `NORMAL_DECISION_UNCERTAINTY` — uncertainty is legitimate and should not automatically become a defect.
+
+Before classifying an incident as `PLAYER_INSTRUCTION`, check the participant's preparation record. If the expected information was included and available but remained difficult to locate or understand, consider `STATION_PRESENTATION` or another appropriate class instead.
 
 Player confusion or a difficult decision is **not by itself evidence for a historical change**. Any change to historical procedure, authority, information, terminology, or modeled Apollo behavior requires separate source review.
 
@@ -109,6 +125,7 @@ Record especially:
 
 The live-device boundary is considered passed when:
 
+- the documented player-preparation package was used and preparation records were captured;
 - all required real-device identity/rejoin and authority-isolation checks work;
 - shared GET remains coherent enough for normal play;
 - the nominal PC+2 coordination path is completed by human operators without hidden facilitator guidance;
@@ -138,6 +155,7 @@ Use `docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md`. At minimum the complete
 - date/server build or commit;
 - participating stations and devices;
 - nominal or ΔP scenario;
+- player-preparation record;
 - result: PASS / PASS WITH NONBLOCKING DEFECTS / BLOCKED;
 - incident-level evidence;
 - blocking defects;
@@ -148,8 +166,10 @@ Use `docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md`. At minimum the complete
 
 ## Historical boundary
 
-The integrated-role concept is source-backed by Apollo/NASA simulation-training material. Apollo mission-rule evidence also supports observing how controllers use rules and judgment during training. The checklist's phone/browser, reload, latency, token, defect-taxonomy, and report-format criteria are modern project validation mechanics and are not presented as Apollo-era procedures.
+The integrated-role concept is source-backed by Apollo/NASA simulation-training material. Apollo mission-rule evidence also supports observing how controllers use rules and judgment during training. Primary Apollo controller-training evidence supports giving players station responsibilities, procedures/rules, and system context before integrated simulation; it does not establish this project's briefing format or duration.
+
+The checklist's phone/browser, reload, latency, token, compact-role, preparation-record, defect-taxonomy, and report-format criteria are modern project validation mechanics and are not presented as Apollo-era procedures.
 
 Later NASA simulation/debrief practice is used only as supporting validation-process evidence, not as a claim about the exact Apollo 13 debrief format.
 
-See research notes 090 and 095 and `resources/source-catalog/LIVE_HUMAN_PLAY_VALIDATION_SOURCES.md`.
+See research notes 090, 095, and 096; `resources/source-catalog/LIVE_HUMAN_PLAY_VALIDATION_SOURCES.md`; `docs/testing/PC2_PLAYER_PREPARATION.md`; and `docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md`.
