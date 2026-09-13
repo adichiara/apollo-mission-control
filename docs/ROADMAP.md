@@ -20,7 +20,7 @@ Core Apollo 13 front-room positions are at B or better, with EECOM at A. Exact c
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, beginning near **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–102**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note 101 resolves immediate post-burn closure; note **102** resolves the spacecraft-physics scope as a decision-relevant causal model rather than full-spacecraft emulation.
+The primary research chain now runs through notes **048–103**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note 101 resolves immediate post-burn closure; note 102 resolves the spacecraft-physics scope as a decision-relevant causal model; note **103** resolves MSFN/CCATS/RTCC scope as functional ground-data services rather than full ground-computer emulation.
 
 Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
@@ -40,13 +40,15 @@ First-pass views exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and 
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** first-playable authoritative model, compact transport/client integration, staged final-load workflow, and physical-model scope boundary established; physical multi-device execution remains.
+**Status:** first-playable authoritative model, compact transport/client integration, staged final-load workflow, spacecraft-model boundary, and ground-data-processing boundary established; physical multi-device execution remains.
 
 Implemented architecture includes station-specific projections, explicit injection/action/communication/decision/physical/evidence layers, `PC2Session`, continuous mission time, readiness/FLIGHT decisions, CAPCOM queue/transmission, audit logging, facilitator authority, browser rejoin, compact station-set ownership, and staged final PC+2 solution/uplink state.
 
 Decision **D-016** remains canonical: GET advances whenever RUNNING; controller decisions do not stop GET; only explicit session pause stops time; ineligible nominal events are missed rather than replayed later.
 
-Decision **D-019** now bounds spacecraft physics to sourced decision dependencies. Required causal domains are DPS/maneuver state, guidance/attitude/control state, coarse electrical/equipment availability, communications/uplink/ranging availability, and instrumentation observation integrity. Full-spacecraft emulation is not a first-playable requirement.
+Decision **D-019** bounds spacecraft physics to sourced decision dependencies. Required causal domains are DPS/maneuver state, guidance/attitude/control state, coarse electrical/equipment availability, communications/uplink/ranging availability, and instrumentation observation integrity. Full-spacecraft emulation is not a first-playable requirement.
+
+Research note **103** applies the same admission rule to MCC ground systems: MSFN/CCATS/RTCC are represented through decision-relevant availability, quality, routing, and generated-product states. IBM/UNIVAC internals, exact support-console keying, internal message formats, full network routing/geometry, and unsupported delays/failure rates are not first-playable requirements.
 
 The synthetic ΔP branch remains explicitly non-historical and source-bounded:
 
@@ -54,13 +56,17 @@ The synthetic ΔP branch remains explicitly non-historical and source-bounded:
 
 ## Phase 5 — Mission Control data path
 
-**Status:** first-slice architecture established.
+**Status:** first-slice architecture and ground-processing scope established.
 
 The project preserves:
 
 `spacecraft/source state → instrumentation/telemetry → communications/ground processing → controller products → controller interpretation → player presentation → controller decisions/communications`
 
-Research note 102 reinforces that this chain is also the physical-model admission test: a new subsystem mechanism belongs in the first playable only when a sourced player decision, observable, rule, or selected failure path depends on it.
+Research note 102 reinforces that this chain is the physical-model admission test. Research note 103 now defines the ground-processing portion explicitly:
+
+`MSFN source/path → CCATS reception/routing/processing → RTCC processing/product generation → station-visible product/status`
+
+Only states that materially affect a sourced player decision or selected failure path enter the executable model. Tracking/ranging quality remains distinct from generated trajectory products, and ground systems must not leak hidden spacecraft truth.
 
 The final PC+2 load path remains:
 
@@ -86,7 +92,7 @@ Still intentionally unresolved where evidence is insufficient: exact onboard 77-
 
 **Status:** repository-side first-playable preparation complete; physical validation remains.
 
-Live-play protocol, structured evidence/debrief capture, scenario-blind player preparation/reference packet, facilitator separation, compact-mode integration, staged final-load workflow, backroom scope rule, source-bounded post-burn closure, and decision-relevant spacecraft-model scope are documented.
+Live-play protocol, structured evidence/debrief capture, scenario-blind player preparation/reference packet, facilitator separation, compact-mode integration, staged final-load workflow, backroom scope rule, source-bounded post-burn closure, decision-relevant spacecraft-model scope, and functional ground-data-processing scope are documented.
 
 Modern HTTP/browser/localStorage/token/report/preparation/reference-packet mechanics are project infrastructure, not Apollo reconstruction.
 
@@ -102,7 +108,7 @@ The primary remaining validation boundary is **physical human/device execution**
 6. Exercise the approved five-player compact configuration with simultaneous clients, especially TELMU↔CONTROL and GUIDO↔FIDO-RETRO switching.
 7. Verify station-qualified readiness/action attribution and information isolation in facilitator audit output.
 8. Repair reproducible network/mobile/presentation/instruction defects and add regression coverage.
-9. Reopen historical or physical-model research only when validation exposes a concrete missing procedure, authority, information, terminology, display, support-room product, player-count dependency, or causal spacecraft mechanism.
+9. Reopen historical, spacecraft-model, or ground-processing research only when validation exposes a concrete missing procedure, authority, information, terminology, display, support-room product, player-count dependency, causal spacecraft mechanism, or ground-data-path dependency.
 
 ## Explicitly deferred
 
@@ -116,6 +122,7 @@ The primary remaining validation boundary is **physical human/device execution**
 - detailed battery chemistry, wiring, breaker, and RF propagation/modulation physics;
 - complete LM instrumentation-channel emulation;
 - full RTCC trajectory propagator and internal RTCC/CCATS computation;
+- IBM 360/75 or UNIVAC 494 emulation, exact support-console keying, internal ground-system message formats, full MSFN routing/geometry, or unsupported processing delays/failure rates;
 - exact PC+2 RTCC Cartesian vector contents/internal RTCC-CCATS load-keying/final-load transmission duration;
 - exact post-burn controller console keying and switch-by-switch LM power-down timing;
 - full PTC dynamics before a concrete scenario need;
@@ -132,4 +139,4 @@ The primary remaining validation boundary is **physical human/device execution**
 
 Automated coverage includes continuous-clock/event rules, crew response, shutdown evidence, player/admin separation, facilitator authority, multi-client integration, multi-station ownership, compact HTTP/browser contracts, and staged PC+2 final-load transitions/station products.
 
-Research notes 095–102 and associated testing/scope documentation improve physical-run evidence quality and scenario closure but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
+Research notes 095–103 and associated testing/scope documentation improve physical-run evidence quality and scenario closure but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
