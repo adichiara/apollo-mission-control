@@ -39,10 +39,10 @@ Players are intended to be physically together and communicate as a team.
 
 ## D-006 — One controller station per player
 
-**Status:** Accepted in principle  
+**Status:** Superseded in part by D-018  
 **Date:** 2026-09-11
 
-Each player assumes responsibility for a Mission Control role/station. Role aggregation for low player counts is expected to be necessary but is **not yet designed**.
+The full-fidelity configuration assigns one Mission Control role/station per player. Low-player-count aggregation was left for later design; D-018 now defines the first compact PC+2 configuration while retaining original station identities underneath bundled player roles.
 
 ## D-007 — Phone-based station interface
 
@@ -145,12 +145,32 @@ The credential mechanism (`APOLLO_FACILITATOR_TOKEN` / `X-Apollo-Facilitator`) i
 
 See `resources/research/088_facilitator_authority_boundary.md`.
 
+## D-018 — Compact PC+2 mode uses five players while preserving original station identities
+
+**Status:** Accepted as first compact configuration; implementation pending  
+**Date:** 2026-09-12
+
+For the Apollo 13 PC+2 first playable, the recommended low-player-count configuration is five human players:
+
+- FLIGHT;
+- CAPCOM;
+- LM SYSTEMS = TELMU + CONTROL;
+- FLIGHT DYNAMICS = GUIDO + FIDO/RETRO;
+- INCO.
+
+This is a **project adaptation**, not a claim about historical Apollo 13 manning. Primary Apollo sources group TELMU/CONTROL within spacecraft systems operations and FIDO/RETRO/GUIDO within Flight Dynamics, but continue to document the underlying positions separately.
+
+Implementation must therefore allow one player to own multiple **original station identities** rather than replacing those identities with synthetic domain stations. Products, readiness, actions, authorization, and audit entries remain attributable to TELMU, CONTROL, GUIDO, FIDO/RETRO, etc.
+
+FLIGHT and CAPCOM stay independent in the recommended compact mode because their final-decision and crew-voice functions are distinct authority boundaries. INCO also stays independent; a four-player CAPCOM+INCO bundle is not accepted at this stage.
+
+See `resources/research/091_low_player_count_station_aggregation_boundary.md` and `resources/source-catalog/PC2_LOW_PLAYER_COUNT_SOURCES.md`.
+
 ## Not yet decided
 
 The following are deliberately not decisions:
 
-- minimum player count;
-- exact controller combinations by player count;
+- four-player-or-smaller station aggregation;
 - durable session persistence/storage architecture;
 - realtime push mechanism (polling vs SSE/WebSockets);
 - degree of RTCC/CCATS/MSFN emulation beyond what the first scenario requires;
