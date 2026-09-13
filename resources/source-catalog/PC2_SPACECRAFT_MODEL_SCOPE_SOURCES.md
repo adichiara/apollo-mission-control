@@ -12,7 +12,7 @@ Purpose: constrain how much spacecraft physics the Apollo 13 PC+2 first playable
 - Stable copy reviewed: https://www.ibiblio.org/apollo/Documents/19720018206.pdf
 - NASA/NTRS document ID: 19720018206.
 - Status: **REVIEWED for model-scope question**.
-- Relevant evidence: LM instrumentation processed approximately 250 measurements for display, caution/warning, and telemetry; the subsystem monitored LM systems and prepared data for MSFN transmission.
+- Relevant evidence: LM instrumentation processed a broad set of measurements for display, caution/warning, and telemetry; the subsystem monitored LM systems and prepared data for MSFN transmission.
 - Scope consequence: preserve physical-state → sensor/conditioning → telemetry/product → controller-interpretation separation, while modeling only channels needed by this scenario.
 
 ### Apollo Experience Report — Descent Propulsion System
