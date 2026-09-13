@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — automated/network multi-client validation artifacts implemented; actual suite/deployment/phone execution is next**
+Status: **CURRENT — automated in-process and real-network validation passing; real-device/browser play validation is next**
 
 ## Completed checkpoints
 
@@ -21,7 +21,9 @@ Status: **CURRENT — automated/network multi-client validation artifacts implem
 - [x] facilitator authority kept separate from all controller station identities;
 - [x] primary-source review of integrated flight-controller simulation as the validation model;
 - [x] in-process multi-client contract test across FLIGHT/CONTROL/CAPCOM/GUIDO + facilitator;
-- [x] destructive real-network multi-client smoke runner for dedicated validation deployments;
+- [x] destructive real-network multi-client smoke runner;
+- [x] complete unit/integration suite passing in GitHub Actions;
+- [x] real TCP/HTTP smoke passing in GitHub Actions against an ephemeral authorized Uvicorn server;
 - [x] admin UI evidence-class values reconciled with the server enum;
 - [x] stale pre-authorization UI contract assertion repaired.
 
@@ -57,49 +59,41 @@ This is a modern software safety boundary. Historical NASA sources support the o
 
 Research note 089 uses primary NASA simulation-training evidence to justify validating the controller environment as an integrated system while keeping facilitator/simulation-control functions distinct.
 
-`tests/test_web_multiclient_integration.py` now protects the in-process contract for:
+`tests/test_web_multiclient_integration.py` protects the in-process contract for shared authoritative state, station-scoped operational information, rejoin, occupied-station protection, facilitator authority isolation, explicit pause semantics, and complete synthetic ΔP propagation/evidence ordering.
 
-- shared authoritative state across independent clients;
-- station-scoped operational information;
-- same-player/same-station rejoin;
-- occupied-station and station-switch rejection;
-- facilitator authority isolation;
-- explicit pause semantics;
-- complete synthetic ΔP propagation and evidence ordering.
+`scripts/pc2_multiclient_smoke.py` carries those checks into a real HTTP environment and adds simultaneous station polling.
 
-`scripts/pc2_multiclient_smoke.py` carries the same checks into a real HTTP environment and adds simultaneous station polling.
+GitHub Actions now runs both the full unit/integration suite and that smoke runner against an ephemeral localhost Uvicorn server with facilitator authorization enabled. Both are recorded as passing.
 
-Neither artifact is recorded as executed/passing in this automation environment.
+## Active priority — live multi-device validation
 
-## Active priority — execute runnable validation
-
-1. execute the complete domain/session/API test suite in a checked-out runtime;
-2. run `scripts/pc2_multiclient_smoke.py` against a dedicated local/Render instance;
-3. run one facilitator console plus several simultaneous real phone station clients;
-4. verify realtime GET under concurrent polling/actions and real network latency;
-5. verify facilitator pause/resume, player reload/rejoin, and station information isolation on actual browsers;
-6. repair usability/integration problems exposed by live multi-client operation;
-7. reopen historical research only if integrated play exposes a concrete missing procedure or information dependency.
+1. run one facilitator console plus several simultaneous real phone station clients against one dedicated server;
+2. verify realtime GET under real browser/network latency;
+3. verify facilitator pause/resume, player reload/rejoin, and station information isolation on actual browsers;
+4. run the nominal PC+2 sequence with human operators and assess FLIGHT/CAPCOM handoff ergonomics;
+5. repair usability/integration problems exposed by live multi-client operation;
+6. reopen historical research only if integrated play exposes a concrete missing procedure or information dependency.
 
 ## Integration validation still required
 
-Covered by automated contract tests but still requiring actual execution in a runnable environment:
+Covered and executed automatically:
 
-- reload/rejoin state preservation;
-- station information isolation;
-- explicit pause as the normal clock stop;
-- end-to-end ΔP evidence boundaries;
+- complete unit/integration suite;
+- in-process multi-client station isolation;
+- real TCP/HTTP concurrent polling and actions;
+- reload/rejoin contract;
+- explicit pause behavior;
+- ΔP evidence boundaries;
 - facilitator/player authority isolation.
 
 Still requiring live/deployed validation:
 
-- full-suite execution;
-- real concurrent HTTP polling/actions;
 - real phone/browser reload/rejoin;
-- continuous GET behavior under network latency;
+- continuous GET behavior under external network latency;
 - phone readability and action ergonomics;
-- nominal PC+2 completion in a full live playthrough;
-- missed-event behavior during real late-controller decisions.
+- nominal PC+2 completion with human operators;
+- missed-event behavior during real late-controller decisions;
+- FLIGHT/CAPCOM handoff under actual play.
 
 ## Explicitly deferred
 
@@ -119,4 +113,4 @@ Still requiring live/deployed validation:
 
 ## Current success criterion
 
-A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior—validated both by automated contracts and an actual multi-device network run.
+A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior—validated automatically in-process and over real HTTP, then verified in an actual multi-device human play session.
