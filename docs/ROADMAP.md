@@ -28,11 +28,11 @@ Further historical work is demand-driven by integrated play or a concrete scenar
 
 ## Phase 2 — First playable mission/scenario
 
-**Status:** selected and implemented to first-playable integration level.
+**Status:** selected and implemented to first-playable integration level; live human/device execution remains.
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, starting at approximately **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–089**, including controller actions/rules, initialization, nominal timing, product projections, shutdown/restart behavior, station presentations, authoritative session integration, continuous mission time, the ΔP nonnominal path, crew/vehicle response, fresh controller evidence, player/admin UI separation, facilitator authority, and integrated multi-client validation boundaries.
+The primary research chain now runs through notes **048–090**, including controller actions/rules, initialization, nominal timing, product projections, shutdown/restart behavior, station presentations, authoritative session integration, continuous mission time, the ΔP nonnominal path, crew/vehicle response, fresh controller evidence, player/admin UI separation, facilitator authority, integrated multi-client validation, and the live-device/human-play validation boundary.
 
 Current first-playable integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
@@ -80,7 +80,11 @@ The 26 psi exercise is explicitly non-historical. No unsupported internal routin
 
 `scripts/pc2_multiclient_smoke.py` exercises the same boundaries over real TCP/HTTP: simultaneous station polling, rejoin, pause/resume, authority isolation, the complete synthetic ΔP branch, controller evidence, and audit ordering.
 
-GitHub Actions now launches a dedicated ephemeral Uvicorn server with facilitator authorization enabled and runs both the complete unit/integration suite and the real-network smoke successfully. This is not a claim that deployed/mobile validation has already passed.
+GitHub Actions launches a dedicated ephemeral Uvicorn server with facilitator authorization enabled and runs both the complete unit/integration suite and the real-network smoke successfully. This is not a claim that deployed/mobile validation has already passed.
+
+### Live-device / human-play protocol
+
+Research note 090 and `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` define the remaining physical validation as a structured integrated mission rehearsal. Apollo/NASA sources support combined crew/controller mission-environment simulation and decisionmaking/procedure readiness, but do not establish mobile UI, browser reload, HTTP latency, or token-authentication criteria. Those remain explicitly modern project concerns.
 
 ## Phase 5 — Mission Control data path
 
@@ -102,7 +106,7 @@ Intentionally unresolved where appropriate: exact onboard 77-percent thrust indi
 
 ## Phase 7 — Simulation scenarios / SimSup
 
-**Status:** source-bounded scenario architecture, facilitator authority, and automated integrated validation implemented.
+**Status:** source-bounded scenario architecture, facilitator authority, automated integrated validation, and live-play protocol implemented.
 
 Completed:
 
@@ -117,19 +121,21 @@ Completed:
 - Render-generated deployment secret with no credential committed to source;
 - primary-source review supporting integrated controller simulation validation;
 - in-process multi-client contract coverage;
-- real-network multi-client smoke execution in CI.
+- real-network multi-client smoke execution in CI;
+- primary-source review supporting integrated live crew/controller rehearsal;
+- structured nominal + synthetic ΔP real-device/human-play protocol.
 
-The facilitator credential is a modern software safety boundary, **not** a claim about Apollo-era authentication. Integrated HTTP/browser validation mechanics are likewise modern infrastructure. See research notes 088–089.
+The facilitator credential is a modern software safety boundary, **not** a claim about Apollo-era authentication. Integrated HTTP/browser validation mechanics are likewise modern infrastructure. See research notes 088–090.
 
 ## Immediate next work
 
-The automated runnable-validation boundary is now closed. The primary need is **live multi-device validation and playability review**, not additional subsystem or authorization complexity.
+The automated runnable-validation and protocol-definition boundaries are closed. The primary need is **physical multi-device/human execution**.
 
-1. Exercise several real phone/browser station clients plus one facilitator console against one dedicated authoritative server.
-2. Verify continuous GET, explicit facilitator pause/resume, reload/rejoin, station information isolation, and facilitator/player authority isolation under actual browser/network conditions.
-3. Run the nominal PC+2 sequence with human operators and verify FLIGHT/CAPCOM handoff ergonomics.
-4. Review phone readability and interaction during continuous realtime play and repair concrete usability defects.
-5. Reopen historical research only when integrated play exposes a concrete missing information, procedure, or decision dependency.
+1. Execute `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` with separate real phone/browser clients for at least FLIGHT, CONTROL, CAPCOM, and GUIDO plus one facilitator console.
+2. Run the nominal PC+2 sequence first, including identity/rejoin/isolation checks, continuous GET, readiness, FLIGHT decision, and FLIGHT→CAPCOM handoff without hidden facilitator coaching.
+3. Repair blocking phone/network/station-presentation defects and add regression coverage where reproducible.
+4. Run the existing synthetic ΔP branch only after nominal coordination is coherent.
+5. Reopen historical research only when play exposes a concrete missing information, procedure, authority, or terminology dependency.
 
 ## Explicitly deferred
 
@@ -151,4 +157,4 @@ The automated runnable-validation boundary is now closed. The primary need is **
 
 Domain/API tests include continuous-clock, declarative-event, crew-response, shutdown-evidence, client-role-separation, facilitator-authority, and multi-client integration coverage. The validation pass also repaired a stale admin-role UI test and invalid `/admin` evidence-class option values.
 
-As of 2026-09-12, GitHub Actions successfully executes the complete unit/integration suite, the real-network multi-client smoke against an ephemeral authorized Uvicorn server, and the documentation audit. Remaining validation is deployed/real-device and human-play usability validation, not automated execution availability.
+As of 2026-09-12, GitHub Actions successfully executes the complete unit/integration suite, the real-network multi-client smoke against an ephemeral authorized Uvicorn server, and the documentation audit. A source-bounded physical playtest protocol is now documented. Remaining validation is actual multi-device/mobile and human-play execution; no PASS claim for that boundary is recorded yet.
