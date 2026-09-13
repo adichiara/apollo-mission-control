@@ -24,9 +24,10 @@ Status: **CURRENT — repository-side preparation and source-bounded scope work 
 - [x] primary-source review of Apollo 13 Staff Support Room/backroom functions and explicit first-playable support-room scope boundary;
 - [x] primary-source review of immediate post-burn verification/power-down and explicit first-playable post-burn closure sequence;
 - [x] primary-source review of LM subsystem dependencies and explicit decision-relevant spacecraft-physics boundary;
-- [x] primary-source review of MSFN/CCATS/RTCC support functions and explicit decision-relevant ground-data-processing boundary.
+- [x] primary-source review of MSFN/CCATS/RTCC support functions and explicit decision-relevant ground-data-processing boundary;
+- [x] primary-source review of LM instrumentation failure experience and explicit layered observation-failure boundary with no random first-playable faults.
 
-See decisions D-016–D-019 and research notes 084–103.
+See decisions D-016–D-020 and research notes 084–104.
 
 ## Continuous-time engine boundary
 
@@ -95,6 +96,23 @@ For the first playable, represent these as functional services only when they af
 
 Relevant modeled concepts may include tracking/ranging availability and quality, trajectory-solution readiness, telemetry-path availability, and staged command/load transfer. Do not emulate IBM 360/75 or UNIVAC 494 execution, exact support-console keying, internal message formats, full MSFN routing/geometry, or invented processing delays/failure rates without a concrete sourced scenario dependency.
 
+## Observation-failure boundary
+
+Research note **104** and Decision **D-020** resolve open question 14 for the current PC+2 slice.
+
+Apollo LM instrumentation experience documents materially different failure classes: broken wiring that removes a measurement path, transducer/data shifts that can deliver wrong values, nuisance caution/warning indications, and signal-conditioning interface problems. Communications and ground processing are separate downstream layers.
+
+The simulator therefore preserves:
+
+`physical source → sensor/transducer → conditioning/PCM → communications/telemetry path → ground processing → station product`
+
+For the current first playable:
+
+- nominal PC+2 receives no added historical sensor fault;
+- the synthetic ΔP exercise is not retroactively explained as a failed transducer;
+- unavailable, stale/delayed, biased/shifted, warning-only, communications-path, and ground-product faults are model capabilities only when a scenario explicitly selects them;
+- unsupported probabilities, random failure rates, noise/bias magnitudes, durations, recovery timing, and correlations are not invented.
+
 ## First nonnominal branch
 
 The synthetic PC+2 fuel/oxidizer ΔP path remains:
@@ -109,9 +127,9 @@ The normal `/` client contains station-authorized controller operations only. `/
 
 ## Live-device / human-play boundary
 
-Research notes 090 and 095–103 plus the testing protocol/preparation/reference/report files define the remaining physical validation. Players receive source-bounded station responsibilities/rules/procedures while remaining blind to nonnominal branch timing/content, hidden state, another station's private evidence, and intended diagnosis.
+Research notes 090 and 095–104 plus the testing protocol/preparation/reference/report files define the remaining physical validation. Players receive source-bounded station responsibilities/rules/procedures while remaining blind to nonnominal branch timing/content, hidden state, another station's private evidence, and intended diagnosis.
 
-Nominal PC+2 comes first and must continue through the immediate post-burn transition; synthetic ΔP follows only after nominal coordination is coherent.
+Nominal PC+2 comes first and must continue through the immediate post-burn transition; synthetic ΔP follows only after nominal coordination is coherent. Observation faults beyond the authored synthetic branch must not be improvised during play.
 
 ## Compact five-player boundary
 
@@ -136,11 +154,11 @@ Research note 100 resolves open question 19 for the current first playable. Apol
 1. brief every player from `PC2_PLAYER_PREPARATION.md`, provide `PC2_PLAYER_REFERENCE_PACKET.md`, record preparation completion, and preserve scenario blindness;
 2. run one facilitator console plus separate real-phone/browser clients against one dedicated server;
 3. execute identity/rejoin/authority/isolation checks;
-4. complete nominal PC+2 through note-101 post-burn verification/power-down/PTC preparation without hidden facilitator coaching;
+4. complete nominal PC+2 through note-101 post-burn verification/power-down/PTC preparation without hidden facilitator coaching or improvised telemetry faults;
 5. assess FLIGHT/CAPCOM handoff, station readability, packet findability, staged final-load handoffs, and whether the post-burn transition needs more station-specific interaction;
 6. execute the synthetic ΔP run after nominal coordination is coherent;
 7. record incidents with preparation/station/build/GET/audit provenance;
-8. reopen spacecraft or ground-data-processing scope only if play exposes a sourced decision whose causal/data-path mechanism is absent.
+8. reopen spacecraft, observation-integrity, or ground-data-processing scope only if play exposes a sourced decision whose causal/data-path mechanism is absent.
 
 ### B. Execute five-player compact human validation
 
@@ -153,7 +171,7 @@ Research note 100 resolves open question 19 for the current first playable. Apol
 
 ### C. Reopen research only from evidence
 
-Reopen historical, physical-model, or ground-processing work only for concrete information/procedure/authority/support/causal/data-path dependencies exposed by validation. Player difficulty alone is not sufficient.
+Reopen historical, physical-model, observation-integrity, or ground-processing work only for concrete information/procedure/authority/support/causal/data-path dependencies exposed by validation. Player difficulty alone is not sufficient.
 
 ## Explicitly deferred
 
@@ -166,6 +184,7 @@ Reopen historical, physical-model, or ground-processing work only for concrete i
 - full LM ECS and dormant CSM subsystem physics for this slice;
 - detailed battery chemistry, wiring, breaker, RF propagation/modulation physics;
 - complete LM instrumentation-channel emulation;
+- random/generic instrumentation or telemetry failure generation, unsupported failure rates, noise distributions, fault durations, or recovery timing;
 - full RTCC trajectory propagator/internal RTCC-CCATS computation;
 - IBM 360/75 or UNIVAC 494 emulation, exact support-console keying, internal ground-system message formats, full MSFN routing/geometry, and unsupported processing delays/failure rates;
 - exact PC+2 RTCC Cartesian vector contents, RTCC/CCATS load-keying, and exact final-load transmission duration;
@@ -181,4 +200,4 @@ Reopen historical, physical-model, or ground-processing work only for concrete i
 
 ## Current success criterion
 
-A rejoin-safe, phone-accessible, continuously running authoritative mission in which prepared station players receive only source-bounded operational information/actions, a separately authorized facilitator controls exercise-wide functions, the nominal load process remains staged, successful PC+2 continues through a source-bounded post-burn verification/power-down transition, spacecraft physics and ground processing remain causal but scenario-bounded, compact play preserves original-station identities, and omitted historical support-room functions are not replaced with invented analysis. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries.
+A rejoin-safe, phone-accessible, continuously running authoritative mission in which prepared station players receive only source-bounded operational information/actions, a separately authorized facilitator controls exercise-wide functions, the nominal load process remains staged, successful PC+2 continues through a source-bounded post-burn verification/power-down transition, spacecraft physics and ground processing remain causal but scenario-bounded, observation faults remain layered and scenario-authored rather than random, compact play preserves original-station identities, and omitted historical support-room functions are not replaced with invented analysis. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries.
