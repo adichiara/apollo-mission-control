@@ -20,13 +20,13 @@ Core Apollo 13 front-room positions are at B or better, with EECOM at A. Exact c
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, beginning near **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–105**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note 101 resolves immediate post-burn closure while preserving an unresolved timing-source tension; note 102 resolves the spacecraft-physics scope as a decision-relevant causal model; note 103 resolves MSFN/CCATS/RTCC scope as functional ground-data services rather than full ground-computer emulation; note 104 resolves the first-playable sensor/telemetry-failure scope as layered, explicitly authored observation faults rather than a generic random telemetry-failure mechanic; note **105** resolves first-playable crew representation as an explicit scenario-authored external actor rather than an additional player or automatic controller-side effect.
+The primary research chain now runs through notes **048–106**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note 101 resolves immediate post-burn closure while preserving an unresolved timing-source tension; note 102 resolves the spacecraft-physics scope as a decision-relevant causal model; note 103 resolves MSFN/CCATS/RTCC scope as functional ground-data services rather than full ground-computer emulation; note 104 resolves the first-playable sensor/telemetry-failure scope as layered, explicitly authored observation faults rather than a generic random telemetry-failure mechanic; note 105 resolves first-playable crew representation as an explicit scenario-authored external actor rather than an additional player or automatic controller-side effect; note **106** narrows the unresolved 150-psi ground inlet-pressure lineage toward **fuel inlet pressure / `GQ3611P`** without claiming an Apollo 13-specific exact mapping or changing executable behavior.
 
 Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
 ### Player-count boundary
 
-Full configuration: seven station players — FLIGHT, CAPCOM, CONTROL, TELMU, GUIDO, FIDO/RETRO, INCO.
+Full configuration: seven station players — FLIGHT, CAPCOM, CONTROL, TELMU, GUIDO, FIDO/RETRO, and INCO.
 
 Minimum supported compact PC+2 configuration: five players — FLIGHT; CAPCOM; LM SYSTEMS = TELMU + CONTROL; FLIGHT DYNAMICS = GUIDO + FIDO/RETRO; INCO.
 
@@ -108,7 +108,9 @@ Research note **101** adds the first-playable post-burn sequence:
 
 Primary Apollo 13 records place nominal PC+2 ignition at 79:27:38.30 GET, record PGNS residuals R1 +00010 / R2 +00003 / R3 +00000, place an initial LM power-down transition at about 79+33–79+34 while retaining PTC-required functions, and place the detailed PTC procedure at about 79+52. A separate change-of-shift briefing describes a power-down timing of roughly cutoff +15 minutes; research note 101 preserves that as an unresolved timing-source tension rather than silently reconciling it. The project does not infer exact console keying, an unsupported formal post-burn poll, exact switch-by-switch timing, or full PTC dynamics.
 
-Still intentionally unresolved where evidence is insufficient: exact onboard 77-percent thrust indication, singular 150-psi inlet-pressure selection/aggregation, exact startup transient boundary, exact alternate-inverter detail, and exact final-load ground-system internals.
+Research note **106** revisits the unresolved 150-psi ground inlet-pressure criterion. Apollo 13 explicitly described the PC+2 rules as similar to LOI Mode I abort with tight limits; a surviving Apollo 10 DPS mission rule names **fuel inlet pressure <150 psi for >65% throttle**. LM-7 documentation identifies `GQ3611P` as engine-interface fuel pressure. This makes fuel inlet / `GQ3611P` the leading historical candidate, but Apollo 13-specific rule/display/routing evidence explicitly tying PC+2 to that measurement has not been recovered. The rule therefore remains `NOT_EVALUABLE`; no minimum/average/either-side or synthetic combined inlet-pressure product is authorized.
+
+Still intentionally unresolved where evidence is insufficient: Apollo 13-specific confirmation of the 150-psi fuel-inlet mapping, exact onboard 77-percent thrust indication, exact startup transient boundary, exact alternate-inverter detail, and exact final-load ground-system internals.
 
 ## Phase 7 — Simulation scenarios / SimSup
 
@@ -132,10 +134,12 @@ The primary remaining validation boundary is **physical human/device execution**
 8. Repair reproducible network/mobile/presentation/instruction defects and add regression coverage.
 9. Reopen historical, spacecraft-model, observation-integrity, crew-action, or ground-processing research only when validation exposes a concrete missing procedure, authority, information, terminology, display, support-room product, player-count dependency, causal spacecraft mechanism, observation failure, crew-discretion dependency, or ground-data-path dependency.
 
+Research note 106 is a bounded archival refinement, not a change to that priority ordering.
+
 ## Explicitly deferred
 
 - exact console pixel/character reconstruction;
-- singular 150-psi inlet-pressure aggregation without direct evidence;
+- Apollo 13-specific proof that the singular 150-psi ground criterion maps directly to fuel interface pressure `GQ3611P`; fuel inlet is the leading lineage-supported candidate, while minimum/average/either-side aggregation remains unsupported;
 - exact onboard 77-percent thrust indication without direct evidence;
 - detailed DPS transient timing beyond selected branch needs;
 - full six-degree-of-freedom spacecraft/orbital propagation;
@@ -164,4 +168,4 @@ The primary remaining validation boundary is **physical human/device execution**
 
 Automated coverage includes continuous-clock/event rules, crew response, shutdown evidence, player/admin separation, facilitator authority, multi-client integration, multi-station ownership, compact HTTP/browser contracts, and staged PC+2 final-load transitions/station products.
 
-Research notes 095–105 and associated testing/scope documentation improve physical-run evidence quality and scenario closure but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
+Research notes 095–106 and associated testing/scope documentation improve physical-run evidence quality and bounded historical interpretation but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
