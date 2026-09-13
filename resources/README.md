@@ -59,6 +59,7 @@ Latest scenario-integration research:
 - `research/096_live_play_player_preparation_boundary.md` — defines the reproducible pre-run knowledge boundary: players receive station responsibility, relevant rules/procedures, authority context, and modern client-operation knowledge while remaining blind to nonnominal branch timing/content, hidden state, and other stations' private information.
 - `research/097_live_play_reference_packet_structure.md` — defines the initial first-playable reference packet: separate common context, original-station sheets, neutral rule/criterion references, nominal phase/procedure context, and visibly modern client-operation instructions; unresolved historical criteria remain unresolved rather than becoming hints.
 - `research/098_pc2_final_state_vector_target_load_uplink.md` — resolves the first-playable final-load workflow into a source-backed staged FIDO/GUIDO/INCO/CAPCOM/crew/FLIGHT process while leaving exact vector contents, RTCC/CCATS internals, controller keying, and transmission duration unfrozen.
+- `research/099_pc2_final_load_staged_implementation.md` — carries note 098 into executable solution/load/uplink states and station-scoped products while preserving the same explicit evidence limits.
 
 ## Research rule
 
