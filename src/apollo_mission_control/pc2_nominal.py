@@ -70,6 +70,15 @@ class PC2State:
     ullage_jets_count: int = 0
     engine_running: bool = False
     throttle_phase: str = "off"
+    # Final PC+2 ground-computed load workflow. These are information-transfer
+    # states, not fabricated RTCC internals or proof of hidden load correctness.
+    pc2_solution_stage: str = "preliminary"
+    state_vector_load_status: str = "preliminary_loaded"
+    target_load_status: str = "preliminary_loaded"
+    uplink_configuration_ready: bool = False
+    final_load_requested: bool = False
+    final_load_transmission_started: bool = False
+    final_load_complete: bool = False
     # Optional modeled observations. None means the project has not supplied a
     # numerical value; it is not a claim of telemetry/product loss.
     dps_chamber_pressure_psi: float | None = None
@@ -131,6 +140,18 @@ def build_events(fixture: dict[str, Any]) -> list[SimEvent]:
     return sorted(events, key=lambda e: e.get_s)
 
 
+def _initial_state(fixture: dict[str, Any]) -> PC2State:
+    pgns = fixture["pgns"]
+    ground = fixture.get("ground_pc2", {})
+    return PC2State(
+        get_s=float(fixture["start_get_s"]),
+        lm_inverter_warning=bool(fixture["lm_power"]["inverter_warning"]),
+        pc2_solution_stage=str(ground.get("solution_stage", "preliminary")),
+        state_vector_load_status=str(pgns.get("state_vector_load_status", "preliminary_loaded")),
+        target_load_status=str(pgns.get("target_load_status", "preliminary_loaded")),
+    )
+
+
 def apply_event(state: PC2State, event: SimEvent, fixture: dict[str, Any]) -> None:
     state.get_s = event.get_s
     name = event.name
@@ -146,10 +167,29 @@ def apply_event(state: PC2State, event: SimEvent, fixture: dict[str, Any]) -> No
     elif name == "lm_burn_configuration_powerup":
         state.phase = "pc2_burn_configuration_powerup"
         state.burn_powered = True
+    elif name == "final_pc2_solution_ready":
+        state.pc2_solution_stage = "final_ready"
+        state.state_vector_load_status = "final_pending"
+        state.target_load_status = "final_pending"
+        state.phase = "pc2_final_ground_computer_support"
+    elif name == "final_load_requested":
+        state.final_load_requested = True
+        state.uplink_configuration_ready = True
+        state.phase = "pc2_final_uplink"
+    elif name == "final_load_transmission_started":
+        state.final_load_transmission_started = True
+        state.state_vector_load_status = "transmitting"
+        state.target_load_status = "transmitting"
+        state.phase = "pc2_final_uplink"
     elif name == "ranging_switch_verification_requested":
         state.phase = "pc2_final_ground_computer_support"
         state.ranging_enabled = True
     elif name == "computer_returned_to_crew":
+        state.final_load_complete = True
+        state.final_load_transmission_started = False
+        state.state_vector_load_status = "final_loaded"
+        state.target_load_status = "final_loaded"
+        state.pc2_solution_stage = "final_stable"
         state.computer_with_crew = True
         state.phase = "pc2_final_readiness"
     elif name == "final_go_no_go_poll":
@@ -192,10 +232,7 @@ def apply_event(state: PC2State, event: SimEvent, fixture: dict[str, Any]) -> No
 
 
 def run_nominal(fixture: dict[str, Any]) -> PC2State:
-    state = PC2State(
-        get_s=float(fixture["start_get_s"]),
-        lm_inverter_warning=bool(fixture["lm_power"]["inverter_warning"]),
-    )
+    state = _initial_state(fixture)
     for event in build_events(fixture):
         apply_event(state, event, fixture)
     return state
@@ -227,6 +264,14 @@ def validate_nominal(fixture: dict[str, Any], final_state: PC2State) -> list[str
 
     if final_state.shutdown_rule_triggers:
         errors.append("Nominal run triggered a shutdown rule.")
+    if not final_state.final_load_complete:
+        errors.append("Nominal run never completed the final PC+2 state-vector/target load.")
+    if final_state.state_vector_load_status != "final_loaded":
+        errors.append("Final state-vector load did not reach final_loaded.")
+    if final_state.target_load_status != "final_loaded":
+        errors.append("Final target load did not reach final_loaded.")
+    if final_state.pc2_solution_stage != "final_stable":
+        errors.append("Final PC+2 ground solution did not reach final_stable.")
     if not final_state.cutoff_complete:
         errors.append("Nominal run never reached guided cutoff.")
     if not final_state.residual_review_complete:
