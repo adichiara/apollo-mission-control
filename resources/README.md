@@ -24,6 +24,7 @@ Current supplements:
 - `source-catalog/PC2_DPS_SHUTDOWN_RESPONSE_SOURCES.md` — contemporary LM sources for crew STOP-pushbutton control, engine-off command routing, and DPS valve-response semantics.
 - `source-catalog/PC2_DPS_SHUTDOWN_CONFIRMATION_SOURCES.md` — mission-specific and contemporary evidence for crew voice shutdown report plus fresh GQ6510P chamber-pressure observation as distinct response-evidence channels, without an invented engine-off threshold.
 - `source-catalog/PC2_CREW_RESPONSE_SOURCES.md` — primary-source supplement for CAPCOM ground-call receipt, explicit crew shutdown command, physical DPS response separation, and its HTTP validation exposure.
+- `source-catalog/PC2_CREW_ACTION_REPRESENTATION_SOURCES.md` — primary Apollo 13/LM procedure evidence constraining the first-playable crew layer to explicit scenario-authored receipt/action steps rather than a separate player, automatic compliance, or random crew-error mechanics.
 - `source-catalog/PC2_CONTROL_PRESENTATION_SOURCES.md` — mission-specific Apollo 13 MSK 1123/1137 and PC+2 operational sources constraining the first player-facing CONTROL rendering.
 - `source-catalog/PC2_GUIDO_PRESENTATION_SOURCES.md` — mission-specific Apollo 13 MSK 1123/1137, LUMINARY 1C R-567, and PC+2 operational sources constraining the first player-facing GUIDO rendering.
 - `source-catalog/PC2_TELMU_PRESENTATION_SOURCES.md` — mission-specific PC+2 chronology, TELMU post-mission, Review Board, and inverter-rule sources constraining the first player-facing TELMU rendering.
@@ -70,6 +71,7 @@ Latest scenario-integration research:
 - `research/102_pc2_spacecraft_physical_model_scope.md` — resolves how much spacecraft physics the first playable needs: causal DPS, guidance/control, electrical availability, communications, and observation-integrity state only where a sourced player decision or selected failure mechanism depends on it.
 - `research/103_pc2_ground_data_processing_scope.md` — resolves how much MSFN/CCATS/RTCC behavior the first playable needs: functional tracking/telemetry/trajectory/display/load services and data-quality consequences only where a sourced player decision depends on them; internal ground-computer emulation remains deferred.
 - `research/104_pc2_sensor_telemetry_failure_scope.md` — resolves first-playable sensor/telemetry failure scope: no additional nominal historical instrumentation fault is added, while unavailable, stale/delayed, biased/shifted, warning-only, communications-path, and ground-product faults remain explicit scenario capabilities only when sourced or labeled synthetic.
+- `research/105_pc2_crew_action_representation_boundary.md` — resolves first-playable crew representation: no separate crew player; CAPCOM communication, crew receipt/action, spacecraft response, telemetry, and crew report remain explicit stages, with no invented random crew delay/error mechanics.
 
 ## Research rule
 
