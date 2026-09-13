@@ -50,7 +50,7 @@ Further display archaeology is demand-driven.
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** first playable authoritative model implemented; automated multi-client validation coverage added; live execution remains.
+**Status:** first playable authoritative model implemented; automated in-process and real-network validation passing; live multi-device execution remains.
 
 Completed architecture includes framework-neutral state/event logic, station-specific products, rule evaluation, distinct injection/action/communication/decision/physical-response/evidence layers, restart/shutdown branches, `PC2Session`, station-scoped snapshots, readiness/FLIGHT decisions, CAPCOM queue/transmission, browser rejoin, audit logging, realtime wall-clock pacing, and a multi-client HTTP contract harness.
 
@@ -74,13 +74,13 @@ The synthetic source-bounded PC+2 fuel/oxidizer ΔP branch now reaches controlle
 
 The 26 psi exercise is explicitly non-historical. No unsupported internal routing, automatic crew compliance, response timing, telemetry synthesis, binary chamber-pressure threshold, or hidden engine-off truth is added.
 
-### Multi-client validation artifacts
+### Multi-client validation
 
-`tests/test_web_multiclient_integration.py` now checks several independent station clients plus facilitator authority against one authoritative in-process session.
+`tests/test_web_multiclient_integration.py` checks several independent station clients plus facilitator authority against one authoritative in-process session.
 
-`scripts/pc2_multiclient_smoke.py` provides a destructive real-network smoke path for a dedicated local/Render validation instance. It exercises simultaneous HTTP station polling, rejoin, pause/resume, authority isolation, the complete synthetic ΔP branch, controller evidence, and audit ordering.
+`scripts/pc2_multiclient_smoke.py` exercises the same boundaries over real TCP/HTTP: simultaneous station polling, rejoin, pause/resume, authority isolation, the complete synthetic ΔP branch, controller evidence, and audit ordering.
 
-These artifacts are not a claim that deployed/mobile validation has already passed.
+GitHub Actions now launches a dedicated ephemeral Uvicorn server with facilitator authorization enabled and runs both the complete unit/integration suite and the real-network smoke successfully. This is not a claim that deployed/mobile validation has already passed.
 
 ## Phase 5 — Mission Control data path
 
@@ -102,7 +102,7 @@ Intentionally unresolved where appropriate: exact onboard 77-percent thrust indi
 
 ## Phase 7 — Simulation scenarios / SimSup
 
-**Status:** source-bounded scenario architecture, facilitator authority, and integrated validation harness implemented.
+**Status:** source-bounded scenario architecture, facilitator authority, and automated integrated validation implemented.
 
 Completed:
 
@@ -116,20 +116,20 @@ Completed:
 - server-side facilitator credential protecting exercise-wide operations in configured deployments;
 - Render-generated deployment secret with no credential committed to source;
 - primary-source review supporting integrated controller simulation validation;
-- in-process multi-client contract coverage and a real-network smoke runner.
+- in-process multi-client contract coverage;
+- real-network multi-client smoke execution in CI.
 
 The facilitator credential is a modern software safety boundary, **not** a claim about Apollo-era authentication. Integrated HTTP/browser validation mechanics are likewise modern infrastructure. See research notes 088–089.
 
 ## Immediate next work
 
-The primary need is now **execution of the integrated validation artifacts**, not additional subsystem or authorization complexity.
+The automated runnable-validation boundary is now closed. The primary need is **live multi-device validation and playability review**, not additional subsystem or authorization complexity.
 
-1. Execute the complete domain/session/API test suite in a runnable checked-out environment.
-2. Run `scripts/pc2_multiclient_smoke.py` against a dedicated local or Render validation deployment.
-3. Exercise several real phone/browser station clients plus one facilitator console against that same authoritative server.
-4. Verify continuous GET, explicit facilitator pause/resume, reload/rejoin, station information isolation, and facilitator/player authority isolation under actual network conditions.
-5. Review the phone UI during continuous realtime play and repair usability issues exposed by live multi-client operation.
-6. Reopen historical research only when integrated play exposes a concrete missing information, procedure, or decision dependency.
+1. Exercise several real phone/browser station clients plus one facilitator console against one dedicated authoritative server.
+2. Verify continuous GET, explicit facilitator pause/resume, reload/rejoin, station information isolation, and facilitator/player authority isolation under actual browser/network conditions.
+3. Run the nominal PC+2 sequence with human operators and verify FLIGHT/CAPCOM handoff ergonomics.
+4. Review phone readability and interaction during continuous realtime play and repair concrete usability defects.
+5. Reopen historical research only when integrated play exposes a concrete missing information, procedure, or decision dependency.
 
 ## Explicitly deferred
 
@@ -149,6 +149,6 @@ The primary need is now **execution of the integrated validation artifacts**, no
 
 ## Validation status
 
-Domain/API tests now include continuous-clock, declarative-event, crew-response, shutdown-evidence, client-role-separation, facilitator-authority, and multi-client integration coverage. The validation pass also repaired a stale admin-role UI test and invalid `/admin` evidence-class option values.
+Domain/API tests include continuous-clock, declarative-event, crew-response, shutdown-evidence, client-role-separation, facilitator-authority, and multi-client integration coverage. The validation pass also repaired a stale admin-role UI test and invalid `/admin` evidence-class option values.
 
-The repository suite is **not recorded as passing** because this automation environment still cannot resolve `github.com` from its execution container and therefore cannot obtain a runnable checkout. The real-network smoke runner is likewise committed but not recorded as executed against a dedicated deployment.
+As of 2026-09-12, GitHub Actions successfully executes the complete unit/integration suite, the real-network multi-client smoke against an ephemeral authorized Uvicorn server, and the documentation audit. Remaining validation is deployed/real-device and human-play usability validation, not automated execution availability.
