@@ -2,7 +2,7 @@
 
 Status: **implementation-oriented research specification — nominal vertical slice**  
 Scenario start: **77:55:00 GET**  
-Research basis: `resources/research/050_pc2_initialization_and_nominal_validation.md`, with later refinements through research note 062.
+Research basis: `resources/research/050_pc2_initialization_and_nominal_validation.md`, with later refinements through research note 099.
 
 ## Purpose
 
@@ -28,7 +28,7 @@ The nominal first pass may use zero transport error, but the fields should not b
 
 | Project name | Type | Units | Initial state | Owner |
 |---|---|---|---|---|
-| `mission.get_s` | float | s | 285300.0 (77:55:00) | mission clock |
+| `mission.get_s` | float | s | 280500.0 (77:55:00) | mission clock |
 | `mission.phase` | enum | — | `pc2_final_prep` | scenario |
 | `vehicle.stack_config` | enum | — | `csm_lm_sm_docked` | vehicle |
 | `scenario.pc2.tig_get_s` | float | s | 286058.30 | scenario/target |
@@ -37,8 +37,8 @@ The nominal first pass may use zero transport error, but the fields should not b
 
 | Project name | Type | Units | Nominal value/state | Primary user |
 |---|---|---|---|---|
-| `ground.rtcc.solution_valid` | bool | — | true | FIDO |
-| `ground.pc2.target_status` | enum | — | `final_being_delivered` at start | FIDO/GUIDO |
+| `ground.rtcc.solution_valid` | bool | — | false/transitioning at scenario start; true once final solution ready | FIDO |
+| `ground.pc2.solution_stage` | enum | — | `preliminary` → `final_ready` → `final_stable` | FIDO/GUIDO/FLIGHT |
 | `ground.pc2.pad_dv_lvlh_x` | float | ft/s | +833.0 | FIDO/GUIDO/CAPCOM |
 | `ground.pc2.pad_dv_lvlh_y` | float | ft/s | -50.9 | FIDO/GUIDO/CAPCOM |
 | `ground.pc2.pad_dv_lvlh_z` | float | ft/s | -213.9 | FIDO/GUIDO/CAPCOM |
@@ -52,7 +52,7 @@ The nominal first pass may use zero transport error, but the fields should not b
 | `ground.return.get_005g_s` | float | s | 513562 (142:39:22) | RETRO/CAPCOM |
 | `ground.postburn.solution_status` | enum | — | `not_available` until tracking | FIDO |
 
-`ground.pc2.*pad_dv_lvlh_*` must remain separate from PGNS IMU-coordinate Vg.
+The approximately 75:35 GET PC+2 state-vector/target-load uplink is completed historical context before the 77:55 scenario start. The later final-preparation cycle is modeled separately. `ground.pc2.*pad_dv_lvlh_*` remains separate from PGNS IMU-coordinate Vg.
 
 ## PGNS / LGC
 
@@ -65,8 +65,8 @@ The nominal first pass may use zero transport error, but the fields should not b
 | `pg_ns.lgc.warning` | bool | — | false | GUIDO |
 | `pg_ns.alignment.accepted` | bool | — | true | GUIDO/FLIGHT |
 | `pg_ns.alignment.error_estimate_deg` | float | deg | prior Sun check ~0.33; accepted <1 | GUIDO |
-| `pg_ns.state_vector_load_status` | enum | — | `pending_final_verification` | GUIDO |
-| `pg_ns.target_load_status` | enum | — | `pending_final_verification` | GUIDO |
+| `pg_ns.state_vector_load_status` | enum | — | `preliminary_loaded` → `final_pending` → `transmitting` → `final_loaded` | GUIDO |
+| `pg_ns.target_load_status` | enum | — | `preliminary_loaded` → `final_pending` → `transmitting` → `final_loaded` | GUIDO |
 | `pg_ns.vg_imu_x` | float | ft/s | +743.08 planned | GUIDO |
 | `pg_ns.vg_imu_y` | float | ft/s | -426.42 planned | GUIDO |
 | `pg_ns.vg_imu_z` | float | ft/s | +90.84 planned | GUIDO |
@@ -79,6 +79,8 @@ The nominal first pass may use zero transport error, but the fields should not b
 Historical nominal executed Vg values for validation are +742.21, -425.88, +91.04 ft/s in the GUIDO report.
 
 `pg_ns.iss.warning` is source-backed as a distinct onboard warning signal with an instrumentation path. The project does **not** yet claim the exact Apollo 13 LM-7 telemetry word or GUIDO CRT field. The PC+2 shutdown criterion is conjunctive: ISS warning **plus** computer program alarm. See research note 054.
+
+The staged final-load statuses are workflow states, not byte/word-level load reconstruction and not proof of hidden load correctness. See research notes 098–099.
 
 ## AGS
 
@@ -181,11 +183,26 @@ Full water/O2/thermal inventories are deferred unless they affect a live decisio
 | `comm.air_ground_quality` | enum/float | — | weak at 77:55; improves after S-band power-amplifier change | INCO |
 | `comm.voice_available` | bool | — | true | CAPCOM |
 | `comm.telemetry_available` | bool | — | true after AOS | INCO/all stations |
-| `comm.uplink_available` | bool | — | configuration-dependent | INCO/GUIDO |
-| `comm.ranging_enabled` | bool | — | required during final prep | INCO/FIDO |
+| `comm.uplink_available` | bool/enum | — | configuration-dependent | INCO/GUIDO |
+| `comm.uplink_configuration_ready` | bool | — | false at start; true once final-load path/crew configuration is ready | INCO/GUIDO |
+| `comm.final_load_transmission_active` | bool | — | false → true during final load → false on completion | INCO |
+| `comm.ranging_enabled` | bool | — | false at start; enabled/verified during final prep | INCO/FIDO |
 | `comm.sband_power_amp_high` | bool | — | false at start; changed during final PAD readback | INCO/crew |
 
-Telemetry-facing products should carry validity and age independently of physical subsystem health.
+Telemetry-facing products should carry validity and age independently of physical subsystem health. Ranging is modeled separately from final-load transmission because the primary record treats it as a distinct final-preparation dependency.
+
+## Final-load chronology boundary
+
+For first-playable fidelity the executable model represents these stages:
+
+1. earlier PC+2 state-vector/target load already loaded before scenario start;
+2. final PC+2 solution becomes ready after the final PAD/update cycle;
+3. final load is pending while uplink/crew configuration is prepared;
+4. final state vector and target load are transmitting;
+5. final load completes and the computer is returned to the crew;
+6. final solution/load state remains stable into the GO/NO-GO period.
+
+Approximate fixture times marked `~` are chronology anchors only. They do not establish exact transmission duration, internal RTCC/CCATS command timing, or exact controller keying. Those remain deferred.
 
 ## Crew-report events
 
@@ -209,6 +226,9 @@ A deterministic nominal run should reproduce:
 | final residual X | +1.0 ft/s |
 | final residual Y | +0.3 ft/s |
 | final residual Z | 0.0 ft/s |
+| final solution stage | `final_stable` before burn readiness |
+| final state-vector load | `final_loaded` before burn readiness |
+| final target load | `final_loaded` before burn readiness |
 | maximum PC+2 attitude error | approximately 7 deg in roll (validation envelope, not reconstructed trace) |
 | maximum PC+2 rate | below 1 deg/s (validation envelope, not reconstructed trace) |
 | shutdown-rule triggers | none |
@@ -216,8 +236,8 @@ A deterministic nominal run should reproduce:
 
 ## Deferred numeric/state detail
 
-The exact RTCC Cartesian state vector at 77:55 GET remains intentionally unfrozen until the propagator requires it. The exact nominal PC+2 chamber-pressure trace, attitude/rate time histories, startup-transient duration, exact LM-7 attitude/rate telemetry routing, exact LM-7 chamber-pressure ground/display routing, exact LM-7 ISS-warning telemetry-word assignment, and exact GUIDO CRT placement remain deferred rather than being reverse-engineered.
+The exact RTCC Cartesian state vector at 77:55 GET remains intentionally unfrozen until the propagator requires it. The exact final-load RTCC/CCATS key/command sequence and transmission duration, nominal PC+2 chamber-pressure trace, attitude/rate time histories, startup-transient duration, exact LM-7 attitude/rate telemetry routing, exact LM-7 chamber-pressure ground/display routing, exact LM-7 ISS-warning telemetry-word assignment, and exact GUIDO CRT placement remain deferred rather than being reverse-engineered.
 
 ## Sources
 
-Principal authority remains the NASA Flight Control Division *Mission Operations Report — Apollo 13* (28 April 1970), with technical air-ground transcription for the crew-facing rule and communication chronology. See research notes 050–062 and `resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md` for implementation-specific provenance.
+Principal authority remains the NASA Flight Control Division *Mission Operations Report — Apollo 13* (28 April 1970), with technical air-ground transcription for the crew-facing rule, uplink, and communication chronology. See research notes 050–062 and 098–099, `resources/source-catalog/PC2_IMPLEMENTATION_SOURCES.md`, and `resources/source-catalog/PC2_FINAL_LOAD_UPLINK_SOURCES.md` for implementation-specific provenance.
