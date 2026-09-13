@@ -15,11 +15,11 @@ Every research document in this repository describes what Apollo *was*. This one
 
 ## Where this sits relative to current work
 
-The first playable session exists. D-013 selected Apollo 13 PC+2 (77:55 GET through post-burn power-down); `docs/scenarios/` defines its parameters, state machine and player-product set; the session orchestration layer assigns seven logical stations, applies scenario events chronologically, gates the FLIGHT GO/NO-GO decision, handles the FLIGHT→CAPCOM handoff, and keeps a chronological audit log. D-014 selected the web transport, D-016 the continuous mission clock, D-017 the separate facilitator authority.
+The first playable session exists. D-013 selected Apollo 13 PC+2 (77:55 GET through post-burn power-down); `docs/scenarios/` defines its parameters, state machine and player-product set; the session orchestration layer assigns seven logical stations, applies scenario events chronologically, gates the FLIGHT GO/NO-GO decision, handles the FLIGHT→CAPCOM handoff, and keeps a chronological audit log. D-014 selected the web transport, D-016 the continuous mission clock, D-017 the separate facilitator authority, and D-018 the five-player compact mode.
 
 This document does not revisit any of that. It addresses what `DECISIONS.md` still lists as undecided and what the roadmap still marks open:
 
-- minimum player count, and controller combinations by player count (§4)
+- station aggregation below five players (§4.3) — D-018 settled five; four-and-below is still open
 - time acceleration / realtime pacing multiplier (§2.1)
 - post-simulation evaluation format (§7)
 - degree of Staff Support Room simulation (§4.3)
@@ -27,6 +27,8 @@ This document does not revisit any of that. It addresses what `DECISIONS.md` sti
 ### What changed since the first draft of this document
 
 The first draft was written before D-016 and proposed compressing time "between timeline events" so that "no player ever loses a decision to the clock." **D-016 rejects that, and is right to.** Under a continuous mission clock, losing an opportunity to the clock is not a failure of the design — it is the design. §2.1 is rewritten accordingly, and the proposal it contained is withdrawn rather than softened.
+
+A later draft proposed a five-player configuration of its own. **D-018 has since accepted a different five**, on better grounds — §4.3 records why the accepted one wins by this document's own criterion, and the earlier proposal is withdrawn.
 
 ---
 
@@ -132,7 +134,7 @@ Levels 4–6 are reachable in the slice today: observation age is preserved with
 
 # 4. Roles
 
-This section addresses what `DECISIONS.md` still lists as undecided — minimum player count and controller combinations — and note 079's explicit deferral of low-player-count aggregation.
+D-018 has since accepted a five-player compact mode, so this section records how that lands against the design rules below, and addresses what remains undecided: aggregation at four players and fewer.
 
 ## 4.1 Select roles whose constraints collide
 
@@ -150,6 +152,8 @@ The instinct is to pick the most interesting individual stations. That produces 
 
 **PROPOSED** aggregation rule: *never combine two positions whose collision is the gameplay.* Combine positions that share a data domain and whose workload peaks are offset within the case.
 
+Under D-018's accepted five-player mode every collision above survives across bundles except **CONTROL ↔ TELMU**, which becomes intra-player (§4.3).
+
 The implemented station set already reflects this: **FIDO_RETRO is a single logical station**, which is the right merge — two positions sharing a discipline, an SSR and adjacent consoles (notes 003, 004) — while every collision above stays intact.
 
 ## 4.2 Never combine
@@ -160,24 +164,37 @@ The last is the one a small-player-count design will be tempted to violate. A FL
 
 ## 4.3 The aggregation ladder for PC+2
 
-The implemented set is seven logical stations: CONTROL, GUIDO, TELMU, FIDO_RETRO, INCO, FLIGHT, CAPCOM. **PROPOSED** reductions, in the order the collisions survive:
+The implemented set is seven logical stations: CONTROL, GUIDO, TELMU, FIDO_RETRO, INCO, FLIGHT, CAPCOM.
 
-| Players | Composition | What is lost |
+**D-018 settles the five-player case, and settles it better than this section's first draft did.**
+
+| Players | Composition | Status |
 |---|---|---|
-| **7** | The implemented set | Nothing — this is the documented target |
-| **6** | FLIGHT · CAPCOM · CONTROL · GUIDO · TELMU · FIDO_RETRO | INCO folded into GUIDO; costs the S0 weak-link PAD-transfer texture |
-| **5** | FLIGHT · CAPCOM · CONTROL · GUIDO · TELMU+FIDO_RETRO | Consumables-versus-trajectory negotiation weakens — one player holds both sides |
-| **4** | FLIGHT · CAPCOM · CONTROL · GUIDO | Trajectory becomes a facilitator-supplied PAD; burn monitoring and the guidance cross-check stay intact |
-| **3** | FLIGHT · CONTROL · GUIDO | CAPCOM folded into FLIGHT. Still viable: the burn, the shutdown rules and the PGNS/AGS cross-check survive |
-| **2** | Not recommended | FLIGHT + one discipline collapses into a conversation |
+| **7** | The implemented set | **IMPLEMENTED** — the documented target |
+| **5** | FLIGHT · CAPCOM · **LM SYSTEMS** (TELMU + CONTROL) · **FLIGHT DYNAMICS** (GUIDO + FIDO/RETRO) · INCO | **ACCEPTED — D-018**; station-set ownership implemented, HTTP/UI pending |
+| **4 or fewer** | — | **OPEN** — `DECISIONS.md` lists "four-player-or-smaller station aggregation" as undecided |
 
-**Recommended design target: 5–6.** Every collision marked "Yes" in §4.1 is available and no player is idle. Note that PC+2 degrades gracefully in a way the accident scenario would not, because its climax is one propulsion event monitored by two or three disciplines.
+### Why D-018's five beats what this document first proposed
 
-A wrinkle worth flagging under D-016: at low player counts a single player holds more decisions, and the clock does not wait for any of them. The 3-player configuration is not merely thinner — it is **harder**, because the same GO window arrives with fewer people to reach it. That argues for the aggregation ladder being presented as a difficulty axis (§5) rather than purely as an accessibility feature.
+The earlier draft proposed FLIGHT · CAPCOM · CONTROL · GUIDO · TELMU+FIDO_RETRO. Measured against this document's own rule in §4.1 — never combine two positions whose collision *is* the gameplay — that was the worse configuration. It merged **TELMU ↔ FIDO/RETRO**, the strongest cross-discipline collision in the record, and it dropped **INCO** entirely.
+
+D-018 does neither. By bundling along Apollo's own functional groups — Systems Operations for TELMU+CONTROL, Flight Dynamics for GUIDO+FIDO/RETRO (note 091) — it keeps TELMU and FIDO/RETRO in *different* bundles, so that negotiation survives, and it keeps INCO staffed. Note 091 also reaches §4.2's FLIGHT-and-CAPCOM-stay-separate conclusion independently, on the same authority-boundary reasoning.
+
+The one collision it trades is **CONTROL ↔ TELMU**, which becomes intra-player. That is the right one to give up: it is the collision most internal to a single vehicle, while the cross-discipline ones — harder to reconstruct, more interesting to play — all survive.
+
+### Station-set ownership changes what aggregation costs
+
+D-018 and note 092 do not merge the stations; one player **owns multiple original station identities**. TELMU and CONTROL keep separate products, alerts, readiness judgments, actions and audit identities; information available to one is not silently reclassified as available to the other; rules and authorization still resolve against the original call sign.
+
+That changes the cost of aggregation. A bundled player is doing two jobs with two information sets, not one blended job — so the collision does not disappear, it relocates, from a negotiation between two people to a reconciliation inside one head. Weaker as co-operative drama, intact as an information boundary.
+
+### Below five
+
+Still **OPEN**, and the useful shape is to extend D-018's bundles downward rather than invent a separate ladder. FLIGHT and CAPCOM are the last things to merge, for note 091's reasons; the honest four-player question is whether INCO folds into FLIGHT DYNAMICS for the PAD-transfer phase, or whether keeping a fourth bundle costs less.
+
+A wrinkle under D-016: at low player counts a single player holds more decisions, and the clock does not wait for any of them. A compact configuration is not merely thinner — it is **harder**, because the same GO window arrives with fewer people to reach it. That argues for compact mode being presented as a difficulty axis (§5) rather than purely as an accessibility feature.
 
 At **8+**, add **backroom (SSR) players** behind front-room positions. **DOCUMENTED:** each MOCR group had a supporting SSR; the Vehicle Systems SSR worked malfunction detection and isolation; Apollo 13's EECOM report praised its SSR's electrical-power specialists (notes 004, 010, 012). A backroom player sees more detail than their controller and can act only through them — pure co-operative information asymmetry, so extra players deepen roles rather than diluting them. This is also the natural home for the "degree of Staff Support Room simulation" question.
-
-**OPEN:** the target count to design the first session against. This recommends 5–6 with a documented 3-player floor.
 
 ---
 
@@ -188,7 +205,7 @@ Principle 4 bans easy/normal/hard. Six levers replace it, each a historical fact
 1. **Which case, and its injection set.** Simulations intensified as launch approached (note 011). The timed injection object (note 056) is the mechanism.
 2. **Instrumentation and product honesty.** The strongest lever, and already built: wrong-but-present ground products with hidden integrity (note 065), observation age (note 064).
 3. **Clock rate.** Under D-016 this is a difficulty choice, because a faster clock genuinely costs opportunities (§2.1). Chosen before the run.
-4. **Player count.** Per §4.3, fewer players against an unwaiting clock is harder, not just thinner.
+4. **Player count.** Per §4.3, D-018's compact mode against an unwaiting clock is harder, not just thinner.
 5. **Backroom availability.** With SSR support you get analysis; without it you derive it yourself.
 6. **Crew dependence.** How much the crew does correctly unprompted versus how precisely you must instruct them (§6).
 
@@ -290,7 +307,7 @@ Offered for acceptance, amendment or rejection in `DECISIONS.md`. None is accept
 | P-2 | Cases are authored to **converge on polls** |
 | P-3 | A **session time scale** exists as a facilitator control in the same category as explicit pause: never coupled to controller state, uniform across stations, and logged as an audit event |
 | P-4 | Roles are selected for **constraint collisions**; positions whose collision is the gameplay are never combined |
-| P-5 | Design target **5–6 players**, with the documented 3-player floor in §4.3 |
+| P-5 | ~~Design target 5–6 players~~ — **superseded by D-018**, which accepts a five-player compact mode built on better grounds (§4.3) |
 | P-6 | Difficulty is expressed only through the six levers in §5, never as a tier; **player count and clock rate are difficulty axes**, chosen before a run |
 | P-7 | The crew is a **checklist executor** with readback, generalising the implemented exchanges, overridable by the facilitator |
 | P-8 | A case outcome is a **state, not a grade**; the debrief reports missed nominal opportunities as first-class content |
@@ -313,7 +330,7 @@ Offered for acceptance, amendment or rejection in `DECISIONS.md`. None is accept
 
 ## Provenance
 
-DOCUMENTED claims trace to existing research notes and station specifications: notes 003, 004, 008, 009, 010, 011, 012, 014, 015, 048, 049, 053, 056, 059, 060, 064, 065, 066, 068, 069, 070, 073–079, 084; the Apollo 13 station specifications; and `docs/scenarios/*`.
+DOCUMENTED claims trace to existing research notes and station specifications: notes 003, 004, 008, 009, 010, 011, 012, 014, 015, 048, 049, 053, 056, 059, 060, 064, 065, 066, 068, 069, 070, 073–079, 084, 091, 092; the Apollo 13 station specifications; and `docs/scenarios/*`.
 
 Three source defects this document's citations touch are tracked in **issue #3** and are unresolved on `main`: the P21/P27 program-number error in the GUIDO spec and note 016; the ITC 1970 paper attribution in the INCO material; and the Honeycutt/Koos simulation conflation in the scenario research. The third is why §8 does **not** propose the program-alarm case as an early scenario despite its appeal.
 
