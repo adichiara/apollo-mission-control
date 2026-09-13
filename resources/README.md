@@ -34,7 +34,7 @@ Current supplements:
 - `source-catalog/WEB_TRANSPORT_SOURCES.md` — current Render/FastAPI platform documentation supporting the first phone-accessible transport and deployment shell.
 - `source-catalog/FACILITATOR_AUTHORITY_SOURCES.md` — primary NASA simulation-control sources plus current Render secret-management sources supporting the facilitator/controller authority boundary.
 - `source-catalog/INTEGRATED_SIMULATION_VALIDATION_SOURCES.md` — primary NASA simulation-training sources supporting integrated multi-station validation with a distinct simulation-control function, without treating HTTP/browser mechanics as historical.
-- `source-catalog/LIVE_HUMAN_PLAY_VALIDATION_SOURCES.md` — primary Apollo/NASA simulation-training and mission-rule sources constraining the real-device/human-play validation protocol, structured evidence/debrief package, and separation of mission-like rehearsal from modern browser/mobile usability testing.
+- `source-catalog/LIVE_HUMAN_PLAY_VALIDATION_SOURCES.md` — primary Apollo/NASA simulation-training, mission-rule, and procedure-development sources constraining the real-device/human-play protocol, scenario-blind player preparation, structured evidence/debrief package, and separation of mission-like rehearsal from modern browser/mobile usability testing.
 - `source-catalog/PC2_LOW_PLAYER_COUNT_SOURCES.md` — Apollo organizational/staffing and PC+2 communications evidence constraining five-player compact play, original-station preservation, and the decision not to approve a sub-five-player PC+2 mode at the current fidelity target.
 - `source-catalog/APOLLO13_GROUND_PRODUCT_INTEGRITY_SOURCES.md` — mission-specific sources for the post-MCC-5 RTCC/AGS body-angle processing error and the distinction between product availability/validity and hidden data integrity.
 
@@ -55,6 +55,7 @@ Latest scenario-integration research:
 - `research/093_compact_http_browser_integration.md` — carries compact ownership through HTTP join/rejoin and browser substation navigation while keeping TELMU, CONTROL, GUIDO, and FIDO/RETRO visibly and operationally distinct.
 - `research/094_pc2_four_player_boundary.md` — resolves the previously open sub-five-player question for PC+2: CAPCOM and INCO remain separate and five players are the minimum supported configuration at the current fidelity target, without claiming a historical staffing minimum.
 - `research/095_live_play_evidence_capture_and_debrief.md` — defines structured incident provenance and post-run debrief separation so physical play observations can drive reproducible software fixes or new historical research without converting player difficulty into unsupported Apollo behavior.
+- `research/096_live_play_player_preparation_boundary.md` — defines the reproducible pre-run knowledge boundary: players receive station responsibility, relevant rules/procedures, authority context, and modern client-operation knowledge while remaining blind to nonnominal branch timing/content, hidden state, and other stations' private information.
 
 ## Research rule
 
