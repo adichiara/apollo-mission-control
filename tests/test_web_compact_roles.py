@@ -90,7 +90,23 @@ class WebCompactRoleTests(unittest.TestCase):
         response = self.client.get(
             "/api/session/control/lm-systems/shutdown-evidence"
         )
-        self.assertEqual(response.status_code, 200)
+        # The request passes CONTROL ownership authorization and reaches the
+        # evidence-domain prerequisite, where it correctly fails because no
+        # crew shutdown command exists yet.
+        self.assertEqual(response.status_code, 400)
+        self.assertIn(
+            "Shutdown evidence assessment requires a crew shutdown command",
+            response.json()["detail"],
+        )
+
+        non_control = self.client.post(
+            "/api/session/join",
+            json={"player_id": "inco", "station": "INCO"},
+        )
+        self.assertEqual(non_control.status_code, 200)
+        denied = self.client.get("/api/session/control/inco/shutdown-evidence")
+        self.assertEqual(denied.status_code, 400)
+        self.assertIn("Only a CONTROL owner", denied.json()["detail"])
 
 
 if __name__ == "__main__":
