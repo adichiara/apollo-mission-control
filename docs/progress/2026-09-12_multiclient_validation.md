@@ -10,6 +10,9 @@ Date: 2026-09-12
 - Covered shared authoritative state, station-scoped information, rejoin, occupied-station protection, facilitator/player authority isolation, explicit pause semantics, full synthetic ΔP propagation, CONTROL shutdown evidence, and audit ordering.
 - Preserved the synthetic 26 psi and 100 psi test values as explicitly non-historical.
 - Added research note 089 and `INTEGRATED_SIMULATION_VALIDATION_SOURCES.md`.
+- Added the real-network smoke runner to GitHub Actions using a dedicated ephemeral localhost Uvicorn process with facilitator authorization enabled.
+- Executed the complete unit/integration suite and the real TCP/HTTP multi-client smoke successfully in CI.
+- Kept documentation auditing in the same CI job so validation-state claims are checked with the code path they describe.
 
 ## Defects found and repaired
 
@@ -36,20 +39,30 @@ The client-role contract test now protects this mapping.
 
 No new Apollo procedure is introduced by these changes.
 
-Primary sources support integrated mission-environment simulation involving flight controllers at their consoles and a distinct simulation-control function. HTTP clients, browser polling, concurrency primitives, and token authorization are modern implementation infrastructure.
+Primary sources support integrated mission-environment simulation involving flight controllers at their consoles and a distinct simulation-control function. HTTP clients, browser polling, concurrency primitives, token authorization, localhost CI execution, and GitHub Actions are modern implementation infrastructure.
 
 ## Validation status
 
-The validation artifacts are committed but **not recorded as executed/passing** in this run.
+**Executed and passing in GitHub Actions as of 2026-09-12.**
 
-This automation host still cannot resolve `github.com` from its execution container, so it cannot clone the repository to run the suite. It also has no target deployment URL/credential context from which to run the destructive network smoke script safely.
+The CI job now successfully completes:
+
+1. dependency installation and `pip check`;
+2. the complete `unittest` unit/integration suite;
+3. a real-network Uvicorn server bound to `127.0.0.1:8000` with facilitator authorization enabled;
+4. `scripts/pc2_multiclient_smoke.py` over actual TCP/HTTP against that server;
+5. the documentation audit.
+
+The network smoke therefore validates actual HTTP serialization/routing, concurrent client polling, rejoin, pause semantics, authority isolation, the synthetic ΔP path, CONTROL shutdown evidence, and audit ordering beyond the in-process TestClient contract.
+
+This is **not** yet evidence of deployed internet behavior, mobile-browser behavior, or multi-device usability.
 
 ## Current stopping point
 
-Actual execution is now the blocking validation step:
+Automated runnable validation is no longer the blocker. The next integration boundary is live-device validation:
 
-1. run the full test suite in a checked-out environment;
-2. run `scripts/pc2_multiclient_smoke.py` against a dedicated local/Render validation instance;
-3. perform real-phone browser checks for readability, reload/rejoin, and simultaneous operation;
-4. fix concrete runtime/usability defects revealed by those runs;
-5. only then reopen historical research if a specific missing operational dependency appears.
+1. run several real phone/browser station clients plus one facilitator console against a dedicated server;
+2. verify readability, continuous GET, reload/rejoin, simultaneous operation, and station information isolation under real browser/network conditions;
+3. exercise FLIGHT/CAPCOM handoff and the nominal PC+2 path with human operators;
+4. repair concrete runtime/usability defects exposed by that play;
+5. reopen historical research only if a specific missing operational dependency appears.

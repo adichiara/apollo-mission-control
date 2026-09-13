@@ -4,7 +4,7 @@ Date: 2026-09-12
 
 ## Status
 
-**VALIDATION ARCHITECTURE ESTABLISHED — live network/phone execution pending**
+**AUTOMATED MULTI-CLIENT NETWORK VALIDATION PASSING — real-device/mobile validation pending**
 
 ## Cross-station boundary
 
@@ -29,9 +29,11 @@ Facilitator/SimSup remains separate from every controller station.
 - player reload/rejoin preserves an existing player/station assignment without permitting silent station switching or takeover of an occupied station.
 - facilitator-only lifecycle, pause, injection, crew/vehicle validation, and audit operations remain unavailable to ordinary station clients when authorization is configured.
 
+These boundaries now pass both the in-process multi-client contract test and the real TCP/HTTP smoke runner in GitHub Actions.
+
 ## Nonnominal integration check
 
-The new multi-client test/harness crosses station and facilitator boundaries explicitly:
+The multi-client validation path crosses station and facilitator boundaries explicitly:
 
 `facilitator source injection → CONTROL callout → CAPCOM queue/transmission → facilitator-modeled crew receipt/command/vehicle response → crew report + fresh pressure observation → CONTROL evidence assessment`
 
@@ -42,6 +44,7 @@ No stage implies the next automatically.
 - Browser clients are project infrastructure, not historical consoles.
 - HTTP concurrency is not presented as an Apollo mechanism.
 - Facilitator-token authorization is modern infrastructure.
+- GitHub Actions and localhost Uvicorn execution are modern validation infrastructure.
 - The 26 psi ΔP and 100 psi post-command pressure values used by validation remain synthetic and non-historical.
 
 ## Remaining station-validation work
@@ -50,7 +53,7 @@ No stage implies the next automatically.
 - check station readability and interaction under continuous GET;
 - verify reload/rejoin on actual mobile browsers;
 - verify FLIGHT/CAPCOM handoff ergonomics during live play;
-- verify no station presentation leaks another station's operational collections;
-- expand the multi-client smoke set only when live testing exposes a concrete need.
+- verify no station presentation leaks another station's operational collections under human multi-device use;
+- expand the automated smoke set only when live testing exposes a concrete need.
 
 See research note 089 and `resources/source-catalog/INTEGRATED_SIMULATION_VALIDATION_SOURCES.md`.
