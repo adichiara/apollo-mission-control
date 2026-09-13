@@ -1,8 +1,8 @@
 # Live human-play validation sources
 
-Status: **IMPLEMENTATION-SOURCE — protocol/evidence/preparation boundary defined; physical execution pending**
+Status: **IMPLEMENTATION-SOURCE — protocol/evidence/preparation/reference-packet boundaries defined; physical execution pending**
 
-This supplement supports the project's first real-device/human integrated play validation. It distinguishes historical Mission Control training principles from modern browser/mobile usability validation, player-preparation mechanics, and debrief mechanics.
+This supplement supports the project's first real-device/human integrated play validation. It distinguishes historical Mission Control training principles from modern browser/mobile usability validation, player-preparation mechanics, reference-packet mechanics, and debrief mechanics.
 
 ## Primary historical sources
 
@@ -38,7 +38,8 @@ Implementation use:
 
 - supports observing information acquisition, decisionmaking, coordination, and procedure use during live play rather than measuring only software correctness;
 - supports recording what information a controller had and what operational judgment/action followed;
-- supports giving project players station responsibility, system/procedure context, and relevant rules before integrated timed play rather than treating zero prior preparation as historically representative.
+- supports giving project players station responsibility, system/procedure context, and relevant rules before integrated timed play rather than treating zero prior preparation as historically representative;
+- supports treating the reference packet as previously learned/available operational material rather than a scenario-reveal device.
 
 Does not establish:
 
@@ -46,7 +47,7 @@ Does not establish:
 - exact pass/fail UI timing metrics;
 - modern mobile-device behavior;
 - this project's defect taxonomy;
-- a specific player briefing format or duration.
+- a specific player briefing or packet format/duration.
 
 ### L. W. Keyser — The role of flight mission rules in mission preparation and conduct
 
@@ -60,32 +61,35 @@ Implementation use:
 
 - supports evaluating whether players can use station information, rules, judgment, and communication to reach operational decisions;
 - supports preserving legitimate uncertainty rather than automatically classifying hesitation as a defect;
-- supports making relevant PC+2 rules and authority boundaries available during player preparation without revealing whether a specific nonnominal event will occur.
+- supports making relevant PC+2 rules and authority boundaries available during player preparation without revealing whether a specific nonnominal event will occur;
+- supports presenting rule criteria as neutral premission references rather than branch-specific hints.
 
 Does not establish:
 
 - a particular PC+2 playtest questionnaire;
 - a browser presentation standard;
 - that every difficult player decision indicates missing historical information;
-- pre-briefing a trainee on the exact malfunction or intended solution for an exercise.
+- pre-briefing a trainee on the exact malfunction or intended solution for an exercise;
+- this project's five-part reference-packet layout.
 
 ### Paul C. Kramer — Systems and Flight Procedures Development
 
 - *Apollo Experience Report — Systems and Flight Procedures Development*.
-- NASA-TN-D-7436, September 1973.
+- NASA-TN-D-7436 / JSC-S-366, September 1973.
 - NTRS document: `19730023040`.
 - https://ntrs.nasa.gov/citations/19730023040
-- Relevant evidence: Apollo flight procedures integrated mission rules/requirements with spacecraft procedures; final procedures were organized around mission phases and incorporated into mission planning/data packages.
+- Relevant evidence: Apollo flight procedures integrated mission rules/requirements with spacecraft procedures; systems procedures and flight procedures were distinct categories; flight procedures were organized around mission phases; final procedures were verified during simulations involving crew, Mission Control, and the Manned Space Flight Network.
 
 Implementation use:
 
 - supports the general preparation principle that mission-phase procedures and rules existed before execution and were available as operational reference material;
-- supports allowing project players to consult assigned rules/procedures rather than turning the live test into a memorization exercise.
+- supports allowing project players to consult assigned rules/procedures rather than turning the live test into a memorization exercise;
+- supports keeping station/system knowledge, decision criteria, and nominal mission-phase procedure context as distinct sections rather than collapsing them into a scenario solution checklist.
 
 Scope warning:
 
 - this source describes Apollo systems and flight-procedures development; it is not evidence for the exact content or format of a flight-controller training handout;
-- it does not establish this project's station briefing pages, browser instructions, compact-role instructions, or briefing duration.
+- it does not establish this project's station briefing pages, five-part packet order, browser instructions, compact-role instructions, or briefing duration.
 
 ### Apollo training / mission simulator history
 
@@ -139,13 +143,15 @@ The live human-play run should validate:
 - human readiness and FLIGHT/CAPCOM coordination;
 - phone/browser readability and rejoin behavior;
 - reproducible pre-run player preparation covering station identity/responsibility, available products/actions, relevant PC+2 phase/rules/procedures, authority/coordination boundaries, and modern client-operation controls;
-- scenario blindness during preparation: no disclosure of whether/when the synthetic ΔP branch will occur, hidden state, another station's private evidence, or intended diagnosis/decision;
+- a layered player reference packet that keeps common context, original-station responsibilities, rule criteria, nominal phase/procedure context, and modern client-operation instructions distinct;
+- scenario blindness during preparation/reference use: no disclosure of whether/when the synthetic ΔP branch will occur, hidden state, another station's private evidence, or intended diagnosis/decision;
+- explicit preservation of unresolved historical criteria rather than converting them into fabricated playable shortcuts;
 - explicit classification of defects as historical/research, simulation, UI, network, instruction/training, or legitimate decision uncertainty;
 - incident-level provenance tying observations to GET, run/build, player role, active original station, visible evidence, action, observed result, and audit/event references where available;
 - a post-run debrief that separates observed fact, participant interpretation, reproducible defects, historical questions, and usability-only changes.
 
-Modern browser, phone, HTTP, localStorage/sessionStorage, token mechanics, compact-role mechanics, player-preparation package format, defect taxonomy, and report format remain project infrastructure, not Apollo reconstruction.
+Modern browser, phone, HTTP, localStorage/sessionStorage, token mechanics, compact-role mechanics, player-preparation/reference-packet format, defect taxonomy, and report format remain project infrastructure, not Apollo reconstruction.
 
 Player difficulty alone is not evidence for changing historical behavior. Any historical/procedural change prompted by play requires a separate source basis before implementation.
 
-See `resources/research/090_live_device_human_play_validation_boundary.md`, `resources/research/095_live_play_evidence_capture_and_debrief.md`, `resources/research/096_live_play_player_preparation_boundary.md`, `docs/testing/PC2_PLAYER_PREPARATION.md`, `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md`, and `docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md`.
+See `resources/research/090_live_device_human_play_validation_boundary.md`, `resources/research/095_live_play_evidence_capture_and_debrief.md`, `resources/research/096_live_play_player_preparation_boundary.md`, `resources/research/097_live_play_reference_packet_structure.md`, `docs/testing/PC2_PLAYER_PREPARATION.md`, `docs/testing/PC2_PLAYER_REFERENCE_PACKET.md`, `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md`, and `docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md`.
