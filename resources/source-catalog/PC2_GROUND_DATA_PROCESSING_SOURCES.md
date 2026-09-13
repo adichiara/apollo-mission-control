@@ -8,11 +8,11 @@ Scope: MSFN / CCATS / RTCC functions material to the Apollo 13 PC+2 first playab
 ### Report of Apollo 13 Review Board — Appendix A
 
 - **Title:** Report of Apollo 13 Review Board. Appendix A — Baseline Data: Apollo 13 Flight Systems and Operations
-- **Report:** NASA-TM-X-66473
-- **Date:** June 1970
 - **NTRS:** https://ntrs.nasa.gov/citations/19700078804
+- **Date:** June 1970
 - **Status:** REVIEWED-PARTIAL / IMPLEMENTATION-SOURCE
 - **Relevant pages:** A-133–A-137 (mission support areas, CCATS, RTCC)
+- **Provenance note:** the document identity and NTRS record are established; the previously cited `NASA-TM-X-66473` report-number attribution is not repeated here because it has not yet been independently confirmed.
 - **Supports:**
   - CCATS as MCC↔MSFN interface;
   - telemetry/command/tracking routing and processing;
