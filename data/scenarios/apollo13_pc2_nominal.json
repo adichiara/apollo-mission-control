@@ -5,7 +5,7 @@
   "mission": "Apollo 13",
   "start_get_s": 280500.0,
   "start_get_hms": "77:55:00",
-  "end_target_get_hms": "79:34:00+",
+  "end_target_get_hms": "79:52:00+",
   "vehicle_configuration": "CSM+SM docked to LM",
   "sources": [
     "NASA Flight Control Division, Mission Operations Report — Apollo 13, 1970-04-28",
@@ -13,7 +13,7 @@
     "Apollo 13 AC Electronics Guidance & Navigation Summary",
     "NASA TM X-66935 / REPT-70-FC13-47-ADD-1",
     "Apollo Operations Handbook LM GN&CS Figure 2.1-33",
-    "Repository research notes 048-054 and 098"
+    "Repository research notes 048-054, 098, and 101"
   ],
   "historical_context_completed_before_start": {
     "free_return_restored": true,
@@ -139,7 +139,8 @@
     "actual_cutoff_get_s": 286322.12,
     "actual_cutoff_get_hms": "79:32:02.12",
     "shutdown_rule_triggers": [],
-    "postburn_powerdown_begins": true
+    "postburn_powerdown_begins": true,
+    "ptc_preparation_begins": true
   },
   "events": [
     {"get_hms": "77:55:00", "event": "scenario_start_weak_link"},
@@ -161,7 +162,8 @@
     {"get_hms": "79:28:09", "event": "crew_reports_100_percent"},
     {"get_hms": "79:32:02.12", "event": "guided_cutoff"},
     {"get_hms": "79:32:41+", "event": "postburn_residual_review"},
-    {"get_hms": "79:34:00~", "event": "lm_powerdown_transition"}
+    {"get_hms": "79:34:00~", "event": "lm_powerdown_transition"},
+    {"get_hms": "79:52:00~", "event": "ptc_preparation_begins"}
   ],
   "deferred_not_blocking": [
     "exact RTCC Cartesian state vector at 77:55 GET",
@@ -173,6 +175,7 @@
     "exact AGS ULL/ACT VEL ground transformation",
     "full LM consumables state",
     "complete INCO look-angle display",
-    "complete FIDO/RETRO CRT catalog"
+    "complete FIDO/RETRO CRT catalog",
+    "full PTC dynamics and switch-by-switch PTC setup"
   ]
 }
