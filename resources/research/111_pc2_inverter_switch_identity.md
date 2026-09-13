@@ -1,99 +1,74 @@
 # Apollo 13 PC+2 — inverter-switch identity
 
 Date: 2026-09-13  
-Status: **RESOLVED FOR FIRST-PLAYABLE IDENTITY — normal DPS-burn inverter 1; contingency alternate inverter 2. Exact cockpit switch chronology and post-switch judgement timing remain unresolved.**
+Status: **SUPERSEDED IN PART BY RESEARCH NOTE 112.** The generic LM handbook evidence below remains valid, but the earlier first-playable conclusion that PC+2 operated on inverter 1 is withdrawn. Mission-specific Apollo 13 procedure evidence explicitly deleted `Select Inverter 1` and restored the inverter-2 feed for PC+2; note 112 is canonical for first-playable identity.
 
 ## Purpose
 
-Research notes 059–060 established the PC+2 rule semantics:
+This note originally attempted to resolve which inverter was expected to be operating during the burn and which inverter was the alternate. The underlying generic handbook evidence was correctly recorded, but the synthesis did not give sufficient priority to the mission-specific Apollo 13 PC+2 modification.
 
-> an inverter light is a shutdown criterion only if it remains after the crew has tried switching inverters.
+## 1. Generic LM design convention
 
-They intentionally left two questions open: which inverter was expected to be operating during the burn, and which inverter was the alternate.
-
-## 1. LM design rule for powered descent/ascent burns
-
-The Apollo LM Operations Handbook, subsystem data, electrical power section states that the two inverters are redundant and that the INVERTER switch selects which inverter feeds the AC buses. It further states that inverter 2 is normally used when LM subsystems are first activated, while **inverter 1 is the operating inverter during DPS and APS engine burns**.
+The Apollo LM Operations Handbook, subsystem data, electrical power section states that the two inverters are redundant and that the INVERTER switch selects which inverter feeds the AC buses. It further states that inverter 2 is normally used when LM subsystems are first activated, while **inverter 1 is the normal operating inverter during DPS and APS engine burns**.
 
 Primary technical source:
 
 - Grumman/NASA, *Apollo Operations Handbook — Lunar Module, Subsystems Data*, LMA790-3-LM, §2.5.3.3 A-C Section.
 - Public scan: https://web.mit.edu/digitalapollo/Documents/Chapter8/lemhandbook.pdf
 
-This is direct subsystem documentation for the LM design/operational convention and is applicable to the DPS-powered PC+2 maneuver.
+This documents the stock LM convention. It does **not** establish the Apollo 13 emergency PC+2 configuration.
 
-## 2. Apollo 13 PC+2 preparation is consistent with inverter 2 as the alternate
+## 2. Apollo 13 mission-specific evidence overrides the stock convention
 
-The mission-specific PC+2 contingency-checklist read-up provides the relevant configuration evidence.
+The PC+2 contingency-checklist read-up instructed the crew to close `CB(16) INVERTER 2` and explicitly **scratch out `Select Inverter 1`** on page 17. Earlier in the same mission sequence, inverter 2 had been explicitly selected for LM AC use.
 
-At about 74:55 GET, CAPCOM instructed Haise to perform the AC-bus power/temperature check in the order **inverter 2, then inverter 1**, and to leave the **EPS INVERTER 2 circuit breaker OPEN** after the check.
+That mission-specific modification is direct evidence that the stock burn procedure's inverter-1 selection was intentionally not followed for PC+2.
 
-At about 75:15 GET, CAPCOM corrected the checklist reference and explicitly had the crew **CLOSE CB(16) INVERTER 2** before the burn procedure continued.
+See research note 112 for the corrected first-playable interpretation and complete source chain.
 
-Primary mission-specific source:
-
-- NASA Apollo 13 air-to-ground/mission commentary, approximately 74:55–75:15 GET.
-- NASA PAO transcript: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf-hr/a13-pao-transcript.pdf
-- Transcript presentation preserving the same air-ground exchange: https://apollo13.spacelog.org/03%3A02%3A56%3A30/
-
-The mission-specific sequence does not itself contain a sentence saying “operate on inverter 1, switch to inverter 2 on an inverter light.” It does, however, prepare inverter 2 and is consistent with the handbook rule that inverter 1 is the operating inverter for DPS burns.
-
-## 3. Crew-facing shutdown rule
+## 3. Crew-facing shutdown rule remains valid
 
 At about 76:30 GET, CAPCOM told the crew to shut down for an inverter light **after switching inverters**. Haise read the rule back as an inverter light that is still on after they have tried switching inverters.
 
 Primary mission-specific source:
 
 - NASA Apollo 13 mission commentary / air-ground transcript, approximately 76:30–76:38 GET.
-- NASA PAO transcript: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf-hr/a13-pao-transcript.pdf
 
-This confirms that the contingency requires an attempted transfer to the redundant inverter before the inverter-light condition becomes a positive shutdown criterion.
+The criterion therefore still requires an attempted redundant-inverter transfer before a continuing inverter warning becomes a positive shutdown condition.
 
-## 4. First-playable interpretation
+## 4. Corrected first-playable boundary
 
-For the PC+2 first playable, represent the sourced configuration as:
+Canonical interpretation after note 112:
 
 ```text
-normal DPS-burn AC source: inverter 1
+PC+2 pre-burn selected source: inverter 2
           ↓
 INVERTER caution/light
           ↓
-crew contingency action: select/switch to inverter 2
+crew attempts switch to redundant inverter
           ↓
 post-switch inverter-light observation
           ↓
 light remains present → shutdown criterion satisfied
 ```
 
-The identity mapping is a **source-bounded synthesis** of:
+Do not encode a named `inverter 2 → inverter 1` post-warning action until direct mission-specific procedure evidence is recovered, even though inverter 1 is the architecturally obvious redundant unit.
 
-1. the LM handbook’s explicit DPS-burn operating-inverter rule; and
-2. Apollo 13’s mission-specific preparation of inverter 2 plus the contemporaneous “switch inverters” shutdown rule.
-
-It is stronger than leaving the inverter numbers anonymous, but it is not presented as a verbatim Apollo 13 rule sentence.
-
-## 5. What this does not authorize
+## 5. What remains unresolved
 
 Do not invent:
 
-- an exact elapsed time the crew must wait after selecting inverter 2;
+- exact post-warning switch-toggle/circuit-breaker chronology;
 - a fixed persistence timer for the light;
-- an exact switch-toggle/circuit-breaker chronology beyond the sourced preparation steps;
 - automatic engine cutoff when the warning appears;
-- automatic knowledge on the ground that the switch occurred unless represented by crew report/procedure state;
+- automatic ground knowledge that the switch occurred unless represented by crew report/procedure state;
 - an exact TELMU/CONTROL CRT field or telemetry word not otherwise sourced.
 
 The LM-5-and-later caution-inhibit design documented in the LM instrumentation experience report still means a normal selection transient should not be treated as the positive post-switch warning condition.
 
-## 6. Consequence for prior notes
-
-Research note 059's unresolved bullets for **initial inverter selection** and **alternate-inverter identity** are closed for the current PC+2 first playable by this note.
-
-Research note 060's generic action/report contract remains valid. Its action can now be represented specifically as an **inverter 1 → inverter 2** contingency transfer, while exact switch timing and post-switch persistence remain unresolved.
-
 ## Sources
 
 1. Grumman/NASA, *Apollo Operations Handbook — Lunar Module, Subsystems Data*, LMA790-3-LM, §2.5.3.3 A-C Section. https://web.mit.edu/digitalapollo/Documents/Chapter8/lemhandbook.pdf
-2. NASA Apollo 13 Mission Commentary / air-ground transcript, ~74:55–75:15 GET and ~76:30–76:38 GET. https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf-hr/a13-pao-transcript.pdf
-3. NASA Flight Control Division, *Mission Operations Report — Apollo 13*, 28 Apr 1970, PC+2 shutdown-rule summary. https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf
-4. NASA, *Apollo Experience Report — Lunar Module Instrumentation Subsystem*, NASA report 19720018206, inverter caution logic and LM-5-and-later selection-transient inhibit discussion. https://www.ibiblio.org/apollo/Documents/19720018206.pdf
+2. NASA Apollo 13 Mission Commentary / air-ground transcript, ~72:48–73:15, ~74:55–75:15, and ~76:30–76:38 GET. https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf-hr/a13-pao-transcript.pdf
+3. NASA Flight Control Division, *Mission Operations Report — Apollo 13*, 28 Apr 1970. https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf
+4. NASA, *Apollo Experience Report — Lunar Module Instrumentation Subsystem*, NASA report 19720018206. https://www.ibiblio.org/apollo/Documents/19720018206.pdf
