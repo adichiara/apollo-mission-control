@@ -13,9 +13,9 @@ This directory is the provenance layer for the simulation.
 Current supplements:
 
 - `source-catalog/PC2_IMPLEMENTATION_SOURCES.md` — sources used directly by the Apollo 13 PC+2 executable product-projection, shutdown-rule, and scenario-injection layers.
-- `source-catalog/PC2_INLET_PRESSURE_SOURCES.md` — focused source record for the unresolved Apollo 13 150-psi ground inlet-pressure mapping; note 106 now identifies fuel inlet / `GQ3611P` as the leading lineage-supported candidate without treating it as proven for Apollo 13.
+- `source-catalog/PC2_INLET_PRESSURE_SOURCES.md` — focused source record for the unresolved Apollo 13 150-psi ground inlet-pressure mapping; note 106 identifies fuel inlet / `GQ3611P` as the leading lineage-supported candidate without treating it as proven for Apollo 13.
 - `source-catalog/PC2_INVERTER_WARNING_SOURCES.md` — focused source record for the inverter-caution, crew-switch, and post-switch mission-rule path.
-- `source-catalog/PC2_THRUST_MONITOR_SOURCES.md` — focused source record for the unresolved onboard 77-percent thrust-monitor indication and rejected unsupported mappings.
+- `source-catalog/PC2_THRUST_MONITOR_SOURCES.md` — focused source record for the onboard 77-percent thrust-monitor criterion; note 107 identifies the LM panel-1 CMD THRUST / ENG THRUST instrument family and ENG THRUST actual-thrust scale, while preserving the unresolved startup applicability gate.
 - `source-catalog/PC2_ATTITUDE_SOURCES.md` — focused source record for PC+2 attitude-error/rate criteria, the startup-transient source conflict, and CONTROL observation provenance.
 - `source-catalog/PC2_FRESHNESS_SOURCES.md` — focused source record for observation age, data validity, and the unresolved absence of a PC+2-specific stale-data threshold.
 - `source-catalog/PC2_RESTART_SOURCES.md` — mission-specific sources for the premature DPS shutdown/restart branch and the distinction between rule-caused shutdown and restart-eligible unexplained shutdown.
@@ -47,23 +47,6 @@ Current supplements:
 
 Latest scenario-integration research:
 
-- `research/081_pc2_mission_clock_and_decision_gate_semantics.md` — primary-source GET findings plus the explicitly superseded provisional pause-gate policy.
-- `research/082_pc2_delta_p_session_integration_boundary.md` — carries the documented >25-psi ground-callout rule through CONTROL decision and CAPCOM transmission without inventing internal routing or automatic crew/vehicle response.
-- `research/083_pc2_crew_response_after_ground_shutdown_call.md` — extends that branch through explicit crew receipt, crew shutdown command, and a separate physical DPS engine-off response without inventing timing or telemetry confirmation.
-- `research/084_continuous_mission_clock_architecture.md` — current architecture: GET continues through controller decisions, explicit pause is the only normal clock stop, and nominal milestones whose prerequisites are absent are missed rather than replayed later.
-- `research/085_pc2_http_crew_response_integration.md` — exposes the source-bounded crew receipt → command → physical-response chain through HTTP while preserving continuous GET and avoiding invented response timing.
-- `research/086_pc2_shutdown_evidence_http_integration.md` — exposes crew-report and fresh GQ6510P evidence through CONTROL without leaking physical truth or inventing an engine-off threshold.
-- `research/087_player_admin_client_separation.md` — separates ordinary station UI from validation/SimSup controls.
-- `research/088_facilitator_authority_boundary.md` — uses primary NASA simulation-control evidence to keep facilitator/SimSup authority separate from controller stations, with a modern server-side credential for exercise-wide operations.
-- `research/089_multiclient_integrated_validation_boundary.md` — establishes source-bounded integrated validation across several controller clients and a distinct facilitator, and records the automated/network smoke artifacts and defects found during the first validation pass.
-- `research/090_live_device_human_play_validation_boundary.md` — defines the remaining real-device/human-play boundary as a structured integrated mission rehearsal, with modern browser/mobile defects kept distinct from historical research gaps.
-- `research/091_low_player_count_station_aggregation_boundary.md` — defines the first compact five-player PC+2 configuration from Apollo functional group/authority evidence while requiring original station identities to survive under bundled player presentation.
-- `research/092_multi_station_player_ownership.md` — implements that compact-domain boundary as one player owning multiple original stations, with separate presentations, station-qualified readiness/actions, and original-station audit provenance.
-- `research/093_compact_http_browser_integration.md` — carries compact ownership through HTTP join/rejoin and browser substation navigation while keeping TELMU, CONTROL, GUIDO, and FIDO/RETRO visibly and operationally distinct.
-- `research/094_pc2_four_player_boundary.md` — resolves the previously open sub-five-player question for PC+2: CAPCOM and INCO remain separate and five players are the minimum supported configuration at the current fidelity target, without claiming a historical staffing minimum.
-- `research/095_live_play_evidence_capture_and_debrief.md` — defines structured incident provenance and post-run debrief separation so physical play observations can drive reproducible software fixes or new historical research without converting player difficulty into unsupported Apollo behavior.
-- `research/096_live_play_player_preparation_boundary.md` — defines the reproducible pre-run knowledge boundary: players receive station responsibility, relevant rules/procedures, authority context, and modern client-operation knowledge while remaining blind to nonnominal branch timing/content, hidden state, and other stations' private information.
-- `research/097_live_play_reference_packet_structure.md` — defines the initial first-playable reference packet: separate common context, original-station sheets, neutral rule/criterion references, nominal phase/procedure context, and visibly modern client-operation instructions; unresolved historical criteria remain unresolved rather than becoming hints.
 - `research/098_pc2_final_state_vector_target_load_uplink.md` — resolves the first-playable final-load workflow into a source-backed staged FIDO/GUIDO/INCO/CAPCOM/crew/FLIGHT process while leaving exact vector contents, RTCC/CCATS internals, controller keying, and transmission duration unfrozen.
 - `research/099_pc2_final_load_staged_implementation.md` — carries note 098 into executable solution/load/uplink states and station-scoped products while preserving the same explicit evidence limits.
 - `research/100_pc2_backroom_staff_support_boundary.md` — documents Apollo 13 SSR support and resolves the current first-playable boundary: backrooms remain acknowledged but non-playable until a scenario exposes a concrete support-product dependency.
@@ -73,6 +56,9 @@ Latest scenario-integration research:
 - `research/104_pc2_sensor_telemetry_failure_scope.md` — resolves first-playable sensor/telemetry failure scope: no additional nominal historical instrumentation fault is added, while unavailable, stale/delayed, biased/shifted, warning-only, communications-path, and ground-product faults remain explicit scenario capabilities only when sourced or labeled synthetic.
 - `research/105_pc2_crew_action_representation_boundary.md` — resolves first-playable crew representation: no separate crew player; CAPCOM communication, crew receipt/action, spacecraft response, telemetry, and crew report remain explicit stages, with no invented random crew delay/error mechanics.
 - `research/106_pc2_inlet_pressure_rule_lineage.md` — follows the Apollo 13 “LOI Mode I abort” rule lineage into surviving Apollo 10/11 mission rules; identifies fuel inlet / `GQ3611P` as the leading candidate behind the 150-psi ground criterion while preserving the lack of an Apollo 13-specific exact mapping and leaving the executable rule `NOT_EVALUABLE`.
+- `research/107_pc2_onboard_thrust_indicator_identification.md` — identifies the LM panel-1 CMD THRUST / ENG THRUST instrument family behind the Apollo 13 onboard percent-thrust rule with high confidence, identifies ENG THRUST as the actual-engine-thrust percent scale, and narrows the remaining gap to the exact startup applicability gate.
+
+Earlier notes 081–097 remain the authoritative history for continuous-clock architecture, shutdown/crew/evidence integration, facilitator/client separation, multi-client validation, compact-role ownership, live-play evidence capture, player preparation, and reference-packet structure.
 
 ## Research rule
 
@@ -91,6 +77,6 @@ Use these labels where helpful:
 
 ## Local source files
 
-The repository currently catalogs authoritative documents by stable NASA/NTRS URL. Whether full PDFs should also be mirrored under `primary-sources/` is intentionally undecided; see `docs/OPEN_QUESTIONS.md`.
+The repository currently catalogs authoritative documents by stable NASA/NTRS or archival URL. Whether full PDFs should also be mirrored under `primary-sources/` is intentionally undecided; see `docs/OPEN_QUESTIONS.md`.
 
 If files are mirrored later, retain source metadata and original filenames where practical.
