@@ -3,7 +3,7 @@ services:
     name: apollo-mission-control
     runtime: python
     buildCommand: pip install -r requirements.lock.txt
-    startCommand: uvicorn --app-dir src apollo_mission_control.web_app:app --host 0.0.0.0 --port $PORT
+    startCommand: uvicorn --app-dir src apollo_mission_control.live_app:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /api/health
     envVars:
       - key: APOLLO_FACILITATOR_TOKEN
