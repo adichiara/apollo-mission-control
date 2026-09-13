@@ -27,7 +27,7 @@ The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation
 
 The model now includes source-backed PC+2 progression, continuous mission time, station-specific products, shutdown/restart branches, explicit communication/action/physical/evidence layers, first-pass views for CONTROL/GUIDO/TELMU/FIDO-RETRO/INCO/FLIGHT/CAPCOM, browser rejoin, CAPCOM handoff, audit logging, the source-bounded synthetic ΔP branch through fresh CONTROL evidence, facilitator authority, automated multi-client validation, and end-to-end compact station-set ownership through the HTTP/browser layer.
 
-The remaining major validation boundary is real-device/browser and human-play execution. Current-head CI must also confirm the newly integrated compact path before it is recorded as passing.
+The compact HTTP/browser path is recorded as passing automated CI. The remaining major validation boundary is real-device/browser and human-play execution.
 
 ## Phone-accessible first playable shell
 
@@ -52,7 +52,7 @@ Browser identity is prototype persistence, not cryptographic authentication.
 
 ## Compact five-player mode
 
-Primary Apollo organizational sources constrain the first compact project configuration without establishing it as historical staffing:
+Primary Apollo organizational sources constrain the compact project configuration without establishing it as historical staffing:
 
 - FLIGHT;
 - CAPCOM;
@@ -72,7 +72,9 @@ The compact path is implemented end to end:
 - the browser persists the station set and active substation;
 - TELMU/CONTROL and GUIDO/FIDO-RETRO are navigated through explicit original-call-sign tabs rather than a merged synthetic console.
 
-See research notes 091–093 and decision D-018.
+Research note 094 resolves the previously open general four-player question for this PC+2 fidelity target: **five players are the minimum supported configuration**. CAPCOM and INCO remain separate because Apollo sources distinguish crew-facing voice authority from communications-system monitoring/troubleshooting, and communications/data-path state is active during PC+2 preparation. This is a simulator-design boundary, not a historical minimum-staffing claim.
+
+See research notes 091–094 and decision D-018.
 
 ## Core engine rule: mission time is continuous
 
@@ -95,7 +97,7 @@ Every step remains explicit. CAPCOM transmission does not imply crew receipt, cr
 - `tests/test_web_compact_roles.py` covers compact station-set join/rejoin, bundled snapshots, station-qualified readiness, station conflicts, and CONTROL authority inside a bundle.
 - `tests/test_web_client_contract.py` covers compact browser persistence/navigation and active-station attribution.
 
-Pre-compact GitHub Actions and real-network smoke are recorded as passing. The compact HTTP/browser head awaits fresh CI confirmation. Physical seven-seat and five-player compact human/device validation are not yet claimed.
+The automated compact HTTP/browser path is recorded as passing GitHub Actions. Physical seven-seat and five-player compact human/device validation are not yet claimed.
 
 ## Historical/presentation boundaries retained
 
@@ -114,11 +116,11 @@ Detailed DPS transients, exact display routing/cadence, and a post-burn FIDO tra
 
 ## Immediate priorities
 
-1. Confirm current-head CI for compact HTTP/browser integration.
-2. Run `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` with actual simultaneous station phones/browsers and one facilitator console.
-3. Run nominal PC+2 first, then the synthetic ΔP branch.
-4. Run the approved five-player compact configuration and evaluate TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching, readiness/action attribution, and information isolation.
-5. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, or terminology dependency.
+1. Run `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` with actual simultaneous station phones/browsers and one facilitator console.
+2. Run nominal PC+2 first, then the synthetic ΔP branch.
+3. Run the approved five-player compact configuration and evaluate TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching, readiness/action attribution, and information isolation.
+4. Repair reproducible network/mobile/presentation defects and add regression coverage.
+5. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, terminology, or player-count dependency.
 
 ## Apollo 13 station specifications
 
