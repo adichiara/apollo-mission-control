@@ -1,7 +1,7 @@
 # Apollo 13 PC+2 — inverter warning after switching inverters
 
 Date: 2026-09-12  
-Status: **REVIEWED-PARTIAL — sufficient to separate the inverter caution indication from the switch action and to identify the LM-5-and-later caution-generation path; exact PC+2 switch procedure/timing and controller information path remain unresolved.**
+Status: **REVIEWED-PARTIAL — sufficient to separate the inverter caution indication from the switch action and to identify the LM-5-and-later caution-generation path. Research note 111 subsequently resolves the first-playable inverter identities as normal DPS-burn inverter 1 and contingency alternate inverter 2; exact post-warning switch chronology/timing and controller information path remain unresolved.**
 
 ## Purpose
 
@@ -62,17 +62,17 @@ This matters for PC+2 interpretation:
 
 ## 4. Implementation boundary
 
-The project may now safely distinguish at least two states/events:
+The project may safely distinguish at least two states/events:
 
 1. `lm.inverter_warning` — the inverter caution indication resulting from the documented voltage/frequency monitoring path;
 2. `lm.inverter_switch_attempted` — a crew/procedural action indicating that an inverter switch was actually attempted.
 
-However, these are not the same information class:
+These are not the same information class:
 
 - the warning is an onboard electrical/caution state that can reach Mission Control through instrumentation/telemetry;
 - the switch attempt is a crew/procedure action and should not be silently inferred from the warning itself.
 
-Therefore the positive rule should eventually be:
+Therefore the positive rule should be:
 
 ```text
 inverter warning present
@@ -86,30 +86,26 @@ without inventing a fixed time delay.
 
 ## 5. Current executable decision
 
-Do **not** yet add `lm_inverter_switch_attempted` as a generic failure-injection target. A switch is an operational action, not a malfunction source condition.
+Do **not** treat an inverter warning alone as an automatic shutdown command.
 
-The present shutdown evaluator behavior remains conservative:
+The shutdown evaluator behavior remains conservative:
 
 - warning absent → rule clear;
-- warning present without represented switch action → `NOT_EVALUABLE`.
+- warning present without represented switch action → `NOT_EVALUABLE`;
+- represented switch attempt followed by a continuing warning → eligible to evaluate the sourced shutdown criterion.
 
-The next implementation dependency is therefore an explicit crew/controller action/event path that can record an inverter switch attempt separately from fault injection.
-
-Once that action path exists, a test may represent:
-
-- warning present before switch;
-- crew switches inverter;
-- warning remains present afterward;
-- rule evaluates `TRIGGERED`;
-- no automatic engine cutoff or generic abort state is created.
+Research note 111 now narrows the first-playable action identity to a **normal inverter 1 → contingency inverter 2** transfer. That identity does not authorize inventing the detailed cockpit switch sequence or a post-switch timer.
 
 ## 6. What remains unresolved
 
-The reviewed sources do not yet establish, for the PC+2 slice:
+Research note 111 closes the earlier gaps for:
 
-- exact initial inverter selection at the relevant instant;
-- which alternate inverter would be selected by the contingency procedure;
-- exact cockpit switch chronology;
+- normal burn-time inverter identity: **inverter 1**;
+- contingency alternate identity: **inverter 2**.
+
+The following remain unresolved:
+
+- exact cockpit switch/breaker chronology after the warning;
 - any required waiting interval before judging the post-switch light;
 - exact telemetry word / TELMU or CONTROL display field used to observe the warning;
 - whether the switch action was independently visible to the ground or known only from crew report/procedure execution.
@@ -118,7 +114,7 @@ These should remain explicit gaps.
 
 ## 7. Architecture consequence
 
-This rule exposes a useful new distinction for the simulator:
+This rule exposes a useful distinction for the simulator:
 
 ```text
 source failure / electrical condition
@@ -131,7 +127,7 @@ inverter warning
 
 crew/controller decision
         ↓
-crew switch action
+crew switch action (PC+2 first playable: inverter 1 → inverter 2)
         ↓
 post-switch warning observation
         ↓
@@ -140,11 +136,9 @@ rule interpretation
 
 The generic scenario-injection layer should continue to inject source conditions/observations, while operational actions such as switching an inverter belong to a separate action/event path.
 
-## 8. Next work
+## 8. Follow-on work
 
-The highest-value next implementation item is therefore **the minimal controller/crew action-event contract**, not another arbitrary malfunction field. It should be just large enough to represent an action such as an inverter switch, preserve its time/source/provenance, and let rule evaluation depend on the resulting observations.
-
-This action layer should be implemented generically enough to support later CAPCOM/crew procedural actions, but should not yet imply a full crew simulator or command language.
+The minimal controller/crew action-event contract developed after this note remains the correct abstraction. Research note 111 adds the source-bounded inverter-number mapping; it does not create a need for another malfunction field or a detailed electrical simulator.
 
 ## Sources
 
@@ -152,3 +146,4 @@ This action layer should be implemented generically enough to support later CAPC
 - Apollo 13 technical/PAO air-ground transcript, ~76:30 GET.
 - NASA, *Apollo Experience Report — Lunar Module Instrumentation Subsystem*, NASA report 19720018206, inverter caution discussion/Figure 27.
   https://www.ibiblio.org/apollo/Documents/19720018206.pdf
+- See research note 111 for the LM Operations Handbook and Apollo 13 PC+2 configuration evidence establishing the first-playable inverter 1 → inverter 2 identity.
