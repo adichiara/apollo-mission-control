@@ -20,7 +20,7 @@ Core Apollo 13 front-room positions are at B or better, with EECOM at A. Exact c
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, beginning near **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–101**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note **101** resolves immediate post-burn closure as a source-backed sequence rather than an instantaneous end-of-burn success state.
+The primary research chain now runs through notes **048–102**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note 101 resolves immediate post-burn closure; note **102** resolves the spacecraft-physics scope as a decision-relevant causal model rather than full-spacecraft emulation.
 
 Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
@@ -40,11 +40,13 @@ First-pass views exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and 
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** first-playable authoritative model, compact transport/client integration, and staged final-load workflow implemented; physical multi-device execution remains.
+**Status:** first-playable authoritative model, compact transport/client integration, staged final-load workflow, and physical-model scope boundary established; physical multi-device execution remains.
 
 Implemented architecture includes station-specific projections, explicit injection/action/communication/decision/physical/evidence layers, `PC2Session`, continuous mission time, readiness/FLIGHT decisions, CAPCOM queue/transmission, audit logging, facilitator authority, browser rejoin, compact station-set ownership, and staged final PC+2 solution/uplink state.
 
 Decision **D-016** remains canonical: GET advances whenever RUNNING; controller decisions do not stop GET; only explicit session pause stops time; ineligible nominal events are missed rather than replayed later.
+
+Decision **D-019** now bounds spacecraft physics to sourced decision dependencies. Required causal domains are DPS/maneuver state, guidance/attitude/control state, coarse electrical/equipment availability, communications/uplink/ranging availability, and instrumentation observation integrity. Full-spacecraft emulation is not a first-playable requirement.
 
 The synthetic ΔP branch remains explicitly non-historical and source-bounded:
 
@@ -58,6 +60,8 @@ The project preserves:
 
 `spacecraft/source state → instrumentation/telemetry → communications/ground processing → controller products → controller interpretation → player presentation → controller decisions/communications`
 
+Research note 102 reinforces that this chain is also the physical-model admission test: a new subsystem mechanism belongs in the first playable only when a sourced player decision, observable, rule, or selected failure path depends on it.
+
 The final PC+2 load path remains:
 
 `FIDO/RTCC final solution → GUIDO load readiness/consistency → INCO uplink configuration → CAPCOM/crew P00 + DATA/ACCEPT + UPDATA LINK configuration → state-vector + target-load transmission → completion / computer returned to crew`
@@ -66,7 +70,7 @@ Exact Cartesian vector values, RTCC/CCATS command internals, exact controller ke
 
 ## Phase 6 — Procedures and flight rules
 
-**Status:** PC+2 core rule set operational; immediate post-burn boundary now source-defined.
+**Status:** PC+2 core rule set operational; immediate post-burn boundary source-defined.
 
 Implemented/evaluable: ISS warning + program alarm path, chamber-pressure observation, >25 psi ΔP ground callout, attitude criteria, inverter path, restart eligibility/sequence, crew STOP/off path, shutdown/restart evidence architecture, final state-vector/target-load staging, and final FLIGHT GO/NO-GO.
 
@@ -82,7 +86,7 @@ Still intentionally unresolved where evidence is insufficient: exact onboard 77-
 
 **Status:** repository-side first-playable preparation complete; physical validation remains.
 
-Live-play protocol, structured evidence/debrief capture, scenario-blind player preparation/reference packet, facilitator separation, compact-mode integration, staged final-load workflow, backroom scope rule, and the source-bounded post-burn closure are documented.
+Live-play protocol, structured evidence/debrief capture, scenario-blind player preparation/reference packet, facilitator separation, compact-mode integration, staged final-load workflow, backroom scope rule, source-bounded post-burn closure, and decision-relevant spacecraft-model scope are documented.
 
 Modern HTTP/browser/localStorage/token/report/preparation/reference-packet mechanics are project infrastructure, not Apollo reconstruction.
 
@@ -98,15 +102,20 @@ The primary remaining validation boundary is **physical human/device execution**
 6. Exercise the approved five-player compact configuration with simultaneous clients, especially TELMU↔CONTROL and GUIDO↔FIDO-RETRO switching.
 7. Verify station-qualified readiness/action attribution and information isolation in facilitator audit output.
 8. Repair reproducible network/mobile/presentation/instruction defects and add regression coverage.
-9. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, terminology, display, support-room product, or player-count dependency.
+9. Reopen historical or physical-model research only when validation exposes a concrete missing procedure, authority, information, terminology, display, support-room product, player-count dependency, or causal spacecraft mechanism.
 
 ## Explicitly deferred
 
 - exact console pixel/character reconstruction;
 - singular 150-psi inlet-pressure aggregation without direct evidence;
 - exact onboard 77-percent thrust indication without direct evidence;
-- detailed DPS transient timing;
-- full RTCC trajectory propagator;
+- detailed DPS transient timing beyond selected branch needs;
+- full six-degree-of-freedom spacecraft/orbital propagation;
+- pulse-level RCS jet dynamics;
+- full LM ECS and dormant CSM subsystem physics for this slice;
+- detailed battery chemistry, wiring, breaker, and RF propagation/modulation physics;
+- complete LM instrumentation-channel emulation;
+- full RTCC trajectory propagator and internal RTCC/CCATS computation;
 - exact PC+2 RTCC Cartesian vector contents/internal RTCC-CCATS load-keying/final-load transmission duration;
 - exact post-burn controller console keying and switch-by-switch LM power-down timing;
 - full PTC dynamics before a concrete scenario need;
@@ -123,4 +132,4 @@ The primary remaining validation boundary is **physical human/device execution**
 
 Automated coverage includes continuous-clock/event rules, crew response, shutdown evidence, player/admin separation, facilitator authority, multi-client integration, multi-station ownership, compact HTTP/browser contracts, and staged PC+2 final-load transitions/station products.
 
-Research notes 095–101 and associated testing/scope documentation improve physical-run evidence quality and scenario closure but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
+Research notes 095–102 and associated testing/scope documentation improve physical-run evidence quality and scenario closure but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
