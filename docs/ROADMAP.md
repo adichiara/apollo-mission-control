@@ -20,9 +20,9 @@ Core Apollo 13 front-room positions are at B or better, with EECOM at A. Exact c
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, beginning near **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–110**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note 101 resolves immediate post-burn closure while preserving an unresolved timing-source tension; note 102 resolves the spacecraft-physics scope as a decision-relevant causal model; note 103 resolves MSFN/CCATS/RTCC scope as functional ground-data services rather than full ground-computer emulation; note 104 resolves the first-playable sensor/telemetry-failure scope as layered, explicitly authored observation faults rather than a generic random telemetry-failure mechanic; note 105 resolves first-playable crew representation as an explicit scenario-authored external actor rather than an additional player or automatic controller-side effect; note 106 narrows the unresolved 150-psi ground inlet-pressure lineage toward fuel inlet pressure / `GQ3611P`; note 107 identifies the crew percent-thrust instrument family as the panel-1 CMD THRUST / ENG THRUST indicator, with ENG THRUST the source-backed actual-thrust percent scale; note 108 bounds the 77-percent applicability gate to entry into the commanded maximum/full-throttle segment at burn +26 seconds; note 109 resolves the PC+2 attitude startup-exception allocation for operational use; and note **110** bounds the remaining duration question: DPS engineering evidence identifies “start transient” as a short engine-start phenomenon, but no reviewed Apollo 13 operational source defines the exact exception duration/end condition, so no numeric historical gate is encoded.
+The primary research chain now runs through notes **048–112**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note 101 resolves immediate post-burn closure while preserving an unresolved timing-source tension; note 102 bounds spacecraft physics to decision-relevant causal fidelity; note 103 bounds MSFN/CCATS/RTCC to functional ground-data services; note 104 defines layered observation failures without random generic telemetry faults; note 105 keeps crew action explicit and scenario-authored; note 106 narrows the 150-psi ground inlet-pressure lineage toward fuel inlet / `GQ3611P` without claiming an Apollo 13-specific mapping; notes 107–108 identify the onboard ENG THRUST percent indication and bound first-playable applicability to the commanded full-throttle transition; notes 109–110 allocate the attitude start-transient exception to attitude error and preserve the lack of an Apollo 13-specific numeric duration; note 111 records the generic LM inverter convention; and note **112 corrects the first-playable inverter selection from mission-specific Apollo 13 procedure evidence**.
 
-Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`. The note-110 archival refinement is recorded in `docs/roadmap/2026-09-13_pc2_attitude_start_transient_duration.md`.
+Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`. Dated archival refinements are recorded under `docs/roadmap/`, including the corrected inverter-selection addendum `2026-09-13_pc2_inverter_switch_identity.md`.
 
 ### Player-count boundary
 
@@ -30,15 +30,13 @@ Full configuration: seven station players — FLIGHT, CAPCOM, CONTROL, TELMU, GU
 
 Minimum supported compact PC+2 configuration: five players — FLIGHT; CAPCOM; LM SYSTEMS = TELMU + CONTROL; FLIGHT DYNAMICS = GUIDO + FIDO/RETRO; INCO.
 
-The spacecraft crew is not an additional first-playable player. Decision **D-021** keeps crew receipt/action explicit in the scenario model while retaining CAPCOM as the player-facing communication boundary.
-
-This is a project adaptation, not a historical staffing claim. Decision **D-018** and research notes **091–094** require compact play to map one player to a set of original station identities rather than create synthetic historical stations. Original station products, actions, readiness, authorization, and audit identities remain distinct.
+The spacecraft crew is not an additional first-playable player. Decision D-021 keeps crew receipt/action explicit in the scenario model while retaining CAPCOM as the player-facing communication boundary.
 
 ## Phase 3 — Display and console reconstruction
 
 **Status:** minimum PC+2 player-presentation checkpoint complete.
 
-First-pass views exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM. Exact semantics are retained where sourced; project renderings remain labeled where exact routing/layout is unresolved; **hidden integrity does not leak**, and missing fields are not turned into invented telemetry failures.
+First-pass views exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM. Exact semantics are retained where sourced; project renderings remain labeled where exact routing/layout is unresolved; hidden integrity does not leak, and missing fields are not turned into invented telemetry failures.
 
 ## Phase 4 — Authoritative simulation model
 
@@ -46,25 +44,17 @@ First-pass views exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and 
 
 Implemented architecture includes station-specific projections, explicit injection/action/communication/decision/physical/evidence layers, `PC2Session`, continuous mission time, readiness/FLIGHT decisions, CAPCOM queue/transmission, audit logging, facilitator authority, browser rejoin, compact station-set ownership, and staged final PC+2 solution/uplink state.
 
-Decision **D-016** remains canonical: GET advances whenever RUNNING; controller decisions do not stop GET; only explicit session pause stops time; ineligible nominal events are missed rather than replayed later.
+Decision D-016 remains canonical: GET advances whenever RUNNING; controller decisions do not stop GET; only explicit session pause stops time; ineligible nominal events are missed rather than replayed later.
 
-Decision **D-019** bounds spacecraft physics to sourced decision dependencies. Required causal domains are DPS/maneuver state, guidance/attitude/control state, coarse electrical/equipment availability, communications/uplink/ranging availability, and instrumentation observation integrity. Full-spacecraft emulation is not a first-playable requirement.
+Decision D-019 bounds spacecraft physics to sourced decision dependencies: DPS/maneuver state, guidance/attitude/control state, coarse electrical/equipment availability, communications/uplink/ranging availability, and instrumentation observation integrity. Full-spacecraft emulation is not a first-playable requirement.
 
-Research note **103** applies the same admission rule to MCC ground systems: MSFN/CCATS/RTCC are represented through decision-relevant availability, quality, routing, and generated-product states. IBM/UNIVAC internals, exact support-console keying, internal message formats, full network routing/geometry, and unsupported delays/failure rates are not first-playable requirements.
-
-Decision **D-020** and research note **104** make observation integrity equally explicit: physical source, sensor/transducer, conditioning/PCM, communications/telemetry transport, ground processing, and station product remain separate layers. The nominal PC+2 run receives no invented historical sensor failure, and later observation faults are admitted only as sourced or explicitly synthetic scenario mechanisms—not random generic telemetry failures.
-
-Decision **D-021** and research note **105** keep crew execution as a separate scenario layer. Controller conclusions do not directly cause crew/vehicle state changes; CAPCOM transmission, crew receipt/action, physical response, telemetry, and crew report remain distinct. Nominal crew actions may be deterministic scenario steps when crew discretion is not being tested, but unsupported crew delays/errors are not invented.
+Research note 103 applies the same admission rule to MCC ground systems. Decision D-020 and note 104 keep source/sensor, conditioning/PCM, communications/telemetry transport, ground processing, and station product separate. Decision D-021 and note 105 keep CAPCOM transmission, crew receipt/action, physical response, telemetry, and crew report separate.
 
 The synthetic ΔP branch remains explicitly non-historical and source-bounded:
 
 `source observation → CONTROL product/rule → CONTROL decision → CAPCOM queue/transmission → crew receipt → crew shutdown command → physical DPS response → crew report / fresh GQ6510P evidence → CONTROL evidence assessment`
 
-The 26 psi exercise is explicitly non-historical. No unsupported internal routing, automatic crew compliance, response timing, telemetry synthesis, binary chamber-pressure threshold, or hidden engine-off truth is added. It is not retroactively explained as a failed pressure transducer.
-
-Compact-role implementation preserves original station identities end to end:
-
-`player → exact original station set → HTTP join/rejoin → bundled station-scoped snapshots → browser substation navigation → station-qualified readiness/actions/audit provenance`
+No unsupported internal routing, automatic crew compliance, response timing, telemetry synthesis, binary chamber-pressure threshold, hidden engine-off truth, or invented sensor failure is added.
 
 ## Phase 5 — Mission Control data path
 
@@ -74,21 +64,7 @@ The project preserves:
 
 `spacecraft/source state → instrumentation/telemetry → communications/ground processing → controller products → controller interpretation → player presentation → controller decisions/communications`
 
-Station projections enforce information boundaries; source injections alter observations rather than announce diagnoses; **validity, age, hidden integrity, crew reports, telemetry, physical state, and controller conclusions remain distinct**.
-
-Research note 102 reinforces that this chain is the physical-model admission test. Research note 103 defines the ground-processing portion explicitly:
-
-`MSFN source/path → CCATS reception/routing/processing → RTCC processing/product generation → station-visible product/status`
-
-Research note 104 further decomposes observation integrity:
-
-`physical source → sensor/transducer → conditioning/PCM → communications/telemetry path → ground processing → station product`
-
-Research note 105 defines the crew-control boundary:
-
-`controller decision → CAPCOM transmission → crew receipt/action → physical response → telemetry / crew report → controller evidence`
-
-Only states that materially affect a sourced player decision or selected failure path enter the executable model. A fresh but biased measurement is not the same condition as a missing/stale communications product, a bad ground-derived product is not automatically bad spacecraft telemetry, and a controller decision is not itself a crew action. Unsupported random fault rates, crew-error rates, response-delay distributions, or recovery times are not introduced.
+Station projections enforce information boundaries; validity, age, hidden integrity, crew reports, telemetry, physical state, and controller conclusions remain distinct.
 
 The final PC+2 load path remains:
 
@@ -100,23 +76,39 @@ Exact Cartesian vector values, RTCC/CCATS command internals, exact controller ke
 
 **Status:** PC+2 core rule set operational; immediate post-burn boundary source-defined.
 
-Implemented/evaluable: ISS warning + program alarm path, chamber-pressure observation, >25 psi ΔP ground callout, attitude criteria, inverter path, restart eligibility/sequence, crew STOP/off path, shutdown/restart evidence architecture, final state-vector/target-load staging, and final FLIGHT GO/NO-GO.
+Implemented/evaluable: ISS warning + program alarm path, chamber-pressure observation, >25 psi ΔP ground callout, attitude criteria, inverter warning/action path, restart eligibility/sequence, crew STOP/off path, shutdown/restart evidence architecture, final state-vector/target-load staging, and final FLIGHT GO/NO-GO.
 
-Research note **101** adds the first-playable post-burn sequence:
+### Immediate post-burn
+
+Research note 101 defines:
 
 `burn cutoff/result → post-burn assessment → release from burn configuration → partial LM power-down → PTC preparation`
 
-Primary Apollo 13 records place nominal PC+2 ignition at 79:27:38.30 GET, record PGNS residuals R1 +00010 / R2 +00003 / R3 +00000, place an initial LM power-down transition at about 79+33–79+34 while retaining PTC-required functions, and place the detailed PTC procedure at about 79+52. A separate change-of-shift briefing describes a power-down timing of roughly cutoff +15 minutes; research note 101 preserves that as an unresolved timing-source tension rather than silently reconciling it. The project does not infer exact console keying, an unsupported formal post-burn poll, exact switch-by-switch timing, or full PTC dynamics.
+Primary Apollo 13 records place nominal PC+2 ignition at 79:27:38.30 GET, record small PGNS residuals, place an initial LM power-down transition at about 79:33–79:34 while retaining PTC-required functions, and place the detailed PTC procedure at about 79:52. A separate change-of-shift briefing describes power-down timing of roughly cutoff +15 minutes; that tension remains documented rather than silently reconciled.
 
-Research note **106** revisits the unresolved 150-psi ground inlet-pressure criterion. Apollo 13 explicitly described the PC+2 rules as similar to LOI Mode I abort with tight limits; a surviving Apollo 10 DPS mission rule names **fuel inlet pressure <150 psi for >65% throttle**. LM-7 documentation identifies `GQ3611P` as engine-interface fuel pressure. This makes fuel inlet / `GQ3611P` the leading historical candidate, but Apollo 13-specific rule/display/routing evidence explicitly tying PC+2 to that measurement has not been recovered. The rule therefore remains `NOT_EVALUABLE`; no minimum/average/either-side or synthetic combined inlet-pressure product is authorized.
+### 150-psi ground inlet criterion
 
-Research notes **107–108** resolve the bounded onboard 77-percent rule questions for first-playable sequencing. Apollo 13 mission material calls it a crew “thrust monitor readout” / onboard thrust criterion. LM technical documentation identifies the panel-1 dual-scale **CMD THRUST / ENG THRUST** indicator, with ENG THRUST displaying actual engine thrust as a percent from a chamber-pressure-transducer input; Apollo 13 malfunction procedures use the same indicator terminology. The Apollo 13 Technical Crew Debriefing then fixes the commanded profile as 5 seconds at idle/low thrust, 21 seconds at 40-percent throttle, and the remainder at full throttle, with the configured full-throttle transition at burn +26 seconds. For the current first playable, the 77-percent criterion is therefore inactive during the commanded low-thrust startup and becomes applicable on entry into the commanded maximum/full-throttle segment. This gate is explicitly a source-bounded lineage inference, not a verbatim recovered Apollo 13 rule qualifier. It still does not authorize deriving a crew ENG THRUST reading directly from hidden engine state; evaluation requires an explicit crew-visible observation path.
+Research note 106 identifies fuel inlet / `GQ3611P` as the leading lineage-supported interpretation from Apollo 10/11 rule lineage and LM-7 documentation. No reviewed Apollo 13-specific source explicitly makes the mapping, so the rule remains `NOT_EVALUABLE`; no minimum/average/either-side or synthetic combined pressure product is authorized.
 
-Research note **109** resolves the separate attitude-rule wording conflict at the operational level. CAPCOM's real-time 76:30 GET transmission and Haise's 76:37 GET readback both put the startup exception on **±10-degree attitude error**, followed by a separate **±10-degree/sec attitude-rate** limit with no exception. The later Mission Operations Report III-25 wording attaches the exception to rate; that conflict remains documented rather than silently normalized.
+### 77-percent onboard thrust criterion
 
-Research note **110** bounds the remaining duration question without inventing historical timing. Apollo 14/15/16 DPS engineering records use “start transient” for a short engine-start interval measured in seconds; Apollo 14 reports 2.14 seconds from FS-1 to 90% of minimum steady-state throttle and a 4.0-second minimum-throttle start specification, while explicitly comparing ignition delay with Apollo 13. Those values establish terminology and scale, not an Apollo 13 PC+2 operational rule. No 2.14-second, 4-second, +5-second, +21-second, or +26-second exception gate is therefore encoded. An attitude-error event whose disposition depends on the exception remains `NOT_EVALUABLE` unless an Apollo 13-specific operational source or explicitly synthetic scenario boundary defines it.
+Notes 107–108 identify the panel-1 CMD THRUST / ENG THRUST instrument family, with ENG THRUST the actual-thrust percent scale. The Apollo 13 crew debrief fixes the commanded PC+2 profile as 5 seconds at low/idle thrust, 21 seconds at 40 percent, then full throttle. For first playable, the 77-percent criterion becomes applicable on entry into the commanded maximum/full-throttle segment at burn +26 seconds. This remains a source-bounded lineage inference, not a verbatim recovered qualifier, and does not authorize deriving the crew gauge directly from hidden engine state.
 
-Still intentionally unresolved where evidence is insufficient: Apollo 13-specific confirmation of the 150-psi fuel-inlet mapping, exact operational duration/end condition of the attitude-error start transient, exact alternate-inverter detail, and exact final-load ground-system internals.
+### Attitude start transient
+
+Note 109 gives operational precedence to the contemporaneous CAPCOM transmission and Haise readback, which attach the startup exception to ±10-degree attitude error, not the separate ±10-degree/sec rate criterion. Note 110 establishes only that DPS engineering usage treated “start transient” as a short engine-start phenomenon; no Apollo 13-specific numeric duration/end condition is recovered. No 2.14-second, 4-second, +5-second, +21-second, or +26-second historical exception timer is encoded.
+
+### Inverter criterion — corrected configuration
+
+Research note 112 supersedes note 111's earlier first-playable identity synthesis. The generic LM handbook says inverter 1 is normally used during DPS/APS burns, but Apollo 13's mission-specific PC+2 read-up explicitly directed `CB(16) INVERTER 2, CLOSE` and **scratched `Select Inverter 1`** from the stock procedure. Earlier in the mission sequence the crew had explicitly selected inverter 2.
+
+Canonical first-playable interpretation:
+
+`PC+2 selected inverter 2 → inverter warning/light → crew attempts switch to redundant inverter → warning remains → shutdown criterion satisfied`
+
+The reviewed Apollo 13 rule does not yet name the post-warning alternate. Do not hard-code a named inverter-2-to-inverter-1 transfer until direct mission-specific procedure evidence is recovered, even though inverter 1 is the architecturally obvious redundant unit. Do not invent a post-switch persistence timer, exact switch/breaker chronology, automatic engine cutoff, independent ground knowledge of switch position, or an exact TELMU/CONTROL display field.
+
+Still intentionally unresolved where evidence is insufficient: Apollo 13-specific confirmation of the 150-psi fuel-inlet mapping; exact operational duration/end condition of the attitude-error start transient; exact named post-warning alternate-inverter procedure; exact final-load ground-system internals; and display/routing details whose absence does not currently block first playable.
 
 ## Phase 7 — Simulation scenarios / SimSup
 
@@ -124,7 +116,7 @@ Still intentionally unresolved where evidence is insufficient: Apollo 13-specifi
 
 Live-play protocol, structured evidence/debrief capture, scenario-blind player preparation/reference packet, facilitator separation, compact-mode integration, staged final-load workflow, backroom scope rule, source-bounded post-burn closure, decision-relevant spacecraft-model scope, functional ground-data-processing scope, layered observation-failure scope, and explicit scenario-authored crew-action scope are documented.
 
-Modern HTTP/browser/localStorage/token/report/preparation/reference-packet/facilitator crew-step mechanics are project infrastructure, not Apollo reconstruction.
+Modern HTTP/browser/localStorage/token/report/preparation/reference-packet/facilitator mechanics are project infrastructure, not Apollo reconstruction.
 
 ## Immediate next work
 
@@ -132,29 +124,31 @@ The primary remaining validation boundary is **physical human/device execution**
 
 1. Prepare participants with `docs/testing/PC2_PLAYER_PREPARATION.md` and `PC2_PLAYER_REFERENCE_PACKET.md`; preserve scenario blindness.
 2. Execute `PC2_LIVE_PLAYTEST_PROTOCOL.md` with separate real-phone/browser clients and one facilitator console: nominal PC+2 first, synthetic ΔP second.
-3. In the nominal run, continue past engine cutoff through the note-101 post-burn assessment/power-down/PTC-preparation transition; do not treat cutoff as scenario completion, improvise extra telemetry/sensor faults, or add unsourced crew delays/errors.
+3. Continue the nominal run past cutoff through the note-101 post-burn assessment/power-down/PTC-preparation transition; do not improvise extra faults or unsupported crew delays/errors.
 4. Record incidents with `PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md`, retaining preparation/GET/station/device/build/audit provenance.
 5. Validate packet findability and clarity separately from historical correctness.
 6. Exercise the approved five-player compact configuration with simultaneous clients, especially TELMU↔CONTROL and GUIDO↔FIDO-RETRO switching.
 7. Verify station-qualified readiness/action attribution, CAPCOM→crew sequencing, and information isolation in facilitator audit output.
 8. Repair reproducible network/mobile/presentation/instruction defects and add regression coverage.
-9. Reopen historical, spacecraft-model, observation-integrity, crew-action, or ground-processing research only when validation exposes a concrete missing procedure, authority, information, terminology, display, support-room product, player-count dependency, causal spacecraft mechanism, observation failure, crew-discretion dependency, or ground-data-path dependency.
+9. Reopen historical or model research only when validation exposes a concrete missing decision dependency.
 
-Research notes 106–110 are bounded archival refinements, not changes to that priority ordering.
+Research notes 106–112 are bounded archival refinements and corrections; they do not displace the physical-play priority.
 
 ## Explicitly deferred
 
 - exact console pixel/character reconstruction;
-- Apollo 13-specific proof that the singular 150-psi ground criterion maps directly to fuel interface pressure `GQ3611P`; fuel inlet is the leading lineage-supported candidate, while minimum/average/either-side aggregation remains unsupported;
-- a verbatim Apollo 13 mission-rule qualifier for the 77-percent ENG THRUST applicability gate; first playable uses the sourced full-throttle transition at burn +26 seconds as a lineage-based gate while preserving that provenance limitation;
-- exact operational duration/end of the attitude-error startup-transient exception; DPS engineering evidence shows it is a short engine-start phenomenon, but cross-mission 2.14-second/4.0-second values are not promoted to an Apollo 13 rule;
+- Apollo 13-specific proof of the 150-psi ground fuel-inlet mapping;
+- a verbatim Apollo 13 qualifier for the 77-percent ENG THRUST applicability gate;
+- exact operational duration/end of the attitude-error startup-transient exception;
+- exact named alternate-inverter action and post-warning cockpit chronology for the inverter criterion;
+- exact TELMU/CONTROL inverter-warning routing/display field and independent switch-position visibility;
 - detailed DPS transient timing beyond selected branch needs;
 - full six-degree-of-freedom spacecraft/orbital propagation;
 - pulse-level RCS jet dynamics;
 - full LM ECS and dormant CSM subsystem physics for this slice;
 - detailed battery chemistry, wiring, breaker, and RF propagation/modulation physics;
 - complete LM instrumentation-channel emulation;
-- random/generic sensor or telemetry faults, unsupported failure probabilities, noise/bias distributions, durations, correlations, or recovery timing;
+- random/generic sensor or telemetry faults or unsupported failure distributions;
 - random crew-error/noncompliance mechanics or unsupported response-delay distributions;
 - a separate human spacecraft-crew role until a selected scenario requires decision-relevant astronaut discretion/workload/manual operation;
 - full RTCC trajectory propagator and internal RTCC/CCATS computation;
@@ -175,4 +169,4 @@ Research notes 106–110 are bounded archival refinements, not changes to that p
 
 Automated coverage includes continuous-clock/event rules, crew response, shutdown evidence, player/admin separation, facilitator authority, multi-client integration, multi-station ownership, compact HTTP/browser contracts, and staged PC+2 final-load transitions/station products.
 
-Research notes 095–110 and associated testing/scope documentation improve physical-run evidence quality and bounded historical interpretation but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
+Research notes 095–112 and associated testing/scope documentation improve physical-run evidence quality and bounded historical interpretation but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
