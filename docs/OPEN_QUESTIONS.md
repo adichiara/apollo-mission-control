@@ -23,37 +23,37 @@ Historical gaps should now be prioritized by scenario impact. An unresolved arch
 12. How much of the spacecraft must be physically modeled for the PC+2 interval?
 13. How much of MSFN/CCATS/RTCC behavior materially affects PC+2 controller decisions and therefore must be simulated?
 14. Which sensor/telemetry failure modes are necessary for the first PC+2 scenario and later nonnominal variants?
-15. Should crew actions be scripted, operator-driven, or otherwise represented? This requires separate design after historical workflow research.
+15. Should crew actions be scripted, operator-driven, or otherwise represented? The first playable now uses explicit modeled crew-response steps for the ΔP branch, but the general architecture for later scenarios remains open.
 
 ## PC+2 vertical-slice definition
 
-30. What exact GET should initialize the first playable PC+2 scenario?
-31. Which controller positions are required for the first full-fidelity run, before player-count aggregation?
-32. Which PC+2-critical fields/products must be available to FLIGHT, FIDO/RETRO, GUIDO, CONTROL, TELMU, INCO, FAO/PROCEDURES, and CAPCOM?
-33. Which exact maneuver-state-vector/target-load/uplink steps must be represented versus initialized as completed state?
-34. Which documented shutdown criteria are player-observable from telemetry versus crew callout versus ground computation?
-35. What immediate post-burn verification and power-down activities belong inside the first scenario endpoint?
+30. **RESOLVED for first playable:** initialize near 77:55 GET. See the canonical roadmap and research note 079.
+31. **RESOLVED for first playable:** seven original station players are FLIGHT, CAPCOM, CONTROL, TELMU, GUIDO, FIDO/RETRO, and INCO; a source-constrained five-player compact mode is also supported. See notes 091–094.
+32. Which additional PC+2-critical fields/products, if any, prove necessary after physical human/device validation for FLIGHT, FIDO/RETRO, GUIDO, CONTROL, TELMU, INCO, and CAPCOM?
+33. Which exact maneuver-state-vector/target-load/uplink steps should be expanded beyond the currently modeled/initialized first-playable state?
+34. **RESOLVED for the implemented shutdown branch:** player-observable shutdown criteria/evidence are explicitly separated into controller products/rules, crew callout/report, and fresh telemetry evidence without hidden physical-state leakage. See notes 053–072 and 082–086.
+35. Which additional immediate post-burn verification and power-down activities should be added after physical play identifies a concrete dependency?
 
 ## Player scaling
 
-16. What is the lowest controller count that preserves the important team structure?
-17. Which historical positions can reasonably be combined for each player count?
-18. Are some positions phase-specific enough to omit rather than combine?
+16. **RESOLVED for PC+2 at the current fidelity target:** five players are the minimum supported configuration. See note 094.
+17. **RESOLVED for the supported five-player configuration:** TELMU+CONTROL may be assigned to one modern `LM SYSTEMS` player and GUIDO+FIDO/RETRO to one modern `FLIGHT DYNAMICS` player while preserving original station identities. No additional pairing is approved. See notes 091–094 and Decision D-018.
+18. Are some positions phase-specific enough to omit rather than combine in later scenarios? For current PC+2, no additional omission is approved.
 19. Should backroom functions be absorbed by front-room players, automated, omitted, or eventually playable?
 
 ## Interface
 
-20. How closely can phone screens reproduce the useful portion of original console displays without losing legibility?
+20. How closely can phone screens reproduce the useful portion of original console displays without losing legibility? Physical validation remains required.
 21. Should the simulated display preserve original aspect/character geometry exactly and use pan/zoom when necessary?
-22. Which modern controls must exist outside the simulation surface for joining/reconnecting?
-23. How should printed rule/procedure packets be organized without turning them into simplified hints?
+22. **RESOLVED for first playable:** modern join/rejoin, station-set persistence, compact substation switching, and facilitator authentication live outside the historical station-information model and are explicitly labeled project infrastructure. See notes 080, 087–093.
+23. How should printed rule/procedure packets be organized without turning them into simplified hints? Research note 096 now constrains what players may be prepared with, but exact packet organization remains open pending physical use.
 
 ## Operations
 
-24. Should simulation time ever be accelerated outside high-workload phases?
-25. How are scenarios reset/restarted?
-26. Should there be a dedicated human SimSup role?
-27. What information should appear in post-simulation review?
+24. Should simulation time ever be accelerated outside high-workload phases? Currently deferred; first playable runs at normal 1× continuous time.
+25. **RESOLVED for first playable:** facilitator/admin controls provide reset/restart and exercise-wide lifecycle operations, separated from controller authority. See notes 087–089.
+26. **RESOLVED for first playable:** use a dedicated human facilitator/SimSup function separate from controller stations; its credential/UI mechanics are modern infrastructure, not historical reconstruction. See note 088 and Decision D-017.
+27. **RESOLVED for first playable:** post-simulation review uses incident-level evidence plus a structured debrief separating observed facts, participant interpretation, reproducible defects, historical questions, usability-only changes, instructional gaps, and legitimate uncertainty. See notes 095–096 and the live-play report template.
 
 ## Repository/resources
 
