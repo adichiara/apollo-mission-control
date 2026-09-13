@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — compact domain ownership implemented; live-device execution and compact HTTP/UI wiring remain**
+Status: **CURRENT — compact HTTP/browser integration implemented; live-device execution remains**
 
 ## Completed checkpoints
 
@@ -10,81 +10,60 @@ Status: **CURRENT — compact domain ownership implemented; live-device executio
 - [x] readiness reports, FLIGHT decision requirement, CAPCOM queue/transmission, and audit trail;
 - [x] FastAPI/Uvicorn phone-accessible transport;
 - [x] rejoin-safe browser identity persistence;
-- [x] continuous mission clock: controller decisions do not stop GET;
-- [x] declarative nominal-event eligibility and missed-event consequences;
+- [x] continuous mission clock and declarative nominal-event eligibility;
 - [x] 1× monotonic wall-clock pacing;
 - [x] end-to-end source-bounded ΔP branch through fresh CONTROL evidence;
-- [x] ordinary player station client separated from validation/SimSup client;
-- [x] primary-source review of Simulation Supervisor / simulation-control role separation;
-- [x] server-side facilitator credential for exercise-wide operations;
-- [x] Render deployment secret generated outside source control;
-- [x] facilitator authority kept separate from all controller station identities;
-- [x] primary-source review of integrated flight-controller simulation as the validation model;
-- [x] in-process multi-client contract test across FLIGHT/CONTROL/CAPCOM/GUIDO + facilitator;
-- [x] destructive real-network multi-client smoke runner;
-- [x] complete pre-compact unit/integration suite passing in GitHub Actions;
-- [x] real TCP/HTTP smoke passing in GitHub Actions against an ephemeral authorized Uvicorn server;
-- [x] admin UI evidence-class values reconciled with the server enum;
-- [x] stale pre-authorization UI contract assertion repaired;
-- [x] primary-source review of Apollo integrated crew/ground-controller simulation for the live-play boundary;
-- [x] structured real-device/human-play protocol with nominal and synthetic ΔP runs, pass criteria, and defect classification;
-- [x] primary-source review of low-player-count station relationships;
-- [x] five-player compact PC+2 configuration defined with original station identity preserved;
-- [x] framework-neutral one-player/multiple-original-stations ownership implemented;
-- [x] bundled domain snapshot retains separate original-station presentations;
-- [x] bundled readiness/action authorization remains station-qualified and audit provenance remains original-station scoped.
+- [x] ordinary player client separated from facilitator/validation client;
+- [x] facilitator authority protected independently from controller station identity;
+- [x] in-process multi-client contract test and real-network smoke runner;
+- [x] complete pre-compact suite and real TCP/HTTP smoke passing in GitHub Actions;
+- [x] structured real-device/human-play protocol;
+- [x] primary-source review constraining five-player compact play;
+- [x] one-player/multiple-original-stations domain ownership;
+- [x] bundled snapshots with separate original-station presentations;
+- [x] station-qualified readiness/action authorization and original-station audit provenance;
+- [x] HTTP station-set join/rejoin with legacy single-station compatibility;
+- [x] generic player snapshot polling for single- and multi-station players;
+- [x] compact browser persistence, legacy identity migration, and original-call-sign substation navigation;
+- [x] compact HTTP/browser regression coverage.
 
 The deployment remains single-process/in-memory. Restart/redeploy loses the live session; multiple workers/sessions and durable persistence remain deferred.
 
-See decisions D-016–D-018 and research notes 084–092.
+See decisions D-016–D-018 and research notes 084–093.
 
 ## Continuous-time engine boundary
 
-At the approximately 79:17 GET final poll, `flight_go` becomes pending while the session remains `RUNNING`. GET continues. Downstream nominal events execute only if their prerequisites are present at their scheduled times; otherwise they are recorded as missed and are not replayed after a late decision.
+At the approximately 79:17 GET final poll, `flight_go` becomes pending while the session remains RUNNING. GET continues. Downstream nominal events execute only if prerequisites are present at their scheduled times; otherwise they are recorded as missed and are not replayed after a late decision.
 
-Manual `/advance` is validation infrastructure only. Normal runtime pacing is 1× monotonic wall-clock time.
+Manual `/advance` remains validation infrastructure only. Normal runtime pacing is 1× monotonic wall-clock time.
 
 ## First nonnominal branch
 
-The synthetic PC+2 fuel/oxidizer ΔP branch now reaches controller evidence end to end:
+The synthetic PC+2 fuel/oxidizer ΔP path remains:
 
 `source injection → CONTROL product/rule → explicit CONTROL decision → CAPCOM queue/transmission → explicit crew receipt → crew shutdown command → physical DPS response → crew report / fresh GQ6510P observation → CONTROL evidence assessment`
 
-The branch preserves all established guardrails: 26 psi is synthetic; internal CONTROL→CAPCOM routing is not claimed as historically exact; each communication/action/physical/evidence layer is explicit; stale pre-command pressure cannot count; no pressure magnitude becomes an engine-off threshold; and CONTROL evidence never reads hidden `engine_running` truth.
+The 26 psi exercise is explicitly synthetic. Internal CONTROL→CAPCOM routing is not claimed as historically exact; each communication/action/physical/evidence layer remains explicit; stale pre-command pressure cannot count; no pressure magnitude is treated as an engine-off threshold; CONTROL evidence does not read hidden `engine_running` truth.
 
 ## Facilitator boundary
 
-The normal `/` client contains station-authorized controller operations only. The `/admin` interface contains exercise-control functions.
-
-When `APOLLO_FACILITATOR_TOKEN` is configured, exercise-wide API operations require the `X-Apollo-Facilitator` header. Render receives a generated secret through `render.yaml`; if a Render instance somehow lacks that configuration, protected operations fail closed.
-
-Protected operations include lifecycle/reset, manual validation time, state injection, validation crew/vehicle response operations, and global audit access. Controller station operations remain independent of this credential.
-
-This is a modern software safety boundary. Historical NASA sources support the organizational separation of SimSup/simulation control from flight controllers, but do not establish an Apollo authentication mechanism.
+The normal `/` client contains station-authorized controller operations only. `/admin` contains exercise-control functions. Configured deployments require the facilitator credential for exercise-wide operations. This is a modern project safety boundary, not Apollo-era authentication reconstruction.
 
 ## Multi-client validation boundary
 
-Research note 089 uses primary NASA simulation-training evidence to justify validating the controller environment as an integrated system while keeping facilitator/simulation-control functions distinct.
+`tests/test_web_multiclient_integration.py` protects the in-process contract for shared state, station isolation, rejoin, occupied-station protection, facilitator isolation, pause semantics, and ΔP ordering.
 
-`tests/test_web_multiclient_integration.py` protects the in-process contract for shared authoritative state, station-scoped operational information, rejoin, occupied-station protection, facilitator authority isolation, explicit pause semantics, and complete synthetic ΔP propagation/evidence ordering.
-
-`scripts/pc2_multiclient_smoke.py` carries those checks into a real HTTP environment and adds simultaneous station polling.
-
-GitHub Actions has run both the full pre-compact unit/integration suite and that smoke runner against an ephemeral localhost Uvicorn server with facilitator authorization enabled. The newly added compact-ownership tests require current-head CI confirmation before they are recorded as passing.
+`scripts/pc2_multiclient_smoke.py` exercises those boundaries over real TCP/HTTP and simultaneous polling. Pre-compact CI has passed both the suite and network smoke.
 
 ## Live-device / human-play boundary
 
-Research note 090 uses Apollo/NASA integrated-simulation sources to constrain the remaining physical validation. The sources support combined crew/controller rehearsal in a mission environment and decisionmaking/procedure readiness, but do not establish phone UI criteria, browser reload semantics, HTTP latency limits, or facilitator authentication.
+Research note 090 and `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` define the remaining physical validation. Apollo/NASA sources support integrated crew/controller rehearsal and decision/procedure readiness, but not phone UI criteria, browser reload semantics, HTTP latency limits, or token authentication.
 
-`docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` therefore treats the remaining run as a structured mission rehearsal while keeping modern usability/network observations explicitly separate from historical research findings.
+The nominal PC+2 run comes first. The synthetic ΔP branch follows only after nominal coordination is coherent.
 
-The nominal PC+2 run comes first. The existing synthetic ΔP branch is a second run only after normal coordination is coherent.
+## Compact five-player boundary
 
-## Low-player-count boundary
-
-Research notes 091–092 close the compact-domain question without claiming a historical five-person Apollo team.
-
-Recommended five-player mode:
+Research notes 091–093 define and implement the approved compact project configuration without claiming a historical five-person Apollo team:
 
 - FLIGHT;
 - CAPCOM;
@@ -92,83 +71,40 @@ Recommended five-player mode:
 - FLIGHT DYNAMICS = GUIDO + FIDO/RETRO;
 - INCO.
 
-Primary Apollo sources support the underlying functional group relationships and the distinct FLIGHT/CAPCOM authority roles. They do not establish these bundled operators historically.
+Primary Apollo sources support the underlying functional relationships and distinct station identities; they do not establish the bundled operators historically.
 
-The framework-neutral implementation now preserves original station identities under shared human ownership:
+Implemented end-to-end shape:
 
-`player → assigned set of original stations → station-scoped products/actions/readiness → bundled player snapshot`
+`player → exact set of original stations → HTTP join/rejoin → bundled station-scoped snapshots → browser substation navigation → station-qualified readiness/actions/audit provenance`
 
-Implemented pieces:
-
-- `PC2Session.assign_stations()`;
-- `stations_for()` / `owns_station()`;
-- original-station uniqueness under shared player ownership;
-- station-qualified readiness;
-- station-specific action authorization;
-- bundled snapshots containing separate original-station presentations;
-- `compact_roles.py` for the approved five-player project mapping.
-
-Still pending:
-
-- HTTP station-set join/rejoin;
-- browser compact-role persistence;
-- compact navigation/subpanels with original call signs visible;
-- compact API/browser regression coverage;
-- five-player live play.
+The browser explicitly labels compact roles as simulator conveniences, preserves original call signs in station tabs and action surfaces, persists station sets and the active substation, and migrates legacy single-station identity. No synthetic `LM_SYSTEMS` or `FLIGHT_DYNAMICS` authoritative station exists.
 
 Four-player-or-smaller aggregation remains unresolved.
 
 ## Active priorities
 
-### A. Execute live multi-device validation
+### A. Confirm current-head automation
 
-1. run one facilitator console plus separate real-phone/browser clients for at least FLIGHT, CONTROL, CAPCOM, and GUIDO against one dedicated server;
-2. execute the pre-run identity/rejoin/authority/isolation checks in `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md`;
-3. complete the nominal PC+2 sequence without hidden facilitator coaching and assess FLIGHT/CAPCOM handoff ergonomics;
-4. repair blocking phone/network/presentation defects and add regression tests where reproducible;
+1. confirm GitHub Actions passes the compact HTTP/browser head;
+2. if a regression appears, repair it before recording the compact implementation as automatically validated.
+
+### B. Execute live multi-device validation
+
+1. run one facilitator console plus separate real-phone/browser clients against one dedicated server;
+2. execute identity/rejoin/authority/isolation checks from `PC2_LIVE_PLAYTEST_PROTOCOL.md`;
+3. complete nominal PC+2 without hidden facilitator coaching;
+4. assess FLIGHT/CAPCOM handoff and station readability;
 5. execute the synthetic ΔP run after nominal coordination is coherent.
 
-### B. Finish five-player compact transport/client integration
+### C. Execute five-player compact human validation
 
-1. extend the HTTP join/rejoin contract to an approved station set while retaining single-station compatibility;
-2. return the bundled snapshot shape for multi-station players;
-3. persist compact identity safely in the browser;
-4. render clear station-switch/subpanel navigation with original station names on readiness and action controls;
-5. add API/browser tests for rejoin, isolation, readiness attribution, action authority, and no cross-station leakage;
-6. run five-player human validation after the seven-seat baseline.
+1. use FLIGHT, CAPCOM, LM SYSTEMS, FLIGHT DYNAMICS, and INCO clients simultaneously;
+2. observe TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure;
+3. verify readiness/action attribution remains tied to the active original station;
+4. inspect audit output for original-station provenance and isolation;
+5. classify usability defects separately from historical/research defects.
 
-Reopen historical research only for concrete information/procedure/authority dependencies exposed by play or compact-mode implementation.
-
-## Integration validation still required
-
-Covered and previously executed automatically:
-
-- complete pre-compact unit/integration suite;
-- in-process multi-client station isolation;
-- real TCP/HTTP concurrent polling and actions;
-- reload/rejoin contract;
-- explicit pause behavior;
-- ΔP evidence boundaries;
-- facilitator/player authority isolation.
-
-New compact-domain regression coverage committed, current-head execution still to confirm:
-
-- one player assigned to multiple original station identities;
-- bundled snapshot without cross-station fusion;
-- station-specific action authorization from a bundled player;
-- readiness/audit attribution to original stations;
-- non-overlapping five-player station coverage.
-
-Protocol defined but still requiring physical execution:
-
-- real phone/browser reload/rejoin;
-- continuous GET behavior under external network latency;
-- phone readability and action ergonomics;
-- nominal PC+2 completion with human operators;
-- missed-event behavior during real late-controller decisions;
-- FLIGHT/CAPCOM handoff under actual play;
-- synthetic ΔP human-play follow-up after nominal success;
-- five-player compact browser workflow after transport/client implementation.
+Reopen historical research only for concrete information/procedure/authority dependencies exposed by validation.
 
 ## Explicitly deferred
 
@@ -188,4 +124,4 @@ Protocol defined but still requiring physical execution:
 
 ## Current success criterion
 
-A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior—validated automatically in-process and over real HTTP, with the remaining real-device/human-play protocol then executed successfully on actual clients. Compact mode must preserve those same boundaries while allowing one player to operate multiple original stations.
+A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior. Compact mode must preserve the same boundaries while allowing one modern player to operate several separately identified original stations. Automated current-head validation and physical human/device execution remain the next PASS boundaries.
