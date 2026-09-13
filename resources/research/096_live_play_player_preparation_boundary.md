@@ -25,7 +25,7 @@ For PC+2, this supports giving players the source-backed rules, responsibility b
 
 ### Flight procedures integrated rules and mission requirements
 
-The Apollo crew-procedures experience report describes flight procedures as integrating mission rules and requirements with spacecraft procedures, with final procedures organized by mission phase and incorporated into mission planning/data packages.
+Paul C. Kramer's *Apollo Experience Report — Systems and Flight Procedures Development* describes flight procedures as integrating mission rules and requirements with spacecraft procedures, with final procedures organized by mission phase and incorporated into mission planning/data packages.
 
 For the project, this supports preparing players with the procedures/products they are expected to use during the selected phase instead of forcing discovery by trial and error during the timed run.
 
@@ -89,7 +89,7 @@ Not supported:
    - https://ntrs.nasa.gov/citations/19700013438
 2. L. W. Keyser, *Apollo experience report: The role of flight mission rules in mission preparation and conduct*, NASA-TN-D-7822 / JSC-S-417, 1974. NTRS `19750002893`.
    - https://ntrs.nasa.gov/citations/19750002893
-3. *Apollo experience report: Crew procedures*, NASA technical report, NTRS `19730023040`.
+3. Paul C. Kramer, *Apollo Experience Report — Systems and Flight Procedures Development*, NASA-TN-D-7436, 1973. NTRS `19730023040`.
    - https://ntrs.nasa.gov/citations/19730023040
 
 See `resources/source-catalog/LIVE_HUMAN_PLAY_VALIDATION_SOURCES.md` and `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md`.
