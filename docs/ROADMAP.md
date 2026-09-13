@@ -22,7 +22,7 @@ Core Apollo 13 front-room positions are at B or better, with EECOM at A. Exact c
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, starting at approximately **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–098**, including controller rules/actions, nominal timing, products, station presentations, authoritative session integration, continuous mission time, the source-bounded ΔP branch, crew/vehicle response, fresh controller evidence, player/admin separation, facilitator authority, automated multi-client validation, live-device validation, compact-role research, multi-station ownership, compact HTTP/browser integration, the sub-five-player boundary, structured live-play evidence/debrief capture, reproducible scenario-blind player preparation, the first-run player reference-packet structure, and the staged final PC+2 state-vector/target-load/uplink workflow.
+The primary research chain now runs through notes **048–099**, including controller rules/actions, nominal timing, products, station presentations, authoritative session integration, continuous mission time, the source-bounded ΔP branch, crew/vehicle response, fresh controller evidence, player/admin separation, facilitator authority, automated multi-client validation, live-device validation, compact-role research, multi-station ownership, compact HTTP/browser integration, the sub-five-player boundary, structured live-play evidence/debrief capture, reproducible scenario-blind player preparation, the first-run player reference-packet structure, the final PC+2 state-vector/target-load/uplink workflow, and its staged executable implementation.
 
 Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
@@ -44,9 +44,9 @@ First-pass views exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and 
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** first-playable authoritative model and compact transport/client integration implemented and passing automated CI; physical multi-device execution remains.
+**Status:** first-playable authoritative model, compact transport/client integration, and staged final-load workflow implemented; physical multi-device execution remains.
 
-Implemented architecture includes framework-neutral state/event logic, station-specific products, rules, explicit injection/action/communication/decision/physical/evidence layers, shutdown/restart branches, `PC2Session`, continuous realtime pacing, readiness/FLIGHT decisions, CAPCOM queue/transmission, audit logging, facilitator authority, single-station browser rejoin, and compact station-set ownership.
+Implemented architecture includes framework-neutral state/event logic, station-specific products, rules, explicit injection/action/communication/decision/physical/evidence layers, shutdown/restart branches, `PC2Session`, continuous realtime pacing, readiness/FLIGHT decisions, CAPCOM queue/transmission, audit logging, facilitator authority, single-station browser rejoin, compact station-set ownership, and source-bounded staged final PC+2 solution/uplink state.
 
 ### Continuous mission time
 
@@ -80,25 +80,23 @@ The project preserves:
 
 Station projections enforce information boundaries; source injections alter observations rather than announce diagnoses; validity, age, hidden integrity, crew reports, telemetry, physical state, and controller conclusions remain distinct.
 
-Research note **098** further constrains the final PC+2 load path as a staged cross-station process rather than a generic GUIDO flag:
+Research notes **098–099** constrain and implement the final PC+2 load path as a staged cross-station process rather than a generic GUIDO flag:
 
 `FIDO/RTCC final solution → GUIDO load readiness/consistency → INCO uplink configuration → CAPCOM/crew P00 + DATA/ACCEPT + UPDATA LINK configuration → state-vector + target-load transmission → completion / computer returned to crew`
 
-Ranging remains a separate final-preparation dependency. Exact Cartesian vector values, RTCC/CCATS command internals, exact controller key sequence, and exact transmission duration remain deliberately unfrozen.
+The executable model now distinguishes `preliminary`, `final_ready`, and `final_stable` solution stages plus `preliminary_loaded`, `final_pending`, `transmitting`, and `final_loaded` load states. Ranging remains separately tracked. Exact Cartesian vector values, RTCC/CCATS command internals, exact controller key sequence, and exact transmission duration remain deliberately unfrozen.
 
 ## Phase 6 — Procedures and flight rules
 
 **Status:** PC+2 core rule set operational.
 
-Implemented/evaluable: ISS warning + program alarm path, chamber-pressure observation, >25 psi ΔP ground callout, attitude criteria, inverter path, restart eligibility/sequence, crew STOP/off path, shutdown/restart evidence architecture, and final FLIGHT GO/NO-GO.
+Implemented/evaluable: ISS warning + program alarm path, chamber-pressure observation, >25 psi ΔP ground callout, attitude criteria, inverter path, restart eligibility/sequence, crew STOP/off path, shutdown/restart evidence architecture, final state-vector/target-load staging, and final FLIGHT GO/NO-GO.
 
-The final state-vector/target-load/uplink chronology is now research-sufficient for first-playable workflow fidelity (research note **098**), but its staged states are not yet expanded in the executable model.
-
-Still intentionally unresolved where evidence is insufficient: exact onboard 77-percent thrust indication, singular 150-psi inlet-pressure selection/aggregation, exact startup transient boundary, and exact alternate-inverter detail.
+Still intentionally unresolved where evidence is insufficient: exact onboard 77-percent thrust indication, singular 150-psi inlet-pressure selection/aggregation, exact startup transient boundary, exact alternate-inverter detail, and exact final-load ground-system internals.
 
 ## Phase 7 — Simulation scenarios / SimSup
 
-**Status:** source-bounded scenario architecture, facilitator authority, automated integration validation, live-play protocol, structured evidence/debrief package, reproducible player-preparation/reference package, and compact browser integration implemented.
+**Status:** source-bounded scenario architecture, facilitator authority, automated integration validation, live-play protocol, structured evidence/debrief package, reproducible player-preparation/reference package, compact browser integration, and staged final-load workflow implemented.
 
 Research note **095** requires physical runs to preserve incident-level provenance — run/build, GET, player role, active original station, visible evidence, action, expected/observed result, and audit/event reference where available — and to route historical/procedural changes through separate source review rather than infer them from player difficulty.
 
@@ -110,7 +108,7 @@ Modern HTTP/browser/localStorage/token/compact-role/report/preparation/reference
 
 ## Immediate next work
 
-Automated compact-path validation and repository-side live-play preparation/reference material are complete. The primary remaining validation boundary is **physical human/device execution**. Research note 098 closes open question 33 for first-playable workflow fidelity, so exact RTCC/vector internals are not a prerequisite for that run.
+Repository-side staged final-load implementation is now complete. The primary remaining validation boundary is **physical human/device execution**.
 
 1. Prepare each participant with `docs/testing/PC2_PLAYER_PREPARATION.md`, provide `docs/testing/PC2_PLAYER_REFERENCE_PACKET.md`, record completion, and keep the synthetic branch scenario-blind.
 2. Execute `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` using separate real phone/browser clients and one facilitator console; nominal PC+2 first, synthetic ΔP second.
@@ -119,8 +117,7 @@ Automated compact-path validation and repository-side live-play preparation/refe
 5. Exercise the approved five-player compact configuration with actual simultaneous clients, especially TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure.
 6. Verify station-qualified readiness/action attribution and information isolation in facilitator audit output.
 7. Repair reproducible network/mobile/presentation/instruction defects and add regression coverage.
-8. As the next repository-side implementation refinement, replace the collapsed PC+2 final-load verification flag with source-bounded staged final-solution/uplink/load-complete states and audit events from note 098; do not fabricate vector contents or ground-system command details.
-9. Reopen historical research only when validation or implementation exposes a concrete missing procedure, authority, information, terminology, or player-count dependency.
+8. Reopen historical research only when validation or implementation exposes a concrete missing procedure, authority, information, terminology, display, or player-count dependency.
 
 ## Explicitly deferred
 
@@ -130,6 +127,7 @@ Automated compact-path validation and repository-side live-play preparation/refe
 - detailed DPS transient timing;
 - full RTCC trajectory propagator;
 - exact PC+2 RTCC Cartesian vector contents and internal RTCC/CCATS load-keying unless later implementation requires them;
+- exact final-load transmission duration without direct evidence;
 - backroom/staff-support simulation;
 - sub-five-player PC+2 mode unless reopened by live-play/scenario evidence;
 - multi-session/durable production persistence;
@@ -141,8 +139,8 @@ Automated compact-path validation and repository-side live-play preparation/refe
 
 ## Validation status
 
-Automated coverage includes continuous-clock/event rules, crew response, shutdown evidence, player/admin separation, facilitator authority, multi-client integration, multi-station ownership, compact HTTP station-set join/rejoin, station-qualified readiness, original-station conflict enforcement, compact CONTROL authorization, and browser compact-role/persistence/navigation contracts.
+Automated coverage includes continuous-clock/event rules, crew response, shutdown evidence, player/admin separation, facilitator authority, multi-client integration, multi-station ownership, compact HTTP station-set join/rejoin, station-qualified readiness, original-station conflict enforcement, compact CONTROL authorization, browser compact-role/persistence/navigation contracts, and staged PC+2 final-load transitions/station products.
 
-GitHub Actions run 59 on commit `ae569dff997c17b0f67546ea452f1706d34b693d` passed after correcting a compact CONTROL regression-test expectation that had conflated authorization with evidence availability. The compact HTTP/browser implementation is therefore recorded as passing automated CI.
+GitHub Actions run 59 on commit `ae569dff997c17b0f67546ea452f1706d34b693d` passed after correcting a compact CONTROL regression-test expectation that had conflated authorization with evidence availability. The compact HTTP/browser implementation is therefore recorded as passing automated CI. The staged final-load implementation has its own CI runs in progress/queued at the time of this roadmap update and is not yet recorded here as a completed CI PASS.
 
-Research notes 095–098, the live-play report template, player-preparation package, and player reference packet improve physical-run evidence quality and historical workflow definition but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
+Research notes 095–099, the live-play report template, player-preparation package, and player reference packet improve physical-run evidence quality and workflow fidelity but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
