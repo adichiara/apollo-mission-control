@@ -12,7 +12,8 @@ Date: 2026-09-13
 - CONTROL evidence authorization now recognizes a player who owns CONTROL inside a bundle.
 - Browser client now exposes the approved five-player compact bundles, persists station sets and active substation, migrates legacy single-station identity, and provides original-call-sign substation navigation.
 - Added compact HTTP regression tests and expanded browser contract tests.
-- Added research note 093 and reconciled the low-player-count source catalog and canonical roadmap.
+- Added research note 093 and reconciled the low-player-count source catalog, roadmaps, station status, README, resource index, and D-018.
+- Repaired a regression-test assumption that conflated successful CONTROL authorization with the separate requirement that shutdown evidence actually exist.
 
 ## Authenticity boundary
 
@@ -22,12 +23,12 @@ All readiness, actions, authorization checks, presentations, and audit provenanc
 
 ## Validation state
 
-Implementation is committed. Do not record current-head CI as passing until the workflow completes successfully.
+GitHub Actions run 59 on commit `ae569dff997c17b0f67546ea452f1706d34b693d` completed successfully after the compact CONTROL test correction. The current functional compact HTTP/browser implementation is therefore recorded as passing automated CI, including the repository's unit/integration and workflow validation path.
 
-Physical five-player compact play has not been executed and is not claimed as validated.
+This is not a physical play-validation claim. Seven-seat and five-player compact real-device/human play remain unexecuted.
 
 ## Next
 
-1. Confirm current-head CI.
-2. Perform the documented seven-seat live-device/human validation.
-3. Perform a five-player compact live run with explicit observation of substation switching, readiness attribution, action provenance, and information isolation.
+1. Perform the documented seven-seat live-device/human validation.
+2. Perform a five-player compact live run with explicit observation of substation switching, readiness attribution, action provenance, and information isolation.
+3. Reopen historical research only if those runs expose a concrete missing procedure, authority, information, or terminology dependency.
