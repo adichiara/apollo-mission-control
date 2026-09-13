@@ -147,7 +147,7 @@ See `resources/research/088_facilitator_authority_boundary.md`.
 
 ## D-018 — Compact PC+2 mode uses five players while preserving original station identities
 
-**Status:** Accepted; framework-neutral station-set ownership implemented, HTTP/UI integration pending  
+**Status:** Accepted; domain, HTTP, and browser integration implemented; physical compact-play validation pending  
 **Date:** 2026-09-12
 
 For the Apollo 13 PC+2 first playable, the recommended low-player-count configuration is five human players:
@@ -160,16 +160,19 @@ For the Apollo 13 PC+2 first playable, the recommended low-player-count configur
 
 This is a **project adaptation**, not a claim about historical Apollo 13 manning. Primary Apollo sources group TELMU/CONTROL within spacecraft systems operations and FIDO/RETRO/GUIDO within Flight Dynamics, but continue to document the underlying positions separately.
 
-Implementation therefore allows one player to own multiple **original station identities** rather than replacing those identities with synthetic domain stations. Products, readiness, actions, authorization, and audit entries remain attributable to TELMU, CONTROL, GUIDO, FIDO/RETRO, etc.
+Implementation therefore allows one player to own multiple **original station identities** rather than replacing those identities with synthetic domain stations. Products, readiness, actions, authorization, presentations, and audit entries remain attributable to TELMU, CONTROL, GUIDO, FIDO/RETRO, etc.
 
-The framework-neutral session layer now implements station-set ownership and bundled snapshots. HTTP join/rejoin and browser presentation for compact roles remain pending.
+The framework-neutral session layer implements station-set ownership and bundled snapshots. The HTTP layer now supports exact-set join/rejoin through `/api/session/join-set` while retaining the original single-station path. The browser persists the station set and active substation and exposes explicit original-call-sign navigation; it does not create a merged synthetic station.
 
 FLIGHT and CAPCOM stay independent in the recommended compact mode because their final-decision and crew-voice functions are distinct authority boundaries. INCO also stays independent; a four-player CAPCOM+INCO bundle is not accepted at this stage.
+
+Physical five-player human/device validation is still required before compact mode is recorded as play-validated.
 
 See:
 
 - `resources/research/091_low_player_count_station_aggregation_boundary.md`
 - `resources/research/092_multi_station_player_ownership.md`
+- `resources/research/093_compact_http_browser_integration.md`
 - `resources/source-catalog/PC2_LOW_PLAYER_COUNT_SOURCES.md`
 
 ## Not yet decided
