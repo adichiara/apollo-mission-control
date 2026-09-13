@@ -193,6 +193,23 @@ This is a scope boundary, not permission to invent or collapse unresolved histor
 
 See `resources/research/102_pc2_spacecraft_physical_model_scope.md` and `resources/source-catalog/PC2_SPACECRAFT_MODEL_SCOPE_SOURCES.md`.
 
+## D-020 — Observation failures are layered and scenario-authored
+
+**Status:** Accepted for the current first playable  
+**Date:** 2026-09-13
+
+The simulator does not use a generic or random `telemetry failure` mechanic for PC+2.
+
+Observation faults must remain attributable to the layer where the evidence places them:
+
+`physical source → sensor/transducer → conditioning/PCM → communications/telemetry path → ground processing → station product`
+
+For the current first playable, the architecture may represent unavailable, stale/delayed, biased/shifted, warning-only, communications-path, or ground-product faults when a scenario specifically requires them. These are capabilities, not random events.
+
+The nominal PC+2 run has no newly invented historical instrumentation failure. A future nonnominal observation fault requires a sourced or explicitly synthetic origin, observable effect, and player-decision consequence. Unsupported probabilities, durations, bias/noise magnitudes, recovery timing, and correlations are not added.
+
+See `resources/research/104_pc2_sensor_telemetry_failure_scope.md` and `resources/source-catalog/PC2_OBSERVATION_FAILURE_SOURCES.md`.
+
 ## Not yet decided
 
 The following are deliberately not decisions:
@@ -200,10 +217,7 @@ The following are deliberately not decisions:
 - four-player-or-smaller station aggregation;
 - durable session persistence/storage architecture;
 - realtime push mechanism (polling vs SSE/WebSockets);
-- degree of RTCC/CCATS/MSFN emulation beyond what the first scenario requires;
-- degree of Staff Support Room simulation;
 - voice-loop implementation;
 - time acceleration / realtime pacing multiplier;
 - scenario-selection UI;
-- post-simulation evaluation format;
 - named facilitator accounts or fine-grained facilitator permissions.
