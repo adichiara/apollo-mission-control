@@ -1,6 +1,6 @@
 # PC+2 low-player-count station-aggregation sources
 
-Status: **IMPLEMENTATION-SOURCE — compact role boundary researched; code implementation pending**
+Status: **IMPLEMENTATION-SOURCE — compact role boundary researched; multi-station domain ownership implemented; HTTP/UI wiring pending**
 
 This supplement records the historical evidence used to constrain low-player-count station aggregation for the Apollo 13 PC+2 first playable. The resulting bundles are project adaptations, not claims about historical Apollo staffing.
 
@@ -62,12 +62,14 @@ The bundle names and one-player assignment are project abstractions.
 ### Mission Operations Report — Apollo 13
 
 - NASA / MSC, 28 April 1970.
+- https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf
 - Separate post-mission controller appendices for FIDO, RETRO, GUIDO, TELMU, CONTROL, INCO, etc.
 - Relevant evidence: station responsibilities remained independently documented even within common organizational groups.
 
 Implementation use:
 
-- supports retaining original station-scoped products, actions, readiness, and audit identity inside any bundle.
+- supports retaining original station-scoped products, actions, readiness, and audit identity inside any bundle;
+- supports the implemented model in which a compact player owns several original stations rather than a new synthetic historical station.
 
 ## Derived project boundary
 
@@ -81,6 +83,11 @@ Recommended compact PC+2 configuration: **five players**.
 
 Historical station identity remains authoritative underneath the bundled UI.
 
+The framework-neutral session layer now implements this semantic boundary through station-set ownership, station-qualified readiness/action authorization, and bundled snapshots containing separate original-station presentations. HTTP join/rejoin and browser presentation are still pending.
+
 Four-player-or-smaller configurations remain unresolved. In particular, CAPCOM+INCO is not accepted merely because both concern communications: Apollo documentation distinguishes the crew-voice function from technical communications engineering.
 
-See `resources/research/091_low_player_count_station_aggregation_boundary.md`.
+See:
+
+- `resources/research/091_low_player_count_station_aggregation_boundary.md`
+- `resources/research/092_multi_station_player_ownership.md`
