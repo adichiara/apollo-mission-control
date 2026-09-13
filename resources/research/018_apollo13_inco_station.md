@@ -67,5 +67,5 @@ This is a strong validation rule for our scenario engine:
 
 - Apollo 13 Mission Operations Report, Appendix I
 - AS-508 MCC/MSFN Mission Configuration/System Description
-- R. W. Winkelman et al., *Telemetry and Communications to Apollo*
+- Alan Glines and Joseph A. Lazzaro, *Telemetry and Communications to Apollo Flight Controllers*, International Telemetering Conference, 1970; NTRS 19710030221: https://ntrs.nasa.gov/citations/19710030221
 - Apollo 13 Technical Air-to-Ground Transcript
