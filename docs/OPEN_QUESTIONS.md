@@ -39,7 +39,7 @@ Historical gaps should now be prioritized by scenario impact. An unresolved arch
 16. **RESOLVED for PC+2 at the current fidelity target:** five players are the minimum supported configuration. See note 094.
 17. **RESOLVED for the supported five-player configuration:** TELMU+CONTROL may be assigned to one modern `LM SYSTEMS` player and GUIDO+FIDO/RETRO to one modern `FLIGHT DYNAMICS` player while preserving original station identities. No additional pairing is approved. See notes 091–094 and Decision D-018.
 18. Are some positions phase-specific enough to omit rather than combine in later scenarios? For current PC+2, no additional omission is approved.
-19. Should backroom functions be absorbed by front-room players, automated, omitted, or eventually playable?
+19. **RESOLVED for the current PC+2 first playable:** Staff Support Room/backroom functions are historically real and explicitly acknowledged, but are not separate playable roles yet. Do not silently transfer unsupported backroom analysis to front-room stations or invent automated expert advice. Reopen when a physical-play or later-scenario decision depends on a specific support-room product, calculation, recommendation, or handoff. See research note 100.
 
 ## Interface
 
