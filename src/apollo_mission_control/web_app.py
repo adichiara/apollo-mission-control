@@ -52,6 +52,11 @@ class JoinRequest(BaseModel):
     station: str = Field(min_length=1, max_length=32)
 
 
+class JoinSetRequest(BaseModel):
+    player_id: str = Field(min_length=1, max_length=64)
+    stations: list[str] = Field(min_length=1, max_length=7)
+
+
 class AdvanceRequest(BaseModel):
     target_get_s: float
 
@@ -59,6 +64,7 @@ class AdvanceRequest(BaseModel):
 class ReadinessRequest(BaseModel):
     ready: bool
     note: str = Field(default="", max_length=500)
+    station: str | None = Field(default=None, min_length=1, max_length=32)
 
 
 class FlightDecisionRequest(BaseModel):
@@ -137,12 +143,7 @@ def _domain_call(call: Callable[[], Any]) -> Any:
 def _facilitator_guard(
     x_apollo_facilitator: str | None = Header(default=None),
 ) -> None:
-    """Protect facilitator/SimSup operations without conflating them with stations.
-
-    Local development remains permissive when no token is configured so the
-    framework-neutral prototype and existing tests can run without secret setup.
-    Deployed Render instances fail closed if the secret is unexpectedly absent.
-    """
+    """Protect facilitator/SimSup operations without conflating them with stations."""
     expected = os.getenv(FACILITATOR_TOKEN_ENV)
     if not expected:
         if os.getenv("RENDER", "").lower() == "true":
@@ -164,23 +165,42 @@ def _status_payload(session: PC2Session) -> dict[str, Any]:
         "phase": session.state.phase,
         "pending_gate": session.pending_gate,
         "pause_reason": session.pause_reason,
-        "assigned_stations": sorted(session.station_assignments.values()),
+        "assigned_stations": sorted(session.assigned_stations),
         "available_stations": list(session.available_stations),
     }
 
 
-def _join_or_rejoin(session: PC2Session, player_id: str, station: str) -> None:
-    """Join a station or idempotently rejoin the player's existing assignment."""
-    normalized = station.upper()
-    existing = session.station_assignments.get(player_id)
+def _join_or_rejoin_set(
+    session: PC2Session,
+    player_id: str,
+    stations: list[str] | tuple[str, ...],
+) -> None:
+    """Join/rejoin an exact set of original station identities."""
+    normalized = tuple(station.upper() for station in stations)
+    existing = session.player_station_sets.get(player_id)
+    if existing is None and player_id in session.station_assignments:
+        existing = (session.station_assignments[player_id],)
     if existing is not None:
         if existing != normalized:
             raise ValueError(
-                f"Player {player_id} is already assigned to {existing}; cannot rejoin as {normalized}"
+                f"Player {player_id} is already assigned to {list(existing)}; "
+                f"cannot rejoin as {list(normalized)}"
             )
-        session._audit("player_rejoined", "SESSION", player_id=player_id, station=normalized)
+        session._audit(
+            "player_rejoined",
+            "SESSION",
+            player_id=player_id,
+            stations=list(normalized),
+        )
         return
-    session.assign_station(player_id, normalized)
+    session.assign_stations(player_id, normalized)
+
+
+def _snapshot_payload(session: PC2Session, player_id: str) -> dict[str, Any]:
+    stations = session.stations_for(player_id)
+    if len(stations) == 1:
+        return session.player_snapshot(player_id).to_dict()
+    return session.bundled_player_snapshot(player_id).to_dict()
 
 
 @app.get("/api/health")
@@ -208,8 +228,21 @@ def session_status() -> dict[str, Any]:
 def join_session(request: JoinRequest) -> dict[str, Any]:
     with _lock:
         session = _sync_session()
-        _domain_call(lambda: _join_or_rejoin(session, request.player_id, request.station))
-        return session.player_snapshot(request.player_id).to_dict()
+        _domain_call(
+            lambda: _join_or_rejoin_set(session, request.player_id, (request.station,))
+        )
+        return _snapshot_payload(session, request.player_id)
+
+
+@app.post("/api/session/join-set")
+def join_session_set(request: JoinSetRequest) -> dict[str, Any]:
+    """Join/rejoin multiple original stations without creating a synthetic station."""
+    with _lock:
+        session = _sync_session()
+        _domain_call(
+            lambda: _join_or_rejoin_set(session, request.player_id, request.stations)
+        )
+        return _snapshot_payload(session, request.player_id)
 
 
 @app.post("/api/session/start", dependencies=[Depends(_facilitator_guard)])
@@ -275,7 +308,7 @@ def apply_injection(request: StateInjectionRequest) -> dict[str, Any]:
 def player_snapshot(player_id: str) -> dict[str, Any]:
     with _lock:
         session = _sync_session()
-        return _domain_call(lambda: session.player_snapshot(player_id).to_dict())
+        return _domain_call(lambda: _snapshot_payload(session, player_id))
 
 
 @app.post("/api/session/player/{player_id}/readiness")
@@ -283,7 +316,12 @@ def submit_readiness(player_id: str, request: ReadinessRequest) -> dict[str, Any
     with _lock:
         session = _sync_session()
         report = _domain_call(
-            lambda: session.submit_readiness(player_id, ready=request.ready, note=request.note)
+            lambda: session.submit_readiness(
+                player_id,
+                ready=request.ready,
+                note=request.note,
+                station=request.station,
+            )
         )
         return {
             "get_s": report.get_s,
@@ -298,7 +336,7 @@ def flight_decision(player_id: str, request: FlightDecisionRequest) -> dict[str,
     with _lock:
         session = _sync_session()
         _domain_call(lambda: session.record_flight_go(player_id, go=request.go, basis=request.basis))
-        return session.player_snapshot(player_id).to_dict()
+        return _snapshot_payload(session, player_id)
 
 
 @app.post("/api/session/flight/{player_id}/capcom")
@@ -347,8 +385,8 @@ def control_shutdown_evidence(player_id: str) -> dict[str, Any]:
     """Return controller-observable evidence availability, never hidden truth."""
     with _lock:
         session = _sync_session()
-        if _domain_call(lambda: session.station_for(player_id)) != "CONTROL":
-            raise HTTPException(status_code=400, detail="Only the CONTROL player can request shutdown evidence")
+        if not _domain_call(lambda: session.owns_station(player_id, "CONTROL")):
+            raise HTTPException(status_code=400, detail="Only a CONTROL owner can request shutdown evidence")
         return _domain_call(lambda: assess_session_shutdown_evidence(session))
 
 
