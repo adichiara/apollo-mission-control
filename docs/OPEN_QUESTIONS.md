@@ -46,14 +46,14 @@ Historical gaps should now be prioritized by scenario impact. An unresolved arch
 20. How closely can phone screens reproduce the useful portion of original console displays without losing legibility? Physical validation remains required.
 21. Should the simulated display preserve original aspect/character geometry exactly and use pan/zoom when necessary?
 22. **RESOLVED for first playable:** modern join/rejoin, station-set persistence, compact substation switching, and facilitator authentication live outside the historical station-information model and are explicitly labeled project infrastructure. See notes 080, 087–093.
-23. How should printed rule/procedure packets be organized without turning them into simplified hints? Research note 096 now constrains what players may be prepared with, but exact packet organization remains open pending physical use.
+23. **RESOLVED for the initial first-playable packet structure:** use separate common-context, original-station, rule/criterion, nominal phase/procedure, and modern client-operation sections; compact players retain separate original-station sheets. This is a project adaptation, not an Apollo handout reconstruction, and physical usability remains to be validated. See notes 096–097 and `docs/testing/PC2_PLAYER_REFERENCE_PACKET.md`.
 
 ## Operations
 
 24. Should simulation time ever be accelerated outside high-workload phases? Currently deferred; first playable runs at normal 1× continuous time.
 25. **RESOLVED for first playable:** facilitator/admin controls provide reset/restart and exercise-wide lifecycle operations, separated from controller authority. See notes 087–089.
 26. **RESOLVED for first playable:** use a dedicated human facilitator/SimSup function separate from controller stations; its credential/UI mechanics are modern infrastructure, not historical reconstruction. See note 088 and Decision D-017.
-27. **RESOLVED for first playable:** post-simulation review uses incident-level evidence plus a structured debrief separating observed facts, participant interpretation, reproducible defects, historical questions, usability-only changes, instructional gaps, and legitimate uncertainty. See notes 095–096 and the live-play report template.
+27. **RESOLVED for first playable:** post-simulation review uses incident-level evidence plus a structured debrief separating observed facts, participant interpretation, reproducible defects, historical questions, usability-only changes, instructional gaps, and legitimate uncertainty. See notes 095–097 and the live-play report template.
 
 ## Repository/resources
 
