@@ -36,21 +36,24 @@ jobs:
       - name: Run real-network multi-client smoke
         env:
           APOLLO_FACILITATOR_TOKEN: ci-validation-token
+          APOLLO_BUILD_COMMIT: ${{ github.sha }}
         run: |
           set -euo pipefail
-          uvicorn --app-dir src apollo_mission_control.web_app:app --host 127.0.0.1 --port 8000 > /tmp/apollo-uvicorn.log 2>&1 &
+          uvicorn --app-dir src apollo_mission_control.live_app:app --host 127.0.0.1 --port 8000 > /tmp/apollo-uvicorn.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true' EXIT
 
           python - <<'PY'
+          import json
+          import os
           import time
           from urllib.request import urlopen
 
-          url = "http://127.0.0.1:8000/api/health"
+          health_url = "http://127.0.0.1:8000/api/health"
           deadline = time.monotonic() + 15
           while True:
               try:
-                  with urlopen(url, timeout=1) as response:
+                  with urlopen(health_url, timeout=1) as response:
                       if response.status == 200:
                           break
               except Exception:
@@ -58,6 +61,11 @@ jobs:
               if time.monotonic() >= deadline:
                   raise SystemExit("server did not become healthy within 15 seconds")
               time.sleep(0.25)
+
+          with urlopen("http://127.0.0.1:8000/api/build", timeout=2) as response:
+              build = json.load(response)
+          if build.get("commit") != os.environ["APOLLO_BUILD_COMMIT"]:
+              raise SystemExit(f"unexpected build provenance: {build!r}")
           PY
 
           if ! python scripts/pc2_multiclient_smoke.py http://127.0.0.1:8000; then
