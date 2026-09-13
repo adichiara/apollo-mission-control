@@ -51,6 +51,7 @@ Latest scenario-integration research:
 - `research/089_multiclient_integrated_validation_boundary.md` — establishes source-bounded integrated validation across several controller clients and a distinct facilitator, and records the automated/network smoke artifacts and defects found during the first validation pass.
 - `research/090_live_device_human_play_validation_boundary.md` — defines the remaining real-device/human-play boundary as a structured integrated mission rehearsal, with modern browser/mobile defects kept distinct from historical research gaps.
 - `research/091_low_player_count_station_aggregation_boundary.md` — defines the first compact five-player PC+2 configuration from Apollo functional group/authority evidence while requiring original station identities to survive under bundled player presentation.
+- `research/092_multi_station_player_ownership.md` — implements that compact-domain boundary as one player owning multiple original stations, with separate presentations, station-qualified readiness/actions, and original-station audit provenance.
 
 ## Research rule
 
