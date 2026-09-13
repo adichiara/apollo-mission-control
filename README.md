@@ -32,7 +32,7 @@ See:
 
 The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation and execution**.
 
-The model now includes source-backed PC+2 progression, continuous mission time, station-specific products, shutdown/restart branches, explicit communication/action/physical/evidence layers, first-pass views for CONTROL/GUIDO/TELMU/FIDO-RETRO/INCO/FLIGHT/CAPCOM, browser rejoin, CAPCOM handoff, audit logging, the source-bounded synthetic ΔP branch through fresh CONTROL evidence, facilitator authority, automated multi-client validation, end-to-end compact station-set ownership through the HTTP/browser layer, a structured live-play evidence/debrief package, a reproducible scenario-blind player-preparation package, a source-constrained first-run player reference packet, and a source-bounded staged final state-vector/target-load/uplink workflow.
+The model now includes source-backed PC+2 progression, continuous mission time, station-specific products, shutdown/restart branches, explicit communication/action/physical/evidence layers, first-pass views for CONTROL/GUIDO/TELMU/FIDO-RETRO/INCO/FLIGHT/CAPCOM, browser rejoin, CAPCOM handoff, audit logging, the source-bounded synthetic ΔP branch through fresh CONTROL evidence, facilitator authority, automated multi-client validation, end-to-end compact station-set ownership through the HTTP/browser layer, a structured live-play evidence/debrief package, a reproducible scenario-blind player-preparation package, a source-constrained first-run player reference packet, a source-bounded staged final state-vector/target-load/uplink workflow, a source-bounded immediate post-burn closure, decision-relevant spacecraft and ground-processing scope, and a layered observation-failure boundary.
 
 The compact HTTP/browser path and staged final-load regression coverage are recorded as passing automated CI. The remaining major validation boundary is real-device/browser and human-play execution.
 
@@ -105,7 +105,7 @@ The source-bounded synthetic ΔP branch reaches fresh controller evidence throug
 
 `source observation → CONTROL product/rule → CONTROL decision → CAPCOM queue/transmission → crew receipt → crew shutdown command → physical DPS response → crew report / fresh GQ6510P evidence → CONTROL evidence assessment`
 
-Every step remains explicit. CAPCOM transmission does not imply crew receipt, crew command does not imply physical shutdown, physical response does not fabricate telemetry evidence, and CONTROL assessment never reads hidden `engine_running` truth. No pressure magnitude is interpreted as a binary engine-off threshold.
+Every step remains explicit. CAPCOM transmission does not imply crew receipt, crew command does not imply physical shutdown, physical response does not fabricate telemetry evidence, and CONTROL assessment never reads hidden `engine_running` truth. No pressure magnitude is interpreted as a binary engine-off threshold. The synthetic branch is not retroactively explained as a pressure-transducer failure.
 
 ## Integrated validation
 
@@ -123,12 +123,15 @@ Research note 096 closes the preparation ambiguity behind `PLAYER_INSTRUCTION`. 
 
 Research note 097 resolves the initial reference-packet organization question for first physical play. `PC2_PLAYER_REFERENCE_PACKET.md` keeps common operational context, original-station sheets, neutral rule/criterion references, nominal phase/procedure context, and visibly modern client-operation instructions separate. Compact players still receive separate original-station references. The layout is a project adaptation, and unresolved historical criteria remain unresolved rather than being turned into hints.
 
+Research notes 102–104 now constrain the causal/data-integrity model. The first playable includes only spacecraft and ground-processing mechanisms needed by sourced controller decisions, and it preserves the chain `physical source → sensor/transducer → conditioning/PCM → communications/telemetry path → ground processing → station product`. The nominal PC+2 run receives no random or invented instrumentation failure; later observation faults must be specifically sourced or explicitly synthetic and authored at the layer where they occur.
+
 ## Historical/presentation boundaries retained
 
 - Apollo 13 MSK 1137 `TCP` percent is not equated to modeled `GQ6510P` psi.
 - TELMU's documented 38–40 A PC+2 burn figure remains a reference value, not fabricated live telemetry.
 - GUIDO residuals are not substituted for a missing FIDO propagated trajectory solution.
 - INCO link quality, voice, telemetry, ranging, uplink configuration, and load-transmission state remain distinct products.
+- Source-sensor faults, communications/telemetry-path faults, and ground-product faults remain distinct; nominal PC+2 receives no random instrumentation failure.
 - Hidden product integrity never appears automatically in a player view.
 - Exact CRT/console layouts are not invented where evidence is incomplete.
 
@@ -136,17 +139,17 @@ Research note 097 resolves the initial reference-packet organization question fo
 
 The singular PC+2 150-psi ground engine-inlet-pressure criterion remains `NOT_EVALUABLE`; the exact historical ground selection/aggregation rule is unresolved. The onboard 77-percent thrust-monitor criterion also remains `NOT_EVALUABLE`; the rule is documented but the exact crew indication/source is unresolved.
 
-Detailed DPS transients, exact display routing/cadence, exact final-load RTCC/CCATS internals, and a post-burn FIDO trajectory propagator remain deferred until a concrete dependency requires them.
+Detailed DPS transients, exact display routing/cadence, exact final-load RTCC/CCATS internals, and a post-burn FIDO trajectory propagator remain deferred until a concrete dependency requires them. Generic/random telemetry-failure probabilities, durations, bias/noise distributions, correlations, and recovery times are not invented.
 
 ## Immediate priorities
 
 1. Prepare each participant from `docs/testing/PC2_PLAYER_PREPARATION.md`, provide `docs/testing/PC2_PLAYER_REFERENCE_PACKET.md`, record completion, and preserve scenario blindness.
 2. Run `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` with actual simultaneous station phones/browsers and one facilitator console.
 3. Record the run in `docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` so preparation, defects, and research questions remain traceable to build/GET/station evidence.
-4. Run nominal PC+2 first, including the staged final-solution/load/uplink handoff, then the synthetic ΔP branch.
-5. Run the approved five-player compact configuration and evaluate TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching, readiness/action attribution, information isolation, and reference-packet findability.
+4. Run nominal PC+2 first, including the staged final-solution/load/uplink handoff and immediate post-burn transition, without improvised telemetry faults; then run the synthetic ΔP branch.
+5. Run the approved five-player compact configuration and evaluate TELMU↔CONTROL and GUIDO↔FIDO-RETRO switching, readiness/action attribution, information isolation, and reference-packet findability.
 6. Repair reproducible network/mobile/presentation/instruction defects and add regression coverage.
-7. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, terminology, or player-count dependency.
+7. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, terminology, player-count dependency, causal spacecraft mechanism, observation-integrity failure, or ground-data-path dependency.
 
 ## Apollo 13 station specifications
 
