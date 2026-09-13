@@ -25,7 +25,15 @@ The same report states that the LM had been powered up for the maneuver and that
 
 At approximately **79:33 GET**, CAPCOM began reading a procedure that would "power [the LM] down a good bit," with further reductions deferred until PTC was established. The procedure explicitly retained selected communications/guidance functions needed for the next operational step.
 
-A contemporary change-of-shift briefing adds the operational reason: controllers intended to begin the initial LM power-down roughly cutoff +15 minutes only after confirming a good, stable post-burn spacecraft. Guidance/navigation and communications remained powered long enough to establish PTC; tracking later provided an additional assessment of maneuver performance.
+A contemporary change-of-shift briefing separately states that controllers intended to begin an LM power-down roughly **cutoff +15 minutes**, after confirming a good, stable post-burn spacecraft. Guidance/navigation and communications remained powered long enough to establish PTC; tracking later provided an additional assessment of maneuver performance.
+
+### Timing-source tension
+
+These records are not treated as interchangeable timing statements. Nominal cutoff was at approximately **79:32:02 GET**, while the Mission Operations Report and air-ground chronology place the beginning of a power-down transition at approximately **79:33–79:34 GET**. A separate change-of-shift briefing describes a power-down timing of roughly **cutoff +15 minutes**.
+
+The present evidence does not establish that the briefing's `+15 minutes` refers to the same initial reduction recorded at 79:33–79:34. It may describe a later or deeper power reduction, but that reconciliation is **not adopted without additional evidence**.
+
+For first-playable behavior, the implementation therefore uses only the unambiguous operational ordering supported by the Mission Operations Report and air-ground chronology: post-burn assessment, an initial power reduction while required functions remain available, and later PTC preparation. The conflicting briefing timing is retained as an unresolved provenance note rather than converted into simulation timing.
 
 ## First-playable interpretation
 
@@ -47,9 +55,10 @@ Do **not** infer or invent:
 - exact current draw at each individual switch transition beyond values explicitly documented in sources;
 - exact timing of every power-down switch operation;
 - a full PTC dynamics model for the first playable;
-- an invented automatic rule that a nominal residual vector itself authorizes power-down.
+- an invented automatic rule that a nominal residual vector itself authorizes power-down;
+- a reconciliation of the 79:33–79:34 power-down chronology with the separate cutoff+15 briefing statement unless stronger evidence establishes what each timing refers to.
 
-The historical record supports the operational ordering and timing envelope, not every internal controller action.
+The historical record supports the operational ordering and a bounded timing envelope, not every internal controller action or an exact interpretation of every timing statement.
 
 ## Implementation / play boundary
 
