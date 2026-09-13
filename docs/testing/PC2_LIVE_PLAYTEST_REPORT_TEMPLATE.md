@@ -21,6 +21,20 @@ Use one copy per physical run. Do not infer historical changes from participant 
 |---|---|---|---|---|---|
 | | | | | | |
 
+## Player preparation record
+
+Use `PC2_PLAYER_PREPARATION.md` before timed play.
+
+| Player | Common briefing reviewed? | Station rules/procedures available? | Client-operation checks completed? | Compact switch practiced? | Prior prototype familiarity / notes |
+|---|---|---|---|---|---|
+| | | | | | |
+
+Confirm:
+
+- [ ] no participant was briefed on whether/when a nonnominal branch would occur;
+- [ ] no participant received hidden state or another station's private evidence;
+- [ ] players were allowed to consult assigned rules/procedures during play.
+
 ## Pre-run checks
 
 - [ ] assigned stations/station sets join correctly;
@@ -48,6 +62,8 @@ Allowed provisional classes:
 - `NETWORK_CLIENT`
 - `PLAYER_INSTRUCTION`
 - `NORMAL_DECISION_UNCERTAINTY`
+
+For a proposed `PLAYER_INSTRUCTION` classification, first compare the incident against the preparation record. If the expected information was provided and available but was difficult to locate or interpret, use `STATION_PRESENTATION` or another appropriate class instead.
 
 ## Mission-path observations
 
