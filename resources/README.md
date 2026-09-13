@@ -13,7 +13,7 @@ This directory is the provenance layer for the simulation.
 Current supplements:
 
 - `source-catalog/PC2_IMPLEMENTATION_SOURCES.md` — sources used directly by the Apollo 13 PC+2 executable product-projection, shutdown-rule, and scenario-injection layers.
-- `source-catalog/PC2_INLET_PRESSURE_SOURCES.md` — focused source record for the unresolved singular inlet-pressure selection/aggregation question.
+- `source-catalog/PC2_INLET_PRESSURE_SOURCES.md` — focused source record for the unresolved Apollo 13 150-psi ground inlet-pressure mapping; note 106 now identifies fuel inlet / `GQ3611P` as the leading lineage-supported candidate without treating it as proven for Apollo 13.
 - `source-catalog/PC2_INVERTER_WARNING_SOURCES.md` — focused source record for the inverter-caution, crew-switch, and post-switch mission-rule path.
 - `source-catalog/PC2_THRUST_MONITOR_SOURCES.md` — focused source record for the unresolved onboard 77-percent thrust-monitor indication and rejected unsupported mappings.
 - `source-catalog/PC2_ATTITUDE_SOURCES.md` — focused source record for PC+2 attitude-error/rate criteria, the startup-transient source conflict, and CONTROL observation provenance.
@@ -72,6 +72,7 @@ Latest scenario-integration research:
 - `research/103_pc2_ground_data_processing_scope.md` — resolves how much MSFN/CCATS/RTCC behavior the first playable needs: functional tracking/telemetry/trajectory/display/load services and data-quality consequences only where a sourced player decision depends on them; internal ground-computer emulation remains deferred.
 - `research/104_pc2_sensor_telemetry_failure_scope.md` — resolves first-playable sensor/telemetry failure scope: no additional nominal historical instrumentation fault is added, while unavailable, stale/delayed, biased/shifted, warning-only, communications-path, and ground-product faults remain explicit scenario capabilities only when sourced or labeled synthetic.
 - `research/105_pc2_crew_action_representation_boundary.md` — resolves first-playable crew representation: no separate crew player; CAPCOM communication, crew receipt/action, spacecraft response, telemetry, and crew report remain explicit stages, with no invented random crew delay/error mechanics.
+- `research/106_pc2_inlet_pressure_rule_lineage.md` — follows the Apollo 13 “LOI Mode I abort” rule lineage into surviving Apollo 10/11 mission rules; identifies fuel inlet / `GQ3611P` as the leading candidate behind the 150-psi ground criterion while preserving the lack of an Apollo 13-specific exact mapping and leaving the executable rule `NOT_EVALUABLE`.
 
 ## Research rule
 
