@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 from enum import Enum
-from typing import Any
+from typing import Any, Iterable
 
 from .capcom_presentation import build_pc2_capcom_presentation
 from .control_presentation import build_pc2_control_presentation
@@ -67,7 +67,7 @@ class CapcomQueueItem:
 
 @dataclass(frozen=True)
 class PlayerSessionSnapshot:
-    """Serializable player-scoped session snapshot for a future client/API."""
+    """Serializable single-station player snapshot retained for compatibility."""
 
     player_id: str
     station: str
@@ -77,6 +77,29 @@ class PlayerSessionSnapshot:
     pending_gate: str | None
     pause_reason: str | None
     presentation: dict[str, Any]
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass(frozen=True)
+class BundledPlayerSessionSnapshot:
+    """Serializable snapshot for a player owning multiple original stations.
+
+    Station identities are deliberately preserved as keys.  A bundled player
+    gains access to multiple station-scoped presentations; the underlying
+    products, actions, readiness reports, and audit actors are not merged into a
+    synthetic domain station.
+    """
+
+    player_id: str
+    stations: tuple[str, ...]
+    get_s: float
+    session_status: str
+    mission_phase: str
+    pending_gate: str | None
+    pause_reason: str | None
+    presentations: dict[str, dict[str, Any]]
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -102,7 +125,11 @@ class PC2Session:
     next_event_index: int = 0
     pending_gate: str | None = None
     pause_reason: str | None = None
+    # Compatibility projection for existing one-player/one-station callers.
+    # For multi-station players this stores the first assigned station only;
+    # authoritative ownership lives in player_station_sets.
     station_assignments: dict[str, str] = field(default_factory=dict)
+    player_station_sets: dict[str, tuple[str, ...]] = field(default_factory=dict)
     readiness_reports: list[ReadinessReport] = field(default_factory=list)
     capcom_queue: list[CapcomQueueItem] = field(default_factory=list)
     audit_log: list[SessionAuditEvent] = field(default_factory=list)
@@ -121,6 +148,14 @@ class PC2Session:
     def available_stations(self) -> tuple[str, ...]:
         return tuple(_PRESENTATION_BUILDERS)
 
+    @property
+    def assigned_stations(self) -> tuple[str, ...]:
+        return tuple(
+            station
+            for stations in self.player_station_sets.values()
+            for station in stations
+        )
+
     def _audit(self, kind: str, actor: str, **details: Any) -> SessionAuditEvent:
         self._audit_sequence += 1
         event = SessionAuditEvent(
@@ -134,21 +169,75 @@ class PC2Session:
         return event
 
     def assign_station(self, player_id: str, station: str) -> None:
-        station = station.upper()
-        if station not in _PRESENTATION_BUILDERS:
-            raise ValueError(f"Unsupported station: {station}")
-        if player_id in self.station_assignments:
+        """Assign one station, preserving the original public API."""
+        self.assign_stations(player_id, (station,))
+
+    def assign_stations(self, player_id: str, stations: Iterable[str]) -> None:
+        """Assign one player a set of original station identities.
+
+        This supports low-player-count presentation without creating synthetic
+        domain stations.  An original station may still belong to only one
+        player at a time.
+        """
+        normalized = tuple(station.upper() for station in stations)
+        if not normalized:
+            raise ValueError("At least one station must be assigned")
+        if len(set(normalized)) != len(normalized):
+            raise ValueError("Duplicate station in player assignment")
+        unsupported = [station for station in normalized if station not in _PRESENTATION_BUILDERS]
+        if unsupported:
+            raise ValueError(f"Unsupported station: {unsupported[0]}")
+        if player_id in self.player_station_sets or player_id in self.station_assignments:
             raise ValueError(f"Player already assigned: {player_id}")
-        if station in self.station_assignments.values():
-            raise ValueError(f"Station already assigned: {station}")
-        self.station_assignments[player_id] = station
-        self._audit("station_assigned", "SESSION", player_id=player_id, station=station)
+
+        occupied = set(self.assigned_stations)
+        conflict = next((station for station in normalized if station in occupied), None)
+        if conflict is not None:
+            raise ValueError(f"Station already assigned: {conflict}")
+
+        self.player_station_sets[player_id] = normalized
+        self.station_assignments[player_id] = normalized[0]
+        if len(normalized) == 1:
+            self._audit(
+                "station_assigned",
+                "SESSION",
+                player_id=player_id,
+                station=normalized[0],
+            )
+        else:
+            self._audit(
+                "station_set_assigned",
+                "SESSION",
+                player_id=player_id,
+                stations=list(normalized),
+            )
+
+    def stations_for(self, player_id: str) -> tuple[str, ...]:
+        stations = self.player_station_sets.get(player_id)
+        if stations is not None:
+            return stations
+        # Defensive compatibility for sessions constructed before the station-set
+        # field existed or tests that manipulate the legacy mapping directly.
+        if player_id in self.station_assignments:
+            return (self.station_assignments[player_id],)
+        raise ValueError(f"Player has no station assignment: {player_id}")
 
     def station_for(self, player_id: str) -> str:
-        try:
-            return self.station_assignments[player_id]
-        except KeyError as exc:
-            raise ValueError(f"Player has no station assignment: {player_id}") from exc
+        stations = self.stations_for(player_id)
+        if len(stations) != 1:
+            raise ValueError(
+                f"Player {player_id} owns multiple stations; specify the station explicitly"
+            )
+        return stations[0]
+
+    def owns_station(self, player_id: str, station: str) -> bool:
+        return station.upper() in self.stations_for(player_id)
+
+    def _require_station(self, player_id: str, station: str) -> str:
+        normalized = station.upper()
+        if normalized not in self.stations_for(player_id):
+            raise ValueError(f"Player {player_id} is not assigned to {normalized}")
+        return normalized
 
     def start(self) -> None:
         if self.status != SessionStatus.CREATED:
@@ -293,8 +382,11 @@ class PC2Session:
             for item in self.capcom_queue
         ]
 
-    def get_station_view(self, player_id: str) -> Any:
-        station = self.station_for(player_id)
+    def get_station_view(self, player_id: str, station: str | None = None) -> Any:
+        if station is None:
+            station = self.station_for(player_id)
+        else:
+            station = self._require_station(player_id, station)
         projections = project_controller_products(self.state, self.fixture)
         projection = projections[station]
         if station == "FLIGHT":
@@ -311,7 +403,7 @@ class PC2Session:
 
     def player_snapshot(self, player_id: str) -> PlayerSessionSnapshot:
         station = self.station_for(player_id)
-        view = self.get_station_view(player_id)
+        view = self.get_station_view(player_id, station)
         return PlayerSessionSnapshot(
             player_id=player_id,
             station=station,
@@ -323,8 +415,34 @@ class PC2Session:
             presentation=asdict(view),
         )
 
-    def submit_readiness(self, player_id: str, *, ready: bool, note: str = "") -> ReadinessReport:
-        station = self.station_for(player_id)
+    def bundled_player_snapshot(self, player_id: str) -> BundledPlayerSessionSnapshot:
+        stations = self.stations_for(player_id)
+        return BundledPlayerSessionSnapshot(
+            player_id=player_id,
+            stations=stations,
+            get_s=float(self.state.get_s),
+            session_status=self.status.value,
+            mission_phase=self.state.phase,
+            pending_gate=self.pending_gate,
+            pause_reason=self.pause_reason,
+            presentations={
+                station: asdict(self.get_station_view(player_id, station))
+                for station in stations
+            },
+        )
+
+    def submit_readiness(
+        self,
+        player_id: str,
+        *,
+        ready: bool,
+        note: str = "",
+        station: str | None = None,
+    ) -> ReadinessReport:
+        if station is None:
+            station = self.station_for(player_id)
+        else:
+            station = self._require_station(player_id, station)
         report = ReadinessReport(
             get_s=float(self.state.get_s),
             player_id=player_id,
@@ -349,7 +467,7 @@ class PC2Session:
         return latest
 
     def record_flight_go(self, player_id: str, *, go: bool, basis: str) -> None:
-        if self.station_for(player_id) != "FLIGHT":
+        if not self.owns_station(player_id, "FLIGHT"):
             raise ValueError("Only the FLIGHT player can record the PC+2 GO/NO-GO decision")
         if self.pending_gate != "flight_go":
             raise ValueError("FLIGHT GO/NO-GO decision is not currently pending")
@@ -409,7 +527,7 @@ class PC2Session:
         parameters: dict[str, Any] | None = None,
         basis: str,
     ) -> CapcomQueueItem:
-        if self.station_for(flight_player_id) != "FLIGHT":
+        if not self.owns_station(flight_player_id, "FLIGHT"):
             raise ValueError("Only FLIGHT can approve this generic CAPCOM queue operation")
         return self._queue_capcom_item(
             requested_by="FLIGHT",
@@ -427,7 +545,7 @@ class PC2Session:
         sequence. The CAPCOM queue used here is therefore a project transport
         mechanism, not a claim about historical loop routing.
         """
-        if self.station_for(control_player_id) != "CONTROL":
+        if not self.owns_station(control_player_id, "CONTROL"):
             raise ValueError("Only the CONTROL player can issue the PC+2 delta-P ground callout")
 
         projections = project_controller_products(self.state, self.fixture)
@@ -464,7 +582,7 @@ class PC2Session:
         )
 
     def transmit_capcom_item(self, capcom_player_id: str, item_id: int) -> CapcomQueueItem:
-        if self.station_for(capcom_player_id) != "CAPCOM":
+        if not self.owns_station(capcom_player_id, "CAPCOM"):
             raise ValueError("Only CAPCOM can transmit an approved CAPCOM queue item")
         item = next((item for item in self.capcom_queue if item.item_id == item_id), None)
         if item is None:
