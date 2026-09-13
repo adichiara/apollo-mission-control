@@ -27,11 +27,12 @@ Status: **CURRENT — repository-side validation preparation complete; physical 
 - [x] compact browser persistence, legacy identity migration, and original-call-sign substation navigation;
 - [x] compact HTTP/browser regression coverage;
 - [x] primary-source review of the four-player boundary, with no sub-five-player PC+2 mode approved at current fidelity;
-- [x] structured live-play evidence-capture and debrief package with a dedicated run report template.
+- [x] structured live-play evidence-capture and debrief package with a dedicated run report template;
+- [x] reproducible, scenario-blind pre-run player-preparation package grounded in Apollo controller-training/rule/procedure evidence.
 
 The deployment remains single-process/in-memory. Restart/redeploy loses the live session; multiple workers/sessions and durable persistence remain deferred.
 
-See decisions D-016–D-018 and research notes 084–095.
+See decisions D-016–D-018 and research notes 084–096.
 
 ## Continuous-time engine boundary
 
@@ -59,9 +60,11 @@ The normal `/` client contains station-authorized controller operations only. `/
 
 ## Live-device / human-play boundary
 
-Research notes 090 and 095, `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md`, and `docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` define the remaining physical validation. Apollo/NASA sources support integrated crew/controller rehearsal, mission-environment decisionmaking, and procedure/rule use, but not phone UI criteria, browser reload semantics, HTTP latency limits, token authentication, or the project's incident taxonomy.
+Research notes 090, 095, and 096; `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md`; `docs/testing/PC2_PLAYER_PREPARATION.md`; and `docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` define the remaining physical validation. Apollo/NASA sources support integrated crew/controller rehearsal, prior controller preparation, mission-environment decisionmaking, and procedure/rule use, but not phone UI criteria, browser reload semantics, HTTP latency limits, token authentication, the project's briefing format, or the project's incident taxonomy.
 
-Each material incident in the physical run should retain run/build, GET, player role, active original station, device/browser, visible evidence, action/communication, expected/observed result, and audit/event reference where available. Debrief must separate observed facts from participant interpretation, reproducible defects, historical questions, usability-only changes, and legitimate uncertainty.
+Before timed play, each player receives the reproducible preparation package: station responsibility, visible products/actions, relevant PC+2 phase/rules/procedures, authority/coordination boundaries, and modern client-operation knowledge. The package remains scenario-blind: it does not reveal whether/when a nonnominal branch will occur, hidden state, another station's private evidence, or the intended diagnosis/decision. Players may consult their assigned rules/procedures during play.
+
+Each material incident in the physical run should retain run/build, GET, player role, active original station, device/browser, visible evidence, action/communication, expected/observed result, audit/event reference where available, and the participant's preparation record. Debrief must separate observed facts from participant interpretation, reproducible defects, historical questions, usability-only changes, instructional gaps, and legitimate uncertainty.
 
 The nominal PC+2 run comes first. The synthetic ΔP branch follows only after nominal coordination is coherent.
 
@@ -91,21 +94,23 @@ This is a simulator-design boundary, not a historical minimum-staffing claim.
 
 ### A. Execute live multi-device validation
 
-1. run one facilitator console plus separate real-phone/browser clients against one dedicated server;
-2. execute identity/rejoin/authority/isolation checks from `PC2_LIVE_PLAYTEST_PROTOCOL.md`;
-3. record incidents directly in `PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` with station/build/GET/audit provenance;
-4. complete nominal PC+2 without hidden facilitator coaching;
-5. assess FLIGHT/CAPCOM handoff and station readability;
-6. execute the synthetic ΔP run after nominal coordination is coherent.
+1. brief every player from `PC2_PLAYER_PREPARATION.md`, record preparation completion, and preserve scenario blindness;
+2. run one facilitator console plus separate real-phone/browser clients against one dedicated server;
+3. execute identity/rejoin/authority/isolation checks from `PC2_LIVE_PLAYTEST_PROTOCOL.md`;
+4. record incidents directly in `PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` with preparation/station/build/GET/audit provenance;
+5. complete nominal PC+2 without hidden facilitator coaching;
+6. assess FLIGHT/CAPCOM handoff and station readability;
+7. execute the synthetic ΔP run after nominal coordination is coherent.
 
 ### B. Execute five-player compact human validation
 
 1. use FLIGHT, CAPCOM, LM SYSTEMS, FLIGHT DYNAMICS, and INCO clients simultaneously;
-2. observe TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure;
-3. verify readiness/action attribution remains tied to the active original station;
-4. inspect audit output for original-station provenance and isolation;
-5. classify usability defects separately from historical/research defects;
-6. route any proposed historical/procedural change into the report's research queue before implementation.
+2. ensure compact players have practiced one TELMU↔CONTROL or GUIDO↔FIDO/RETRO switch before timed play without seeing scenario-specific events;
+3. observe TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure;
+4. verify readiness/action attribution remains tied to the active original station;
+5. inspect audit output for original-station provenance and isolation;
+6. classify usability defects separately from historical/research/instructional defects;
+7. route any proposed historical/procedural change into the report's research queue before implementation.
 
 ### C. Reopen research only from evidence
 
@@ -129,4 +134,4 @@ Reopen historical work only for concrete information/procedure/authority depende
 
 ## Current success criterion
 
-A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior. Compact mode must preserve the same boundaries while allowing one modern player to operate several separately identified original stations. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries; the repository now includes the structured evidence/debrief package needed to make those claims traceable.
+A rejoin-safe, phone-accessible, continuously running authoritative mission in which prepared station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior. Compact mode must preserve the same boundaries while allowing one modern player to operate several separately identified original stations. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries; the repository now includes the preparation, evidence-capture, and debrief package needed to make those claims traceable.
