@@ -20,7 +20,7 @@ Core Apollo 13 front-room positions are at B or better, with EECOM at A. Exact c
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, beginning near **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–108**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note 101 resolves immediate post-burn closure while preserving an unresolved timing-source tension; note 102 resolves the spacecraft-physics scope as a decision-relevant causal model; note 103 resolves MSFN/CCATS/RTCC scope as functional ground-data services rather than full ground-computer emulation; note 104 resolves the first-playable sensor/telemetry-failure scope as layered, explicitly authored observation faults rather than a generic random telemetry-failure mechanic; note 105 resolves first-playable crew representation as an explicit scenario-authored external actor rather than an additional player or automatic controller-side effect; note 106 narrows the unresolved 150-psi ground inlet-pressure lineage toward fuel inlet pressure / `GQ3611P`; note 107 identifies the crew percent-thrust instrument family as the panel-1 CMD THRUST / ENG THRUST indicator, with ENG THRUST the source-backed actual-thrust percent scale; and note **108** bounds the 77-percent applicability gate to entry into the commanded maximum/full-throttle segment, which the Apollo 13 crew debrief fixes at burn +26 seconds for the nominal PC+2 profile. That gate remains explicitly labeled a lineage-based inference rather than a verbatim recovered Apollo 13 mission-rule qualifier.
+The primary research chain now runs through notes **048–109**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note 101 resolves immediate post-burn closure while preserving an unresolved timing-source tension; note 102 resolves the spacecraft-physics scope as a decision-relevant causal model; note 103 resolves MSFN/CCATS/RTCC scope as functional ground-data services rather than full ground-computer emulation; note 104 resolves the first-playable sensor/telemetry-failure scope as layered, explicitly authored observation faults rather than a generic random telemetry-failure mechanic; note 105 resolves first-playable crew representation as an explicit scenario-authored external actor rather than an additional player or automatic controller-side effect; note 106 narrows the unresolved 150-psi ground inlet-pressure lineage toward fuel inlet pressure / `GQ3611P`; note 107 identifies the crew percent-thrust instrument family as the panel-1 CMD THRUST / ENG THRUST indicator, with ENG THRUST the source-backed actual-thrust percent scale; note 108 bounds the 77-percent applicability gate to entry into the commanded maximum/full-throttle segment at burn +26 seconds; and note **109** resolves the PC+2 attitude startup-exception allocation for operational use: contemporaneous CAPCOM transmission and crew readback attach the exception to ±10-degree attitude error, while the conflicting later postflight wording is retained. Exact startup-transient duration remains unresolved.
 
 Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
@@ -58,7 +58,7 @@ Decision **D-021** and research note **105** keep crew execution as a separate s
 
 The synthetic ΔP branch remains explicitly non-historical and source-bounded:
 
-`source observation → CONTROL product/rule → CONTROL decision → CAPCOM queue/transmission → crew receipt → crew shutdown command → physical DPS response → crew report / fresh GQ6510P observation → CONTROL evidence assessment`
+`source observation → CONTROL product/rule → CONTROL decision → CAPCOM queue/transmission → crew receipt → crew shutdown command → physical DPS response → crew report / fresh GQ6510P evidence → CONTROL evidence assessment`
 
 The 26 psi exercise is explicitly non-historical. No unsupported internal routing, automatic crew compliance, response timing, telemetry synthesis, binary chamber-pressure threshold, or hidden engine-off truth is added. It is not retroactively explained as a failed pressure transducer.
 
@@ -112,7 +112,9 @@ Research note **106** revisits the unresolved 150-psi ground inlet-pressure crit
 
 Research notes **107–108** resolve the bounded onboard 77-percent rule questions for first-playable sequencing. Apollo 13 mission material calls it a crew “thrust monitor readout” / onboard thrust criterion. LM technical documentation identifies the panel-1 dual-scale **CMD THRUST / ENG THRUST** indicator, with ENG THRUST displaying actual engine thrust as a percent from a chamber-pressure-transducer input; Apollo 13 malfunction procedures use the same indicator terminology. The Apollo 13 Technical Crew Debriefing then fixes the commanded profile as 5 seconds at idle/low thrust, 21 seconds at 40-percent throttle, and the remainder at full throttle, with the configured full-throttle transition at burn +26 seconds. For the current first playable, the 77-percent criterion is therefore inactive during the commanded low-thrust startup and becomes applicable on entry into the commanded maximum/full-throttle segment. This gate is explicitly a source-bounded lineage inference, not a verbatim recovered Apollo 13 rule qualifier. It still does not authorize deriving a crew ENG THRUST reading directly from hidden engine state; evaluation requires an explicit crew-visible observation path.
 
-Still intentionally unresolved where evidence is insufficient: Apollo 13-specific confirmation of the 150-psi fuel-inlet mapping, exact startup-transient boundary for other shutdown criteria, exact alternate-inverter detail, and exact final-load ground-system internals.
+Research note **109** resolves the separate attitude-rule wording conflict at the operational level. CAPCOM's real-time 76:30 GET transmission and Haise's 76:37 GET readback both put the startup exception on **±10-degree attitude error**, followed by a separate **±10-degree/sec attitude-rate** limit with no exception. The later Mission Operations Report III-25 wording attaches the exception to rate; that conflict remains documented rather than silently normalized. The first playable follows the transmitted/read-back rule, but the exact duration/end of “start transient” remains unsupported and is not inferred from the 5-second, 21-second, or +26-second thrust-profile landmarks.
+
+Still intentionally unresolved where evidence is insufficient: Apollo 13-specific confirmation of the 150-psi fuel-inlet mapping, exact duration of the attitude-error start transient, exact alternate-inverter detail, and exact final-load ground-system internals.
 
 ## Phase 7 — Simulation scenarios / SimSup
 
@@ -136,13 +138,14 @@ The primary remaining validation boundary is **physical human/device execution**
 8. Repair reproducible network/mobile/presentation/instruction defects and add regression coverage.
 9. Reopen historical, spacecraft-model, observation-integrity, crew-action, or ground-processing research only when validation exposes a concrete missing procedure, authority, information, terminology, display, support-room product, player-count dependency, causal spacecraft mechanism, observation failure, crew-discretion dependency, or ground-data-path dependency.
 
-Research notes 106–108 are bounded archival refinements, not changes to that priority ordering.
+Research notes 106–109 are bounded archival refinements, not changes to that priority ordering.
 
 ## Explicitly deferred
 
 - exact console pixel/character reconstruction;
 - Apollo 13-specific proof that the singular 150-psi ground criterion maps directly to fuel interface pressure `GQ3611P`; fuel inlet is the leading lineage-supported candidate, while minimum/average/either-side aggregation remains unsupported;
 - a verbatim Apollo 13 mission-rule qualifier for the 77-percent ENG THRUST applicability gate; first playable uses the sourced full-throttle transition at burn +26 seconds as a lineage-based gate while preserving that provenance limitation;
+- exact duration/end of the attitude-error startup-transient exception; do not assume a 5-, 21-, or 26-second boundary;
 - detailed DPS transient timing beyond selected branch needs;
 - full six-degree-of-freedom spacecraft/orbital propagation;
 - pulse-level RCS jet dynamics;
@@ -170,4 +173,4 @@ Research notes 106–108 are bounded archival refinements, not changes to that p
 
 Automated coverage includes continuous-clock/event rules, crew response, shutdown evidence, player/admin separation, facilitator authority, multi-client integration, multi-station ownership, compact HTTP/browser contracts, and staged PC+2 final-load transitions/station products.
 
-Research notes 095–108 and associated testing/scope documentation improve physical-run evidence quality and bounded historical interpretation but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
+Research notes 095–109 and associated testing/scope documentation improve physical-run evidence quality and bounded historical interpretation but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
