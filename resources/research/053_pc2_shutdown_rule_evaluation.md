@@ -30,12 +30,9 @@ Source: NASA Flight Control Division, *Mission Operations Report — Apollo 13*,
 
 At 76:30–76:38 GET CAPCOM read the rules to the crew and Haise read them back. This confirms the crew-side 77-percent thrust criterion, 160-psi inlet criterion, the ground-only fuel/OX delta-P callout, warning-light combinations, and restart procedure.
 
-It also exposes a wording difference that should not be silently normalized:
+The contemporaneous transmission and readback both place the startup-transient exception on **attitude error**, followed separately by the ±10 deg/s attitude-rate limit. The later Mission Operations Report III-25 wording instead attaches the exception to attitude rate.
 
-- the Mission Operations Report wording places the “except start transients” phrase with the **attitude-rate** limit;
-- the crew readback places the exception with **attitude error**, then states the rate limit separately.
-
-Both sources agree on approximately ±10 deg attitude error and ±10 deg/s attitude rate. The exact scope of the startup-transient exception remains unresolved.
+Research note 109 resolves the operational first-playable allocation by giving precedence to the actual transmitted-and-read-back rule while preserving the postflight wording conflict. The exact duration of the startup transient remains unresolved.
 
 ## Evaluation model
 
@@ -56,7 +53,8 @@ A rule evaluator returns:
 - inlet pressure <= approximately 150 psi;
 - fuel/OX differential pressure >25 psi — ground callout only;
 - engine-gimbal warning;
-- attitude/rate criteria;
+- attitude error ±10 deg except during the undefined start transient;
+- attitude rate ±10 deg/s, with no startup exception in the contemporaneous transmitted/read-back rule;
 - CES DC failure.
 
 Exact nominal pressure, attitude-error, and rate values remain unmodeled. Those criteria remain `not_evaluable` rather than being assigned invented safe values.
@@ -98,6 +96,8 @@ The source-backed fixture can evaluate modeled discrete criteria without fabrica
 
 Pressure, delta-P, attitude/rate, and crew-side analog criteria remain explicitly unevaluable until their measurement/state paths are implemented.
 
+For attitude specifically, note 109 resolves **which** criterion carries the startup exception but not **when** that transient ends. Do not infer a duration from the staged thrust profile without direct evidence.
+
 ## Important architecture rule
 
 Do not collapse rule evaluation into an authoritative simulation value such as `burn_abort = true/false`.
@@ -110,10 +110,10 @@ Do not automatically restart after any engine stop. The documented restart proce
 
 ## Deferred research
 
-- exact scope of the startup-transient exception across attitude error vs attitude rate;
+- exact duration/end boundary of the attitude-error startup-transient exception;
 - exact normal PC+2 chamber/inlet/differential-pressure telemetry values;
 - exact Apollo 13 LM-7 ISS warning telemetry word / GUIDO CRT location;
 - positive-case inverter-switch attempt state;
 - crew thrust-monitor and onboard inlet-pressure observation model.
 
-See `resources/research/054_pc2_iss_warning_observation_path.md` for the resolved ISS-warning signal path.
+See `resources/research/054_pc2_iss_warning_observation_path.md` and `resources/research/109_pc2_attitude_start_transient_scope.md`.
