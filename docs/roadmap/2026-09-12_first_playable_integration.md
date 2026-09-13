@@ -28,9 +28,10 @@ Status: **CURRENT — repository-side preparation and source-bounded scope work 
 - [x] primary-source review of LM instrumentation failure experience and explicit layered observation-failure boundary with no random first-playable faults;
 - [x] primary-source review of ground-to-crew procedure execution and explicit scenario-authored crew-action boundary with no separate first-playable crew player;
 - [x] follow-up primary-source review of the 150-psi DPS inlet-pressure rule lineage, narrowing the leading candidate to fuel inlet / `GQ3611P` without asserting an Apollo 13-specific exact mapping;
-- [x] follow-up primary-source review of the onboard 77-percent rule, identifying the panel-1 CMD THRUST / ENG THRUST instrument family and ENG THRUST actual-thrust scale while retaining the unresolved startup applicability gate.
+- [x] follow-up primary-source review of the onboard 77-percent rule, identifying the panel-1 CMD THRUST / ENG THRUST instrument family and ENG THRUST actual-thrust scale;
+- [x] follow-up primary-source review of the 77-percent startup applicability gate, using the Apollo 13 crew-debrief full-throttle transition at burn +26 seconds as the first-playable applicability boundary while explicitly labeling the final mapping as a lineage-based inference rather than a verbatim recovered Apollo 13 rule qualifier.
 
-See decisions D-016–D-021 and research notes 084–107.
+See decisions D-016–D-021 and research notes 084–108.
 
 ## Continuous-time engine boundary
 
@@ -110,7 +111,7 @@ Therefore keep the rule `NOT_EVALUABLE`; do not invent minimum/average/either-si
 
 ## Onboard 77-percent thrust boundary
 
-Research note **107** revisits the other bounded propulsion-rule gap.
+Research notes **107–108** resolve the first-playable instrument and applicability questions while preserving the provenance limit.
 
 Primary mission evidence says the crew was to shut down for a **“thrust monitor readout, 77 percent or below”** and separately describes the criterion as onboard thrust. Primary LM technical documentation identifies a panel-1 dual-scale **CMD THRUST / ENG THRUST** indicator:
 
@@ -121,17 +122,16 @@ Primary mission evidence says the crew was to shut down for a **“thrust monito
 
 Apollo 13 LM malfunction procedures also use CMD THRUST / ENG THRUST indicator terminology. The instrument identity is therefore high-confidence, and the ENG scale is the source-backed actual-performance scale relevant to the rule.
 
-The exact Apollo 13 rule text does not explicitly say “use the ENG pointer,” so that final mapping remains documented as a strong functional inference rather than a verbatim mission-rule label.
+The Apollo 13 Technical Crew Debriefing supplies the missing phase boundary: PC+2 used 5 seconds at idle/low thrust, 21 seconds at 40-percent throttle, then the remainder at full throttle; Lovell states that the configured transition to full throttle occurred at **burn +26 seconds**. The Mission Operations Report independently records the same staged throttle profile in rounded form.
 
-The remaining unresolved issue is applicability timing. PC+2 intentionally begins at approximately 12.6 percent and then 40 percent commanded thrust before maximum thrust, so the 77-percent shutdown threshold cannot apply indiscriminately from ignition.
+For the current first playable:
 
-Accordingly:
-
-- historical documentation may identify the crew criterion as ENG THRUST <=77 percent;
-- the executable rule remains `NOT_EVALUABLE` until a source-bounded crew observation/applicability state is present;
-- do not alias the indication to ground `GQ6510P`;
-- do not synthesize a crew percent gauge from hidden engine state;
-- do not invent the startup activation time.
+- the 77-percent criterion is inactive during the intentionally commanded 12.6-percent/40-percent startup segments;
+- it becomes applicable when the commanded profile enters maximum/full throttle;
+- the nominal Apollo 13 gate is burn +26 seconds;
+- the gate is explicitly a **source-bounded lineage inference**, not a recovered Apollo 13 sentence saying that the 77-percent rule activates exactly at that moment;
+- the gate does not create an ENG THRUST observation: a scenario-authored crew-visible indication is still required for evaluation;
+- do not alias the indication to ground `GQ6510P` or derive it directly from hidden engine state.
 
 ## First nonnominal branch
 
@@ -147,7 +147,7 @@ The normal `/` client contains station-authorized controller operations only. `/
 
 ## Live-device / human-play boundary
 
-Research notes 090 and 095–107 plus the testing protocol/preparation/reference/report files define the remaining physical validation. Players receive source-bounded station responsibilities/rules/procedures while remaining blind to nonnominal branch timing/content, hidden state, another station's private evidence, and intended diagnosis.
+Research notes 090 and 095–108 plus the testing protocol/preparation/reference/report files define the remaining physical validation. Players receive source-bounded station responsibilities/rules/procedures while remaining blind to nonnominal branch timing/content, hidden state, another station's private evidence, and intended diagnosis.
 
 Nominal PC+2 comes first and must continue through the immediate post-burn transition; synthetic ΔP follows only after nominal coordination is coherent. Observation faults beyond the authored synthetic branch and unsourced crew delays/errors must not be improvised during play.
 
@@ -187,13 +187,13 @@ Research note 100 resolves open question 19 for the current first playable. Apol
 
 Reopen historical, physical-model, observation-integrity, crew-action, or ground-processing work only for concrete information/procedure/authority/support/causal/data-path/crew-discretion dependencies exposed by validation. Player difficulty alone is not sufficient.
 
-Notes 106–107 are retained as bounded archival refinements discovered during repository continuation; they do not change the physical-validation priority or authorize unsupported mechanics.
+Notes 106–108 are retained as bounded archival refinements discovered during repository continuation; they do not change the physical-validation priority or authorize unsupported mechanics.
 
 ## Explicitly deferred
 
 - exact console pixel/character reconstruction;
 - Apollo 13-specific proof that the 150-psi ground criterion maps directly to fuel-interface measurement `GQ3611P`;
-- exact activation point for the crew ENG THRUST <=77-percent rule during the 12.6-percent/40-percent startup sequence;
+- a verbatim Apollo 13 mission-rule qualifier for the 77-percent ENG THRUST applicability gate; the first playable uses the sourced full-throttle transition at burn +26 seconds as an explicitly labeled lineage-based approximation;
 - detailed DPS transient timing beyond selected branch needs;
 - full six-degree-of-freedom spacecraft/orbital propagation;
 - pulse-level RCS jet dynamics;
