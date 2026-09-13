@@ -20,7 +20,7 @@ Core Apollo 13 front-room positions are at B or better, with EECOM at A. Exact c
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, beginning near **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–103**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note 101 resolves immediate post-burn closure; note 102 resolves the spacecraft-physics scope as a decision-relevant causal model; note **103** resolves MSFN/CCATS/RTCC scope as functional ground-data services rather than full ground-computer emulation.
+The primary research chain now runs through notes **048–103**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note 101 resolves immediate post-burn closure while preserving an unresolved timing-source tension; note 102 resolves the spacecraft-physics scope as a decision-relevant causal model; note **103** resolves MSFN/CCATS/RTCC scope as functional ground-data services rather than full ground-computer emulation.
 
 Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
@@ -30,13 +30,13 @@ Full configuration: seven station players — FLIGHT, CAPCOM, CONTROL, TELMU, GU
 
 Minimum supported compact PC+2 configuration: five players — FLIGHT; CAPCOM; LM SYSTEMS = TELMU + CONTROL; FLIGHT DYNAMICS = GUIDO + FIDO/RETRO; INCO.
 
-This is a project adaptation, not a historical staffing claim. Original station products, actions, readiness, authorization, and audit identities remain distinct.
+This is a project adaptation, not a historical staffing claim. Decision **D-018** and research notes **091–094** require compact play to map one player to a set of original station identities rather than create synthetic historical stations. Original station products, actions, readiness, authorization, and audit identities remain distinct.
 
 ## Phase 3 — Display and console reconstruction
 
 **Status:** minimum PC+2 player-presentation checkpoint complete.
 
-First-pass views exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM. Exact semantics are retained where sourced; project renderings remain labeled where exact routing/layout is unresolved.
+First-pass views exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM. Exact semantics are retained where sourced; project renderings remain labeled where exact routing/layout is unresolved; **hidden integrity does not leak**, and missing fields are not turned into invented telemetry failures.
 
 ## Phase 4 — Authoritative simulation model
 
@@ -54,6 +54,12 @@ The synthetic ΔP branch remains explicitly non-historical and source-bounded:
 
 `source observation → CONTROL product/rule → CONTROL decision → CAPCOM queue/transmission → crew receipt → crew shutdown command → physical DPS response → crew report / fresh GQ6510P observation → CONTROL evidence assessment`
 
+The 26 psi exercise is explicitly non-historical. No unsupported internal routing, **automatic crew compliance**, response timing, telemetry synthesis, **binary chamber-pressure threshold**, or **hidden engine-off truth** is added.
+
+Compact-role implementation preserves original station identities end to end:
+
+`player → exact original station set → HTTP join/rejoin → bundled station-scoped snapshots → browser substation navigation → station-qualified readiness/actions/audit provenance`
+
 ## Phase 5 — Mission Control data path
 
 **Status:** first-slice architecture and ground-processing scope established.
@@ -61,6 +67,8 @@ The synthetic ΔP branch remains explicitly non-historical and source-bounded:
 The project preserves:
 
 `spacecraft/source state → instrumentation/telemetry → communications/ground processing → controller products → controller interpretation → player presentation → controller decisions/communications`
+
+Station projections enforce information boundaries; source injections alter observations rather than announce diagnoses; **validity, age, hidden integrity, crew reports, telemetry, physical state, and controller conclusions remain distinct**.
 
 Research note 102 reinforces that this chain is the physical-model admission test. Research note 103 now defines the ground-processing portion explicitly:
 
@@ -84,7 +92,7 @@ Research note **101** adds the first-playable post-burn sequence:
 
 `burn cutoff/result → post-burn assessment → release from burn configuration → partial LM power-down → PTC preparation`
 
-Primary Apollo 13 records place nominal PC+2 ignition at 79:27:38.30 GET, record PGNS residuals R1 +00010 / R2 +00003 / R3 +00000, place initial LM power-down at about 79+34 while retaining PTC-required functions, and place the detailed PTC procedure at about 79+52. The project does not infer exact console keying, an unsupported formal post-burn poll, exact switch-by-switch timing, or full PTC dynamics.
+Primary Apollo 13 records place nominal PC+2 ignition at 79:27:38.30 GET, record PGNS residuals R1 +00010 / R2 +00003 / R3 +00000, place an initial LM power-down transition at about 79+33–79+34 while retaining PTC-required functions, and place the detailed PTC procedure at about 79+52. A separate change-of-shift briefing describes a power-down timing of roughly cutoff +15 minutes; research note 101 preserves that as an unresolved timing-source tension rather than silently reconciling it. The project does not infer exact console keying, an unsupported formal post-burn poll, exact switch-by-switch timing, or full PTC dynamics.
 
 Still intentionally unresolved where evidence is insufficient: exact onboard 77-percent thrust indication, singular 150-psi inlet-pressure selection/aggregation, exact startup transient boundary, exact alternate-inverter detail, and exact final-load ground-system internals.
 
