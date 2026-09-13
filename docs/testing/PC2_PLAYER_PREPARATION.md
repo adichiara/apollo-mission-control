@@ -5,6 +5,8 @@ Status: **READY FOR LIVE-PLAY USE**
 
 This package defines the minimum reproducible preparation players should receive before a physical PC+2 validation run. It is a project training aid constrained by Apollo flight-controller training evidence; it is not an Apollo-era handout reconstruction.
 
+Use `PC2_PLAYER_REFERENCE_PACKET.md` as the during-run reference companion. Its organization is a modern project adaptation constrained by research note 097.
+
 ## Common briefing for all players
 
 Players should know before the run:
@@ -99,6 +101,20 @@ For the five-player compact configuration:
 
 Before timed play, compact-role players should practice one substation switch and confirm that the active original call sign is visible.
 
+The reference packet keeps TELMU and CONTROL on separate original-station sheets, and GUIDO and FIDO/RETRO on separate original-station sheets. Do not merge those pages into a synthetic historical station reference.
+
+## Reference-material preparation
+
+Before timed play each player should know how the reference packet is organized:
+
+1. common operational brief;
+2. original-station sheet(s);
+3. rule/criterion sheet;
+4. nominal PC+2 phase reference;
+5. modern client-operation sheet.
+
+Players may consult the packet during play. Its rules are neutral references, not predictions of which condition the facilitator will exercise. Unresolved criteria remain labeled as unresolved rather than being converted into simplified hints.
+
 ## Client-operation preparation
 
 Before timed play each participant should demonstrate that they can:
@@ -134,6 +150,7 @@ Before each validation run, record for every player:
 
 - assigned role/station set;
 - whether this package was reviewed;
+- whether `PC2_PLAYER_REFERENCE_PACKET.md` was available and its organization reviewed;
 - whether station-specific rules/procedures were available;
 - whether client-operation checks were completed;
 - any known prior familiarity with the prototype.
@@ -142,4 +159,4 @@ This record allows later incidents to distinguish `PLAYER_INSTRUCTION` from pres
 
 ## Historical basis
 
-See research note `096_live_play_player_preparation_boundary.md` and `resources/source-catalog/LIVE_HUMAN_PLAY_VALIDATION_SOURCES.md`.
+See research notes `096_live_play_player_preparation_boundary.md` and `097_live_play_reference_packet_structure.md`, plus `resources/source-catalog/LIVE_HUMAN_PLAY_VALIDATION_SOURCES.md`.
