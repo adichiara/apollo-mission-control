@@ -19,6 +19,7 @@ See:
 - [Simulation architecture](docs/SIMULATION_ARCHITECTURE.md)
 - [PC+2 player products](docs/scenarios/APOLLO13_PC2_PLAYER_PRODUCTS.md)
 - [PC+2 player preparation](docs/testing/PC2_PLAYER_PREPARATION.md)
+- [PC+2 player reference packet](docs/testing/PC2_PLAYER_REFERENCE_PACKET.md)
 - [Live playtest protocol](docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md)
 - [Live playtest report template](docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md)
 - [Research resources](resources/README.md)
@@ -28,7 +29,7 @@ See:
 
 The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation and execution**.
 
-The model now includes source-backed PC+2 progression, continuous mission time, station-specific products, shutdown/restart branches, explicit communication/action/physical/evidence layers, first-pass views for CONTROL/GUIDO/TELMU/FIDO-RETRO/INCO/FLIGHT/CAPCOM, browser rejoin, CAPCOM handoff, audit logging, the source-bounded synthetic ΔP branch through fresh CONTROL evidence, facilitator authority, automated multi-client validation, end-to-end compact station-set ownership through the HTTP/browser layer, a structured live-play evidence/debrief package, and a reproducible scenario-blind player-preparation package.
+The model now includes source-backed PC+2 progression, continuous mission time, station-specific products, shutdown/restart branches, explicit communication/action/physical/evidence layers, first-pass views for CONTROL/GUIDO/TELMU/FIDO-RETRO/INCO/FLIGHT/CAPCOM, browser rejoin, CAPCOM handoff, audit logging, the source-bounded synthetic ΔP branch through fresh CONTROL evidence, facilitator authority, automated multi-client validation, end-to-end compact station-set ownership through the HTTP/browser layer, a structured live-play evidence/debrief package, a reproducible scenario-blind player-preparation package, and a source-constrained first-run player reference packet.
 
 The compact HTTP/browser path is recorded as passing automated CI. The remaining major validation boundary is real-device/browser and human-play execution.
 
@@ -106,6 +107,8 @@ Research note 095 adds the evidence discipline for those physical runs: material
 
 Research note 096 closes the preparation ambiguity behind `PLAYER_INSTRUCTION`. Apollo controller-training and mission-rule sources support prior station/system/procedure preparation before integrated simulation, so the project now uses `PC2_PLAYER_PREPARATION.md` before timed play. Players receive station responsibilities, relevant products/actions/rules/procedures, authority context, and modern client-operation knowledge, but are not told whether or when the synthetic nonnominal branch will occur or given hidden/other-station information. The package format itself is a modern validation aid.
 
+Research note 097 resolves the initial reference-packet organization question for first physical play. `PC2_PLAYER_REFERENCE_PACKET.md` keeps common operational context, original-station sheets, neutral rule/criterion references, nominal phase/procedure context, and visibly modern client-operation instructions separate. Compact players still receive separate original-station references. The layout is a project adaptation, and unresolved historical criteria remain unresolved rather than being turned into hints.
+
 ## Historical/presentation boundaries retained
 
 - Apollo 13 MSK 1137 `TCP` percent is not equated to modeled `GQ6510P` psi.
@@ -123,12 +126,12 @@ Detailed DPS transients, exact display routing/cadence, and a post-burn FIDO tra
 
 ## Immediate priorities
 
-1. Prepare each participant from `docs/testing/PC2_PLAYER_PREPARATION.md`, record completion, and preserve scenario blindness.
+1. Prepare each participant from `docs/testing/PC2_PLAYER_PREPARATION.md`, provide `docs/testing/PC2_PLAYER_REFERENCE_PACKET.md`, record completion, and preserve scenario blindness.
 2. Run `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` with actual simultaneous station phones/browsers and one facilitator console.
 3. Record the run in `docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` so preparation, defects, and research questions remain traceable to build/GET/station evidence.
 4. Run nominal PC+2 first, then the synthetic ΔP branch.
-5. Run the approved five-player compact configuration and evaluate TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching, readiness/action attribution, and information isolation.
-6. Repair reproducible network/mobile/presentation defects and add regression coverage.
+5. Run the approved five-player compact configuration and evaluate TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching, readiness/action attribution, information isolation, and reference-packet findability.
+6. Repair reproducible network/mobile/presentation/instruction defects and add regression coverage.
 7. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, terminology, or player-count dependency.
 
 ## Apollo 13 station specifications
