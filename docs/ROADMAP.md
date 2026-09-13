@@ -42,7 +42,7 @@ First-pass views exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and 
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** first-playable authoritative model and compact transport/client integration implemented; physical multi-device execution remains.
+**Status:** first-playable authoritative model and compact transport/client integration implemented and passing automated CI; physical multi-device execution remains.
 
 Implemented architecture includes framework-neutral state/event logic, station-specific products, rules, explicit injection/action/communication/decision/physical/evidence layers, shutdown/restart branches, `PC2Session`, continuous realtime pacing, readiness/FLIGHT decisions, CAPCOM queue/transmission, audit logging, facilitator authority, single-station browser rejoin, and compact station-set ownership.
 
@@ -94,14 +94,13 @@ Modern HTTP/browser/localStorage/token/compact-role mechanics are project infras
 
 ## Immediate next work
 
-The next repository-level boundary is **validation of the newly integrated compact path**, while the primary project validation need remains physical human/device execution.
+Automated compact-path validation is now complete. The primary remaining validation boundary is **physical human/device execution**.
 
-1. Confirm current-head CI passes the complete unit/integration suite, compact API/browser contract tests, documentation audit, and real-network smoke.
-2. Execute `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` using separate real phone/browser clients and one facilitator console; nominal PC+2 first, synthetic ΔP second.
-3. Exercise the approved five-player compact configuration with actual simultaneous clients, especially TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure.
-4. Verify station-qualified readiness/action attribution and information isolation in facilitator audit output.
-5. Repair reproducible network/mobile/presentation defects and add regression coverage.
-6. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, or terminology dependency.
+1. Execute `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` using separate real phone/browser clients and one facilitator console; nominal PC+2 first, synthetic ΔP second.
+2. Exercise the approved five-player compact configuration with actual simultaneous clients, especially TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure.
+3. Verify station-qualified readiness/action attribution and information isolation in facilitator audit output.
+4. Repair reproducible network/mobile/presentation defects and add regression coverage.
+5. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, or terminology dependency.
 
 ## Explicitly deferred
 
@@ -123,4 +122,4 @@ The next repository-level boundary is **validation of the newly integrated compa
 
 Automated coverage includes continuous-clock/event rules, crew response, shutdown evidence, player/admin separation, facilitator authority, multi-client integration, multi-station ownership, compact HTTP station-set join/rejoin, station-qualified readiness, original-station conflict enforcement, compact CONTROL authorization, and browser compact-role/persistence/navigation contracts.
 
-Pre-compact GitHub Actions and real-network smoke are recorded as passing. The current compact HTTP/browser head requires fresh CI confirmation before being recorded as passing. Physical seven-seat and five-player compact human/device validation remain unclaimed.
+GitHub Actions run 59 on commit `ae569dff997c17b0f67546ea452f1706d34b693d` passed after correcting a compact CONTROL regression-test expectation that had conflated authorization with evidence availability. The compact HTTP/browser implementation is therefore recorded as passing automated CI. Physical seven-seat and five-player compact human/device validation remain unclaimed.
