@@ -57,4 +57,8 @@ PC2_EVENT_RULES: dict[str, EventEligibilityRule] = {
         "lm_powerdown_transition",
         (_req("cutoff_complete", "nominal cutoff complete"),),
     ),
+    "ptc_preparation_begins": EventEligibilityRule(
+        "ptc_preparation_begins",
+        (_req("powerdown_started", "initial LM powerdown transition begun"),),
+    ),
 }
