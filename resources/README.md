@@ -35,6 +35,7 @@ Current supplements:
 - `source-catalog/FACILITATOR_AUTHORITY_SOURCES.md` — primary NASA simulation-control sources plus current Render secret-management sources supporting the facilitator/controller authority boundary.
 - `source-catalog/INTEGRATED_SIMULATION_VALIDATION_SOURCES.md` — primary NASA simulation-training sources supporting integrated multi-station validation with a distinct simulation-control function, without treating HTTP/browser mechanics as historical.
 - `source-catalog/LIVE_HUMAN_PLAY_VALIDATION_SOURCES.md` — primary Apollo/NASA simulation-training sources constraining the real-device/human-play validation protocol and separating mission-like integrated rehearsal from modern browser/mobile usability testing.
+- `source-catalog/PC2_LOW_PLAYER_COUNT_SOURCES.md` — Apollo 13 organizational and responsibility sources constraining the first five-player compact PC+2 role configuration while keeping bundled-player mechanics explicitly non-historical.
 - `source-catalog/APOLLO13_GROUND_PRODUCT_INTEGRITY_SOURCES.md` — mission-specific sources for the post-MCC-5 RTCC/AGS body-angle processing error and the distinction between product availability/validity and hidden data integrity.
 
 Latest scenario-integration research:
@@ -49,6 +50,7 @@ Latest scenario-integration research:
 - `research/088_facilitator_authority_boundary.md` — uses primary NASA simulation-control evidence to keep facilitator/SimSup authority separate from controller stations, with a modern server-side credential for exercise-wide operations.
 - `research/089_multiclient_integrated_validation_boundary.md` — establishes source-bounded integrated validation across several controller clients and a distinct facilitator, and records the automated/network smoke artifacts and defects found during the first validation pass.
 - `research/090_live_device_human_play_validation_boundary.md` — defines the remaining real-device/human-play boundary as a structured integrated mission rehearsal, with modern browser/mobile defects kept distinct from historical research gaps.
+- `research/091_low_player_count_station_aggregation_boundary.md` — defines the first compact five-player PC+2 configuration from Apollo functional group/authority evidence while requiring original station identities to survive under bundled player presentation.
 
 ## Research rule
 
