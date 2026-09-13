@@ -2,7 +2,7 @@
 
 Status: **Phase 1 research baseline**
 
-This document summarizes the controller organization that is currently supported by Apollo-era NASA documentation. It is not yet a player-role design.
+This document summarizes the controller organization that is currently supported by Apollo-era NASA documentation. It is primarily a historical organization reference; player-role simplifications are recorded separately and must not be mistaken for historical manning.
 
 The principal detailed source used here is Appendix A of the Apollo 13 Review Board baseline-data report. Apollo 11-specific manning is checked against the official June 30, 1969 flight-control manning memorandum reproduced in NASA-TM-103373.
 
@@ -75,6 +75,8 @@ Apollo documentation describes INCO and O&P as sharing a console/responsibility 
 - **INCO / Apollo Communications Engineer:** spacecraft, LM, TV, PLSS, and erectable-antenna communications; execution of communications-system commands
 - **O&P / PROCEDURES:** detailed MCC/MSFN/GSFC/KSC interface procedures; telemetry and DSE voice playback scheduling; ground-support timeline communications inputs/changes
 
+This is direct evidence that selected functional sharing existed in Apollo, but it is not evidence that arbitrary controller positions were interchangeable.
+
 ## 4. Flight Dynamics Group
 
 | Position | Documented responsibility |
@@ -84,7 +86,7 @@ Apollo documentation describes INCO and O&P as sharing a console/responsibility 
 | GUIDO | Guidance monitoring during powered flight and spacecraft initialization; CSM/LM DSKY and CMC/LGC command updates |
 | YAW | Second guidance officer with similar monitoring duties but without command responsibility |
 
-These definitions show why FIDO, RETRO, and GUIDO should not be collapsed conceptually into one generic "navigation" role before workload is studied.
+These definitions show why FIDO, RETRO, and GUIDO must remain conceptually distinct even when a modern low-player-count interface places their products under one player.
 
 ## 5. Staff Support Rooms (SSR)
 
@@ -233,18 +235,29 @@ Do not retroactively normalize every mission to TELMU.
 - controller-visible information depended on MSFN/CCATS/RTCC processing
 - CAPCOM was the voice interface to the crew
 - mission-specific staffing and nomenclature varied
+- INCO/O&P provides a specific historical example of selected console/responsibility sharing
 
-### Not yet decided
+### Current player-role decision for Apollo 13 PC+2
 
-- which positions become player roles
-- minimum player count
-- which roles can be combined
+Research note `091_low_player_count_station_aggregation_boundary.md` and decision D-018 use this historical organization as a constraint, not as proof of historical bundled manning.
+
+The full PC+2 player model remains seven station identities. The first compact project configuration is five players:
+
+- FLIGHT;
+- CAPCOM;
+- LM SYSTEMS player operating TELMU + CONTROL;
+- FLIGHT DYNAMICS player operating GUIDO + FIDO/RETRO;
+- INCO.
+
+The original stations remain distinct in the domain model. `LM SYSTEMS` and bundled `FLIGHT DYNAMICS` are player-interface concepts, not historical Apollo console identities.
+
+### Still not decided
+
+- four-player-or-smaller combinations
 - whether any SSR function is represented automatically or by players
 - whether CCATS/RTCC support positions become explicit simulation agents
-- how voice loops are implemented
-- exact role set for the first mission interval
-
-Those decisions wait for role workload, display, and mission-phase research.
+- how voice loops are implemented outside the current first-playable communication path
+- compact-role behavior for missions/scenario windows other than Apollo 13 PC+2
 
 ## Sources
 
@@ -262,3 +275,6 @@ Those decisions wait for role workload, display, and mission-phase research.
 
 5. **Robert H. Heselmeyer Oral History**, NASA Johnson Space Center Oral History Project, November 12, 2004.  
    https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/HeselmeyerRH/HeselmeyerRH_11-12-04.pdf
+
+6. **Apollo 13 Press Kit**, NASA, 1970 — position descriptions and Systems Operations / Flight Dynamics grouping.  
+   https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_PressKit.pdf
