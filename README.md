@@ -25,9 +25,9 @@ See:
 
 The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation and execution**.
 
-The domain/session model now includes source-backed PC+2 progression, declarative event prerequisites, station-specific products, shutdown/restart branches, explicit communication/action/physical/evidence layers, first-pass views for CONTROL/GUIDO/TELMU/FIDO-RETRO/INCO/FLIGHT/CAPCOM, one authoritative continuous-time session, browser rejoin, CAPCOM handoff, audit logging, a complete source-bounded synthetic ΔP branch through fresh CONTROL evidence, and framework-neutral multi-station player ownership for compact play.
+The model now includes source-backed PC+2 progression, continuous mission time, station-specific products, shutdown/restart branches, explicit communication/action/physical/evidence layers, first-pass views for CONTROL/GUIDO/TELMU/FIDO-RETRO/INCO/FLIGHT/CAPCOM, browser rejoin, CAPCOM handoff, audit logging, the source-bounded synthetic ΔP branch through fresh CONTROL evidence, facilitator authority, automated multi-client validation, and end-to-end compact station-set ownership through the HTTP/browser layer.
 
-Automated integrated validation passes both in-process and over real TCP/HTTP on the established full-station path. The remaining major validation boundary is real-device/browser and human-play validation; compact HTTP/browser integration is also still pending.
+The remaining major validation boundary is real-device/browser and human-play execution. Current-head CI must also confirm the newly integrated compact path before it is recorded as passing.
 
 ## Phone-accessible first playable shell
 
@@ -40,21 +40,19 @@ The player client contains station-authorized information and actions only. Exer
 
 ### Facilitator authority
 
-Primary NASA simulation sources support treating Simulation Supervisor / simulation-control authority as organizationally distinct from the flight controllers being trained. The project therefore keeps facilitator authority separate from every controller station.
-
-When `APOLLO_FACILITATOR_TOKEN` is configured, protected operations require the `X-Apollo-Facilitator` HTTP header. Render deployments receive a generated secret through `render.yaml`; no credential value is committed to the repository. A Render instance fails closed if the secret is unexpectedly absent.
-
-This token mechanism is a modern software safety boundary, **not** a reconstruction of Apollo-era authentication. See research note `088_facilitator_authority_boundary.md` and decision D-017.
+When `APOLLO_FACILITATOR_TOKEN` is configured, protected operations require the `X-Apollo-Facilitator` header. Render deployments receive a generated secret through `render.yaml`; no credential value is committed to the repository. This token mechanism is a modern software safety boundary, not Apollo-era authentication reconstruction.
 
 ### Rejoin behavior
 
-A browser/client may repeat the same player ID + station assignment to rejoin its existing station without modifying mission state. The same player ID cannot silently switch stations, and a different player cannot take an occupied station.
+Single-station clients use `/api/session/join`. Compact clients use `/api/session/join-set` with the exact original-station set they own.
 
-This is lightweight prototype player identity, not cryptographic authentication. The current HTTP/browser contract is still single-station; compact station-set rejoin is the next transport/client boundary.
+Rejoin is idempotent only for the same player and same assignment. A player cannot silently switch stations or mutate its compact station set, and another player cannot take an occupied original station.
+
+Browser identity is prototype persistence, not cryptographic authentication.
 
 ## Compact five-player mode
 
-Primary Apollo 13 organizational sources constrain the first compact project configuration without establishing it as historical staffing:
+Primary Apollo organizational sources constrain the first compact project configuration without establishing it as historical staffing:
 
 - FLIGHT;
 - CAPCOM;
@@ -62,23 +60,23 @@ Primary Apollo 13 organizational sources constrain the first compact project con
 - FLIGHT DYNAMICS = GUIDO + FIDO/RETRO;
 - INCO.
 
-`LM SYSTEMS` and bundled `FLIGHT DYNAMICS` are simulator role labels only. The domain layer continues to represent the original station identities separately.
+`LM SYSTEMS` and `FLIGHT DYNAMICS` are simulator role labels only. Original station identities remain authoritative.
 
-`PC2Session` now supports one player owning multiple original stations through `assign_stations()`, with separate station presentations, station-qualified readiness/actions, and original-station audit provenance. HTTP join/rejoin and browser navigation for this mode remain to be implemented.
+The compact path is implemented end to end:
 
-See research notes 091–092 and decision D-018.
+- `PC2Session.assign_stations()` owns multiple original stations for one player;
+- bundled snapshots retain separate station presentations;
+- readiness/actions remain station-qualified;
+- `/api/session/join-set` exposes exact station-set join/rejoin;
+- player snapshot polling returns bundled data for multi-station players;
+- the browser persists the station set and active substation;
+- TELMU/CONTROL and GUIDO/FIDO-RETRO are navigated through explicit original-call-sign tabs rather than a merged synthetic console.
+
+See research notes 091–093 and decision D-018.
 
 ## Core engine rule: mission time is continuous
 
-The engine is a **continuously evolving mission**, not a sequence of scenes waiting for player input.
-
-- GET advances whenever the session is running;
-- pending controller decisions do not stop GET;
-- missing prerequisites may make a nominal event ineligible when its time arrives;
-- missed nominal events are recorded and not replayed retroactively;
-- only an explicit game/session pause stops simulated mission time.
-
-For the PC+2 final readiness sequence, the approximately **79:17 GET** FLIGHT poll opens a `flight_go` requirement while the clock continues. A late GO does not rewind the mission or retroactively activate missed P40/ullage/ignition milestones.
+GET advances whenever the session is running. Pending controller decisions do not stop GET. Missing prerequisites may make a nominal event ineligible when its time arrives; missed nominal events are recorded and not replayed retroactively. Only an explicit game/session pause stops simulated mission time.
 
 See research notes 081 and 084 and decision D-016.
 
@@ -88,37 +86,21 @@ The source-bounded synthetic ΔP branch reaches fresh controller evidence throug
 
 `source observation → CONTROL product/rule → CONTROL decision → CAPCOM queue/transmission → crew receipt → crew shutdown command → physical DPS response → crew report / fresh GQ6510P evidence → CONTROL evidence assessment`
 
-Every step remains explicit. CAPCOM transmission does not imply crew receipt, crew command does not imply physical engine shutdown, physical response does not fabricate telemetry evidence, and CONTROL assessment never reads hidden `engine_running` truth.
-
-No pressure magnitude is interpreted as a binary engine-off threshold.
+Every step remains explicit. CAPCOM transmission does not imply crew receipt, crew command does not imply physical shutdown, physical response does not fabricate telemetry evidence, and CONTROL assessment never reads hidden `engine_running` truth. No pressure magnitude is interpreted as a binary engine-off threshold.
 
 ## Integrated validation
 
-Primary NASA simulation-training material supports validating flight controllers together in a mission environment while keeping simulation control distinct. The project uses that historical boundary without treating its modern HTTP/browser mechanics as Apollo hardware/software.
+- `tests/test_web_multiclient_integration.py` covers independent station clients plus facilitator authority in-process.
+- `scripts/pc2_multiclient_smoke.py` exercises the established full-station path over real TCP/HTTP.
+- `tests/test_web_compact_roles.py` covers compact station-set join/rejoin, bundled snapshots, station-qualified readiness, station conflicts, and CONTROL authority inside a bundle.
+- `tests/test_web_client_contract.py` covers compact browser persistence/navigation and active-station attribution.
 
-Two validation artifacts exist:
-
-- `tests/test_web_multiclient_integration.py` — independent FLIGHT, CONTROL, CAPCOM, GUIDO, and facilitator clients sharing one in-process authoritative session;
-- `scripts/pc2_multiclient_smoke.py` — destructive real-network smoke runner for a dedicated local or deployed validation server.
-
-GitHub Actions executes the complete unit/integration suite and launches an ephemeral authorized Uvicorn server to run the network smoke over actual TCP/HTTP. The established full-station paths are recorded as passing; compact ownership regression coverage was added with the new domain implementation.
-
-The network runner checks simultaneous station polling, rejoin, explicit pause, facilitator/player authority isolation, the complete synthetic ΔP branch, fresh CONTROL evidence, and audit ordering.
-
-Example against a local server:
-
-```bash
-python scripts/pc2_multiclient_smoke.py http://127.0.0.1:8000
-```
-
-For an authorized deployment, set `APOLLO_FACILITATOR_TOKEN` or pass `--facilitator-token`.
-
-See research note `089_multiclient_integrated_validation_boundary.md`.
+Pre-compact GitHub Actions and real-network smoke are recorded as passing. The compact HTTP/browser head awaits fresh CI confirmation. Physical seven-seat and five-player compact human/device validation are not yet claimed.
 
 ## Historical/presentation boundaries retained
 
 - Apollo 13 MSK 1137 `TCP` percent is not equated to modeled `GQ6510P` psi.
-- TELMU's documented **38–40 A** PC+2 burn figure remains a reference value, not fabricated live telemetry.
+- TELMU's documented 38–40 A PC+2 burn figure remains a reference value, not fabricated live telemetry.
 - GUIDO residuals are not substituted for a missing FIDO propagated trajectory solution.
 - INCO link quality, voice, telemetry, ranging, and uplink remain distinct products.
 - Hidden product integrity never appears automatically in a player view.
@@ -126,33 +108,17 @@ See research note `089_multiclient_integrated_validation_boundary.md`.
 
 ## Remaining bounded historical gaps
 
-The singular PC+2 150-psi ground **engine inlet pressure** criterion remains intentionally `NOT_EVALUABLE`; the exact historical ground selection/aggregation rule is unresolved.
+The singular PC+2 150-psi ground engine-inlet-pressure criterion remains `NOT_EVALUABLE`; the exact historical ground selection/aggregation rule is unresolved. The onboard 77-percent thrust-monitor criterion also remains `NOT_EVALUABLE`; the rule is documented but the exact crew indication/source is unresolved.
 
-The onboard **77-percent thrust-monitor** criterion also remains `NOT_EVALUABLE`; the rule is documented but the exact crew indication/source is unresolved.
-
-Detailed DPS transients, exact display routing/cadence, and a post-burn FIDO trajectory propagator remain deferred until a concrete integration dependency requires them.
+Detailed DPS transients, exact display routing/cadence, and a post-burn FIDO trajectory propagator remain deferred until a concrete dependency requires them.
 
 ## Immediate priorities
 
-Two tracks can proceed without weakening the historical boundary.
-
-### Live full-station validation
-
-1. run several real phone/browser station clients plus one facilitator console against one dedicated authoritative server;
-2. verify continuous GET, facilitator pause/resume, reload/rejoin, station isolation, and authority isolation under actual browser/network conditions;
-3. run the nominal PC+2 sequence with human operators and assess FLIGHT/CAPCOM handoff ergonomics;
-4. repair usability/integration problems exposed by actual realtime play;
-5. run the synthetic ΔP branch after nominal coordination is coherent.
-
-### Compact transport/client integration
-
-1. extend HTTP join/rejoin to approved station sets while retaining the existing single-station contract;
-2. return bundled snapshots for multi-station players;
-3. add browser persistence and station-switch/subpanel navigation with original call signs visible;
-4. test readiness attribution, action authority, rejoin, and information isolation;
-5. run five-player human validation after the seven-seat baseline.
-
-Historical research is reopened only when integrated play or compact implementation exposes a concrete missing dependency.
+1. Confirm current-head CI for compact HTTP/browser integration.
+2. Run `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` with actual simultaneous station phones/browsers and one facilitator console.
+3. Run nominal PC+2 first, then the synthetic ΔP branch.
+4. Run the approved five-player compact configuration and evaluate TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching, readiness/action attribution, and information isolation.
+5. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, or terminology dependency.
 
 ## Apollo 13 station specifications
 
