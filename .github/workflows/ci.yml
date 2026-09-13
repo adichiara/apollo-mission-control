@@ -32,6 +32,38 @@ jobs:
       - name: Run unit and integration tests
         run: python -m unittest discover -s tests
 
+      - name: Run real-network multi-client smoke
+        env:
+          APOLLO_FACILITATOR_TOKEN: ci-validation-token
+        run: |
+          set -euo pipefail
+          uvicorn --app-dir src apollo_mission_control.web_app:app --host 127.0.0.1 --port 8000 > /tmp/apollo-uvicorn.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true' EXIT
+
+          python - <<'PY'
+          import time
+          from urllib.request import urlopen
+
+          url = "http://127.0.0.1:8000/api/health"
+          deadline = time.monotonic() + 15
+          while True:
+              try:
+                  with urlopen(url, timeout=1) as response:
+                      if response.status == 200:
+                          break
+              except Exception:
+                  pass
+              if time.monotonic() >= deadline:
+                  raise SystemExit("server did not become healthy within 15 seconds")
+              time.sleep(0.25)
+          PY
+
+          if ! python scripts/pc2_multiclient_smoke.py http://127.0.0.1:8000; then
+            cat /tmp/apollo-uvicorn.log
+            exit 1
+          fi
+
       - name: Audit documentation
         if: always()
         run: python scripts/audit_documentation.py
