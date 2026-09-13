@@ -21,6 +21,35 @@ Status: **active implementation-source supplement**
 - **Implementation precedence:** research note 109 formalizes use of this contemporaneous transmitted-and-read-back wording for the operational first-playable rule when it conflicts with the later postflight summary.
 - **Limitation:** no duration or exact start/end definition for the transient is given.
 
+## Apollo 14 Mission Report, Supplement 5 — Descent Propulsion System Final Flight Evaluation
+
+- **Organization:** NASA Manned Spacecraft Center / TRW Systems
+- **Report:** MSC-04112 Supplement 5
+- **Date:** September 1972
+- **URL:** https://www.nasa.gov/wp-content/uploads/static/history/alsj/a14/a14DPSPerformance.pdf
+- **Status:** PRIMARY / REVIEWED-DETAILED / CROSS-MISSION ENGINEERING EVIDENCE
+- **Use:** section 9 defines DPS start-transient performance from engine-fire signal FS-1. Apollo 14 ignition delay to first chamber-pressure rise was about 0.55 s and explicitly compared favorably with the first-burn delay observed during Apollo 13. FS-1 to 90% of the minimum steady-state throttle setting required 2.14 s, with a 4.0 s specification limit for a minimum-throttle start; 90% to 100% required another 0.13 s.
+- **Interpretive value:** establishes that Apollo DPS engineering used “start transient” for a short engine-start phenomenon measured in seconds, not for the entire later commanded throttle profile.
+- **Limitation:** Apollo 14 engineering performance is not an Apollo 13 PC+2 operational flight-rule timing definition. It does not authorize a 2.14 s or 4.0 s historical rule gate.
+
+## Apollo 15 DPS Final Flight Evaluation
+
+- **Organization:** NASA
+- **NTRS ID:** 19730023018
+- **URL:** https://ntrs.nasa.gov/citations/19730023018
+- **Status:** PRIMARY / REVIEWED-PARTIAL / CROSS-MISSION CORROBORATION
+- **Use:** uses the same DPS start-transient engineering concept and reports a 2.35 s FS-1-to-90%-minimum-steady-state interval with a 4.0 s specification limit; its ignition delay is compared with earlier Apollo flights including Apollo 13.
+- **Limitation:** corroborates terminology/scale only; not an Apollo 13 operational rule source.
+
+## Apollo 16 Mission Report Supplement — Descent Propulsion System Final Flight Evaluation
+
+- **Organization:** NASA
+- **NTRS ID:** 19740024177
+- **URL:** https://ntrs.nasa.gov/citations/19740024177
+- **Status:** PRIMARY / REVIEWED-PARTIAL / CROSS-MISSION CORROBORATION
+- **Use:** again treats the start transient as a short FS-1-to-near-steady-state engine-start interval and compares ignition delay with Apollo 13–15.
+- **Limitation:** corroborates engineering terminology/scale only; not an Apollo 13 PC+2 operational rule source.
+
 ## Report of Apollo 13 Review Board — Appendices B–E
 
 - **Organization:** NASA
@@ -29,7 +58,7 @@ Status: **active implementation-source supplement**
 - **NTRS ID:** 19700078726
 - **URL:** https://ntrs.nasa.gov/citations/19700078726
 - **Status:** PRIMARY / REVIEWED-PARTIAL
-- **Use:** provides corroborating postflight guidance/control material and preserves the same general ±10-degree / ±10-degree/sec shutdown-rule family.
+- **Use:** provides corroborating postflight guidance/control material and preserves the same general ±10-degree / ±10-degree-sec shutdown-rule family.
 - **Limitation:** retrospective/postflight evidence; it does not override the contemporaneous crew-facing instruction and does not define the startup-transient time boundary.
 
 ## Apollo Experience Report — Engineering and Analysis Mission Support
@@ -47,10 +76,13 @@ Status: **active implementation-source supplement**
 
 - attitude error: ±10 degrees, except during the undefined start transient;
 - attitude rate: ±10 degrees/sec, with no sourced startup exception in the contemporaneous transmitted/read-back rule;
-- exact transient duration: unresolved and not inferred from the 5-second 12.6-percent segment, 21-second 40-percent segment, or burn +26-second full-throttle transition.
+- engineering evidence indicates “start transient” was a short engine-start phenomenon, not the complete +26 s low-throttle buildup;
+- exact Apollo 13 operational transient duration/end condition remains unresolved and **must not** be inferred from Apollo 14/15/16 performance values or from the 5-second, 21-second, or burn +26-second throttle landmarks;
+- an attitude-error excursion whose disposition depends on the transient exception remains `NOT_EVALUABLE` unless an Apollo 13-specific operational source or an explicitly synthetic scenario boundary defines that interval.
 
 ## Research records
 
 - `resources/research/062_pc2_attitude_error_rate_shutdown_path.md`
 - `resources/research/063_pc2_attitude_projection_and_rule_integration.md`
 - `resources/research/109_pc2_attitude_start_transient_scope.md`
+- `resources/research/110_pc2_attitude_start_transient_duration_boundary.md`
