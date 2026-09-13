@@ -17,9 +17,9 @@ The Apollo 13 Mission Operations Report and preserved air-ground chronology alre
 
 ### Apollo Experience Report — Lunar Module Instrumentation Subsystem
 
-NASA TN D-6845 states that the LM instrumentation subsystem processed approximately 250 measurements for display, caution/warning, and telemetry, including analog values such as pressure, temperature, and quantity and discrete values such as switch closures. It also describes instrumentation as the layer that monitored LM subsystems and prepared data for transmission to the Manned Space Flight Network.
+NASA TN D-6845 describes the LM instrumentation subsystem as processing a broad set of measurements for display, caution/warning, and telemetry, including analog values such as pressure, temperature, and quantity and discrete values such as switch closures. It also describes instrumentation as the layer that monitored LM subsystems and prepared data for transmission to the Manned Space Flight Network.
 
-Implication: the simulation should preserve the causal distinction between physical state, sensed/conditioned observation, telemetry/product state, and controller interpretation. It does **not** follow that all ~250 LM measurements must be modeled for a scenario whose controller decisions touch only a small subset.
+Implication: the simulation should preserve the causal distinction between physical state, sensed/conditioned observation, telemetry/product state, and controller interpretation. It does **not** follow that the complete LM instrumentation inventory must be modeled for a scenario whose controller decisions touch only a small subset.
 
 ### Apollo Experience Report — Descent Propulsion System
 
