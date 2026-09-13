@@ -1,6 +1,6 @@
 # PC+2 low-player-count station-aggregation sources
 
-Status: **IMPLEMENTATION-SOURCE — compact role boundary researched; multi-station domain ownership implemented; HTTP/UI wiring pending**
+Status: **IMPLEMENTATION-SOURCE — compact role boundary, domain ownership, HTTP transport, and browser navigation implemented; physical compact play validation pending**
 
 This supplement records the historical evidence used to constrain low-player-count station aggregation for the Apollo 13 PC+2 first playable. The resulting bundles are project adaptations, not claims about historical Apollo staffing.
 
@@ -71,6 +71,17 @@ Implementation use:
 - supports retaining original station-scoped products, actions, readiness, and audit identity inside any bundle;
 - supports the implemented model in which a compact player owns several original stations rather than a new synthetic historical station.
 
+### Mission Operations Control Room flight-controller assignments
+
+- NASA History / Apollo Lunar Surface Journal archive.
+- https://www.nasa.gov/wp-content/uploads/static/history/alsj/flight_controller_assigns.pdf
+- Relevant evidence: FIDO, RETRO, GUIDO, LM/TELMU, LM/CONTROL, INCO, CAPCOM, and FLIGHT leadership are separately enumerated Mission Control positions.
+
+Implementation use:
+
+- reinforces the requirement that compact transport/browser presentation keep the original call signs visible and independently attributable;
+- does not establish any modern compact staffing arrangement.
+
 ## Derived project boundary
 
 Recommended compact PC+2 configuration: **five players**.
@@ -83,11 +94,14 @@ Recommended compact PC+2 configuration: **five players**.
 
 Historical station identity remains authoritative underneath the bundled UI.
 
-The framework-neutral session layer now implements this semantic boundary through station-set ownership, station-qualified readiness/action authorization, and bundled snapshots containing separate original-station presentations. HTTP join/rejoin and browser presentation are still pending.
+The session and HTTP layers now implement this boundary through station-set ownership, exact-set rejoin, station-qualified readiness/action authorization, and bundled snapshots containing separate original-station presentations. The browser persists the station set and active substation and provides explicit original-call-sign navigation rather than a merged synthetic station display.
 
 Four-player-or-smaller configurations remain unresolved. In particular, CAPCOM+INCO is not accepted merely because both concern communications: Apollo documentation distinguishes the crew-voice function from technical communications engineering.
+
+Physical five-player usability validation remains pending.
 
 See:
 
 - `resources/research/091_low_player_count_station_aggregation_boundary.md`
 - `resources/research/092_multi_station_player_ownership.md`
+- `resources/research/093_compact_http_browser_integration.md`
