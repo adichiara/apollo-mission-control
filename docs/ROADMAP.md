@@ -22,7 +22,7 @@ Core Apollo 13 front-room positions are at B or better, with EECOM at A. Exact c
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, starting at approximately **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–093**, including controller rules/actions, nominal timing, products, station presentations, authoritative session integration, continuous mission time, the source-bounded ΔP branch, crew/vehicle response, fresh controller evidence, player/admin separation, facilitator authority, automated multi-client validation, live-device validation, compact-role research, multi-station ownership, and compact HTTP/browser integration.
+The primary research chain now runs through notes **048–094**, including controller rules/actions, nominal timing, products, station presentations, authoritative session integration, continuous mission time, the source-bounded ΔP branch, crew/vehicle response, fresh controller evidence, player/admin separation, facilitator authority, automated multi-client validation, live-device validation, compact-role research, multi-station ownership, compact HTTP/browser integration, and the sub-five-player boundary.
 
 Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
@@ -30,9 +30,11 @@ Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_in
 
 Full configuration: seven station players — FLIGHT, CAPCOM, CONTROL, TELMU, GUIDO, FIDO/RETRO, INCO.
 
-Approved compact project configuration: five players — FLIGHT; CAPCOM; LM SYSTEMS = TELMU + CONTROL; FLIGHT DYNAMICS = GUIDO + FIDO/RETRO; INCO.
+Minimum supported compact PC+2 configuration at the current fidelity target: five players — FLIGHT; CAPCOM; LM SYSTEMS = TELMU + CONTROL; FLIGHT DYNAMICS = GUIDO + FIDO/RETRO; INCO.
 
-This is a usability adaptation constrained by Apollo organizational evidence, not a historical staffing claim. Original station products, actions, readiness, authorization, and audit identities remain distinct. Four-player-or-smaller aggregation remains unresolved.
+This is a usability adaptation constrained by Apollo organizational evidence, not a historical staffing claim. Original station products, actions, readiness, authorization, and audit identities remain distinct.
+
+Research note **094** closes the general four-player question without approving a four-player mode: CAPCOM and INCO are historically distinct functions, communications/data-path reasoning is active in the selected PC+2 window, and silently merging/automating INCO would remove intended coordination. A smaller mode may be reconsidered only for a demonstrated live-play need, a different scenario window, stronger evidence, or an explicitly lower-fidelity accessibility mode.
 
 ## Phase 3 — Display and console reconstruction
 
@@ -60,7 +62,7 @@ The 26 psi exercise is explicitly non-historical. No unsupported internal routin
 
 ### Compact-role architecture
 
-Decision **D-018** and research notes **091–093** require compact play to map one player to a set of original stations rather than create synthetic historical stations.
+Decision **D-018** and research notes **091–094** require compact play to map one player to a set of original stations rather than create synthetic historical stations, while retaining five players as the minimum supported PC+2 compact configuration at current fidelity.
 
 Implemented end to end:
 
@@ -94,13 +96,13 @@ Modern HTTP/browser/localStorage/token/compact-role mechanics are project infras
 
 ## Immediate next work
 
-Automated compact-path validation is now complete. The primary remaining validation boundary is **physical human/device execution**.
+Automated compact-path validation is complete. The primary remaining validation boundary is **physical human/device execution**.
 
 1. Execute `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` using separate real phone/browser clients and one facilitator console; nominal PC+2 first, synthetic ΔP second.
 2. Exercise the approved five-player compact configuration with actual simultaneous clients, especially TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure.
 3. Verify station-qualified readiness/action attribution and information isolation in facilitator audit output.
 4. Repair reproducible network/mobile/presentation defects and add regression coverage.
-5. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, or terminology dependency.
+5. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, terminology, or player-count dependency.
 
 ## Explicitly deferred
 
@@ -110,7 +112,7 @@ Automated compact-path validation is now complete. The primary remaining validat
 - detailed DPS transient timing;
 - full RTCC trajectory propagator;
 - backroom/staff-support simulation;
-- four-player-or-smaller aggregation;
+- sub-five-player PC+2 mode unless reopened by live-play/scenario evidence;
 - multi-session/durable production persistence;
 - historically exact SimSup console UI;
 - named facilitator accounts/fine-grained admin permissions;
