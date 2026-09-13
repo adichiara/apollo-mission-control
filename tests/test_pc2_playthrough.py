@@ -14,7 +14,7 @@ from apollo_mission_control.pc2_session import SessionStatus  # noqa: E402
 
 
 class PC2PlaythroughTests(unittest.TestCase):
-    def test_scripted_nominal_playthrough_reaches_powerdown_complete(self):
+    def test_scripted_nominal_playthrough_reaches_ptc_preparation_complete(self):
         fixture = load_fixture(ROOT / "data" / "scenarios" / "apollo13_pc2_nominal.json")
         session = run_scripted_nominal_playthrough(fixture)
 
@@ -23,7 +23,8 @@ class PC2PlaythroughTests(unittest.TestCase):
         self.assertTrue(session.state.cutoff_complete)
         self.assertTrue(session.state.residual_review_complete)
         self.assertTrue(session.state.powerdown_started)
-        self.assertEqual(session.state.phase, "pc2_postburn_powerdown")
+        self.assertTrue(session.state.ptc_preparation_started)
+        self.assertEqual(session.state.phase, "pc2_ptc_preparation")
         self.assertIsNone(session.pending_gate)
         self.assertEqual(set(session.station_assignments.values()), set(DEFAULT_PLAYERS.values()))
 
@@ -41,6 +42,14 @@ class PC2PlaythroughTests(unittest.TestCase):
         self.assertIn("capcom_item_transmitted", kinds)
         self.assertIn("session_completed", kinds)
 
+        applied = [
+            event.details.get("event")
+            for event in session.audit_log
+            if event.kind == "scenario_event_applied"
+        ]
+        self.assertIn("lm_powerdown_transition", applied)
+        self.assertIn("ptc_preparation_begins", applied)
+
     def test_every_logical_player_can_receive_a_final_snapshot(self):
         fixture = load_fixture(ROOT / "data" / "scenarios" / "apollo13_pc2_nominal.json")
         session = run_scripted_nominal_playthrough(fixture)
@@ -49,6 +58,7 @@ class PC2PlaythroughTests(unittest.TestCase):
             snapshot = session.player_snapshot(player_id).to_dict()
             self.assertEqual(snapshot["station"], station)
             self.assertEqual(snapshot["session_status"], "complete")
+            self.assertEqual(snapshot["mission_phase"], "pc2_ptc_preparation")
             self.assertIn("presentation", snapshot)
 
 
