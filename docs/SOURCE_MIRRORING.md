@@ -1,6 +1,6 @@
 # Source Mirroring Policy
 
-Status: **proposed — resolves Phase 0's archival item and open question 28**
+Status: **proposed — would resolve Phase 0's archival item and open question 28 if accepted**
 
 Purpose: make the project's evidence base verifiable without depending on a third-party URL staying alive, and make page-level citation checkable as Principle 8 requires.
 
@@ -13,7 +13,7 @@ The repository cites 88 unique external URLs across 14 hosts. Every material cla
 - One document is cited through several URLs. The Apollo 13 Mission Operations Report appears as `.../alsj/a13/A13_MissionOpReport.pdf`, `.../afj/ap13fj/pdf/a13-mission-ops-report-19700428.pdf`, and an `apollojournals.org` path. The LM-10 Operations Handbook is cited under both `ibiblio.org` and `www.ibiblio.org`.
 - Nothing records *which bytes* a claim was checked against, so a silently revised scan is undetectable.
 
-## The decision
+## Proposed policy
 
 Three tiers, chosen per document by size and rights rather than by importance.
 
@@ -56,7 +56,7 @@ This is an engineering judgment recorded for review, not legal advice. The one e
 ## How it works
 
 ```bash
-# download every full/pages entry, hash it, write the lock file
+# download every Tier 1 full entry, hash it, write the lock file
 python3 scripts/mirror_sources.py fetch
 
 # re-hash what is on disk against the lock and report drift
@@ -70,13 +70,13 @@ python3 scripts/mirror_sources.py status
 
 `verify` is the check that matters over time: it is the difference between "the URL still resolves" and "the bytes are the ones the claim was recorded against."
 
-## What this changes for citations
+## What this would change for citations
 
-Once a document is mirrored, a research note can cite it by manifest id and page, and a reviewer can confirm the page without leaving the repository. The external URL stays in the manifest as provenance for *where the bytes came from*, rather than as the only way to see them.
+If the policy is accepted and a document is mirrored, a research note can cite it by manifest id and page, and a reviewer can confirm the page without leaving the repository. The external URL stays in the manifest as provenance for *where the bytes came from*, rather than as the only way to see them.
 
-This is also the answer to **open question 29** — the citation convention for code and data files. A stable id plus a page reference, resolvable against a hashed local file, is a citation an implementation comment can carry.
+This would also answer **open question 29** — the citation convention for code and data files. A stable id plus a page reference, resolvable against a hashed local file, is a citation an implementation comment can carry.
 
-## Sequencing
+## Proposed sequencing
 
 1. Fetch Tier 1 for the PC+2 dependency set. Roughly 20 documents; this is the load-bearing work.
 2. Extract Tier 2 page ranges for the three oversized scans, starting with the ASPO 45 CRT section.
