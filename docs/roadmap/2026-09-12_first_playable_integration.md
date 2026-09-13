@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — automated validation passing; live-device/human-play protocol defined and physical execution remains**
+Status: **CURRENT — automated validation passing; live-device/human-play protocol defined; five-player compact mode researched; physical execution remains**
 
 ## Completed checkpoints
 
@@ -27,11 +27,13 @@ Status: **CURRENT — automated validation passing; live-device/human-play proto
 - [x] admin UI evidence-class values reconciled with the server enum;
 - [x] stale pre-authorization UI contract assertion repaired;
 - [x] primary-source review of Apollo integrated crew/ground-controller simulation for the live-play boundary;
-- [x] structured real-device/human-play protocol with nominal and synthetic ΔP runs, pass criteria, and defect classification.
+- [x] structured real-device/human-play protocol with nominal and synthetic ΔP runs, pass criteria, and defect classification;
+- [x] primary-source review of low-player-count station relationships;
+- [x] five-player compact PC+2 configuration defined with original station identity preserved.
 
 The deployment remains single-process/in-memory. Restart/redeploy loses the live session; multiple workers/sessions and durable persistence remain deferred.
 
-See decisions D-016–D-017 and research notes 084–090.
+See decisions D-016–D-018 and research notes 084–091.
 
 ## Continuous-time engine boundary
 
@@ -75,6 +77,26 @@ Research note 090 uses Apollo/NASA integrated-simulation sources to constrain th
 
 The nominal PC+2 run comes first. The existing synthetic ΔP branch is a second run only after normal coordination is coherent.
 
+## Low-player-count boundary
+
+Research note 091 closes the first design/research question for compact staffing without claiming a historical five-person Apollo team.
+
+Recommended five-player mode:
+
+- FLIGHT;
+- CAPCOM;
+- LM SYSTEMS = TELMU + CONTROL;
+- FLIGHT DYNAMICS = GUIDO + FIDO/RETRO;
+- INCO.
+
+Primary Apollo sources support the underlying functional group relationships and the distinct FLIGHT/CAPCOM authority roles. They do not establish these bundled operators historically.
+
+Implementation must preserve original station identities under the bundled UI:
+
+`player → assigned set of original stations → station-scoped products/actions/readiness → combined player presentation`
+
+Four-player-or-smaller aggregation remains unresolved.
+
 ## Active priority — execute live multi-device validation
 
 1. run one facilitator console plus separate real-phone/browser clients for at least FLIGHT, CONTROL, CAPCOM, and GUIDO against one dedicated server;
@@ -82,7 +104,8 @@ The nominal PC+2 run comes first. The existing synthetic ΔP branch is a second 
 3. complete the nominal PC+2 sequence without hidden facilitator coaching and assess FLIGHT/CAPCOM handoff ergonomics;
 4. repair blocking phone/network/presentation defects and add regression tests where reproducible;
 5. execute the synthetic ΔP run after nominal coordination is coherent;
-6. reopen historical research only for concrete information/procedure/authority dependencies exposed by play.
+6. implement D-018 multi-station player assignment for the five-player compact mode without changing original domain station ownership;
+7. reopen historical research only for concrete information/procedure/authority dependencies exposed by play or compact-mode implementation.
 
 ## Integration validation still required
 
@@ -106,6 +129,14 @@ Protocol defined but still requiring physical execution:
 - FLIGHT/CAPCOM handoff under actual play;
 - synthetic ΔP human-play follow-up after nominal success.
 
+Compact-mode implementation/validation still required:
+
+- one player assigned to multiple original station identities;
+- bundled snapshot/presentation without cross-station leakage;
+- station-specific action authorization from a bundled player;
+- readiness/audit attribution to original stations;
+- five-player browser workflow and rejoin behavior.
+
 ## Explicitly deferred
 
 - exact console pixel/character reconstruction;
@@ -114,7 +145,7 @@ Protocol defined but still requiring physical execution:
 - detailed DPS transient timing;
 - full RTCC trajectory propagator;
 - backroom/staff-support simulation;
-- low-player-count station aggregation;
+- four-player-or-smaller station aggregation;
 - multi-session/durable production persistence;
 - historically exact SimSup console UI;
 - named/fine-grained facilitator accounts;
@@ -124,4 +155,4 @@ Protocol defined but still requiring physical execution:
 
 ## Current success criterion
 
-A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior—validated automatically in-process and over real HTTP, with the remaining real-device/human-play protocol then executed successfully on actual clients.
+A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior—validated automatically in-process and over real HTTP, with the remaining real-device/human-play protocol then executed successfully on actual clients. Compact mode must preserve those same boundaries while allowing one player to operate multiple original stations.
