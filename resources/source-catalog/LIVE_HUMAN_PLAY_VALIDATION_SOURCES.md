@@ -69,8 +69,10 @@ Does not establish:
 - that every difficult player decision indicates missing historical information;
 - pre-briefing a trainee on the exact malfunction or intended solution for an exercise.
 
-### Apollo experience report — crew procedures
+### Paul C. Kramer — Systems and Flight Procedures Development
 
+- *Apollo Experience Report — Systems and Flight Procedures Development*.
+- NASA-TN-D-7436, September 1973.
 - NTRS document: `19730023040`.
 - https://ntrs.nasa.gov/citations/19730023040
 - Relevant evidence: Apollo flight procedures integrated mission rules/requirements with spacecraft procedures; final procedures were organized around mission phases and incorporated into mission planning/data packages.
@@ -82,7 +84,7 @@ Implementation use:
 
 Scope warning:
 
-- this is a crew-procedures source, not evidence for the exact content or format of a flight-controller training handout;
+- this source describes Apollo systems and flight-procedures development; it is not evidence for the exact content or format of a flight-controller training handout;
 - it does not establish this project's station briefing pages, browser instructions, compact-role instructions, or briefing duration.
 
 ### Apollo training / mission simulator history
