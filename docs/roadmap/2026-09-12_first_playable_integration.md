@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — automated in-process and real-network validation passing; real-device/browser play validation is next**
+Status: **CURRENT — automated validation passing; live-device/human-play protocol defined and physical execution remains**
 
 ## Completed checkpoints
 
@@ -25,11 +25,13 @@ Status: **CURRENT — automated in-process and real-network validation passing; 
 - [x] complete unit/integration suite passing in GitHub Actions;
 - [x] real TCP/HTTP smoke passing in GitHub Actions against an ephemeral authorized Uvicorn server;
 - [x] admin UI evidence-class values reconciled with the server enum;
-- [x] stale pre-authorization UI contract assertion repaired.
+- [x] stale pre-authorization UI contract assertion repaired;
+- [x] primary-source review of Apollo integrated crew/ground-controller simulation for the live-play boundary;
+- [x] structured real-device/human-play protocol with nominal and synthetic ΔP runs, pass criteria, and defect classification.
 
 The deployment remains single-process/in-memory. Restart/redeploy loses the live session; multiple workers/sessions and durable persistence remain deferred.
 
-See decisions D-016–D-017 and research notes 084–089.
+See decisions D-016–D-017 and research notes 084–090.
 
 ## Continuous-time engine boundary
 
@@ -65,14 +67,22 @@ Research note 089 uses primary NASA simulation-training evidence to justify vali
 
 GitHub Actions now runs both the full unit/integration suite and that smoke runner against an ephemeral localhost Uvicorn server with facilitator authorization enabled. Both are recorded as passing.
 
-## Active priority — live multi-device validation
+## Live-device / human-play boundary
 
-1. run one facilitator console plus several simultaneous real phone station clients against one dedicated server;
-2. verify realtime GET under real browser/network latency;
-3. verify facilitator pause/resume, player reload/rejoin, and station information isolation on actual browsers;
-4. run the nominal PC+2 sequence with human operators and assess FLIGHT/CAPCOM handoff ergonomics;
-5. repair usability/integration problems exposed by live multi-client operation;
-6. reopen historical research only if integrated play exposes a concrete missing procedure or information dependency.
+Research note 090 uses Apollo/NASA integrated-simulation sources to constrain the remaining physical validation. The sources support combined crew/controller rehearsal in a mission environment and decisionmaking/procedure readiness, but do not establish phone UI criteria, browser reload semantics, HTTP latency limits, or facilitator authentication.
+
+`docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` therefore treats the remaining run as a structured mission rehearsal while keeping modern usability/network observations explicitly separate from historical research findings.
+
+The nominal PC+2 run comes first. The existing synthetic ΔP branch is a second run only after normal coordination is coherent.
+
+## Active priority — execute live multi-device validation
+
+1. run one facilitator console plus separate real-phone/browser clients for at least FLIGHT, CONTROL, CAPCOM, and GUIDO against one dedicated server;
+2. execute the pre-run identity/rejoin/authority/isolation checks in `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md`;
+3. complete the nominal PC+2 sequence without hidden facilitator coaching and assess FLIGHT/CAPCOM handoff ergonomics;
+4. repair blocking phone/network/presentation defects and add regression tests where reproducible;
+5. execute the synthetic ΔP run after nominal coordination is coherent;
+6. reopen historical research only for concrete information/procedure/authority dependencies exposed by play.
 
 ## Integration validation still required
 
@@ -86,14 +96,15 @@ Covered and executed automatically:
 - ΔP evidence boundaries;
 - facilitator/player authority isolation.
 
-Still requiring live/deployed validation:
+Protocol defined but still requiring physical execution:
 
 - real phone/browser reload/rejoin;
 - continuous GET behavior under external network latency;
 - phone readability and action ergonomics;
 - nominal PC+2 completion with human operators;
 - missed-event behavior during real late-controller decisions;
-- FLIGHT/CAPCOM handoff under actual play.
+- FLIGHT/CAPCOM handoff under actual play;
+- synthetic ΔP human-play follow-up after nominal success.
 
 ## Explicitly deferred
 
@@ -113,4 +124,4 @@ Still requiring live/deployed validation:
 
 ## Current success criterion
 
-A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior—validated automatically in-process and over real HTTP, then verified in an actual multi-device human play session.
+A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior—validated automatically in-process and over real HTTP, with the remaining real-device/human-play protocol then executed successfully on actual clients.
