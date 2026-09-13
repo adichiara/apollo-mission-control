@@ -18,6 +18,8 @@ See:
 - [Decisions](docs/DECISIONS.md)
 - [Simulation architecture](docs/SIMULATION_ARCHITECTURE.md)
 - [PC+2 player products](docs/scenarios/APOLLO13_PC2_PLAYER_PRODUCTS.md)
+- [Live playtest protocol](docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md)
+- [Live playtest report template](docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md)
 - [Research resources](resources/README.md)
 - [Evidence verification audit](resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md)
 
@@ -25,7 +27,7 @@ See:
 
 The first implementation-oriented vertical slice is **Apollo 13 PC+2 preparation and execution**.
 
-The model now includes source-backed PC+2 progression, continuous mission time, station-specific products, shutdown/restart branches, explicit communication/action/physical/evidence layers, first-pass views for CONTROL/GUIDO/TELMU/FIDO-RETRO/INCO/FLIGHT/CAPCOM, browser rejoin, CAPCOM handoff, audit logging, the source-bounded synthetic ΔP branch through fresh CONTROL evidence, facilitator authority, automated multi-client validation, and end-to-end compact station-set ownership through the HTTP/browser layer.
+The model now includes source-backed PC+2 progression, continuous mission time, station-specific products, shutdown/restart branches, explicit communication/action/physical/evidence layers, first-pass views for CONTROL/GUIDO/TELMU/FIDO-RETRO/INCO/FLIGHT/CAPCOM, browser rejoin, CAPCOM handoff, audit logging, the source-bounded synthetic ΔP branch through fresh CONTROL evidence, facilitator authority, automated multi-client validation, end-to-end compact station-set ownership through the HTTP/browser layer, and a structured live-play evidence/debrief package.
 
 The compact HTTP/browser path is recorded as passing automated CI. The remaining major validation boundary is real-device/browser and human-play execution.
 
@@ -99,6 +101,8 @@ Every step remains explicit. CAPCOM transmission does not imply crew receipt, cr
 
 The automated compact HTTP/browser path is recorded as passing GitHub Actions. Physical seven-seat and five-player compact human/device validation are not yet claimed.
 
+Research note 095 adds the evidence discipline for those physical runs: material incidents should retain run/build, GET, player role, active original station, visible evidence, action, expected/observed result, and audit/event references where available. The debrief must distinguish reproducible defects and historical questions from player instruction issues and legitimate controller uncertainty. Player difficulty alone is not grounds for inventing or changing Apollo behavior.
+
 ## Historical/presentation boundaries retained
 
 - Apollo 13 MSK 1137 `TCP` percent is not equated to modeled `GQ6510P` psi.
@@ -117,10 +121,11 @@ Detailed DPS transients, exact display routing/cadence, and a post-burn FIDO tra
 ## Immediate priorities
 
 1. Run `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` with actual simultaneous station phones/browsers and one facilitator console.
-2. Run nominal PC+2 first, then the synthetic ΔP branch.
-3. Run the approved five-player compact configuration and evaluate TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching, readiness/action attribution, and information isolation.
-4. Repair reproducible network/mobile/presentation defects and add regression coverage.
-5. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, terminology, or player-count dependency.
+2. Record the run in `docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` so defects and research questions remain traceable to build/GET/station evidence.
+3. Run nominal PC+2 first, then the synthetic ΔP branch.
+4. Run the approved five-player compact configuration and evaluate TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching, readiness/action attribution, and information isolation.
+5. Repair reproducible network/mobile/presentation defects and add regression coverage.
+6. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, terminology, or player-count dependency.
 
 ## Apollo 13 station specifications
 
