@@ -25,9 +25,10 @@ Status: **CURRENT — repository-side preparation and source-bounded scope work 
 - [x] primary-source review of immediate post-burn verification/power-down and explicit first-playable post-burn closure sequence;
 - [x] primary-source review of LM subsystem dependencies and explicit decision-relevant spacecraft-physics boundary;
 - [x] primary-source review of MSFN/CCATS/RTCC support functions and explicit decision-relevant ground-data-processing boundary;
-- [x] primary-source review of LM instrumentation failure experience and explicit layered observation-failure boundary with no random first-playable faults.
+- [x] primary-source review of LM instrumentation failure experience and explicit layered observation-failure boundary with no random first-playable faults;
+- [x] primary-source review of ground-to-crew procedure execution and explicit scenario-authored crew-action boundary with no separate first-playable crew player.
 
-See decisions D-016–D-020 and research notes 084–104.
+See decisions D-016–D-021 and research notes 084–105.
 
 ## Continuous-time engine boundary
 
@@ -113,6 +114,27 @@ For the current first playable:
 - unavailable, stale/delayed, biased/shifted, warning-only, communications-path, and ground-product faults are model capabilities only when a scenario explicitly selects them;
 - unsupported probabilities, random failure rates, noise/bias magnitudes, durations, recovery timing, and correlations are not invented.
 
+## Crew-action boundary
+
+Research note **105** and Decision **D-021** resolve open question 15 for the current PC+2 slice.
+
+Apollo 13 operational records show Mission Control passing maneuver products and procedures to the crew, with the crew then configuring and operating the spacecraft. LM procedure documentation likewise treats crew procedure execution as a distinct operational layer.
+
+The first playable therefore uses:
+
+`controller evidence → controller decision → CAPCOM message → crew receipt → crew action → physical spacecraft response → telemetry / crew report → controller evidence`
+
+For the current slice:
+
+- no separate human crew player is added;
+- controller conclusions do not directly mutate crew or spacecraft state;
+- nominal crew actions may be deterministic scenario-authored steps where crew discretion is not the mechanic being tested;
+- nonnominal crew behavior must be historically sourced or explicitly synthetic;
+- response-delay distributions, random misunderstanding/noncompliance, and generic crew-error rates are not invented;
+- facilitator crew-step controls remain modern validation infrastructure.
+
+Reopen this boundary when a selected scenario materially depends on astronaut discretion, manual flying, onboard workload, ambiguous crew observations, or detailed checklist execution.
+
 ## First nonnominal branch
 
 The synthetic PC+2 fuel/oxidizer ΔP path remains:
@@ -127,9 +149,9 @@ The normal `/` client contains station-authorized controller operations only. `/
 
 ## Live-device / human-play boundary
 
-Research notes 090 and 095–104 plus the testing protocol/preparation/reference/report files define the remaining physical validation. Players receive source-bounded station responsibilities/rules/procedures while remaining blind to nonnominal branch timing/content, hidden state, another station's private evidence, and intended diagnosis.
+Research notes 090 and 095–105 plus the testing protocol/preparation/reference/report files define the remaining physical validation. Players receive source-bounded station responsibilities/rules/procedures while remaining blind to nonnominal branch timing/content, hidden state, another station's private evidence, and intended diagnosis.
 
-Nominal PC+2 comes first and must continue through the immediate post-burn transition; synthetic ΔP follows only after nominal coordination is coherent. Observation faults beyond the authored synthetic branch must not be improvised during play.
+Nominal PC+2 comes first and must continue through the immediate post-burn transition; synthetic ΔP follows only after nominal coordination is coherent. Observation faults beyond the authored synthetic branch and unsourced crew delays/errors must not be improvised during play.
 
 ## Compact five-player boundary
 
@@ -141,7 +163,7 @@ The approved compact project configuration remains:
 - FLIGHT DYNAMICS = GUIDO + FIDO/RETRO;
 - INCO.
 
-Original station identities remain authoritative. Compact labels are presentation-only. Five players remain the minimum supported PC+2 configuration at the current fidelity target.
+Original station identities remain authoritative. Compact labels are presentation-only. Five players remain the minimum supported PC+2 configuration at the current fidelity target. The spacecraft crew remains an external scenario actor, not a sixth compact-role player.
 
 ## Backroom / Staff Support Room boundary
 
@@ -154,11 +176,11 @@ Research note 100 resolves open question 19 for the current first playable. Apol
 1. brief every player from `PC2_PLAYER_PREPARATION.md`, provide `PC2_PLAYER_REFERENCE_PACKET.md`, record preparation completion, and preserve scenario blindness;
 2. run one facilitator console plus separate real-phone/browser clients against one dedicated server;
 3. execute identity/rejoin/authority/isolation checks;
-4. complete nominal PC+2 through note-101 post-burn verification/power-down/PTC preparation without hidden facilitator coaching or improvised telemetry faults;
-5. assess FLIGHT/CAPCOM handoff, station readability, packet findability, staged final-load handoffs, and whether the post-burn transition needs more station-specific interaction;
+4. complete nominal PC+2 through note-101 post-burn verification/power-down/PTC preparation without hidden facilitator coaching, improvised telemetry faults, or invented crew delays/errors;
+5. assess FLIGHT/CAPCOM handoff, station readability, packet findability, staged final-load handoffs, CAPCOM→crew sequencing, and whether the post-burn transition needs more station-specific interaction;
 6. execute the synthetic ΔP run after nominal coordination is coherent;
 7. record incidents with preparation/station/build/GET/audit provenance;
-8. reopen spacecraft, observation-integrity, or ground-data-processing scope only if play exposes a sourced decision whose causal/data-path mechanism is absent.
+8. reopen spacecraft, observation-integrity, crew-action, or ground-data-processing scope only if play exposes a sourced decision whose causal/data-path/crew-execution mechanism is absent.
 
 ### B. Execute five-player compact human validation
 
@@ -171,7 +193,7 @@ Research note 100 resolves open question 19 for the current first playable. Apol
 
 ### C. Reopen research only from evidence
 
-Reopen historical, physical-model, observation-integrity, or ground-processing work only for concrete information/procedure/authority/support/causal/data-path dependencies exposed by validation. Player difficulty alone is not sufficient.
+Reopen historical, physical-model, observation-integrity, crew-action, or ground-processing work only for concrete information/procedure/authority/support/causal/data-path/crew-discretion dependencies exposed by validation. Player difficulty alone is not sufficient.
 
 ## Explicitly deferred
 
@@ -185,6 +207,8 @@ Reopen historical, physical-model, observation-integrity, or ground-processing w
 - detailed battery chemistry, wiring, breaker, RF propagation/modulation physics;
 - complete LM instrumentation-channel emulation;
 - random/generic instrumentation or telemetry failure generation, unsupported failure rates, noise distributions, fault durations, or recovery timing;
+- random crew-error/noncompliance mechanics and unsupported response-delay distributions;
+- a human crew player before a selected scenario requires decision-relevant astronaut discretion/workload/manual operation;
 - full RTCC trajectory propagator/internal RTCC-CCATS computation;
 - IBM 360/75 or UNIVAC 494 emulation, exact support-console keying, internal ground-system message formats, full MSFN routing/geometry, and unsupported processing delays/failure rates;
 - exact PC+2 RTCC Cartesian vector contents, RTCC/CCATS load-keying, and exact final-load transmission duration;
@@ -200,4 +224,4 @@ Reopen historical, physical-model, observation-integrity, or ground-processing w
 
 ## Current success criterion
 
-A rejoin-safe, phone-accessible, continuously running authoritative mission in which prepared station players receive only source-bounded operational information/actions, a separately authorized facilitator controls exercise-wide functions, the nominal load process remains staged, successful PC+2 continues through a source-bounded post-burn verification/power-down transition, spacecraft physics and ground processing remain causal but scenario-bounded, observation faults remain layered and scenario-authored rather than random, compact play preserves original-station identities, and omitted historical support-room functions are not replaced with invented analysis. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries.
+A rejoin-safe, phone-accessible, continuously running authoritative mission in which prepared station players receive only source-bounded operational information/actions, a separately authorized facilitator controls exercise-wide functions, the nominal load process remains staged, successful PC+2 continues through a source-bounded post-burn verification/power-down transition, spacecraft physics and ground processing remain causal but scenario-bounded, observation faults remain layered and scenario-authored rather than random, crew actions remain explicit downstream of CAPCOM rather than automatic or randomly error-prone, compact play preserves original-station identities, and omitted historical support-room functions are not replaced with invented analysis. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries.
