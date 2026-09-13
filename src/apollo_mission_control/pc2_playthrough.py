@@ -39,7 +39,7 @@ def run_scripted_nominal_playthrough(fixture: dict[str, Any]) -> PC2Session:
     session.start()
 
     # Advance beyond the historical final-poll time; the playable session must
-    # stop at the FLIGHT decision gate instead of automatically setting GO.
+    # continue through the FLIGHT decision gate rather than automatically setting GO.
     session.advance_to(hms_to_seconds("79:20:00"))
 
     for player_id in (
@@ -69,5 +69,8 @@ def run_scripted_nominal_playthrough(fixture: dict[str, Any]) -> PC2Session:
     )
     session.transmit_capcom_item("capcom_player", item.item_id)
 
-    session.advance_to(hms_to_seconds("79:35:00"))
+    # Note 101 extends the first-playable closure past initial LM powerdown to
+    # the source-backed PTC-preparation transition at about 79:52 GET. No PTC
+    # dynamics or switch-by-switch procedure is implied by this validation step.
+    session.advance_to(hms_to_seconds("79:53:00"))
     return session
