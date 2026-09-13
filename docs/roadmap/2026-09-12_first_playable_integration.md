@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — compact HTTP/browser integration implemented; sub-five-player boundary researched; live-device execution remains**
+Status: **CURRENT — repository-side validation preparation complete; physical human/device execution remains**
 
 ## Completed checkpoints
 
@@ -26,11 +26,12 @@ Status: **CURRENT — compact HTTP/browser integration implemented; sub-five-pla
 - [x] generic player snapshot polling for single- and multi-station players;
 - [x] compact browser persistence, legacy identity migration, and original-call-sign substation navigation;
 - [x] compact HTTP/browser regression coverage;
-- [x] primary-source review of the four-player boundary, with no sub-five-player PC+2 mode approved at current fidelity.
+- [x] primary-source review of the four-player boundary, with no sub-five-player PC+2 mode approved at current fidelity;
+- [x] structured live-play evidence-capture and debrief package with a dedicated run report template.
 
 The deployment remains single-process/in-memory. Restart/redeploy loses the live session; multiple workers/sessions and durable persistence remain deferred.
 
-See decisions D-016–D-018 and research notes 084–094.
+See decisions D-016–D-018 and research notes 084–095.
 
 ## Continuous-time engine boundary
 
@@ -58,7 +59,9 @@ The normal `/` client contains station-authorized controller operations only. `/
 
 ## Live-device / human-play boundary
 
-Research note 090 and `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` define the remaining physical validation. Apollo/NASA sources support integrated crew/controller rehearsal and decision/procedure readiness, but not phone UI criteria, browser reload semantics, HTTP latency limits, or token authentication.
+Research notes 090 and 095, `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md`, and `docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` define the remaining physical validation. Apollo/NASA sources support integrated crew/controller rehearsal, mission-environment decisionmaking, and procedure/rule use, but not phone UI criteria, browser reload semantics, HTTP latency limits, token authentication, or the project's incident taxonomy.
+
+Each material incident in the physical run should retain run/build, GET, player role, active original station, device/browser, visible evidence, action/communication, expected/observed result, and audit/event reference where available. Debrief must separate observed facts from participant interpretation, reproducible defects, historical questions, usability-only changes, and legitimate uncertainty.
 
 The nominal PC+2 run comes first. The synthetic ΔP branch follows only after nominal coordination is coherent.
 
@@ -90,9 +93,10 @@ This is a simulator-design boundary, not a historical minimum-staffing claim.
 
 1. run one facilitator console plus separate real-phone/browser clients against one dedicated server;
 2. execute identity/rejoin/authority/isolation checks from `PC2_LIVE_PLAYTEST_PROTOCOL.md`;
-3. complete nominal PC+2 without hidden facilitator coaching;
-4. assess FLIGHT/CAPCOM handoff and station readability;
-5. execute the synthetic ΔP run after nominal coordination is coherent.
+3. record incidents directly in `PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` with station/build/GET/audit provenance;
+4. complete nominal PC+2 without hidden facilitator coaching;
+5. assess FLIGHT/CAPCOM handoff and station readability;
+6. execute the synthetic ΔP run after nominal coordination is coherent.
 
 ### B. Execute five-player compact human validation
 
@@ -100,11 +104,12 @@ This is a simulator-design boundary, not a historical minimum-staffing claim.
 2. observe TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure;
 3. verify readiness/action attribution remains tied to the active original station;
 4. inspect audit output for original-station provenance and isolation;
-5. classify usability defects separately from historical/research defects.
+5. classify usability defects separately from historical/research defects;
+6. route any proposed historical/procedural change into the report's research queue before implementation.
 
 ### C. Reopen research only from evidence
 
-Reopen historical work only for concrete information/procedure/authority dependencies exposed by validation. Reopen sub-five-player design only if live testing demonstrates a real need, a different scenario removes a station dependency, stronger primary evidence supports another pairing, or an explicitly lower-fidelity accessibility mode is deliberately chosen.
+Reopen historical work only for concrete information/procedure/authority dependencies exposed by validation. Player difficulty alone is not sufficient. Reopen sub-five-player design only if live testing demonstrates a real need, a different scenario removes a station dependency, stronger primary evidence supports another pairing, or an explicitly lower-fidelity accessibility mode is deliberately chosen.
 
 ## Explicitly deferred
 
@@ -124,4 +129,4 @@ Reopen historical work only for concrete information/procedure/authority depende
 
 ## Current success criterion
 
-A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior. Compact mode must preserve the same boundaries while allowing one modern player to operate several separately identified original stations. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries.
+A rejoin-safe, phone-accessible, continuously running authoritative mission in which station players receive only their operational information/actions, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior. Compact mode must preserve the same boundaries while allowing one modern player to operate several separately identified original stations. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries; the repository now includes the structured evidence/debrief package needed to make those claims traceable.
