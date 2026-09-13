@@ -118,6 +118,7 @@ class PC2State:
     cutoff_complete: bool = False
     residual_review_complete: bool = False
     powerdown_started: bool = False
+    ptc_preparation_started: bool = False
     shutdown_rule_triggers: list[str] = field(default_factory=list)
 
 
@@ -229,6 +230,9 @@ def apply_event(state: PC2State, event: SimEvent, fixture: dict[str, Any]) -> No
     elif name == "lm_powerdown_transition":
         state.powerdown_started = True
         state.phase = "pc2_postburn_powerdown"
+    elif name == "ptc_preparation_begins":
+        state.ptc_preparation_started = True
+        state.phase = "pc2_ptc_preparation"
 
 
 def run_nominal(fixture: dict[str, Any]) -> PC2State:
@@ -278,6 +282,8 @@ def validate_nominal(fixture: dict[str, Any], final_state: PC2State) -> list[str
         errors.append("Nominal run never reached residual review.")
     if not final_state.powerdown_started:
         errors.append("Nominal run never entered post-burn powerdown.")
+    if not final_state.ptc_preparation_started:
+        errors.append("Nominal run never entered source-backed PTC preparation.")
 
     reports = [(report.get_s, report.report) for report in final_state.crew_reports]
     expected_reports = [
