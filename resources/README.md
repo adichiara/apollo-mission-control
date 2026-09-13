@@ -31,6 +31,7 @@ Current supplements:
 - `source-catalog/PC2_INCO_PRESENTATION_SOURCES.md` — mission-specific communications and ranging evidence constraining the first player-facing INCO rendering.
 - `source-catalog/PC2_FLIGHT_CAPCOM_PRESENTATION_SOURCES.md` — mission-specific Flight Director and air-ground communication sources constraining the first FLIGHT and CAPCOM renderings.
 - `source-catalog/PC2_SESSION_INTEGRATION_SOURCES.md` — historical/state-machine sources governing the first authoritative playable-session orchestration layer.
+- `source-catalog/PC2_FINAL_LOAD_UPLINK_SOURCES.md` — mission-specific primary evidence for the staged final PC+2 state-vector/target-load/uplink workflow across Flight Dynamics, GUIDO, INCO, CAPCOM/crew, and FLIGHT, with exact vector and ground-command internals explicitly deferred.
 - `source-catalog/WEB_TRANSPORT_SOURCES.md` — current Render/FastAPI platform documentation supporting the first phone-accessible transport and deployment shell.
 - `source-catalog/FACILITATOR_AUTHORITY_SOURCES.md` — primary NASA simulation-control sources plus current Render secret-management sources supporting the facilitator/controller authority boundary.
 - `source-catalog/INTEGRATED_SIMULATION_VALIDATION_SOURCES.md` — primary NASA simulation-training sources supporting integrated multi-station validation with a distinct simulation-control function, without treating HTTP/browser mechanics as historical.
@@ -57,6 +58,7 @@ Latest scenario-integration research:
 - `research/095_live_play_evidence_capture_and_debrief.md` — defines structured incident provenance and post-run debrief separation so physical play observations can drive reproducible software fixes or new historical research without converting player difficulty into unsupported Apollo behavior.
 - `research/096_live_play_player_preparation_boundary.md` — defines the reproducible pre-run knowledge boundary: players receive station responsibility, relevant rules/procedures, authority context, and modern client-operation knowledge while remaining blind to nonnominal branch timing/content, hidden state, and other stations' private information.
 - `research/097_live_play_reference_packet_structure.md` — defines the initial first-playable reference packet: separate common context, original-station sheets, neutral rule/criterion references, nominal phase/procedure context, and visibly modern client-operation instructions; unresolved historical criteria remain unresolved rather than becoming hints.
+- `research/098_pc2_final_state_vector_target_load_uplink.md` — resolves the first-playable final-load workflow into a source-backed staged FIDO/GUIDO/INCO/CAPCOM/crew/FLIGHT process while leaving exact vector contents, RTCC/CCATS internals, controller keying, and transmission duration unfrozen.
 
 ## Research rule
 
