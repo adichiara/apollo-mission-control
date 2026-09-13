@@ -22,7 +22,7 @@ Core Apollo 13 front-room positions are at B or better, with EECOM at A. Exact c
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, starting at approximately **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–096**, including controller rules/actions, nominal timing, products, station presentations, authoritative session integration, continuous mission time, the source-bounded ΔP branch, crew/vehicle response, fresh controller evidence, player/admin separation, facilitator authority, automated multi-client validation, live-device validation, compact-role research, multi-station ownership, compact HTTP/browser integration, the sub-five-player boundary, structured live-play evidence/debrief capture, and reproducible scenario-blind player preparation.
+The primary research chain now runs through notes **048–097**, including controller rules/actions, nominal timing, products, station presentations, authoritative session integration, continuous mission time, the source-bounded ΔP branch, crew/vehicle response, fresh controller evidence, player/admin separation, facilitator authority, automated multi-client validation, live-device validation, compact-role research, multi-station ownership, compact HTTP/browser integration, the sub-five-player boundary, structured live-play evidence/debrief capture, reproducible scenario-blind player preparation, and the first-run player reference-packet structure.
 
 Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
@@ -90,25 +90,28 @@ Still intentionally unresolved where evidence is insufficient: exact onboard 77-
 
 ## Phase 7 — Simulation scenarios / SimSup
 
-**Status:** source-bounded scenario architecture, facilitator authority, automated integration validation, live-play protocol, structured evidence/debrief package, reproducible player-preparation package, and compact browser integration implemented.
+**Status:** source-bounded scenario architecture, facilitator authority, automated integration validation, live-play protocol, structured evidence/debrief package, reproducible player-preparation/reference package, and compact browser integration implemented.
 
 Research note **095** requires physical runs to preserve incident-level provenance — run/build, GET, player role, active original station, visible evidence, action, expected/observed result, and audit/event reference where available — and to route historical/procedural changes through separate source review rather than infer them from player difficulty.
 
 Research note **096** defines the pre-run knowledge boundary: players receive station responsibilities, products/actions, relevant PC+2 rules/procedures, authority/coordination context, and modern client-operation instructions, while remaining blind to whether/when a nonnominal branch will occur, hidden state, other stations' private information, and the intended diagnosis or decision. The package format is a modern validation aid, not an Apollo handout reconstruction.
 
-Modern HTTP/browser/localStorage/token/compact-role/report/preparation mechanics are project infrastructure, not Apollo reconstruction.
+Research note **097** resolves the initial packet-organization question for physical play: keep common context, original-station responsibility sheets, rule/criterion references, nominal phase/procedure context, and modern client-operation instructions distinct. Compact players receive separate original-station sheets. Unresolved historical criteria remain unresolved rather than being turned into simplified hints. This layout is a project adaptation and still requires physical usability validation.
+
+Modern HTTP/browser/localStorage/token/compact-role/report/preparation/reference-packet mechanics are project infrastructure, not Apollo reconstruction.
 
 ## Immediate next work
 
-Automated compact-path validation and repository-side live-play preparation are complete. The primary remaining validation boundary is **physical human/device execution**.
+Automated compact-path validation and repository-side live-play preparation/reference material are complete. The primary remaining validation boundary is **physical human/device execution**.
 
-1. Prepare each participant with `docs/testing/PC2_PLAYER_PREPARATION.md`, record completion, and keep the synthetic branch scenario-blind.
+1. Prepare each participant with `docs/testing/PC2_PLAYER_PREPARATION.md`, provide `docs/testing/PC2_PLAYER_REFERENCE_PACKET.md`, record completion, and keep the synthetic branch scenario-blind.
 2. Execute `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md` using separate real phone/browser clients and one facilitator console; nominal PC+2 first, synthetic ΔP second.
 3. Use `docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` during the run so incidents retain preparation/GET/station/device/build/audit provenance and are classified before fixes are proposed.
-4. Exercise the approved five-player compact configuration with actual simultaneous clients, especially TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure.
-5. Verify station-qualified readiness/action attribution and information isolation in facilitator audit output.
-6. Repair reproducible network/mobile/presentation defects and add regression coverage.
-7. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, terminology, or player-count dependency.
+4. Validate packet findability and clarity separately from historical correctness; do not convert player confusion directly into new historical behavior.
+5. Exercise the approved five-player compact configuration with actual simultaneous clients, especially TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure.
+6. Verify station-qualified readiness/action attribution and information isolation in facilitator audit output.
+7. Repair reproducible network/mobile/presentation/instruction defects and add regression coverage.
+8. Reopen historical research only when validation exposes a concrete missing procedure, authority, information, terminology, or player-count dependency.
 
 ## Explicitly deferred
 
@@ -132,4 +135,4 @@ Automated coverage includes continuous-clock/event rules, crew response, shutdow
 
 GitHub Actions run 59 on commit `ae569dff997c17b0f67546ea452f1706d34b693d` passed after correcting a compact CONTROL regression-test expectation that had conflated authorization with evidence availability. The compact HTTP/browser implementation is therefore recorded as passing automated CI.
 
-Research notes 095–096, the live-play report template, and the player-preparation package improve physical-run evidence quality but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
+Research notes 095–097, the live-play report template, player-preparation package, and player reference packet improve physical-run evidence quality but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
