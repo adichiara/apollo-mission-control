@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — automated validation passing; live-device/human-play protocol defined; five-player compact mode researched; physical execution remains**
+Status: **CURRENT — compact domain ownership implemented; live-device execution and compact HTTP/UI wiring remain**
 
 ## Completed checkpoints
 
@@ -22,18 +22,21 @@ Status: **CURRENT — automated validation passing; live-device/human-play proto
 - [x] primary-source review of integrated flight-controller simulation as the validation model;
 - [x] in-process multi-client contract test across FLIGHT/CONTROL/CAPCOM/GUIDO + facilitator;
 - [x] destructive real-network multi-client smoke runner;
-- [x] complete unit/integration suite passing in GitHub Actions;
+- [x] complete pre-compact unit/integration suite passing in GitHub Actions;
 - [x] real TCP/HTTP smoke passing in GitHub Actions against an ephemeral authorized Uvicorn server;
 - [x] admin UI evidence-class values reconciled with the server enum;
 - [x] stale pre-authorization UI contract assertion repaired;
 - [x] primary-source review of Apollo integrated crew/ground-controller simulation for the live-play boundary;
 - [x] structured real-device/human-play protocol with nominal and synthetic ΔP runs, pass criteria, and defect classification;
 - [x] primary-source review of low-player-count station relationships;
-- [x] five-player compact PC+2 configuration defined with original station identity preserved.
+- [x] five-player compact PC+2 configuration defined with original station identity preserved;
+- [x] framework-neutral one-player/multiple-original-stations ownership implemented;
+- [x] bundled domain snapshot retains separate original-station presentations;
+- [x] bundled readiness/action authorization remains station-qualified and audit provenance remains original-station scoped.
 
 The deployment remains single-process/in-memory. Restart/redeploy loses the live session; multiple workers/sessions and durable persistence remain deferred.
 
-See decisions D-016–D-018 and research notes 084–091.
+See decisions D-016–D-018 and research notes 084–092.
 
 ## Continuous-time engine boundary
 
@@ -67,7 +70,7 @@ Research note 089 uses primary NASA simulation-training evidence to justify vali
 
 `scripts/pc2_multiclient_smoke.py` carries those checks into a real HTTP environment and adds simultaneous station polling.
 
-GitHub Actions now runs both the full unit/integration suite and that smoke runner against an ephemeral localhost Uvicorn server with facilitator authorization enabled. Both are recorded as passing.
+GitHub Actions has run both the full pre-compact unit/integration suite and that smoke runner against an ephemeral localhost Uvicorn server with facilitator authorization enabled. The newly added compact-ownership tests require current-head CI confirmation before they are recorded as passing.
 
 ## Live-device / human-play boundary
 
@@ -79,7 +82,7 @@ The nominal PC+2 run comes first. The existing synthetic ΔP branch is a second 
 
 ## Low-player-count boundary
 
-Research note 091 closes the first design/research question for compact staffing without claiming a historical five-person Apollo team.
+Research notes 091–092 close the compact-domain question without claiming a historical five-person Apollo team.
 
 Recommended five-player mode:
 
@@ -91,33 +94,70 @@ Recommended five-player mode:
 
 Primary Apollo sources support the underlying functional group relationships and the distinct FLIGHT/CAPCOM authority roles. They do not establish these bundled operators historically.
 
-Implementation must preserve original station identities under the bundled UI:
+The framework-neutral implementation now preserves original station identities under shared human ownership:
 
-`player → assigned set of original stations → station-scoped products/actions/readiness → combined player presentation`
+`player → assigned set of original stations → station-scoped products/actions/readiness → bundled player snapshot`
+
+Implemented pieces:
+
+- `PC2Session.assign_stations()`;
+- `stations_for()` / `owns_station()`;
+- original-station uniqueness under shared player ownership;
+- station-qualified readiness;
+- station-specific action authorization;
+- bundled snapshots containing separate original-station presentations;
+- `compact_roles.py` for the approved five-player project mapping.
+
+Still pending:
+
+- HTTP station-set join/rejoin;
+- browser compact-role persistence;
+- compact navigation/subpanels with original call signs visible;
+- compact API/browser regression coverage;
+- five-player live play.
 
 Four-player-or-smaller aggregation remains unresolved.
 
-## Active priority — execute live multi-device validation
+## Active priorities
+
+### A. Execute live multi-device validation
 
 1. run one facilitator console plus separate real-phone/browser clients for at least FLIGHT, CONTROL, CAPCOM, and GUIDO against one dedicated server;
 2. execute the pre-run identity/rejoin/authority/isolation checks in `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md`;
 3. complete the nominal PC+2 sequence without hidden facilitator coaching and assess FLIGHT/CAPCOM handoff ergonomics;
 4. repair blocking phone/network/presentation defects and add regression tests where reproducible;
-5. execute the synthetic ΔP run after nominal coordination is coherent;
-6. implement D-018 multi-station player assignment for the five-player compact mode without changing original domain station ownership;
-7. reopen historical research only for concrete information/procedure/authority dependencies exposed by play or compact-mode implementation.
+5. execute the synthetic ΔP run after nominal coordination is coherent.
+
+### B. Finish five-player compact transport/client integration
+
+1. extend the HTTP join/rejoin contract to an approved station set while retaining single-station compatibility;
+2. return the bundled snapshot shape for multi-station players;
+3. persist compact identity safely in the browser;
+4. render clear station-switch/subpanel navigation with original station names on readiness and action controls;
+5. add API/browser tests for rejoin, isolation, readiness attribution, action authority, and no cross-station leakage;
+6. run five-player human validation after the seven-seat baseline.
+
+Reopen historical research only for concrete information/procedure/authority dependencies exposed by play or compact-mode implementation.
 
 ## Integration validation still required
 
-Covered and executed automatically:
+Covered and previously executed automatically:
 
-- complete unit/integration suite;
+- complete pre-compact unit/integration suite;
 - in-process multi-client station isolation;
 - real TCP/HTTP concurrent polling and actions;
 - reload/rejoin contract;
 - explicit pause behavior;
 - ΔP evidence boundaries;
 - facilitator/player authority isolation.
+
+New compact-domain regression coverage committed, current-head execution still to confirm:
+
+- one player assigned to multiple original station identities;
+- bundled snapshot without cross-station fusion;
+- station-specific action authorization from a bundled player;
+- readiness/audit attribution to original stations;
+- non-overlapping five-player station coverage.
 
 Protocol defined but still requiring physical execution:
 
@@ -127,15 +167,8 @@ Protocol defined but still requiring physical execution:
 - nominal PC+2 completion with human operators;
 - missed-event behavior during real late-controller decisions;
 - FLIGHT/CAPCOM handoff under actual play;
-- synthetic ΔP human-play follow-up after nominal success.
-
-Compact-mode implementation/validation still required:
-
-- one player assigned to multiple original station identities;
-- bundled snapshot/presentation without cross-station leakage;
-- station-specific action authorization from a bundled player;
-- readiness/audit attribution to original stations;
-- five-player browser workflow and rejoin behavior.
+- synthetic ΔP human-play follow-up after nominal success;
+- five-player compact browser workflow after transport/client implementation.
 
 ## Explicitly deferred
 
