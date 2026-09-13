@@ -35,6 +35,7 @@ Current supplements:
 - `source-catalog/PC2_POSTBURN_SOURCES.md` — primary Apollo 13 evidence for the immediate post-PC+2 maneuver assessment, initial LM power-down, retained communications/guidance functions, and PTC-preparation boundary.
 - `source-catalog/PC2_SPACECRAFT_MODEL_SCOPE_SOURCES.md` — primary Apollo/NASA LM subsystem sources constraining the amount of spacecraft physics required by the first playable and supporting the decision-relevant causal-fidelity rule.
 - `source-catalog/PC2_GROUND_DATA_PROCESSING_SOURCES.md` — Apollo 13 Review Board and March 1970 MCC/MSFN sources constraining MSFN/CCATS/RTCC behavior to decision-relevant tracking, telemetry, trajectory, display, and command/load services rather than full ground-computer emulation.
+- `source-catalog/PC2_OBSERVATION_FAILURE_SOURCES.md` — primary LM instrumentation, communications, Apollo 13 ground-processing, and mission evidence constraining first-playable observation failures to explicit layered, scenario-authored faults rather than random telemetry failure.
 - `source-catalog/PC2_BACKROOM_SUPPORT_SOURCES.md` — Apollo 13 primary evidence for Staff Support Room/backroom functions and the first-playable rule that omits separate backroom players without pretending the historical support structure did not exist.
 - `source-catalog/WEB_TRANSPORT_SOURCES.md` — current Render/FastAPI platform documentation supporting the first phone-accessible transport and deployment shell.
 - `source-catalog/FACILITATOR_AUTHORITY_SOURCES.md` — primary NASA simulation-control sources plus current Render secret-management sources supporting the facilitator/controller authority boundary.
@@ -68,6 +69,7 @@ Latest scenario-integration research:
 - `research/101_pc2_immediate_postburn_verification_powerdown.md` — establishes the source-backed immediate post-PC+2 sequence through maneuver assessment, initial LM power-down, and PTC preparation without inventing console keying or full PTC dynamics.
 - `research/102_pc2_spacecraft_physical_model_scope.md` — resolves how much spacecraft physics the first playable needs: causal DPS, guidance/control, electrical availability, communications, and observation-integrity state only where a sourced player decision or selected failure mechanism depends on it.
 - `research/103_pc2_ground_data_processing_scope.md` — resolves how much MSFN/CCATS/RTCC behavior the first playable needs: functional tracking/telemetry/trajectory/display/load services and data-quality consequences only where a sourced player decision depends on them; internal ground-computer emulation remains deferred.
+- `research/104_pc2_sensor_telemetry_failure_scope.md` — resolves first-playable sensor/telemetry failure scope: no additional nominal historical instrumentation fault is added, while unavailable, stale/delayed, biased/shifted, warning-only, communications-path, and ground-product faults remain explicit scenario capabilities only when sourced or labeled synthetic.
 
 ## Research rule
 
