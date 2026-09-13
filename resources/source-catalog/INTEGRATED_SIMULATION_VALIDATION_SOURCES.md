@@ -1,6 +1,6 @@
 # Integrated simulation validation sources
 
-Status: **IMPLEMENTATION-SOURCE**
+Status: **IMPLEMENTATION-SOURCE — historical boundary established; automated network validation now passing**
 
 This supplement supports the project's decision to validate several controller clients and a distinct facilitator/simulation-control surface together against one authoritative simulation. It does **not** claim that the project's HTTP/browser architecture is historical Apollo hardware or software.
 
@@ -50,6 +50,15 @@ Does not establish:
 
 The primary sources support validating an integrated mission-like controller environment while preserving a distinct simulation-control function.
 
-The project therefore tests multiple station clients and a facilitator against one shared authoritative state, while labeling transport, browser concurrency, and credential behavior as modern implementation infrastructure.
+The project therefore tests multiple station clients and a facilitator against one shared authoritative state, while labeling transport, browser concurrency, credential behavior, CI, and localhost execution as modern implementation infrastructure.
 
-See `resources/research/089_multiclient_integrated_validation_boundary.md`.
+## Current implementation-validation result
+
+As of 2026-09-12, GitHub Actions successfully executes both:
+
+- the complete unit/integration test suite; and
+- `scripts/pc2_multiclient_smoke.py` over real TCP/HTTP against an ephemeral Uvicorn server with facilitator authorization enabled.
+
+This closes the automated runnable-validation gap. It does **not** substitute for deployed or real-phone validation, which remains the next integration boundary.
+
+See `resources/research/089_multiclient_integrated_validation_boundary.md` and `docs/progress/2026-09-12_multiclient_validation.md`.
