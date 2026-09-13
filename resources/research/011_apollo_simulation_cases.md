@@ -47,13 +47,30 @@ Harold Miller's retrospective NASA paper says:
 
 This strongly supports the project's existing architecture.
 
-## Program-alarm example
+## Apollo 11 simulation evidence — keep distinct
 
-Miller recalls Jay Honeycutt running a lunar-landing simulation involving the computer failure light.
+Two source threads must not be treated as one proven event.
 
-The better-known Apollo 11 historical accounts identify the case as a preflight program-alarm simulation that resulted in an unnecessary abort call and subsequent development of alarm-response guidance.
+### Harold Miller / Jay Honeycutt recollection
 
-This is currently the strongest candidate for a specifically reconstructed historical SimSup case.
+Miller recalls Jay Honeycutt running a lunar-landing simulation involving the **computer failure light**. That recollection establishes a Honeycutt-run computer-indication case, but the current source does not establish that it was the same run as the later-described 1201/1202 program-alarm exercise.
+
+### Richard Koos / Gene Kranz program-alarm account
+
+Separate NASA oral-history evidence identifies a final Apollo 11 landing simulation in which SimSup **Richard (Dick) Koos** inserted a **1201/1202 program alarm**. Steve Bales called for an abort; the debrief concluded that the team should not have aborted solely on that alarm, and follow-up training/rule development addressed program-alarm response.
+
+Kranz's oral history independently describes the same training lesson: the team aborted for computer program alarms, Koos challenged the decision in debrief, and Bales was tasked to develop rules for handling the alarms.
+
+### Evidence boundary
+
+The repository therefore treats these as **distinct evidence threads unless a stronger source explicitly links them**:
+
+1. Honeycutt / computer-failure-light recollection;
+2. Koos / program-alarm simulation and abort/debrief sequence.
+
+Do not infer identical indications, identical scenario scripting, or a shared run merely because both concern the LM computer.
+
+The Koos program-alarm case is the stronger candidate for a specifically reconstructed historical SimSup case because its operational consequence and debrief lesson are more directly documented. Exact scripting, timing, and telemetry-injection details still require stronger source support before reconstruction.
 
 ## Archive question
 
@@ -77,5 +94,7 @@ Search specifically for:
 
 ## Sources
 
-- https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf
-- https://www.nasa.gov/wp-content/uploads/2025/08/millerhg-paper.pdf
+- Apollo 13 Mission Operations Report: https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf
+- Harold G. Miller, *The Early Days of Simulation and Operations*: https://www.nasa.gov/wp-content/uploads/2025/08/millerhg-paper.pdf
+- Richard H. Koos NASA Oral History, 24 August 2023: https://www.nasa.gov/wp-content/uploads/2025/08/koosrh-8-24-23.pdf
+- Eugene F. Kranz NASA Oral History, 8 January 1999: https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/KranzEF/EFK_1-8-99.pdf

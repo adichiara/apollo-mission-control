@@ -33,7 +33,7 @@ Update functions include:
 - Verb 72 — scatter update;
 - Verb 73 — octal-clock increment.
 
-P27 provided the update-processing context.
+P27 provided the update-processing context. Independent Apollo GN&CS program documentation identifies **P27 as LGC Update** and **P21 as Ground Track Determination**; P21 must not be labeled as an LGC update program.
 
 The ground could monitor update state through downlinked registers including UPBUFF, UPVERB, UPOLDMOD, COMPNUMB and UPCOUNT.
 
@@ -64,7 +64,7 @@ Used in P22 and P57.
 
 ### AGS Initialization / Update
 
-Used in P21 and R47.
+The list is associated with AGS initialization/update data-link activity, including R47. A previous repository revision incorrectly described this as “Used in P21 and R47” by interpreting the downlist-list selection as a program-title mapping. Because P21 is independently documented as Ground Track Determination, that wording is withdrawn. The exact list-selection condition in R-567 should be cited directly before assigning another major-program number here.
 
 ## Snapshot behavior
 
@@ -112,6 +112,7 @@ This reinforces the need for mission profiles: AGC telemetry genuinely changed m
 - combine with LM instrumentation telemetry (non-AGC) for CONTROL/TELMU;
 - locate the Lunar Module Simulator Console Directory/output tables.
 
-## Source
+## Sources
 
-https://www.ibiblio.org/apollo/NARA-SW/R-567-sec2-rev8.pdf
+- R-567 Section 2, Rev. 8: https://www.ibiblio.org/apollo/NARA-SW/R-567-sec2-rev8.pdf
+- *User's Guide to Apollo GN&CS Major Modes and Routines, Colossus 3 and Luminary 1E*, E-2448 Rev. 4, §4.1: identifies LM P21 as Ground-track Determination and LM P27 as an update program: https://www.ibiblio.org/apollo/Documents/j2-80-E-2448-REV4_text.pdf
