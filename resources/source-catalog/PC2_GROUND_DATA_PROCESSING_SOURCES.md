@@ -12,7 +12,7 @@ Scope: MSFN / CCATS / RTCC functions material to the Apollo 13 PC+2 first playab
 - **Date:** June 1970
 - **Status:** REVIEWED-PARTIAL / IMPLEMENTATION-SOURCE
 - **Relevant pages:** A-133–A-137 (mission support areas, CCATS, RTCC)
-- **Provenance note:** the document identity and NTRS record are established; the previously cited `NASA-TM-X-66473` report-number attribution is not repeated here because it has not yet been independently confirmed.
+- **Provenance note:** the document identity and NTRS record are established; the exact NASA TM-X designation remains unconfirmed and is therefore omitted.
 - **Supports:**
   - CCATS as MCC↔MSFN interface;
   - telemetry/command/tracking routing and processing;
