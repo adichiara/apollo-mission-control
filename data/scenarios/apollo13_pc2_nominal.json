@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.3-research-fixture",
+  "schema_version": "0.4-research-fixture",
   "scenario_id": "apollo13_pc2_nominal",
   "status": "source-backed nominal fixture used by executable prototype",
   "mission": "Apollo 13",
@@ -13,7 +13,7 @@
     "Apollo 13 AC Electronics Guidance & Navigation Summary",
     "NASA TM X-66935 / REPT-70-FC13-47-ADD-1",
     "Apollo Operations Handbook LM GN&CS Figure 2.1-33",
-    "Repository research notes 048-054"
+    "Repository research notes 048-054 and 098"
   ],
   "historical_context_completed_before_start": {
     "free_return_restored": true,
@@ -21,7 +21,8 @@
     "pc2_mission_rules_review_complete": true,
     "platform_alignment_accepted": true,
     "prior_alignment_error_estimate_deg": 0.33,
-    "alignment_acceptance_limit_deg": 1.0
+    "alignment_acceptance_limit_deg": 1.0,
+    "earlier_pc2_state_vector_target_load_completed_get_hms": "75:35~"
   },
   "communications": {
     "air_ground_available": true,
@@ -32,6 +33,10 @@
     "ranging_enabled": false,
     "sband_power_amp_high": false,
     "nominal_quality_improves_get_hms": "77:59:17"
+  },
+  "ground_pc2": {
+    "solution_stage": "preliminary",
+    "note": "Final-solution chronology is source-bounded; exact Cartesian vector and internal RTCC/CCATS operations are deferred."
   },
   "pc2_target": {
     "tig_get_s": 286058.30,
@@ -75,8 +80,8 @@
     "iss_warning": false,
     "lgc_warning": false,
     "alignment_accepted": true,
-    "state_vector_load_status": "pending_final_verification",
-    "target_load_status": "pending_final_verification",
+    "state_vector_load_status": "preliminary_loaded",
+    "target_load_status": "preliminary_loaded",
     "planned_vg_imu_fps": {"x": 743.08, "y": -426.42, "z": 90.84},
     "nominal_executed_vg_imu_fps": {"x": 742.21, "y": -425.88, "z": 91.04},
     "nominal_postburn_residual_fps": {"x": 1.0, "y": 0.3, "z": 0.0}
@@ -140,7 +145,10 @@
     {"get_hms": "77:55:00", "event": "scenario_start_weak_link"},
     {"get_hms": "77:55:24", "event": "final_p30_lm_pad_readup_begins"},
     {"get_hms": "77:59:17", "event": "communications_loud_and_clear_after_sband_change"},
+    {"get_hms": "78:00:00~", "event": "final_pc2_solution_ready"},
     {"get_hms": "78:12:00~", "event": "lm_burn_configuration_powerup"},
+    {"get_hms": "78:17:00~", "event": "final_load_requested"},
+    {"get_hms": "78:17:00~", "event": "final_load_transmission_started"},
     {"get_hms": "78:21:54", "event": "ranging_switch_verification_requested"},
     {"get_hms": "78:23:05", "event": "computer_returned_to_crew"},
     {"get_hms": "79:17:00~", "event": "final_go_no_go_poll"},
@@ -157,6 +165,7 @@
   ],
   "deferred_not_blocking": [
     "exact RTCC Cartesian state vector at 77:55 GET",
+    "exact final-load RTCC/CCATS command/key sequence and transmission duration",
     "exact nominal DPS pressure readings",
     "detailed physical DPS throttle ramp/engine-response timing",
     "complete MSK 1123/1137 routing",

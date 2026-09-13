@@ -30,7 +30,7 @@ Historical gaps should now be prioritized by scenario impact. An unresolved arch
 30. **RESOLVED for first playable:** initialize near 77:55 GET. See the canonical roadmap and research note 079.
 31. **RESOLVED for first playable:** seven original station players are FLIGHT, CAPCOM, CONTROL, TELMU, GUIDO, FIDO/RETRO, and INCO; a source-constrained five-player compact mode is also supported. See notes 091–094.
 32. Which additional PC+2-critical fields/products, if any, prove necessary after physical human/device validation for FLIGHT, FIDO/RETRO, GUIDO, CONTROL, TELMU, INCO, and CAPCOM?
-33. Which exact maneuver-state-vector/target-load/uplink steps should be expanded beyond the currently modeled/initialized first-playable state?
+33. **RESOLVED for first-playable workflow fidelity:** model the final PC+2 state-vector/target-load process as a staged cross-station workflow rather than a single generic verification flag: final FIDO/RTCC solution, GUIDO load readiness/consistency, INCO uplink configuration, CAPCOM/crew P00 + DATA/ACCEPT + UPDATA LINK configuration, transmission, and final-load completion/computer return. Ranging remains a separate final-prep dependency. Exact Cartesian vector contents, RTCC/CCATS internal command path, exact console/key sequence, and exact transmission duration remain deferred until demanded by propagator, exact-console, or failure-mode work. See research note 098.
 34. **RESOLVED for the implemented shutdown branch:** player-observable shutdown criteria/evidence are explicitly separated into controller products/rules, crew callout/report, and fresh telemetry evidence without hidden physical-state leakage. See notes 053–072 and 082–086.
 35. Which additional immediate post-burn verification and power-down activities should be added after physical play identifies a concrete dependency?
 
@@ -39,7 +39,7 @@ Historical gaps should now be prioritized by scenario impact. An unresolved arch
 16. **RESOLVED for PC+2 at the current fidelity target:** five players are the minimum supported configuration. See note 094.
 17. **RESOLVED for the supported five-player configuration:** TELMU+CONTROL may be assigned to one modern `LM SYSTEMS` player and GUIDO+FIDO/RETRO to one modern `FLIGHT DYNAMICS` player while preserving original station identities. No additional pairing is approved. See notes 091–094 and Decision D-018.
 18. Are some positions phase-specific enough to omit rather than combine in later scenarios? For current PC+2, no additional omission is approved.
-19. Should backroom functions be absorbed by front-room players, automated, omitted, or eventually playable?
+19. **RESOLVED for the current PC+2 first playable:** Staff Support Room/backroom functions are historically real and explicitly acknowledged, but are not separate playable roles yet. Do not silently transfer unsupported backroom analysis to front-room stations or invent automated expert advice. Reopen when a physical-play or later-scenario decision depends on a specific support-room product, calculation, recommendation, or handoff. See research note 100.
 
 ## Interface
 

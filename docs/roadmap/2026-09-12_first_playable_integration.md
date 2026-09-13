@@ -1,45 +1,46 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — repository-side validation preparation/reference material complete; physical human/device execution remains**
+Status: **CURRENT — repository-side preparation and source-bounded scope work complete; physical human/device execution remains**
 
 ## Completed checkpoints
 
 - [x] minimum player presentations for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, CAPCOM;
 - [x] one authoritative mission state and synchronized GET;
 - [x] readiness reports, FLIGHT decision requirement, CAPCOM queue/transmission, and audit trail;
-- [x] FastAPI/Uvicorn phone-accessible transport;
-- [x] rejoin-safe browser identity persistence;
-- [x] continuous mission clock and declarative nominal-event eligibility;
-- [x] 1× monotonic wall-clock pacing;
+- [x] FastAPI/Uvicorn phone-accessible transport and rejoin-safe browser identity persistence;
+- [x] continuous mission clock, declarative nominal-event eligibility, and 1× monotonic pacing;
 - [x] end-to-end source-bounded ΔP branch through fresh CONTROL evidence;
 - [x] ordinary player client separated from facilitator/validation client;
 - [x] facilitator authority protected independently from controller station identity;
 - [x] in-process multi-client contract test and real-network smoke runner;
-- [x] complete pre-compact suite and real TCP/HTTP smoke passing in GitHub Actions;
 - [x] structured real-device/human-play protocol;
-- [x] primary-source review constraining five-player compact play;
-- [x] one-player/multiple-original-stations domain ownership;
-- [x] bundled snapshots with separate original-station presentations;
-- [x] station-qualified readiness/action authorization and original-station audit provenance;
-- [x] HTTP station-set join/rejoin with legacy single-station compatibility;
-- [x] generic player snapshot polling for single- and multi-station players;
-- [x] compact browser persistence, legacy identity migration, and original-call-sign substation navigation;
-- [x] compact HTTP/browser regression coverage;
-- [x] primary-source review of the four-player boundary, with no sub-five-player PC+2 mode approved at current fidelity;
-- [x] structured live-play evidence-capture and debrief package with a dedicated run report template;
-- [x] reproducible, scenario-blind pre-run player-preparation package grounded in Apollo controller-training/rule/procedure evidence;
-- [x] first-run player reference packet with separate common, original-station, rule/criterion, nominal-phase, and modern-client sections.
+- [x] five-player compact role research and multi-original-station ownership;
+- [x] station-set HTTP join/rejoin, bundled snapshots, station-qualified readiness/actions, audit provenance, and browser substation navigation;
+- [x] four-player boundary reviewed with no sub-five-player PC+2 mode approved at current fidelity;
+- [x] structured live-play evidence/debrief package;
+- [x] reproducible scenario-blind player-preparation package and first-run reference packet;
+- [x] primary-source review and staged implementation of the final PC+2 state-vector/target-load/uplink workflow;
+- [x] staged final-load regression coverage passing GitHub Actions run 118;
+- [x] primary-source review of Apollo 13 Staff Support Room/backroom functions and explicit first-playable support-room scope boundary.
 
-The deployment remains single-process/in-memory. Restart/redeploy loses the live session; multiple workers/sessions and durable persistence remain deferred.
-
-See decisions D-016–D-018 and research notes 084–097.
+See decisions D-016–D-018 and research notes 084–100.
 
 ## Continuous-time engine boundary
 
 At the approximately 79:17 GET final poll, `flight_go` becomes pending while the session remains RUNNING. GET continues. Downstream nominal events execute only if prerequisites are present at their scheduled times; otherwise they are recorded as missed and are not replayed after a late decision.
 
 Manual `/advance` remains validation infrastructure only. Normal runtime pacing is 1× monotonic wall-clock time.
+
+## Final PC+2 load boundary
+
+Research notes 098–099 carry the final state-vector/target-load work into the executable model:
+
+`FIDO/RTCC final solution → GUIDO load readiness/consistency → INCO uplink configuration → CAPCOM/crew configuration → state-vector + target-load transmission → load complete / computer returned to crew`
+
+The model distinguishes `preliminary` → `final_ready` → `final_stable` ground-solution state and `preliminary_loaded` → `final_pending` → `transmitting` → `final_loaded` state-vector/target-load status. Ranging remains a separate final-preparation dependency.
+
+Exact Cartesian vector contents, RTCC/CCATS command internals, controller keying, and transmission duration remain deliberately unfrozen.
 
 ## First nonnominal branch
 
@@ -51,29 +52,19 @@ The 26 psi exercise is explicitly synthetic. Internal CONTROL→CAPCOM routing i
 
 ## Facilitator boundary
 
-The normal `/` client contains station-authorized controller operations only. `/admin` contains exercise-control functions. Configured deployments require the facilitator credential for exercise-wide operations. This is a modern project safety boundary, not Apollo-era authentication reconstruction.
-
-## Multi-client validation boundary
-
-`tests/test_web_multiclient_integration.py` protects the in-process contract for shared state, station isolation, rejoin, occupied-station protection, facilitator isolation, pause semantics, and ΔP ordering.
-
-`scripts/pc2_multiclient_smoke.py` exercises those boundaries over real TCP/HTTP and simultaneous polling. Pre-compact CI has passed both the suite and network smoke.
+The normal `/` client contains station-authorized controller operations only. `/admin` contains exercise-control functions. Configured deployments require the facilitator credential for exercise-wide operations. This is modern project infrastructure, not Apollo-era authentication reconstruction.
 
 ## Live-device / human-play boundary
 
-Research notes 090, 095, 096, and 097; `docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md`; `docs/testing/PC2_PLAYER_PREPARATION.md`; `docs/testing/PC2_PLAYER_REFERENCE_PACKET.md`; and `docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` define the remaining physical validation. Apollo/NASA sources support integrated crew/controller rehearsal, prior controller preparation, mission-environment decisionmaking, and procedure/rule use, but not phone UI criteria, browser reload semantics, HTTP latency limits, token authentication, the project's briefing/reference format, or the project's incident taxonomy.
+Research notes 090 and 095–097 plus the testing protocol/preparation/reference/report files define the remaining physical validation. Players receive station responsibility, visible products/actions, relevant PC+2 rules/procedures, authority/coordination boundaries, and modern client-operation knowledge while remaining blind to nonnominal branch timing/content, hidden state, another station's private evidence, and intended diagnosis.
 
-Before timed play, each player receives the reproducible preparation package and the reference packet: station responsibility, visible products/actions, relevant PC+2 phase/rules/procedures, authority/coordination boundaries, and modern client-operation knowledge. The material remains scenario-blind: it does not reveal whether/when a nonnominal branch will occur, hidden state, another station's private evidence, or the intended diagnosis/decision. Players may consult their assigned rules/procedures during play.
+Each material incident should retain run/build, GET, player role, active original station, device/browser, visible evidence, action/communication, expected/observed result, audit/event reference where available, and participant preparation record. Debrief must separate observed facts from interpretation, reproducible defects, historical questions, usability-only changes, instructional gaps, and legitimate uncertainty.
 
-The reference packet deliberately separates common operational context, original-station sheets, neutral rule/criterion references, nominal PC+2 phase/procedure context, and modern browser mechanics. Compact players retain separate original-station sheets. Exact onboard 77-percent thrust indication and singular 150-psi ground inlet-pressure aggregation remain unresolved rather than being turned into hints.
-
-Each material incident in the physical run should retain run/build, GET, player role, active original station, device/browser, visible evidence, action/communication, expected/observed result, audit/event reference where available, and the participant's preparation record. Debrief must separate observed facts from participant interpretation, reproducible defects, historical questions, usability-only changes, instructional gaps, and legitimate uncertainty.
-
-The nominal PC+2 run comes first. The synthetic ΔP branch follows only after nominal coordination is coherent.
+Nominal PC+2 comes first; synthetic ΔP follows only after nominal coordination is coherent.
 
 ## Compact five-player boundary
 
-Research notes 091–094 define and constrain the compact project configuration without claiming a historical five-person Apollo team:
+Research notes 091–094 define the compact project configuration without claiming a historical five-person Apollo team:
 
 - FLIGHT;
 - CAPCOM;
@@ -81,17 +72,23 @@ Research notes 091–094 define and constrain the compact project configuration 
 - FLIGHT DYNAMICS = GUIDO + FIDO/RETRO;
 - INCO.
 
-Primary Apollo sources support the underlying functional relationships and distinct station identities; they do not establish the bundled operators historically.
+Original station identities remain authoritative. Compact labels are presentation-only. Five players remain the minimum supported PC+2 configuration at the current fidelity target.
 
-Implemented end-to-end shape:
+## Backroom / Staff Support Room boundary
 
-`player → exact set of original stations → HTTP join/rejoin → bundled station-scoped snapshots → browser substation navigation → station-qualified readiness/actions/audit provenance`
+Research note 100 resolves open question 19 for the current first playable.
 
-The browser explicitly labels compact roles as simulator conveniences, preserves original call signs in station tabs and action surfaces, persists station sets and the active substation, and migrates legacy single-station identity. No synthetic `LM_SYSTEMS` or `FLIGHT_DYNAMICS` authoritative station exists.
+Apollo 13 primary sources show that the MOCR was supported by Staff Support Rooms. Flight Dynamics SSR supplied detailed trajectory/guidance analysis and outside technical interfaces; Vehicle Systems SSR supported detailed system monitoring/troubleshooting; the Apollo 13 Mission Operations Report specifically commended EECOM SSR support during the emergency.
 
-Research note 094 resolves the previously open general four-player question for this scenario/fidelity target: **five players are the minimum supported PC+2 configuration**. CAPCOM and INCO remain distinct because crew-facing voice authority and communications-system monitoring/troubleshooting are separately documented functions, and communications/data-path reasoning is active in the selected PC+2 window. Silent INCO omission/automation is therefore not accepted merely to reduce player count.
+Therefore:
 
-This is a simulator-design boundary, not a historical minimum-staffing claim.
+- the seven-seat/five-player configurations are front-room playable slices, not complete historical staffing reconstructions;
+- no separate SSR player is added before physical front-room validation;
+- no fictional automated expert advice is introduced;
+- no unsupported backroom analysis is silently transferred to a front-room station;
+- a concrete support-generated product or handoff exposed by playtesting/later scenarios reopens research and implementation.
+
+Exact PC+2 SSR rosters, loop topology, and support-product flow remain unfrozen unless needed.
 
 ## Active priorities
 
@@ -99,26 +96,24 @@ This is a simulator-design boundary, not a historical minimum-staffing claim.
 
 1. brief every player from `PC2_PLAYER_PREPARATION.md`, provide `PC2_PLAYER_REFERENCE_PACKET.md`, record preparation completion, and preserve scenario blindness;
 2. run one facilitator console plus separate real-phone/browser clients against one dedicated server;
-3. execute identity/rejoin/authority/isolation checks from `PC2_LIVE_PLAYTEST_PROTOCOL.md`;
-4. record incidents directly in `PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md` with preparation/station/build/GET/audit provenance;
+3. execute identity/rejoin/authority/isolation checks;
+4. record incidents with preparation/station/build/GET/audit provenance;
 5. complete nominal PC+2 without hidden facilitator coaching;
-6. assess FLIGHT/CAPCOM handoff, station readability, and reference-packet findability/clarity;
+6. assess FLIGHT/CAPCOM handoff, station readability, packet findability/clarity, and staged final-load handoffs;
 7. execute the synthetic ΔP run after nominal coordination is coherent.
 
 ### B. Execute five-player compact human validation
 
-1. use FLIGHT, CAPCOM, LM SYSTEMS, FLIGHT DYNAMICS, and INCO clients simultaneously;
-2. ensure compact players have practiced one TELMU↔CONTROL or GUIDO↔FIDO/RETRO switch before timed play without seeing scenario-specific events;
-3. provide separate original-station reference sheets for each compact player's substations;
+1. use FLIGHT, CAPCOM, LM SYSTEMS, FLIGHT DYNAMICS, and INCO simultaneously;
+2. ensure compact players have practiced substation switching before timed play without seeing scenario-specific events;
+3. provide separate original-station reference sheets;
 4. observe TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure;
-5. verify readiness/action attribution remains tied to the active original station;
-6. inspect audit output for original-station provenance and isolation;
-7. classify usability/instruction defects separately from historical/research defects;
-8. route any proposed historical/procedural change into the report's research queue before implementation.
+5. verify readiness/action attribution and audit provenance stay tied to original stations;
+6. classify usability/instruction defects separately from historical/research defects.
 
 ### C. Reopen research only from evidence
 
-Reopen historical work only for concrete information/procedure/authority dependencies exposed by validation. Player difficulty alone is not sufficient. Reopen sub-five-player design only if live testing demonstrates a real need, a different scenario removes a station dependency, stronger primary evidence supports another pairing, or an explicitly lower-fidelity accessibility mode is deliberately chosen.
+Reopen historical work only for concrete information/procedure/authority/support dependencies exposed by validation. Player difficulty alone is not sufficient. Reopen sub-five-player design only if live testing demonstrates a real need, a different scenario removes a station dependency, stronger primary evidence supports another pairing, or an explicitly lower-fidelity accessibility mode is deliberately chosen.
 
 ## Explicitly deferred
 
@@ -127,8 +122,9 @@ Reopen historical work only for concrete information/procedure/authority depende
 - exact onboard 77-percent thrust indication;
 - detailed DPS transient timing;
 - full RTCC trajectory propagator;
-- backroom/staff-support simulation;
-- sub-five-player PC+2 mode unless the boundary is explicitly reopened;
+- exact PC+2 RTCC Cartesian vector contents, RTCC/CCATS load-keying, and exact final-load transmission duration;
+- playable/detailed Staff Support Room reconstruction until a concrete scenario dependency requires it;
+- sub-five-player PC+2 mode unless explicitly reopened;
 - multi-session/durable production persistence;
 - historically exact SimSup console UI;
 - named/fine-grained facilitator accounts;
@@ -138,4 +134,4 @@ Reopen historical work only for concrete information/procedure/authority depende
 
 ## Current success criterion
 
-A rejoin-safe, phone-accessible, continuously running authoritative mission in which prepared station players receive only their operational information/actions, can consult a source-bounded scenario-blind reference packet, a separately authorized facilitator controls exercise-wide simulation functions, and source-bounded nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers without hidden decisions, hidden physical-truth leaks, or invented historical behavior. Compact mode must preserve the same boundaries while allowing one modern player to operate several separately identified original stations. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries; the repository now includes the preparation, reference, evidence-capture, and debrief package needed to make those claims traceable.
+A rejoin-safe, phone-accessible, continuously running authoritative mission in which prepared station players receive only source-bounded operational information/actions, a separately authorized facilitator controls exercise-wide functions, nonnominal conditions propagate through explicit controller/crew/vehicle/evidence layers, the nominal final-load process remains staged, compact play preserves original-station identities, and omitted historical support-room functions are not replaced with invented analysis. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries.

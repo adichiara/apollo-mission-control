@@ -153,8 +153,9 @@ def project_controller_products(state: PC2State, fixture: dict[str, Any]) -> dic
             "pg_ns.iss.warning": _live_product(state, pgns["iss_warning"], source_layer="onboard/telemetry", provenance="pc2.fixture.pgns.iss_warning"),
             "pg_ns.lgc.warning": _live_product(state, pgns["lgc_warning"], source_layer="onboard/telemetry", provenance="pc2.fixture.pgns.lgc_warning"),
             "pg_ns.alignment.accepted": _reference_product(pgns["alignment_accepted"], source_layer="onboard/ground_assessment", provenance="pc2.fixture.pgns.alignment_accepted"),
-            "pg_ns.state_vector_load_status": _reference_product(pgns["state_vector_load_status"], source_layer="onboard/uplink", provenance="pc2.fixture.pgns.state_vector_load_status"),
-            "pg_ns.target_load_status": _reference_product(pgns["target_load_status"], source_layer="onboard/uplink", provenance="pc2.fixture.pgns.target_load_status"),
+            "ground.pc2.solution_stage": _live_product(state, state.pc2_solution_stage, source_layer="ground-derived/trajectory", provenance="pc2.state.ground.pc2.solution_stage"),
+            "pg_ns.state_vector_load_status": _live_product(state, state.state_vector_load_status, source_layer="onboard/uplink", provenance="pc2.state.pgns.state_vector_load_status"),
+            "pg_ns.target_load_status": _live_product(state, state.target_load_status, source_layer="onboard/uplink", provenance="pc2.state.pgns.target_load_status"),
             "pg_ns.vg_imu_planned": _reference_product(pgns["planned_vg_imu_fps"], units="ft/s", source_layer="onboard/target", provenance="pc2.fixture.pgns.planned_vg_imu_fps"),
             "pg_ns.postburn_residual": _live_product(state, residual_value, units="ft/s", source_layer="onboard/telemetry", provenance="pc2.fixture.pgns.nominal_postburn_residual_fps", validity=residual_validity),
         },
@@ -168,7 +169,8 @@ def project_controller_products(state: PC2State, fixture: dict[str, Any]) -> dic
             "ground.pc2.pad_dv_lvlh": _reference_product(target["pad_dv_lvlh_fps"], units="ft/s", source_layer="ground-derived", provenance="pc2.fixture.pc2_target.pad_dv_lvlh_fps"),
             "ground.pc2.expected_perigee_nmi": _reference_product(target["expected_perigee_nmi"], units="nmi", source_layer="ground-derived", provenance="pc2.fixture.pc2_target.expected_perigee_nmi"),
             "ground.return.plan": _reference_product(fixture["return_products"], source_layer="ground-derived", provenance="pc2.fixture.return_products"),
-            "ground.rtcc.solution_valid": _live_product(state, True, source_layer="ground-derived", provenance="pc2.nominal.rtcc.solution_valid"),
+            "ground.rtcc.solution_valid": _live_product(state, state.pc2_solution_stage in {"final_ready", "final_stable"}, source_layer="ground-derived", provenance="pc2.state.ground.pc2.solution_stage"),
+            "ground.pc2.solution_stage": _live_product(state, state.pc2_solution_stage, source_layer="ground-derived/trajectory", provenance="pc2.state.ground.pc2.solution_stage"),
         },
         ("ground.rtcc.cartesian_state_vector", "ground.postburn.propagated_trajectory"),
     )
@@ -198,16 +200,22 @@ def project_controller_products(state: PC2State, fixture: dict[str, Any]) -> dic
         "comm.telemetry_available": _live_product(state, comm["telemetry_available"], source_layer="communications", provenance="pc2.fixture.communications.telemetry_available"),
         "comm.ranging_enabled": _live_product(state, state.ranging_enabled, source_layer="communications/navigation", provenance="pc2.state.comm.ranging"),
         "comm.uplink_state": _reference_product(comm["uplink_available"], source_layer="communications/command", provenance="pc2.fixture.communications.uplink_available"),
+        "comm.uplink_configuration_ready": _live_product(state, state.uplink_configuration_ready, source_layer="communications/command", provenance="pc2.state.comm.uplink_configuration_ready"),
+        "comm.final_load_transmission_active": _live_product(state, state.final_load_transmission_started, source_layer="communications/command", provenance="pc2.state.comm.final_load_transmission_started"),
     })
 
     flight = ProjectionSet("FLIGHT", {
         "mission.phase": _live_product(state, state.phase, source_layer="mission/session", provenance="pc2.state.phase"),
         "flight.go_for_burn": _live_product(state, state.flight_go, source_layer="controller-decision", provenance="pc2.state.flight.go_for_burn"),
+        "ground.pc2.solution_stage": _live_product(state, state.pc2_solution_stage, source_layer="ground-derived/trajectory", provenance="pc2.state.ground.pc2.solution_stage"),
+        "ground.pc2.final_load_complete": _live_product(state, state.final_load_complete, source_layer="ground/uplink-status", provenance="pc2.state.ground.pc2.final_load_complete"),
     }, ("controller.readiness_reports",))
 
     capcom = ProjectionSet("CAPCOM", {
         "comm.air_ground_quality": _live_product(state, state.comm_quality, source_layer="communications", provenance="pc2.state.comm.air_ground_quality"),
         "ground.pc2.final_pad": _reference_product({"tig_get_s": target["tig_get_s"], "pad_dv_lvlh_fps": target["pad_dv_lvlh_fps"], "expected_perigee_nmi": target["expected_perigee_nmi"], "ullage": target["ullage"], "throttle_profile": target["throttle_profile"]}, source_layer="ground-derived/procedure", provenance="pc2.fixture.pc2_target"),
+        "ground.pc2.final_load_requested": _live_product(state, state.final_load_requested, source_layer="ground/uplink-status", provenance="pc2.state.ground.pc2.final_load_requested"),
+        "ground.pc2.final_load_complete": _live_product(state, state.final_load_complete, source_layer="ground/uplink-status", provenance="pc2.state.ground.pc2.final_load_complete"),
         "crew.report_stream": _live_product(state, [{"get_s": report.get_s, "report": report.report} for report in state.crew_reports], source_layer="crew-report", provenance="pc2.state.crew_reports"),
     })
 
