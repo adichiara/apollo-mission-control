@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+
+# Mirrored primary sources: tracked deliberately per docs/SOURCE_MIRRORING.md.
+# Partial downloads are not.
+resources/primary-sources/files/*.part

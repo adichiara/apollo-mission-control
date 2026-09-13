@@ -23,7 +23,9 @@ See:
 - [PC+2 player reference packet](docs/testing/PC2_PLAYER_REFERENCE_PACKET.md)
 - [Live playtest protocol](docs/testing/PC2_LIVE_PLAYTEST_PROTOCOL.md)
 - [Live playtest report template](docs/testing/PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md)
+- [Source mirroring policy](docs/SOURCE_MIRRORING.md) — proposed
 - [Research resources](resources/README.md)
+- [Primary-source mirror manifest](resources/primary-sources/manifest.json)
 - [Evidence verification audit](resources/audits/2026-09-11_EVIDENCE_VERIFICATION.md)
 
 ## Current status
