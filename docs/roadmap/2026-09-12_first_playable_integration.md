@@ -29,9 +29,10 @@ Status: **CURRENT — repository-side preparation and source-bounded scope work 
 - [x] primary-source review of ground-to-crew procedure execution and explicit scenario-authored crew-action boundary with no separate first-playable crew player;
 - [x] follow-up primary-source review of the 150-psi DPS inlet-pressure rule lineage, narrowing the leading candidate to fuel inlet / `GQ3611P` without asserting an Apollo 13-specific exact mapping;
 - [x] follow-up primary-source review of the onboard 77-percent rule, identifying the panel-1 CMD THRUST / ENG THRUST instrument family and ENG THRUST actual-thrust scale;
-- [x] follow-up primary-source review of the 77-percent startup applicability gate, using the Apollo 13 crew-debrief full-throttle transition at burn +26 seconds as the first-playable applicability boundary while explicitly labeling the final mapping as a lineage-based inference rather than a verbatim recovered Apollo 13 rule qualifier.
+- [x] follow-up primary-source review of the 77-percent startup applicability gate, using the Apollo 13 crew-debrief full-throttle transition at burn +26 seconds as the first-playable applicability boundary while explicitly labeling the final mapping as a lineage-based inference rather than a verbatim recovered Apollo 13 rule qualifier;
+- [x] follow-up primary-source reconciliation of the attitude “start transient” wording conflict: the contemporaneous CAPCOM transmission and Haise readback attach the exception to ±10-degree attitude error, while the later postflight summary wording differs. Exact transient duration remains unresolved.
 
-See decisions D-016–D-021 and research notes 084–108.
+See decisions D-016–D-021 and research notes 084–109.
 
 ## Continuous-time engine boundary
 
@@ -133,6 +134,19 @@ For the current first playable:
 - the gate does not create an ENG THRUST observation: a scenario-authored crew-visible indication is still required for evaluation;
 - do not alias the indication to ground `GQ6510P` or derive it directly from hidden engine state.
 
+## Attitude start-transient boundary
+
+Research note **109** resolves the prior conflict over which PC+2 attitude criterion carried the startup exception.
+
+The contemporaneous 76:30 GET CAPCOM transmission and 76:37 GET Haise readback both specify:
+
+- attitude error ±10 degrees, **except for the start transient**;
+- attitude rate ±10 degrees/sec, with no stated exception.
+
+The later Flight Control Division Mission Operations Report III-25 instead attaches “except start transients” to attitude rate. The project preserves that conflict but gives implementation precedence to the operational instruction actually transmitted to and acknowledged by the crew.
+
+The exact duration of “start transient” is still unsupported. Do not equate it to the 5-second 12.6-percent segment, the 21-second 40-percent segment, the full +26-second low-thrust interval, or any inferred hidden engine-dynamics window without direct evidence.
+
 ## First nonnominal branch
 
 The synthetic PC+2 fuel/oxidizer ΔP path remains:
@@ -147,7 +161,7 @@ The normal `/` client contains station-authorized controller operations only. `/
 
 ## Live-device / human-play boundary
 
-Research notes 090 and 095–108 plus the testing protocol/preparation/reference/report files define the remaining physical validation. Players receive source-bounded station responsibilities/rules/procedures while remaining blind to nonnominal branch timing/content, hidden state, another station's private evidence, and intended diagnosis.
+Research notes 090 and 095–109 plus the testing protocol/preparation/reference/report files define the remaining physical validation. Players receive source-bounded station responsibilities/rules/procedures while remaining blind to nonnominal branch timing/content, hidden state, another station's private evidence, and intended diagnosis.
 
 Nominal PC+2 comes first and must continue through the immediate post-burn transition; synthetic ΔP follows only after nominal coordination is coherent. Observation faults beyond the authored synthetic branch and unsourced crew delays/errors must not be improvised during play.
 
@@ -187,13 +201,14 @@ Research note 100 resolves open question 19 for the current first playable. Apol
 
 Reopen historical, physical-model, observation-integrity, crew-action, or ground-processing work only for concrete information/procedure/authority/support/causal/data-path/crew-discretion dependencies exposed by validation. Player difficulty alone is not sufficient.
 
-Notes 106–108 are retained as bounded archival refinements discovered during repository continuation; they do not change the physical-validation priority or authorize unsupported mechanics.
+Notes 106–109 are retained as bounded archival refinements discovered during repository continuation; they do not change the physical-validation priority or authorize unsupported mechanics.
 
 ## Explicitly deferred
 
 - exact console pixel/character reconstruction;
 - Apollo 13-specific proof that the 150-psi ground criterion maps directly to fuel-interface measurement `GQ3611P`;
 - a verbatim Apollo 13 mission-rule qualifier for the 77-percent ENG THRUST applicability gate; the first playable uses the sourced full-throttle transition at burn +26 seconds as an explicitly labeled lineage-based approximation;
+- exact duration/end definition of the attitude-error “start transient” exception; no 5-, 21-, or 26-second boundary is assumed;
 - detailed DPS transient timing beyond selected branch needs;
 - full six-degree-of-freedom spacecraft/orbital propagation;
 - pulse-level RCS jet dynamics;
