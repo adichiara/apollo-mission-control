@@ -20,7 +20,7 @@ Historical gaps should now be prioritized by scenario impact. An unresolved arch
 ## Simulation scope
 
 11. **RESOLVED:** first vertical slice is Apollo 13 PC+2 preparation/execution, approximately 74:00–80:00 GET. See Decision D-013 and research note 048.
-12. How much of the spacecraft must be physically modeled for the PC+2 interval?
+12. **RESOLVED for the current PC+2 first playable:** use decision-relevant causal fidelity rather than full-spacecraft emulation. Required causal domains are DPS/maneuver state, guidance/attitude/control state, coarse electrical/equipment availability, communications/uplink/ranging availability, and instrumentation observation integrity. Full ECS/CSM physics, six-DOF propagation, pulse-level RCS, detailed battery/wiring/RF physics, complete LM instrumentation, and full RTCC/CCATS internals remain deferred until a sourced player decision or selected failure mechanism depends on them. See research note 102 and Decision D-019.
 13. How much of MSFN/CCATS/RTCC behavior materially affects PC+2 controller decisions and therefore must be simulated?
 14. Which sensor/telemetry failure modes are necessary for the first PC+2 scenario and later nonnominal variants?
 15. Should crew actions be scripted, operator-driven, or otherwise represented? The first playable now uses explicit modeled crew-response steps for the ΔP branch, but the general architecture for later scenarios remains open.
