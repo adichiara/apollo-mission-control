@@ -43,7 +43,7 @@ class PC2FinalLoadWorkflowTests(unittest.TestCase):
         self.assertEqual(self.state.state_vector_load_status, "transmitting")
         self.assertEqual(self.state.target_load_status, "transmitting")
 
-        self.apply(281?00 if False else 282185, "computer_returned_to_crew")
+        self.apply(282185, "computer_returned_to_crew")
         self.assertTrue(self.state.final_load_complete)
         self.assertTrue(self.state.computer_with_crew)
         self.assertEqual(self.state.state_vector_load_status, "final_loaded")
