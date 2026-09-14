@@ -51,7 +51,25 @@ Status: **active supplement to `PC2_IMPLEMENTATION_SOURCES.md`**
 - **Selection-transient evidence:** LM-5-and-later circuitry delays removal of the caution inhibit during inverter selection until valid processed inverter data are established.
 - **First-playable consequence:** normal selection-transient suppression belongs to spacecraft indication logic, not a separate crew persistence timer. Ground controllers may receive a project-rendered electrical product based on source-backed `GC0155`/`GC0071` telemetry without pretending that an exact Apollo 13 CRT format has been recovered.
 - **Direct-telemetry boundary:** the reviewed schematic positively labels PCMTEA taps for `GC0155` and `GC0071` but does **not** label equivalent PCMTEA taps for the `GL4046` caution output or the `4S14` selector position. This is sufficient to exclude those direct paths from first-playable historical telemetry unless a later primary routing source explicitly establishes them; it is not universal proof that no other Apollo document could contain an additional path.
-- **Remaining boundary:** exact Apollo 13 MSFN/CCATS/RTCC-to-TELMU/CONTROL routing, CRT/MSK field, display cadence/latency, and numeric selection-inhibit duration remain unresolved.
+
+## Apollo Experience Report — Flight-Control Data Needs, Terminal Display Devices, and Ground System Configuration Requirements
+
+- **NASA document ID:** 19740015284
+- **Report:** NASA TN D-7685 / JSC S-396, May 1974
+- **NTRS:** https://ntrs.nasa.gov/citations/19740015284
+- **Public scan:** https://www.ibiblio.org/apollo/Documents/TN-7685-ApolloExperienceReport-FlightControlNeeds.pdf
+- **Status:** PRIMARY APOLLO-EXPERIENCE / REVIEWED for MCC computer-driven TV routing architecture.
+- **Use:** documents that an individual console could request a display format, after which the computer formatted it, assigned the next available computer-driven TV channel, and automatically connected that channel to the requesting console. It also documents channel-attach mode, in which a console could attach to an already active TV channel.
+- **Consequence for note 118:** do not model `GC0155` or `GC0071` as requiring a permanently assigned TELMU/CONTROL TV channel. The remaining Apollo 13-specific gap is the display-format/configuration record that identifies exact format identity, field placement, selection action, cadence, and latency.
+- **Boundary:** this 1974 experience report describes Apollo MCC architecture generally; it does not identify the Apollo 13 PC+2 inverter format or prove which station had that format selected.
+
+## Apollo 15 MCC Operational Configuration
+
+- **Document:** *MCC Operational Configuration for Mission J1, AS-510 / SC-112 / LM-10, Apollo 15*, PHO-TR155, 15 Apr 1971.
+- **Public scan:** https://ibiblio.org/apollo/Documents/MCC%20Operational%20Configuration%20Apollo%2015.pdf
+- **Status:** PRIMARY / LATER-MISSION ARCHITECTURE CROSS-CHECK ONLY.
+- **Use:** confirms separate LM TELMU Engineer and LM Control Engineer consoles in the later Apollo configuration.
+- **Boundary:** not Apollo 13 format evidence and not used to infer a PC+2 display number, channel, field, or station selection state.
 
 ## Apollo 13 LM-7 Contingency Checklist — surviving artifact / transcripted read-up
 
@@ -67,7 +85,7 @@ For the crew-side first-playable criterion:
 
 For the source-backed ground electrical observation path:
 
-`selected inverter bus → GC0155 frequency + GC0071 voltage → conditioning/isolation → PCMTEA telemetry → communications/MSFN → [exact MCC station routing/display unresolved]`
+`selected inverter bus → GC0155 frequency + GC0071 voltage → conditioning/isolation → PCMTEA telemetry → communications/MSFN → MCC computer-driven display capability → [exact Apollo 13 format/station selection unresolved]`
 
 The onboard derived caution remains a distinct path:
 
@@ -81,7 +99,9 @@ The initial inverter-2 identity is mission-specific and directly supported. The 
 
 Research note 117 adds a bounded negative result: the reviewed primary schematics do not establish direct PCM telemetry of the `GL4046` caution state or INV1/INV2 selector position. The first playable therefore does not provide either as historical ground telemetry. A project-derived warning calculated from source-backed voltage/frequency may be used only if explicitly labeled as a modern/project rendering rather than a recovered caution discrete.
 
-Exact TELMU/CONTROL routing/display field, ground display latency/cadence, numeric selection-inhibit duration, crew-member assignment, and exact controller wording remain unresolved and must not be invented.
+Research note 118 further narrows the MCC routing issue: Apollo computer-driven TV displays used dynamic display-request and channel-attach behavior, so the project must not invent a fixed historical TELMU/CONTROL TV channel for `GC0155` or `GC0071`. The exact Apollo 13 display-format identity, field placement, selection action, cadence, latency, and actual PC+2 station selection remain unresolved.
+
+Exact Apollo 13 display-format identity/field placement, ground display cadence/latency, numeric selection-inhibit duration, crew-member assignment, exact controller wording, and any as-yet-unreviewed source establishing an additional caution/selector discrete remain unresolved and must not be invented.
 
 ## Research record
 
@@ -94,3 +114,4 @@ Exact TELMU/CONTROL routing/display field, ground display latency/cadence, numer
 - `resources/research/115_pc2_inverter_reobservation_timing_boundary.md` — resolves first-playable post-transfer timing semantics as valid-state re-observation, with no invented numeric crew dwell
 - `resources/research/116_pc2_inverter_ground_observation_path.md` — resolves the source-backed ground electrical-observation provenance through `GC0155`/`GC0071` PCMTEA telemetry while preserving caution/selector separation
 - `resources/research/117_pc2_inverter_direct_caution_selector_telemetry_boundary.md` — bounds the remaining direct-telemetry question: reviewed primary schematics do not establish a PCM path for `GL4046` or selector position, so neither is exposed as historical ground telemetry in first playable
+- `resources/research/118_pc2_inverter_mcc_display_routing_boundary.md` — resolves the fixed-channel architectural ambiguity: Apollo MCC computer-driven TV access was dynamically requested/attached; exact Apollo 13 inverter format and presentation remain unresolved
