@@ -1,0 +1,48 @@
+{
+  "schema_version": "0.1-model-profile",
+  "model_profile_id": "apollo11_g_descent_partial",
+  "mission_profile_id": "apollo11_g",
+  "status": "partial historical model profile; architecture reference only",
+  "validation_state": "not_historically_validated",
+  "domains": {
+    "guidance_computer": {
+      "status": "partial",
+      "note": "Apollo 11 1201/1202 Executive-overflow meanings, software-restart behavior, and P63/P64 restart protection are source-backed; exact real-time workload state, display path, and complete alarm-response rule set remain incomplete."
+    },
+    "backup_guidance": {
+      "status": "partial",
+      "note": "PGNS/AGS independent cross-check value is documented operationally, but exact controller-visible values and comparison tolerances for the selected interval are not yet frozen."
+    },
+    "landing_radar": {
+      "status": "partial",
+      "note": "Mission Report timing for radar-good state and radar-update enablement is sourced; measurement equations, error model, update acceptance criteria, and controller presentation remain unresolved."
+    },
+    "propulsion": {
+      "status": "unresolved",
+      "note": "Generic variable-thrust machinery exists, but Apollo 11 LM-5 powered-descent thrust/mass-flow profile and historical acceptance inputs are not yet frozen for this reference interval."
+    },
+    "translational_dynamics": {
+      "status": "unresolved",
+      "note": "Generic central-gravity propagation exists, but Apollo 11 descent frame, initial state, lunar gravity/perturbation scope, thrust-direction coupling, and validation tolerance are not yet frozen."
+    },
+    "controller_observation": {
+      "status": "partial",
+      "note": "Alarm chronology and selected controller/crew communications are documented; exact GUIDO display fields, update cadence, and independent PGNS/AGS/radar observation products remain incomplete."
+    }
+  },
+  "sources": [
+    "NASA Apollo 11 Mission Report, November 1969",
+    "Grumman LAV-500-940, Program Alarms in Powered Descent - Apollo 11, 31 July 1969",
+    "MIT/IL letter, Exegesis of the 1201 and 1202 Alarms Which Occurred During the Mission G Lunar Landing",
+    "NASA Oral History Project, Richard H. Koos interview, 24 August 2023",
+    "Repository research note 141_second_reference_apollo11_descent_assessment.md"
+  ],
+  "deferred": [
+    "complete Apollo 11 powered-descent state vector/trajectory initialization",
+    "LM-5 delivered thrust and mass-flow profile",
+    "landing-radar measurement and update model",
+    "exact GUIDO/FLIGHT alarm and cross-check presentation",
+    "historically validated alarm decision rule implementation",
+    "Apollo 11 descent runtime adapter"
+  ]
+}
