@@ -88,6 +88,8 @@ A model profile records the evidence/readiness state of reusable executable doma
 
 This separation prevents scenario chronology or mission metadata from silently becoming executable physics. Unresolved historical constants remain explicitly unresolved in the model profile until sourced.
 
+Each scenario also declares `required_model_domains`. Historical numerical readiness is assessed only against those domains. This means a scenario can have a supported runtime adapter and be executable as a prototype while still reporting that its required historical numerical models are partial or unresolved. Different scenario families can require different model domains rather than inheriting a single global fidelity gate.
+
 ### 1. Session / mission authority
 
 Owns:
