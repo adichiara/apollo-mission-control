@@ -1,6 +1,9 @@
 {
   "schema_version": "0.4-research-fixture",
   "scenario_id": "apollo13_pc2_nominal",
+  "title": "Apollo 13 PC+2 Preparation and Execution",
+  "scenario_class": "historical_flight_reconstruction",
+  "runtime_adapter": "pc2_v1",
   "status": "source-backed nominal fixture used by executable prototype",
   "mission": "Apollo 13",
   "start_get_s": 280500.0,
