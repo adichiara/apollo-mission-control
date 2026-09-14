@@ -1,7 +1,7 @@
 # PC+2 numerical-validation roadmap — pad-weight epoch
 
 Date: 2026-09-14
-Research notes: `resources/research/137_pc2_pad_weight_epoch_boundary.md`, `resources/research/138_pc2_rtcc_mass_property_deck_boundary.md`, `resources/research/139_pc2_dps_performance_boundary.md`, `resources/research/140_apollo13_dps_supplement_publication_boundary.md`, `resources/research/141_apollo13_dps_supplement_contractor_provenance.md`, `resources/research/142_rtcc_mass_properties_operational_semantics.md`, `resources/research/143_apollo13_tplus_mass_property_epoch_semantics.md`, `resources/research/144_rtcc_mass_properties_depletion_table_architecture.md`
+Research notes: `resources/research/137_pc2_pad_weight_epoch_boundary.md`, `resources/research/138_pc2_rtcc_mass_property_deck_boundary.md`, `resources/research/139_pc2_dps_performance_boundary.md`, `resources/research/140_apollo13_dps_supplement_publication_boundary.md`, `resources/research/141_apollo13_dps_supplement_contractor_provenance.md`, `resources/research/142_rtcc_mass_properties_operational_semantics.md`, `resources/research/143_apollo13_tplus_mass_property_epoch_semantics.md`, `resources/research/144_rtcc_mass_properties_depletion_table_architecture.md`, `resources/research/145_apollo13_tplus_reference_epoch_boundary.md`
 
 ## Resolved this pass
 
@@ -14,15 +14,17 @@ The Flight Control Division Mission Operations Report further establishes that:
 
 Research note 142 adds Apollo-era operational semantics from primary Apollo 10/11 support documentation: mass-properties products fed trajectory, trim, DAP/control, and propellant-support computations, with in-flight updates as propellant state and vehicle configuration changed. This supports treating the Apollo 13 T+55 deck as an in-flight operational mass-properties state product rather than a fixed preflight constant.
 
-Research note 143 now narrows the `T+55` label using the Apollo 13 report itself. The same Flight Dynamics narrative records lift-off (`T-6`) mass properties, compares a `T+25` mass-properties run against `T+6` trims, and later updates LM-burn decks to `T+55`. This establishes the labels as successive **mission-relative, time-tagged mass-properties bases/products**. `T+55` can therefore be represented as a mass-properties state associated with approximately mission time +55 hours, rather than an opaque revision identifier.
+Research note 143 narrows the `T+55` label using the Apollo 13 report itself. The same Flight Dynamics narrative records lift-off (`T-6`) mass properties, compares a `T+25` mass-properties run against `T+6` trims, and later updates LM-burn decks to `T+55`. This establishes the labels as successive **mission-relative, time-tagged mass-properties bases/products**. `T+55` can therefore be represented as a mass-properties state associated with approximately mission time +55 hours, rather than an opaque revision identifier.
 
 Research note 144 adds a primary NASA RTCC requirements source from June 1971 that explicitly describes the Skylab mass-properties system as a **carryover of the present Apollo RTCC Mass Properties System**. Its architecture maintains weight/CG, sums module-level inputs, supports temporary or permanent propellant depletion tables, and feeds engine-trim calculations from input spacecraft weight and center of mass. This confirms that the Apollo-era mass-properties state was structurally richer than a single scalar weight and provides a safe architectural target for the simulator without supplying unrecovered H-2 values.
+
+Research note 145 resolves one remaining ambiguity using a stronger timing separation in the same Apollo 13 report: the lift-off `T-6` mass properties were **generated and loaded into RTCC by T-2:46**. Therefore the `T±N` label is distinct from the actual generation/loading timestamp. `T+55` should be modeled as a mission-relative mass-properties **reference state/epoch label**, while exact-versus-nominal/propagated epoch semantics remain unresolved.
 
 These values are therefore safe to use as **historical final-PAD / targeting regression inputs with an in-flight updated, mission-time-tagged RTCC mass-properties lineage**.
 
 ## Boundary retained
 
-The Apollo 13 report still does not define whether `T+55` means exactly 55:00:00 GET, a nominal scheduled calculation epoch, deck-generation time, or a propagated state referenced to approximately +55 hours. The 1971 RTCC requirements note does not close that gap: it does not identify `T+55` as a depletion table or define H-2 deck fields. Nor do the sources provide the H-2 deck record layout, processor fields, or mapping from the deck to the final `62480 + 33452 = 95932 lb` P30 pair. The pair must not be labeled exact physical ignition mass.
+The Apollo 13 report still does not define whether `T+55` means exactly 55:00:00 GET, a nominal scheduled reference epoch, or a propagated state referenced to approximately +55 hours. The 1971 RTCC requirements note does not close that gap: it does not identify `T+55` as a depletion table or define H-2 deck fields. Nor do the sources provide the H-2 deck record layout, processor fields, or mapping from the deck to the final `62480 + 33452 = 95932 lb` P30 pair. The pair must not be labeled exact physical ignition mass.
 
 Keep distinct:
 
@@ -51,7 +53,7 @@ This does **not** verify an Apollo 13 TRW number, author list, or `MSC-02680-SUP
 
 Priority order is now:
 
-1. recover mission-specific H-2 RTCC/Flight Dynamics documentation defining the **precise T+N epoch convention** and LM-burn deck fields/values, with special attention to how module summation and temporary/permanent propellant depletion tables entered the mission-specific deck/state; the broad time-related meaning of `T+55` and the general Apollo RTCC mass-properties architecture are now source-bounded;
+1. recover mission-specific H-2 RTCC/Flight Dynamics documentation defining the **precise T+N reference-epoch convention** and LM-burn deck fields/values, with special attention to how module summation and temporary/permanent propellant depletion tables entered the mission-specific deck/state; the broad time-related meaning of `T+55`, its distinction from generation/load time, and the general Apollo RTCC mass-properties architecture are now source-bounded;
 2. recover the published October 1970 Apollo 13 Mission Report Supplement 2, *Descent Propulsion System Final Flight Evaluation*, using the evidence-based provenance tuple `Apollo 13 + LM-7 + exact title + October 1970 + TRW Systems Group + NAS9-8166 + MSC-02680`;
 3. recover LM-7 engine acceptance/calibration or PC+2 high-speed propulsion data if Supplement 2 remains inaccessible;
 4. extract original LMS/FMES equations/integration assumptions beyond the current public handbook boundary;

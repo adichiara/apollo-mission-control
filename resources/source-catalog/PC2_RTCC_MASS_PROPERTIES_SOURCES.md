@@ -9,15 +9,16 @@
 ### Supports
 
 - prelaunch lift-off (`T-6`) mass properties — weights, centers of gravity, and aerodynamic data — were generated and loaded into the RTCC;
+- critically, those `T-6` products were generated/loaded **by `T-2:46`**, demonstrating that the `T±N` label is not the generation/loading timestamp;
 - a `T+25` RTCC mass-properties run was compared against `T+6` pitch/yaw trims and did not require an update;
 - LM-burn mass-property decks were later updated to `T+55` decks before abort-maneuver work;
 - LM Control initially challenged the PC+2 DPS trim after using premission mass properties;
 - Flight Dynamics considered better in-flight mass-properties data available for the maneuver solution;
-- taken together, the repeated `T-6`, `T+6`, `T+25`, and `T+55` usage establishes a mission-relative time-tagged mass-properties lineage rather than an opaque revision-letter convention.
+- taken together, the repeated `T-6`, `T+6`, `T+25`, and `T+55` usage establishes a mission-relative mass-properties **reference-state/epoch lineage**, with the reference label distinct from any separately documented generation/load time.
 
 ### Boundary
 
-The report supports interpreting `T+55` as a mass-properties basis associated with approximately mission time +55 hours. It does not define whether that label means an exact 55:00:00 GET state, a nominal calculation epoch, deck-generation time, or a propagated state referenced to that mission time. It also does not provide the deck fields, mass/CG values, or derivation of the final P30 weights.
+The report supports interpreting `T+55` as a mass-properties reference state/epoch associated with approximately mission time +55 hours. It rules out simple deck-generation/loading time as the meaning of the label. It does not define whether the reference means an exact 55:00:00 GET state, a nominal/scheduled epoch, or a propagated state referenced to that mission time. It also does not provide the deck fields, mass/CG values, or derivation of the final P30 weights.
 
 ## NASA MSC Internal Note 71-FM-214 — Skylab RTCC Mass Properties System Requirements
 
@@ -39,7 +40,7 @@ The report supports interpreting `T+55` as a mass-properties basis associated wi
 
 ### Boundary
 
-This source establishes a safe Apollo-era **architectural** model for mass-properties state, not the Apollo 13/H-2 deck contents. It does not prove that `T+55` was itself a propellant-depletion table, identify which temporary/permanent tables H-2 used, define the precise `T+N` epoch convention, or map the H-2 deck to the final P30 weights.
+This source establishes a safe Apollo-era **architectural** model for mass-properties state, not the Apollo 13/H-2 deck contents. It does not prove that `T+55` was itself a propellant-depletion table, identify which temporary/permanent tables H-2 used, define the precise `T+N` reference-epoch convention, or map the H-2 deck to the final P30 weights.
 
 ## Apollo 10 — Operational Support Plan for the Real-Time Auxiliary Computing Facility, Flight Annex
 
@@ -78,16 +79,19 @@ For historical PC+2 validation, keep separate:
 1. physical spacecraft mass/CG;
 2. mission-control mass-properties state/deck;
 3. module-level contributions and propellant-depletion state/tables within that computational layer;
-4. mission-relative deck epoch label and any separately documented generation/update timestamp;
-5. maneuver targeting/P30 weight values;
-6. controller-visible trim/trajectory products.
+4. mission-relative reference-epoch label;
+5. actual generation/update/load timestamp when separately documented;
+6. maneuver targeting/P30 weight values;
+7. controller-visible trim/trajectory products.
 
 Do not label the documented `62480 lb` CSM and `33452 lb` LM P30 values as exact physical ignition masses until H-2-specific deck semantics or equivalent calculation records establish that relationship.
 
 ## Next archival targets
 
-The broad question of whether `T+55` is time-related is now closed by the Apollo 13 Flight Dynamics narrative, and the general Apollo RTCC mass-properties architecture is now bounded by MSC-IN-71-FM-214. Prioritize mission-specific sources matching combinations of:
+The broad question of whether `T+55` is time-related is closed, and research note 145 now also closes the possibility that the label merely denotes the deck-generation/loading time. The general Apollo RTCC mass-properties architecture is bounded by MSC-IN-71-FM-214.
 
-`Apollo 13`, `H-2`, `RTCC`, `RTACF`, `ACF`, `mass properties`, `LM burn`, `T+55`, `T+25`, `T+6`, `trim`, `P30`, `weight-CG`, `depletion table`, `temporary table`, `permanent table`, `deck`.
+Prioritize mission-specific sources matching combinations of:
 
-Highest-value recoveries would be H-2 RTCC/Flight Dynamics requirements, mass-property deck definitions/listings, processor input descriptions, or maneuver-support worksheets that define the precise `T+N` epoch convention and bridge the documented module/depletion-table architecture to the actual `T+55` deck and final PC+2 solution.
+`Apollo 13`, `H-2`, `RTCC`, `RTACF`, `ACF`, `mass properties`, `LM burn`, `T+55`, `T+25`, `T+6`, `trim`, `P30`, `weight-CG`, `reference epoch`, `depletion table`, `temporary table`, `permanent table`, `deck`.
+
+Highest-value recoveries would be H-2 RTCC/Flight Dynamics requirements, mass-property deck definitions/listings, processor input descriptions, or maneuver-support worksheets that define the precise `T+N` reference-epoch convention and bridge the documented module/depletion-table architecture to the actual `T+55` deck and final PC+2 solution.
