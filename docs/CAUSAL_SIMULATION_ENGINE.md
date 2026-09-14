@@ -325,7 +325,7 @@ This layer is implemented in `causal_translational_model.py`. It contains no Ear
 - invalid observations may remain visible but are explicitly flagged;
 - no Apollo/MSFN/RTCC tracking constants are embedded.
 
-Implemented in `tracking_observation.py`; see `docs/models/TRACKING_OBSERVATION_PROOF.md`.
+Implemented in `tracking_observation.py`; see `docs/models/TRACKING_OBSERVATION_PROOF.md`. The facilitator validation API now exposes the combined synthetic chain through `POST /api/admin/model-proof/trajectory-tracking`.
 
 ### Level 5 — observation chain
 
