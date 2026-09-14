@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from apollo_mission_control.model_profiles import (  # noqa: E402
+    assess_model_readiness,
     discover_model_profiles,
     get_model_profile,
     load_model_profile_record,
@@ -34,6 +35,46 @@ class ModelProfileTests(unittest.TestCase):
             "unresolved",
         )
         self.assertGreater(profile.source_count, 0)
+
+    def test_readiness_is_scenario_specific_and_explicit(self):
+        profile = get_model_profile("apollo13_h2_dynamics_partial")
+        readiness = assess_model_readiness(
+            profile,
+            (
+                "mass_properties",
+                "propulsion",
+                "translational_dynamics",
+                "tracking_observation",
+            ),
+        )
+
+        self.assertFalse(readiness.historical_validation_ready)
+        self.assertEqual(readiness.missing_domains, ())
+        self.assertEqual(
+            readiness.unvalidated_domains,
+            (
+                "mass_properties",
+                "propulsion",
+                "translational_dynamics",
+                "tracking_observation",
+            ),
+        )
+        self.assertEqual(readiness.domain_statuses["propulsion"], "partial")
+        self.assertEqual(
+            readiness.domain_statuses["translational_dynamics"],
+            "unresolved",
+        )
+
+    def test_readiness_reports_missing_required_domain(self):
+        profile = get_model_profile("apollo13_h2_dynamics_partial")
+        readiness = assess_model_readiness(
+            profile,
+            ("propulsion", "not_in_profile"),
+        )
+
+        self.assertFalse(readiness.historical_validation_ready)
+        self.assertEqual(readiness.missing_domains, ("not_in_profile",))
+        self.assertEqual(readiness.domain_statuses["not_in_profile"], "missing")
 
     def test_unknown_profile_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "unknown model_profile_id"):

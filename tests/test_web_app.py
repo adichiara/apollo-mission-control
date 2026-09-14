@@ -24,6 +24,13 @@ class WebAppTests(unittest.TestCase):
             response.json()["model_validation_state"],
             "not_historically_validated",
         )
+        self.assertFalse(
+            response.json()["model_readiness"]["historical_validation_ready"]
+        )
+        self.assertIn(
+            "propulsion",
+            response.json()["model_readiness"]["unvalidated_domains"],
+        )
         self.assertEqual(response.json()["runtime_adapter"], "pc2_v1")
         self.assertIn("mission_control_core", response.json()["runtime_capabilities"])
         self.assertIn("pc2_delta_p", response.json()["runtime_capabilities"])
@@ -55,6 +62,17 @@ class WebAppTests(unittest.TestCase):
         self.assertEqual(pc2["scenario_class"], "historical_flight_reconstruction")
         self.assertTrue(pc2["default"])
         self.assertTrue(pc2["executable"])
+        self.assertFalse(
+            pc2["model_readiness"]["historical_validation_ready"]
+        )
+        self.assertEqual(
+            pc2["model_readiness"]["domain_statuses"]["propulsion"],
+            "partial",
+        )
+        self.assertEqual(
+            pc2["model_readiness"]["domain_statuses"]["tracking_observation"],
+            "unresolved",
+        )
 
         created = self.client.post(
             "/api/session/create?scenario_id=apollo13_pc2_nominal"
@@ -84,6 +102,18 @@ class WebAppTests(unittest.TestCase):
         self.assertEqual(
             status.json()["model_validation_state"],
             "not_historically_validated",
+        )
+        self.assertFalse(
+            status.json()["model_readiness"]["historical_validation_ready"]
+        )
+        self.assertEqual(
+            status.json()["model_readiness"]["required_domains"],
+            [
+                "mass_properties",
+                "propulsion",
+                "translational_dynamics",
+                "tracking_observation",
+            ],
         )
 
 

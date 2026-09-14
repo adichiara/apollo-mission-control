@@ -23,6 +23,15 @@ class ScenarioCatalogTests(unittest.TestCase):
         self.assertEqual(record.runtime_adapter, "pc2_v1")
         self.assertEqual(record.mission_profile_id, "apollo13_h2")
         self.assertEqual(record.model_profile_id, "apollo13_h2_dynamics_partial")
+        self.assertEqual(
+            record.required_model_domains,
+            (
+                "mass_properties",
+                "propulsion",
+                "translational_dynamics",
+                "tracking_observation",
+            ),
+        )
         self.assertEqual(record.scenario_class, "historical_flight_reconstruction")
         self.assertGreater(record.source_count, 0)
 
@@ -46,6 +55,7 @@ class ScenarioCatalogTests(unittest.TestCase):
                 "runtime_adapter": "test_adapter",
                 "mission_profile_id": "test_profile",
                 "model_profile_id": "test_model_profile",
+                "required_model_domains": ["test"],
                 "start_get_s": 0,
                 "start_get_hms": "00:00:00",
                 "end_target_get_hms": "00:01:00",
@@ -71,6 +81,7 @@ class ScenarioCatalogTests(unittest.TestCase):
                         "scenario_class": "test",
                         "mission_profile_id": "test_profile",
                         "model_profile_id": "test_model_profile",
+                        "required_model_domains": ["test"],
                         "start_get_s": 0,
                         "start_get_hms": "00:00:00",
                         "end_target_get_hms": "00:01:00",

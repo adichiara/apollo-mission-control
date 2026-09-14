@@ -67,7 +67,7 @@ Compact-role implementation preserves original station identities end to end:
 `player → exact original station set → HTTP join/rejoin → bundled station-scoped snapshots → browser substation navigation → station-qualified readiness/actions/audit provenance`
 
 
-A distinct model-profile catalog now separates historical mission metadata from numerical-model readiness. Scenarios reference a `model_profile_id`; the initial Apollo 13 profile marks mass properties and propulsion as partial and translational/tracking historical configuration as unresolved. No unresolved constants are promoted merely to satisfy configuration.
+A distinct model-profile catalog now separates historical mission metadata from numerical-model readiness. Scenarios now also declare `required_model_domains`, allowing numerical historical readiness to be evaluated per scenario rather than globally. Scenarios reference a `model_profile_id`; the initial Apollo 13 profile marks mass properties and propulsion as partial and translational/tracking historical configuration as unresolved. No unresolved constants are promoted merely to satisfy configuration.
 
 ## Phase 5 — Mission Control data path
 

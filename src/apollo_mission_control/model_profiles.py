@@ -158,3 +158,61 @@ def get_model_profile(
         if record.model_profile_id == requested:
             return record
     raise ValueError(f"unknown model_profile_id: {requested}")
+
+
+@dataclass(frozen=True)
+class ModelReadinessAssessment:
+    required_domains: tuple[str, ...]
+    domain_statuses: dict[str, str]
+    missing_domains: tuple[str, ...]
+    unvalidated_domains: tuple[str, ...]
+    historical_validation_ready: bool
+
+    def to_public_dict(self) -> dict[str, object]:
+        return {
+            "required_domains": list(self.required_domains),
+            "domain_statuses": dict(self.domain_statuses),
+            "missing_domains": list(self.missing_domains),
+            "unvalidated_domains": list(self.unvalidated_domains),
+            "historical_validation_ready": self.historical_validation_ready,
+        }
+
+
+def assess_model_readiness(
+    profile: ModelProfileRecord,
+    required_domains: list[str] | tuple[str, ...],
+) -> ModelReadinessAssessment:
+    normalized: list[str] = []
+    for raw in required_domains:
+        name = str(raw).strip()
+        if not name:
+            raise ValueError("required model domains must be non-empty strings")
+        if name not in normalized:
+            normalized.append(name)
+
+    if not normalized:
+        raise ValueError("at least one required model domain must be supplied")
+
+    statuses: dict[str, str] = {}
+    missing: list[str] = []
+    unvalidated: list[str] = []
+
+    for name in normalized:
+        domain = profile.domains.get(name)
+        if domain is None:
+            statuses[name] = "missing"
+            missing.append(name)
+            unvalidated.append(name)
+            continue
+
+        statuses[name] = domain.status
+        if domain.status != "validated":
+            unvalidated.append(name)
+
+    return ModelReadinessAssessment(
+        required_domains=tuple(normalized),
+        domain_statuses=statuses,
+        missing_domains=tuple(missing),
+        unvalidated_domains=tuple(unvalidated),
+        historical_validation_ready=not unvalidated,
+    )
