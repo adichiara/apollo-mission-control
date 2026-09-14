@@ -347,7 +347,7 @@ The reusable resource, electrical, and observation layers are now exercised in o
 
 The chain uses an explicit `ResourceElectricalSourceRule` coupling with caller-supplied operating threshold/provenance. A depletion outcome is therefore propagated through model state rather than selected by a scenario branch. Hardware/source availability remains distinct from resource sufficiency.
 
-See `docs/models/RESOURCE_POWER_OBSERVATION_CHAIN.md`.
+See `docs/models/RESOURCE_POWER_OBSERVATION_CHAIN.md`. The facilitator validation API exposes independent resource/electrical proofs plus the composed chain; the composed endpoint does not accept a direct electrical-source availability override.
 
 ## Source and validation requirements
 
