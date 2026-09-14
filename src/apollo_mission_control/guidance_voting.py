@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from itertools import combinations
+from math import isfinite
 from typing import Iterable, Mapping
 
 from .guidance_crosscheck import GuidanceObservation
@@ -42,11 +43,15 @@ class GuidanceVotingConfig:
             if not field:
                 raise ValueError("voting field must not be empty")
             tolerance = float(raw_tolerance)
+            if not isfinite(tolerance):
+                raise ValueError(f"tolerance for {field} must be finite")
             if tolerance < 0.0:
                 raise ValueError(f"tolerance for {field} must be non-negative")
             tolerances[field] = tolerance
 
         max_time = float(self.max_time_separation_s)
+        if not isfinite(max_time):
+            raise ValueError("max_time_separation_s must be finite")
         if max_time < 0.0:
             raise ValueError("max_time_separation_s must be non-negative")
 
