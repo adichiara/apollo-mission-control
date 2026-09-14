@@ -32,6 +32,23 @@ class FacilitatorAuthorityTests(unittest.TestCase):
             )
             self.assertEqual(joined.status_code, 200)
 
+            denied_model = self.client.post(
+                "/api/admin/model-proof/dps-burn",
+                json={
+                    "initial_mass_kg": 100.0,
+                    "dry_mass_kg": 50.0,
+                    "specific_impulse_s": 300.0,
+                    "segments": [
+                        {
+                            "duration_s": 1.0,
+                            "thrust_n": 10.0,
+                            "direction": [1.0, 0.0, 0.0],
+                        }
+                    ],
+                },
+            )
+            self.assertEqual(denied_model.status_code, 401)
+
             denied_start = self.client.post("/api/session/start")
             self.assertEqual(denied_start.status_code, 401)
             started = self.client.post("/api/session/start", headers=self.headers)

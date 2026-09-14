@@ -17,6 +17,12 @@ from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 
+from .causal_dps_model import (
+    BurnSegment,
+    DPSModelConfig,
+    ManeuverState,
+    simulate_dps_maneuver,
+)
 from .crew_response import (
     apply_session_engine_off_response,
     command_dps_shutdown_from_callout,
@@ -113,6 +119,32 @@ class CrewShutdownReportRequest(BaseModel):
 
 class EngineOffResponseRequest(BaseModel):
     cause: str = Field(default="crew_stop_pushbutton", min_length=1, max_length=128)
+
+
+class BurnSegmentRequest(BaseModel):
+    duration_s: float = Field(ge=0.0, le=7200.0)
+    thrust_n: float = Field(ge=0.0, le=1_000_000.0)
+    direction: list[float] = Field(min_length=3, max_length=3)
+
+
+class DPSModelProofRequest(BaseModel):
+    initial_time_s: float = 0.0
+    initial_mass_kg: float = Field(gt=0.0, le=1_000_000.0)
+    dry_mass_kg: float = Field(ge=0.0, le=1_000_000.0)
+    initial_velocity_m_s: list[float] = Field(
+        default_factory=lambda: [0.0, 0.0, 0.0],
+        min_length=3,
+        max_length=3,
+    )
+    specific_impulse_s: float = Field(gt=0.0, le=10_000.0)
+    max_step_s: float = Field(default=0.25, gt=0.0, le=60.0)
+    applicability: str = Field(
+        default="generic model proof; not mission validated",
+        min_length=1,
+        max_length=500,
+    )
+    provenance: list[str] = Field(default_factory=list, max_length=20)
+    segments: list[BurnSegmentRequest] = Field(min_length=1, max_length=50)
 
 
 def _require_session() -> PC2Session:
@@ -470,6 +502,40 @@ def dps_engine_off_response(request: EngineOffResponseRequest) -> dict[str, Any]
                 cause=request.cause,
             )
         )
+
+
+@app.post(
+    "/api/admin/model-proof/dps-burn",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def dps_burn_model_proof(request: DPSModelProofRequest) -> dict[str, object]:
+    """Run the mission-neutral Level-1 burn model from explicit caller inputs."""
+
+    result = _domain_call(
+        lambda: simulate_dps_maneuver(
+            ManeuverState(
+                time_s=request.initial_time_s,
+                mass_kg=request.initial_mass_kg,
+                velocity_m_s=tuple(request.initial_velocity_m_s),
+            ),
+            [
+                BurnSegment(
+                    duration_s=segment.duration_s,
+                    thrust_n=segment.thrust_n,
+                    direction=tuple(segment.direction),
+                )
+                for segment in request.segments
+            ],
+            DPSModelConfig(
+                specific_impulse_s=request.specific_impulse_s,
+                dry_mass_kg=request.dry_mass_kg,
+                max_step_s=request.max_step_s,
+                applicability=request.applicability,
+                provenance=tuple(request.provenance),
+            ),
+        )
+    )
+    return result.to_dict()
 
 
 @app.get("/api/session/audit", dependencies=[Depends(_facilitator_guard)])
