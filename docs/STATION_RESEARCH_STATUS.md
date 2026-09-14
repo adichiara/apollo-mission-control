@@ -20,7 +20,7 @@ Purpose: track how far each Apollo 13-era station has been reconstructed and pre
 | GUIDO | B | `APOLLO13_GUIDO.md` | GUIDO report + LUMINARY 1C + 1123/1137 provenance + FP7 DEDA/AEA telemetry evidence | exact telemetry-to-MSK selection / RTCC transforms + console access |
 | EECOM | **A** | `APOLLO13_EECOM.md` | official console diagram + two real display formats | full display catalog / keyboard layouts |
 | GNC | B | `APOLLO13_GNC.md` | GNC report + earlier CRT continuity lead | 683 field transcription / source mapping |
-| TELMU | B | `APOLLO13_TELMU.md` | TELMU report, consumables/power chronology | exact LM systems displays |
+| TELMU | B | `APOLLO13_TELMU.md` | TELMU report, consumables/power chronology, H-2 display-system implementation provenance | exact H-2 LM systems display/loading |
 | CONTROL | B | `APOLLO13_CONTROL.md` | CONTROL report + 1123/1137 layouts + LGC/PCM/AEA provenance | exact telemetry-to-MSK selection / RTCC transforms + console workflow |
 | INCO | B | `APOLLO13_INCO.md` | INCO report + comms paper; MSK 1475 known | actual look-angle/command display layouts |
 | PROCEDURES | B | `APOLLO13_PROCEDURES.md` | Procedures report; FCOH; MSK 1503 known | console/request/display workflow |
@@ -128,7 +128,6 @@ Further historical reconstruction continues when a selected scenario, implementa
 
 ASPO 45 pages are accessible and inspected. MSK 1137 has a normalized Apollo 13 definition-group inventory and verified differences from Apollo 11. See research notes 029–031. This advances display evidence without resolving full console configuration, access, refresh behavior, or operational revisions; maturity ratings remain unchanged.
 
-
 ## 2026-09-11 — LM CRT provenance pass
 
 R-567 Rev. 8 has now been mapped against the Apollo 13 LM CRT evidence. This establishes direct LGC origins for many MSK 1123/1137 field families and, equally importantly, identifies fields that must be ground-derived or sourced from non-LGC telemetry.
@@ -136,7 +135,6 @@ R-567 Rev. 8 has now been mapped against the Apollo 13 LM CRT evidence. This est
 The strongest new result is the landing-radar chain: the LGC downlink sends time-tagged antenna-axis data one velocity component at a time, while MSK 1137 presents stable-member velocity components and guidance-comparison residuals. Exact RTCC/ground transformation logic is therefore now a high-priority research target.
 
 See research note 032. Maturity ratings remain unchanged at B because display access, ground transforms, non-LGC telemetry provenance, and console workflow are not yet fully reconstructed.
-
 
 ## 2026-09-11 — MSK 1137 non-LGC telemetry pass
 
@@ -153,7 +151,6 @@ CONTROL remains maturity B: the provenance picture is materially better, but exa
 
 See research note 034.
 
-
 ## 2026-09-11 — MSK 1123 provenance pass
 
 Research note 035 begins the same field-provenance treatment for Apollo 13 MSK 1123 that notes 032–034 established for 1137.
@@ -161,7 +158,6 @@ Research note 035 begins the same field-provenance treatment for Apollo 13 MSK 1
 The key result is that 1123 is also a composite Mission Control product. It combines LGC/PGNS downlink values, PCM control measurements, AGS/AEA information, radar data, propulsion state, and ground context. Apollo telemetry routing tables explicitly tie RGA rate channels, attitude-error channels, and selected APS/RCS measurements to 1123.
 
 GUIDO and CONTROL remain at B: the display's source architecture is substantially clearer, but mission-specific AGS Flight Program 7 mapping, exact LM-7 PCM routing/calibration, ground transformations, station access, and refresh behavior remain unresolved.
-
 
 ## 2026-09-11 — AGS Flight Program 7 operational pass
 
@@ -177,7 +173,6 @@ This narrows the AGS gap from “what did Flight Program 7 expose?” to the mor
 
 GUIDO and CONTROL remain maturity B because that telemetry/display path, station access, and update behavior are still incomplete.
 
-
 ## 2026-09-11 — AGS telemetry / RTCC processing pass
 
 Research note 037 separates the AEA's ground telemetry stream from the crew DEDA interface and documents the mission-era LM-7 handbook's dedicated AEA telemetry-word-list table.
@@ -188,7 +183,6 @@ The Apollo 13 Mission Operations Report adds a particularly important real-world
 
 This confirms that ground-processing validity must be modeled separately from spacecraft/telemetry validity. Station maturity remains unchanged.
 
-
 ## 2026-09-11 — FP7 telemetry continuity matrix
 
 Research notes 038–039 now constrain the missing Apollo 13 AEA telemetry list much more tightly.
@@ -196,7 +190,6 @@ Research notes 038–039 now constrain the missing Apollo 13 AEA telemetry list 
 The surviving FP6 and FP8 source listings both place their 50-word telemetry block at octal addresses **0325–0406**. Their symbols agree at 49 of 50 positions; address **0371** differs. The Apollo 13 G&N Dictionary independently supplies direct or partial mission-specific meaning for 25 of those 50 candidate addresses, including navigation vectors, time, velocity, selector state, and delta-V monitor words.
 
 This is still **not** treated as a certified Apollo 13 Table 2.1-7. The remaining authority target is the February 1970 LM-7 handbook telemetry table. GUIDO/CONTROL maturity remains B.
-
 
 ## 2026-09-11 — AGS direction-cosine attitude path
 
@@ -206,7 +199,6 @@ FP6 and FP8 source listings both show six telemetered direction cosines (X-body 
 
 The exact FP7 Table 2.1-7 identifiers and RTCC conversion equations remain unresolved. GUIDO/CONTROL maturity remains B.
 
-
 ## 2026-09-11 — AGS delta-V interface pass
 
 Research note 041 separates the AEA's telemetered delta-V accumulation from the crew DEDA readout path.
@@ -215,20 +207,17 @@ The telemetry block carries VD1X/Y/Z at 0404–0406, while Apollo 13 DEDA 470–
 
 This removes another potential false simplification: MSK 1123 AGS DEL VEL must not be implemented as a mirror of the crew's current DEDA display. Exact CRT routing remains unresolved; maturity stays B.
 
-
 ## 2026-09-11 — AGS ullage provenance pass
 
 Research note 042 separates the AGS ullage measurement, threshold test, consecutive-cycle counter, completion criterion, and controller-visible field.
 
 This removes another ambiguity in MSK 1123: its AGS ULL field is in velocity units and therefore is not simply the MU8 counter or an ullage-acquired Boolean. Exact field calculation/routing remains unresolved; GUIDO/CONTROL maturity stays B.
 
-
 ## 2026-09-11 — MSK 1123 DEDA telemetry pass
 
 Research note 043 ties the DEDA portion of MSK 1123 to explicit AEA telemetry variables: readout-mode flag, DEDA data, clear-mode flag, and DEDA address.
 
 This is another piece of the 1123 page that can now be implemented from a historically separated source path rather than by mirroring a crew display. Exact Apollo 13 masks/formatting and FP7 telemetry IDs remain unresolved; GUIDO/CONTROL remain maturity B.
-
 
 ## 2026-09-11 — consolidated MSK 1123 AGS field matrix
 
@@ -238,7 +227,6 @@ Several rows now have strong provenance (AGS time, RGA rates, AGS attitude, AGS 
 
 The main research bottleneck has shifted from “what does the page contain?” to **exact FP7 telemetry membership and RTCC/display transformation rules**. GUIDO/CONTROL remain at B.
 
-
 ## 2026-09-11 — MSK 1123 velocity-row semantics and ground-format context
 
 Research note 045 separates five adjacent velocity-related rows using the Apollo 11/12 AC/Delco display definitions: **AGS VEL** (indicated velocity), **LGC DEL VEL** (two-second PIPA output), **AGS DEL VEL** (measured velocity), **AGS ULL** (ullage measurement), and **ACT VEL** (accumulated velocity along thrust). The older display definitions also constrain their historical precision without proving that the Apollo 13 masks were unchanged.
@@ -246,7 +234,6 @@ Research note 045 separates five adjacent velocity-related rows using the Apollo
 A January 1970 MIT Instrumentation Laboratory report independently reproduces the 1123-style page as a **Typical Data Format for Ground Consoles**, including the AEA/LGC/PCM header and the same velocity rows. This strengthens the evidence that the page is a composite ground-monitoring product rather than a direct mirror of a single onboard source.
 
 The new evidence does **not** identify the exact Apollo 13 FP7 telemetry word or RTCC transformation feeding AGS VEL / DEL VEL / ULL, nor does it establish that the AEA/LGC/PCM header boxes were dynamic validity indicators. GUIDO and CONTROL therefore remain at maturity B.
-
 
 ## 2026-09-11 — AEA telemetry-word-list recovery
 
@@ -256,13 +243,11 @@ The telemetry list independently confirms distinct products for present LM inert
 
 This removes “what velocity products are actually available in the AEA telemetry stream?” as the main uncertainty. The remaining high-value problem is **which telemetry product and ground transformation feeds each MSK 1123 row**. GUIDO and CONTROL remain maturity **B** because controller-facing selection, RTCC transformation, station access, and refresh behavior remain incomplete.
 
-
 ## 2026-09-12 — AGS ullage test narrowed
 
 Research note 047 adds primary AGS specification evidence that ullage qualification is based on **accumulated +X-axis velocity increment over each 2-second computer cycle**, with the threshold required for three consecutive cycles. The inspected specification states a **0.2 ft/s** threshold; a later LM handbook expresses the equivalent condition as average +X acceleration greater than **0.1 ft/s²** over the same cycle.
 
 That makes a velocity-valued quantity in the two-second ullage-test chain the strongest current physical candidate behind the controller's **AGS ULL** measurement. It still does not identify the exact telemetry word or RTCC/display transformation. **AGS ULL** and **ACT VEL** remain distinct unresolved parameters, and GUIDO/CONTROL remain maturity **B**.
-
 
 ## 2026-09-12 — PC+2 vertical-slice initialization readiness
 
@@ -281,7 +266,6 @@ Scenario-specific readiness now includes:
 
 All affected stations remain at their existing maturity grades. The next station research should be driven by the minimum PC+2 player-facing product set rather than by generic console completeness.
 
-
 ## 2026-09-12 — PC+2 ullage/throttle command chronology
 
 Research note 051 freezes the first-slice procedure/command sequence relevant to CONTROL and CAPCOM: manual two-jet ullage begins at **TIG−10 s**, minimum throttle begins at ignition, 40-percent throttle is commanded at **TIG+5 s**, and maximum throttle is commanded after the documented 21-second 40-percent segment.
@@ -289,7 +273,6 @@ Research note 051 freezes the first-slice procedure/command sequence relevant to
 The crew's later 40-percent and 100-percent voice reports remain separate communication events. This is important for station modeling because CONTROL should not receive a perfect throttle-state transition merely because the crew procedure commanded one; physical engine response, telemetry indication and crew report are different information layers.
 
 This improves scenario fidelity but does **not** resolve exact CONTROL CRT timing, telemetry-to-display routing, or detailed physical engine-response dynamics. CONTROL therefore remains maturity **B**.
-
 
 ## 2026-09-12 — PC+2 controller-product projection and shutdown-rule boundary
 
@@ -311,3 +294,16 @@ The PC+2 Mission Rules have also been converted into a **partial derived audit e
 A primary-source wording conflict is now logged rather than normalized: the Mission Operations Report places the startup-transient exception with the attitude-rate criterion, while the crew readback places it with attitude error. The exact scope remains unresolved.
 
 No station is promoted: this is implementation of documented information boundaries, not new exact console/display evidence. CONTROL, GUIDO, FIDO, RETRO, TELMU, INCO, FLIGHT and CAPCOM remain maturity **B**.
+
+## 2026-09-14 — H-2 Display System / PHO-TR155 implementation boundary
+
+Research note **124** adds mission-specific Philco evidence that the **Mission H-2 Display System was configured in accordance with PHO-TR155 Revision C**, that Revision C was implemented in March 1970, and that **no equipment configuration changes were necessary** for that implementation.
+
+For TELMU this narrows the unresolved display problem without promoting maturity:
+
+- the Apollo 13/H-2 operational display configuration was real and implemented before flight;
+- Revision C does not justify inventing new physical TELMU display hardware, monitor count, or modules;
+- source-backed inverter measurements `GC0071V` / `GC0155F` may continue to appear in a project-rendered TELMU product;
+- exact H-2 indicator/module position, CRT/display request, DRK/MSK workflow, cadence, precision, latency, and console labeling remain unresolved until Revision C, data-pack Revision N, or equivalent loading records are recovered.
+
+TELMU therefore remains maturity **B**. The new evidence strengthens configuration provenance, not exact station reconstruction.
