@@ -40,12 +40,18 @@ def record_crew_receipt(
 ) -> dict[str, Any]:
     """Record explicit crew receipt/readback state without commanding the engine."""
     item = _transmitted_shutdown_callout(session, item_id)
+    receipt = session.simulated_crew.receive_instruction(
+        item,
+        get_s=float(session.state.get_s),
+    )
     event = session._audit(
         "crew_capcom_item_received",
         crew_id,
         item_id=item.item_id,
         action=item.action,
         response=response,
+        actor_acknowledgement=receipt.acknowledgement,
+        rule_provenance=receipt.provenance,
     )
     return asdict(event)
 
@@ -59,22 +65,19 @@ def command_dps_shutdown_from_callout(
 ) -> OperationalAction:
     """Record the crew DPS shutdown command after an explicit transmitted call."""
     item = _transmitted_shutdown_callout(session, item_id)
-    receipt_exists = any(
-        event.kind == "crew_capcom_item_received"
-        and event.details.get("item_id") == item_id
-        for event in session.audit_log
+    crew_action = session.simulated_crew.perform_supported_action(
+        item,
+        get_s=float(session.state.get_s),
     )
-    if not receipt_exists:
-        raise ValueError("Crew receipt must be recorded before the shutdown command")
 
     action = OperationalAction(
         action_id=f"crew-dps-shutdown-{item_id}",
-        get_s=float(session.state.get_s),
+        get_s=crew_action.get_s,
         actor=crew_id,
-        action="command_dps_shutdown",
+        action=crew_action.action,
         parameters={
             "capcom_item_id": item_id,
-            "criterion": item.parameters.get("criterion"),
+            **crew_action.parameters,
         },
         provenance=provenance,
     )
@@ -86,6 +89,8 @@ def command_dps_shutdown_from_callout(
         action_id=action.action_id,
         criterion=item.parameters.get("criterion"),
         provenance=provenance,
+        simulated_crew_action_id=crew_action.action_id,
+        rule_provenance=crew_action.provenance,
     )
     return action
 
