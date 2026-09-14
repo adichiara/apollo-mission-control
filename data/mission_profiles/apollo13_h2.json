@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1-research-profile",
+  "mission_profile_id": "apollo13_h2",
+  "mission": "Apollo 13",
+  "mission_designation": "H-2",
+  "status": "reference technical baseline; partial mission profile",
+  "launch_vehicle": "AS-508",
+  "spacecraft": {
+    "csm": "CSM-109",
+    "lm": "LM-7"
+  },
+  "controller_nomenclature": {
+    "lm_electrical_environmental_emu": "TELMU",
+    "lm_control": "CONTROL"
+  },
+  "ground_configuration_reference": "AS-508 MCC/MSFN Mission Configuration/System Description",
+  "sources": [
+    "NASA Flight Control Division, Mission Operations Report — Apollo 13, 1970-04-28",
+    "NASA, AS-508 MCC/MSFN Mission Configuration/System Description, NTRS 19700024253",
+    "Report of Apollo 13 Review Board, Appendix A — MCC Activities"
+  ],
+  "deferred": [
+    "complete mission-wide station/display mapping",
+    "complete mission-wide RTCC/CCATS software configuration",
+    "full spacecraft and telemetry configuration outside selected scenarios"
+  ]
+}
