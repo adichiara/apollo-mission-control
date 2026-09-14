@@ -125,6 +125,9 @@ class BurnSegmentRequest(BaseModel):
     duration_s: float = Field(ge=0.0, le=7200.0)
     thrust_n: float = Field(ge=0.0, le=1_000_000.0)
     direction: list[float] = Field(min_length=3, max_length=3)
+    end_thrust_n: float | None = Field(default=None, ge=0.0, le=1_000_000.0)
+    specific_impulse_s: float | None = Field(default=None, gt=0.0, le=10_000.0)
+    regime: str = Field(default="regulated", min_length=1, max_length=64)
 
 
 class DPSModelProofRequest(BaseModel):
@@ -523,6 +526,9 @@ def dps_burn_model_proof(request: DPSModelProofRequest) -> dict[str, object]:
                     duration_s=segment.duration_s,
                     thrust_n=segment.thrust_n,
                     direction=tuple(segment.direction),
+                    end_thrust_n=segment.end_thrust_n,
+                    specific_impulse_s=segment.specific_impulse_s,
+                    regime=segment.regime,
                 )
                 for segment in request.segments
             ],
