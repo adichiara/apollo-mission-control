@@ -71,10 +71,12 @@ This catalog separates evidence about how Apollo simulation/training worked from
 ## *Lunar Module Mission Simulator Instructor's Handbook, Volume I — Simulator Description*
 
 - Organization: Grumman / LMS program documentation lineage; exact scan metadata to be captured during extraction.
-- Discovery/catalog context: Virtual AGC document library.
+- Public scan: https://www.ibiblio.org/apollo/Documents/lms_instructors_handbook_vol1.pdf
+- Archive index: https://ibiblio.org/apollo/Documents/
 - Evidence use: simulator subsystem representation, controls/displays, and how individual spacecraft subsystems were simulated.
-- Status: **public digital copy identified in Virtual AGC library; extraction target**.
+- Status: **public digital copy located; direct extraction pending**.
 - Architecture relevance: likely complements the technical-addendum equations with subsystem-level functional descriptions.
+- Identity boundary: this is a separate LMS source; do not conflate it with the 1965 AMS Volume II scan.
 
 ## *Lunar Module Mission Simulator Instructors Handbook, Volume II*, LMA790-2-LMS
 
@@ -84,19 +86,21 @@ This catalog separates evidence about how Apollo simulation/training worked from
 - Evidence use: LMS operating/instructor procedures and simulator behavior lineage.
 - Status: handbook lineage independently confirmed by NASA source; exact public scan/sections remain an extraction target.
 
-## North American Aviation — *Apollo Mission Simulator Instructor Handbook*, SM-6T-2-02
+## North American Aviation — *Preliminary Apollo Mission Simulator Instructor Handbook, Volume II: Operation & Utilization*
 
-- Vol. I: *Description*.
-- Vol. II: *Operation and Utilization*.
-- Public transcription/index: Wikisource / Virtual AGC.
+- Document: `SM6T-2-02` / `SID 65-974-2`.
+- Date: 1 July 1965.
+- Contract: NAS 9-150.
+- Public primary-source scan: https://ibiblio.org/apollo/Documents/19730060784_1973060784.pdf
 - Evidence use:
-  - AMS described as simulating spacecraft system performance and flight dynamics through computer-controlled system parameters and dynamics;
-  - instructor station includes Malfunction Insertion Unit;
+  - five operational-program classes: vehicle dynamics, vehicle systems, simulation effects, simulator control, and Mission Simulation Control Center interface;
+  - equations-of-motion outputs feed subsequent inputs and drive onboard, instrument, and visual simulations;
   - manual, preprogrammed, and time-dependent malfunction insertion;
-  - Volume III described as containing complete simulated-malfunction tables;
-  - simulation-output tables described as including **program and/or math-model designators** for each parameter.
-- Architecture relevance: strong route to recovering original simulator model partitioning, output variables, and failure-injection boundaries.
-- Key boundary: early AMS configuration; later Block II/Apollo-13 configuration must be checked before importing details.
+  - physical/system-derived telemetry plus the ability to inject a telemetry malfunction directly;
+  - Volume III described as containing complete simulated-malfunction and simulation-output tables, including program/math-model designators.
+- Architecture relevance: direct primary evidence for causal feedback, simulator model partitioning, output variables, external interfaces, and separate physical/observation failure paths.
+- Key boundaries: this is the **AMS**, not LMS, handbook; it is preliminary initial-configuration material and explicitly not design-requirements data. Later accepted, Block II, and Apollo-13 behavior must be checked before importing details.
+- Detailed extraction: `resources/research/135_public_ams_instructor_handbook_extraction.md`.
 
 ## Virtual AGC document-library continuity
 
@@ -142,6 +146,28 @@ Virtual AGC has continued adding simulator material. Its 2025 additions include 
 - Evidence use: numerical-integration fidelity and timestep sensitivity in the LMS.
 - Status: exact report contents not yet extracted.
 - Key boundary: the title supports only that a 50 ms LMS integration step was studied for its effect on simulated AACS response. It does **not** establish a global LMS timestep or require this project to use 50 ms.
+
+## Modern implementation references — Orbiter and Project Apollo–NASSP
+
+These projects are **not historical Apollo evidence**. They are implementation-review, source-discovery, and potential comparison resources.
+
+### Orbiter
+
+- Repository: https://github.com/orbitersim/orbiter
+- Technical reference: https://github.com/orbitersim/orbiter/blob/main/Doc/Orbiter%20Technical%20Reference/dynamics.tex
+- License: MIT for the core repository.
+- Use: integration methods, timestep/convergence questions, translational/rotational state contracts, and independent trajectory comparisons.
+- Boundary: no dependency or code adoption is currently approved.
+
+### Project Apollo–NASSP
+
+- Project: https://nassp.space/index.php/Main_Page
+- Repository: https://github.com/orbiternassp/NASSP
+- License: GPL-2.0 lineage.
+- Use: implementation reconnaissance, missing-mechanism review, and discovery of primary-document citations.
+- Boundary: do not copy NASSP code or inherit its constants. Reviewed LM DPS code contains explicit approximations and TBD behavior; every candidate equation/value must be traced to a primary source.
+
+Detailed assessment: `resources/research/136_orbiter_nassp_reference_assessment.md`.
 
 ## Apollo Operations Handbooks and subsystem engineering reports
 
