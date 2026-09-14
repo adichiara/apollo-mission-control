@@ -110,11 +110,17 @@ The operational profile rounded as 5 s + 21 s + 235 s totals 261 s, while Flight
 
 The Mission Report's 264 s is consistent with the Flight Dynamics value as a rounded duration.
 
+## Named missing-source lead
+
+Appendix E of the September 1970 *Apollo 13 Mission Report* lists **Apollo 13 Supplement 2 — Descent Propulsion System Final Flight Evaluation** with publication status **Preparation**.
+
+This is the most direct known title for the missing LM-7 performance source. Its listing proves that such a supplement was planned/in preparation at that date; it does **not** prove that a final report was published or survives in a public archive. Current public document indexes reviewed in this pass expose Apollo 13 Supplement 1 but do not expose Supplement 2.
+
 ## Next archival targets
 
 Highest-value sources are now:
 
-1. Apollo 13 / LM-7 DPS final-flight or postflight performance evaluation, if separately archived;
+1. the planned Apollo 13 Mission Report Supplement 2, *Descent Propulsion System Final Flight Evaluation*, or draft/final material traceable to it;
 2. LM-7 engine acceptance/calibration data relevant to thrust, mixture ratio, and Isp;
 3. PC+2 high-speed propulsion telemetry or engineering plots;
 4. detailed DPS pressurization/blowdown equations or simulator-model documentation that can be bridged to LM-7;
