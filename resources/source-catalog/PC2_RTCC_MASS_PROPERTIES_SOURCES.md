@@ -12,13 +12,16 @@
 - critically, those `T-6` products were generated/loaded **by `T-2:46`**, demonstrating that the `T±N` label is not the generation/loading timestamp;
 - a `T+25` RTCC mass-properties run was compared against `T+6` pitch/yaw trims and did not require an update;
 - LM-burn mass-property decks were later updated to `T+55` decks before abort-maneuver work;
-- LM Control initially challenged the PC+2 DPS trim after using premission mass properties;
-- Flight Dynamics considered better in-flight mass-properties data available for the maneuver solution;
-- taken together, the repeated `T-6`, `T+6`, `T+25`, and `T+55` usage establishes a mission-relative mass-properties **reference-state/epoch lineage**, with the reference label distinct from any separately documented generation/load time.
+- at approximately 59 hours GET, a PC+2 block-data pad for a DPS maneuver at 79:30 GET carried a trim that LM Control challenged;
+- LM Control later agreed with the Flight Dynamics data after the report states that LM Control had used **premission mass properties**, which were not the best data available;
+- taken together, the repeated `T-6`, `T+6`, `T+25`, and `T+55` usage establishes a mission-relative mass-properties **reference-state/epoch lineage**, with the reference label distinct from any separately documented generation/load time;
+- the ~59-hour trim dispute establishes that different mass-properties bases could propagate into a controller-visible maneuver product and require cross-console reconciliation.
 
 ### Boundary
 
 The report supports interpreting `T+55` as a mass-properties reference state/epoch associated with approximately mission time +55 hours. It rules out simple deck-generation/loading time as the meaning of the label. It does not define whether the reference means an exact 55:00:00 GET state, a nominal/scheduled epoch, or a propagated state referenced to that mission time. It also does not provide the deck fields, mass/CG values, or derivation of the final P30 weights.
+
+Critically, the report does **not** explicitly identify the accepted Flight Dynamics mass-properties basis in the ~59-hour trim dispute as the `T+55` deck. The chronology is compatible with that interpretation, but it is not source-proven and must remain an open link.
 
 ## NASA MSC Internal Note 71-FM-214 — Skylab RTCC Mass Properties System Requirements
 
@@ -81,17 +84,18 @@ For historical PC+2 validation, keep separate:
 3. module-level contributions and propellant-depletion state/tables within that computational layer;
 4. mission-relative reference-epoch label;
 5. actual generation/update/load timestamp when separately documented;
-6. maneuver targeting/P30 weight values;
-7. controller-visible trim/trajectory products.
+6. provenance/version of the mass-properties basis used for a calculation;
+7. maneuver targeting/P30 weight values;
+8. controller-visible trim/trajectory products and cross-console reconciliation.
 
 Do not label the documented `62480 lb` CSM and `33452 lb` LM P30 values as exact physical ignition masses until H-2-specific deck semantics or equivalent calculation records establish that relationship.
 
 ## Next archival targets
 
-The broad question of whether `T+55` is time-related is closed, and research note 145 now also closes the possibility that the label merely denotes the deck-generation/loading time. The general Apollo RTCC mass-properties architecture is bounded by MSC-IN-71-FM-214.
+The broad question of whether `T+55` is time-related is closed, and research note 145 also closes the possibility that the label merely denotes deck-generation/loading time. Research note 146 establishes that stale premission mass properties could produce a disputed PC+2 trim product, but does not prove that the accepted Flight Dynamics basis was specifically the `T+55` deck. The general Apollo RTCC mass-properties architecture is bounded by MSC-IN-71-FM-214.
 
 Prioritize mission-specific sources matching combinations of:
 
-`Apollo 13`, `H-2`, `RTCC`, `RTACF`, `ACF`, `mass properties`, `LM burn`, `T+55`, `T+25`, `T+6`, `trim`, `P30`, `weight-CG`, `reference epoch`, `depletion table`, `temporary table`, `permanent table`, `deck`.
+`Apollo 13`, `H-2`, `RTCC`, `RTACF`, `ACF`, `mass properties`, `LM burn`, `T+55`, `T+25`, `T+6`, `trim`, `PC+2`, `block data`, `P30`, `weight-CG`, `reference epoch`, `depletion table`, `temporary table`, `permanent table`, `deck`.
 
-Highest-value recoveries would be H-2 RTCC/Flight Dynamics requirements, mass-property deck definitions/listings, processor input descriptions, or maneuver-support worksheets that define the precise `T+N` reference-epoch convention and bridge the documented module/depletion-table architecture to the actual `T+55` deck and final PC+2 solution.
+Highest-value recoveries would be H-2 RTCC/Flight Dynamics requirements, mass-property deck definitions/listings, processor input descriptions, or maneuver-support worksheets that define the precise `T+N` reference-epoch convention and explicitly identify which mass-properties job/deck supplied the accepted ~59-hour PC+2 DPS trim.
