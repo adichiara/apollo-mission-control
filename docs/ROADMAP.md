@@ -46,13 +46,13 @@ For TELMU inverter monitoring, source-backed `GC0071V` / `GC0155F` evidence may 
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** first-playable authoritative model, compact transport/client integration, staged final-load workflow, spacecraft-model boundary, ground-data-processing boundary, and facilitator-driven live nominal/contingency integration validated; multi-human execution remains.
+**Status:** first-playable authoritative model, compact transport/client integration, staged final-load workflow, spacecraft-model boundary, ground-data-processing boundary, facilitator-driven live nominal/contingency integration, propulsion model proof, and generic translational dynamics proof implemented; multi-human execution and historical trajectory validation remain.
 
 Implemented architecture includes station-specific projections, explicit injection/action/communication/decision/physical/evidence layers, `PC2Session`, continuous mission time, readiness/FLIGHT decisions, CAPCOM queue/transmission, audit logging, facilitator authority, browser rejoin, compact station-set ownership, and staged final PC+2 solution/uplink state.
 
 Decision **D-016** remains canonical: GET advances whenever RUNNING; controller decisions do not stop GET; only explicit session pause stops time; ineligible nominal events are missed rather than replayed later.
 
-Decision **D-019** bounds spacecraft physics to sourced decision dependencies. Required causal domains are DPS/maneuver state, guidance/attitude/control state, coarse electrical/equipment availability, communications/uplink/ranging availability, and instrumentation observation integrity. Full-spacecraft emulation is not a first-playable requirement.
+Decision **D-019** bounds spacecraft physics to sourced decision dependencies. Decision **D-021** additionally requires reusable model boundaries rather than treating PC+2 as the simulator's scope. Required causal domains are DPS/maneuver state, guidance/attitude/control state, coarse electrical/equipment availability, communications/uplink/ranging availability, and instrumentation observation integrity. Full-spacecraft emulation is not a first-playable requirement. The current generic translational proof supports point-mass position/velocity propagation with optional caller-supplied central gravity, but does not yet claim an Apollo historical frame, orbit solution, or RTCC-equivalent propagator.
 
 Research note **103** applies the same admission rule to MCC ground systems: MSFN/CCATS/RTCC are represented through decision-relevant availability, quality, routing, and generated-product states. IBM/UNIVAC internals, exact support-console keying, internal message formats, full network routing/geometry, and unsupported delays/failure rates are not first-playable requirements.
 
