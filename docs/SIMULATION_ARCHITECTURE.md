@@ -174,13 +174,15 @@ It deliberately does not infer abort/continue. For the Apollo 11 reference, 1201
 
 The spacecraft crew is part of the authoritative simulation, not a human player role. See Decision D-020.
 
-Initial crew behavior may be deterministic and canned where that is sufficient:
+A mission-neutral deterministic crew actor is now implemented. Scenario/runtime-supplied rules map supported CAPCOM action types to bounded acknowledgements and supported crew operational actions:
 
 `CAPCOM transmission → crew receipt/acknowledgement → supported crew action → spacecraft consequence → crew report/other observations`
 
-These are separate stages. CAPCOM transmission does not automatically mutate spacecraft state, and a crew report is not a direct alias of hidden physical truth.
+These remain separate stages. The actor does not invent response latency, perform physical subsystem mutations, choose procedures, or infer mission decisions. Callers supply authoritative GET for receipt/action; subsystem adapters apply the resulting operational action separately.
 
-Later crew behavior may become more sophisticated only when scenarios require it. The first implementation target is deterministic support for known CAPCOM/crew action types and source-/scenario-bounded response timing/wording.
+The existing PC+2 shutdown-call path now uses this generic actor for receipt/action sequencing while preserving the separate physical DPS response step.
+
+Later crew behavior may become more sophisticated only when scenarios require it. Crew reports remain an observation channel rather than a direct alias of hidden physical truth.
 
 ### 5. Instrumentation and telemetry
 

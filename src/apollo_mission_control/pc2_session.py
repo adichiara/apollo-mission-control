@@ -24,6 +24,7 @@ from .pc2_event_rules import PC2_EVENT_RULES
 from .pc2_nominal import PC2State, SimEvent, apply_event, build_events
 from .scenario_injection import StateInjection, apply_state_injection
 from .session_runtime import SessionStatus
+from .simulated_crew import CrewInstructionRule, SimulatedCrew
 from .shutdown_rules import RuleState, evaluate_pc2_shutdown_rules
 from .telmu_presentation import build_pc2_telmu_presentation
 
@@ -98,6 +99,24 @@ class BundledPlayerSessionSnapshot:
         return asdict(self)
 
 
+def _build_pc2_simulated_crew() -> SimulatedCrew:
+    return SimulatedCrew(
+        crew_id="CREW",
+        rules={
+            "callout_dps_shutdown_criterion": CrewInstructionRule(
+                capcom_action="callout_dps_shutdown_criterion",
+                acknowledgement="received",
+                crew_action="command_dps_shutdown",
+                forwarded_parameters=("criterion",),
+                provenance=(
+                    "Apollo 13 PC+2 ground-call shutdown rule; "
+                    "exact cockpit choreography and response latency unresolved"
+                ),
+            )
+        },
+    )
+
+
 _PRESENTATION_BUILDERS = {
     "CONTROL": build_pc2_control_presentation,
     "GUIDO": build_pc2_guido_presentation,
@@ -125,6 +144,7 @@ class PC2Session:
     player_station_sets: dict[str, tuple[str, ...]] = field(default_factory=dict)
     readiness_reports: list[ReadinessReport] = field(default_factory=list)
     capcom_queue: list[CapcomQueueItem] = field(default_factory=list)
+    simulated_crew: SimulatedCrew = field(default_factory=_build_pc2_simulated_crew)
     audit_log: list[SessionAuditEvent] = field(default_factory=list)
     _audit_sequence: int = 0
     _next_capcom_item_id: int = 1
