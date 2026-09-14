@@ -152,6 +152,12 @@ A mission-neutral coarse electrical model now derives equipment supply state fro
 
 This is a decision-relevant availability model, not a circuit simulator. Battery energy depletion, converters/inverters, detailed protective logic, wiring, voltage behavior, and mission-specific bus topology remain separate layers/configuration work.
 
+### Resource inventory / depletion boundary
+
+A mission-neutral finite-resource model now propagates caller-supplied piecewise consumption/replenishment rates for bounded inventories such as battery energy, propellant-like resources, oxygen, water, or cooling consumables.
+
+It reports remaining quantity, unmet consumption, overflow, and exact configured boundary-hit time. It does not automatically disable equipment or create downstream outcomes. Coupling a depleted resource to electrical, propulsion, ECS, or observation state requires an explicit sourced relationship.
+
 ### Independent guidance cross-check boundary
 
 A mission-neutral comparison model now accepts two independently produced guidance observations, caller-selected fields/tolerances, validity, and freshness constraints. It returns agreement/disagreement/indeterminate plus per-field differences without choosing a hidden-truth source or issuing a mission decision.
