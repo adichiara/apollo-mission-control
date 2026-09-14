@@ -74,6 +74,28 @@ class WebAppTests(unittest.TestCase):
             "unresolved",
         )
 
+        apollo11 = next(
+            item for item in scenarios
+            if item["scenario_id"] == "apollo11_descent_program_alarm_reference"
+        )
+        self.assertEqual(apollo11["mission"], "Apollo 11")
+        self.assertEqual(apollo11["runtime_adapter"], "apollo11_descent_v1")
+        self.assertFalse(apollo11["default"])
+        self.assertFalse(apollo11["executable"])
+        self.assertFalse(
+            apollo11["model_readiness"]["historical_validation_ready"]
+        )
+        self.assertEqual(
+            apollo11["model_readiness"]["domain_statuses"]["guidance_computer"],
+            "partial",
+        )
+
+        unavailable = self.client.post(
+            "/api/session/create?scenario_id=apollo11_descent_program_alarm_reference"
+        )
+        self.assertEqual(unavailable.status_code, 400)
+        self.assertIn("unsupported runtime adapter", unavailable.json()["detail"])
+
         created = self.client.post(
             "/api/session/create?scenario_id=apollo13_pc2_nominal"
         )
@@ -145,6 +167,11 @@ class WebAppTests(unittest.TestCase):
             for item in response.json()
         }
         self.assertIn("apollo13_h2_dynamics_partial", profiles)
+        self.assertIn("apollo11_g_descent_partial", profiles)
+        self.assertEqual(
+            profiles["apollo11_g_descent_partial"]["domains"]["guidance_computer"]["status"],
+            "partial",
+        )
         profile = profiles["apollo13_h2_dynamics_partial"]
         self.assertEqual(profile["mission_profile_id"], "apollo13_h2")
         self.assertEqual(
