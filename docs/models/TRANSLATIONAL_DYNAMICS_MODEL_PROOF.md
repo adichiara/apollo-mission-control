@@ -117,3 +117,12 @@ A scenario may use this model historically only after defining from appropriate 
 - comparison target and acceptance tolerance.
 
 The model provides the reusable causal machinery; mission/scenario profiles provide the historically grounded inputs.
+
+
+## Facilitator validation API
+
+The combined proof endpoint is:
+
+`POST /api/admin/model-proof/trajectory-tracking`
+
+It accepts explicit trajectory, gravity, propulsion, station, and observation inputs and returns both the translational result and the downstream tracking observation. This endpoint is facilitator validation infrastructure, not a player control or historical scenario API.
