@@ -24,6 +24,17 @@ from .crew_response import (
 )
 from .pc2_nominal import load_fixture
 from .pc2_session import PC2Session
+from .propulsion_dynamics import (
+    BurnSegment,
+    PropulsionModel,
+    PropulsionState,
+    Vector3,
+    delta_v_vector,
+    lbf_to_newtons,
+    meters_per_second_to_feet_per_second,
+    pounds_mass_to_kg,
+    run_burn_segments,
+)
 from .realtime_clock import RealtimeSessionClock
 from .scenario_injection import EvidenceClass, StateInjection
 from .session_shutdown_evidence import (
@@ -113,6 +124,27 @@ class CrewShutdownReportRequest(BaseModel):
 
 class EngineOffResponseRequest(BaseModel):
     cause: str = Field(default="crew_stop_pushbutton", min_length=1, max_length=128)
+
+
+class Vector3Request(BaseModel):
+    x: float = 1.0
+    y: float = 0.0
+    z: float = 0.0
+
+
+class BurnSegmentRequest(BaseModel):
+    duration_s: float = Field(ge=0.0, le=7200.0)
+    throttle_fraction: float = Field(ge=0.0, le=1.0)
+    direction: Vector3Request = Field(default_factory=Vector3Request)
+    engine_running: bool = True
+
+
+class PropulsionValidationRequest(BaseModel):
+    initial_mass_lb: float = Field(gt=0.0, le=1_000_000.0)
+    full_thrust_lbf: float = Field(gt=0.0, le=1_000_000.0)
+    specific_impulse_s: float = Field(gt=0.0, le=10_000.0)
+    step_s: float = Field(default=0.1, gt=0.0, le=10.0)
+    segments: list[BurnSegmentRequest] = Field(min_length=1, max_length=32)
 
 
 def _require_session() -> PC2Session:
@@ -206,6 +238,73 @@ def _snapshot_payload(session: PC2Session, player_id: str) -> dict[str, Any]:
 @app.get("/api/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.post(
+    "/api/validation/propulsion",
+    dependencies=[Depends(_facilitator_guard)],
+    tags=["validation"],
+)
+def validate_propulsion(request: PropulsionValidationRequest) -> dict[str, Any]:
+    """Run the Level-1 propulsion model without mutating the live session."""
+    model = PropulsionModel(
+        full_thrust_n=lbf_to_newtons(request.full_thrust_lbf),
+        specific_impulse_s=request.specific_impulse_s,
+    )
+    initial = PropulsionState(
+        elapsed_s=0.0,
+        mass_kg=pounds_mass_to_kg(request.initial_mass_lb),
+    )
+    segments = [
+        BurnSegment(
+            duration_s=segment.duration_s,
+            throttle_fraction=segment.throttle_fraction,
+            thrust_direction=Vector3(
+                segment.direction.x,
+                segment.direction.y,
+                segment.direction.z,
+            ),
+            engine_running=segment.engine_running,
+        )
+        for segment in request.segments
+    ]
+    final = _domain_call(
+        lambda: run_burn_segments(
+            initial,
+            model,
+            segments,
+            step_s=request.step_s,
+        )
+    )
+    dv = delta_v_vector(initial.velocity_m_s, final)
+    return {
+        "model": "level_1_propulsion_delta_v",
+        "scope": (
+            "thrust + propellant mass depletion + vector delta-V only; "
+            "no gravity/orbital propagation or rotational dynamics"
+        ),
+        "initial_mass_lb": request.initial_mass_lb,
+        "final_mass_lb": final.mass_kg / 0.45359237,
+        "propellant_used_lb": final.propellant_used_kg / 0.45359237,
+        "elapsed_s": final.elapsed_s,
+        "accumulated_impulse_n_s": final.accumulated_impulse_n_s,
+        "delta_v_m_s": {"x": dv.x, "y": dv.y, "z": dv.z},
+        "delta_v_fps": {
+            "x": meters_per_second_to_feet_per_second(dv.x),
+            "y": meters_per_second_to_feet_per_second(dv.y),
+            "z": meters_per_second_to_feet_per_second(dv.z),
+        },
+        "delta_v_magnitude_m_s": dv.magnitude(),
+        "delta_v_magnitude_fps": meters_per_second_to_feet_per_second(
+            dv.magnitude()
+        ),
+        "assumptions": [
+            "piecewise-constant thrust magnitude and direction per segment",
+            "ideal mass-flow relationship from thrust and specific impulse",
+            "direction vectors normalized before force integration",
+            "historical Apollo values are caller-supplied and not embedded",
+        ],
+    }
 
 
 @app.post("/api/session/create", dependencies=[Depends(_facilitator_guard)])
