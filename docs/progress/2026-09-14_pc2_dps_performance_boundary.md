@@ -12,7 +12,9 @@ Date: 2026-09-14
   - Apollo 13 vehicle-baseline nominal full thrust `9870 lbf`.
 - Separated those mission-specific facts from general DPS design values such as `10,500 lbf` maximum rated thrust and `305 s` design specific impulse.
 - Recorded startup transient behavior as an explicit historical-model boundary because Apollo 13 high-speed data showed thrust buildup timing could matter operationally.
-- Identified the exact planned missing source: Apollo 13 Mission Report **Supplement 2, Descent Propulsion System Final Flight Evaluation**, listed as `Preparation` in the September 1970 mission report. Publication/survival remains unresolved.
+- Identified the exact missing source: Apollo 13 Mission Report **Supplement 2, Descent Propulsion System Final Flight Evaluation**.
+- Resolved its publication status using later official NASA mission-report tables: **October 1970**.
+- Public copy/report identifier remains unresolved; current Apollo 13 document indexes omit Supplement 2.
 
 ## Consequence
 
