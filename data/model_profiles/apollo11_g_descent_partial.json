@@ -11,7 +11,7 @@
     },
     "backup_guidance": {
       "status": "partial",
-      "note": "PGNS/AGS independent cross-check value is documented operationally and generic independent-observation comparison machinery is implemented; exact Apollo 11 fields, controller-visible values, freshness rules, and comparison tolerances remain unfrozen."
+      "note": "PGNS/AGS independent cross-check value is documented operationally and generic pairwise comparison machinery is implemented; exact Apollo 11 fields, controller-visible values, freshness rules, and comparison tolerances remain unfrozen."
     },
     "landing_radar": {
       "status": "partial",
@@ -28,6 +28,10 @@
     "controller_observation": {
       "status": "partial",
       "note": "Alarm chronology and selected controller/crew communications are documented; exact GUIDO display fields, update cadence, and independent PGNS/AGS/radar observation products remain incomplete."
+    },
+    "guidance_monitoring": {
+      "status": "partial",
+      "note": "Apollo 11 powered-descent monitoring used PGNCS, AGS, and MSFN velocity comparisons with two-out-of-three logic and premission residual redlines. Generic multi-source consensus machinery is implemented; exact phase/source-pair fields, redlines, cadence, MSFN processor behavior, and controller presentation remain incomplete."
     }
   },
   "sources": [
@@ -35,7 +39,8 @@
     "Grumman LAV-500-940, Program Alarms in Powered Descent - Apollo 11, 31 July 1969",
     "MIT/IL letter, Exegesis of the 1201 and 1202 Alarms Which Occurred During the Mission G Lunar Landing",
     "NASA Oral History Project, Richard H. Koos interview, 24 August 2023",
-    "Repository research note 141_second_reference_apollo11_descent_assessment.md"
+    "Repository research note 141_second_reference_apollo11_descent_assessment.md",
+    "MSC Internal Note 70-FM-80 / MSC-02419, Lunar Descent and Ascent Trajectories, 21 April 1970"
   ],
   "deferred": [
     "complete Apollo 11 powered-descent state vector/trajectory initialization",
