@@ -108,9 +108,11 @@ Still intentionally unresolved where evidence is insufficient: exact onboard 77-
 
 ## Phase 7 — Simulation scenarios / SimSup
 
-**Status:** repository-side first-playable preparation and facilitator-driven live scenario integration complete; multi-human play remains.
+**Status:** first reference scenario integrated; reusable multi-scenario framework remains an explicit project target.
 
-Live-play protocol, structured evidence/debrief capture, scenario-blind player preparation/reference packet, facilitator separation, compact-mode integration, staged final-load workflow, backroom scope rule, source-bounded post-burn closure, decision-relevant spacecraft-model scope, and functional ground-data-processing scope are documented.
+Live-play protocol, structured evidence/debrief capture, scenario-blind player preparation/reference packet, facilitator separation, compact-mode integration, staged final-load workflow, backroom scope rule, source-bounded post-burn closure, decision-relevant spacecraft-model scope, and functional ground-data-processing scope are documented for the first reference scenario.
+
+Per D-021, Apollo 13 PC+2 is a validation anchor rather than the simulator's terminal scope. Phase 7 ultimately requires a scenario framework that can load historically grounded cases from multiple mission phases without baking PC+2-specific assumptions into reusable engine layers.
 
 Modern HTTP/browser/localStorage/token/report/preparation/reference-packet mechanics are project infrastructure, not Apollo reconstruction.
 
