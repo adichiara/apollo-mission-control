@@ -142,8 +142,8 @@ Priority order:
 
 1. PC+2 nominal vertical-slice model and validation as the first reference case.
 2. PC+2 nonnominal variants only where a failure can be tied to documented subsystem behavior and flight rules.
-3. Continue identifying scenarios that exercise **different reusable mechanisms and mission phases**, rather than only deeper PC+2 variants.
-4. Apollo 11 lunar-descent program-alarm simulation.
+3. **Apollo 11 powered-descent program-alarm interval** as the second engineering reference case, using the actual-flight chronology for source-bounded timing and state.
+4. Continue research on the documented final Apollo 11 lunar-descent program-alarm simulation as a distinct historical SimSup case; do not invent its unresolved alarm identity/timing.
 5. Apollo 13 LM activation/descent simulation records.
 6. Apollo 13 descent-abort and ascent simulations.
 7. Apollo 13 reentry / launch-abort simulations.
@@ -210,7 +210,17 @@ See:
 - `resources/research/048_first_vertical_slice_candidate_assessment.md`
 - `resources/research/049_pc2_controller_action_and_rule_matrix.md`
 
-## 11. Research sufficiency rule for scenario work
+## 11. Second engineering reference — Apollo 11 powered descent / program alarms
+
+Research note 141 selects the actual Apollo 11 powered-descent alarm interval as the next architecture pressure test after PC+2.
+
+This does **not** make Apollo 11 descent the only next playable scenario. Its purpose is to force the reusable engine to support a substantially different causal chain: landing radar → PGNS/AGS guidance observations → LGC program/restart alarms → continuously evolving descent trajectory → controller continue/abort judgment.
+
+The separately documented preflight program-alarm simulation remains a valuable future SimSup scenario, but Richard Koos explicitly could not recall whether its injected alarm was 1201 or 1202 and surviving evidence does not yet establish exact injection timing. Those gaps must not be silently filled from the actual flight.
+
+See `resources/research/141_second_reference_apollo11_descent_assessment.md`.
+
+## 12. Research sufficiency rule for scenario work
 
 Do not delay the vertical slice to resolve an archival detail unless it materially changes:
 
