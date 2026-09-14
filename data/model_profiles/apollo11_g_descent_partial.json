@@ -11,7 +11,7 @@
     },
     "backup_guidance": {
       "status": "partial",
-      "note": "PGNS/AGS independent cross-check value is documented operationally, but exact controller-visible values and comparison tolerances for the selected interval are not yet frozen."
+      "note": "PGNS/AGS independent cross-check value is documented operationally and generic independent-observation comparison machinery is implemented; exact Apollo 11 fields, controller-visible values, freshness rules, and comparison tolerances remain unfrozen."
     },
     "landing_radar": {
       "status": "partial",
