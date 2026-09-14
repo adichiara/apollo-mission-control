@@ -24,8 +24,8 @@ Status: **active supplement to `PC2_IMPLEMENTATION_SOURCES.md`**
 - **Document:** LMA790-3-LM, §2.5.3.3 A-C Section
 - **Public scan:** https://web.mit.edu/digitalapollo/Documents/Chapter8/lemhandbook.pdf
 - **Status:** PRIMARY TECHNICAL / REVIEWED
-- **Use:** identifies the two inverters as redundant and documents the generic LM convention that inverter 1 normally operates during DPS/APS burns while inverter 2 is commonly used during subsystem activation.
-- **PC+2 consequence:** this is background architecture, **not the controlling Apollo 13 PC+2 selection evidence**. The mission-specific read-up explicitly scratched `Select Inverter 1`, so the generic convention cannot be used to place PC+2 on inverter 1.
+- **Use:** identifies the LM AC section as using two identical redundant inverters and documents the generic convention that inverter 1 normally operates during DPS/APS burns while inverter 2 is commonly used during subsystem activation.
+- **PC+2 consequence:** this is background architecture, not the controlling Apollo 13 initial-selection evidence. The mission-specific read-up fixes PC+2 on inverter 2. Once that state is combined with the contemporaneous instruction to `switch inverters`, the only other redundant inverter identity is inverter 1. This closes the alternate **identity** without claiming recovery of an exact malfunction-transfer checklist sequence.
 
 ## Apollo Experience Report — Lunar Module Instrumentation Subsystem
 
@@ -46,13 +46,14 @@ Status: **active supplement to `PC2_IMPLEMENTATION_SOURCES.md`**
 
 For the first playable:
 
-`PC+2 selected inverter 2 → inverter light → crew attempts switch to redundant inverter → light remains → shutdown criterion satisfied`
+`PC+2 selected inverter 2 → inverter light → crew switches to the other redundant inverter, inverter 1 → light remains → shutdown criterion satisfied`
 
-The initial inverter identity is mission-specific and directly supported. A named post-warning `inverter 2 → inverter 1` action is **not yet frozen** because the reviewed Apollo 13 rule says only to try switching inverters; the architectural redundancy strongly implies inverter 1 but does not substitute for recovered procedure wording.
+The initial inverter-2 identity is mission-specific and directly supported. The alternate inverter-1 identity is an architecture-constrained consequence of (a) that mission-specific starting state, (b) the contemporaneous `switch inverters` rule, and (c) the primary LM handbook's two-inverter redundant architecture. The exact cockpit switch/circuit-breaker chronology remains unresolved and must not be invented.
 
 ## Research record
 
 - `resources/research/059_pc2_inverter_warning_after_switch.md`
 - `resources/research/060_pc2_inverter_contingency_action_report_loop.md`
 - `resources/research/111_pc2_inverter_switch_identity.md` — generic-convention synthesis superseded in part
-- `resources/research/112_pc2_inverter_selection_correction.md` — canonical first-playable selection correction
+- `resources/research/112_pc2_inverter_selection_correction.md` — canonical initial inverter-2 selection correction
+- `resources/research/113_pc2_inverter_alternate_identity.md` — resolves alternate inverter identity while preserving transfer-procedure uncertainty
