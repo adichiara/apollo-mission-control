@@ -353,6 +353,7 @@ This supports continued research into backroom relationships even if the final s
 - Revision C required no Display System equipment configuration changes
 - Mission H-2 TDFCB Revision 4 existed as the mission-specific telemetry-format baseline and was delivered before flight
 - H-2 Rev. 4 PCMGS material was explicitly checked against PHO-TR155
+- earlier H-2 PHO-TR155 work used multiple named data-pack products plus a preliminary IBM card deck/listing
 
 ## PARTIAL
 
@@ -361,6 +362,7 @@ This supports continued research into backroom relationships even if the final s
 - inverter-bus ground evidence via `GC0071V` / `GC0155F`
 - TELMU station-family continuity for those electrical measurements
 - TDFCB Rev. 4 deliverable families, including special LM Flight Control, PCMGS, high-speed/wideband, index, and compare products
+- PHO-TR155 data-pack lineage through the later Mission H-2 Revision N reference; exact pack scope is unrecovered
 
 ## UNRESOLVED
 
@@ -374,6 +376,7 @@ This supports continued research into backroom relationships even if the final s
 - exact voice-loop configuration
 - exact PC+2 inverter display cadence, precision, latency, and selector workflow
 - exact `GC0071V` / `GC0155F` membership/routing within unrecovered H-2 TDFCB Rev. 4 listings
+- exact meaning/content of the PHO-TR155 data-pack abbreviations and Revision N scope
 
 ---
 
@@ -381,17 +384,19 @@ This supports continued research into backroom relationships even if the final s
 
 1. Locate **Mission H-2 TDFCB Revision 4**, especially its special LM Flight Control and PCMGS listings.
 2. Locate **PHO-TR155 Mission H-2 Revision C** itself or its change pages.
-3. Locate **Mission H-2 data-pack Revision N** or equivalent TELMU console-09 loading sheets.
-4. Locate LM systems console handbook / Grumman support material.
-5. Identify exact telemetry identifiers for battery, water, oxygen, CO2, and thermal parameters.
-6. Determine whether consumable lifetime projections were shown on CRT, calculated in SSR, or communicated by another product.
-7. Reconstruct the CWEA/ground-warning relationship relevant to TELMU.
-8. Identify the exact H-2 presentation path for `GC0071V` / `GC0155F` without importing Apollo 15 indicator positions or later LM sample schedules.
+3. Locate a **PHO-TR155 data-pack key/index/contents record** that maps the H-2 pack abbreviations and identifies Revision N scope.
+4. Locate **Mission H-2 data-pack Revision N** itself; do not assume it is TELMU-specific until its scope is established.
+5. Locate H-2 TELMU console-09 operational-configuration/loading sheets or controller handbook.
+6. Identify exact telemetry identifiers for battery, water, oxygen, CO2, and thermal parameters.
+7. Determine whether consumable lifetime projections were shown on CRT, calculated in SSR, or communicated by another product.
+8. Reconstruct the CWEA/ground-warning relationship relevant to TELMU.
+9. Identify the exact H-2 presentation path for `GC0071V` / `GC0155F` without importing Apollo 15 indicator positions or later LM sample schedules.
 
 ## Primary sources
 
 - *Mission Operations Report — Apollo 13*, Appendix G: TELMU Post Mission Report.
 - *Apollo 13 Mission Report*, sections 7.2.3–7.2.5.
+- Philco-Ford / Houston Operations, **PHO-TR460**, NASA NTRS 19690029816.
 - Philco-Ford / Houston Operations, **PHO-TR474**, 10 April 1970, NASA NTRS 19700016172.
 
 
@@ -424,7 +429,7 @@ For in-flight scenarios, use mission-phase flight rules, controller reports, pro
 
 ## 14B. Mission H-2 display/telemetry configuration boundary
 
-Research notes 123–125 establish a mission-specific configuration-control boundary from Philco's contemporaneous April 1970 progress report:
+Research notes 123–126 establish a mission-specific configuration-control boundary from Philco's contemporaneous progress reporting:
 
 - PHO-TR155 Mission H-2 Revision C was issued on **1970-03-06**;
 - the **Mission H-2 Display System configuration was in accordance with Revision C**;
@@ -432,10 +437,12 @@ Research notes 123–125 establish a mission-specific configuration-control boun
 - Philco states that **no equipment configuration changes were necessary**;
 - **Mission H-2 TDFCB Revision 4** was delivered on **1970-01-28** as the mission telemetry-format baseline;
 - its deliverables included special LM Flight Control, PCMGS-related, high-speed/wideband, index, and compare products;
-- Philco checked the **H-2 Rev. 4 TDFCB PCMGS against PHO-TR155 on 1970-02-10**.
+- Philco checked the **H-2 Rev. 4 TDFCB PCMGS against PHO-TR155 on 1970-02-10**;
+- earlier H-2 PHO-TR155 configuration work used multiple named data-pack products and a preliminary IBM card deck/listing;
+- PHO-TR474 later records **H-2 data-pack Revision N** on 1970-03-06, but the reviewed evidence does not identify Revision N as TELMU-specific or define the data-pack abbreviations.
 
-This is important for reconstruction. It establishes separate but cross-checked telemetry-format and MCC display-configuration authorities for H-2, while explicitly arguing against inventing parameter-to-console details that have not been recovered.
+This is important for reconstruction. It establishes separate but cross-checked telemetry-format and MCC display-configuration authorities for H-2, while explicitly arguing against inventing parameter-to-console details that have not been recovered. It also prevents Revision N from being treated as a recovered TELMU loading sheet merely because it is the latest named H-2 data-pack revision.
 
 The same quarterly report mentions 1126 console-label changes, but it does not establish that those changes were all caused by Revision C, belonged to TELMU, or involved PC+2 inverter monitoring. They must not be used as a TELMU layout source.
 
-Until TDFCB Rev. 4, Revision C, Revision N, or equivalent H-2 loading material is recovered, exact TELMU indicator/module positions, CRT requests, DRK/MSK actions, update cadence, precision, and latency remain unresolved.
+Until TDFCB Rev. 4, Revision C, a PHO-TR155 data-pack key/Revision N, or equivalent H-2 loading material is recovered, exact TELMU indicator/module positions, CRT requests, DRK/MSK actions, update cadence, precision, and latency remain unresolved.
