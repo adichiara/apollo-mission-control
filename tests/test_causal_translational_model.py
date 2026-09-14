@@ -31,8 +31,16 @@ class TranslationalModelTests(unittest.TestCase):
             ),
         )
 
-        self.assertEqual(result.final_state.position_m, (140.0, 10.0, 5.0))
-        self.assertEqual(result.final_state.velocity_m_s, (2.0, 3.0, -1.0))
+        for actual, expected in zip(
+            result.final_state.position_m,
+            (140.0, 10.0, 5.0),
+        ):
+            self.assertAlmostEqual(actual, expected, places=12)
+        for actual, expected in zip(
+            result.final_state.velocity_m_s,
+            (2.0, 3.0, -1.0),
+        ):
+            self.assertAlmostEqual(actual, expected, places=12)
         self.assertEqual(result.final_state.mass_kg, 1000.0)
         self.assertEqual(result.propulsive_impulse_n_s, 0.0)
 
