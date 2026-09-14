@@ -146,6 +146,12 @@ Principle:
 
 > Players do not read authoritative state directly.
 
+### Landing-radar update boundary
+
+A mission-neutral landing-radar gate now separates upstream measurement quality, crew/guidance update enablement, altitude/velocity channel presence, and optional velocity-update speed criteria from the downstream state estimator. It does not generate measurements or overwrite a guidance state vector.
+
+This boundary is driven by the Apollo 11 descent reference but contains no Apollo 11 thresholds or timing constants. Program-specific radar reasonability tests, weighting/filter equations, guidance-cycle cadence, and controller products remain historical configuration/model work.
+
 ### Guidance-computer alarm/restart boundary
 
 A mission-neutral guidance-computer model now represents caller-defined alarm codes, program-alarm indication, software-restart classification, restart history, and restart-protected program recovery.
