@@ -150,7 +150,7 @@ Principle:
 
 A mission-neutral comparison model now accepts two independently produced guidance observations, caller-selected fields/tolerances, validity, and freshness constraints. It returns agreement/disagreement/indeterminate plus per-field differences without choosing a hidden-truth source or issuing a mission decision.
 
-This supports Apollo 11 PGNS/AGS comparison and later Apollo guidance cross-checks while keeping mission-specific fields and tolerances outside the generic engine.
+This supports Apollo 11 PGNS/AGS comparison and later Apollo guidance cross-checks while keeping mission-specific fields and tolerances outside the generic engine. A separate historical guidance-monitoring profile catalog now stores source-pair/field/tolerance configuration. Profiles with unresolved freshness cannot be converted into executable cross-check configs, preventing a missing historical timing rule from becoming an invented software constant.
 
 ### Landing-radar update boundary
 
