@@ -19,13 +19,21 @@ Status: **active supplement to `PC2_IMPLEMENTATION_SOURCES.md`**
 - **Status:** PRIMARY / REVIEWED for mission-specific inverter selection, PC+2 configuration, rule ordering, and CAPCOM/crew communication path.
 - **Public transcript:** https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf-hr/a13-pao-transcript.pdf
 
+## Apollo 13 LM Malfunction Procedures
+
+- **Document:** LMA790-3-LM, *LM Malfunction Procedures*, Apollo 13 flight handbook scan.
+- **Public scan:** https://www.ibiblio.org/apollo/Documents/Apollo%2013%20Malfunction%20Procedures.pdf
+- **Status:** PRIMARY PROCEDURAL / REVIEWED for INVERTER caution alternate-selection sequence.
+- **Use:** directly resolves the cockpit transfer chronology when inverter 2 is the operating source. The INVERTER caution flowchart's `Select alt inverter` action gives: `CB(11) EPS: INV 1 — close` → `INVERTER — 1` → `CB(16) EPS: INV 2 — open`, followed by re-observation of whether the INVERTER caution is off.
+- **Boundary:** the flowchart provides no numeric dwell/persistence interval before that re-observation and does not establish crew-member assignment, exact ground voice wording, or ground visibility of selector position.
+
 ## Apollo Operations Handbook — Lunar Module, Subsystems Data
 
 - **Document:** LMA790-3-LM, §2.5.3.3 A-C Section
 - **Public scan:** https://web.mit.edu/digitalapollo/Documents/Chapter8/lemhandbook.pdf
 - **Status:** PRIMARY TECHNICAL / REVIEWED
-- **Use:** identifies the LM AC section as using two identical redundant inverters and documents the generic convention that inverter 1 normally operates during DPS/APS burns while inverter 2 is commonly used during subsystem activation.
-- **PC+2 consequence:** this is background architecture, not the controlling Apollo 13 initial-selection evidence. The mission-specific read-up fixes PC+2 on inverter 2. Once that state is combined with the contemporaneous instruction to `switch inverters`, the only other redundant inverter identity is inverter 1. This closes the alternate **identity** without claiming recovery of an exact malfunction-transfer checklist sequence.
+- **Use:** identifies the LM AC section as using two identical redundant inverters and documents the generic convention that inverter 1 normally operates during DPS/APS burns while inverter 2 is commonly used during subsystem activation; also corroborates the feeder breakers and INVERTER selector used by the Apollo 13 malfunction procedure.
+- **PC+2 consequence:** mission-specific evidence, not the generic convention, controls the initial PC+2 configuration. The handbook is an architecture/control cross-check.
 
 ## Apollo Experience Report — Lunar Module Instrumentation Subsystem
 
@@ -46,9 +54,9 @@ Status: **active supplement to `PC2_IMPLEMENTATION_SOURCES.md`**
 
 For the first playable:
 
-`PC+2 selected inverter 2 → inverter light → crew switches to the other redundant inverter, inverter 1 → light remains → shutdown criterion satisfied`
+`PC+2 selected inverter 2 → inverter light → close CB(11) EPS: INV 1 → select INVERTER 1 → open CB(16) EPS: INV 2 → re-observe warning → warning remains → shutdown criterion satisfied`
 
-The initial inverter-2 identity is mission-specific and directly supported. The alternate inverter-1 identity is an architecture-constrained consequence of (a) that mission-specific starting state, (b) the contemporaneous `switch inverters` rule, and (c) the primary LM handbook's two-inverter redundant architecture. The exact cockpit switch/circuit-breaker chronology remains unresolved and must not be invented.
+The initial inverter-2 identity is mission-specific and directly supported. The alternate inverter-1 identity is supported by the mission-specific starting state plus the two-inverter architecture. The exact transfer sequence is now directly supported by the Apollo 13 LM Malfunction Procedures. A numeric post-switch persistence timer, crew-member assignment, exact controller wording, selector-position ground visibility, and exact TELMU/CONTROL field remain unresolved and must not be invented.
 
 ## Research record
 
@@ -56,4 +64,5 @@ The initial inverter-2 identity is mission-specific and directly supported. The 
 - `resources/research/060_pc2_inverter_contingency_action_report_loop.md`
 - `resources/research/111_pc2_inverter_switch_identity.md` — generic-convention synthesis superseded in part
 - `resources/research/112_pc2_inverter_selection_correction.md` — canonical initial inverter-2 selection correction
-- `resources/research/113_pc2_inverter_alternate_identity.md` — resolves alternate inverter identity while preserving transfer-procedure uncertainty
+- `resources/research/113_pc2_inverter_alternate_identity.md` — resolves alternate inverter identity
+- `resources/research/114_pc2_inverter_transfer_procedure.md` — resolves the cockpit inverter-2-to-inverter-1 transfer sequence while preserving unresolved timing/routing details
