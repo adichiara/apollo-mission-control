@@ -341,4 +341,19 @@ Research note 134 partially clears this gate at the interface level. The first p
 
 This authorizes a **model proof**, not a historically validated Apollo 13 PC+2 propagator. Mission-specific thrust history, mass epoch, coordinate-frame mapping, and numerical acceptance tolerance must remain explicit/unfrozen until their primary sources are extracted.
 
-The existing historical PC+2 event model remains the deployed integration scaffold while the numerical proof is developed beside it.
+## Level-1 implementation status
+
+The first mission-neutral numerical proof is implemented in `causal_dps_model.py` and exposed only through the facilitator validation API/console.
+
+It now demonstrates, through one model path:
+
+- thrust-driven mass depletion and impulse;
+- prescribed-direction vector Delta-V;
+- deterministic fixed-step midpoint integration;
+- convergence as the step is refined;
+- correctly ordered early, late, wrong-thrust, wrong-direction, and combined-error consequences;
+- explicit applicability, provenance, assumptions, and a non-historical-validation status.
+
+See `docs/models/DPS_LEVEL1_MODEL_PROOF.md`.
+
+The existing historical PC+2 event model remains the deployed integration scaffold. The proof does not yet mutate live scenario state or generate player-visible products. Historical PC+2 integration remains gated on primary-source thrust history, mass epoch, frame mapping, gravity/trajectory treatment, and acceptance tolerance.
