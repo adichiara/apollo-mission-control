@@ -31,6 +31,22 @@ def _number(data: dict[str, Any], key: str) -> float:
     return float(value)
 
 
+def _string_list(data: dict[str, Any], key: str) -> tuple[str, ...]:
+    value = data.get(key)
+    if not isinstance(value, list) or not value:
+        raise ValueError(f"scenario metadata {key!r} must be a non-empty list")
+    result: list[str] = []
+    for item in value:
+        if not isinstance(item, str) or not item.strip():
+            raise ValueError(
+                f"scenario metadata {key!r} must contain non-empty strings"
+            )
+        normalized = item.strip()
+        if normalized not in result:
+            result.append(normalized)
+    return tuple(result)
+
+
 @dataclass(frozen=True)
 class ScenarioRecord:
     scenario_id: str
@@ -41,6 +57,7 @@ class ScenarioRecord:
     runtime_adapter: str
     mission_profile_id: str
     model_profile_id: str
+    required_model_domains: tuple[str, ...]
     start_get_s: float
     start_get_hms: str
     end_target_get_hms: str
@@ -58,6 +75,7 @@ class ScenarioRecord:
             "runtime_adapter": self.runtime_adapter,
             "mission_profile_id": self.mission_profile_id,
             "model_profile_id": self.model_profile_id,
+            "required_model_domains": list(self.required_model_domains),
             "start_get_s": self.start_get_s,
             "start_get_hms": self.start_get_hms,
             "end_target_get_hms": self.end_target_get_hms,
@@ -89,6 +107,7 @@ def load_scenario_record(path: str | Path) -> ScenarioRecord:
         runtime_adapter=_text(data, "runtime_adapter"),
         mission_profile_id=_text(data, "mission_profile_id"),
         model_profile_id=_text(data, "model_profile_id"),
+        required_model_domains=_string_list(data, "required_model_domains"),
         start_get_s=_number(data, "start_get_s"),
         start_get_hms=_text(data, "start_get_hms"),
         end_target_get_hms=_text(data, "end_target_get_hms"),
