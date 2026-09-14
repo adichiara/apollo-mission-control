@@ -31,11 +31,16 @@ Current research has identified direct evidence for this type of architecture:
 - Grumman LED 500-16, *LEM Guidance Computer (LGC) Math Model for the Full Mission Engineering Simulator (FMES) and LEM Mission Simulator (LMS)*, 8 June 1966;
 - Link Group's *Proposal for LEM Mission Simulator, Volume II, Technical Addendum*, whose surviving scan contains LMS mathematical-equation flowcharts;
 - a Grumman memo studying the effect of 50-millisecond LMS integration steps on simulated Abort Attitude Control System response;
-- LMS/AMS instructor material documenting subsystem simulation and malfunction insertion.
+- LMS/AMS instructor material documenting subsystem simulation and malfunction insertion;
+- the publicly available North American Aviation AMS Instructor Handbook Volume II, which explicitly separates equations of motion, weight/balance, vehicle-system, simulator-effects, and simulator-control programs and describes feedback among them.
 
-These sources establish that equations of motion, subsystem interfaces, model partitions, numerical integration behavior, and display-driving outputs were explicit simulator concerns. They do not yet establish every equation, constant, or Apollo-13-specific configuration we should implement.
+The AMS handbook is especially useful because it describes translational/rotational EOM driven by simulated thrusting-system inputs, weight/balance outputs feeding mass/inertia/CG back to EOM, vehicle-system programs for propulsion/electrical/logic/displays/bus equations, and explicit malfunction insertion. This is direct historical evidence for a modular closed-loop simulator architecture.
 
-See research notes 127–129 and resources/source-catalog/APOLLO_SIMULATION_ENGINE_SOURCES.md.
+These sources establish that equations of motion, subsystem interfaces, model partitions, numerical integration behavior, display-driving outputs, and malfunction injection were explicit simulator concerns. They do not yet establish every equation, constant, or Apollo-13-specific configuration we should implement.
+
+Primary simulator scans should be cited from the public Virtual AGC / ibiblio archive when available rather than account-gated mirrors. Orbiter and Project Apollo — NASSP are useful modern implementation references, but they are not historical evidence and do not replace primary Apollo sources.
+
+See research notes 127–131 and resources/source-catalog/APOLLO_SIMULATION_ENGINE_SOURCES.md.
 
 ## Core architecture rule
 
@@ -194,6 +199,21 @@ burn command / crew action
 → derived maneuver / trajectory result
 → controller-observable tracking/trajectory product
 
+### Current Level-1 implementation checkpoint
+
+The first numerical proof is now implemented on the development branch as a deliberately narrow, framework-neutral model:
+
+- `src/apollo_mission_control/propulsion_dynamics.py` owns thrust, specific impulse, propellant mass depletion, command state, thrust direction, and vector Delta-V;
+- crew/engine commands are separated from elapsed-time physical evolution;
+- arbitrary piecewise-constant duration/throttle/direction inputs all use the same model;
+- the model uses SI internally and does not embed Apollo-specific constants;
+- `POST /api/validation/propulsion` exposes the model only as a facilitator validation endpoint and does not mutate the live PC+2 session;
+- `/dynamics-test` provides a dedicated test screen with editable inputs and quick early-cutoff, late-cutoff, wrong-throttle, and attitude-offset perturbations.
+
+This Level-1 model is **not yet an orbital trajectory simulator**. It currently computes thrust-produced vector Delta-V and propellant/mass consequences. It omits gravity, Earth/Moon propagation, position integration, rotational dynamics, actual attitude response, detailed DPS feed/pressurization behavior, and controller tracking/RTCC products.
+
+That limitation is intentional: it gives the project a small causal kernel that can be tested before adding coupled dynamics.
+
 ### Source-bounded PC+2 validation case
 
 Existing Apollo 13 evidence provides a useful regression case:
@@ -316,10 +336,16 @@ Every implemented numerical model must carry:
 
 A simulator-era equation may be adopted only after checking whether it describes the relevant LMS/FMES configuration and whether its constants/configuration are applicable to Apollo 13/LM-7.
 
-## Near-term implementation gate
+## Near-term implementation sequence
 
-Do not build a broad subsystem framework just because this architecture anticipates one.
+The Level-1 propulsion/Delta-V kernel now exists. The next steps should increase causal fidelity in controlled increments rather than expanding every subsystem at once.
 
-Implementation begins after the current LMS equation/model extraction identifies enough of the original dynamics/propulsion boundary to choose a defensible first state vector and integration contract.
+1. Validate the Level-1 model through CI and the deployed `/dynamics-test` screen, including early/late cutoff, throttle, attitude-vector, and timestep-refinement cases.
+2. Continue extracting the public LMS/AMS mathematical-model material, especially equations of motion, model interfaces, integration cadence, mass properties, and malfunction boundaries.
+3. Add position plus gravity/orbital propagation so different burns produce different Earth-Moon trajectory states rather than only different Delta-V vectors.
+4. Add actual attitude/orientation evolution and thrust-vector coupling, replacing the current externally prescribed direction vector.
+5. Connect the simulated crew/CAPCOM path to these command inputs so a wrong instruction changes the same authoritative dynamics model.
+6. Add electrical-power and consumables causal models, using primary Apollo sources for behavior and NASSP only as a secondary implementation/coverage cross-check.
+7. Derive instrumentation/telemetry/ground products from the resulting state rather than injecting outcomes directly.
 
-Until then, the existing historical PC+2 event model remains the validation scaffold and deployed test path.
+The historical PC+2 event model remains a useful chronology and regression scaffold during this transition, but it is no longer the intended mechanism for determining physical consequences.
