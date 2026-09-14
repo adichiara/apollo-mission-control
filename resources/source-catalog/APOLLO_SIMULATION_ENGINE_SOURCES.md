@@ -1,0 +1,148 @@
+# Apollo Simulation-Engine Sources
+
+Status: active source catalog for the project's causal simulation-engine architecture.
+
+This catalog separates evidence about how Apollo simulation/training worked from project architecture decisions. It does not imply that the original simulator software or complete mathematical models have been recovered.
+
+## NASA TN D-7290 — *Apollo Experience Report: Simulation of Manned Space Flight for Crew Training*
+
+- Authors: C. H. Woodling et al.
+- NASA/JSC, 1973.
+- NTRS document ID: `19730011149`.
+- NTRS record: https://ntrs.nasa.gov/citations/19730011149
+- Evidence use: Apollo crew-training mission simulators; functional uses, characteristics, development experience, and fidelity evolution.
+- Status: identified/reviewed at report-record level; detailed simulator internals remain a target for deeper extraction.
+
+## NASA TN D-7436 — *Apollo Experience Report: Systems and Flight Procedures Development*
+
+- Author: P. C. Kramer.
+- NASA/JSC, 1973.
+- NTRS document ID: `19730023040`.
+- NTRS record: https://ntrs.nasa.gov/citations/19730023040
+- Evidence use: mission-simulation procedure verification; coupling of the Apollo mission simulator to simulated MSFN/MCC functions; coverage of spacecraft trajectories, telemetry, uplink/voice communications, and major spacecraft systems operations.
+- Key boundary: NASA describes the Apollo mission simulator as the highest-fidelity spacecraft simulator available for mission simulation, used together with Mission Control for procedure verification and training.
+
+## NASA TN D-7287 — *Apollo Experience Report: Guidance and Control Systems—Engineering Simulation Program*
+
+- Author: David W. Gilbert.
+- NASA/JSC, 1973.
+- NTRS document ID: `19730016146`.
+- NTRS record: https://ntrs.nasa.gov/citations/19730016146
+- Evidence use: real-time engineering simulation; use of general-purpose analog/digital computing, subsystem hardware, special interfaces, and large hybrid mission-evaluation simulators for closed-loop verification.
+- Key boundary: this is engineering-simulation evidence, not a direct software listing for the crew-training mission simulator, but it confirms that Apollo system behavior was modeled causally rather than only replayed as scripted event sequences.
+
+## NASA Apollo training overview, 1964
+
+- NTRS document ID: `19660019476`.
+- NTRS PDF: https://ntrs.nasa.gov/api/citations/19660019476/downloads/19660019476.pdf
+- Evidence use: description of planned Apollo mission simulators.
+- Relevant evidence: the command-module controls, displays, and window scenes were to be active and driven closed-loop by peripheral computing equipment; the instructor console was to include duplicate displays and malfunction-insertion units.
+- Key boundary: early-program description; later mission-specific implementation details may differ.
+
+## AIAA Paper 65-266 — *Integrated Operating Mode of the Apollo Mission Simulator*
+
+- Authors: F. O. Martikan and S. H. Nassiff.
+- 1965.
+- NTRS document IDs: `19650039405` / `19660033487`.
+- NTRS records:
+  - https://ntrs.nasa.gov/citations/19650039405
+  - https://ntrs.nasa.gov/citations/19660033487
+- Evidence use: integrated Apollo mission simulator/Mission Control training concept.
+- Status: record identified; public full text not currently recovered through NTRS.
+
+## NASA TN D-7822 — *Apollo Experience Report: The Role of Flight Mission Rules in Mission Preparation and Conduct*
+
+- Author: L. W. Keyser.
+- NASA/JSC, 1974.
+- NTRS document ID: `19750002893`.
+- NTRS record: https://ntrs.nasa.gov/citations/19750002893
+- Evidence use: mission-rule development and controller training, including training for nonnominal situations for which no complete response had been preplanned.
+- Architecture relevance: supports a simulator that allows controllers to reason through consequences rather than merely select the one expected historical branch.
+
+## *Proposal for LEM Mission Simulator, Volume II, Technical Addendum: Glossary of Symbols*
+
+- Organization: Link Group — Systems Division, General Precision, Inc.
+- Public scan: https://www.ibiblio.org/apollo/Documents/proposal_for_lem_mission_simulator_vol2.pdf
+- Discovery/catalog context: Virtual AGC document library, which notes that the document contains many flowcharts showing the mathematical equations underlying the LMS.
+- Evidence use: direct LMS mathematical-model architecture, equation/flowchart families, variables, subsystem coupling, and abstraction choices.
+- Status: **public digital copy located; high-priority extraction target**.
+- Key boundary: a simulator-design source, not automatically Apollo-13-specific vehicle configuration. Every equation/constant/configuration adopted by the project still requires applicability review.
+
+## *Lunar Module Mission Simulator Instructor's Handbook, Volume I — Simulator Description*
+
+- Organization: Grumman / LMS program documentation lineage; exact scan metadata to be captured during extraction.
+- Discovery/catalog context: Virtual AGC document library.
+- Evidence use: simulator subsystem representation, controls/displays, and how individual spacecraft subsystems were simulated.
+- Status: **public digital copy identified in Virtual AGC library; extraction target**.
+- Architecture relevance: likely complements the technical-addendum equations with subsystem-level functional descriptions.
+
+## *Lunar Module Mission Simulator Instructors Handbook, Volume II*, LMA790-2-LMS
+
+- Date: 1 April 1967.
+- Independent NASA citation: NTRS `19700026546`, *LM Descent/Phasing Summary Document*, references Volume II, Sections II and III.
+- NTRS PDF: https://ntrs.nasa.gov/api/citations/19700026546/downloads/19700026546.pdf
+- Evidence use: LMS operating/instructor procedures and simulator behavior lineage.
+- Status: handbook lineage independently confirmed by NASA source; exact public scan/sections remain an extraction target.
+
+## North American Aviation — *Apollo Mission Simulator Instructor Handbook*, SM-6T-2-02
+
+- Vol. I: *Description*.
+- Vol. II: *Operation and Utilization*.
+- Public transcription/index: Wikisource / Virtual AGC.
+- Evidence use:
+  - AMS described as simulating spacecraft system performance and flight dynamics through computer-controlled system parameters and dynamics;
+  - instructor station includes Malfunction Insertion Unit;
+  - manual, preprogrammed, and time-dependent malfunction insertion;
+  - Volume III described as containing complete simulated-malfunction tables;
+  - simulation-output tables described as including **program and/or math-model designators** for each parameter.
+- Architecture relevance: strong route to recovering original simulator model partitioning, output variables, and failure-injection boundaries.
+- Key boundary: early AMS configuration; later Block II/Apollo-13 configuration must be checked before importing details.
+
+## Virtual AGC document-library continuity
+
+Virtual AGC has continued adding simulator material. Its 2025 additions include improved scans of AMS instructor-handbook volumes and note that one volume includes a complete simulator-output listing, giving insight into the level at which each subsystem was simulated.
+
+- Library/change log: https://www.ibiblio.org/apollo/changes.html
+- Evidence use: discovery index and scan provenance, not a substitute for the underlying primary documents.
+
+## Grumman LED 500-5 — *LMS Math Model — Equations of Motion, Subsystem Interfaces and Visual Display Drive Equations*
+
+- Date: 22 April 1965.
+- MSC accession: *66-10469.
+- Contract: NAS 9-1100.
+- Archive evidence: NASA/NARA corporate index preserved by Virtual AGC.
+- Evidence use: direct LMS mathematical-model lineage covering equations of motion, subsystem interfaces, and visual-display drive equations.
+- Status: title/date/accession verified in archive index; full report extraction remains pending.
+- Architecture relevance: strongest current direct evidence that the LMS separated dynamic equations, subsystem coupling, and display-drive mathematics.
+
+## Grumman LED 500-16 — *LEM Guidance Computer (LGC) Math Model for the Full Mission Engineering Simulator (FMES) and LEM Mission Simulator (LMS)*
+
+- Date: 8 June 1966.
+- MSC accession: *66-13246.
+- Contract: NAS 9-1100.
+- Archive evidence: NASA/NARA corporate index preserved by Virtual AGC.
+- Evidence use: dedicated LGC model boundary shared by FMES and LMS.
+- Status: title/date/accession verified; full report not yet recovered.
+
+## Grumman 1965 — *Effect of LMS Fifty-Millisecond Integration Steps on Simulated Response of Abort Attitude Control System*
+
+- Archive listing: TechWorks archival-document catalog.
+- Evidence use: numerical-integration fidelity and timestep sensitivity in the LMS.
+- Status: exact report contents not yet extracted.
+- Key boundary: the title supports only that a 50 ms LMS integration step was studied for its effect on simulated AACS response. It does **not** establish a global LMS timestep or require this project to use 50 ms.
+
+## Apollo Operations Handbooks and subsystem engineering reports
+
+The mission-simulator documents establish the need for causal/closed-loop behavior but do not by themselves provide every subsystem equation or failure consequence. The project should continue using mission-specific or vehicle-specific sources for physical mechanisms, including:
+
+- Apollo Operations Handbook LM/CSM systems descriptions and operational procedures;
+- subsystem specifications and malfunction procedures;
+- Apollo Experience Reports for propulsion, electrical, guidance/control, communications, instrumentation, etc.;
+- telemetry/instrumentation documentation where observation behavior matters;
+- mission rules and controller console documentation for controller interpretation/action boundaries.
+
+## Current evidence conclusion
+
+The surviving Apollo documentation now does more than merely support a generic closed-loop architecture. A direct **LEM Mission Simulator mathematical-model source has been located**, alongside simulator-description and instructor-handbook lineages that can expose subsystem abstraction and malfunction behavior.
+
+The project still should not claim recovery of the complete Apollo simulator software/model. The next research step is systematic extraction of the recovered LMS/AMS model documentation, followed by cross-checking against Apollo 13 LM-7/CSM spacecraft documentation before implementing equations or configuration values.
