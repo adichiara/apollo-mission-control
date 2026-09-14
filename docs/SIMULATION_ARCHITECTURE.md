@@ -150,6 +150,14 @@ Later crew behavior may become more sophisticated only when scenarios require it
 
 ### 5. Instrumentation and telemetry
 
+A generic tracking-observation proof now exercises this boundary for trajectory data:
+
+`authoritative trajectory state → geometric tracking truth → delayed/biased/available observation`
+
+The proof supports deterministic range/range-rate, latency/age, bias, availability, validity, and provenance without embedding Apollo/MSFN constants. It is not yet a model of MSFN radar/Doppler hardware, station visibility, propagation delay, CCATS, or RTCC processing. Those remain historical layers to be added when sourced scenario requirements demand them.
+
+
+
 Transforms authoritative state into the measurements that would actually be available.
 
 This layer is necessary to represent distinctions such as:
