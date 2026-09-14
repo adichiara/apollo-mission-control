@@ -87,3 +87,26 @@ Examples:
 ## Project rule
 
 For historical PC+2 numerical validation, keep **commanded throttle state**, **delivered thrust history**, **specific impulse/mass flow**, and **pressurization/blowdown state** as separate concepts until primary evidence supports collapsing any of them.
+
+
+## Apollo 13 Mission Report Appendix E — planned Supplement 2
+
+- Source: *Apollo 13 Mission Report*, September 1970
+- NTRS: https://ntrs.nasa.gov/citations/19710003598
+- Source class: primary / mission report publication-status table
+
+### Supports
+
+Appendix E lists:
+
+- Apollo 13 Supplement 2;
+- title: *Descent Propulsion System Final Flight Evaluation*;
+- status: **Preparation**.
+
+### Boundary
+
+This establishes that the report was planned/in preparation in September 1970. It does not establish that a final version was issued or that the currently public archive contains it.
+
+### Archival priority
+
+Treat this exact title as the highest-priority LM-7 propulsion search target. Search report-number cross-references, TRW records, MSC/JSC archives, NARA holdings, contractor indexes, and draft memoranda before substituting adjacent-mission final-flight evaluations.
