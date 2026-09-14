@@ -205,6 +205,32 @@ class PC2Session:
                 stations=list(normalized),
             )
 
+    def join_or_rejoin_stations(
+        self,
+        player_id: str,
+        stations: Iterable[str],
+    ) -> None:
+        """Join/rejoin an exact station set using runtime-owned semantics."""
+
+        normalized = tuple(station.upper() for station in stations)
+        existing = self.player_station_sets.get(player_id)
+        if existing is None and player_id in self.station_assignments:
+            existing = (self.station_assignments[player_id],)
+        if existing is None:
+            self.assign_stations(player_id, normalized)
+            return
+        if existing != normalized:
+            raise ValueError(
+                f"Player {player_id} is already assigned to {list(existing)}; "
+                f"cannot rejoin as {list(normalized)}"
+            )
+        self._audit(
+            "player_rejoined",
+            "SESSION",
+            player_id=player_id,
+            stations=list(normalized),
+        )
+
     def stations_for(self, player_id: str) -> tuple[str, ...]:
         stations = self.player_station_sets.get(player_id)
         if stations is not None:
