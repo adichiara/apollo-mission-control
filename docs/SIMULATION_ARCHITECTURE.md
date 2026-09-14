@@ -146,6 +146,12 @@ Principle:
 
 > Players do not read authoritative state directly.
 
+### Independent guidance cross-check boundary
+
+A mission-neutral comparison model now accepts two independently produced guidance observations, caller-selected fields/tolerances, validity, and freshness constraints. It returns agreement/disagreement/indeterminate plus per-field differences without choosing a hidden-truth source or issuing a mission decision.
+
+This supports Apollo 11 PGNS/AGS comparison and later Apollo guidance cross-checks while keeping mission-specific fields and tolerances outside the generic engine.
+
 ### Landing-radar update boundary
 
 A mission-neutral landing-radar gate now separates upstream measurement quality, crew/guidance update enablement, altitude/velocity channel presence, and optional velocity-update speed criteria from the downstream state estimator. It does not generate measurements or overwrite a guidance state vector.
