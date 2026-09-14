@@ -175,7 +175,7 @@ def _require_session() -> SessionRuntime:
 
 def _require_clock() -> RealtimeSessionClock:
     if _clock is None:
-        raise HTTPException(status_code=409, detail="No PC+2 session clock has been created")
+        raise HTTPException(status_code=409, detail="No simulation session clock has been created")
     return _clock
 
 
@@ -256,32 +256,6 @@ def _status_payload(session: SessionRuntime) -> dict[str, Any]:
     }
 
 
-def _join_or_rejoin_set(
-    session: SessionRuntime,
-    player_id: str,
-    stations: list[str] | tuple[str, ...],
-) -> None:
-    """Join/rejoin an exact set of original station identities."""
-    normalized = tuple(station.upper() for station in stations)
-    existing = session.player_station_sets.get(player_id)
-    if existing is None and player_id in session.station_assignments:
-        existing = (session.station_assignments[player_id],)
-    if existing is not None:
-        if existing != normalized:
-            raise ValueError(
-                f"Player {player_id} is already assigned to {list(existing)}; "
-                f"cannot rejoin as {list(normalized)}"
-            )
-        session._audit(
-            "player_rejoined",
-            "SESSION",
-            player_id=player_id,
-            stations=list(normalized),
-        )
-        return
-    session.assign_stations(player_id, normalized)
-
-
 def _snapshot_payload(session: SessionRuntime, player_id: str) -> dict[str, Any]:
     stations = session.stations_for(player_id)
     if len(stations) == 1:
@@ -355,7 +329,10 @@ def join_session(request: JoinRequest) -> dict[str, Any]:
     with _lock:
         session = _sync_session()
         _domain_call(
-            lambda: _join_or_rejoin_set(session, request.player_id, (request.station,))
+            lambda: session.join_or_rejoin_stations(
+                request.player_id,
+                (request.station,),
+            )
         )
         return _snapshot_payload(session, request.player_id)
 
@@ -366,7 +343,10 @@ def join_session_set(request: JoinSetRequest) -> dict[str, Any]:
     with _lock:
         session = _sync_session()
         _domain_call(
-            lambda: _join_or_rejoin_set(session, request.player_id, request.stations)
+            lambda: session.join_or_rejoin_stations(
+                request.player_id,
+                request.stations,
+            )
         )
         return _snapshot_payload(session, request.player_id)
 
