@@ -46,6 +46,36 @@ class WebModelProofTests(unittest.TestCase):
         self.assertLess(body["final_state"]["mass_kg"], self.payload["initial_mass_kg"])
         self.assertIn("no gravity or external forces", body["assumptions"])
 
+
+    def test_endpoint_accepts_linear_thrust_and_segment_isp_override(self):
+        self.payload["segments"] = [
+            {
+                "duration_s": 5.0,
+                "thrust_n": 0.0,
+                "end_thrust_n": 5_000.0,
+                "specific_impulse_s": 280.0,
+                "regime": "startup",
+                "direction": [1.0, 0.0, 0.0],
+            },
+            {
+                "duration_s": 5.0,
+                "thrust_n": 5_000.0,
+                "end_thrust_n": 2_000.0,
+                "regime": "blowdown",
+                "direction": [1.0, 0.0, 0.0],
+            },
+        ]
+        response = self.client.post("/api/admin/model-proof/dps-burn", json=self.payload)
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body["elapsed_s"], 10.0)
+        self.assertGreater(body["impulse_n_s"], 0.0)
+        self.assertLess(body["final_state"]["mass_kg"], self.payload["initial_mass_kg"])
+        self.assertIn(
+            "specific impulse is constant for the run unless a segment override is supplied",
+            body["assumptions"],
+        )
+
     def test_endpoint_rejects_unphysical_direction(self):
         self.payload["segments"][0]["direction"] = [0.0, 0.0, 0.0]
         response = self.client.post("/api/admin/model-proof/dps-burn", json=self.payload)
