@@ -36,6 +36,18 @@ class ModelProfileTests(unittest.TestCase):
         )
         self.assertGreater(profile.source_count, 0)
 
+    def test_apollo11_descent_profile_keeps_partial_domains_explicit(self):
+        profile = get_model_profile("apollo11_g_descent_partial")
+        self.assertEqual(profile.mission_profile_id, "apollo11_g")
+        self.assertEqual(profile.domains["guidance_computer"].status, "partial")
+        self.assertEqual(profile.domains["landing_radar"].status, "partial")
+        self.assertEqual(profile.domains["propulsion"].status, "unresolved")
+        self.assertEqual(
+            profile.domains["translational_dynamics"].status,
+            "unresolved",
+        )
+        self.assertGreater(profile.source_count, 0)
+
     def test_readiness_is_scenario_specific_and_explicit(self):
         profile = get_model_profile("apollo13_h2_dynamics_partial")
         readiness = assess_model_readiness(
