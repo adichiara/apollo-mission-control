@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.1-model-profile",
+  "model_profile_id": "apollo13_h2_dynamics_partial",
+  "mission_profile_id": "apollo13_h2",
+  "status": "partial historical model profile; not executable historical validation",
+  "validation_state": "not_historically_validated",
+  "domains": {
+    "mass_properties": {
+      "status": "partial",
+      "note": "Final PC+2 P30 weights and an in-flight updated T+55 RTCC mass-properties lineage are sourced; exact H-2 deck semantics and physical ignition-mass mapping remain unresolved."
+    },
+    "propulsion": {
+      "status": "partial",
+      "note": "PC+2 command timing, terminal blowdown, and mission-configuration nominal full-thrust evidence are sourced; LM-7 delivered thrust, effective Isp, startup transient, and mass-flow history remain unresolved."
+    },
+    "translational_dynamics": {
+      "status": "unresolved",
+      "note": "Generic propagation machinery exists, but Apollo 13 frame, epoch state vector, perturbation scope, and historical acceptance tolerance are not yet frozen."
+    },
+    "tracking_observation": {
+      "status": "unresolved",
+      "note": "Generic range/range-rate observation machinery exists, but Apollo 13 station geometry, measurement path, cadence, latency, and ground-processing configuration are not yet frozen."
+    }
+  },
+  "sources": [
+    "Repository research notes 137-142",
+    "NASA Flight Control Division, Mission Operations Report — Apollo 13, 1970-04-28",
+    "Apollo 13 Mission Report and later official supplement tables",
+    "NASA Apollo Experience Report — Descent Propulsion System"
+  ],
+  "deferred": [
+    "exact H-2 RTCC T+55 mass-property deck semantics",
+    "published Apollo 13 DPS Supplement 2 retrieval",
+    "LM-7 delivered thrust/mass-flow/Isp calibration",
+    "historical PC+2 translational frame and state",
+    "MSFN/RTCC tracking observation configuration"
+  ]
+}

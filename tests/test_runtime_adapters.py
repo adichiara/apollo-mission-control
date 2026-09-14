@@ -49,6 +49,7 @@ class RuntimeAdapterTests(unittest.TestCase):
             scenario_class="test",
             runtime_adapter="apollo11_descent_v1",
             mission_profile_id="apollo11_g",
+            model_profile_id="synthetic_model_profile",
             start_get_s=0.0,
             start_get_hms="00:00:00",
             end_target_get_hms="00:01:00",

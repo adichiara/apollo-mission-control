@@ -16,6 +16,14 @@ class WebAppTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["scenario_id"], "apollo13_pc2_nominal")
         self.assertEqual(response.json()["mission_profile_id"], "apollo13_h2")
+        self.assertEqual(
+            response.json()["model_profile_id"],
+            "apollo13_h2_dynamics_partial",
+        )
+        self.assertEqual(
+            response.json()["model_validation_state"],
+            "not_historically_validated",
+        )
         self.assertEqual(response.json()["runtime_adapter"], "pc2_v1")
         self.assertIn("mission_control_core", response.json()["runtime_capabilities"])
         self.assertIn("pc2_delta_p", response.json()["runtime_capabilities"])
@@ -40,6 +48,10 @@ class WebAppTests(unittest.TestCase):
         self.assertEqual(pc2["mission"], "Apollo 13")
         self.assertEqual(pc2["runtime_adapter"], "pc2_v1")
         self.assertEqual(pc2["mission_profile_id"], "apollo13_h2")
+        self.assertEqual(
+            pc2["model_profile_id"],
+            "apollo13_h2_dynamics_partial",
+        )
         self.assertEqual(pc2["scenario_class"], "historical_flight_reconstruction")
         self.assertTrue(pc2["default"])
         self.assertTrue(pc2["executable"])
@@ -50,6 +62,10 @@ class WebAppTests(unittest.TestCase):
         self.assertEqual(created.status_code, 200)
         self.assertEqual(created.json()["scenario_title"], pc2["title"])
         self.assertEqual(created.json()["mission_profile_id"], "apollo13_h2")
+        self.assertEqual(
+            created.json()["model_profile_id"],
+            "apollo13_h2_dynamics_partial",
+        )
 
         rejected = self.client.post(
             "/api/session/create?scenario_id=does-not-exist"
@@ -61,6 +77,14 @@ class WebAppTests(unittest.TestCase):
         self.assertEqual(status.status_code, 200)
         self.assertEqual(status.json()["scenario_id"], "apollo13_pc2_nominal")
         self.assertEqual(status.json()["mission_profile_id"], "apollo13_h2")
+        self.assertEqual(
+            status.json()["model_profile_id"],
+            "apollo13_h2_dynamics_partial",
+        )
+        self.assertEqual(
+            status.json()["model_validation_state"],
+            "not_historically_validated",
+        )
 
 
     def test_mission_profile_catalog_preserves_documented_nomenclature(self):
@@ -82,6 +106,30 @@ class WebAppTests(unittest.TestCase):
             ],
             "TELMU",
         )
+
+    def test_model_profile_catalog_exposes_domain_readiness(self):
+        response = self.client.get("/api/model-profiles")
+        self.assertEqual(response.status_code, 200)
+        profiles = {
+            item["model_profile_id"]: item
+            for item in response.json()
+        }
+        self.assertIn("apollo13_h2_dynamics_partial", profiles)
+        profile = profiles["apollo13_h2_dynamics_partial"]
+        self.assertEqual(profile["mission_profile_id"], "apollo13_h2")
+        self.assertEqual(
+            profile["validation_state"],
+            "not_historically_validated",
+        )
+        self.assertEqual(
+            profile["domains"]["propulsion"]["status"],
+            "partial",
+        )
+        self.assertEqual(
+            profile["domains"]["translational_dynamics"]["status"],
+            "unresolved",
+        )
+
 
     def test_join_start_advance_and_snapshot(self):
         join = self.client.post(

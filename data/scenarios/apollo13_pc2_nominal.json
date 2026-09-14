@@ -5,6 +5,7 @@
   "scenario_class": "historical_flight_reconstruction",
   "runtime_adapter": "pc2_v1",
   "mission_profile_id": "apollo13_h2",
+  "model_profile_id": "apollo13_h2_dynamics_partial",
   "status": "source-backed nominal fixture used by executable prototype",
   "mission": "Apollo 13",
   "start_get_s": 280500.0,
