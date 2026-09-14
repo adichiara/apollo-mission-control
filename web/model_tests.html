@@ -28,7 +28,7 @@ async function request(path,payload,expectedStatus=200){
 function input(duration=100,thrust=10000,direction=[1,0,0],step=.25){
  return {initial_time_s:0,initial_mass_kg:10000,dry_mass_kg:5000,
  initial_velocity_m_s:[0,0,0],specific_impulse_s:300,max_step_s:step,
- applicability:'synthetic shareable test suite v2',provenance:['Synthetic test values; not Apollo constants'],
+ applicability:'synthetic shareable test suite v3',provenance:['Synthetic test values; not Apollo constants'],
  segments:[{duration_s:duration,thrust_n:thrust,direction}]};
 }
 function check(name,actual,expected,pass,tolerance=null){
@@ -37,7 +37,7 @@ function check(name,actual,expected,pass,tolerance=null){
 $('run').onclick=async()=>{
  if(report&&!confirm('Replace the previous report? Download it first if needed.'))return;
  $('run').disabled=true;$('download').disabled=true;$('copy').disabled=true;
- report={schema_version:1,suite:'dps-numerical-v2',started_at:new Date().toISOString(),
+ report={schema_version:1,suite:'dps-numerical-v3',started_at:new Date().toISOString(),
  scope:'Synthetic numerical/API tests only; not historical validation',build_before:null,build_after:null,cases:[],checks:[],errors:[]};
  try{
  report.build_before=await request('/api/build');
@@ -52,7 +52,14 @@ $('run').onclick=async()=>{
  {duration_s:30,thrust_n:8000,direction:[0,1,0]}];
  const split=input();split.segments=[{duration_s:40,thrust_n:10000,direction:[1,0,0]},{duration_s:60,thrust_n:10000,direction:[1,0,0]}];
  const cutoff=input();cutoff.segments=[{duration_s:80,thrust_n:10000,direction:[1,0,0]},{duration_s:20,thrust_n:0,direction:[0,0,0]}];
- cases.push(['segmented',segmented],['split',split],['cutoff_coast',cutoff]);
+ const ramp=input(10,0,[1,0,0]);ramp.segments=[{duration_s:10,thrust_n:0,end_thrust_n:10000,direction:[1,0,0],regime:'startup'}];
+ const rampSplit=input(10,0,[1,0,0]);rampSplit.segments=[
+ {duration_s:5,thrust_n:0,end_thrust_n:5000,direction:[1,0,0],regime:'startup'},
+ {duration_s:5,thrust_n:5000,end_thrust_n:10000,direction:[1,0,0],regime:'startup'}];
+ const ispBase=input(10,10000,[1,0,0]);ispBase.segments=[{duration_s:10,thrust_n:10000,direction:[1,0,0]}];
+ const ispOverride=input(10,10000,[1,0,0]);ispOverride.segments=[{duration_s:10,thrust_n:10000,direction:[1,0,0],specific_impulse_s:250,regime:'alternate-performance'}];
+ cases.push(['segmented',segmented],['split',split],['cutoff_coast',cutoff],
+ ['linear_ramp',ramp],['linear_ramp_split',rampSplit],['isp_base',ispBase],['isp_override',ispOverride]);
  const values={};
  for(const [name,payload] of cases){
  $('status').textContent='Running '+name;
@@ -78,6 +85,17 @@ $('run').onclick=async()=>{
  check('multi-segment analytic vector',values.segmented.delta_v_m_s,analytic,analytic.every((x,i)=>Math.abs(values.segmented.delta_v_m_s[i]-x)<1e-6),1e-6);
  check('split invariance',v('split'),v('nominal'),Math.abs(v('split')-v('nominal'))<1e-8,1e-8);
  check('cutoff then coast',v('cutoff_coast'),v('early'),Math.abs(v('cutoff_coast')-v('early'))<1e-8&&values.cutoff_coast.elapsed_s===100,1e-8);
+ const rampImpulse=50000,rampMass=10000-rampImpulse/(300*9.80665);
+ check('linear ramp impulse',values.linear_ramp.impulse_n_s,rampImpulse,Math.abs(values.linear_ramp.impulse_n_s-rampImpulse)<1e-8,1e-8);
+ check('linear ramp propellant',values.linear_ramp.final_state.mass_kg,rampMass,Math.abs(values.linear_ramp.final_state.mass_kg-rampMass)<1e-8,1e-8);
+ check('linear ramp split invariance',values.linear_ramp_split,values.linear_ramp,
+ Math.abs(values.linear_ramp_split.impulse_n_s-values.linear_ramp.impulse_n_s)<1e-8&&
+ Math.abs(values.linear_ramp_split.final_state.mass_kg-values.linear_ramp.final_state.mass_kg)<1e-8&&
+ Math.abs(values.linear_ramp_split.delta_v_m_s[0]-values.linear_ramp.delta_v_m_s[0])<1e-10,1e-8);
+ check('segment Isp preserves impulse',[values.isp_base.impulse_n_s,values.isp_override.impulse_n_s],'equal',
+ Math.abs(values.isp_base.impulse_n_s-values.isp_override.impulse_n_s)<1e-8,1e-8);
+ check('lower segment Isp uses more propellant',[values.isp_base.final_state.mass_kg,values.isp_override.final_state.mass_kg],
+ 'override final mass < baseline',values.isp_override.final_state.mass_kg<values.isp_base.final_state.mass_kg);
  const exhausted=input();exhausted.dry_mass_kg=9999;
  const rejected={name:'propellant_limit_rejection',request:exhausted,expected_http_status:400,response:null};report.cases.push(rejected);
  rejected.response=await request('/api/admin/model-proof/dps-burn',exhausted,400);
