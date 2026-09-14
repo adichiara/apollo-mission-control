@@ -1,6 +1,6 @@
 # Landing Radar Guidance-Update Gate Model Proof
 
-Status: **implemented reusable eligibility model; not a radar or state-estimator simulation**
+Status: **implemented reusable eligibility model; paired with a separate generic measurement-quality model; not a radar or state-estimator simulation**
 
 ## Purpose
 
@@ -45,13 +45,18 @@ A scenario script should not equate "radar good" with "state vector immediately 
 - explicit blocking reasons;
 - assumptions/provenance.
 
+## Upstream quality layer
+
+`src/apollo_mission_control/landing_radar_quality.py` now represents Data Good persistence, optional range-scale stability, channel validity, and caller-supplied affine residual reasonableness tests. These remain separate from the update gate so raw measurement qualification is not conflated with permission to enter the estimator.
+
+Apollo 11 historical values are recorded in `data/landing_radar_profiles/apollo11_lm5_landing_radar_partial.json`; no Apollo constants are embedded in either model.
+
 ## Deliberately deferred
 
 - radar beam geometry;
 - surface intersection/terrain model;
 - measurement noise/bias generation;
 - antenna state;
-- reasonability tests;
 - weighting/filter equations;
 - state-vector correction;
 - program-specific guidance-cycle cadence;
@@ -69,7 +74,7 @@ The Apollo 11 Mission Report documents:
 
 Apollo guidance documentation further describes altitude updating after radar incorporation is allowed and velocity use below a preselected speed threshold.
 
-The reusable model contains none of those mission values. A future Apollo 11 runtime/profile may supply them only with explicit source provenance.
+The reusable models contain none of those mission values. The Apollo 11 profile now records the sourced 4-second Data Good persistence, 1-second range-scale stability, 50,000-ft range-update altitude boundary, 2,000-ft/s velocity-update boundary, astronaut approval requirement, and affine reasonableness-rule constants. Historical execution still requires the missing upstream/downstream pieces described below.
 
 ## Validation
 
