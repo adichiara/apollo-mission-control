@@ -29,6 +29,19 @@ class WebClientContractTests(unittest.TestCase):
         self.assertIn("/delta-p-callout", html)
         self.assertNotIn("/api/session/admin/injection", html)
 
+    def test_admin_readiness_controls_are_explicit_reports(self):
+        html = (ROOT / "web" / "admin.html").read_text(encoding="utf-8")
+        self.assertIn("REPORT READY", html)
+        self.assertIn("REPORT NOT READY", html)
+        self.assertIn("controller_readiness_report", html)
+
+    def test_admin_engine_off_override_has_no_dead_item_id_input(self):
+        html = (ROOT / "web" / "admin.html").read_text(encoding="utf-8")
+        self.assertIn("APPLY ENGINE-OFF RESPONSE", html)
+        self.assertIn("No CAPCOM item ID is consumed by this action", html)
+        self.assertNotIn('id="shutdownItem"', html)
+        self.assertNotIn("SHUTDOWN ITEM ID", html)
+
 
 if __name__ == "__main__":
     unittest.main()
