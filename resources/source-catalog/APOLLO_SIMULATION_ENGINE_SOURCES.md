@@ -105,6 +105,32 @@ Virtual AGC has continued adding simulator material. Its 2025 additions include 
 - Library/change log: https://www.ibiblio.org/apollo/changes.html
 - Evidence use: discovery index and scan provenance, not a substitute for the underlying primary documents.
 
+## Grumman LED 500-5 — *LMS Math Model — Equations of Motion, Subsystem Interfaces and Visual Display Drive Equations*
+
+- Date: 22 April 1965.
+- MSC accession: *66-10469.
+- Contract: NAS 9-1100.
+- Archive evidence: NASA/NARA corporate index preserved by Virtual AGC.
+- Evidence use: direct LMS mathematical-model lineage covering equations of motion, subsystem interfaces, and visual-display drive equations.
+- Status: title/date/accession verified in archive index; full report extraction remains pending.
+- Architecture relevance: strongest current direct evidence that the LMS separated dynamic equations, subsystem coupling, and display-drive mathematics.
+
+## Grumman LED 500-16 — *LEM Guidance Computer (LGC) Math Model for the Full Mission Engineering Simulator (FMES) and LEM Mission Simulator (LMS)*
+
+- Date: 8 June 1966.
+- MSC accession: *66-13246.
+- Contract: NAS 9-1100.
+- Archive evidence: NASA/NARA corporate index preserved by Virtual AGC.
+- Evidence use: dedicated LGC model boundary shared by FMES and LMS.
+- Status: title/date/accession verified; full report not yet recovered.
+
+## Grumman 1965 — *Effect of LMS Fifty-Millisecond Integration Steps on Simulated Response of Abort Attitude Control System*
+
+- Archive listing: TechWorks archival-document catalog.
+- Evidence use: numerical-integration fidelity and timestep sensitivity in the LMS.
+- Status: exact report contents not yet extracted.
+- Key boundary: the title supports only that a 50 ms LMS integration step was studied for its effect on simulated AACS response. It does **not** establish a global LMS timestep or require this project to use 50 ms.
+
 ## Apollo Operations Handbooks and subsystem engineering reports
 
 The mission-simulator documents establish the need for causal/closed-loop behavior but do not by themselves provide every subsystem equation or failure consequence. The project should continue using mission-specific or vehicle-specific sources for physical mechanisms, including:
