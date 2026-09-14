@@ -39,6 +39,15 @@ class ScenarioCatalogTests(unittest.TestCase):
         self.assertEqual(fixture["scenario_id"], record.scenario_id)
         self.assertEqual(fixture["title"], record.title)
 
+    def test_apollo11_second_reference_is_cataloged_but_runtime_specific(self):
+        record = get_scenario_record("apollo11_descent_program_alarm_reference")
+        self.assertEqual(record.mission, "Apollo 11")
+        self.assertEqual(record.runtime_adapter, "apollo11_descent_v1")
+        self.assertEqual(record.mission_profile_id, "apollo11_g")
+        self.assertEqual(record.model_profile_id, "apollo11_g_descent_partial")
+        self.assertIn("guidance_computer", record.required_model_domains)
+        self.assertIn("landing_radar", record.required_model_domains)
+
     def test_unknown_scenario_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "unknown scenario_id"):
             get_scenario_record("does-not-exist")
