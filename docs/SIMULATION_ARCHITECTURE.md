@@ -146,6 +146,12 @@ Principle:
 
 > Players do not read authoritative state directly.
 
+### Multi-source guidance monitoring boundary
+
+Apollo 11 powered-descent ground monitoring adds a three-source pattern above pairwise cross-checking: PGNCS, AGS, and MSFN-derived velocity were compared with two-out-of-three logic and premission residual redlines. A mission-neutral consensus model now represents multi-source agreement topology, quorum, freshness, and sources outside consensus without labeling them failed.
+
+This preserves an important historical distinction: a residual discrepancy can arise from initialization/geometry rather than a failed guidance system. Mission-specific fields, redlines, powered-flight processing, and controller response remain profile/scenario work.
+
 ### Independent guidance cross-check boundary
 
 A mission-neutral comparison model now accepts two independently produced guidance observations, caller-selected fields/tolerances, validity, and freshness constraints. It returns agreement/disagreement/indeterminate plus per-field differences without choosing a hidden-truth source or issuing a mission decision.
