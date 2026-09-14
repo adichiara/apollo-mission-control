@@ -311,3 +311,12 @@ The PC+2 Mission Rules have also been converted into a **partial derived audit e
 A primary-source wording conflict is now logged rather than normalized: the Mission Operations Report places the startup-transient exception with the attitude-rate criterion, while the crew readback places it with attitude error. The exact scope remains unresolved.
 
 No station is promoted: this is implementation of documented information boundaries, not new exact console/display evidence. CONTROL, GUIDO, FIDO, RETRO, TELMU, INCO, FLIGHT and CAPCOM remain maturity **B**.
+
+
+## 2026-09-13 — PC+2 inverter re-observation timing boundary
+
+Research note 115 closes the first-playable numeric-dwell ambiguity for the inverter criterion. The Apollo 13 *LM Malfunction Procedures* takes the crew from the sourced inverter-2-to-inverter-1 transfer directly to the `INVERTER lt — off?` decision and provides no numeric crew persistence wait. NASA LM instrumentation documentation independently places inverter-selection transient suppression in LM-5-and-subsequent caution/inhibit logic, applicable to LM-7.
+
+For station modeling, TELMU/CONTROL should therefore receive a **fresh valid post-transfer caution state**, not a controller product generated from an arbitrary 1-second, 2-second, 5-second, or other timer. The exact selection-inhibit duration and exact telemetry/ground-display latency remain unresolved and are not inferred.
+
+This improves the operational rule boundary without adding exact console/display evidence. TELMU and CONTROL remain maturity **B**; exact inverter-warning routing/CRT presentation and independent ground visibility of selector position remain open only if later validation makes them decision-relevant.
