@@ -62,16 +62,7 @@ Mission H-2 telemetry-format entries establish:
 
 The surviving Philco report shows that TDFCB Rev. 4 carried mission-specific telemetry-format and Flight Control products and that its PCMGS material was explicitly checked against PHO-TR155.
 
-**Highest-value components to recover:**
-
-- special LM Flight Control listing;
-- Flight Control listing and compare;
-- PCMGS listing/material;
-- high-speed/wideband requirements;
-- index/master compare;
-- March 1970 Format-30 compare material.
-
-**Use if recovered:** establish Apollo 13/H-2 measurement membership, telemetry formats/cadence, Flight Control routing products, and possibly the exact ground-side evidence path for `GC0071V` / `GC0155F`.
+**Highest-value components to recover:** special LM Flight Control listing; Flight Control listing and compare; PCMGS listing/material; high-speed/wideband requirements; index/master compare; March 1970 Format-30 compare material.
 
 ### A3. PHO-TR155 data-pack family / Mission H-2 Revision N — identified, scope unresolved
 
@@ -79,7 +70,22 @@ PHO-TR474 records **Mission H-2 data-pack Revision N** on 6 March 1970. PHO-TR46
 
 **Current boundary:** Revision N is a valid archival target but cannot be described as TELMU console-09 loading unless the actual package, a PHO-TR155 data-pack key/index, or equivalent authoritative contents record is recovered.
 
-**Highest-value recovery:** a PHO-TR155 contents/index key mapping the pack abbreviations and Revision N scope, followed by Revision N itself.
+### A4. PHO-TR515 — data-pack-to-PHO-TR155 process authority
+
+**Organization:** Philco-Ford  
+**NASA NTRS:** 19730010501  
+**URL:** https://ntrs.nasa.gov/api/citations/19730010501/downloads/19730010501.pdf  
+**Authority:** primary Apollo-era MCC display-format standards/procedures manual.
+
+PHO-TR515 states that the Requirements and Configuration Section gathered display/configuration requirements through **data-pack circulation** and prepared **PHO-TR155, Configuration and Control Document**, with computer listings. It also describes preliminary PHO-TR155 working lists as downstream production inputs, including module-overlay work.
+
+**Use:** establishes the process relationship:
+
+`user/display requirement → data-pack circulation → Requirements & Configuration → PHO-TR155 output → working lists/display implementation`
+
+This tightens note 126: the H-2 data-pack family was upstream/supporting configuration material in the PHO-TR155 workflow, not merely another title for PHO-TR155 itself. The identical 1970-03-06 dates for Revision N and PHO-TR155 Revision C do not establish a one-to-one contents mapping.
+
+**Do not use for:** assigning meanings to the named pack abbreviations, claiming Revision N contains TELMU console-09 loading, or identifying specific measurements inside Revision N.
 
 ## B. Adjacent-mission continuity evidence
 
@@ -108,10 +114,10 @@ Later LM instrumentation documentation preserves the same measurements and gives
 
 Highest priority:
 
-1. **Mission H-2 TDFCB Revision 4**, delivered 1970-01-28, especially its special LM Flight Control and PCMGS listings;
-2. **PHO-TR155, Mission H-2, Revision C**, issued 1970-03-06;
-3. **PHO-TR155 data-pack key/index/contents record** mapping the H-2 pack abbreviations and Revision N scope;
-4. **Mission H-2 data-pack Revision N**, dated 1970-03-06, with its scope left unspecified until recovered;
+1. **Mission H-2 data-pack Revision N or its transmittal/index**, now known to be configuration-input/control material associated with the PHO-TR155 workflow;
+2. **PHO-TR155 Mission H-2 Revision C**, issued 1970-03-06;
+3. a **Requirements and Configuration data-pack definition/key** mapping the H-2 pack abbreviations and pack contents;
+4. **Mission H-2 TDFCB Revision 4**, especially its special LM Flight Control and PCMGS listings;
 5. H-2 TELMU console-09 operational-configuration/loading sheets;
 6. H-2 TELMU console handbook or controller log;
 7. H-2 display-request/MSK inventory naming `GC0071V` and/or `GC0155F`.
@@ -124,9 +130,10 @@ The repository may state that:
 - the Mission H-2 Display System was implemented in accordance with Revision C during March 1970;
 - Revision C implementation required **no equipment configuration changes**;
 - earlier H-2 PHO-TR155 configuration work used multiple named data-pack products and a preliminary IBM card deck/listing;
-- PHO-TR474 later records H-2 data-pack Revision N, but its exact pack scope is unrecovered;
+- PHO-TR515 establishes that data-pack circulation supplied the Requirements and Configuration process that prepared PHO-TR155;
+- PHO-TR155 preliminary working lists then supported downstream display-production work;
+- PHO-TR474 later records H-2 data-pack Revision N, but its exact internal scope remains unrecovered;
 - Mission H-2 telemetry-format configuration was controlled by **TDFCB Revision 4**, delivered 1970-01-28;
-- its mission-specific products included LM Flight Control, PCMGS, high-speed/wideband, index, and compare material;
 - Philco explicitly checked the H-2 Rev. 4 TDFCB PCMGS against PHO-TR155;
 - `GC0071V` and `GC0155F` are source-backed LM inverter-bus electrical measurements;
 - cross-mission evidence supports TELMU station-family ownership.
@@ -141,6 +148,7 @@ The repository must **not** state as Apollo 13 fact, absent recovered H-2 config
 - exact CONTROL equivalent presentation;
 - that `GC0071V` / `GC0155F` are definitely present in a specific unrecovered H-2 TDFCB listing;
 - that Mission H-2 data-pack Revision N is specifically the TELMU console-09 loading package;
+- that Revision N is synonymous with PHO-TR155 Revision C or has a proven one-to-one contents mapping to it;
 - unsupported expansions or contents for the PHO-TR155 pack abbreviations;
 - that the 1126 quarterly console-label changes were specifically TELMU or Revision-C inverter-display changes.
 
@@ -156,3 +164,4 @@ The repository must **not** state as Apollo 13 fact, absent recovered H-2 config
 - `resources/research/124_pc2_pho_tr155_h2_display_system_implementation_boundary.md`
 - `resources/research/125_pc2_h2_tdfcb_rev4_configuration_boundary.md`
 - `resources/research/126_pc2_h2_photr155_data_pack_lineage_boundary.md`
+- `resources/research/127_pc2_photr155_data_pack_process_boundary.md`
