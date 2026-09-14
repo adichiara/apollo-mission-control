@@ -1,7 +1,7 @@
 # PC+2 numerical-validation roadmap — pad-weight epoch
 
 Date: 2026-09-14
-Research notes: `resources/research/137_pc2_pad_weight_epoch_boundary.md`, `resources/research/138_pc2_rtcc_mass_property_deck_boundary.md`, `resources/research/139_pc2_dps_performance_boundary.md`
+Research notes: `resources/research/137_pc2_pad_weight_epoch_boundary.md`, `resources/research/138_pc2_rtcc_mass_property_deck_boundary.md`, `resources/research/139_pc2_dps_performance_boundary.md`, `resources/research/140_apollo13_dps_supplement_publication_boundary.md`
 
 ## Resolved this pass
 
@@ -28,7 +28,7 @@ General DPS design values remain separate from LM-7 PC+2 calibration. In particu
 
 Priority order is now:
 
-1. recover Apollo 13/LM-7-specific DPS thrust, mass-flow, Isp, startup, and blowdown performance data suitable for numerical validation;
+1. recover the published October 1970 Apollo 13 Mission Report Supplement 2, *Descent Propulsion System Final Flight Evaluation*, or equivalent LM-7-specific thrust/mass-flow/Isp/startup/blowdown performance data suitable for numerical validation;
 2. recover the Apollo RTCC mass-properties/T+55 deck semantics and how that deck fed the docked PC+2 DPS solution;
 3. extract original LMS/FMES equations/integration assumptions beyond the current public handbook boundary;
 4. recover sufficient state-vector/trajectory information for postburn propagation and regression.
