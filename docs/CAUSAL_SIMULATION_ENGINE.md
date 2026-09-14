@@ -316,6 +316,17 @@ This layer is implemented in `causal_translational_model.py`. It contains no Ear
 - battery energy/current;
 - consumable rates tied to active equipment.
 
+### Level 4B — tracking observation proof
+
+- authoritative trajectory state remains hidden;
+- internal geometric range/range-rate truth is derived separately;
+- caller-supplied delay, bias, availability, and validity create downstream observations;
+- unavailable observations withhold values;
+- invalid observations may remain visible but are explicitly flagged;
+- no Apollo/MSFN/RTCC tracking constants are embedded.
+
+Implemented in `tracking_observation.py`; see `docs/models/TRACKING_OBSERVATION_PROOF.md`.
+
 ### Level 5 — observation chain
 
 - onboard sensors/indications;
@@ -367,6 +378,6 @@ It now demonstrates, through one model path:
 - correctly ordered early, late, wrong-thrust, wrong-direction, and combined-error consequences;
 - explicit applicability, provenance, assumptions, and a non-historical-validation status.
 
-See `docs/models/DPS_LEVEL1_MODEL_PROOF.md` and `docs/models/TRANSLATIONAL_DYNAMICS_MODEL_PROOF.md`.
+See `docs/models/DPS_LEVEL1_MODEL_PROOF.md`, `docs/models/TRANSLATIONAL_DYNAMICS_MODEL_PROOF.md`, and `docs/models/TRACKING_OBSERVATION_PROOF.md`.
 
 The existing historical PC+2 event model remains the deployed integration scaffold. A separate mission-neutral translational proof now propagates position, velocity, and mass under supplied propulsion plus optional central gravity, providing a reusable trajectory foundation for later scenarios. The proof does not yet mutate live scenario state or generate player-visible products. Historical scenario integration remains gated on source-backed delivered-thrust/mass-flow treatment, mass/depletion convention, frame mapping, gravity/trajectory treatment, and acceptance tolerance appropriate to that scenario. For PC+2 specifically, the model can now accept a recovered startup/blowdown profile without another integrator redesign; no Apollo 13 transient curve or propulsion constant has been inserted.
