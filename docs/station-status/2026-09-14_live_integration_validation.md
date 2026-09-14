@@ -39,19 +39,20 @@ The live run supports the current station architecture:
 - physical response does not fabricate controller telemetry evidence;
 - fresh ground evidence plus crew report can corroborate shutdown for CONTROL without exposing simulator truth.
 
-## Remaining station/player validation
+## Remaining validation sequence
 
-The next unclosed boundary is simultaneous human use of the actual player clients on separate devices. Required observations include:
+Multi-human station play remains unvalidated, but it is **not the next project stage**.
 
-- whether each station can find and interpret its information without facilitator explanation;
-- FLIGHT/CAPCOM coordination in timed play;
-- station information isolation;
-- phone readability and action discoverability;
-- reference-packet findability;
-- five-player compact switching between TELMU↔CONTROL and GUIDO↔FIDO/RETRO;
-- station-qualified readiness/action attribution under real use.
+Before player-interface/human validation, the project will continue through the facilitator/test harness to establish:
 
-Until that is completed, no seven-seat or five-player compact **multi-human** PASS claim is made.
+- simulation-controlled crew responses to CAPCOM rather than a crew player role;
+- causal subsystem behavior in which commands, omissions, and mistakes change authoritative state;
+- numerical propulsion/attitude/trajectory consequences for arbitrary supported burn inputs;
+- electrical-power and consumables consequences;
+- derived instrumentation/telemetry/ground products from those states;
+- deterministic tests of correct, late, omitted, and incorrect actions without pre-authored outcome branches.
+
+After that engine boundary is mature, the separate-device station tests documented elsewhere can resume. Until then, no seven-seat or five-player compact **multi-human** PASS claim is made.
 
 See also:
 
