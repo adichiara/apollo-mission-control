@@ -80,6 +80,14 @@ This extends Decision D-019 rather than replacing it.
 
 ## Proposed software layers
 
+### Model-profile boundary
+
+Mission profiles describe historical mission-era configuration and nomenclature. Numerical/causal **model profiles** are a separate configuration layer.
+
+A model profile records the evidence/readiness state of reusable executable domains such as mass properties, propulsion, translational dynamics, and tracking observation. A scenario names both a mission profile and a model profile; session creation verifies that the model profile belongs to the selected mission profile.
+
+This separation prevents scenario chronology or mission metadata from silently becoming executable physics. Unresolved historical constants remain explicitly unresolved in the model profile until sourced.
+
 ### 1. Session / mission authority
 
 Owns:
