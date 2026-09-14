@@ -1,7 +1,7 @@
 # Roadmap addendum — first playable PC+2 integration
 
 Date: 2026-09-12  
-Status: **CURRENT — repository-side preparation and source-bounded scope work complete; physical human/device execution remains**
+Status: **CURRENT — facilitator-driven deployed nominal and ΔP integration validated; multi-human/device execution remains**
 
 ## Completed checkpoints
 
@@ -24,9 +24,11 @@ Status: **CURRENT — repository-side preparation and source-bounded scope work 
 - [x] primary-source review of Apollo 13 Staff Support Room/backroom functions and explicit first-playable support-room scope boundary;
 - [x] primary-source review of immediate post-burn verification/power-down and explicit first-playable post-burn closure sequence;
 - [x] primary-source review of LM subsystem dependencies and explicit decision-relevant spacecraft-physics boundary;
-- [x] primary-source review of MSFN/CCATS/RTCC support functions and explicit decision-relevant ground-data-processing boundary.
+- [x] primary-source review of MSFN/CCATS/RTCC support functions and explicit decision-relevant ground-data-processing boundary;
+- [x] facilitator-driven deployed nominal PC+2 validation through post-burn/PTC preparation;
+- [x] facilitator-driven deployed synthetic ΔP validation through corroborated CONTROL evidence without hidden engine truth.
 
-See decisions D-016–D-019 and research notes 084–103.
+See decisions D-016–D-019, research notes 084–103, and `docs/progress/2026-09-14_live_nominal_and_delta_p_validation.md`.
 
 ## Continuous-time engine boundary
 
@@ -103,15 +105,19 @@ The synthetic PC+2 fuel/oxidizer ΔP path remains:
 
 The 26 psi exercise is explicitly synthetic. Internal CONTROL→CAPCOM routing is not claimed as historically exact; stale pre-command pressure cannot count; no pressure magnitude is treated as an engine-off threshold; CONTROL evidence does not read hidden `engine_running` truth.
 
+This full chain has now passed deployed facilitator-driven browser validation. The successful final evidence state was `corroborated`, based on a post-command crew report plus a fresh synthetic chamber-pressure observation, with no authoritative engine-off verdict exposed to CONTROL.
+
 ## Facilitator boundary
 
 The normal `/` client contains station-authorized controller operations only. `/admin` contains exercise-control functions. Configured deployments require the facilitator credential for exercise-wide operations. This is modern project infrastructure, not Apollo-era authentication reconstruction.
 
 ## Live-device / human-play boundary
 
-Research notes 090 and 095–103 plus the testing protocol/preparation/reference/report files define the remaining physical validation. Players receive source-bounded station responsibilities/rules/procedures while remaining blind to nonnominal branch timing/content, hidden state, another station's private evidence, and intended diagnosis.
+The facilitator-driven deployed integration boundary is closed for the nominal PC+2 and synthetic ΔP paths. The remaining live boundary is **multi-human station play**.
 
-Nominal PC+2 comes first and must continue through the immediate post-burn transition; synthetic ΔP follows only after nominal coordination is coherent.
+Research notes 090 and 095–103 plus the testing protocol/preparation/reference/report files define that validation. Players receive source-bounded station responsibilities/rules/procedures while remaining blind to nonnominal branch timing/content, hidden state, another station's private evidence, and intended diagnosis.
+
+Nominal PC+2 comes first and must continue through the immediate post-burn transition; synthetic ΔP follows to test human recognition, communication, and response rather than first-time software integration.
 
 ## Compact five-player boundary
 
@@ -131,29 +137,31 @@ Research note 100 resolves open question 19 for the current first playable. Apol
 
 ## Active priorities
 
-### A. Execute live multi-device validation
+### A. Preserve and improve the validation harness
 
-1. brief every player from `PC2_PLAYER_PREPARATION.md`, provide `PC2_PLAYER_REFERENCE_PACKET.md`, record preparation completion, and preserve scenario blindness;
-2. run one facilitator console plus separate real-phone/browser clients against one dedicated server;
-3. execute identity/rejoin/authority/isolation checks;
-4. complete nominal PC+2 through note-101 post-burn verification/power-down/PTC preparation without hidden facilitator coaching;
-5. assess FLIGHT/CAPCOM handoff, station readability, packet findability, staged final-load handoffs, and whether the post-burn transition needs more station-specific interaction;
-6. execute the synthetic ΔP run after nominal coordination is coherent;
-7. record incidents with preparation/station/build/GET/audit provenance;
-8. reopen spacecraft or ground-data-processing scope only if play exposes a sourced decision whose causal/data-path mechanism is absent.
+1. repair confirmed test-console/runtime defects and add regression coverage;
+2. keep the facilitator/test screen as the primary development surface;
+3. do not begin player-facing station UI reconstruction yet.
 
-### B. Execute five-player compact human validation
+### B. Replace scripted consequences with a causal simulation core
 
-1. use FLIGHT, CAPCOM, LM SYSTEMS, FLIGHT DYNAMICS, and INCO simultaneously;
-2. practice substation switching before timed play without scenario-specific disclosure;
-3. provide separate original-station reference sheets;
-4. observe TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure;
-5. verify readiness/action attribution and audit provenance stay tied to original stations;
-6. classify usability/instruction defects separately from historical/research defects.
+1. model the crew as a simulation-controlled actor responding to CAPCOM through structured/canned acknowledgements and supported cockpit actions;
+2. separate scenario initial conditions/failure injections from authoritative subsystem evolution;
+3. make supported actions alter subsystem state rather than select a pre-authored outcome branch;
+4. derive instrumentation, telemetry, ground products, and crew reports from resulting state while preserving information boundaries.
 
-### C. Reopen research only from evidence
+### C. Research and implement the first numerical subsystem chain
 
-Reopen historical, physical-model, or ground-processing work only for concrete information/procedure/authority/support/causal/data-path dependencies exposed by validation. Player difficulty alone is not sufficient.
+1. prioritize Apollo LMS/AMS mathematical-model, malfunction, instructor, output-dictionary, and validation/correlation documentation;
+2. extract state variables, equations, subsystem interfaces, integration/update assumptions, and failure-insertion boundaries;
+3. cross-check simulator abstractions against Apollo 13 LM-7/CSM vehicle documentation before adopting mission-specific constants;
+4. implement propulsion + attitude/thrust direction + trajectory as the first numerical proof chain;
+5. validate correct, late, omitted, and incorrect burn commands through the existing test screen;
+6. follow with electrical power and consumables, then connect those states to instrumentation/telemetry/controller products.
+
+### D. Defer human/player-interface validation
+
+The seven-seat/five-player play protocols, packets, and compact-role work remain valid, but execution is deliberately deferred until the causal engine and simulated-crew loop are mature enough that player actions can produce realistic emergent consequences.
 
 ## Explicitly deferred
 
@@ -181,4 +189,6 @@ Reopen historical, physical-model, or ground-processing work only for concrete i
 
 ## Current success criterion
 
-A rejoin-safe, phone-accessible, continuously running authoritative mission in which prepared station players receive only source-bounded operational information/actions, a separately authorized facilitator controls exercise-wide functions, the nominal load process remains staged, successful PC+2 continues through a source-bounded post-burn verification/power-down transition, spacecraft physics and ground processing remain causal but scenario-bounded, compact play preserves original-station identities, and omitted historical support-room functions are not replaced with invented analysis. Physical seven-seat and five-player human/device execution remain the next unclosed PASS boundaries.
+The repository has now demonstrated a rejoin-safe, phone-accessible, continuously running authoritative mission in deployed facilitator-driven validation: the nominal PC+2 sequence reaches the source-bounded post-burn/PTC transition, and the synthetic ΔP branch reaches corroborated controller evidence while preserving the separation between observation, communication, crew action, physical response, and controller-visible evidence.
+
+The next unclosed PASS boundary is causal-engine behavior under the validation harness: arbitrary supported actions must propagate through subsystem state into realistic downstream mission and controller-visible consequences. Physical seven-seat and five-player compact multi-human PASS claims remain deliberately deferred.

@@ -18,11 +18,13 @@ Mission H-2 display/telemetry provenance has now been tightened through research
 
 ## Phase 2 — First playable mission/scenario
 
-**Status:** implemented to first-playable integration level; physical human/device execution remains.
+**Status:** implemented and facilitator-driven live integration validated; multi-human/device play remains.
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, beginning near **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
 The primary research chain now runs through notes **048–126**. Notes 098–103 establish the final-load, support-room, post-burn, spacecraft-model, and ground-data-processing boundaries. Notes 104–126 further constrain the PC+2 observation and shutdown-rule evidence paths, including inlet-pressure and thrust-monitor semantics, attitude-transient handling, inverter transfer/re-observation, ground inverter telemetry, TELMU station continuity, crew-local electrical monitoring, H-2 PHO-TR155 provenance/implementation, mission-specific H-2 TDFCB telemetry configuration, and the PHO-TR155 data-pack lineage boundary.
+
+The deployed browser runtime has now completed a facilitator-driven nominal PC+2 pass through the immediate post-burn/PTC-preparation sequence and a separate synthetic ΔP contingency pass through CONTROL corroborated shutdown evidence. See `docs/progress/2026-09-14_live_nominal_and_delta_p_validation.md`.
 
 Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
@@ -36,7 +38,7 @@ This is a project adaptation, not a historical staffing claim. Decision **D-018*
 
 ## Phase 3 — Display and console reconstruction
 
-**Status:** minimum PC+2 player-presentation checkpoint complete.
+**Status:** minimum PC+2 player-presentation checkpoint complete; player-facing usability/presentation refinement remains.
 
 First-pass views exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM. Exact semantics are retained where sourced; project renderings remain labeled where exact routing/layout is unresolved; **hidden integrity does not leak**, and missing fields are not turned into invented telemetry failures.
 
@@ -44,7 +46,7 @@ For TELMU inverter monitoring, source-backed `GC0071V` / `GC0155F` evidence may 
 
 ## Phase 4 — Authoritative simulation model
 
-**Status:** first-playable authoritative model, compact transport/client integration, staged final-load workflow, spacecraft-model boundary, and ground-data-processing boundary established; physical multi-device execution remains.
+**Status:** first-playable authoritative model, compact transport/client integration, staged final-load workflow, spacecraft-model boundary, ground-data-processing boundary, and facilitator-driven live nominal/contingency integration validated; multi-human execution remains.
 
 Implemented architecture includes station-specific projections, explicit injection/action/communication/decision/physical/evidence layers, `PC2Session`, continuous mission time, readiness/FLIGHT decisions, CAPCOM queue/transmission, audit logging, facilitator authority, browser rejoin, compact station-set ownership, and staged final PC+2 solution/uplink state.
 
@@ -58,7 +60,7 @@ The synthetic ΔP branch remains explicitly non-historical and source-bounded:
 
 `source observation → CONTROL product/rule → CONTROL decision → CAPCOM queue/transmission → crew receipt → crew shutdown command → physical DPS response → crew report / fresh GQ6510P observation → CONTROL evidence assessment`
 
-The 26 psi exercise is explicitly non-historical. No unsupported internal routing, **automatic crew compliance**, response timing, telemetry synthesis, **binary chamber-pressure threshold**, or **hidden engine-off truth** is added.
+The 26 psi exercise is explicitly non-historical. No unsupported internal routing, **automatic crew compliance**, response timing, telemetry synthesis, **binary chamber-pressure threshold**, or **hidden engine-off truth** is added. This chain has now passed live deployed facilitator-driven validation through `state = corroborated`.
 
 Compact-role implementation preserves original station identities end to end:
 
@@ -66,7 +68,7 @@ Compact-role implementation preserves original station identities end to end:
 
 ## Phase 5 — Mission Control data path
 
-**Status:** first-slice architecture and ground-processing scope established.
+**Status:** first-slice architecture and ground-processing scope established; core ΔP information path live-validated.
 
 The project preserves:
 
@@ -90,7 +92,7 @@ Exact Cartesian vector values, RTCC/CCATS command internals, exact controller ke
 
 ## Phase 6 — Procedures and flight rules
 
-**Status:** PC+2 core rule set operational; immediate post-burn boundary source-defined; inverter observation path substantially constrained.
+**Status:** PC+2 core rule set operational; immediate post-burn boundary source-defined; inverter observation path substantially constrained; ΔP shutdown procedure live-validated.
 
 Implemented/evaluable: ISS warning + program alarm path, chamber-pressure observation, >25 psi ΔP ground callout, attitude criteria, inverter path, restart eligibility/sequence, crew STOP/off path, shutdown/restart evidence architecture, final state-vector/target-load staging, and final FLIGHT GO/NO-GO.
 
@@ -106,7 +108,7 @@ Still intentionally unresolved where evidence is insufficient: exact onboard 77-
 
 ## Phase 7 — Simulation scenarios / SimSup
 
-**Status:** repository-side first-playable preparation complete; physical validation remains.
+**Status:** repository-side first-playable preparation and facilitator-driven live scenario integration complete; multi-human play remains.
 
 Live-play protocol, structured evidence/debrief capture, scenario-blind player preparation/reference packet, facilitator separation, compact-mode integration, staged final-load workflow, backroom scope rule, source-bounded post-burn closure, decision-relevant spacecraft-model scope, and functional ground-data-processing scope are documented.
 
@@ -114,18 +116,18 @@ Modern HTTP/browser/localStorage/token/report/preparation/reference-packet mecha
 
 ## Immediate next work
 
-The primary remaining validation boundary is **physical human/device execution**. Historical research should continue only when it closes a concrete PC+2 evidence gap or recovers unusually high-value mission-specific material.
+The deployed nominal and ΔP paths are validated, but the project is **not yet at player-interface or multi-human playtest stage**. The next architectural boundary is replacing scripted outcome progression with a reusable causal simulation core that can respond realistically to arbitrary valid, late, omitted, or incorrect controller/crew actions.
 
-1. Prepare participants with `docs/testing/PC2_PLAYER_PREPARATION.md` and `PC2_PLAYER_REFERENCE_PACKET.md`; preserve scenario blindness.
-2. Execute `PC2_LIVE_PLAYTEST_PROTOCOL.md` with separate real-phone/browser clients and one facilitator console: nominal PC+2 first, synthetic ΔP second.
-3. In the nominal run, continue past engine cutoff through the note-101 post-burn assessment/power-down/PTC-preparation transition; do not treat cutoff as scenario completion.
-4. Record incidents with `PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md`, retaining preparation/GET/station/device/build/audit provenance.
-5. Validate packet findability and clarity separately from historical correctness.
-6. Exercise the approved five-player compact configuration with simultaneous clients, especially TELMU↔CONTROL and GUIDO↔FIDO-RETRO switching.
-7. Verify station-qualified readiness/action attribution and information isolation in facilitator audit output.
-8. Repair reproducible network/mobile/presentation/instruction defects and add regression coverage.
-9. Continue the archival search for **Mission H-2 TDFCB Revision 4** (especially special LM Flight Control and PCMGS listings), **PHO-TR155 Mission H-2 Revision C**, and a **PHO-TR155 data-pack key/index or Revision N package** that establishes the pack scope; do not assume Revision N is TELMU-specific and do not block physical validation on recovery.
-10. Reopen other historical, spacecraft-model, or ground-processing research only when validation exposes a concrete missing procedure, authority, information, terminology, display, support-room product, player-count dependency, causal spacecraft mechanism, or ground-data-path dependency.
+1. Complete the remaining test-console cleanup and preserve the facilitator/test interface as the primary validation surface.
+2. Formalize the flight crew as a simulation-controlled actor that receives CAPCOM messages, gives bounded/canned acknowledgements and reports, and performs supported cockpit actions through the same authoritative simulation state used by the vehicle model.
+3. Continue targeted research into Apollo LMS/AMS mathematical-model, subsystem-model, malfunction-insertion, instructor, output-dictionary, and validation/correlation documentation.
+4. Extract the original simulator's useful abstraction boundaries: state variables, equations, subsystem coupling, integration/update assumptions, failure insertion points, and separation of physical truth from indications/telemetry.
+5. Build the first narrow causal numerical slice through the existing test screen. The preferred proof chain is propulsion + attitude/thrust direction + trajectory, so different burn times, durations, throttle states, and attitudes produce computed downstream consequences rather than selected branches.
+6. Add consequence tests for correct, late, omitted, and wrong actions. Scenario files should define initial conditions, plans, and failures; they should not enumerate every possible outcome.
+7. Follow with electrical-power and consumables models, then extend instrumentation/telemetry/ground-product derivation from those physical/logical states.
+8. Cross-check simulator-era abstractions against Apollo 13 LM-7/CSM configuration sources before importing constants or mission-specific behavior.
+9. Keep player-facing station UI reconstruction, multi-human seven-seat/five-player playtesting, and packet-usability work deferred until the causal engine and simulated-crew loop are sufficiently mature.
+10. Continue mission-specific archival work only where it materially constrains the causal engine, supported actions/failures, or controller-visible consequences.
 
 ## Explicitly deferred
 
@@ -157,4 +159,6 @@ The primary remaining validation boundary is **physical human/device execution**
 
 Automated coverage includes continuous-clock/event rules, crew response, shutdown evidence, player/admin separation, facilitator authority, multi-client integration, multi-station ownership, compact HTTP/browser contracts, and staged PC+2 final-load transitions/station products.
 
-Research notes 095–126 and associated testing/scope documentation improve physical-run evidence quality and scenario closure but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
+Facilitator-driven validation against the deployed browser application has now passed both the complete nominal PC+2 sequence through post-burn/PTC preparation and the synthetic ΔP branch through corroborated CONTROL evidence without hidden engine truth. See `docs/progress/2026-09-14_live_nominal_and_delta_p_validation.md`.
+
+Physical seven-seat and five-player compact **multi-human** PASS claims remain unmade.
