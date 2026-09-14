@@ -28,9 +28,15 @@ from .crew_response import (
     command_dps_shutdown_from_callout,
     record_crew_receipt,
 )
-from .pc2_nominal import load_fixture
 from .pc2_session import PC2Session
 from .realtime_clock import RealtimeSessionClock
+from .scenario_catalog import (
+    DEFAULT_SCENARIO_ID,
+    ScenarioRecord,
+    discover_scenarios,
+    get_scenario_record,
+    load_scenario_fixture,
+)
 from .scenario_injection import EvidenceClass, StateInjection
 from .session_shutdown_evidence import (
     assess_session_shutdown_evidence,
@@ -38,19 +44,20 @@ from .session_shutdown_evidence import (
 )
 
 ROOT = Path(__file__).resolve().parents[2]
-FIXTURE_PATH = ROOT / "data" / "scenarios" / "apollo13_pc2_nominal.json"
 WEB_ROOT = ROOT / "web"
+SUPPORTED_RUNTIME_ADAPTERS = frozenset({"pc2_v1"})
 FACILITATOR_TOKEN_ENV = "APOLLO_FACILITATOR_TOKEN"
 
 app = FastAPI(
     title="Apollo Mission Control",
-    description="First playable Apollo 13 PC+2 Mission Control session API",
+    description="Reusable Apollo Mission Control simulation API",
     version="0.1.0",
 )
 
 _lock = RLock()
 _session: PC2Session | None = None
 _clock: RealtimeSessionClock | None = None
+_active_scenario: ScenarioRecord | None = None
 
 
 class JoinRequest(BaseModel):
@@ -202,7 +209,27 @@ def _status_payload(session: PC2Session) -> dict[str, Any]:
         "pause_reason": session.pause_reason,
         "assigned_stations": sorted(session.assigned_stations),
         "available_stations": list(session.available_stations),
+        "scenario_id": (
+            _active_scenario.scenario_id if _active_scenario is not None else None
+        ),
+        "mission": (
+            _active_scenario.mission if _active_scenario is not None else None
+        ),
+        "scenario_title": (
+            _active_scenario.title if _active_scenario is not None else None
+        ),
     }
+
+
+def _create_runtime(record: ScenarioRecord) -> PC2Session:
+    """Instantiate the currently supported runtime adapter for one scenario."""
+
+    if record.runtime_adapter != "pc2_v1":
+        raise ValueError(
+            f"scenario {record.scenario_id} uses unsupported runtime adapter "
+            f"{record.runtime_adapter!r}"
+        )
+    return PC2Session.create(load_scenario_fixture(record))
 
 
 def _join_or_rejoin_set(
@@ -243,14 +270,31 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
+@app.get("/api/scenarios")
+def list_scenarios() -> list[dict[str, object]]:
+    records = _domain_call(discover_scenarios)
+    return [
+        {
+            **record.to_public_dict(),
+            "default": record.scenario_id == DEFAULT_SCENARIO_ID,
+            "executable": record.runtime_adapter in SUPPORTED_RUNTIME_ADAPTERS,
+        }
+        for record in records
+    ]
+
+
 @app.post("/api/session/create", dependencies=[Depends(_facilitator_guard)])
-def create_session() -> dict[str, Any]:
-    global _session, _clock
+def create_session(
+    scenario_id: str = DEFAULT_SCENARIO_ID,
+) -> dict[str, Any]:
+    global _session, _clock, _active_scenario
     with _lock:
-        fixture = load_fixture(FIXTURE_PATH)
-        _session = PC2Session.create(fixture)
-        _clock = RealtimeSessionClock(_session)
-        return _status_payload(_session)
+        record = _domain_call(lambda: get_scenario_record(scenario_id))
+        session = _domain_call(lambda: _create_runtime(record))
+        _session = session
+        _clock = RealtimeSessionClock(session)
+        _active_scenario = record
+        return _status_payload(session)
 
 
 @app.get("/api/session/status")
