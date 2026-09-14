@@ -208,6 +208,19 @@ The current facilitator-driven crew receipt/shutdown/report buttons are validati
 
 See `resources/research/127_causal_simulation_engine_and_crew_model.md`.
 
+## D-021 — PC+2 is a validation anchor, not the simulation's scope boundary
+
+**Status:** Accepted  
+**Date:** 2026-09-14
+
+Apollo 13 PC+2 remains the first implementation/validation slice because it is unusually well documented and provides a coherent end-to-end test of Mission Control information flow, controller decisions, crew interaction, and causal spacecraft response.
+
+It does **not** define the eventual scenario scope of the simulator.
+
+The reusable platform is intended to support a range of historically grounded Apollo simulator scenarios across different mission phases, spacecraft configurations, controller workloads, and failure/contingency types. Core simulation code should therefore avoid embedding assumptions that are only true of PC+2 when those assumptions can instead live in mission/scenario profiles or subsystem configuration.
+
+PC+2-specific research may be used to validate a reusable mechanism. It should not be treated as a reason to model only mechanisms needed by PC+2 indefinitely.
+
 ## Not yet decided
 
 The following are deliberately not decisions:
