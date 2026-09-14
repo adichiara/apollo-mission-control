@@ -82,6 +82,84 @@ class CausalDPSModelTests(unittest.TestCase):
         second = self.run_profile(profile)
         self.assertEqual(first, second)
 
+
+    def test_linear_thrust_profile_has_expected_impulse_and_propellant_use(self):
+        result = self.run_profile([
+            BurnSegment(
+                10.0,
+                0.0,
+                (1.0, 0.0, 0.0),
+                end_thrust_n=10_000.0,
+                regime="startup",
+            )
+        ])
+        expected_impulse = 50_000.0
+        expected_propellant = expected_impulse / (300.0 * STANDARD_GRAVITY_M_S2)
+
+        self.assertAlmostEqual(result.impulse_n_s, expected_impulse, places=9)
+        self.assertAlmostEqual(result.propellant_used_kg, expected_propellant, places=9)
+        self.assertGreater(result.delta_v_m_s[0], 0.0)
+
+    def test_split_linear_profile_is_invariant_at_same_step_grid(self):
+        whole = self.run_profile([
+            BurnSegment(
+                10.0,
+                0.0,
+                (1.0, 0.0, 0.0),
+                end_thrust_n=10_000.0,
+                regime="startup",
+            )
+        ])
+        split = self.run_profile([
+            BurnSegment(
+                5.0,
+                0.0,
+                (1.0, 0.0, 0.0),
+                end_thrust_n=5_000.0,
+                regime="startup",
+            ),
+            BurnSegment(
+                5.0,
+                5_000.0,
+                (1.0, 0.0, 0.0),
+                end_thrust_n=10_000.0,
+                regime="startup",
+            ),
+        ])
+
+        self.assertAlmostEqual(whole.impulse_n_s, split.impulse_n_s, places=9)
+        self.assertAlmostEqual(
+            whole.final_state.mass_kg,
+            split.final_state.mass_kg,
+            places=9,
+        )
+        self.assertAlmostEqual(
+            whole.delta_v_m_s[0],
+            split.delta_v_m_s[0],
+            places=12,
+        )
+
+    def test_segment_specific_isp_changes_mass_not_impulse(self):
+        baseline = self.run_profile([
+            BurnSegment(10.0, 10_000.0, (1.0, 0.0, 0.0))
+        ])
+        lower_isp = self.run_profile([
+            BurnSegment(
+                10.0,
+                10_000.0,
+                (1.0, 0.0, 0.0),
+                specific_impulse_s=250.0,
+                regime="alternate-performance",
+            )
+        ])
+
+        self.assertAlmostEqual(baseline.impulse_n_s, lower_isp.impulse_n_s, places=9)
+        self.assertLess(lower_isp.final_state.mass_kg, baseline.final_state.mass_kg)
+        self.assertGreater(
+            lower_isp.delta_v_magnitude_m_s,
+            baseline.delta_v_magnitude_m_s,
+        )
+
     def test_rejects_invalid_inputs_and_dry_mass_violation(self):
         with self.assertRaisesRegex(ValueError, "non-zero"):
             self.run_profile([BurnSegment(1.0, 1.0, (0.0, 0.0, 0.0))])
@@ -91,6 +169,33 @@ class CausalDPSModelTests(unittest.TestCase):
                 [BurnSegment(10.0, 10_000.0, (1.0, 0.0, 0.0))],
                 DPSModelConfig(specific_impulse_s=1.0, dry_mass_kg=9.0),
             )
+        with self.assertRaisesRegex(ValueError, "end_thrust_n"):
+            self.run_profile([
+                BurnSegment(
+                    1.0,
+                    0.0,
+                    (1.0, 0.0, 0.0),
+                    end_thrust_n=-1.0,
+                )
+            ])
+        with self.assertRaisesRegex(ValueError, "direction must be non-zero"):
+            self.run_profile([
+                BurnSegment(
+                    1.0,
+                    0.0,
+                    (0.0, 0.0, 0.0),
+                    end_thrust_n=1.0,
+                )
+            ])
+        with self.assertRaisesRegex(ValueError, "specific_impulse_s"):
+            self.run_profile([
+                BurnSegment(
+                    1.0,
+                    1.0,
+                    (1.0, 0.0, 0.0),
+                    specific_impulse_s=0.0,
+                )
+            ])
 
 
 if __name__ == "__main__":
