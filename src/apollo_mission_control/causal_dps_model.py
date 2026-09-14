@@ -1,13 +1,17 @@
-"""Deterministic Level-1 DPS maneuver model proof.
+"""Deterministic Level-1 propulsion maneuver model proof.
 
 This module is intentionally mission-neutral. Callers must supply every
-vehicle/mission parameter; no Apollo 13 constant is frozen here. The model
+vehicle/mission parameter; no Apollo mission constant is frozen here. The model
 proves the causal contract
 
-    thrust history + mass + thrust direction -> mass and vector delta-v
+    delivered thrust history + mass + thrust direction -> mass and vector delta-v
 
-without gravity, position propagation, engine transients, attitude dynamics,
-gimbal dynamics, pressurization, or telemetry modeling.
+without gravity, position propagation, attitude dynamics, gimbal dynamics,
+pressurization physics, or telemetry modeling.
+
+A segment may use constant thrust or a linear start-to-end thrust profile. The
+latter is a generic numerical input mechanism for sourced startup, shutdown, or
+blowdown histories; it is not itself an engine transient model.
 
 Units are SI throughout.
 """
@@ -52,23 +56,58 @@ def _unit_direction(value: Iterable[float], *, thrust_n: float) -> Vector3:
 
 @dataclass(frozen=True)
 class BurnSegment:
-    """One constant-command portion of a burn profile."""
+    """One supplied portion of a delivered-thrust profile.
+
+    ``thrust_n`` is the segment-start thrust. If ``end_thrust_n`` is omitted,
+    thrust is constant. If supplied, thrust is linearly interpolated from start
+    to end over the segment. ``specific_impulse_s`` optionally overrides the
+    run-wide value for this segment. ``regime`` is provenance/interpretation
+    metadata only; it does not select hidden physics.
+    """
 
     duration_s: float
     thrust_n: float
     direction: Vector3
+    end_thrust_n: float | None = None
+    specific_impulse_s: float | None = None
+    regime: str = "regulated"
 
     def validated(self) -> "BurnSegment":
         duration_s = _finite(self.duration_s, "duration_s")
         thrust_n = _finite(self.thrust_n, "thrust_n")
+        end_thrust_n = (
+            thrust_n
+            if self.end_thrust_n is None
+            else _finite(self.end_thrust_n, "end_thrust_n")
+        )
+        specific_impulse_s = (
+            None
+            if self.specific_impulse_s is None
+            else _finite(self.specific_impulse_s, "specific_impulse_s")
+        )
+        regime = str(self.regime).strip()
+
         if duration_s < 0.0:
             raise ValueError("duration_s must be non-negative")
         if thrust_n < 0.0:
             raise ValueError("thrust_n must be non-negative")
+        if end_thrust_n < 0.0:
+            raise ValueError("end_thrust_n must be non-negative")
+        if specific_impulse_s is not None and specific_impulse_s <= 0.0:
+            raise ValueError("specific_impulse_s must be positive when supplied")
+        if not regime:
+            raise ValueError("regime must not be empty")
+
         return BurnSegment(
             duration_s=duration_s,
             thrust_n=thrust_n,
-            direction=_unit_direction(self.direction, thrust_n=thrust_n),
+            direction=_unit_direction(
+                self.direction,
+                thrust_n=max(thrust_n, end_thrust_n),
+            ),
+            end_thrust_n=end_thrust_n,
+            specific_impulse_s=specific_impulse_s,
+            regime=regime,
         )
 
 
@@ -82,11 +121,12 @@ class DPSModelConfig:
     applicability: str = "generic model proof; not mission validated"
     provenance: tuple[str, ...] = ()
     assumptions: tuple[str, ...] = (
-        "constant thrust and direction within each segment",
-        "specific impulse constant for the run",
+        "thrust is constant within a segment unless an end thrust is supplied; then it is linearly interpolated",
+        "thrust direction is constant within each segment",
+        "specific impulse is constant for the run unless a segment override is supplied",
         "no gravity or external forces",
         "no position or attitude dynamics",
-        "instantaneous segment transitions",
+        "segment boundaries are exact; no implicit engine transient physics is added",
     )
 
     def validated(self) -> "DPSModelConfig":
@@ -174,11 +214,16 @@ def simulate_dps_maneuver(
     segments: Iterable[BurnSegment],
     config: DPSModelConfig,
 ) -> ManeuverResult:
-    """Integrate thrust acceleration and propellant depletion with midpoint steps.
+    """Integrate supplied thrust history and propellant depletion.
 
-    Segment boundaries are exact. Within a segment, mass decreases linearly and
-    acceleration is evaluated at midpoint mass. Reducing max_step_s must
-    converge toward the constant-specific-impulse rocket-equation result.
+    Segment boundaries are exact. Constant-thrust segments retain the previous
+    Level-1 behavior. When an end thrust is supplied, thrust is evaluated by
+    linear interpolation at each integration-step midpoint. Mass flow follows
+    the supplied effective specific impulse, and acceleration is evaluated at
+    midpoint mass.
+
+    This is a generic numerical profile mechanism, not an engine transient,
+    pressurization, or blowdown physics model.
     """
 
     checked_config = config.validated()
@@ -196,25 +241,42 @@ def simulate_dps_maneuver(
     for segment in checked_segments:
         if segment.duration_s == 0.0:
             continue
+
         step_count = max(1, ceil(segment.duration_s / checked_config.max_step_s))
         dt = segment.duration_s / step_count
-        mass_flow_kg_s = (
+        end_thrust_n = (
             segment.thrust_n
-            / (checked_config.specific_impulse_s * STANDARD_GRAVITY_M_S2)
+            if segment.end_thrust_n is None
+            else segment.end_thrust_n
         )
-        for _ in range(step_count):
+        specific_impulse_s = (
+            checked_config.specific_impulse_s
+            if segment.specific_impulse_s is None
+            else segment.specific_impulse_s
+        )
+
+        for step_index in range(step_count):
+            midpoint_fraction = (step_index + 0.5) / step_count
+            thrust_n = segment.thrust_n + (
+                end_thrust_n - segment.thrust_n
+            ) * midpoint_fraction
+            mass_flow_kg_s = thrust_n / (
+                specific_impulse_s * STANDARD_GRAVITY_M_S2
+            )
             next_mass_kg = mass_kg - mass_flow_kg_s * dt
             if next_mass_kg < checked_config.dry_mass_kg:
                 raise ValueError(
                     "burn would consume mass below the configured dry_mass_kg"
                 )
             midpoint_mass_kg = (mass_kg + next_mass_kg) / 2.0
-            acceleration_scale = segment.thrust_n / midpoint_mass_kg
+            acceleration_scale = thrust_n / midpoint_mass_kg
             for axis in range(3):
-                velocity[axis] += segment.direction[axis] * acceleration_scale * dt
+                velocity[axis] += (
+                    segment.direction[axis] * acceleration_scale * dt
+                )
             mass_kg = next_mass_kg
             elapsed_s += dt
-            impulse_n_s += segment.thrust_n * dt
+            impulse_n_s += thrust_n * dt
             integration_steps += 1
 
     final_velocity = tuple(velocity)

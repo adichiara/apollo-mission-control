@@ -350,10 +350,13 @@ It now demonstrates, through one model path:
 - thrust-driven mass depletion and impulse;
 - prescribed-direction vector Delta-V;
 - deterministic fixed-step midpoint integration;
+- constant-thrust and caller-supplied linear start-to-end thrust segments;
+- optional segment-specific effective-Isp overrides;
+- explicit caller-supplied regime labels such as startup/regulated/blowdown without hidden regime physics;
 - convergence as the step is refined;
 - correctly ordered early, late, wrong-thrust, wrong-direction, and combined-error consequences;
 - explicit applicability, provenance, assumptions, and a non-historical-validation status.
 
 See `docs/models/DPS_LEVEL1_MODEL_PROOF.md`.
 
-The existing historical PC+2 event model remains the deployed integration scaffold. The proof does not yet mutate live scenario state or generate player-visible products. Historical PC+2 integration remains gated on primary-source delivered-thrust/mass-flow treatment (including startup and blowdown), exact mass/depletion convention, frame mapping, gravity/trajectory treatment, and acceptance tolerance.
+The existing historical PC+2 event model remains the deployed integration scaffold. The proof does not yet mutate live scenario state or generate player-visible products. Historical scenario integration remains gated on source-backed delivered-thrust/mass-flow treatment, mass/depletion convention, frame mapping, gravity/trajectory treatment, and acceptance tolerance appropriate to that scenario. For PC+2 specifically, the model can now accept a recovered startup/blowdown profile without another integrator redesign; no Apollo 13 transient curve or propulsion constant has been inserted.
