@@ -213,11 +213,11 @@ Existing Apollo 13 evidence provides a useful regression case:
 
 - PC+2 TIG: 79:27:38.30 GET;
 - actual burn duration: approximately 263.82 s;
-- staged throttle profile beginning at low thrust, then 40 percent, then maximum thrust;
+- staged throttle-command profile beginning at low thrust, then 40 percent, then maximum thrust; the terminal portion was completed in blowdown after pressurization isolation;
 - executed PGNS velocity components are documented;
 - resultant maneuver magnitude and postburn residual evidence are documented;
 - Apollo 13 documentation gives final-PAD CSM/LM weights and separately shows that RTCC LM-burn mass-property decks had been updated to a T+55 set; premission mass properties were explicitly rejected as inferior for PC+2 DPS trim work;
-- DPS engineering documentation provides thrust/throttle/propellant design information.
+- Apollo 13 configuration documentation gives 9870 lbf nominal full thrust, while general DPS engineering documentation uses distinct rated-thrust/fixed-throttle-point terminology; exact LM-7 delivered thrust and effective Isp remain unfrozen.
 
 The historical case is a validation oracle, not the simulation algorithm.
 
@@ -339,7 +339,7 @@ Research note 134 partially clears this gate at the interface level. The first p
 - separate propulsion, prescribed-attitude/thrust-direction, mass-properties, dynamics, and observation-product boundaries;
 - an assumption-visible deterministic integrator with convergence and correct/early/late/wrong-input ordering tests.
 
-This authorizes a **model proof**, not a historically validated Apollo 13 PC+2 propagator. Mission-specific thrust history, exact mass/depletion convention, coordinate-frame mapping, and numerical acceptance tolerance must remain explicit/unfrozen until their primary sources are extracted. Research notes 137–138 now establish final PAD weights plus an in-flight updated T+55 RTCC mass-property-deck lineage, but not exact physical ignition mass.
+This authorizes a **model proof**, not a historically validated Apollo 13 PC+2 propagator. Mission-specific delivered-thrust/mass-flow history, exact mass/depletion convention, coordinate-frame mapping, and numerical acceptance tolerance must remain explicit/unfrozen until their primary sources are extracted. Research notes 137–138 establish final PAD weights plus an in-flight updated T+55 RTCC mass-property-deck lineage, but not exact physical ignition mass. Research note 139 establishes PC+2 command timing, terminal blowdown, and a mission-configuration nominal full-thrust value, while leaving startup transient, LM-7 thrust calibration, and effective Isp unresolved.
 
 ## Level-1 implementation status
 
@@ -356,4 +356,4 @@ It now demonstrates, through one model path:
 
 See `docs/models/DPS_LEVEL1_MODEL_PROOF.md`.
 
-The existing historical PC+2 event model remains the deployed integration scaffold. The proof does not yet mutate live scenario state or generate player-visible products. Historical PC+2 integration remains gated on primary-source thrust history, mass epoch, frame mapping, gravity/trajectory treatment, and acceptance tolerance.
+The existing historical PC+2 event model remains the deployed integration scaffold. The proof does not yet mutate live scenario state or generate player-visible products. Historical PC+2 integration remains gated on primary-source delivered-thrust/mass-flow treatment (including startup and blowdown), exact mass/depletion convention, frame mapping, gravity/trajectory treatment, and acceptance tolerance.
