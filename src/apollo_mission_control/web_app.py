@@ -41,6 +41,7 @@ from .mission_profiles import (
 )
 from .model_profiles import (
     ModelProfileRecord,
+    assess_model_readiness,
     discover_model_profiles,
     get_model_profile,
 )
@@ -289,6 +290,14 @@ def _facilitator_guard(
 
 
 def _status_payload(session: SessionRuntime) -> dict[str, Any]:
+    readiness = (
+        assess_model_readiness(
+            _active_model_profile,
+            _active_scenario.required_model_domains,
+        )
+        if _active_model_profile is not None and _active_scenario is not None
+        else None
+    )
     return {
         "status": session.status.value,
         "get_s": session.state.get_s,
@@ -321,6 +330,9 @@ def _status_payload(session: SessionRuntime) -> dict[str, Any]:
             if _active_model_profile is not None
             else None
         ),
+        "model_readiness": (
+            readiness.to_public_dict() if readiness is not None else None
+        ),
         "runtime_adapter": _active_runtime_adapter_id,
         "runtime_capabilities": sorted(
             runtime_capabilities(_active_runtime_adapter_id)
@@ -345,14 +357,26 @@ def health() -> dict[str, str]:
 @app.get("/api/scenarios")
 def list_scenarios() -> list[dict[str, object]]:
     records = _domain_call(discover_scenarios)
-    return [
-        {
-            **record.to_public_dict(),
-            "default": record.scenario_id == DEFAULT_SCENARIO_ID,
-            "executable": has_runtime_adapter(record.runtime_adapter),
-        }
-        for record in records
-    ]
+    result: list[dict[str, object]] = []
+    for record in records:
+        profile = _domain_call(
+            lambda record=record: get_model_profile(record.model_profile_id)
+        )
+        readiness = _domain_call(
+            lambda record=record, profile=profile: assess_model_readiness(
+                profile,
+                record.required_model_domains,
+            )
+        )
+        result.append(
+            {
+                **record.to_public_dict(),
+                "default": record.scenario_id == DEFAULT_SCENARIO_ID,
+                "executable": has_runtime_adapter(record.runtime_adapter),
+                "model_readiness": readiness.to_public_dict(),
+            }
+        )
+    return result
 
 
 @app.get("/api/mission-profiles")
