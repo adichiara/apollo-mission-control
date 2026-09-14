@@ -105,6 +105,18 @@ Virtual AGC has continued adding simulator material. Its 2025 additions include 
 - Library/change log: https://www.ibiblio.org/apollo/changes.html
 - Evidence use: discovery index and scan provenance, not a substitute for the underlying primary documents.
 
+## Grumman LED-440-3 — *LEM Mission Simulator (LMS) Math Model: True Motion Equations*
+
+- Date: August 1965.
+- Organization: Grumman Aircraft Engineering Corporation.
+- Report identity: cited as part 1 of 3 by Brian Woycechowsky's 2021 *Lunar Module Moon-Referenced Equations of Motion*.
+- Former public-file reference: `1965-08-LEM-Mission-Simulator-Math-Model-1-130-1-65.pdf` at TechWorks.
+- Evidence use: source-attributed true-motion model partition and interfaces among propulsion thrust, Stabilization and Control thrust direction, Weight and Balance mass/inertia/center-of-gravity state, RCS thrust, slosh, stage separation, ephemeris/gravity, and translational/rotational integration.
+- Status: original report identity and a modern technical reconstruction are located; the primary three-part report still requires direct page extraction.
+- Key boundary: Woycechowsky's reconstruction is an extraction/provenance aid, not a replacement for the original Grumman report.
+- Relationship to LED 500-5: unresolved; do not treat the two report identities as equivalent without documentary evidence.
+- Reconstruction/extraction aid: https://static1.squarespace.com/static/567433669cadb6ac8da3ff92/t/6071a7ea04f3ed70ebd956f0/1618061309500/lunar%2Bv6.0%2B%2Bincl%2Bcover%2Bsupplement%2B%2B%2Bfront%2Bmatter.pdf
+
 ## Grumman LED 500-5 — *LMS Math Model — Equations of Motion, Subsystem Interfaces and Visual Display Drive Equations*
 
 - Date: 22 April 1965.
@@ -145,4 +157,4 @@ The mission-simulator documents establish the need for causal/closed-loop behavi
 
 The surviving Apollo documentation now does more than merely support a generic closed-loop architecture. A direct **LEM Mission Simulator mathematical-model source has been located**, alongside simulator-description and instructor-handbook lineages that can expose subsystem abstraction and malfunction behavior.
 
-The project still should not claim recovery of the complete Apollo simulator software/model. The next research step is systematic extraction of the recovered LMS/AMS model documentation, followed by cross-checking against Apollo 13 LM-7/CSM spacecraft documentation before implementing equations or configuration values.
+The project still should not claim recovery of the complete Apollo simulator software/model. The LED-440-3 reconstruction now constrains a separable propulsion/control/mass-properties/true-motion interface, but the original report and Apollo 13 profile inputs remain unextracted. The next research step is direct LMS/AMS model-document extraction and cross-checking against Apollo 13 LM-7/CSM spacecraft documentation before freezing equations, constants, coordinate frames, or historical acceptance tolerances.
