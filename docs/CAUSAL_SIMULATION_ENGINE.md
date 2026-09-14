@@ -316,6 +316,8 @@ This layer is implemented in `causal_translational_model.py`. It contains no Ear
 - battery energy/current;
 - consumable rates tied to active equipment.
 
+The first mission-neutral electrical proof is now implemented in `electrical_power_model.py`. It evaluates caller-supplied source capacity, bus enablement, commanded load demand, and explicit load priority to derive equipment powered/unpowered state. It does not yet model battery-energy depletion, converters/inverters, wiring, voltage dynamics, or Apollo-specific topology.
+
 ### Level 4B — tracking observation proof
 
 - authoritative trajectory state remains hidden;
@@ -364,7 +366,7 @@ This authorizes a **model proof**, not a historically validated Apollo 13 PC+2 p
 
 ## Level-1 implementation status
 
-The first mission-neutral numerical proof is implemented in `causal_dps_model.py` and exposed only through the facilitator validation API/console.
+The first mission-neutral numerical proof is implemented in `causal_dps_model.py` and exposed only through the facilitator validation API/console. Subsequent reusable proofs now include translational dynamics, tracking observations, guidance cross-checks, landing-radar qualification/gating, deterministic simulated crew behavior, and coarse electrical power/equipment availability.
 
 It now demonstrates, through one model path:
 
