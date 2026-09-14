@@ -218,7 +218,7 @@ This does **not** make Apollo 11 descent the only next playable scenario. Its pu
 
 The separately documented preflight program-alarm simulation remains a valuable future SimSup scenario, but Richard Koos explicitly could not recall whether its injected alarm was 1201 or 1202 and surviving evidence does not yet establish exact injection timing. Those gaps must not be silently filled from the actual flight.
 
-See `resources/research/141_second_reference_apollo11_descent_assessment.md`.
+See `resources/research/141_second_reference_apollo11_descent_assessment.md`. The source-bounded actual-flight interval is also now represented by `data/scenarios/apollo11_descent_program_alarm_reference.json` as a **reference-only, non-executable** catalog entry.
 
 ## 12. Research sufficiency rule for scenario work
 
