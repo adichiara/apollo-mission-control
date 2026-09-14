@@ -107,6 +107,14 @@ The November 1970 MSC directory identifies Flight Control Division branches incl
 **Use:** establishes that `FCOB` and `LSB` were genuine Apollo-era organizational acronyms and supplies organization-name search terms that resemble several PHO-TR460 pack labels.  
 **Do not use for:** asserting that PHO-TR460's identically spelled pack labels were necessarily owned by those branches; automatically expanding `CSB`, `FDB`, or `ESB`; or assigning meanings to `SLV`, `FSB`, `MOD`, `PCB`, or `OSB` without a PHO-TR155/data-pack cross-reference.
 
+### A6. PHO-TR515 — Flight Control data-requirements / recorder-production authority
+
+The same PHO-TR515 manual defines a separate Flight Control requirements path for recorder displays. Flight Control Division branch requirements for pen recorders identified **user console numbers** and **telemetry measurement numbers**. The **Flight Control Data Requirements Document** listed high-speed format, subformat alphanumeric titles, measurement numbers, and pen locations for stripchart recorders. For LBOs, requirements likewise used console numbers and telemetry subformat numbers, while the document carried format/subformat, titles, measurement numbers, and pen locations; overlay identification also included mission and Flight Control branch designators.
+
+**Use:** identifies a concrete archival source class capable of carrying mission/controller/measurement/format/pen assignments. An H-2 Flight Control Data Requirements Document, branch requirement letter, or recorder cross-reference could materially narrow the TELMU presentation path.
+
+**Do not use for:** asserting that `GC0071V` / `GC0155F` occupied a particular Apollo 13 recorder pen, that TELMU necessarily used a recorder for them, or that any PHO-TR460 abbreviated data-pack label is synonymous with the Flight Control Data Requirements Document.
+
 ## B. Adjacent-mission continuity evidence
 
 ### B1. LM-1 Data Evaluation Guide
@@ -134,13 +142,14 @@ Later LM instrumentation documentation preserves the same measurements and gives
 
 Highest priority:
 
-1. **Mission H-2 data-pack Revision N or its transmittal/index**, now known to be configuration-input/control material associated with the PHO-TR155 workflow;
-2. **PHO-TR155 Mission H-2 Revision C**, issued 1970-03-06;
-3. a **Requirements and Configuration data-pack definition/key** mapping the H-2 pack abbreviations and pack contents; searches should include the directly attested organization terms Flight Control Operations Branch / `FCOB` and LM Systems Branch / `LSB`, plus contemporary CSM Systems, Flight Dynamics, Mission Control Requirements, and Experiments Systems branch names without presuming those names define the pack labels;
-4. **Mission H-2 TDFCB Revision 4**, especially its special LM Flight Control and PCMGS listings;
-5. H-2 TELMU console-09 operational-configuration/loading sheets;
-6. H-2 TELMU console handbook or controller log;
-7. H-2 display-request/MSK inventory naming `GC0071V` and/or `GC0155F`.
+1. **Mission H-2 Flight Control Data Requirements Document**, Flight Control branch requirement letters, or recorder cross-reference/overlay requirements keyed by console and measurement number;
+2. **Mission H-2 data-pack Revision N or its transmittal/index**, now known to be configuration-input/control material associated with the PHO-TR155 workflow;
+3. **PHO-TR155 Mission H-2 Revision C**, issued 1970-03-06;
+4. a **Requirements and Configuration data-pack definition/key** mapping the H-2 pack abbreviations and pack contents; searches should include the directly attested organization terms Flight Control Operations Branch / `FCOB` and LM Systems Branch / `LSB`, plus contemporary CSM Systems, Flight Dynamics, Mission Control Requirements, and Experiments Systems branch names without presuming those names define the pack labels;
+5. **Mission H-2 TDFCB Revision 4**, especially its special LM Flight Control and PCMGS listings;
+6. H-2 TELMU console-09 operational-configuration/loading sheets;
+7. H-2 TELMU console handbook or controller log;
+8. H-2 display-request/MSK inventory naming `GC0071V` and/or `GC0155F`.
 
 ## D. Current historical boundary
 
@@ -152,6 +161,7 @@ The repository may state that:
 - earlier H-2 PHO-TR155 configuration work used multiple named data-pack products and a preliminary IBM card deck/listing;
 - PHO-TR515 establishes that data-pack circulation supplied the Requirements and Configuration process that prepared PHO-TR155;
 - PHO-TR155 preliminary working lists then supported downstream display-production work;
+- Flight Control branch recorder requirements used console/measurement or console/subformat assignments and the Flight Control Data Requirements Document carried format/subformat, measurement-number, title, and pen-location data;
 - PHO-TR474 later records H-2 data-pack Revision N, but its exact internal scope remains unrecovered;
 - Mission H-2 telemetry-format configuration was controlled by **TDFCB Revision 4**, delivered 1970-01-28;
 - its mission-specific products included LM Flight Control, PCMGS, high-speed/wideband, index, and compare material;
@@ -168,10 +178,11 @@ The repository must **not** state as Apollo 13 fact, absent recovered H-2 config
 - exact live sampling/display cadence;
 - exact field precision or latency;
 - exact CONTROL equivalent presentation;
-- that `GC0071V` / `GC0155F` are definitely present in a specific unrecovered H-2 TDFCB listing;
+- that `GC0071V` / `GC0155F` are definitely present in a specific unrecovered H-2 TDFCB listing or recorder assignment;
 - that Mission H-2 data-pack Revision N is specifically the TELMU console-09 loading package;
 - that Revision N is synonymous with PHO-TR155 Revision C or has a proven one-to-one contents mapping to it;
 - that contemporary organizational expansions automatically define the identically shaped PHO-TR460 pack labels;
+- that any PHO-TR460 pack abbreviation is proven to identify the Flight Control Data Requirements Document;
 - unsupported expansions or contents for the remaining PHO-TR155 pack abbreviations;
 - that the 1126 quarterly console-label changes were specifically TELMU or Revision-C inverter-display changes.
 
@@ -189,3 +200,4 @@ The repository must **not** state as Apollo 13 fact, absent recovered H-2 config
 - `resources/research/126_pc2_h2_photr155_data_pack_lineage_boundary.md`
 - `resources/research/127_pc2_photr155_data_pack_process_boundary.md`
 - `resources/research/128_pc2_h2_data_pack_organizational_acronym_boundary.md`
+- `resources/research/129_pc2_flight_control_data_requirements_boundary.md`
