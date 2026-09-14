@@ -1,6 +1,7 @@
-"""Thin FastAPI transport for the Apollo Mission Control PC+2 prototype.
+"""Thin FastAPI transport for the Apollo Mission Control simulator.
 
-The simulation/domain layer remains framework-neutral. This module owns only
+The simulation/domain layer remains framework-neutral. Scenario-specific
+sessions are constructed through the runtime-adapter registry. This module owns only
 HTTP request/response adaptation, an in-memory single-session registry, realtime
 wall-clock pacing, facilitator authorization, and static prototype delivery.
 """
@@ -33,14 +34,18 @@ from .mission_profiles import (
     discover_mission_profiles,
     get_mission_profile,
 )
-from .pc2_session import PC2Session
 from .realtime_clock import RealtimeSessionClock
+from .runtime_adapters import (
+    create_runtime,
+    has_runtime_adapter,
+    runtime_capabilities,
+)
+from .session_runtime import SessionRuntime
 from .scenario_catalog import (
     DEFAULT_SCENARIO_ID,
     ScenarioRecord,
     discover_scenarios,
     get_scenario_record,
-    load_scenario_fixture,
 )
 from .scenario_injection import EvidenceClass, StateInjection
 from .session_shutdown_evidence import (
@@ -50,7 +55,6 @@ from .session_shutdown_evidence import (
 
 ROOT = Path(__file__).resolve().parents[2]
 WEB_ROOT = ROOT / "web"
-SUPPORTED_RUNTIME_ADAPTERS = frozenset({"pc2_v1"})
 FACILITATOR_TOKEN_ENV = "APOLLO_FACILITATOR_TOKEN"
 
 app = FastAPI(
@@ -60,10 +64,11 @@ app = FastAPI(
 )
 
 _lock = RLock()
-_session: PC2Session | None = None
+_session: SessionRuntime | None = None
 _clock: RealtimeSessionClock | None = None
 _active_scenario: ScenarioRecord | None = None
 _active_mission_profile: MissionProfileRecord | None = None
+_active_runtime_adapter_id: str | None = None
 
 
 class JoinRequest(BaseModel):
@@ -163,19 +168,19 @@ class DPSModelProofRequest(BaseModel):
     segments: list[BurnSegmentRequest] = Field(min_length=1, max_length=50)
 
 
-def _require_session() -> PC2Session:
+def _require_session() -> SessionRuntime:
     if _session is None:
-        raise HTTPException(status_code=409, detail="No PC+2 session has been created")
+        raise HTTPException(status_code=409, detail="No simulation session has been created")
     return _session
 
 
 def _require_clock() -> RealtimeSessionClock:
     if _clock is None:
-        raise HTTPException(status_code=409, detail="No PC+2 session clock has been created")
+        raise HTTPException(status_code=409, detail="No simulation session clock has been created")
     return _clock
 
 
-def _sync_session() -> PC2Session:
+def _sync_session() -> SessionRuntime:
     session = _require_session()
     _require_clock().sync()
     return session
@@ -186,6 +191,20 @@ def _domain_call(call: Callable[[], Any]) -> Any:
         return call()
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+def _require_runtime_capability(capability: str) -> None:
+    adapter_id = _active_runtime_adapter_id
+    if adapter_id is None:
+        raise HTTPException(status_code=409, detail="No simulation session has been created")
+    if capability not in runtime_capabilities(adapter_id):
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                f"runtime adapter {adapter_id!r} does not support "
+                f"capability {capability!r}"
+            ),
+        )
 
 
 def _facilitator_guard(
@@ -206,7 +225,7 @@ def _facilitator_guard(
         raise HTTPException(status_code=401, detail="Facilitator authorization required")
 
 
-def _status_payload(session: PC2Session) -> dict[str, Any]:
+def _status_payload(session: SessionRuntime) -> dict[str, Any]:
     return {
         "status": session.status.value,
         "get_s": session.state.get_s,
@@ -229,47 +248,16 @@ def _status_payload(session: PC2Session) -> dict[str, Any]:
             if _active_mission_profile is not None
             else None
         ),
+        "runtime_adapter": _active_runtime_adapter_id,
+        "runtime_capabilities": sorted(
+            runtime_capabilities(_active_runtime_adapter_id)
+            if _active_runtime_adapter_id is not None
+            else ()
+        ),
     }
 
 
-def _create_runtime(record: ScenarioRecord) -> PC2Session:
-    """Instantiate the currently supported runtime adapter for one scenario."""
-
-    if record.runtime_adapter != "pc2_v1":
-        raise ValueError(
-            f"scenario {record.scenario_id} uses unsupported runtime adapter "
-            f"{record.runtime_adapter!r}"
-        )
-    return PC2Session.create(load_scenario_fixture(record))
-
-
-def _join_or_rejoin_set(
-    session: PC2Session,
-    player_id: str,
-    stations: list[str] | tuple[str, ...],
-) -> None:
-    """Join/rejoin an exact set of original station identities."""
-    normalized = tuple(station.upper() for station in stations)
-    existing = session.player_station_sets.get(player_id)
-    if existing is None and player_id in session.station_assignments:
-        existing = (session.station_assignments[player_id],)
-    if existing is not None:
-        if existing != normalized:
-            raise ValueError(
-                f"Player {player_id} is already assigned to {list(existing)}; "
-                f"cannot rejoin as {list(normalized)}"
-            )
-        session._audit(
-            "player_rejoined",
-            "SESSION",
-            player_id=player_id,
-            stations=list(normalized),
-        )
-        return
-    session.assign_stations(player_id, normalized)
-
-
-def _snapshot_payload(session: PC2Session, player_id: str) -> dict[str, Any]:
+def _snapshot_payload(session: SessionRuntime, player_id: str) -> dict[str, Any]:
     stations = session.stations_for(player_id)
     if len(stations) == 1:
         return session.player_snapshot(player_id).to_dict()
@@ -288,7 +276,7 @@ def list_scenarios() -> list[dict[str, object]]:
         {
             **record.to_public_dict(),
             "default": record.scenario_id == DEFAULT_SCENARIO_ID,
-            "executable": record.runtime_adapter in SUPPORTED_RUNTIME_ADAPTERS,
+            "executable": has_runtime_adapter(record.runtime_adapter),
         }
         for record in records
     ]
@@ -307,6 +295,7 @@ def create_session(
     scenario_id: str = DEFAULT_SCENARIO_ID,
 ) -> dict[str, Any]:
     global _session, _clock, _active_scenario, _active_mission_profile
+    global _active_runtime_adapter_id
     with _lock:
         record = _domain_call(lambda: get_scenario_record(scenario_id))
         profile = _domain_call(
@@ -321,11 +310,12 @@ def create_session(
                     f"mission {profile.mission!r}"
                 ),
             )
-        session = _domain_call(lambda: _create_runtime(record))
+        session = _domain_call(lambda: create_runtime(record))
         _session = session
         _clock = RealtimeSessionClock(session)
         _active_scenario = record
         _active_mission_profile = profile
+        _active_runtime_adapter_id = record.runtime_adapter
         return _status_payload(session)
 
 
@@ -340,7 +330,10 @@ def join_session(request: JoinRequest) -> dict[str, Any]:
     with _lock:
         session = _sync_session()
         _domain_call(
-            lambda: _join_or_rejoin_set(session, request.player_id, (request.station,))
+            lambda: session.join_or_rejoin_stations(
+                request.player_id,
+                (request.station,),
+            )
         )
         return _snapshot_payload(session, request.player_id)
 
@@ -351,7 +344,10 @@ def join_session_set(request: JoinSetRequest) -> dict[str, Any]:
     with _lock:
         session = _sync_session()
         _domain_call(
-            lambda: _join_or_rejoin_set(session, request.player_id, request.stations)
+            lambda: session.join_or_rejoin_stations(
+                request.player_id,
+                request.stations,
+            )
         )
         return _snapshot_payload(session, request.player_id)
 
@@ -402,6 +398,7 @@ def advance_session(request: AdvanceRequest) -> dict[str, Any]:
 def apply_injection(request: StateInjectionRequest) -> dict[str, Any]:
     """Prototype scenario-authoring/validation endpoint, not a player control."""
     with _lock:
+        _require_runtime_capability("state_injection")
         session = _sync_session()
         injection = StateInjection(
             injection_id=request.injection_id,
@@ -476,6 +473,7 @@ def queue_capcom(player_id: str, request: CapcomQueueRequest) -> dict[str, Any]:
 @app.post("/api/session/control/{player_id}/delta-p-callout")
 def control_delta_p_callout(player_id: str, request: ControlDeltaPCalloutRequest) -> dict[str, Any]:
     with _lock:
+        _require_runtime_capability("pc2_delta_p")
         session = _sync_session()
         item = _domain_call(
             lambda: session.record_control_delta_p_callout(player_id, basis=request.basis)
@@ -495,6 +493,7 @@ def control_delta_p_callout(player_id: str, request: ControlDeltaPCalloutRequest
 def control_shutdown_evidence(player_id: str) -> dict[str, Any]:
     """Return controller-observable evidence availability, never hidden truth."""
     with _lock:
+        _require_runtime_capability("pc2_delta_p")
         session = _sync_session()
         if not _domain_call(lambda: session.owns_station(player_id, "CONTROL")):
             raise HTTPException(status_code=400, detail="Only a CONTROL owner can request shutdown evidence")
@@ -538,6 +537,7 @@ def crew_receipt(item_id: int, request: CrewReceiptRequest) -> dict[str, Any]:
 )
 def crew_shutdown(item_id: int, request: CrewShutdownRequest) -> dict[str, Any]:
     with _lock:
+        _require_runtime_capability("pc2_dps_shutdown")
         session = _sync_session()
         action = _domain_call(
             lambda: command_dps_shutdown_from_callout(
@@ -563,6 +563,7 @@ def crew_shutdown(item_id: int, request: CrewShutdownRequest) -> dict[str, Any]:
 )
 def crew_shutdown_report(request: CrewShutdownReportRequest) -> dict[str, Any]:
     with _lock:
+        _require_runtime_capability("pc2_dps_shutdown")
         session = _sync_session()
         return _domain_call(lambda: record_crew_shutdown_report(session, crew_id=request.crew_id))
 
@@ -573,6 +574,7 @@ def crew_shutdown_report(request: CrewShutdownReportRequest) -> dict[str, Any]:
 )
 def dps_engine_off_response(request: EngineOffResponseRequest) -> dict[str, Any]:
     with _lock:
+        _require_runtime_capability("pc2_dps_shutdown")
         session = _sync_session()
         return _domain_call(
             lambda: apply_session_engine_off_response(

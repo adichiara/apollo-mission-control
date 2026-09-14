@@ -11,12 +11,12 @@ from dataclasses import dataclass, field
 from time import monotonic
 from typing import Callable
 
-from .pc2_session import PC2Session, SessionStatus
+from .session_runtime import SessionRuntime, SessionStatus
 
 
 @dataclass
 class RealtimeSessionClock:
-    session: PC2Session
+    session: SessionRuntime
     rate: float = 1.0
     now_fn: Callable[[], float] = monotonic
     _wall_anchor: float = field(init=False)
@@ -37,7 +37,7 @@ class RealtimeSessionClock:
 
         Only RUNNING sessions accrue GET. Explicit PAUSED/CREATED/COMPLETE
         sessions remain fixed. The current first-slice driver is capped at the
-        final fixture event so a late HTTP poll does not advance beyond the
+        final runtime event so a late HTTP poll does not advance beyond the
         modeled scenario interval.
         """
         if self.session.status != SessionStatus.RUNNING:

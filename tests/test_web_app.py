@@ -16,6 +16,9 @@ class WebAppTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["scenario_id"], "apollo13_pc2_nominal")
         self.assertEqual(response.json()["mission_profile_id"], "apollo13_h2")
+        self.assertEqual(response.json()["runtime_adapter"], "pc2_v1")
+        self.assertIn("mission_control_core", response.json()["runtime_capabilities"])
+        self.assertIn("pc2_delta_p", response.json()["runtime_capabilities"])
 
     def test_health_and_phone_shell(self):
         self.assertEqual(self.client.get("/api/health").json(), {"status": "ok"})

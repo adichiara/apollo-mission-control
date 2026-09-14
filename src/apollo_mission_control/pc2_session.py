@@ -9,7 +9,6 @@ authoritative session without adding network/UI policy.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
-from enum import Enum
 from typing import Any, Iterable
 
 from .capcom_presentation import build_pc2_capcom_presentation
@@ -24,15 +23,9 @@ from .inco_presentation import build_pc2_inco_presentation
 from .pc2_event_rules import PC2_EVENT_RULES
 from .pc2_nominal import PC2State, SimEvent, apply_event, build_events
 from .scenario_injection import StateInjection, apply_state_injection
+from .session_runtime import SessionStatus
 from .shutdown_rules import RuleState, evaluate_pc2_shutdown_rules
 from .telmu_presentation import build_pc2_telmu_presentation
-
-
-class SessionStatus(str, Enum):
-    CREATED = "created"
-    RUNNING = "running"
-    PAUSED = "paused"
-    COMPLETE = "complete"
 
 
 @dataclass(frozen=True)
@@ -211,6 +204,32 @@ class PC2Session:
                 player_id=player_id,
                 stations=list(normalized),
             )
+
+    def join_or_rejoin_stations(
+        self,
+        player_id: str,
+        stations: Iterable[str],
+    ) -> None:
+        """Join/rejoin an exact station set using runtime-owned semantics."""
+
+        normalized = tuple(station.upper() for station in stations)
+        existing = self.player_station_sets.get(player_id)
+        if existing is None and player_id in self.station_assignments:
+            existing = (self.station_assignments[player_id],)
+        if existing is None:
+            self.assign_stations(player_id, normalized)
+            return
+        if existing != normalized:
+            raise ValueError(
+                f"Player {player_id} is already assigned to {list(existing)}; "
+                f"cannot rejoin as {list(normalized)}"
+            )
+        self._audit(
+            "player_rejoined",
+            "SESSION",
+            player_id=player_id,
+            stations=list(normalized),
+        )
 
     def stations_for(self, player_id: str) -> tuple[str, ...]:
         stations = self.player_station_sets.get(player_id)
