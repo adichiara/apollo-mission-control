@@ -53,9 +53,21 @@ This is stronger than treating the source as merely planned.
 
 Do not substitute Apollo 10/12/14/15 DPS final-flight numerical values for the missing Apollo 13 data. Adjacent-mission reports may be used to learn the evaluation method, likely data products, terminology, and report structure.
 
+## Adjacent-report identifier pattern
+
+NTRS records for adjacent DPS final-flight evaluations show a consistent parent-report/supplement identifier convention:
+
+- Apollo 12 DPS Supplement 5: `MSC-01855-SUPPL-5`, with TRW report `TRW-11176-H585-R0-00-SUPPL-5`;
+- Apollo 14 DPS Supplement 5: `MSC-04112-SUPPL-5`, with TRW report `TRW-17618-H219-R0-00-SUPPL-5`;
+- Apollo 15 DPS Supplement 4: `MSC-05161-SUPPL-4`, with TRW report `TRW-20029-H084-R0-00-SUPPL-4`.
+
+Because the Apollo 13 parent Mission Report is `MSC-02680` and the missing document is Supplement 2, **`MSC-02680-SUPPL-2` is a structurally plausible search key**.
+
+It is **not** recorded as the Apollo 13 supplement's verified report number unless a primary catalog record, scan, or bibliographic citation confirms it. Likewise, no TRW report number is inferred.
+
 ## Retrieval priorities
 
-1. Search NTRS using report-number/author/organization metadata rather than title alone.
+1. Search NTRS and archival catalogs for the exact title plus the **unverified search key** `MSC-02680-SUPPL-2`, author/organization metadata, and October 1970 date.
 2. Search MSC/JSC report indexes, microfiche catalogs, NARA finding aids, and contractor holdings for October 1970 Apollo 13 DPS final-flight material.
 3. Search TRW/Rocketdyne/Grumman bibliographic references that cite the Apollo 13 evaluation.
 4. Inspect adjacent-mission DPS final-flight reports for standard cover-page numbering patterns, authorship, distribution lists, and reference chains that may expose the Apollo 13 identifier.
