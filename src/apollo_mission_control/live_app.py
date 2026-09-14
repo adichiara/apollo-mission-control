@@ -25,3 +25,9 @@ def build_info() -> dict[str, Any]:
 def contingency_console() -> FileResponse:
     """Serve the guided PC+2 delta-P contingency validation console."""
     return FileResponse(WEB_ROOT / "contingency.html")
+
+
+@app.get("/model-tests", include_in_schema=False)
+def model_tests_console() -> FileResponse:
+    """Shareable numerical validation against the protected model API."""
+    return FileResponse(WEB_ROOT / "model_tests.html")

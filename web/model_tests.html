@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DPS test runner</title>
+<style>body{background:#07121b;color:#eef6fb;font:16px system-ui;max-width:900px;margin:24px auto;padding:16px}button,input,textarea{font:inherit;padding:10px;margin:6px 0}button{cursor:pointer}textarea{width:95%}pre{white-space:pre-wrap;overflow-wrap:anywhere}a{color:#55b4ff}</style>
+<h1>DPS test runner</h1>
+<p>Synthetic numerical tests of the real server API. PASS does not establish Apollo 13 accuracy, crew behavior, or live-session integration. Running these tests does not reset or modify a mission.</p>
+<a href="/admin">Back to test console</a>
+<p><label>Facilitator token <input id="token" type="password" autocomplete="off"></label></p>
+<button id="run">Run standard suite</button>
+<button id="download" disabled>Download report</button>
+<button id="copy" disabled>Copy report</button>
+<p><label>Notes to include<textarea id="notes" placeholder="What you noticed; do not include passwords or tokens."></textarea></label></p>
+<p id="status" role="status">Ready. Export before leaving this page.</p><pre id="results"></pre>
+<script>
+const $=id=>document.getElementById(id);
+$('token').value=localStorage.getItem('apollo_facilitator_token')||sessionStorage.getItem('apollo_facilitator_token')||'';
+let report=null;
+async function request(path,payload){
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),30000);
+ try{
+ const response=await fetch(path,{method:payload?'POST':'GET',signal:controller.signal,
+ headers:payload?{'Content-Type':'application/json','X-Apollo-Facilitator':$('token').value}:{},
+ ...(payload?{body:JSON.stringify(payload)}:{})});
+ if(!response.ok)throw Error('HTTP '+response.status);
+ return await response.json();
+ }finally{clearTimeout(timer)}
+}
+function input(duration=100,thrust=10000,direction=[1,0,0],step=.25){
+ return {initial_time_s:0,initial_mass_kg:10000,dry_mass_kg:5000,
+ initial_velocity_m_s:[0,0,0],specific_impulse_s:300,max_step_s:step,
+ applicability:'synthetic shareable test suite v1',provenance:['Synthetic test values; not Apollo constants'],
+ segments:[{duration_s:duration,thrust_n:thrust,direction}]};
+}
+function check(name,actual,expected,pass,tolerance=null){
+ report.checks.push({name,actual,expected,tolerance,status:pass?'PASS':'FAIL'});
+}
+$('run').onclick=async()=>{
+ if(report&&!confirm('Replace the previous report? Download it first if needed.'))return;
+ $('run').disabled=true;$('download').disabled=true;$('copy').disabled=true;
+ report={schema_version:1,suite:'dps-numerical-v1',started_at:new Date().toISOString(),
+ scope:'Synthetic numerical/API tests only; not historical validation',build_before:null,build_after:null,cases:[],checks:[],errors:[]};
+ try{
+ report.build_before=await request('/api/build');
+ const cases=[['nominal',input()],['early',input(80)],['late',input(120)],
+ ['low_thrust',input(100,7000)],['offset',input(100,10000,[1,1,0])],
+ ['omitted',input(100,0,[0,0,0])],['coarse',input(100,10000,[1,0,0],5)],
+ ['fine',input(100,10000,[1,0,0],.1)],['repeat',input()],
+ ['combined',input(80,7000,[1,1,0])]];
+ const values={};
+ for(const [name,payload] of cases){
+ $('status').textContent='Running '+name;
+ const item={name,request:payload,response:null};report.cases.push(item);
+ item.response=await request('/api/admin/model-proof/dps-burn',payload);values[name]=item.response;
+ }
+ const v=name=>values[name].delta_v_magnitude_m_s;
+ const exhaust=300*9.80665,expectedMass=10000-1000000/exhaust;
+ const expectedDV=exhaust*Math.log(10000/expectedMass);
+ check('mass depletion',values.nominal.final_state.mass_kg,expectedMass,Math.abs(values.nominal.final_state.mass_kg-expectedMass)<1e-6,1e-6);
+ check('impulse',values.nominal.impulse_n_s,1000000,Math.abs(values.nominal.impulse_n_s-1000000)<1e-6,1e-6);
+ check('rocket equation',v('fine'),expectedDV,Math.abs(v('fine')-expectedDV)<1e-6,1e-6);
+ check('step refinement',[Math.abs(v('fine')-expectedDV),Math.abs(v('coarse')-expectedDV)],'fine error < coarse error',Math.abs(v('fine')-expectedDV)<Math.abs(v('coarse')-expectedDV));
+ check('cutoff ordering',[v('early'),v('nominal'),v('late')],'early < nominal < late',v('early')<v('nominal')&&v('nominal')<v('late'));
+ check('lower thrust',v('low_thrust'),'< nominal',v('low_thrust')<v('nominal'));
+ check('direction preserves magnitude',v('offset'),v('nominal'),Math.abs(v('offset')-v('nominal'))<1e-8,1e-8);
+ check('direction changes vector',values.offset.delta_v_m_s,'positive Y and reduced X',values.offset.delta_v_m_s[1]>0&&values.offset.delta_v_m_s[0]<values.nominal.delta_v_m_s[0]);
+ check('omitted burn',[v('omitted'),values.omitted.final_state.mass_kg],[0,10000],v('omitted')===0&&values.omitted.final_state.mass_kg===10000);
+ check('repeatability',values.repeat,values.nominal,JSON.stringify(values.repeat)===JSON.stringify(values.nominal));
+ check('combined error',values.combined.delta_v_m_s,'reduced magnitude and positive Y',v('combined')<v('nominal')&&values.combined.delta_v_m_s[1]>0);
+ report.build_after=await request('/api/build');
+ check('build identity',report.build_after,report.build_before,!!report.build_before.commit&&report.build_before.commit!=='unknown'&&report.build_before.commit===report.build_after.commit);
+ report.status=report.checks.every(c=>c.status==='PASS')?'PASS':'FAIL';
+ }catch(e){report.status='INCOMPLETE';report.errors.push(String(e.message||e))}
+ finally{
+ report.finished_at=new Date().toISOString();
+ $('results').textContent=report.checks.map(c=>c.status+' — '+c.name).join('\n')+'\n'+report.errors.join('\n');
+ $('status').textContent=report.status+' — '+report.cases.length+' requests recorded. Download and share the JSON report.';
+ $('run').disabled=false;$('download').disabled=false;$('copy').disabled=false;
+ }
+};
+function serialized(){return JSON.stringify({...report,notes:$('notes').value},null,2)}
+$('download').onclick=()=>{
+ const url=URL.createObjectURL(new Blob([serialized()],{type:'application/json'}));
+ const a=document.createElement('a');a.href=url;a.download='apollo-dps-test-'+report.started_at.replace(/[:.]/g,'-')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(serialized());$('status').textContent='Report copied.'}catch{$('status').textContent='Clipboard unavailable. Use Download report.'}};
+</script></html>
