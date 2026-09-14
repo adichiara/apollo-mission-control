@@ -51,11 +51,24 @@ That combination is exactly the source family needed to reconstruct abstraction 
 
 ## Apollo Mission Simulator evidence is similarly useful
 
-The surviving Apollo Mission Simulator instructor material is also unusually valuable.
+The surviving Apollo Mission Simulator instructor material is also unusually valuable, and a public direct scan is available through Virtual AGC / ibiblio rather than an account-gated mirror:
 
-The AMS Instructor Handbook describes the AMS as simulating spacecraft system performance and flight dynamics through computer-controlled system parameters, dynamics, and visual perspective. Its instructor station includes a Malfunction Insertion Unit.
+- https://ibiblio.org/apollo/Documents/19730060784_1973060784.pdf
+- https://www.ibiblio.org/apollo/Documents/ams_instructor_handbook_vol2.pdf
 
-The companion operations/utilization material describes:
+The scan is North American Aviation SM-6T-2-02 / SID 65-974-2, *Preliminary Apollo Mission Simulator Instructor Handbook, Volume II: Operation and Utilization*, 1 July 1965.
+
+Section 2 explicitly documents the simulator computer-program structure. It describes:
+
+- vehicle-dynamics programs, including equations of motion, aerodynamic forces/moments, and weight/balance;
+- translational and rotational motion about three spacecraft axes plus inertial-frame transformations;
+- continuous EOM recomputation from simulated SPS/RCS thrusting inputs, elapsed time, and other spacecraft-system effects on weight/balance;
+- EOM feedback into other programs using values such as altitude and vehicle velocity;
+- weight/balance outputs including total mass, moments/products of inertia, and center-of-gravity location fed into EOM;
+- vehicle-system programs for propulsion, electrical power, logic, displays, and bus equations;
+- simulator-control and MSCC/telemetry interface programs.
+
+The same volume describes:
 
 - manual malfunction insertion;
 - preprogrammed malfunction insertion;
@@ -63,10 +76,11 @@ The companion operations/utilization material describes:
 - computer-initiated malfunction handling;
 - malfunction status;
 - system-specific malfunction codes;
-- a complete malfunction section in Volume III;
-- simulation-output tables associated with program/math-model designators.
+- Volume III simulation-output tables organized with **program and/or mathematical-model designators** for each parameter.
 
-The output-table description is particularly important because it indicates that simulator parameters were organized by **program and/or mathematical-model designator**, giving a possible route to reconstruct the original simulator's model partitioning and observable variables.
+This is unusually strong evidence for a modular closed-loop simulator architecture. It shows dynamics, mass properties, subsystem state, telemetry/output, and malfunction handling as interacting computer models rather than a fixed sequence of authored outcomes.
+
+The output-table description is particularly important because it gives a route to reconstructing the original simulator's model partitioning and observable variables.
 
 ## Strong architecture implication
 
@@ -142,3 +156,17 @@ Therefore a wrong burn time, duration, throttle, or attitude does **not** requir
 The newly located simulator documents support the existence of mathematical and subsystem simulation structure. They do **not** yet justify reproducing any specific equation, constant, failure mapping, sample rate, or Apollo-13 configuration until the relevant pages are extracted and cross-checked.
 
 The simulator documentation should guide abstraction and model topology. Mission/vehicle-specific spacecraft documentation remains authoritative for Apollo 13 configuration where the two differ.
+
+
+## Modern cross-check implementations
+
+Two modern projects should now be treated as structured secondary references:
+
+- **Orbiter** — https://github.com/orbitersim/orbiter — MIT-licensed generic Newtonian spaceflight simulator with reusable vessel, thruster, propellant, gravity, and rigid-body abstractions.
+- **Project Apollo — NASSP** — https://github.com/orbiternassp/NASSP — Apollo-specific Orbiter add-on with detailed subsystem simulation and Virtual AGC integration.
+
+They are useful for implementation comparison, model-coverage discovery, and independent numerical regression, but neither is historical evidence.
+
+NASSP is especially relevant architecturally because it separates Orbiter's general dynamics from Apollo-specific systems. Current source includes explicit LM DPS/propellant/pressure/gimbal state and a causal electrical network. However, NASSP source also contains simplifications/TBDs, and its code is GPL v2-or-later, so this project should **not copy its code** without a compatible licensing decision. Any historical behavior found there must be traced back to primary Apollo documentation.
+
+See research note 131.
