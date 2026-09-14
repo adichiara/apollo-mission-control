@@ -35,6 +35,13 @@ class WebClientContractTests(unittest.TestCase):
         self.assertIn("REPORT NOT READY", html)
         self.assertIn("controller_readiness_report", html)
 
+    def test_admin_exposes_assumption_visible_model_proof(self):
+        html = (ROOT / "web" / "admin.html").read_text(encoding="utf-8")
+        self.assertIn("DPS CAUSAL MODEL PROOF", html)
+        self.assertIn("NOT HISTORICALLY VALIDATED", html)
+        self.assertIn("/api/admin/model-proof/dps-burn", html)
+        self.assertIn("manual facilitator-console inputs; not historical evidence", html)
+
     def test_admin_engine_off_override_has_no_dead_item_id_input(self):
         html = (ROOT / "web" / "admin.html").read_text(encoding="utf-8")
         self.assertIn("APPLY ENGINE-OFF RESPONSE", html)
