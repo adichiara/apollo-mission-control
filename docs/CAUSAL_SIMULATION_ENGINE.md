@@ -287,6 +287,16 @@ The model should grow by replacing abstractions, not by rewriting the architectu
 - translational integration;
 - derived Delta-V / trajectory state.
 
+### Level 1B — translational trajectory propagation
+
+- position + velocity state;
+- optional caller-supplied central gravity;
+- propulsion/trajectory coupling;
+- explicit frame/epoch applicability boundary;
+- synthetic orbit/coast convergence tests.
+
+This layer is implemented in `causal_translational_model.py`. It contains no Earth, Moon, Apollo, or scenario constants and remains a model proof until a scenario supplies sourced frame, state, gravity, propulsion, and tolerance inputs.
+
 ### Level 2 — propulsion state
 
 - engine command vs actual state;
@@ -357,6 +367,6 @@ It now demonstrates, through one model path:
 - correctly ordered early, late, wrong-thrust, wrong-direction, and combined-error consequences;
 - explicit applicability, provenance, assumptions, and a non-historical-validation status.
 
-See `docs/models/DPS_LEVEL1_MODEL_PROOF.md`.
+See `docs/models/DPS_LEVEL1_MODEL_PROOF.md` and `docs/models/TRANSLATIONAL_DYNAMICS_MODEL_PROOF.md`.
 
-The existing historical PC+2 event model remains the deployed integration scaffold. The proof does not yet mutate live scenario state or generate player-visible products. Historical scenario integration remains gated on source-backed delivered-thrust/mass-flow treatment, mass/depletion convention, frame mapping, gravity/trajectory treatment, and acceptance tolerance appropriate to that scenario. For PC+2 specifically, the model can now accept a recovered startup/blowdown profile without another integrator redesign; no Apollo 13 transient curve or propulsion constant has been inserted.
+The existing historical PC+2 event model remains the deployed integration scaffold. A separate mission-neutral translational proof now propagates position, velocity, and mass under supplied propulsion plus optional central gravity, providing a reusable trajectory foundation for later scenarios. The proof does not yet mutate live scenario state or generate player-visible products. Historical scenario integration remains gated on source-backed delivered-thrust/mass-flow treatment, mass/depletion convention, frame mapping, gravity/trajectory treatment, and acceptance tolerance appropriate to that scenario. For PC+2 specifically, the model can now accept a recovered startup/blowdown profile without another integrator redesign; no Apollo 13 transient curve or propulsion constant has been inserted.
