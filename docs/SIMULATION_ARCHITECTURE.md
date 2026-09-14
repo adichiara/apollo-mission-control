@@ -152,11 +152,17 @@ A mission-neutral comparison model now accepts two independently produced guidan
 
 This supports Apollo 11 PGNS/AGS comparison and later Apollo guidance cross-checks while keeping mission-specific fields and tolerances outside the generic engine. A separate historical guidance-monitoring profile catalog now stores source-pair/field/tolerance configuration. Profiles with unresolved freshness cannot be converted into executable cross-check configs, preventing a missing historical timing rule from becoming an invented software constant.
 
-### Landing-radar update boundary
+### Landing-radar measurement and update boundary
 
-A mission-neutral landing-radar gate now separates upstream measurement quality, crew/guidance update enablement, altitude/velocity channel presence, and optional velocity-update speed criteria from the downstream state estimator. It does not generate measurements or overwrite a guidance state vector.
+A mission-neutral landing-radar quality model now sits upstream of the update gate. It can evaluate caller-supplied Data Good persistence, channel validity, range-scale stability, and affine residual reasonableness rules without embedding Apollo constants.
 
-This boundary is driven by the Apollo 11 descent reference but contains no Apollo 11 thresholds or timing constants. Program-specific radar reasonability tests, weighting/filter equations, guidance-cycle cadence, and controller products remain historical configuration/model work.
+The existing mission-neutral update gate separately handles crew/guidance update enablement, altitude/velocity channel presence, and optional velocity-update speed criteria before the downstream state estimator.
+
+The resulting architecture is:
+
+`raw radar/data-good state -> measurement qualification -> update eligibility -> estimator`
+
+Apollo 11 constants live in a historical profile, not in either generic model. Radar beam/terrain geometry, exact Apollo radar-axis reference computation, weighting/filter equations, guidance-cycle cadence, and controller products remain historical configuration/model work.
 
 ### Guidance-computer alarm/restart boundary
 
