@@ -25,6 +25,28 @@
 - whether ullage or DPS startup propellant is included/excluded at a particular mass epoch;
 - internal RTCC/Flight Dynamics computation fields.
 
+## NASA — Flight Control Division, Mission Operations Report — Apollo 13
+
+- NASA scan: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/a13-mission-ops-report-19700428.pdf
+- Date: 1970-04-28
+- Report: MSC-02680
+- Source class: primary / mission-specific Flight Control Division report
+- Relevant material: Flight Dynamics mission narrative, pages B-4 through B-9
+
+### Supports
+
+- RTCC **LM-burn mass-property decks were updated to T+55 decks**;
+- a PC+2 DPS trim disagreement was caused by LM Control using **premission mass properties**;
+- the Flight Dynamics data used in that comparison were treated as the better/current basis;
+- the final PC+2 PAD was produced later and was based on the GYM 289 vector.
+
+### Does not support
+
+- exact semantic meaning of the T+55 deck label;
+- direct identity between the T+55 deck values and the later final-PAD weights;
+- exact physical mass at PC+2 ignition;
+- exact RTCC propellant/depletion propagation between the T+55 deck and the burn.
+
 ## Apollo Flight Journal — Day 4, part 2
 
 - URL: https://www.apollojournals.org/afj/ap13fj/13day4-leaving-moon.html
@@ -33,4 +55,4 @@
 
 ## Project rule
 
-Until a mission-specific computation or weight-accounting source is recovered, cite the numbers as **final PC+2 PAD/targeting weights**, not as proven exact ignition mass.
+Until a mission-specific computation or weight-accounting source closes the remaining gap, cite the numbers as **final PC+2 PAD/targeting weights from an in-flight updated RTCC mass-properties lineage**, not as proven exact ignition mass.
