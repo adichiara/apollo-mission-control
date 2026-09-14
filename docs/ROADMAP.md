@@ -116,19 +116,18 @@ Modern HTTP/browser/localStorage/token/report/preparation/reference-packet mecha
 
 ## Immediate next work
 
-The primary remaining validation boundary is **multi-human/device execution and player-facing usability**. Historical research should continue only when it closes a concrete PC+2 evidence gap or recovers unusually high-value mission-specific material.
+The deployed nominal and ΔP paths are validated, but the project is **not yet at player-interface or multi-human playtest stage**. The next architectural boundary is replacing scripted outcome progression with a reusable causal simulation core that can respond realistically to arbitrary valid, late, omitted, or incorrect controller/crew actions.
 
-1. Repair reproducible validation/runtime defects before expanding scope, including any confirmed duplicate CAPCOM-queue behavior and repeated readiness-audit noise; add regression coverage where appropriate.
-2. Review and refine the player-facing phone interface now that nominal and ΔP integration paths are live-validated; preserve source/information boundaries and review substantial historical-presentation departures before adopting them.
-3. Prepare participants with `docs/testing/PC2_PLAYER_PREPARATION.md` and `PC2_PLAYER_REFERENCE_PACKET.md`; preserve scenario blindness.
-4. Execute `PC2_LIVE_PLAYTEST_PROTOCOL.md` with separate real-phone/browser station clients and one facilitator console. The nominal and synthetic ΔP paths no longer need first-time integration proof; the purpose is now human coordination, usability, information isolation, and procedure clarity.
-5. In the nominal human run, continue past engine cutoff through the note-101 post-burn assessment/power-down/PTC-preparation transition.
-6. Record incidents with `PC2_LIVE_PLAYTEST_REPORT_TEMPLATE.md`, retaining preparation/GET/station/device/build/audit provenance.
-7. Validate packet findability and clarity separately from historical correctness.
-8. Exercise the approved five-player compact configuration with simultaneous clients, especially TELMU↔CONTROL and GUIDO↔FIDO-RETRO switching.
-9. Verify station-qualified readiness/action attribution and information isolation in facilitator audit output.
-10. Continue the archival search for **Mission H-2 TDFCB Revision 4** (especially special LM Flight Control and PCMGS listings), **PHO-TR155 Mission H-2 Revision C**, and a **PHO-TR155 data-pack key/index or Revision N package** that establishes the pack scope; do not assume Revision N is TELMU-specific and do not block human validation on recovery.
-11. Reopen other historical, spacecraft-model, or ground-processing research only when validation exposes a concrete missing procedure, authority, information, terminology, display, support-room product, player-count dependency, causal spacecraft mechanism, or ground-data-path dependency.
+1. Complete the remaining test-console cleanup and preserve the facilitator/test interface as the primary validation surface.
+2. Formalize the flight crew as a simulation-controlled actor that receives CAPCOM messages, gives bounded/canned acknowledgements and reports, and performs supported cockpit actions through the same authoritative simulation state used by the vehicle model.
+3. Continue targeted research into Apollo LMS/AMS mathematical-model, subsystem-model, malfunction-insertion, instructor, output-dictionary, and validation/correlation documentation.
+4. Extract the original simulator's useful abstraction boundaries: state variables, equations, subsystem coupling, integration/update assumptions, failure insertion points, and separation of physical truth from indications/telemetry.
+5. Build the first narrow causal numerical slice through the existing test screen. The preferred proof chain is propulsion + attitude/thrust direction + trajectory, so different burn times, durations, throttle states, and attitudes produce computed downstream consequences rather than selected branches.
+6. Add consequence tests for correct, late, omitted, and wrong actions. Scenario files should define initial conditions, plans, and failures; they should not enumerate every possible outcome.
+7. Follow with electrical-power and consumables models, then extend instrumentation/telemetry/ground-product derivation from those physical/logical states.
+8. Cross-check simulator-era abstractions against Apollo 13 LM-7/CSM configuration sources before importing constants or mission-specific behavior.
+9. Keep player-facing station UI reconstruction, multi-human seven-seat/five-player playtesting, and packet-usability work deferred until the causal engine and simulated-crew loop are sufficiently mature.
+10. Continue mission-specific archival work only where it materially constrains the causal engine, supported actions/failures, or controller-visible consequences.
 
 ## Explicitly deferred
 
