@@ -68,7 +68,9 @@ Compact-role implementation preserves original station identities end to end:
 
 ## Phase 5 — Mission Control data path
 
-**Status:** first-slice architecture and ground-processing scope established; core ΔP information path live-validated.
+**Status:** first-slice architecture and ground-processing scope established; core ΔP information path live-validated; generic trajectory-to-tracking observation boundary implemented.
+
+A mission-neutral tracking proof now derives geometric range/range-rate from authoritative translational state, then separately applies caller-supplied delay, bias, availability, and validity. This is validation infrastructure for the truth/observation boundary, not an MSFN or RTCC reconstruction.
 
 The project preserves:
 
