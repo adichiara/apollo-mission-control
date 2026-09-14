@@ -1036,6 +1036,15 @@ def resource_power_observation_model_proof(
 ) -> dict[str, object]:
     """Run resource -> source -> bus/load -> tracking observation causality."""
 
+    if request.electrical_bus.source_available:
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "resource-power-observation derives source availability from "
+                "source_rules; electrical_bus.source_available must be empty"
+            ),
+        )
+
     resource = _domain_call(
         lambda: _resource_inventory_from_request(request.resource_inventory)
     )
