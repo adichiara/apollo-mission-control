@@ -1,7 +1,7 @@
 # Apollo 13 PC+2 — DPS inlet-pressure observation path
 
 Date: 2026-09-12  
-Status: **REVIEWED-PARTIAL — LM-7 fuel/oxidizer engine-interface measurements are established, but the exact ground rule aggregation/selection behind singular “engine inlet pressure” remains unresolved. Do not implement the 150-psi rule as either-side/minimum/average without stronger evidence.**
+Status: **REVIEWED-PARTIAL — LM-7 fuel/oxidizer engine-interface measurements are established. Research note 106 now identifies fuel inlet / `GQ3611P` as the leading rule-lineage candidate behind the singular 150-psi ground criterion, but an Apollo 13-specific exact mapping remains unresolved. Do not implement the rule as either-side/minimum/average or as a proven `GQ3611P` trigger without stronger evidence.**
 
 ## Purpose
 
@@ -11,7 +11,7 @@ Question:
 
 > Can the documented 150-psi ground engine-inlet-pressure criterion be mapped unambiguously to an Apollo 13 LM-7 measurement/product?
 
-Answer: **the source measurements are clear; the exact rule-to-product mapping is not yet clear enough to freeze.**
+Answer: **the source measurements are clear; later rule-lineage research strongly favors fuel inlet pressure, but the Apollo 13-specific rule-to-product mapping is still not clear enough to freeze.**
 
 ## 1. PC+2 rule evidence
 
@@ -66,15 +66,15 @@ Later LM flight-performance reports retain the same measurement identities.
 
 This continuity strengthens the interpretation of the LM-7 signals as actual propulsion feed/interface measurements, but later/earlier vehicle sampling rates are **not** imported as Apollo 13 controller display cadence.
 
-## 4. The unresolved mapping
+## 4. Original unresolved mapping
 
-The historical PC+2 rule uses singular wording:
+The historical PC+2 narrative rule uses singular wording:
 
 > engine inlet pressure
 
 But the vehicle has distinct fuel and oxidizer interface-pressure measurements.
 
-The currently reviewed primary material does **not** establish which of the following ground-rule semantics was used:
+At the time of this note's original review, the primary material examined here did **not** establish which of the following ground-rule semantics was used:
 
 - either fuel or oxidizer interface pressure ≤150 psi;
 - the lower/minimum of the two;
@@ -84,36 +84,53 @@ The currently reviewed primary material does **not** establish which of the foll
 
 Likewise, the crew's single 160-psi onboard indication should not be assumed to be a direct mirror of either telemetry transducer without reconstructing the onboard selector/display path.
 
-## 5. Implementation decision
+## 5. Follow-up from research note 106
+
+Research note 106 reviewed the rule lineage explicitly referenced during Apollo 13's ~76:30 GET read-up. CAPCOM said the PC+2 rules should be **similar to LOI Mode I abort with tight limits**.
+
+A surviving Apollo 10 DPS mission rule in that lineage states:
+
+- fuel inlet pressure <120 psi below 65% throttle;
+- **fuel inlet pressure <150 psi above 65% throttle**.
+
+Apollo 11 mission-rule material also names **fuel inlet pressure** as the DPS quantity, although its reviewed summary carries a different numeric threshold. Apollo 13 PC+2 spent most of the burn at maximum thrust after short 12.6% and 40% segments.
+
+This evidence materially narrows the interpretation: **fuel inlet pressure is now the leading source-backed lineage, and `GQ3611P` is the corresponding LM-7 measurement identity.**
+
+However, no reviewed Apollo 13-specific mission-rule/display/routing page explicitly says that the PC+2 150-psi ground rule was evaluated directly from `GQ3611P`. Apollo 13 narrative sources continue to use generic “engine inlet pressure” wording. Therefore lineage evidence must not be promoted into an exact Apollo 13 implementation claim.
+
+## 6. Implementation decision
 
 Do **not** yet make `ground_inlet_pressure` evaluable.
 
-It should remain `NOT_EVALUABLE` in `shutdown_rules.py` until the selection/aggregation rule is sourced.
+It should remain `NOT_EVALUABLE` in `shutdown_rules.py` until the Apollo 13-specific selection/mapping is sourced or the project deliberately adopts a clearly labeled lineage-based approximation.
 
-However, future authoritative runtime state may safely carry two distinct source observations:
+Authoritative runtime state may safely carry two distinct source observations:
 
 - `dps_fuel_interface_pressure_psi` ← `GQ3611P`;
 - `dps_oxidizer_interface_pressure_psi` ← `GQ4111P`.
 
 Those measurements may be injected/projected individually once the implementation is extended, provided no single combined “inlet pressure” diagnosis is manufactured from them.
 
-## 6. Scenario-injection consequence
+Do not implement minimum, average, or either-side aggregation. Do not silently treat `GQ3611P` as directly proven for Apollo 13.
+
+## 7. Scenario-injection consequence
 
 The generic injection layer should **not** add a single `dps_inlet_pressure_psi` target at this stage.
 
-A safe future extension is to add the two physical/measurement targets separately. The rule evaluator should still remain unresolved until ground-rule aggregation is documented.
+A safe future extension is to add the two physical/measurement targets separately. The rule evaluator should still remain unresolved until the Apollo 13-specific ground mapping is documented or an explicitly labeled approximation is accepted.
 
 This keeps the architecture useful without baking an unsupported interpretation into scenario files.
 
-## 7. Next research target
+## 8. Next research target
 
-The most valuable next evidence is one of:
+The most valuable remaining evidence is one of:
 
-1. Apollo 13 CONTROL/MSK documentation showing the inlet-pressure field(s) used during PC+2;
-2. a PC+2/LOI mode-I rule/procedure defining whether the 150-psi ground criterion applied to either feed leg or to a processed value;
-3. MCC/telemetry routing material tying `GQ3611P`/`GQ4111P` to the relevant CONTROL display and limit logic.
+1. Apollo 13 CONTROL/MSK documentation showing the inlet-pressure field used during PC+2;
+2. an Apollo 13 PC+2/LOI mode-I rule/procedure explicitly tying the 150-psi ground criterion to fuel inlet pressure / `GQ3611P`;
+3. MCC/telemetry routing material tying `GQ3611P` to the relevant CONTROL display and limit logic.
 
-If none is readily accessible, stop rather than infer. The alternative next rule path is fuel/oxidizer differential pressure, where the existence of both interface measurements may help but the exact ground delta-P computation still requires source support.
+This is a bounded archival gap, not the current project blocker. Physical live-device/human validation remains the next unclosed first-playable boundary.
 
 ## Sources
 
@@ -123,3 +140,6 @@ If none is readily accessible, stop rather than infer. The alternative next rule
 - *Lunar Module 7, 8 & 9 Elementary Functional Diagrams*, LED-267-37C.
 - LM-7 OCP Outline, `OCP-GF-26043-LM7`, NASA ID 19700001339.
 - TRW/NASA MSC, *Apollo 10 LM-4 Descent Propulsion System Final Flight Evaluation*, 8 Aug 1969, 11176-H314-R0-00.
+- NASA MSC, *Apollo 10 Mission Rules*, Section 3 item 3-77.
+- NASA MSC, *Apollo 11 Mission Rules*, Section 3 item 3-72.
+- See `resources/research/106_pc2_inlet_pressure_rule_lineage.md` for the follow-up rule-lineage review.
