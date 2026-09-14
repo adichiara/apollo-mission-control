@@ -93,6 +93,8 @@ Owns:
 
 This is a software requirement of the multiplayer simulation.
 
+**Current implementation:** a framework-neutral scenario catalog now discovers fixture metadata and exposes scenario IDs independently of the PC+2 domain model. Session creation selects a scenario by ID and then dispatches to an explicit runtime adapter. Only `pc2_v1` is currently executable; discovery of a fixture does not imply runtime support.
+
 ### 2. Scenario definition / SimSup inputs
 
 Defines the exercise rather than the physics.
@@ -107,6 +109,8 @@ Owns:
 - validation/test hooks.
 
 A scenario does not own controller-visible truth directly. Its injections enter the causal model at an appropriate layer.
+
+The cross-scenario fixture metadata contract currently includes scenario identity/title, mission, provenance/status class, runtime-adapter identity, mission-time bounds, and vehicle configuration. PC+2-specific state remains below that boundary until a second runtime case establishes what should become common.
 
 ### 3. Authoritative causal mission state
 
