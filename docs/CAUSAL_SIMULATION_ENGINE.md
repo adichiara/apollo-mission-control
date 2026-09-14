@@ -338,6 +338,17 @@ Implemented in `tracking_observation.py`; see `docs/models/TRACKING_OBSERVATION_
 
 The order may change if newly recovered simulator documentation shows a more useful model boundary.
 
+
+## Cross-model composition proof
+
+The reusable resource, electrical, and observation layers are now exercised in one synthetic causal chain:
+
+`finite resource -> electrical source availability -> powered load -> observation availability`
+
+The chain uses an explicit `ResourceElectricalSourceRule` coupling with caller-supplied operating threshold/provenance. A depletion outcome is therefore propagated through model state rather than selected by a scenario branch. Hardware/source availability remains distinct from resource sufficiency.
+
+See `docs/models/RESOURCE_POWER_OBSERVATION_CHAIN.md`.
+
 ## Source and validation requirements
 
 Every implemented numerical model must carry:

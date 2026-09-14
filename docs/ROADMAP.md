@@ -131,7 +131,7 @@ The deployed nominal and ΔP paths are validated, but the project is **not yet a
 4. Extract the original simulator's useful abstraction boundaries: state variables, equations, subsystem coupling, integration/update assumptions, failure insertion points, and separation of physical truth from indications/telemetry.
 5. Continue maturing the first narrow causal numerical slice through the existing test screen. The propulsion proof now accepts constant or linear delivered-thrust segments plus segment-specific effective-Isp overrides, allowing sourced startup/blowdown histories to be represented without PC+2-specific engine code. The preferred proof chain remains propulsion + attitude/thrust direction + trajectory, so different burn times, durations, throttle states, and attitudes produce computed downstream consequences rather than selected branches.
 6. Add consequence tests for correct, late, omitted, and wrong actions. Scenario files should define initial conditions, plans, and failures; they should not enumerate every possible outcome.
-7. Generic electrical-power/equipment availability and finite resource inventory/depletion models are now implemented. Next add only source-backed couplings among resource depletion, source/equipment availability, and instrumentation/telemetry/ground products where selected scenarios require them.
+7. Generic electrical-power/equipment availability and finite resource inventory/depletion models are implemented, and a synthetic resource→power→tracking-observation chain now proves cross-model consequence propagation without scenario outcome branches. Next add only source-backed historical couplings where selected scenarios require them.
 8. Cross-check simulator-era abstractions against Apollo 13 LM-7/CSM configuration sources before importing constants or mission-specific behavior.
 9. Keep player-facing station UI reconstruction, multi-human seven-seat/five-player playtesting, and packet-usability work deferred until the causal engine and simulated-crew loop are sufficiently mature.
 10. Continue the Apollo 11 powered-descent/program-alarm interval as the second architecture pressure test. The guidance alarm/restart domain, landing-radar update-eligibility gate, generic independent-guidance cross-check machinery, and non-executable scenario/model-profile metadata are implemented. Research note 146 now defines source-backed Apollo 11 guidance-monitoring source pairs and several velocity-residual limits in a dedicated historical profile, while deliberately blocking executable comparison because freshness/update cadence remains unresolved. Next recover the guidance-comparison timing boundary. The landing-radar path now includes a generic upstream measurement-qualification model plus Apollo 11 source-profile values for Data Good persistence, range-scale stability, update-state boundaries, and residual tests; remaining radar work is LM-5 measurement geometry/reference computation and the downstream estimator/filter. Then complete powered-descent trajectory/propulsion, controller-product interfaces, and sourced decision rules before an Apollo 11 runtime is allowed.
@@ -162,6 +162,10 @@ The deployed nominal and ΔP paths are validated, but the project is **not yet a
 - cryptographic player authentication;
 - numeric PC+2 allowable-delay/retargeting model without direct evidence;
 - time acceleration.
+
+## Causal composition validation
+
+A synthetic integration test now verifies a multi-model chain in which finite resource depletion changes electrical source availability, which changes equipment supply, which changes tracking-observation availability. This is architecture validation only; no Apollo resource/power/tracking constants are asserted.
 
 ## Validation status
 

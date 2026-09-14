@@ -158,6 +158,18 @@ A mission-neutral finite-resource model now propagates caller-supplied piecewise
 
 It reports remaining quantity, unmet consumption, overflow, and exact configured boundary-hit time. It does not automatically disable equipment or create downstream outcomes. Coupling a depleted resource to electrical, propulsion, ECS, or observation state requires an explicit sourced relationship.
 
+### Explicit cross-model coupling boundary
+
+Reusable models are not allowed to infer undocumented dependencies merely because two state domains coexist. Cross-domain dependencies are represented by explicit coupling rules with provenance.
+
+The first implemented example maps finite resource quantity to electrical-source availability using a caller-supplied operating threshold. That derived source state then feeds the electrical bus/load model, whose powered-equipment result can drive observation availability.
+
+A synthetic test now demonstrates:
+
+`resource depletion -> source unavailable -> receiver unpowered -> observation unavailable`
+
+This is the intended composition pattern for historical scenario work: source the coupling itself, not only the component models.
+
 ### Independent guidance cross-check boundary
 
 A mission-neutral comparison model now accepts two independently produced guidance observations, caller-selected fields/tolerances, validity, and freshness constraints. It returns agreement/disagreement/indeterminate plus per-field differences without choosing a hidden-truth source or issuing a mission decision.
