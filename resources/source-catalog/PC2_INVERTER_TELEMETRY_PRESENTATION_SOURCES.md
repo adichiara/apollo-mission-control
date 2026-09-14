@@ -66,6 +66,17 @@ Track primary sources bearing specifically on the ground sampling and presentati
 - **Consequence:** Apollo 13's mission-specific ground configuration confirms LM-capable normal telemetry formats while preventing a false inference that Format-30 10/50-sample/s rates were live TELMU/CONTROL CRT cadence.
 - **Boundary:** does not identify `GC0071V` / `GC0155F` in a specific AS-508 normal format or Format-30 LM subformat, does not establish their live PC+2 sampling cadence, and does not identify an Apollo 13 MSK or exact indicator loading.
 
+## Apollo 13 Mission Commentary / air-to-ground transcript
+
+- **Mission:** Apollo 13 / AS-508 / LM-7
+- **Date:** April 1970
+- **Archival scan:** https://apollojournals.org/afj/ap13fj/pdf-hr/a13-pao-transcript.pdf
+- **Mission-document index:** https://apollojournals.org/afj/ap13fj/a13-documents.html
+- **Status:** PRIMARY MISSION-SPECIFIC TRANSCRIPT / REVIEWED for PC+2 activation and immediate post-burn monitoring boundary.
+- **Use:** around 74:55 GET, the PC+2 activation read-up explicitly closes the EPS display and directs the crew to use `POWER/TEMP MONITOR — AC BUS` on **INVERTER 2, then INVERTER 1**. Around 79:55 GET, the crew asks whether caution-and-warning power can be removed after the burn and CAPCOM directs that it remain up until PTC is established. During the later powerdown the transcript records continued low-bit-rate telemetry while multiple local display functions are removed.
+- **Consequence:** proves that PC+2 inverter verification included a crew-local onboard electrical-display path in parallel with ground telemetry. The simulator must not model inverter evidence as an exclusively TELMU-ground-display event.
+- **Boundary:** the transcript does not identify the Apollo 13 TELMU indicator/MSK/display request, sample cadence, field precision, refresh, latency, or any direct ground caution/selector discrete.
+
 ## Apollo Experience Report — Flight-Control Data Needs, Terminal Display Devices, and Ground System Configuration Requirements
 
 - **Report:** NASA TN D-7685 / JSC S-396, May 1974
@@ -85,6 +96,8 @@ LM-1: both IDs are explicit ground display/telemetry products
         ↓
 AS-508 mission configuration: normal LM-capable formats exist; high-rate Format 30 is post-pass playback, not sourced live CRT cadence
         ↓
+Apollo 13 flown transcript: crew explicitly compares inverter 2 then inverter 1 on the onboard Power/Temp Monitor; caution/warning and telemetry availability are separately managed
+        ↓
 Apollo 15: both IDs appear on TELMU console 09 operational indicators
         ↓
 LM-10 telemetry packet: same IDs/loadings have explicit format-dependent sample rates and primary MSKs
@@ -92,7 +105,7 @@ LM-10 telemetry packet: same IDs/loadings have explicit format-dependent sample 
 Apollo 13 exact live format/rate/indicator/MSK loading: still unresolved
 ```
 
-For the first playable, `GC0071V` / `GC0155F` may remain source-backed TELMU electrical evidence. The station-family assignment is now stronger than the exact presentation assignment: later primary MCC configuration explicitly places both measurements on TELMU, but the UI must not claim Apollo 15 module/indicator coordinates, LM-1 display-request numbers, a recovered Apollo 13 MSK number, or a recovered Apollo 13 refresh rate. Normal telemetry sample cadence, physical operational indicators, CRT/display routing, and post-pass high-rate playback remain distinct concepts.
+For the first playable, `GC0071V` / `GC0155F` may remain source-backed TELMU electrical evidence. The station-family assignment is stronger than the exact presentation assignment: later primary MCC configuration explicitly places both measurements on TELMU, while Apollo 13's own transcript independently proves a parallel crew-local Power/Temp Monitor/caution path. The UI must not claim Apollo 15 module/indicator coordinates, LM-1 display-request numbers, a recovered Apollo 13 MSK number, or a recovered Apollo 13 refresh rate. Normal telemetry sample cadence, physical operational indicators, CRT/display routing, onboard crew indications, and post-pass high-rate playback remain distinct concepts.
 
 ## Research record
 
@@ -102,3 +115,4 @@ For the first playable, `GC0071V` / `GC0155F` may remain source-backed TELMU ele
 - `resources/research/119_pc2_inverter_telemetry_sample_display_continuity.md`
 - `resources/research/120_pc2_inverter_as508_format30_boundary.md`
 - `resources/research/121_pc2_inverter_telmu_indicator_continuity_boundary.md`
+- `resources/research/122_pc2_inverter_onboard_ground_monitoring_boundary.md`
