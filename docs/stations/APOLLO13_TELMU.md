@@ -349,38 +349,45 @@ This supports continued research into backroom relationships even if the final s
 - battery-warning/sensor ambiguity
 - LM/CSM power-transfer role
 - thermal consequences of low-power operation
+- Mission H-2 Display System implementation under PHO-TR155 Revision C
+- Revision C required no Display System equipment configuration changes
 
 ## PARTIAL
 
 - likely telemetry families and calculations
 - importance of CWEA and warning indications
+- inverter-bus ground evidence via `GC0071V` / `GC0155F`
+- TELMU station-family continuity for those electrical measurements
 
 ## UNRESOLVED
 
 - exact Apollo 13 TELMU console layout
-- exact CRT formats/display numbers
+- exact H-2 CRT formats/display numbers and operational-indicator loading
 - MSK/DRK configuration
 - event/limit panel layout
-- exact telemetry parameter identifiers
+- exact telemetry parameter identifiers beyond specifically researched PC+2 electrical channels
 - exact projected-lifetime calculation products/displays
 - exact ground-command authority
 - exact voice-loop configuration
+- exact PC+2 inverter display cadence, precision, latency, and selector workflow
 
 ---
 
 # 14. Research targets
 
-1. Locate Apollo 13 TELMU display-format documentation.
-2. Locate H-2 PHO-TR155 Revision C.
+1. Locate **PHO-TR155 Mission H-2 Revision C** itself or its change pages.
+2. Locate **Mission H-2 data-pack Revision N** or equivalent TELMU console-09 loading sheets.
 3. Locate LM systems console handbook / Grumman support material.
 4. Identify exact telemetry identifiers for battery, water, oxygen, CO2, and thermal parameters.
 5. Determine whether consumable lifetime projections were shown on CRT, calculated in SSR, or communicated by another product.
 6. Reconstruct the CWEA/ground-warning relationship relevant to TELMU.
+7. Identify the exact H-2 presentation path for `GC0071V` / `GC0155F` without importing Apollo 15 indicator positions or later LM sample schedules.
 
 ## Primary sources
 
 - *Mission Operations Report — Apollo 13*, Appendix G: TELMU Post Mission Report.
 - *Apollo 13 Mission Report*, sections 7.2.3–7.2.5.
+- Philco-Ford / Houston Operations, **PHO-TR474**, 10 April 1970, NASA NTRS 19700016172.
 
 
 ## 14A. LM-7 mission-era measurement/redline source
@@ -409,3 +416,18 @@ Use the book for:
 - causal/backup rationale.
 
 For in-flight scenarios, use mission-phase flight rules, controller reports, procedures, and system documentation to establish the applicable limits.
+
+## 14B. Mission H-2 display-system configuration boundary
+
+Research notes 123–124 establish a mission-specific configuration-control boundary from Philco's contemporaneous April 1970 progress report:
+
+- PHO-TR155 Mission H-2 Revision C was issued on **1970-03-06**;
+- the **Mission H-2 Display System configuration was in accordance with Revision C**;
+- Revision C was implemented in **March 1970**;
+- Philco states that **no equipment configuration changes were necessary**.
+
+This is important for reconstruction. It supports a real Apollo 13/H-2 display configuration while explicitly arguing against inventing new physical TELMU hardware because of Revision C.
+
+The same quarterly report mentions 1126 console-label changes, but it does not establish that those changes were all caused by Revision C, belonged to TELMU, or involved PC+2 inverter monitoring. They must not be used as a TELMU layout source.
+
+Until Revision C, Revision N, or equivalent H-2 loading material is recovered, exact TELMU indicator/module positions, CRT requests, DRK/MSK actions, update cadence, precision, and latency remain unresolved.
