@@ -8,6 +8,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from apollo_mission_control.pc2_nominal import hms_to_seconds, load_fixture  # noqa: E402
 from apollo_mission_control.pc2_session import PC2Session, SessionStatus  # noqa: E402
 from apollo_mission_control.realtime_clock import RealtimeSessionClock  # noqa: E402
+from apollo_mission_control.session_runtime import SessionStatus as SharedSessionStatus  # noqa: E402
 
 
 class FakeClock:
@@ -21,10 +22,52 @@ class FakeClock:
         self.value += float(seconds)
 
 
+
+
+class GenericState:
+    def __init__(self, get_s=10.0):
+        self.get_s = float(get_s)
+        self.phase = "generic"
+
+
+class GenericEvent:
+    def __init__(self, get_s):
+        self.get_s = float(get_s)
+
+
+class GenericRuntime:
+    """Minimal non-PC2 object proving realtime pacing is runtime-neutral."""
+
+    def __init__(self):
+        self.state = GenericState()
+        self.events = [GenericEvent(20.0)]
+        self.status = SharedSessionStatus.RUNNING
+
+    def advance_to(self, target_get_s):
+        self.state.get_s = float(target_get_s)
+        if self.state.get_s >= self.events[-1].get_s:
+            self.status = SharedSessionStatus.COMPLETE
+        return self.state.get_s
+
+
 class RealtimeSessionClockTests(unittest.TestCase):
     def _session(self):
         fixture = load_fixture(ROOT / "data" / "scenarios" / "apollo13_pc2_nominal.json")
         return PC2Session.create(fixture)
+
+
+    def test_clock_accepts_non_pc2_runtime_contract(self):
+        session = GenericRuntime()
+        fake = FakeClock()
+        clock = RealtimeSessionClock(session, now_fn=fake.now)
+        clock.reanchor()
+
+        fake.advance(3.5)
+        self.assertAlmostEqual(clock.sync(), 13.5, places=6)
+
+        fake.advance(20.0)
+        self.assertEqual(clock.sync(), 20.0)
+        self.assertEqual(session.status, SharedSessionStatus.COMPLETE)
 
     def test_running_session_accrues_get_at_one_to_one_rate(self):
         session = self._session()
