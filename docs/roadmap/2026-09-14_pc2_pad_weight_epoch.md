@@ -1,7 +1,7 @@
 # PC+2 numerical-validation roadmap — pad-weight epoch
 
 Date: 2026-09-14
-Research notes: `resources/research/137_pc2_pad_weight_epoch_boundary.md`, `resources/research/138_pc2_rtcc_mass_property_deck_boundary.md`, `resources/research/139_pc2_dps_performance_boundary.md`, `resources/research/140_apollo13_dps_supplement_publication_boundary.md`
+Research notes: `resources/research/137_pc2_pad_weight_epoch_boundary.md`, `resources/research/138_pc2_rtcc_mass_property_deck_boundary.md`, `resources/research/139_pc2_dps_performance_boundary.md`, `resources/research/140_apollo13_dps_supplement_publication_boundary.md`, `resources/research/141_apollo13_dps_supplement_contractor_provenance.md`
 
 ## Resolved this pass
 
@@ -24,14 +24,23 @@ Research note 139 establishes mission-specific PC+2 burn duration, staged thrott
 
 General DPS design values remain separate from LM-7 PC+2 calibration. In particular, the Apollo 13 `9870 lbf` nominal full-thrust baseline must not be silently equated with the general design report's `10,500 lbf` maximum rated thrust, and the design `305 s` specific impulse is not yet frozen as the PC+2 effective Isp.
 
+## Apollo 13 DPS Supplement 2 retrieval status
+
+Research note 140 establishes that Apollo 13 Mission Report Supplement 2, *Descent Propulsion System Final Flight Evaluation*, was recorded by later official NASA mission reports as published in **October 1970**, although a public copy and verified report identifier remain unrecovered.
+
+Research note 141 narrows the archival search using primary NTRS metadata from adjacent dedicated DPS evaluations. Apollo 10, Apollo 12, and Apollo 14 evaluations all sit in a TRW Systems Group / MSC propulsion-analysis lineage, with contract `NAS9-8166` documented on the adjacent records. This supports using `TRW Systems Group` and `NAS9-8166` as retrieval terms for Apollo 13.
+
+This does **not** verify an Apollo 13 TRW number, author list, or `MSC-02680-SUPPL-2` identifier. That MSC form remains only a search key until a primary record confirms it.
+
 ## Next unresolved numerical inputs
 
 Priority order is now:
 
-1. recover the published October 1970 Apollo 13 Mission Report Supplement 2, *Descent Propulsion System Final Flight Evaluation*, or equivalent LM-7-specific thrust/mass-flow/Isp/startup/blowdown performance data suitable for numerical validation;
+1. recover the published October 1970 Apollo 13 Mission Report Supplement 2, *Descent Propulsion System Final Flight Evaluation*, using the evidence-based provenance tuple `Apollo 13 + LM-7 + exact title + October 1970 + TRW Systems Group + NAS9-8166 + MSC-02680`;
 2. recover the Apollo RTCC mass-properties/T+55 deck semantics and how that deck fed the docked PC+2 DPS solution;
-3. extract original LMS/FMES equations/integration assumptions beyond the current public handbook boundary;
-4. recover sufficient state-vector/trajectory information for postburn propagation and regression.
+3. recover LM-7 engine acceptance/calibration or PC+2 high-speed propulsion data if Supplement 2 remains inaccessible;
+4. extract original LMS/FMES equations/integration assumptions beyond the current public handbook boundary;
+5. recover sufficient state-vector/trajectory information for postburn propagation and regression.
 
 ## Integration rule
 
