@@ -1,6 +1,7 @@
-"""Thin FastAPI transport for the Apollo Mission Control PC+2 prototype.
+"""Thin FastAPI transport for the Apollo Mission Control simulator.
 
-The simulation/domain layer remains framework-neutral. This module owns only
+The simulation/domain layer remains framework-neutral. Scenario-specific
+sessions are constructed through the runtime-adapter registry. This module owns only
 HTTP request/response adaptation, an in-memory single-session registry, realtime
 wall-clock pacing, facilitator authorization, and static prototype delivery.
 """
