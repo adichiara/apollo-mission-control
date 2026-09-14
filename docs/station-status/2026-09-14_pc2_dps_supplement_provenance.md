@@ -1,14 +1,14 @@
-# Station-status addendum — PC+2 DPS Supplement 2 provenance
+# Station-status addendum — PC+2 DPS and mass-properties provenance
 
 Date: 2026-09-14
 
-Historical station maturity grades are unchanged. This pass improves propulsion-source provenance, not console/display reconstruction.
+Historical station maturity grades are unchanged. This pass improves the source boundary for propulsion and Flight Dynamics mass-properties state, not console/display reconstruction.
 
 ## CONTROL
 
 Maturity remains **B**.
 
-The documented Apollo 13 PC+2 propulsion boundary is stronger: mission-specific sources already establish the staged throttle-command profile, terminal blowdown, and nominal Apollo 13 full-thrust baseline. Research note 141 further narrows the missing dedicated LM-7 final-flight evaluation to a TRW/MSC contractor-reporting lineage supported by adjacent primary NTRS records.
+Mission-specific sources establish the staged PC+2 throttle-command profile, terminal blowdown, and nominal Apollo 13 full-thrust baseline. Research note 141 narrows the missing dedicated LM-7 final-flight evaluation to a TRW/MSC contractor-reporting lineage supported by adjacent primary NTRS records.
 
 Still unresolved for CONTROL-facing historical numerical fidelity:
 
@@ -23,19 +23,29 @@ No adjacent-mission propulsion constants are promoted into the Apollo 13 station
 
 ## FIDO / Flight Dynamics
 
-Maturity remains **B**.
+Maturity remains **B**, but the mass-properties interpretation is stronger.
 
-The independent mass-properties uncertainty is unchanged: Apollo 13 Flight Dynamics used an in-flight updated T+55 LM-burn mass-property deck lineage, but the deck semantics and exact propagation to the final PC+2 P30 weights remain unresolved.
+Research note 142 establishes from Apollo 10/11 operational support documentation that mass-properties products were active computational inputs/products for trajectory, trim, DAP/control, and propellant-support work and could be updated as propellant state and vehicle configuration changed. Combined with the Apollo 13 Flight Control Division report, the `T+55` LM-burn deck should therefore be represented as an **in-flight updated operational mass-properties state**, not a fixed preflight constant.
+
+Still unresolved:
+
+- exact meaning of `T+55`;
+- H-2 LM-burn deck field layout and mass/CG values;
+- processor mapping from deck values into the PC+2 solution;
+- exact relationship between the deck and the final P30 CSM/LM weights;
+- whether those P30 weights equal physical ignition mass.
+
+The simulator should keep physical mass/CG, mission-control mass-properties state, maneuver targeting weights, and controller-visible trajectory/trim products separate.
 
 ## FLIGHT
 
 Maturity remains **B**.
 
-No new decision authority or display behavior is inferred. The improved source provenance only makes the propulsion-validation dependency more explicit: a historically calibrated PC+2 causal model still requires LM-7-specific performance evidence or an explicit lower-fidelity project decision.
+No new decision authority or display behavior is inferred. The improved evidence makes two numerical-validation dependencies explicit: LM-7-specific propulsion performance and H-2-specific mass-properties semantics.
 
 ## Research priority
 
-For station-facing PC+2 fidelity, prioritize recovery of the October 1970 Apollo 13 *Descent Propulsion System Final Flight Evaluation* using the evidence-based tuple:
+First priority is now mission-specific H-2 RTCC/Flight Dynamics mass-properties requirements, deck definitions/listings, or ACF/RTCC material defining `T+55` and LM-burn fields. In parallel, continue recovery of the October 1970 Apollo 13 *Descent Propulsion System Final Flight Evaluation* using:
 
 `Apollo 13 + LM-7 + exact title + October 1970 + TRW Systems Group + NAS9-8166 + MSC-02680`
 
