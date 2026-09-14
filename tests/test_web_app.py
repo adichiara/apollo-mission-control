@@ -14,12 +14,46 @@ class WebAppTests(unittest.TestCase):
         self.client = TestClient(app)
         response = self.client.post("/api/session/create")
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["scenario_id"], "apollo13_pc2_nominal")
 
     def test_health_and_phone_shell(self):
         self.assertEqual(self.client.get("/api/health").json(), {"status": "ok"})
         page = self.client.get("/")
         self.assertEqual(page.status_code, 200)
         self.assertIn("APOLLO MISSION CONTROL", page.text)
+
+
+    def test_scenario_catalog_and_explicit_selection(self):
+        response = self.client.get("/api/scenarios")
+        self.assertEqual(response.status_code, 200)
+        scenarios = response.json()
+        self.assertTrue(scenarios)
+
+        pc2 = next(
+            item for item in scenarios
+            if item["scenario_id"] == "apollo13_pc2_nominal"
+        )
+        self.assertEqual(pc2["mission"], "Apollo 13")
+        self.assertEqual(pc2["runtime_adapter"], "pc2_v1")
+        self.assertEqual(pc2["scenario_class"], "historical_flight_reconstruction")
+        self.assertTrue(pc2["default"])
+        self.assertTrue(pc2["executable"])
+
+        created = self.client.post(
+            "/api/session/create?scenario_id=apollo13_pc2_nominal"
+        )
+        self.assertEqual(created.status_code, 200)
+        self.assertEqual(created.json()["scenario_title"], pc2["title"])
+
+        rejected = self.client.post(
+            "/api/session/create?scenario_id=does-not-exist"
+        )
+        self.assertEqual(rejected.status_code, 400)
+        self.assertIn("unknown scenario_id", rejected.json()["detail"])
+
+        status = self.client.get("/api/session/status")
+        self.assertEqual(status.status_code, 200)
+        self.assertEqual(status.json()["scenario_id"], "apollo13_pc2_nominal")
 
     def test_join_start_advance_and_snapshot(self):
         join = self.client.post(
