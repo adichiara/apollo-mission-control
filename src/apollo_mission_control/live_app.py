@@ -25,3 +25,9 @@ def build_info() -> dict[str, Any]:
 def contingency_console() -> FileResponse:
     """Serve the guided PC+2 delta-P contingency validation console."""
     return FileResponse(WEB_ROOT / "contingency.html")
+
+
+@app.get("/dynamics-test", include_in_schema=False)
+def dynamics_test_console() -> FileResponse:
+    """Serve the Level-1 causal propulsion/dynamics validation console."""
+    return FileResponse(WEB_ROOT / "dynamics.html")
