@@ -24,6 +24,11 @@ from .causal_dps_model import (
     ManeuverState,
     simulate_dps_maneuver,
 )
+from .causal_translational_model import (
+    TranslationalConfig,
+    TranslationalState,
+    simulate_translational_maneuver,
+)
 from .crew_response import (
     apply_session_engine_off_response,
     command_dps_shutdown_from_callout,
@@ -51,6 +56,12 @@ from .scenario_injection import EvidenceClass, StateInjection
 from .session_shutdown_evidence import (
     assess_session_shutdown_evidence,
     record_crew_shutdown_report,
+)
+from .tracking_observation import (
+    TrackingObservationConfig,
+    TrackingStationState,
+    compute_geometric_tracking_truth,
+    produce_tracking_observation,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -166,6 +177,52 @@ class DPSModelProofRequest(BaseModel):
     )
     provenance: list[str] = Field(default_factory=list, max_length=20)
     segments: list[BurnSegmentRequest] = Field(min_length=1, max_length=50)
+
+
+class TrackingObservationRequest(BaseModel):
+    receive_delay_s: float = Field(default=0.0, ge=0.0, le=86_400.0)
+    range_bias_m: float = Field(default=0.0, ge=-1.0e9, le=1.0e9)
+    range_rate_bias_m_s: float = Field(default=0.0, ge=-1.0e6, le=1.0e6)
+    available: bool = True
+    valid: bool = True
+    source: str = Field(
+        default="generic trajectory-tracking API proof",
+        min_length=1,
+        max_length=500,
+    )
+    provenance: list[str] = Field(default_factory=list, max_length=20)
+
+
+class TrajectoryTrackingModelProofRequest(BaseModel):
+    initial_time_s: float = 0.0
+    initial_position_m: list[float] = Field(min_length=3, max_length=3)
+    initial_velocity_m_s: list[float] = Field(min_length=3, max_length=3)
+    initial_mass_kg: float = Field(gt=0.0, le=1_000_000.0)
+    dry_mass_kg: float = Field(ge=0.0, le=1_000_000.0)
+    specific_impulse_s: float = Field(gt=0.0, le=10_000.0)
+    gravitational_parameter_m3_s2: float = Field(default=0.0, ge=0.0)
+    gravity_center_m: list[float] = Field(
+        default_factory=lambda: [0.0, 0.0, 0.0],
+        min_length=3,
+        max_length=3,
+    )
+    max_step_s: float = Field(default=0.25, gt=0.0, le=60.0)
+    applicability: str = Field(
+        default="generic trajectory-tracking model proof; not mission validated",
+        min_length=1,
+        max_length=500,
+    )
+    provenance: list[str] = Field(default_factory=list, max_length=20)
+    segments: list[BurnSegmentRequest] = Field(min_length=1, max_length=50)
+    station_position_m: list[float] = Field(min_length=3, max_length=3)
+    station_velocity_m_s: list[float] = Field(
+        default_factory=lambda: [0.0, 0.0, 0.0],
+        min_length=3,
+        max_length=3,
+    )
+    observation: TrackingObservationRequest = Field(
+        default_factory=TrackingObservationRequest
+    )
 
 
 def _require_session() -> SessionRuntime:
@@ -620,6 +677,79 @@ def dps_burn_model_proof(request: DPSModelProofRequest) -> dict[str, object]:
         )
     )
     return result.to_dict()
+
+
+@app.post(
+    "/api/admin/model-proof/trajectory-tracking",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def trajectory_tracking_model_proof(
+    request: TrajectoryTrackingModelProofRequest,
+) -> dict[str, object]:
+    """Run a mission-neutral trajectory -> tracking-observation proof chain."""
+
+    segments = [
+        BurnSegment(
+            duration_s=segment.duration_s,
+            thrust_n=segment.thrust_n,
+            direction=tuple(segment.direction),
+            end_thrust_n=segment.end_thrust_n,
+            specific_impulse_s=segment.specific_impulse_s,
+            regime=segment.regime,
+        )
+        for segment in request.segments
+    ]
+
+    trajectory = _domain_call(
+        lambda: simulate_translational_maneuver(
+            TranslationalState(
+                time_s=request.initial_time_s,
+                position_m=tuple(request.initial_position_m),
+                velocity_m_s=tuple(request.initial_velocity_m_s),
+                mass_kg=request.initial_mass_kg,
+            ),
+            segments,
+            TranslationalConfig(
+                specific_impulse_s=request.specific_impulse_s,
+                dry_mass_kg=request.dry_mass_kg,
+                gravitational_parameter_m3_s2=request.gravitational_parameter_m3_s2,
+                gravity_center_m=tuple(request.gravity_center_m),
+                max_step_s=request.max_step_s,
+                applicability=request.applicability,
+                provenance=tuple(request.provenance),
+            ),
+        )
+    )
+
+    truth = _domain_call(
+        lambda: compute_geometric_tracking_truth(
+            trajectory.final_state,
+            TrackingStationState(
+                position_m=tuple(request.station_position_m),
+                velocity_m_s=tuple(request.station_velocity_m_s),
+            ),
+        )
+    )
+    observation = _domain_call(
+        lambda: produce_tracking_observation(
+            truth,
+            TrackingObservationConfig(
+                receive_delay_s=request.observation.receive_delay_s,
+                range_bias_m=request.observation.range_bias_m,
+                range_rate_bias_m_s=request.observation.range_rate_bias_m_s,
+                available=request.observation.available,
+                valid=request.observation.valid,
+                source=request.observation.source,
+                provenance=tuple(request.observation.provenance),
+            ),
+        )
+    )
+
+    return {
+        "model_status": "trajectory_tracking_chain_not_historically_validated",
+        "trajectory": trajectory.to_dict(),
+        "tracking_observation": observation.to_dict(),
+    }
 
 
 @app.get("/api/session/audit", dependencies=[Depends(_facilitator_guard)])
