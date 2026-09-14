@@ -9,6 +9,7 @@
   "required_model_domains": [
     "guidance_computer",
     "backup_guidance",
+    "guidance_monitoring",
     "landing_radar",
     "propulsion",
     "translational_dynamics",
@@ -16,7 +17,7 @@
   ],
   "status": "source-backed architecture reference; runtime intentionally not implemented",
   "mission": "Apollo 11",
-  "start_get_s": 369450.0,
+  "start_get_s": 369450,
   "start_get_hms": "102:37:30",
   "end_target_get_hms": "102:43:22",
   "vehicle_configuration": "LM-5 Eagle powered descent",
@@ -25,19 +26,50 @@
     "Apollo 11 Technical Air-to-Ground Voice Transcription",
     "Grumman LAV-500-940, Program Alarms in Powered Descent - Apollo 11, 31 July 1969",
     "NASA Oral History Project, Richard H. Koos interview, 24 August 2023",
-    "Repository research note 141_second_reference_apollo11_descent_assessment.md"
+    "Repository research note 141_second_reference_apollo11_descent_assessment.md",
+    "MSC Internal Note 70-FM-80 / MSC-02419, Lunar Descent and Ascent Trajectories, 21 April 1970"
   ],
   "reference_events": [
-    {"get_hms": "102:37:51", "event": "landing_radar_data_good"},
-    {"get_hms": "102:38:22", "event": "program_alarm_1202"},
-    {"get_hms": "102:38:45", "event": "radar_updates_enabled"},
-    {"get_hms": "102:39:02", "event": "program_alarm_1202"},
-    {"get_hms": "102:41:32", "event": "enter_p64"},
-    {"get_hms": "102:42:18", "event": "program_alarm_1201"},
-    {"get_hms": "102:42:43", "event": "program_alarm_1202"},
-    {"get_hms": "102:42:58", "event": "program_alarm_1202"},
-    {"get_hms": "102:43:20", "event": "ags_attitude_update"},
-    {"get_hms": "102:43:22", "event": "enter_p66"}
+    {
+      "get_hms": "102:37:51",
+      "event": "landing_radar_data_good"
+    },
+    {
+      "get_hms": "102:38:22",
+      "event": "program_alarm_1202"
+    },
+    {
+      "get_hms": "102:38:45",
+      "event": "radar_updates_enabled"
+    },
+    {
+      "get_hms": "102:39:02",
+      "event": "program_alarm_1202"
+    },
+    {
+      "get_hms": "102:41:32",
+      "event": "enter_p64"
+    },
+    {
+      "get_hms": "102:42:18",
+      "event": "program_alarm_1201"
+    },
+    {
+      "get_hms": "102:42:43",
+      "event": "program_alarm_1202"
+    },
+    {
+      "get_hms": "102:42:58",
+      "event": "program_alarm_1202"
+    },
+    {
+      "get_hms": "102:43:20",
+      "event": "ags_attitude_update"
+    },
+    {
+      "get_hms": "102:43:22",
+      "event": "enter_p66"
+    }
   ],
   "evidence_boundary": {
     "actual_flight_interval": true,
