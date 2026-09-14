@@ -5,6 +5,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from apollo_mission_control.generic_runtime import GenericScenarioSession  # noqa: E402
 from apollo_mission_control.pc2_session import PC2Session  # noqa: E402
 from apollo_mission_control.runtime_adapters import (  # noqa: E402
     create_runtime,
@@ -30,6 +31,16 @@ class RuntimeAdapterTests(unittest.TestCase):
         self.assertEqual(runtime.state.get_s, record.start_get_s)
         self.assertIn("pc2_v1", supported_runtime_adapters())
         self.assertTrue(has_runtime_adapter("pc2_v1"))
+
+    def test_generic_adapter_is_registered_without_pc2_capabilities(self):
+        self.assertIn("generic_v1", supported_runtime_adapters())
+        self.assertTrue(has_runtime_adapter("generic_v1"))
+        capabilities = runtime_capabilities("generic_v1")
+        self.assertIn("mission_control_core", capabilities)
+        self.assertIn("state_injection", capabilities)
+        self.assertIn("generic_timed_events", capabilities)
+        self.assertNotIn("pc2_delta_p", capabilities)
+        self.assertNotIn("pc2_dps_shutdown", capabilities)
 
     def test_capabilities_keep_pc2_specific_operations_explicit(self):
         capabilities = runtime_capabilities("pc2_v1")

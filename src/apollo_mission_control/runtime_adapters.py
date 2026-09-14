@@ -9,6 +9,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass
 
+from .generic_runtime import GenericScenarioSession
 from .pc2_session import PC2Session
 from .scenario_catalog import ScenarioRecord, load_scenario_fixture
 from .session_runtime import SessionRuntime
@@ -28,7 +29,22 @@ def _build_pc2(record: ScenarioRecord) -> SessionRuntime:
     return PC2Session.create(load_scenario_fixture(record))
 
 
+def _build_generic(record: ScenarioRecord) -> SessionRuntime:
+    return GenericScenarioSession.create(load_scenario_fixture(record))
+
+
 _ADAPTERS: dict[str, RuntimeAdapter] = {
+    "generic_v1": RuntimeAdapter(
+        adapter_id="generic_v1",
+        builder=_build_generic,
+        capabilities=frozenset(
+            {
+                "mission_control_core",
+                "state_injection",
+                "generic_timed_events",
+            }
+        ),
+    ),
     "pc2_v1": RuntimeAdapter(
         adapter_id="pc2_v1",
         builder=_build_pc2,

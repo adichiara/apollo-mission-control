@@ -103,11 +103,11 @@ Owns:
 
 This is a software requirement of the multiplayer simulation.
 
-**Current implementation:** a framework-neutral scenario catalog discovers fixture metadata and exposes scenario IDs independently of the PC+2 domain model. Session creation selects a scenario by ID and dispatches through a runtime-adapter registry. Only `pc2_v1` is currently executable; discovery of a fixture does not imply runtime support.
+**Current implementation:** a framework-neutral scenario catalog discovers fixture metadata and exposes scenario IDs independently of the PC+2 domain model. Session creation selects a scenario by ID and dispatches through a runtime-adapter registry. `pc2_v1` remains the historical reference adapter. A second `generic_v1` adapter now proves the shared runtime contract independently of PC+2 using synthetic validation fixtures; discovery of a historical fixture still does not imply that its required causal models or procedures are implemented.
 
 The transport and realtime clock now depend on a small shared `SessionRuntime` lifecycle/station contract rather than directly on `PC2Session`. Adapter capabilities explicitly identify scenario-specific operations. For example, the current adapter advertises `pc2_delta_p` and `pc2_dps_shutdown`; those endpoints are rejected for a future runtime that does not advertise them.
 
-This deliberately does **not** force PC+2-specific state, products, rules, or controller procedures into the generic runtime interface.
+This deliberately does **not** force PC+2-specific state, products, rules, or controller procedures into the generic runtime interface. The generic adapter handles only shared exercise mechanics and explicitly scripted external/discrete state changes; it does not compute subsystem physics or allow scripted events to stand in for causal consequences that belong in reusable models.
 
 ### 2. Scenario definition / SimSup inputs
 
