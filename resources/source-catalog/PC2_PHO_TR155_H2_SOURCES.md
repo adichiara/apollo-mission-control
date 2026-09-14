@@ -96,6 +96,17 @@ This tightens note 126: the H-2 data-pack family was upstream/supporting configu
 
 **Do not use for:** assigning meanings to the named pack abbreviations, claiming Revision N contains TELMU console-09 loading, or identifying specific measurements inside Revision N.
 
+### A5. MSC organization records — acronym search boundary
+
+**Organizations:** NASA Manned Spacecraft Center / Flight Control Division  
+**Primary records:** MSC Telephone Directory, November 1970; ALSEP Flight Control Experiments Operations Plan acronym appendix.  
+**Authority:** contemporary NASA/MSC organizational records.
+
+The November 1970 MSC directory identifies Flight Control Division branches including Flight Control Operations, CSM Systems, LM Systems, Flight Dynamics, Mission Control Requirements, and Experiments Systems. The ALSEP plan's acronym appendix explicitly defines **FCOB = Flight Control Operations Branch** and **LSB = LM Systems Branch**.
+
+**Use:** establishes that `FCOB` and `LSB` were genuine Apollo-era organizational acronyms and supplies organization-name search terms that resemble several PHO-TR460 pack labels.  
+**Do not use for:** asserting that PHO-TR460's identically spelled pack labels were necessarily owned by those branches; automatically expanding `CSB`, `FDB`, or `ESB`; or assigning meanings to `SLV`, `FSB`, `MOD`, `PCB`, or `OSB` without a PHO-TR155/data-pack cross-reference.
+
 ## B. Adjacent-mission continuity evidence
 
 ### B1. LM-1 Data Evaluation Guide
@@ -125,7 +136,7 @@ Highest priority:
 
 1. **Mission H-2 data-pack Revision N or its transmittal/index**, now known to be configuration-input/control material associated with the PHO-TR155 workflow;
 2. **PHO-TR155 Mission H-2 Revision C**, issued 1970-03-06;
-3. a **Requirements and Configuration data-pack definition/key** mapping the H-2 pack abbreviations and pack contents;
+3. a **Requirements and Configuration data-pack definition/key** mapping the H-2 pack abbreviations and pack contents; searches should include the directly attested organization terms Flight Control Operations Branch / `FCOB` and LM Systems Branch / `LSB`, plus contemporary CSM Systems, Flight Dynamics, Mission Control Requirements, and Experiments Systems branch names without presuming those names define the pack labels;
 4. **Mission H-2 TDFCB Revision 4**, especially its special LM Flight Control and PCMGS listings;
 5. H-2 TELMU console-09 operational-configuration/loading sheets;
 6. H-2 TELMU console handbook or controller log;
@@ -145,6 +156,7 @@ The repository may state that:
 - Mission H-2 telemetry-format configuration was controlled by **TDFCB Revision 4**, delivered 1970-01-28;
 - its mission-specific products included LM Flight Control, PCMGS, high-speed/wideband, index, and compare material;
 - Philco explicitly checked the H-2 Rev. 4 TDFCB PCMGS against PHO-TR155;
+- `FCOB` and `LSB` were contemporary Apollo organizational acronyms for Flight Control Operations Branch and LM Systems Branch, respectively, while the PHO-TR460 pack-label mapping remains unproven;
 - `GC0071V` and `GC0155F` are source-backed LM inverter-bus electrical measurements;
 - cross-mission evidence supports TELMU station-family ownership.
 
@@ -159,7 +171,8 @@ The repository must **not** state as Apollo 13 fact, absent recovered H-2 config
 - that `GC0071V` / `GC0155F` are definitely present in a specific unrecovered H-2 TDFCB listing;
 - that Mission H-2 data-pack Revision N is specifically the TELMU console-09 loading package;
 - that Revision N is synonymous with PHO-TR155 Revision C or has a proven one-to-one contents mapping to it;
-- unsupported expansions or contents for the PHO-TR155 pack abbreviations;
+- that contemporary organizational expansions automatically define the identically shaped PHO-TR460 pack labels;
+- unsupported expansions or contents for the remaining PHO-TR155 pack abbreviations;
 - that the 1126 quarterly console-label changes were specifically TELMU or Revision-C inverter-display changes.
 
 ## Related research
@@ -175,3 +188,4 @@ The repository must **not** state as Apollo 13 fact, absent recovered H-2 config
 - `resources/research/125_pc2_h2_tdfcb_rev4_configuration_boundary.md`
 - `resources/research/126_pc2_h2_photr155_data_pack_lineage_boundary.md`
 - `resources/research/127_pc2_photr155_data_pack_process_boundary.md`
+- `resources/research/128_pc2_h2_data_pack_organizational_acronym_boundary.md`
