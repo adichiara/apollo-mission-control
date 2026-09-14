@@ -61,7 +61,7 @@ The architecture is intended to support a scenario library spanning different Ap
 - mechanisms not exercised by PC+2 may be added later when another selected scenario requires them;
 - historical fidelity is still evaluated per mission/scenario rather than by assuming the Apollo 13 configuration applies everywhere.
 
-PC+2 is thus a **calibration and architecture proof case**: if arbitrary correct or incorrect actions produce plausible sourced consequences there, the same engine structure should be capable of supporting later lunar-descent, ascent, rendezvous, entry, launch-abort, communications/network, and other documented simulator cases after their required models are added.
+PC+2 is thus a **calibration and architecture proof case**: if arbitrary correct or incorrect actions produce plausible sourced consequences there, the same engine structure should be capable of supporting later lunar-descent, ascent, rendezvous, entry, launch-abort, communications/network, and other documented simulator cases after their required models are added. The Apollo 11 powered-descent/program-alarm interval is now cataloged as the second historical pressure test, but remains deliberately non-executable until its required causal domains are ready.
 
 This implements Decision D-021 and complements the Apollo 13-era default technical baseline in D-012.
 
@@ -145,6 +145,12 @@ Subsystem detail is admitted when a supported player action, failure, rule, or o
 Principle:
 
 > Players do not read authoritative state directly.
+
+### Guidance-computer alarm/restart boundary
+
+A mission-neutral guidance-computer model now represents caller-defined alarm codes, program-alarm indication, software-restart classification, restart history, and restart-protected program recovery.
+
+It deliberately does not infer abort/continue. For the Apollo 11 reference, 1201/1202 semantics and P63/P64 restart protection are source-backed, while PGNS validity, AGS agreement, radar quality, trajectory state, and controller decisions remain separate model/observation layers.
 
 ### 4. Simulated flight crew
 
