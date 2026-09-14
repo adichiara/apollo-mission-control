@@ -32,11 +32,31 @@ Status: active source supplement for the first-pass TELMU player-facing presenta
 - **Use:** Confirms the crew-facing inverter rule: shutdown if the inverter light remains after switching inverters.
 - **Presentation consequence:** Inverter warning and inverter-switch action must remain separate products/events.
 
+## 5. Apollo Experience Report — Lunar Module Instrumentation Subsystem
+
+- **Report:** NASA TN D-6845 / MSC-S-294, June 1972
+- **Source class:** PRIMARY technical
+- **Use:** establishes source-backed inverter-bus frequency `GC0155` and voltage `GC0071` PCMTEA telemetry paths while keeping the derived `GL4046` / `6DS26` onboard caution distinct.
+- **Presentation consequence:** TELMU may receive a project-rendered electrical product based on the underlying source-backed voltage/frequency measurements without pretending that the onboard caution itself was directly telemetered.
+- **Limitation:** does not establish the exact Apollo 13 TELMU display format, selector position telemetry, or a direct `GL4046` telemetry bit.
+
+## 6. Apollo Experience Report — Flight-Control Data Needs, Terminal Display Devices, and Ground System Configuration Requirements
+
+- **Report:** NASA TN D-7685 / JSC S-396, May 1974
+- **NTRS:** https://ntrs.nasa.gov/citations/19740015284
+- **Source class:** PRIMARY Apollo-experience / ground-display architecture
+- **Use:** documents that an individual console could request a computer-driven TV display format and receive it on the next available dynamically assigned TV channel; consoles could also attach to an already active TV channel.
+- **Presentation consequence:** do not fabricate a permanently assigned TELMU TV channel for `GC0155` / `GC0071`. A project rendering can remain source-compatible without reproducing a fixed channel assignment.
+- **Limitation:** does not identify the Apollo 13 PC+2 inverter display-format number/name, exact fields, which station selected it, MSK/DRK action, cadence, or latency.
+
 ## Repository research
 
 - `resources/research/059_pc2_inverter_warning_after_switch.md`
 - `resources/research/060_pc2_inverter_contingency_action_report_loop.md`
 - `resources/research/075_pc2_telmu_player_presentation_boundary.md`
+- `resources/research/116_pc2_inverter_ground_observation_path.md`
+- `resources/research/117_pc2_inverter_direct_caution_selector_telemetry_boundary.md`
+- `resources/research/118_pc2_inverter_mcc_display_routing_boundary.md`
 - `docs/stations/APOLLO13_TELMU.md`
 
 ## Evidence rule
@@ -47,6 +67,9 @@ Do not:
 
 - present 38–40 A as live measured telemetry;
 - invent an exact TELMU CRT layout;
+- invent a fixed historical TV-channel number or permanent TELMU channel assignment for inverter voltage/frequency;
 - expose hidden product-integrity metadata;
 - turn deferred measured current into a historical telemetry failure;
 - collapse inverter warning, switch action, re-observation, and shutdown-rule result into one status flag.
+
+Source-backed `GC0155` / `GC0071` ground electrical evidence may be rendered for play, but exact Apollo 13 display-format identity, field placement, selection action, cadence, and latency remain unresolved.
