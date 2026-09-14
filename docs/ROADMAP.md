@@ -14,7 +14,7 @@ Repository baseline, research-first authenticity policy, source catalog/research
 
 Core Apollo 13 front-room positions are at B or better, with EECOM at A. Exact console/display reconstruction remains incomplete for several stations but is not a prerequisite where missing detail does not affect the selected scenario. Research note 100 makes the Staff Support Room boundary explicit: the seven-seat/five-player implementation is a front-room playable slice, not a complete staffing reconstruction.
 
-Mission H-2 display-system provenance has now been tightened through research note **124**: PHO-TR155 Revision C was issued before flight, the H-2 Display System was implemented in accordance with it during March 1970, and Philco explicitly reported that no equipment configuration changes were required. Exact Apollo 13 TELMU loading remains unrecovered, so project renderings must not be represented as exact H-2 physical-console reconstructions.
+Mission H-2 display/telemetry provenance has now been tightened through research notes **123–125**. PHO-TR155 Revision C was issued before flight, the H-2 Display System was implemented in accordance with it during March 1970, and Philco explicitly reported that no equipment configuration changes were required. Separately, Mission H-2 **TDFCB Revision 4** was delivered on 28 January 1970 with mission-specific LM Flight Control, PCMGS, high-speed/wideband, index, and compare products; Philco records checking the H-2 Rev. 4 PCMGS against PHO-TR155. Exact Apollo 13 TELMU loading remains unrecovered, so project renderings must not be represented as exact H-2 physical-console or parameter-loading reconstructions.
 
 ## Phase 2 — First playable mission/scenario
 
@@ -22,7 +22,7 @@ Mission H-2 display-system provenance has now been tightened through research no
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, beginning near **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–124**. Notes 098–103 establish the final-load, support-room, post-burn, spacecraft-model, and ground-data-processing boundaries. Notes 104–124 further constrain the PC+2 observation and shutdown-rule evidence paths, including inlet-pressure and thrust-monitor semantics, attitude-transient handling, inverter transfer/re-observation, ground inverter telemetry, TELMU station continuity, crew-local electrical monitoring, and H-2 PHO-TR155 provenance/implementation.
+The primary research chain now runs through notes **048–125**. Notes 098–103 establish the final-load, support-room, post-burn, spacecraft-model, and ground-data-processing boundaries. Notes 104–125 further constrain the PC+2 observation and shutdown-rule evidence paths, including inlet-pressure and thrust-monitor semantics, attitude-transient handling, inverter transfer/re-observation, ground inverter telemetry, TELMU station continuity, crew-local electrical monitoring, H-2 PHO-TR155 provenance/implementation, and the mission-specific H-2 TDFCB telemetry-configuration trail.
 
 Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`.
 
@@ -40,7 +40,7 @@ This is a project adaptation, not a historical staffing claim. Decision **D-018*
 
 First-pass views exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM. Exact semantics are retained where sourced; project renderings remain labeled where exact routing/layout is unresolved; **hidden integrity does not leak**, and missing fields are not turned into invented telemetry failures.
 
-For TELMU inverter monitoring, source-backed `GC0071V` / `GC0155F` evidence may be rendered as a project product. The H-2 configuration is known to have been implemented under PHO-TR155 Revision C without Display System equipment changes, but exact Apollo 13 indicator/module placement, CRT request, selector workflow, cadence, precision, and latency remain unresolved.
+For TELMU inverter monitoring, source-backed `GC0071V` / `GC0155F` evidence may be rendered as a project product. H-2 now has two identified mission-specific configuration authorities: PHO-TR155 Revision C for the Display System and TDFCB Revision 4 for telemetry-format/Flight Control products. Their cross-check is documented, but exact Apollo 13 indicator/module placement, CRT request, selector workflow, sample/display cadence, precision, and latency remain unresolved.
 
 ## Phase 4 — Authoritative simulation model
 
@@ -80,6 +80,8 @@ Research note 102 reinforces that this chain is the physical-model admission tes
 
 Only states that materially affect a sourced player decision or selected failure path enter the executable model. Tracking/ranging quality remains distinct from generated trajectory products, and ground systems must not leak hidden spacecraft truth.
 
+Research note **125** adds a historical configuration-control boundary above this functional model: Mission H-2 TDFCB Revision 4 carried mission-specific telemetry-format/Flight Control products, and its PCMGS material was checked against PHO-TR155. The unrecovered TDFCB cannot be replaced with guessed H-2 parameter loading or adjacent-mission sample rates.
+
 The final PC+2 load path remains:
 
 `FIDO/RTCC final solution → GUIDO load readiness/consistency → INCO uplink configuration → CAPCOM/crew P00 + DATA/ACCEPT + UPDATA LINK configuration → state-vector + target-load transmission → completion / computer returned to crew`
@@ -92,7 +94,7 @@ Exact Cartesian vector values, RTCC/CCATS command internals, exact controller ke
 
 Implemented/evaluable: ISS warning + program alarm path, chamber-pressure observation, >25 psi ΔP ground callout, attitude criteria, inverter path, restart eligibility/sequence, crew STOP/off path, shutdown/restart evidence architecture, final state-vector/target-load staging, and final FLIGHT GO/NO-GO.
 
-Research notes **104–124** now constrain several previously loose rule/observation details. In particular, Apollo 13 retained inverter 2 for the burn, the alternate-inverter transfer procedure is source-backed, the post-transfer warning must be treated as a fresh observation rather than an invented timed dwell, `GC0071V` / `GC0155F` provide a ground electrical evidence path, and crew Power/Temp Monitor/caution observation remains a distinct local path. Direct ground telemetry of the caution state or inverter selector position has not been established.
+Research notes **104–125** now constrain several previously loose rule/observation details. In particular, Apollo 13 retained inverter 2 for the burn, the alternate-inverter transfer procedure is source-backed, the post-transfer warning must be treated as a fresh observation rather than an invented timed dwell, `GC0071V` / `GC0155F` provide a ground electrical evidence path, and crew Power/Temp Monitor/caution observation remains a distinct local path. Direct ground telemetry of the caution state or inverter selector position has not been established. Mission-specific TDFCB provenance now identifies the correct archival route for exact H-2 telemetry loading without inventing it.
 
 Research note **101** adds the first-playable post-burn sequence:
 
@@ -122,7 +124,7 @@ The primary remaining validation boundary is **physical human/device execution**
 6. Exercise the approved five-player compact configuration with simultaneous clients, especially TELMU↔CONTROL and GUIDO↔FIDO-RETRO switching.
 7. Verify station-qualified readiness/action attribution and information isolation in facilitator audit output.
 8. Repair reproducible network/mobile/presentation/instruction defects and add regression coverage.
-9. Continue the archival search for PHO-TR155 Mission H-2 Revision C / data-pack Revision N or equivalent H-2 TELMU loading material; do not block physical validation on its recovery.
+9. Continue the archival search for **Mission H-2 TDFCB Revision 4** (especially special LM Flight Control and PCMGS listings), PHO-TR155 Mission H-2 Revision C, and data-pack Revision N; do not block physical validation on their recovery.
 10. Reopen other historical, spacecraft-model, or ground-processing research only when validation exposes a concrete missing procedure, authority, information, terminology, display, support-room product, player-count dependency, causal spacecraft mechanism, or ground-data-path dependency.
 
 ## Explicitly deferred
@@ -155,4 +157,4 @@ The primary remaining validation boundary is **physical human/device execution**
 
 Automated coverage includes continuous-clock/event rules, crew response, shutdown evidence, player/admin separation, facilitator authority, multi-client integration, multi-station ownership, compact HTTP/browser contracts, and staged PC+2 final-load transitions/station products.
 
-Research notes 095–124 and associated testing/scope documentation improve physical-run evidence quality and scenario closure but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
+Research notes 095–125 and associated testing/scope documentation improve physical-run evidence quality and scenario closure but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
