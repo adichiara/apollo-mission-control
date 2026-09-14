@@ -62,7 +62,16 @@ Mission H-2 telemetry-format entries establish:
 
 The surviving Philco report shows that TDFCB Rev. 4 carried mission-specific telemetry-format and Flight Control products and that its PCMGS material was explicitly checked against PHO-TR155.
 
-**Highest-value components to recover:** special LM Flight Control listing; Flight Control listing and compare; PCMGS listing/material; high-speed/wideband requirements; index/master compare; March 1970 Format-30 compare material.
+**Highest-value components to recover:**
+
+- special LM Flight Control listing;
+- Flight Control listing and compare;
+- PCMGS listing/material;
+- high-speed/wideband requirements;
+- index/master compare;
+- March 1970 Format-30 compare material.
+
+**Use if recovered:** establish Apollo 13/H-2 measurement membership, telemetry formats/cadence, Flight Control routing products, and possibly the exact ground-side evidence path for `GC0071V` / `GC0155F`.
 
 ### A3. PHO-TR155 data-pack family / Mission H-2 Revision N — identified, scope unresolved
 
@@ -134,6 +143,7 @@ The repository may state that:
 - PHO-TR155 preliminary working lists then supported downstream display-production work;
 - PHO-TR474 later records H-2 data-pack Revision N, but its exact internal scope remains unrecovered;
 - Mission H-2 telemetry-format configuration was controlled by **TDFCB Revision 4**, delivered 1970-01-28;
+- its mission-specific products included LM Flight Control, PCMGS, high-speed/wideband, index, and compare material;
 - Philco explicitly checked the H-2 Rev. 4 TDFCB PCMGS against PHO-TR155;
 - `GC0071V` and `GC0155F` are source-backed LM inverter-bus electrical measurements;
 - cross-mission evidence supports TELMU station-family ownership.
