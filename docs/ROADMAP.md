@@ -20,9 +20,9 @@ Core Apollo 13 front-room positions are at B or better, with EECOM at A. Exact c
 
 Selected slice: **Apollo 13 PC+2 preparation/execution**, beginning near **77:55 GET** and continuing through immediate post-burn verification/power-down.
 
-The primary research chain now runs through notes **048–117**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note 101 resolves immediate post-burn closure while preserving an unresolved timing-source tension; note 102 bounds spacecraft physics to decision-relevant causal fidelity; note 103 bounds MSFN/CCATS/RTCC to functional ground-data services; note 104 defines layered observation failures without random generic telemetry faults; note 105 keeps crew action explicit and scenario-authored; note 106 narrows the 150-psi ground inlet-pressure lineage toward fuel inlet / `GQ3611P` without claiming an Apollo 13-specific mapping; notes 107–108 identify the onboard ENG THRUST percent indication and bound first-playable applicability to the commanded full-throttle transition; notes 109–110 allocate the attitude start-transient exception to attitude error and preserve the lack of an Apollo 13-specific numeric duration; note 111 records the generic LM inverter convention; note 112 corrects the first-playable inverter selection from mission-specific Apollo 13 procedure evidence; note 113 closes the alternate-inverter identity; note 114 directly resolves the inverter-2-to-inverter-1 cockpit transfer sequence from the Apollo 13 LM Malfunction Procedures; note 115 closes the first-playable post-transfer timing ambiguity by requiring a fresh valid caution re-observation rather than an invented crew persistence timer; note 116 establishes the source-backed ground electrical-observation path through inverter-bus frequency `GC0155` and voltage `GC0071` PCMTEA telemetry while keeping the onboard `GL4046`/`6DS26` caution, selector position, and exact controller routing distinct; and note **117 closes the first-playable direct-telemetry boundary by documenting that the reviewed primary schematics do not establish PCM telemetry taps for the derived `GL4046` caution or INV1/INV2 selector position.**
+The primary research chain now runs through notes **048–118**. Notes 098–099 establish and implement the staged final state-vector/target-load/uplink workflow; note 100 defines the backroom/SSR scope boundary; note 101 resolves immediate post-burn closure while preserving an unresolved timing-source tension; note 102 bounds spacecraft physics to decision-relevant causal fidelity; note 103 bounds MSFN/CCATS/RTCC to functional ground-data services; note 104 defines layered observation failures without random generic telemetry faults; note 105 keeps crew action explicit and scenario-authored; note 106 narrows the 150-psi ground inlet-pressure lineage toward fuel inlet / `GQ3611P` without claiming an Apollo 13-specific mapping; notes 107–108 identify the onboard ENG THRUST percent indication and bound first-playable applicability to the commanded full-throttle transition; notes 109–110 allocate the attitude start-transient exception to attitude error and preserve the lack of an Apollo 13-specific numeric duration; note 111 records the generic LM inverter convention; note 112 corrects the first-playable inverter selection from mission-specific Apollo 13 procedure evidence; note 113 closes the alternate-inverter identity; note 114 directly resolves the inverter-2-to-inverter-1 cockpit transfer sequence from the Apollo 13 LM Malfunction Procedures; note 115 closes the first-playable post-transfer timing ambiguity by requiring a fresh valid caution re-observation rather than an invented crew persistence timer; note 116 establishes the source-backed ground electrical-observation path through inverter-bus frequency `GC0155` and voltage `GC0071` PCMTEA telemetry while keeping the onboard `GL4046`/`6DS26` caution, selector position, and exact controller routing distinct; note 117 closes the first-playable direct-telemetry boundary by documenting that the reviewed primary schematics do not establish PCM telemetry taps for the derived `GL4046` caution or INV1/INV2 selector position; and note **118 resolves the fixed-channel architectural ambiguity by documenting Apollo MCC dynamic display-request/channel-attach behavior while preserving the unresolved Apollo 13 format identity, field placement, cadence, latency, and actual station selection.**
 
-Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`. Dated archival refinements are recorded under `docs/roadmap/`, including the inverter selection, transfer, re-observation, ground-observation, and direct-telemetry boundary records.
+Current detailed integration roadmap: `docs/roadmap/2026-09-12_first_playable_integration.md`. Dated archival refinements are recorded under `docs/roadmap/`, including the inverter selection, transfer, re-observation, ground-observation, direct-telemetry, and MCC display-routing boundary records.
 
 ### Player-count boundary
 
@@ -37,6 +37,8 @@ The spacecraft crew is not an additional first-playable player. Decision D-021 k
 **Status:** minimum PC+2 player-presentation checkpoint complete.
 
 First-pass views exist for CONTROL, GUIDO, TELMU, FIDO/RETRO, INCO, FLIGHT, and CAPCOM. Exact semantics are retained where sourced; project renderings remain labeled where exact routing/layout is unresolved; hidden integrity does not leak, and missing fields are not turned into invented telemetry failures.
+
+Note 118 adds an important presentation constraint: Apollo computer-driven TV displays were dynamically requested and assigned to available channels, with channel-attach also supported. Therefore missing Apollo 13 inverter-display evidence must not be replaced by an invented fixed TELMU/CONTROL channel number. Exact Apollo 13 display-format identity and field placement remain unresolved.
 
 ## Phase 4 — Authoritative simulation model
 
@@ -58,7 +60,7 @@ No unsupported internal routing, automatic crew compliance, response timing, tel
 
 ## Phase 5 — Mission Control data path
 
-**Status:** first-slice architecture, ground-processing scope, observation-integrity scope, and crew-interaction boundary established.
+**Status:** first-slice architecture, ground-processing scope, observation-integrity scope, crew-interaction boundary, and inverter display-routing architecture established.
 
 The project preserves:
 
@@ -72,7 +74,7 @@ The final PC+2 load path remains:
 
 Exact Cartesian vector values, RTCC/CCATS command internals, exact controller key sequence, and exact transmission duration remain unfrozen. SSR-derived analysis is not silently invented inside this path.
 
-Research notes 116–117 provide a concrete inverter example of the layered data model. Primary LM instrumentation documentation explicitly routes inverter-bus frequency `GC0155` and voltage `GC0071` through conditioning/isolation to PCMTEA telemetry and the MSFN path. The onboard derived caution `GL4046` / `6DS26` is a separate indication path, and the reviewed schematic does not show a PCMTEA telemetry tap for either that caution output or INV1/INV2 selector position. Ground electrical telemetry therefore uses the sourced voltage/frequency measurements; selected-inverter identity and onboard caution persistence remain explicit crew action/report information unless a later primary routing source establishes additional telemetry. Exact MCC routing and CRT presentation remain unresolved.
+Research notes 116–118 provide a concrete inverter example of the layered data model. Primary LM instrumentation documentation explicitly routes inverter-bus frequency `GC0155` and voltage `GC0071` through conditioning/isolation to PCMTEA telemetry and the MSFN path. The onboard derived caution `GL4046` / `6DS26` is a separate indication path, and the reviewed schematic does not show a PCMTEA telemetry tap for either that caution output or INV1/INV2 selector position. NASA TN D-7685 further documents Apollo MCC computer-driven TV as a dynamic display-request/channel-attach system rather than a permanently consigned display/channel-per-console scheme. Ground electrical telemetry therefore uses the sourced voltage/frequency measurements, while selected-inverter identity and onboard caution persistence remain explicit crew action/report information. The exact Apollo 13 inverter display-format number/name, field placement, selection key, update cadence, latency, and actual PC+2 station selection remain unresolved.
 
 ## Phase 6 — Procedures and flight rules
 
@@ -100,9 +102,9 @@ Notes 107–108 identify the panel-1 CMD THRUST / ENG THRUST instrument family, 
 
 Note 109 gives operational precedence to the contemporaneous CAPCOM transmission and Haise readback, which attach the startup exception to ±10-degree attitude error, not the separate ±10-degree/sec rate criterion. Note 110 establishes only that DPS engineering usage treated “start transient” as a short engine-start phenomenon; no Apollo 13-specific numeric duration/end condition is recovered. No 2.14-second, 4-second, +5-second, +21-second, or +26-second historical exception timer is encoded.
 
-### Inverter criterion — corrected configuration, transfer, re-observation, and ground-observation provenance
+### Inverter criterion — corrected configuration, transfer, re-observation, ground observation, and MCC presentation boundary
 
-Research notes 112–117 supersede note 111's earlier first-playable identity synthesis. Apollo 13's mission-specific PC+2 read-up explicitly directed `CB(16) INVERTER 2, CLOSE` and scratched the stock `Select Inverter 1` step, fixing the burn configuration on inverter 2. The Apollo 13 *LM Malfunction Procedures* then directly supplies the alternate-selection action for inverter 2 operating and immediately evaluates whether the INVERTER caution is off; it does not prescribe a crew stopwatch interval. NASA LM instrumentation documentation separately describes LM-5-and-subsequent inverter-selection transient-inhibit behavior, placing normal switching-transient suppression in spacecraft indication logic rather than in an additional crew dwell rule.
+Research notes 112–118 supersede note 111's earlier first-playable identity synthesis. Apollo 13's mission-specific PC+2 read-up explicitly directed `CB(16) INVERTER 2, CLOSE` and scratched the stock `Select Inverter 1` step, fixing the burn configuration on inverter 2. The Apollo 13 *LM Malfunction Procedures* then directly supplies the alternate-selection action for inverter 2 operating and immediately evaluates whether the INVERTER caution is off; it does not prescribe a crew stopwatch interval. NASA LM instrumentation documentation separately describes LM-5-and-subsequent inverter-selection transient-inhibit behavior, placing normal switching-transient suppression in spacecraft indication logic rather than in an additional crew dwell rule.
 
 Canonical crew-side first-playable interpretation:
 
@@ -110,7 +112,7 @@ Canonical crew-side first-playable interpretation:
 
 Ground electrical observation:
 
-`selected inverter bus → GC0155 frequency + GC0071 voltage → conditioning/isolation → PCMTEA telemetry → communications/MSFN → [exact MCC station routing/display unresolved]`
+`selected inverter bus → GC0155 frequency + GC0071 voltage → conditioning/isolation → PCMTEA telemetry → communications/MSFN → MCC computer-driven display capability → [exact Apollo 13 format/station selection unresolved]`
 
 Onboard caution:
 
@@ -122,9 +124,11 @@ Selected-inverter identity:
 
 Note 117 records the negative evidence boundary: the reviewed primary schematic positively labels PCMTEA taps for `GC0155` and `GC0071` but does not label equivalent taps for the `GL4046` caution output or selector position. Therefore first playable does **not** expose either as historical direct ground telemetry. This is a bounded negative finding rather than universal proof of nonexistence; a later primary routing source may supersede it.
 
-Do not invent a 1-second, 2-second, 5-second, or other post-transfer persistence timer. Do not invent a direct ground `GL4046` caution bit or selector-position telemetry. A first-playable ground electrical product may use `GC0155` / `GC0071`; a derived electrical warning may be shown only if clearly labeled as a project-derived aid rather than a recovered Apollo 13 caution discrete.
+Note 118 records the MCC display-routing boundary: Apollo computer-driven TV display formats were dynamically requested and assigned to available channels, and consoles could attach to active channels. Therefore first playable does **not** invent a permanent TELMU/CONTROL channel number for inverter electrical data. A project-rendered station product may use source-backed `GC0155` / `GC0071`, but the exact Apollo 13 format number/name, field layout, selection action, cadence, latency, and actual station selection remain archival gaps.
 
-Still intentionally unresolved where evidence is insufficient: Apollo 13-specific confirmation of the 150-psi fuel-inlet mapping; exact operational duration/end condition of the attitude-error start transient; exact inverter-selection inhibit duration; exact TELMU/CONTROL routing/CRT field, cadence, and latency; whether an as-yet-unreviewed primary routing source establishes any additional caution/selector discrete; exact final-load ground-system internals; and display/routing details whose absence does not currently block first playable.
+Do not invent a 1-second, 2-second, 5-second, or other post-transfer persistence timer. Do not invent a direct ground `GL4046` caution bit or selector-position telemetry. Do not invent a fixed historical TV-channel number. A first-playable ground electrical product may use `GC0155` / `GC0071`; a derived electrical warning may be shown only if clearly labeled as a project-derived aid rather than a recovered Apollo 13 caution discrete.
+
+Still intentionally unresolved where evidence is insufficient: Apollo 13-specific confirmation of the 150-psi fuel-inlet mapping; exact operational duration/end condition of the attitude-error start transient; exact inverter-selection inhibit duration; exact Apollo 13 TELMU/CONTROL inverter display-format identity/field placement, station selection, cadence, and latency; whether an as-yet-unreviewed primary routing source establishes any additional caution/selector discrete; exact final-load ground-system internals; and display details whose absence does not currently block first playable.
 
 ## Phase 7 — Simulation scenarios / SimSup
 
@@ -148,7 +152,7 @@ The primary remaining validation boundary is **physical human/device execution**
 8. Repair reproducible network/mobile/presentation/instruction defects and add regression coverage.
 9. Reopen historical or model research only when validation exposes a concrete missing decision dependency.
 
-Research notes 106–117 are bounded archival refinements and corrections; they do not displace the physical-play priority.
+Research notes 106–118 are bounded archival refinements and corrections; they do not displace the physical-play priority.
 
 ## Explicitly deferred
 
@@ -158,7 +162,7 @@ Research notes 106–117 are bounded archival refinements and corrections; they 
 - exact operational duration/end of the attitude-error startup-transient exception;
 - exact inverter-selection transient-inhibit duration;
 - recovery of any primary routing source that explicitly establishes direct `GL4046` caution telemetry or INV1/INV2 selector-position telemetry beyond the paths reviewed in note 117;
-- exact TELMU/CONTROL inverter routing, CRT/MSK field, update cadence, and display latency;
+- exact Apollo 13 inverter display-format identity, field labels/placement, actual station selection, MSK/DRK request action, update cadence, and display latency;
 - detailed DPS transient timing beyond selected branch needs;
 - full six-degree-of-freedom spacecraft/orbital propagation;
 - pulse-level RCS jet dynamics;
@@ -186,4 +190,4 @@ Research notes 106–117 are bounded archival refinements and corrections; they 
 
 Automated coverage includes continuous-clock/event rules, crew response, shutdown evidence, player/admin separation, facilitator authority, multi-client integration, multi-station ownership, compact HTTP/browser contracts, and staged PC+2 final-load transitions/station products.
 
-Research notes 095–117 and associated testing/scope documentation improve physical-run evidence quality and bounded historical interpretation but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
+Research notes 095–118 and associated testing/scope documentation improve physical-run evidence quality and bounded historical interpretation but do not constitute physical validation. Physical seven-seat and five-player compact human/device PASS claims remain unmade.
