@@ -15,6 +15,7 @@ class WebAppTests(unittest.TestCase):
         response = self.client.post("/api/session/create")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["scenario_id"], "apollo13_pc2_nominal")
+        self.assertEqual(response.json()["mission_profile_id"], "apollo13_h2")
 
     def test_health_and_phone_shell(self):
         self.assertEqual(self.client.get("/api/health").json(), {"status": "ok"})
@@ -35,6 +36,7 @@ class WebAppTests(unittest.TestCase):
         )
         self.assertEqual(pc2["mission"], "Apollo 13")
         self.assertEqual(pc2["runtime_adapter"], "pc2_v1")
+        self.assertEqual(pc2["mission_profile_id"], "apollo13_h2")
         self.assertEqual(pc2["scenario_class"], "historical_flight_reconstruction")
         self.assertTrue(pc2["default"])
         self.assertTrue(pc2["executable"])
@@ -44,6 +46,7 @@ class WebAppTests(unittest.TestCase):
         )
         self.assertEqual(created.status_code, 200)
         self.assertEqual(created.json()["scenario_title"], pc2["title"])
+        self.assertEqual(created.json()["mission_profile_id"], "apollo13_h2")
 
         rejected = self.client.post(
             "/api/session/create?scenario_id=does-not-exist"
@@ -54,6 +57,28 @@ class WebAppTests(unittest.TestCase):
         status = self.client.get("/api/session/status")
         self.assertEqual(status.status_code, 200)
         self.assertEqual(status.json()["scenario_id"], "apollo13_pc2_nominal")
+        self.assertEqual(status.json()["mission_profile_id"], "apollo13_h2")
+
+
+    def test_mission_profile_catalog_preserves_documented_nomenclature(self):
+        response = self.client.get("/api/mission-profiles")
+        self.assertEqual(response.status_code, 200)
+        profiles = {
+            item["mission_profile_id"]: item
+            for item in response.json()
+        }
+        self.assertIn("apollo11_g", profiles)
+        self.assertIn("apollo13_h2", profiles)
+        self.assertEqual(
+            profiles["apollo11_g"]["controller_nomenclature"]["lm_systems"],
+            "TELCOM",
+        )
+        self.assertEqual(
+            profiles["apollo13_h2"]["controller_nomenclature"][
+                "lm_electrical_environmental_emu"
+            ],
+            "TELMU",
+        )
 
     def test_join_start_advance_and_snapshot(self):
         join = self.client.post(
