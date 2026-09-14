@@ -39,6 +39,11 @@ from .mission_profiles import (
     discover_mission_profiles,
     get_mission_profile,
 )
+from .model_profiles import (
+    ModelProfileRecord,
+    discover_model_profiles,
+    get_model_profile,
+)
 from .realtime_clock import RealtimeSessionClock
 from .runtime_adapters import (
     create_runtime,
@@ -79,6 +84,7 @@ _session: SessionRuntime | None = None
 _clock: RealtimeSessionClock | None = None
 _active_scenario: ScenarioRecord | None = None
 _active_mission_profile: MissionProfileRecord | None = None
+_active_model_profile: ModelProfileRecord | None = None
 _active_runtime_adapter_id: str | None = None
 
 
@@ -305,6 +311,16 @@ def _status_payload(session: SessionRuntime) -> dict[str, Any]:
             if _active_mission_profile is not None
             else None
         ),
+        "model_profile_id": (
+            _active_model_profile.model_profile_id
+            if _active_model_profile is not None
+            else None
+        ),
+        "model_validation_state": (
+            _active_model_profile.validation_state
+            if _active_model_profile is not None
+            else None
+        ),
         "runtime_adapter": _active_runtime_adapter_id,
         "runtime_capabilities": sorted(
             runtime_capabilities(_active_runtime_adapter_id)
@@ -347,16 +363,27 @@ def list_mission_profiles() -> list[dict[str, object]]:
     ]
 
 
+@app.get("/api/model-profiles")
+def list_model_profiles() -> list[dict[str, object]]:
+    return [
+        record.to_public_dict()
+        for record in _domain_call(discover_model_profiles)
+    ]
+
+
 @app.post("/api/session/create", dependencies=[Depends(_facilitator_guard)])
 def create_session(
     scenario_id: str = DEFAULT_SCENARIO_ID,
 ) -> dict[str, Any]:
     global _session, _clock, _active_scenario, _active_mission_profile
-    global _active_runtime_adapter_id
+    global _active_model_profile, _active_runtime_adapter_id
     with _lock:
         record = _domain_call(lambda: get_scenario_record(scenario_id))
         profile = _domain_call(
             lambda: get_mission_profile(record.mission_profile_id)
+        )
+        model_profile = _domain_call(
+            lambda: get_model_profile(record.model_profile_id)
         )
         if profile.mission != record.mission:
             raise HTTPException(
@@ -367,11 +394,22 @@ def create_session(
                     f"mission {profile.mission!r}"
                 ),
             )
+        if model_profile.mission_profile_id != profile.mission_profile_id:
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    f"scenario {record.scenario_id} model profile "
+                    f"{model_profile.model_profile_id!r} belongs to mission profile "
+                    f"{model_profile.mission_profile_id!r}, not "
+                    f"{profile.mission_profile_id!r}"
+                ),
+            )
         session = _domain_call(lambda: create_runtime(record))
         _session = session
         _clock = RealtimeSessionClock(session)
         _active_scenario = record
         _active_mission_profile = profile
+        _active_model_profile = model_profile
         _active_runtime_adapter_id = record.runtime_adapter
         return _status_payload(session)
 
