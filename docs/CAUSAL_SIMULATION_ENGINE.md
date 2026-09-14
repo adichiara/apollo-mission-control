@@ -216,7 +216,7 @@ Existing Apollo 13 evidence provides a useful regression case:
 - staged throttle profile beginning at low thrust, then 40 percent, then maximum thrust;
 - executed PGNS velocity components are documented;
 - resultant maneuver magnitude and postburn residual evidence are documented;
-- Apollo 13 documentation gives source-backed LM/CSM weights used in the existing scenario fixture;
+- Apollo 13 documentation gives final-PAD CSM/LM weights and separately shows that RTCC LM-burn mass-property decks had been updated to a T+55 set; premission mass properties were explicitly rejected as inferior for PC+2 DPS trim work;
 - DPS engineering documentation provides thrust/throttle/propellant design information.
 
 The historical case is a validation oracle, not the simulation algorithm.
@@ -339,7 +339,7 @@ Research note 134 partially clears this gate at the interface level. The first p
 - separate propulsion, prescribed-attitude/thrust-direction, mass-properties, dynamics, and observation-product boundaries;
 - an assumption-visible deterministic integrator with convergence and correct/early/late/wrong-input ordering tests.
 
-This authorizes a **model proof**, not a historically validated Apollo 13 PC+2 propagator. Mission-specific thrust history, mass epoch, coordinate-frame mapping, and numerical acceptance tolerance must remain explicit/unfrozen until their primary sources are extracted.
+This authorizes a **model proof**, not a historically validated Apollo 13 PC+2 propagator. Mission-specific thrust history, exact mass/depletion convention, coordinate-frame mapping, and numerical acceptance tolerance must remain explicit/unfrozen until their primary sources are extracted. Research notes 137–138 now establish final PAD weights plus an in-flight updated T+55 RTCC mass-property-deck lineage, but not exact physical ignition mass.
 
 ## Level-1 implementation status
 
