@@ -1,7 +1,7 @@
 # PC+2 numerical-validation roadmap — pad-weight epoch
 
 Date: 2026-09-14
-Research notes: `resources/research/137_pc2_pad_weight_epoch_boundary.md`, `resources/research/138_pc2_rtcc_mass_property_deck_boundary.md`, `resources/research/139_pc2_dps_performance_boundary.md`, `resources/research/140_apollo13_dps_supplement_publication_boundary.md`, `resources/research/141_apollo13_dps_supplement_contractor_provenance.md`
+Research notes: `resources/research/137_pc2_pad_weight_epoch_boundary.md`, `resources/research/138_pc2_rtcc_mass_property_deck_boundary.md`, `resources/research/139_pc2_dps_performance_boundary.md`, `resources/research/140_apollo13_dps_supplement_publication_boundary.md`, `resources/research/141_apollo13_dps_supplement_contractor_provenance.md`, `resources/research/142_rtcc_mass_properties_operational_semantics.md`
 
 ## Resolved this pass
 
@@ -12,11 +12,20 @@ The Flight Control Division Mission Operations Report further establishes that:
 - RTCC **LM-burn mass-property decks were updated to T+55 decks** before the abort maneuver work; and
 - a PC+2 DPS trim disagreement was resolved because LM Control had used **premission mass properties**, which were not the best data then available.
 
+Research note 142 adds Apollo-era operational semantics from primary Apollo 10/11 support documentation: mass-properties products fed trajectory, trim, DAP/control, and propellant-support computations, with in-flight updates as propellant state and vehicle configuration changed. This supports treating the Apollo 13 T+55 deck as an in-flight operational mass-properties state product rather than a fixed preflight constant.
+
 These values are therefore safe to use as **historical final-PAD / targeting regression inputs with an in-flight updated RTCC mass-properties lineage**.
 
 ## Boundary retained
 
-Neither reviewed source defines the `62480 + 33452 = 95932 lb` pair as exact physical ignition mass or exposes the RTCC mass-accounting/propagation convention. The causal model must therefore keep PAD/targeting mass reference distinct from hidden physical mass.
+Neither the Apollo 13 report nor the Apollo 10/11 support documents define the exact H-2 `T+55` deck semantics, record layout, processor fields, or mapping from the deck to the final `62480 + 33452 = 95932 lb` P30 pair. The pair must not be labeled exact physical ignition mass.
+
+Keep distinct:
+
+1. hidden physical vehicle mass/CG;
+2. mission-control mass-properties deck/state;
+3. maneuver targeting/P30 weights;
+4. controller-visible trim/trajectory products.
 
 ## Propulsion boundary now partially resolved
 
@@ -36,8 +45,8 @@ This does **not** verify an Apollo 13 TRW number, author list, or `MSC-02680-SUP
 
 Priority order is now:
 
-1. recover the published October 1970 Apollo 13 Mission Report Supplement 2, *Descent Propulsion System Final Flight Evaluation*, using the evidence-based provenance tuple `Apollo 13 + LM-7 + exact title + October 1970 + TRW Systems Group + NAS9-8166 + MSC-02680`;
-2. recover the Apollo RTCC mass-properties/T+55 deck semantics and how that deck fed the docked PC+2 DPS solution;
+1. recover mission-specific H-2 RTCC/Flight Dynamics mass-properties requirements, deck definitions/listings, or ACF/RTCC documentation that explicitly defines `T+55` and the LM-burn deck fields;
+2. recover the published October 1970 Apollo 13 Mission Report Supplement 2, *Descent Propulsion System Final Flight Evaluation*, using the evidence-based provenance tuple `Apollo 13 + LM-7 + exact title + October 1970 + TRW Systems Group + NAS9-8166 + MSC-02680`;
 3. recover LM-7 engine acceptance/calibration or PC+2 high-speed propulsion data if Supplement 2 remains inaccessible;
 4. extract original LMS/FMES equations/integration assumptions beyond the current public handbook boundary;
 5. recover sufficient state-vector/trajectory information for postburn propagation and regression.
