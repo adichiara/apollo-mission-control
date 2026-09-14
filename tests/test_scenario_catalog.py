@@ -21,6 +21,7 @@ class ScenarioCatalogTests(unittest.TestCase):
         record = get_scenario_record(DEFAULT_SCENARIO_ID)
         self.assertEqual(record.mission, "Apollo 13")
         self.assertEqual(record.runtime_adapter, "pc2_v1")
+        self.assertEqual(record.mission_profile_id, "apollo13_h2")
         self.assertEqual(record.scenario_class, "historical_flight_reconstruction")
         self.assertGreater(record.source_count, 0)
 
@@ -42,6 +43,7 @@ class ScenarioCatalogTests(unittest.TestCase):
                 "status": "test",
                 "scenario_class": "test",
                 "runtime_adapter": "test_adapter",
+                "mission_profile_id": "test_profile",
                 "start_get_s": 0,
                 "start_get_hms": "00:00:00",
                 "end_target_get_hms": "00:01:00",
@@ -65,6 +67,7 @@ class ScenarioCatalogTests(unittest.TestCase):
                         "mission": "Test",
                         "status": "test",
                         "scenario_class": "test",
+                        "mission_profile_id": "test_profile",
                         "start_get_s": 0,
                         "start_get_hms": "00:00:00",
                         "end_target_get_hms": "00:01:00",

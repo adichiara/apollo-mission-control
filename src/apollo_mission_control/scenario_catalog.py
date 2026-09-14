@@ -39,6 +39,7 @@ class ScenarioRecord:
     status: str
     scenario_class: str
     runtime_adapter: str
+    mission_profile_id: str
     start_get_s: float
     start_get_hms: str
     end_target_get_hms: str
@@ -54,6 +55,7 @@ class ScenarioRecord:
             "status": self.status,
             "scenario_class": self.scenario_class,
             "runtime_adapter": self.runtime_adapter,
+            "mission_profile_id": self.mission_profile_id,
             "start_get_s": self.start_get_s,
             "start_get_hms": self.start_get_hms,
             "end_target_get_hms": self.end_target_get_hms,
@@ -83,6 +85,7 @@ def load_scenario_record(path: str | Path) -> ScenarioRecord:
         status=_text(data, "status"),
         scenario_class=_text(data, "scenario_class"),
         runtime_adapter=_text(data, "runtime_adapter"),
+        mission_profile_id=_text(data, "mission_profile_id"),
         start_get_s=_number(data, "start_get_s"),
         start_get_hms=_text(data, "start_get_hms"),
         end_target_get_hms=_text(data, "end_target_get_hms"),

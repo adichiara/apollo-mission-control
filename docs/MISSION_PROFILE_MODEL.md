@@ -1,12 +1,25 @@
 # Mission Profile Model
 
-Status: **architecture concept grounded in documented mission-to-mission differences; first profile target selected**
+Status: **minimal mission-profile catalog implemented; broader profile-driven behavior remains incremental**
 
 ## Purpose
 
 The common simulation platform should support Apollo 11, Apollo 13, and potentially other lunar missions without falsely assuming that every MCC detail was identical.
 
 The Apollo 13-era configuration is the default technical baseline/superset. A mission profile determines which portions are historically applicable to a given scenario.
+
+## Current implementation boundary
+
+The repository now contains two deliberately partial mission-era profiles:
+
+- `apollo13_h2` — Apollo 13 / H-2 / AS-508 / CSM-109 / LM-7, including the source-backed TELMU terminology and the AS-508 MCC/MSFN configuration reference;
+- `apollo11_g` — Apollo 11 / Mission G / AS-506 / CSM-107 / LM-5, including the source-backed TELCOM terminology and Mission G RTCC support-plan reference.
+
+Scenario fixtures reference a `mission_profile_id`. The runtime resolves that profile when a session is created and rejects a mission/profile identity mismatch.
+
+This is a **configuration/provenance boundary**, not a universal station schema. Profile fields do not yet rename stations, enable displays, or change controller authority automatically. Those behaviors should become profile-driven only when a second executable scenario establishes the required reusable contract.
+
+The TELCOM/TELMU difference is the first concrete pressure test: the catalog can preserve a real mission-era difference without forcing either name into the shared engine.
 
 ## Current first profile target
 
@@ -141,6 +154,6 @@ If implementation later exposes a dependency on a deferred item, research resume
 
 ## Implementation timing
 
-The categories above are now stable enough to guide the first scenario profile, but do not create a universal exhaustive schema solely to encode unused Apollo details.
+The minimal profile catalog now implements only fields already justified as reusable: mission identity, launch/spacecraft identifiers, sourced controller nomenclature, a selected ground-configuration reference, and provenance.
 
-The PC+2 parameter/action matrix should define the minimum profile fields actually needed for the first implementation. Broader schema generalization can follow once that slice has exercised the architecture.
+Do not expand this into an exhaustive universal Apollo schema solely because more historical fields exist. Broader profile behavior should be introduced when a second scenario/runtime actually requires shared configuration, with unresolved mission differences remaining explicit rather than inherited from Apollo 13.

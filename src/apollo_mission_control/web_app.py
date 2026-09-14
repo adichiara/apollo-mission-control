@@ -28,6 +28,11 @@ from .crew_response import (
     command_dps_shutdown_from_callout,
     record_crew_receipt,
 )
+from .mission_profiles import (
+    MissionProfileRecord,
+    discover_mission_profiles,
+    get_mission_profile,
+)
 from .pc2_session import PC2Session
 from .realtime_clock import RealtimeSessionClock
 from .scenario_catalog import (
@@ -58,6 +63,7 @@ _lock = RLock()
 _session: PC2Session | None = None
 _clock: RealtimeSessionClock | None = None
 _active_scenario: ScenarioRecord | None = None
+_active_mission_profile: MissionProfileRecord | None = None
 
 
 class JoinRequest(BaseModel):
@@ -218,6 +224,11 @@ def _status_payload(session: PC2Session) -> dict[str, Any]:
         "scenario_title": (
             _active_scenario.title if _active_scenario is not None else None
         ),
+        "mission_profile_id": (
+            _active_mission_profile.mission_profile_id
+            if _active_mission_profile is not None
+            else None
+        ),
     }
 
 
@@ -283,17 +294,38 @@ def list_scenarios() -> list[dict[str, object]]:
     ]
 
 
+@app.get("/api/mission-profiles")
+def list_mission_profiles() -> list[dict[str, object]]:
+    return [
+        record.to_public_dict()
+        for record in _domain_call(discover_mission_profiles)
+    ]
+
+
 @app.post("/api/session/create", dependencies=[Depends(_facilitator_guard)])
 def create_session(
     scenario_id: str = DEFAULT_SCENARIO_ID,
 ) -> dict[str, Any]:
-    global _session, _clock, _active_scenario
+    global _session, _clock, _active_scenario, _active_mission_profile
     with _lock:
         record = _domain_call(lambda: get_scenario_record(scenario_id))
+        profile = _domain_call(
+            lambda: get_mission_profile(record.mission_profile_id)
+        )
+        if profile.mission != record.mission:
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    f"scenario {record.scenario_id} mission {record.mission!r} "
+                    f"does not match mission profile {profile.mission_profile_id} "
+                    f"mission {profile.mission!r}"
+                ),
+            )
         session = _domain_call(lambda: _create_runtime(record))
         _session = session
         _clock = RealtimeSessionClock(session)
         _active_scenario = record
+        _active_mission_profile = profile
         return _status_payload(session)
 
 
