@@ -34,6 +34,18 @@ Track primary sources bearing specifically on the ground sampling and presentati
 - **Consequence:** confirms that these IDs were operational MSFN-sampled/display-routed telemetry products and that sampling was format-dependent.
 - **Boundary:** LM-10 is not LM-7. None of these exact rates or MSK lists are promoted into Apollo 13 historical configuration without Apollo 13/LM-7 corroboration.
 
+## AS-508 MCC/MSFN Mission Configuration/System Description
+
+- **Mission:** Apollo 13 / AS-508
+- **Date:** March 1970
+- **Prepared by:** Manned Spacecraft Center, Flight Support Division
+- **NTRS:** https://ntrs.nasa.gov/citations/19700024253
+- **Archival scan:** https://www.apollojournals.org/alsj/AS-508-MCC-MSFN-Config.pdf
+- **Status:** PRIMARY / MISSION-SPECIFIC / REVIEWED for format architecture and high-speed playback boundary.
+- **Use:** AS-508's utilization matrix identifies normal LM-capable 2.4-kb/s formats, including LM ONLY, CSM-LM PCM, CSM + LM BACKUP, and ASCENT/DESCENT. Section 3.2.2.3 separately defines High Speed Format 30 for **post-pass playback** of pre-defined CSM/LM high-rate subformats, with LM analog slots at 50 or 10 samples/s and real-time CEF selection at the TICC.
+- **Consequence:** Apollo 13's mission-specific ground configuration confirms LM-capable normal telemetry formats while preventing a false inference that Format-30 10/50-sample/s rates were live TELMU/CONTROL CRT cadence.
+- **Boundary:** does not identify `GC0071V` / `GC0155F` in a specific AS-508 normal format or Format-30 LM subformat, does not establish their live PC+2 sampling cadence, and does not identify an Apollo 13 MSK or controller selection.
+
 ## Apollo Experience Report — Flight-Control Data Needs, Terminal Display Devices, and Ground System Configuration Requirements
 
 - **Report:** NASA TN D-7685 / JSC S-396, May 1974
@@ -49,12 +61,14 @@ LM-7/8/9 documents: measurement identity exists for Apollo 13 vehicle family
         ↓
 NASA instrumentation architecture: PCM/MSFN telemetry path exists
         ↓
+AS-508 mission configuration: normal LM-capable formats exist; high-rate Format 30 is post-pass playback, not sourced live CRT cadence
+        ↓
 LM-10 telemetry packet: same IDs have explicit format-dependent sample rates and MSK destinations in a later flight configuration
         ↓
-Apollo 13 exact format/rate/MSK selection: still unresolved
+Apollo 13 exact live format/rate/MSK selection: still unresolved
 ```
 
-For the first playable, `GC0071V` / `GC0155F` may remain source-backed ground electrical evidence, but the UI must not claim a recovered Apollo 13 MSK number, CRT field, or refresh rate. Telemetry sample cadence and CRT/display update latency remain distinct concepts.
+For the first playable, `GC0071V` / `GC0155F` may remain source-backed ground electrical evidence, but the UI must not claim a recovered Apollo 13 MSK number, CRT field, or refresh rate. Normal telemetry sample cadence, CRT/display update latency, and post-pass high-rate playback remain distinct concepts.
 
 ## Research record
 
@@ -62,3 +76,4 @@ For the first playable, `GC0071V` / `GC0155F` may remain source-backed ground el
 - `resources/research/117_pc2_inverter_direct_caution_selector_telemetry_boundary.md`
 - `resources/research/118_pc2_inverter_mcc_display_routing_boundary.md`
 - `resources/research/119_pc2_inverter_telemetry_sample_display_continuity.md`
+- `resources/research/120_pc2_inverter_as508_format30_boundary.md`
