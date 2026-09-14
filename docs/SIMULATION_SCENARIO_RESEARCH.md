@@ -136,19 +136,20 @@ Do not use unless the project explicitly decides to author a hypothetical scenar
 
 ## 7. Scenario-research priorities after first-slice selection
 
-Historical SimSup-case research remains valuable, but it no longer blocks the first nominal implementation.
+Historical SimSup-case research remains valuable. PC+2 no longer blocks broad scenario research, but it remains the current implementation/reference case while the reusable causal architecture is proven.
 
 Priority order:
 
-1. PC+2 nominal vertical-slice model and validation.
+1. PC+2 nominal vertical-slice model and validation as the first reference case.
 2. PC+2 nonnominal variants only where a failure can be tied to documented subsystem behavior and flight rules.
-3. Apollo 11 lunar-descent program-alarm simulation.
-4. Apollo 13 LM activation/descent simulation records.
-5. Apollo 13 descent-abort and ascent simulations.
-6. Apollo 13 reentry / launch-abort simulations.
-7. FIDO/BSE math-model cases.
-8. LOI/DOI and TEI simulations.
-9. Any surviving SimSup scripts/case sheets from JSC archives.
+3. Continue identifying scenarios that exercise **different reusable mechanisms and mission phases**, rather than only deeper PC+2 variants.
+4. Apollo 11 lunar-descent program-alarm simulation.
+5. Apollo 13 LM activation/descent simulation records.
+6. Apollo 13 descent-abort and ascent simulations.
+7. Apollo 13 reentry / launch-abort simulations.
+8. FIDO/BSE math-model cases.
+9. LOI/DOI and TEI simulations.
+10. Any surviving SimSup scripts/case sheets from JSC archives.
 
 ## 8. Important distinction
 
@@ -185,7 +186,7 @@ https://www.ibiblio.org/apollo/Documents/apollo_13_simulator_discrepencies.pdf
 
 ## 10. Selected first vertical slice — Apollo 13 PC+2
 
-Decision D-013 selects Apollo 13 PC+2 preparation and execution as the first playable vertical slice.
+Decision D-013 selects Apollo 13 PC+2 preparation and execution as the first playable vertical slice. Decision D-021 clarifies that this is a validation anchor and first reference implementation, not the eventual scope of the simulator.
 
 Working scope:
 
@@ -194,7 +195,7 @@ Working scope:
 - DPS ignition: 79:27:38.30 GET;
 - immediate endpoint: burn verification and initiation of post-burn LM power-down.
 
-Why this supersedes further broad scenario hunting for now:
+Why this is the current implementation priority:
 
 - strong primary-source chronology and controller reports;
 - explicit burn/shutdown rules;

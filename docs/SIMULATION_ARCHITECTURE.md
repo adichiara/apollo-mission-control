@@ -49,6 +49,22 @@ scenario inputs + elapsed time + controller/crew actions
 
 A scenario event may change state or inject a failure. It should not directly decree a downstream outcome when that outcome should emerge from modeled state.
 
+## Scenario portability and validation-anchor rule
+
+Apollo 13 PC+2 is the current **reference scenario** for building and validating the first complete causal chain. It is not the product boundary.
+
+The architecture is intended to support a scenario library spanning different Apollo mission phases and problem classes. Therefore:
+
+- reusable subsystem models should be mission/scenario-configurable rather than PC+2-specific where the historical system varies;
+- mission-specific constants, procedures, station configurations, timelines, and failure injections should live in profiles/scenario data when practical;
+- a mechanism first implemented because PC+2 needs it should expose a general causal contract that other sourced scenarios can reuse;
+- mechanisms not exercised by PC+2 may be added later when another selected scenario requires them;
+- historical fidelity is still evaluated per mission/scenario rather than by assuming the Apollo 13 configuration applies everywhere.
+
+PC+2 is thus a **calibration and architecture proof case**: if arbitrary correct or incorrect actions produce plausible sourced consequences there, the same engine structure should be capable of supporting later lunar-descent, ascent, rendezvous, entry, launch-abort, communications/network, and other documented simulator cases after their required models are added.
+
+This implements Decision D-021 and complements the Apollo 13-era default technical baseline in D-012.
+
 ## Causal-fidelity rule
 
 The target is **not** an exhaustive first-principles emulation of every Apollo component. It is a modular causal simulator with enough fidelity to support the decisions/actions available in a scenario.
