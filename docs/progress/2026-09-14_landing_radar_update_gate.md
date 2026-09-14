@@ -28,3 +28,17 @@ The Apollo 11 landing-radar domain remains partial. Still required:
 - controller/downlink presentation.
 
 No Apollo 11 threshold or measurement constant is embedded in the generic model.
+
+
+## Measurement-quality layer added
+
+Research note 147 and the new generic `landing_radar_quality.py` model now add the upstream qualification stage:
+
+- Data Good persistence;
+- channel validity;
+- optional range-scale stability;
+- caller-supplied affine residual reasonableness rules.
+
+Apollo 11 profile data records the source-backed 4-s Data Good persistence, 1-s range-scale stability, 50,000-ft range-update altitude boundary, 2,000-ft/s velocity-update boundary, astronaut approval requirement, 200-ft + 0.125×altitude range criterion, and 7.5-ft/s + proportional velocity criterion.
+
+Still unresolved are LM-5 beam/terrain measurement generation, exact radar-axis reference computation, estimator/filter weighting, cadence, and controller presentation.
