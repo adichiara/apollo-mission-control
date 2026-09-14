@@ -54,9 +54,9 @@ The technical and onboard voice records separately preserve controller/crew repo
 
 Primary sources:
 
-- NASA, *Apollo 11 Mission Report*, November 1969.
-- NASA, *Apollo 11 Technical Air-to-Ground Voice Transcription*.
-- NASA, *Apollo 11 Onboard Voice Transcription*.
+- NASA, *Apollo 11 Mission Report*, November 1969: https://www.nasa.gov/wp-content/uploads/static/apollo50th/pdf/A11_MissionReport.pdf
+- NASA, *Apollo 11 Technical Air-to-Ground Voice Transcription*: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11transcript_tec.pdf
+- NASA, *Apollo 11 Onboard Voice Transcription*: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11transscript_cm.pdf
 
 ## Documented preflight simulation
 
@@ -70,7 +70,7 @@ Koos states that program-alarm handling was not yet in the flight rules. Kranz d
 
 Source:
 
-- NASA Oral History Project, Richard H. Koos interview, 24 August 2023, pp. 10–13.
+- NASA Oral History Project, Richard H. Koos interview, 24 August 2023, pp. 10–13: https://www.nasa.gov/wp-content/uploads/2025/08/koosrh-8-24-23.pdf
 
 ## Simulation-case evidence boundary
 
