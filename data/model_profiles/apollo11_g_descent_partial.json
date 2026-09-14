@@ -15,7 +15,7 @@
     },
     "landing_radar": {
       "status": "partial",
-      "note": "Mission Report timing for radar-good state and radar-update enablement is sourced; measurement equations, error model, update acceptance criteria, and controller presentation remain unresolved."
+      "note": "Mission Report timing for radar-good state and radar-update enablement is sourced. Generic data-good/update-enable/channel/velocity-threshold gating is implemented; LM-5 measurement generation, reasonability tests, weighting/filter equations, cadence, and controller presentation remain unresolved."
     },
     "propulsion": {
       "status": "unresolved",
