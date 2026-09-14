@@ -44,6 +44,23 @@ class WebAppTests(unittest.TestCase):
         self.assertTrue(pc2["default"])
         self.assertTrue(pc2["executable"])
 
+        apollo11 = next(
+            item for item in scenarios
+            if item["scenario_id"] == "apollo11_descent_program_alarm_reference"
+        )
+        self.assertEqual(apollo11["mission"], "Apollo 11")
+        self.assertEqual(apollo11["mission_profile_id"], "apollo11_g")
+        self.assertEqual(apollo11["runtime_adapter"], "apollo11_descent_v1")
+        self.assertFalse(apollo11["default"])
+        self.assertFalse(apollo11["executable"])
+
+        unimplemented = self.client.post(
+            "/api/session/create"
+            "?scenario_id=apollo11_descent_program_alarm_reference"
+        )
+        self.assertEqual(unimplemented.status_code, 400)
+        self.assertIn("unsupported runtime adapter", unimplemented.json()["detail"])
+
         created = self.client.post(
             "/api/session/create?scenario_id=apollo13_pc2_nominal"
         )
