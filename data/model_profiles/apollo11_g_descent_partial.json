@@ -15,7 +15,7 @@
     },
     "landing_radar": {
       "status": "partial",
-      "note": "Mission Report timing for radar-good state and radar-update enablement is sourced. Generic data-good/update-enable/channel/velocity-threshold gating is implemented; LM-5 measurement generation, reasonability tests, weighting/filter equations, cadence, and controller presentation remain unresolved."
+      "note": "Apollo 11 radar-good/update-enable/velocity-update chronology is sourced. Generic update gating and a separate generic measurement-qualification layer are implemented. Apollo 11 profile data now captures 4-s Data Good persistence, 1-s range-scale stability, 50,000-ft range-update altitude boundary, 2,000-ft/s velocity-update speed boundary, astronaut approval requirement, and source-shaped affine residual rules. LM-5 beam/terrain measurement generation, exact radar-axis reference computation, estimator weighting/filter equations, processing cadence, and controller presentation remain unresolved."
     },
     "propulsion": {
       "status": "unresolved",
@@ -36,12 +36,13 @@
     "MIT/IL letter, Exegesis of the 1201 and 1202 Alarms Which Occurred During the Mission G Lunar Landing",
     "NASA Oral History Project, Richard H. Koos interview, 24 August 2023",
     "Repository research note 141_second_reference_apollo11_descent_assessment.md",
-    "Repository research note 146_apollo11_guidance_monitoring_fields_limits.md"
+    "Repository research note 146_apollo11_guidance_monitoring_fields_limits.md",
+    "Repository research note 147_apollo11_landing_radar_measurement_quality.md"
   ],
   "deferred": [
     "complete Apollo 11 powered-descent state vector/trajectory initialization",
     "LM-5 delivered thrust and mass-flow profile",
-    "landing-radar measurement and update model",
+    "LM-5 landing-radar beam/terrain measurement generation, radar-axis reference computation, and estimator/filter implementation",
     "historical guidance observation freshness/cadence and exact GUIDO/FLIGHT alarm/cross-check presentation",
     "historically validated alarm decision rule implementation",
     "Apollo 11 descent runtime adapter"
