@@ -64,7 +64,7 @@ Historical gaps should now be prioritized by scenario impact. An unresolved arch
 
 These remain useful archival targets but are not PC+2 blockers unless implementation shows otherwise.
 
-36. Can a surviving copy of **PHO-TR155 Mission H-2 Revision C (issued 1970-03-06)** be located?
+36. Can a surviving copy of **PHO-TR155 Mission H-2 Revision C (issued 1970-03-06 and implemented for the H-2 Display System in March 1970)** be located, including its change pages/loading tables?
 37. What were the exact Apollo 13 EECOM DRK key legends and arrangement?
 38. What were the exact Apollo 13 EECOM limit-sense/event-indicator legends beyond the functions documented by the Review Board?
 39. What did the Status/Status Report and Summary Message Enable keyboards do in Apollo 13 EECOM operations?
@@ -72,3 +72,4 @@ These remain useful archival targets but are not PC+2 blockers unless implementa
 41. What direct ground-command authority, if any, remained at Apollo 13 EECOM?
 42. What were the complete EECOM display-format/channel IDs beyond the two preserved Review Board examples?
 43. What exact user workflow did EECOM use for HSD Format 30 playback requests and review?
+44. What were the exact H-2 TELMU console-09 loading, display-request/MSK selection, indicator/module positions, live cadence, precision, and latency for `GC0071V` / `GC0155F`? PHO-TR474 establishes that Revision C required no Display System equipment configuration changes, but does not expose these operational details. See research note 124.
