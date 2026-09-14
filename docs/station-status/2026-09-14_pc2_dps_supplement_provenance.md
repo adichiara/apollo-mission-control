@@ -29,25 +29,28 @@ Research note 142 establishes from Apollo 10/11 operational support documentatio
 
 Research note 143 adds mission-specific Apollo 13 evidence: the Flight Dynamics narrative uses `T-6`, `T+6`, `T+25`, and `T+55` for successive mass-properties bases/products. A `T+25` run was explicitly compared against `T+6` trims, and the later LM-burn decks were updated to `T+55`. The `T+55` label should therefore be represented as a **mission-relative time-tagged mass-properties state associated with approximately +55 hours**, not as an opaque deck revision identifier.
 
+Research note 144 adds a primary NASA RTCC requirements source from June 1971. It explicitly says the Skylab mass-properties system was to be a carryover of the present Apollo RTCC Mass Properties System and documents an architecture with module summation, total weight/CG computation, temporary or permanent propellant depletion tables, and engine-trim calculations driven by input spacecraft weight and center of mass. This supports modeling the Flight Dynamics mass-properties layer as structured operational state rather than a single scalar mission weight.
+
 Still unresolved:
 
 - whether `T+55` denotes exactly 55:00:00 GET, a nominal calculation epoch, deck-generation time, or a propagated-state reference epoch;
-- H-2 LM-burn deck field layout and mass/CG values;
+- whether `T+55` selected or contained temporary/permanent propellant depletion tables;
+- H-2 LM-burn deck field layout, module breakdown, mass/CG values, and depletion-state values;
 - processor mapping from deck values into the PC+2 solution;
 - exact relationship between the deck and the final P30 CSM/LM weights;
 - whether those P30 weights equal physical ignition mass.
 
-The simulator should keep physical mass/CG, mission-control mass-properties state, deck epoch label, targeting weights, and controller-visible trajectory/trim products separate.
+The simulator should keep physical mass/CG, mission-control mass-properties state, module/depletion-table state, deck epoch label, targeting weights, and controller-visible trajectory/trim products separate.
 
 ## FLIGHT
 
 Maturity remains **B**.
 
-No new decision authority or display behavior is inferred. The improved evidence narrows one numerical-validation dependency: the mission-relative sense of `T+55` is established, while its precise epoch convention and deck contents remain open. LM-7-specific propulsion performance remains the parallel unresolved dependency.
+No new decision authority or display behavior is inferred. The improved evidence narrows one numerical-validation dependency: the mission-relative sense of `T+55` and the general Apollo RTCC mass-properties architecture are established, while its precise epoch convention and H-2 deck contents remain open. LM-7-specific propulsion performance remains the parallel unresolved dependency.
 
 ## Research priority
 
-First priority is now mission-specific H-2 RTCC/Flight Dynamics documentation defining the **precise T+N epoch convention** and LM-burn deck fields/values. In parallel, continue recovery of the October 1970 Apollo 13 *Descent Propulsion System Final Flight Evaluation* using:
+First priority is now mission-specific H-2 RTCC/Flight Dynamics documentation defining the **precise T+N epoch convention** and LM-burn deck fields/values, especially any material showing how module summation and propellant-depletion tables were instantiated for H-2. In parallel, continue recovery of the October 1970 Apollo 13 *Descent Propulsion System Final Flight Evaluation* using:
 
 `Apollo 13 + LM-7 + exact title + October 1970 + TRW Systems Group + NAS9-8166 + MSC-02680`
 
