@@ -29,6 +29,30 @@ class ScenarioCatalogTests(unittest.TestCase):
         self.assertEqual(fixture["scenario_id"], record.scenario_id)
         self.assertEqual(fixture["title"], record.title)
 
+
+    def test_apollo11_reference_fixture_is_cataloged_but_not_runtime_ready(self):
+        record = get_scenario_record("apollo11_descent_program_alarm_reference")
+        self.assertEqual(record.mission, "Apollo 11")
+        self.assertEqual(record.mission_profile_id, "apollo11_g")
+        self.assertEqual(record.runtime_adapter, "apollo11_descent_v1")
+        self.assertEqual(
+            record.scenario_class,
+            "historical_flight_reconstruction_reference",
+        )
+        self.assertEqual(record.start_get_s, 369450.0)
+
+        fixture = load_scenario_fixture(record)
+        self.assertEqual(
+            fixture["reference_events"][-1]["event"],
+            "p66",
+        )
+        self.assertTrue(
+            any(
+                "not a reconstruction of the final preflight SimSup case" in item
+                for item in fixture["research_boundaries"]
+            )
+        )
+
     def test_unknown_scenario_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "unknown scenario_id"):
             get_scenario_record("does-not-exist")
