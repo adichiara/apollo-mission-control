@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.1-research-profile",
+  "mission_profile_id": "apollo11_g",
+  "mission": "Apollo 11",
+  "mission_designation": "G",
+  "status": "partial historical profile; terminology and selected ground-system evidence",
+  "launch_vehicle": "AS-506",
+  "spacecraft": {
+    "csm": "CSM-107",
+    "lm": "LM-5"
+  },
+  "controller_nomenclature": {
+    "lm_systems": "TELCOM"
+  },
+  "ground_configuration_reference": "Project Apollo 500 RTCC Operations Support Plan for Mission G",
+  "sources": [
+    "Apollo 11 Flight Mission Rules, AS-506/107/LM-5",
+    "NASA Apollo 11 Flight Director Loop — EVA",
+    "MSC Internal Note 69-FS-2, Project Apollo 500 RTCC Operations Support Plan for Mission G"
+  ],
+  "deferred": [
+    "complete Apollo 11 station responsibility mapping",
+    "complete Apollo 11 display/control configuration",
+    "mission-wide ground-system differences from the Apollo 13-era baseline"
+  ]
+}
