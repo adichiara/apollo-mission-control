@@ -134,7 +134,7 @@ The deployed nominal and ΔP paths are validated, but the project is **not yet a
 7. Follow with electrical-power and consumables models, then extend instrumentation/telemetry/ground-product derivation from those physical/logical states.
 8. Cross-check simulator-era abstractions against Apollo 13 LM-7/CSM configuration sources before importing constants or mission-specific behavior.
 9. Keep player-facing station UI reconstruction, multi-human seven-seat/five-player playtesting, and packet-usability work deferred until the causal engine and simulated-crew loop are sufficiently mature.
-10. Continue the Apollo 11 powered-descent/program-alarm interval as the second architecture pressure test. The guidance alarm/restart domain and non-executable scenario/model-profile metadata are now implemented; next define the reusable landing-radar, independent PGNS/AGS observation, powered-descent trajectory, and controller-product interfaces needed before an Apollo 11 runtime is allowed.
+10. Continue the Apollo 11 powered-descent/program-alarm interval as the second architecture pressure test. The guidance alarm/restart domain, landing-radar update-eligibility gate, and non-executable scenario/model-profile metadata are now implemented; next define upstream landing-radar measurement/quality behavior as needed, independent PGNS/AGS observation, powered-descent trajectory/propulsion, estimator/controller-product interfaces, and sourced decision rules before an Apollo 11 runtime is allowed.
 11. Continue mission-specific archival work only where it materially constrains the causal engine, supported actions/failures, or controller-visible consequences.
 
 ## Explicitly deferred
