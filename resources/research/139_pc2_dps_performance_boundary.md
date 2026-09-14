@@ -112,15 +112,17 @@ The Mission Report's 264 s is consistent with the Flight Dynamics value as a rou
 
 ## Named missing-source lead
 
-Appendix E of the September 1970 *Apollo 13 Mission Report* lists **Apollo 13 Supplement 2 — Descent Propulsion System Final Flight Evaluation** with publication status **Preparation**.
+Appendix E of the September 1970 *Apollo 13 Mission Report* lists **Apollo 13 Supplement 2 — Descent Propulsion System Final Flight Evaluation** with status **Preparation**.
 
-This is the most direct known title for the missing LM-7 performance source. Its listing proves that such a supplement was planned/in preparation at that date; it does **not** prove that a final report was published or survives in a public archive. Current public document indexes reviewed in this pass expose Apollo 13 Supplement 1 but do not expose Supplement 2.
+Research note 140 closes the publication-status question: later official Apollo mission-report tables consistently record Apollo 13 Supplement 2 as **October 1970**. The source should therefore be treated as **published but currently unrecovered**, not merely planned.
+
+Current public Apollo 13 document indexes reviewed in this pass expose Supplement 1 but not Supplement 2, and title-based NTRS searches did not recover a direct record.
 
 ## Next archival targets
 
 Highest-value sources are now:
 
-1. the planned Apollo 13 Mission Report Supplement 2, *Descent Propulsion System Final Flight Evaluation*, or draft/final material traceable to it;
+1. the published October 1970 Apollo 13 Mission Report Supplement 2, *Descent Propulsion System Final Flight Evaluation*, including its report identifier or archival copy;
 2. LM-7 engine acceptance/calibration data relevant to thrust, mixture ratio, and Isp;
 3. PC+2 high-speed propulsion telemetry or engineering plots;
 4. detailed DPS pressurization/blowdown equations or simulator-model documentation that can be bridged to LM-7;
