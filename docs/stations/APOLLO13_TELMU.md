@@ -351,6 +351,8 @@ This supports continued research into backroom relationships even if the final s
 - thermal consequences of low-power operation
 - Mission H-2 Display System implementation under PHO-TR155 Revision C
 - Revision C required no Display System equipment configuration changes
+- Mission H-2 TDFCB Revision 4 existed as the mission-specific telemetry-format baseline and was delivered before flight
+- H-2 Rev. 4 PCMGS material was explicitly checked against PHO-TR155
 
 ## PARTIAL
 
@@ -358,6 +360,7 @@ This supports continued research into backroom relationships even if the final s
 - importance of CWEA and warning indications
 - inverter-bus ground evidence via `GC0071V` / `GC0155F`
 - TELMU station-family continuity for those electrical measurements
+- TDFCB Rev. 4 deliverable families, including special LM Flight Control, PCMGS, high-speed/wideband, index, and compare products
 
 ## UNRESOLVED
 
@@ -370,18 +373,20 @@ This supports continued research into backroom relationships even if the final s
 - exact ground-command authority
 - exact voice-loop configuration
 - exact PC+2 inverter display cadence, precision, latency, and selector workflow
+- exact `GC0071V` / `GC0155F` membership/routing within unrecovered H-2 TDFCB Rev. 4 listings
 
 ---
 
 # 14. Research targets
 
-1. Locate **PHO-TR155 Mission H-2 Revision C** itself or its change pages.
-2. Locate **Mission H-2 data-pack Revision N** or equivalent TELMU console-09 loading sheets.
-3. Locate LM systems console handbook / Grumman support material.
-4. Identify exact telemetry identifiers for battery, water, oxygen, CO2, and thermal parameters.
-5. Determine whether consumable lifetime projections were shown on CRT, calculated in SSR, or communicated by another product.
-6. Reconstruct the CWEA/ground-warning relationship relevant to TELMU.
-7. Identify the exact H-2 presentation path for `GC0071V` / `GC0155F` without importing Apollo 15 indicator positions or later LM sample schedules.
+1. Locate **Mission H-2 TDFCB Revision 4**, especially its special LM Flight Control and PCMGS listings.
+2. Locate **PHO-TR155 Mission H-2 Revision C** itself or its change pages.
+3. Locate **Mission H-2 data-pack Revision N** or equivalent TELMU console-09 loading sheets.
+4. Locate LM systems console handbook / Grumman support material.
+5. Identify exact telemetry identifiers for battery, water, oxygen, CO2, and thermal parameters.
+6. Determine whether consumable lifetime projections were shown on CRT, calculated in SSR, or communicated by another product.
+7. Reconstruct the CWEA/ground-warning relationship relevant to TELMU.
+8. Identify the exact H-2 presentation path for `GC0071V` / `GC0155F` without importing Apollo 15 indicator positions or later LM sample schedules.
 
 ## Primary sources
 
@@ -417,17 +422,20 @@ Use the book for:
 
 For in-flight scenarios, use mission-phase flight rules, controller reports, procedures, and system documentation to establish the applicable limits.
 
-## 14B. Mission H-2 display-system configuration boundary
+## 14B. Mission H-2 display/telemetry configuration boundary
 
-Research notes 123–124 establish a mission-specific configuration-control boundary from Philco's contemporaneous April 1970 progress report:
+Research notes 123–125 establish a mission-specific configuration-control boundary from Philco's contemporaneous April 1970 progress report:
 
 - PHO-TR155 Mission H-2 Revision C was issued on **1970-03-06**;
 - the **Mission H-2 Display System configuration was in accordance with Revision C**;
 - Revision C was implemented in **March 1970**;
-- Philco states that **no equipment configuration changes were necessary**.
+- Philco states that **no equipment configuration changes were necessary**;
+- **Mission H-2 TDFCB Revision 4** was delivered on **1970-01-28** as the mission telemetry-format baseline;
+- its deliverables included special LM Flight Control, PCMGS-related, high-speed/wideband, index, and compare products;
+- Philco checked the **H-2 Rev. 4 TDFCB PCMGS against PHO-TR155 on 1970-02-10**.
 
-This is important for reconstruction. It supports a real Apollo 13/H-2 display configuration while explicitly arguing against inventing new physical TELMU hardware because of Revision C.
+This is important for reconstruction. It establishes separate but cross-checked telemetry-format and MCC display-configuration authorities for H-2, while explicitly arguing against inventing parameter-to-console details that have not been recovered.
 
 The same quarterly report mentions 1126 console-label changes, but it does not establish that those changes were all caused by Revision C, belonged to TELMU, or involved PC+2 inverter monitoring. They must not be used as a TELMU layout source.
 
-Until Revision C, Revision N, or equivalent H-2 loading material is recovered, exact TELMU indicator/module positions, CRT requests, DRK/MSK actions, update cadence, precision, and latency remain unresolved.
+Until TDFCB Rev. 4, Revision C, Revision N, or equivalent H-2 loading material is recovered, exact TELMU indicator/module positions, CRT requests, DRK/MSK actions, update cadence, precision, and latency remain unresolved.
