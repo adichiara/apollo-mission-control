@@ -146,6 +146,12 @@ Principle:
 
 > Players do not read authoritative state directly.
 
+### Electrical power / equipment-availability boundary
+
+A mission-neutral coarse electrical model now derives equipment supply state from caller-supplied source availability/capacity, bus enablement, and commanded loads. Explicit load priorities support deterministic capacity shortfall tests without embedding Apollo topology.
+
+This is a decision-relevant availability model, not a circuit simulator. Battery energy depletion, converters/inverters, detailed protective logic, wiring, voltage behavior, and mission-specific bus topology remain separate layers/configuration work.
+
 ### Independent guidance cross-check boundary
 
 A mission-neutral comparison model now accepts two independently produced guidance observations, caller-selected fields/tolerances, validity, and freshness constraints. It returns agreement/disagreement/indeterminate plus per-field differences without choosing a hidden-truth source or issuing a mission decision.
