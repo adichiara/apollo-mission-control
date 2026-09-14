@@ -315,6 +315,16 @@ class WebModelProofTests(unittest.TestCase):
         self.assertFalse(after_body["tracking_observation"]["available"])
         self.assertIsNone(after_body["tracking_observation"]["range_m"])
 
+    def test_resource_power_chain_rejects_direct_source_availability_override(self):
+        payload = self._resource_power_observation_payload(4.0)
+        payload["electrical_bus"]["source_available"] = {"BATTERY": True}
+        response = self.client.post(
+            "/api/admin/model-proof/resource-power-observation",
+            json=payload,
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("must be empty", response.json()["detail"])
+
     def test_endpoint_rejects_unphysical_direction(self):
         self.payload["segments"][0]["direction"] = [0.0, 0.0, 0.0]
         response = self.client.post("/api/admin/model-proof/dps-burn", json=self.payload)
