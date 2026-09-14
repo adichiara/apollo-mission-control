@@ -354,6 +354,8 @@ This supports continued research into backroom relationships even if the final s
 - Mission H-2 TDFCB Revision 4 existed as the mission-specific telemetry-format baseline and was delivered before flight
 - H-2 Rev. 4 PCMGS material was explicitly checked against PHO-TR155
 - earlier H-2 PHO-TR155 work used multiple named data-pack products plus a preliminary IBM card deck/listing
+- PHO-TR515 establishes that data-pack circulation fed the Requirements and Configuration process that prepared PHO-TR155
+- preliminary PHO-TR155 working lists supported downstream display-production work
 
 ## PARTIAL
 
@@ -382,10 +384,10 @@ This supports continued research into backroom relationships even if the final s
 
 # 14. Research targets
 
-1. Locate **Mission H-2 TDFCB Revision 4**, especially its special LM Flight Control and PCMGS listings.
-2. Locate **PHO-TR155 Mission H-2 Revision C** itself or its change pages.
-3. Locate a **PHO-TR155 data-pack key/index/contents record** that maps the H-2 pack abbreviations and identifies Revision N scope.
-4. Locate **Mission H-2 data-pack Revision N** itself; do not assume it is TELMU-specific until its scope is established.
+1. Locate **Mission H-2 data-pack Revision N or its transmittal/index**; PHO-TR515 establishes this class of material as input/supporting configuration material in the PHO-TR155 process, not PHO-TR155 itself.
+2. Locate a **Requirements and Configuration data-pack definition/key** mapping the H-2 pack abbreviations and pack contents.
+3. Locate **PHO-TR155 Mission H-2 Revision C** itself or its change pages/working lists.
+4. Locate **Mission H-2 TDFCB Revision 4**, especially its special LM Flight Control and PCMGS listings.
 5. Locate H-2 TELMU console-09 operational-configuration/loading sheets or controller handbook.
 6. Identify exact telemetry identifiers for battery, water, oxygen, CO2, and thermal parameters.
 7. Determine whether consumable lifetime projections were shown on CRT, calculated in SSR, or communicated by another product.
@@ -398,6 +400,7 @@ This supports continued research into backroom relationships even if the final s
 - *Apollo 13 Mission Report*, sections 7.2.3–7.2.5.
 - Philco-Ford / Houston Operations, **PHO-TR460**, NASA NTRS 19690029816.
 - Philco-Ford / Houston Operations, **PHO-TR474**, 10 April 1970, NASA NTRS 19700016172.
+- Philco-Ford, **PHO-TR515**, NASA NTRS 19730010501.
 
 
 ## 14A. LM-7 mission-era measurement/redline source
@@ -429,7 +432,7 @@ For in-flight scenarios, use mission-phase flight rules, controller reports, pro
 
 ## 14B. Mission H-2 display/telemetry configuration boundary
 
-Research notes 123–126 establish a mission-specific configuration-control boundary from Philco's contemporaneous progress reporting:
+Research notes 123–127 establish a mission-specific configuration-control boundary from Philco's contemporaneous reporting and display-format procedures:
 
 - PHO-TR155 Mission H-2 Revision C was issued on **1970-03-06**;
 - the **Mission H-2 Display System configuration was in accordance with Revision C**;
@@ -439,10 +442,12 @@ Research notes 123–126 establish a mission-specific configuration-control boun
 - its deliverables included special LM Flight Control, PCMGS-related, high-speed/wideband, index, and compare products;
 - Philco checked the **H-2 Rev. 4 TDFCB PCMGS against PHO-TR155 on 1970-02-10**;
 - earlier H-2 PHO-TR155 configuration work used multiple named data-pack products and a preliminary IBM card deck/listing;
-- PHO-TR474 later records **H-2 data-pack Revision N** on 1970-03-06, but the reviewed evidence does not identify Revision N as TELMU-specific or define the data-pack abbreviations.
+- PHO-TR515 states that Requirements and Configuration gathered information through **data-pack circulation** and prepared **PHO-TR155** with computer listings;
+- preliminary PHO-TR155 working lists then supported downstream display-production work;
+- PHO-TR474 later records **H-2 data-pack Revision N** on 1970-03-06, but the reviewed evidence does not identify Revision N as TELMU-specific, define its internal contents, or make it synonymous with PHO-TR155 Revision C.
 
-This is important for reconstruction. It establishes separate but cross-checked telemetry-format and MCC display-configuration authorities for H-2, while explicitly arguing against inventing parameter-to-console details that have not been recovered. It also prevents Revision N from being treated as a recovered TELMU loading sheet merely because it is the latest named H-2 data-pack revision.
+This establishes separate but linked stages: configuration requirements/data-pack circulation, PHO-TR155 configuration/control output, and display implementation. It also preserves a separate telemetry-format authority in TDFCB Rev. 4. The identical 1970-03-06 dates for data-pack Revision N and PHO-TR155 Revision C do not prove one-to-one contents identity.
 
 The same quarterly report mentions 1126 console-label changes, but it does not establish that those changes were all caused by Revision C, belonged to TELMU, or involved PC+2 inverter monitoring. They must not be used as a TELMU layout source.
 
-Until TDFCB Rev. 4, Revision C, a PHO-TR155 data-pack key/Revision N, or equivalent H-2 loading material is recovered, exact TELMU indicator/module positions, CRT requests, DRK/MSK actions, update cadence, precision, and latency remain unresolved.
+Until Revision N or its transmittal/index, a data-pack definition/key, PHO-TR155 Revision C, TDFCB Rev. 4, or equivalent H-2 loading material is recovered, exact TELMU indicator/module positions, CRT requests, DRK/MSK actions, update cadence, precision, and latency remain unresolved.
