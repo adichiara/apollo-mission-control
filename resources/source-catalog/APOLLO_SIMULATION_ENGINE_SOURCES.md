@@ -88,15 +88,21 @@ This catalog separates evidence about how Apollo simulation/training worked from
 
 - Vol. I: *Description*.
 - Vol. II: *Operation and Utilization*.
-- Public transcription/index: Wikisource / Virtual AGC.
+- Preferred public archive: Virtual AGC / ibiblio.
+- Direct Volume II scan:
+  - https://ibiblio.org/apollo/Documents/19730060784_1973060784.pdf
+  - https://www.ibiblio.org/apollo/Documents/ams_instructor_handbook_vol2.pdf
 - Evidence use:
-  - AMS described as simulating spacecraft system performance and flight dynamics through computer-controlled system parameters and dynamics;
+  - Section 2 explicitly describes vehicle-dynamics, vehicle-system, simulator-effects, and simulator-control programs;
+  - equations of motion compute translational and rotational motion and reference-frame transformations;
+  - EOM are continuously updated from thrusting-system inputs, elapsed time, and system states that affect weight/balance;
+  - weight/balance calculations feed mass, moments/products of inertia, and center of gravity to the EOM;
+  - vehicle-system programs include propulsion, electrical power, logic, displays, and bus equations;
   - instructor station includes Malfunction Insertion Unit;
-  - manual, preprogrammed, and time-dependent malfunction insertion;
-  - Volume III described as containing complete simulated-malfunction tables;
-  - simulation-output tables described as including **program and/or math-model designators** for each parameter.
-- Architecture relevance: strong route to recovering original simulator model partitioning, output variables, and failure-injection boundaries.
-- Key boundary: early AMS configuration; later Block II/Apollo-13 configuration must be checked before importing details.
+  - manual, preprogrammed, and time-dependent malfunction insertion are documented;
+  - Volume III is described as containing complete simulation-output tables, including **program and/or math-model designators** for each parameter.
+- Architecture relevance: direct evidence for modular closed-loop dynamics, subsystem coupling, display-driving outputs, and explicit malfunction insertion.
+- Key boundary: early initial-delivered AMS configuration; later Block II/Apollo-13 configuration must be checked before importing details.
 
 ## Virtual AGC document-library continuity
 
@@ -146,3 +152,30 @@ The mission-simulator documents establish the need for causal/closed-loop behavi
 The surviving Apollo documentation now does more than merely support a generic closed-loop architecture. A direct **LEM Mission Simulator mathematical-model source has been located**, alongside simulator-description and instructor-handbook lineages that can expose subsystem abstraction and malfunction behavior.
 
 The project still should not claim recovery of the complete Apollo simulator software/model. The next research step is systematic extraction of the recovered LMS/AMS model documentation, followed by cross-checking against Apollo 13 LM-7/CSM spacecraft documentation before implementing equations or configuration values.
+
+
+## Modern implementation references — not historical evidence
+
+### Orbiter Space Flight Simulator
+
+- Repository: https://github.com/orbitersim/orbiter
+- License: MIT.
+- Project description: open-source spaceflight simulator based on Newtonian mechanics.
+- Evidence use: **modern implementation reference only** for generic rigid-body/orbital dynamics, gravity-field handling, thrusters, propellant resources, vessel mass/state, and add-on interfaces.
+- Architecture relevance: demonstrates a reusable generic flight-dynamics layer beneath spacecraft-specific simulation.
+- Historical boundary: Orbiter is not a source for Apollo hardware behavior or 1960s simulator architecture.
+
+### Project Apollo — NASSP
+
+- Project site: https://nassp.space/index.php/Main_Page
+- Repository: https://github.com/orbiternassp/NASSP
+- Source-license boundary: source files identify GNU GPL version 2 or later.
+- Project description: Apollo study simulator/add-on for Orbiter with detailed CSM/LM panels and internal systems; supports Virtual AGC.
+- Reviewed implementation areas include:
+  - LM DPS/propellant state with helium, ullage/inlet pressures, valves, chamber pressure, thrust command, and gimbal actuators;
+  - LM electrical topology with batteries, ECAs, buses, bus ties/cross ties, circuit breakers, power sources/loads, voltage/current/frequency.
+- Evidence use: **modern secondary comparison/discovery reference only**; useful for subsystem coverage maps and independent behavior comparisons.
+- Historical boundary: any NASSP constant/equation remains unverified for this project until traced to a primary Apollo source.
+- Licensing boundary: do not copy/port NASSP GPL source code into this repository without an explicit compatible licensing decision.
+
+See `resources/research/131_public_simulator_archives_orbiter_nassp.md`.
