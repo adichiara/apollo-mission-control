@@ -193,10 +193,26 @@ This is a scope boundary, not permission to invent or collapse unresolved histor
 
 See `resources/research/102_pc2_spacecraft_physical_model_scope.md` and `resources/source-catalog/PC2_SPACECRAFT_MODEL_SCOPE_SOURCES.md`.
 
+## D-020 — Flight crew is simulation-controlled, not a player role
+
+**Status:** Accepted for the project direction  
+**Date:** 2026-09-14
+
+The human player experience is Mission Control. The spacecraft flight crew will therefore be represented by the authoritative simulation rather than assigned to another player.
+
+For the current development stage, CAPCOM/crew interaction may use deterministic canned exchanges and supported crew-action responses. A CAPCOM transmission does not itself mutate spacecraft state. The simulation records crew receipt/acknowledgement separately, applies the corresponding modeled crew action when appropriate, and then lets the spacecraft/simulation model produce the physical and observational consequences.
+
+Crew reports remain an information channel, not hidden physical truth. A crew report may corroborate or contradict other evidence but must not bypass the project's observation/information boundaries.
+
+The current facilitator-driven crew receipt/shutdown/report buttons are validation scaffolding and should migrate into the simulated-crew layer as that layer is implemented.
+
+See `resources/research/127_causal_simulation_engine_and_crew_model.md`.
+
 ## Not yet decided
 
 The following are deliberately not decisions:
 
+- exact subsystem/model fidelity and mathematical implementation of the proposed causal simulation engine beyond D-019's decision-relevant boundary;
 - four-player-or-smaller station aggregation;
 - durable session persistence/storage architecture;
 - realtime push mechanism (polling vs SSE/WebSockets);
