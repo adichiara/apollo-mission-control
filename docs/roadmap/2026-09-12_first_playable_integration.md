@@ -137,37 +137,31 @@ Research note 100 resolves open question 19 for the current first playable. Apol
 
 ## Active priorities
 
-### A. Repair and refine before multi-human play
+### A. Preserve and improve the validation harness
 
-1. reproduce and repair confirmed runtime/network defects rather than treating exploratory repeated actions as defects;
-2. reduce repeated readiness-audit noise if confirmed as unintended behavior;
-3. refine the player-facing mobile interface for clarity, navigation, information hierarchy, and historical feel without changing source/information boundaries;
-4. review substantial historical-presentation departures before adopting them;
-5. add regression coverage for defects exposed by live validation.
+1. repair confirmed test-console/runtime defects and add regression coverage;
+2. keep the facilitator/test screen as the primary development surface;
+3. do not begin player-facing station UI reconstruction yet.
 
-### B. Execute live multi-human validation
+### B. Replace scripted consequences with a causal simulation core
 
-1. brief every player from `PC2_PLAYER_PREPARATION.md`, provide `PC2_PLAYER_REFERENCE_PACKET.md`, record preparation completion, and preserve scenario blindness;
-2. run one facilitator console plus separate real-phone/browser station clients against one dedicated server;
-3. execute identity/rejoin/authority/isolation checks;
-4. complete nominal PC+2 through note-101 post-burn verification/power-down/PTC preparation without hidden facilitator coaching;
-5. assess FLIGHT/CAPCOM handoff, station readability, packet findability, staged final-load handoffs, and whether the post-burn transition needs more station-specific interaction;
-6. execute the synthetic ΔP run after nominal coordination is coherent, now as a human recognition/communication test rather than an integration proof;
-7. record incidents with preparation/station/build/GET/audit provenance;
-8. reopen spacecraft or ground-data-processing scope only if play exposes a sourced decision whose causal/data-path mechanism is absent.
+1. model the crew as a simulation-controlled actor responding to CAPCOM through structured/canned acknowledgements and supported cockpit actions;
+2. separate scenario initial conditions/failure injections from authoritative subsystem evolution;
+3. make supported actions alter subsystem state rather than select a pre-authored outcome branch;
+4. derive instrumentation, telemetry, ground products, and crew reports from resulting state while preserving information boundaries.
 
-### C. Execute five-player compact human validation
+### C. Research and implement the first numerical subsystem chain
 
-1. use FLIGHT, CAPCOM, LM SYSTEMS, FLIGHT DYNAMICS, and INCO simultaneously;
-2. practice substation switching before timed play without scenario-specific disclosure;
-3. provide separate original-station reference sheets;
-4. observe TELMU↔CONTROL and GUIDO↔FIDO/RETRO switching under time pressure;
-5. verify readiness/action attribution and audit provenance stay tied to original stations;
-6. classify usability/instruction defects separately from historical/research defects.
+1. prioritize Apollo LMS/AMS mathematical-model, malfunction, instructor, output-dictionary, and validation/correlation documentation;
+2. extract state variables, equations, subsystem interfaces, integration/update assumptions, and failure-insertion boundaries;
+3. cross-check simulator abstractions against Apollo 13 LM-7/CSM vehicle documentation before adopting mission-specific constants;
+4. implement propulsion + attitude/thrust direction + trajectory as the first numerical proof chain;
+5. validate correct, late, omitted, and incorrect burn commands through the existing test screen;
+6. follow with electrical power and consumables, then connect those states to instrumentation/telemetry/controller products.
 
-### D. Reopen research only from evidence
+### D. Defer human/player-interface validation
 
-Reopen historical, physical-model, or ground-processing work only for concrete information/procedure/authority/support/causal/data-path dependencies exposed by validation. Player difficulty alone is not sufficient.
+The seven-seat/five-player play protocols, packets, and compact-role work remain valid, but execution is deliberately deferred until the causal engine and simulated-crew loop are mature enough that player actions can produce realistic emergent consequences.
 
 ## Explicitly deferred
 
@@ -197,4 +191,4 @@ Reopen historical, physical-model, or ground-processing work only for concrete i
 
 The repository has now demonstrated a rejoin-safe, phone-accessible, continuously running authoritative mission in deployed facilitator-driven validation: the nominal PC+2 sequence reaches the source-bounded post-burn/PTC transition, and the synthetic ΔP branch reaches corroborated controller evidence while preserving the separation between observation, communication, crew action, physical response, and controller-visible evidence.
 
-The next unclosed PASS boundary is multi-human play: prepared station players must receive only source-bounded operational information/actions, coordinate without hidden facilitator coaching, preserve station identity/information isolation, and complete the scenario coherently on separate real devices. Physical seven-seat and five-player compact multi-human PASS claims remain unmade.
+The next unclosed PASS boundary is causal-engine behavior under the validation harness: arbitrary supported actions must propagate through subsystem state into realistic downstream mission and controller-visible consequences. Physical seven-seat and five-player compact multi-human PASS claims remain deliberately deferred.
