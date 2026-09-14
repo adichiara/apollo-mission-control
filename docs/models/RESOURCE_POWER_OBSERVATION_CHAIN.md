@@ -66,3 +66,14 @@ Historical scenarios must source:
 - observation-channel dependency and behavior.
 
 No Apollo values are embedded.
+
+
+## Facilitator validation API
+
+The validation harness now exposes:
+
+- `POST /api/admin/model-proof/resource-inventory`
+- `POST /api/admin/model-proof/electrical-bus`
+- `POST /api/admin/model-proof/resource-power-observation`
+
+The composed endpoint derives electrical-source availability from resource state and explicit coupling rules. It rejects direct `electrical_bus.source_available` overrides so the downstream observation outage cannot be caller-selected while claiming to exercise the causal chain.
