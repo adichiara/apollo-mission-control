@@ -6,6 +6,12 @@
   "runtime_adapter": "pc2_v1",
   "mission_profile_id": "apollo13_h2",
   "model_profile_id": "apollo13_h2_dynamics_partial",
+  "required_model_domains": [
+    "mass_properties",
+    "propulsion",
+    "translational_dynamics",
+    "tracking_observation"
+  ],
   "status": "source-backed nominal fixture used by executable prototype",
   "mission": "Apollo 13",
   "start_get_s": 280500.0,
