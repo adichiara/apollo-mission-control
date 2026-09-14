@@ -14,7 +14,7 @@ Purpose: track primary evidence for the missing Apollo 13/H-2 MCC Operational Co
 **URL:** https://ntrs.nasa.gov/api/citations/19700016172/downloads/19700016172.pdf  
 **Authority:** primary contemporaneous contractor record.
 
-Relevant section: **Operational Configuration Documentation (PHO-TR155)**.
+Relevant sections include **Operational Configuration Documentation (PHO-TR155)** and **MCC Reconfiguration**.
 
 Mission H-2 entries establish:
 
@@ -22,10 +22,14 @@ Mission H-2 entries establish:
 - Revision B issued 1970-02-13;
 - Revision C issued **1970-03-06**;
 - H-2 data-pack Revision N dated **1970-03-06**;
-- additional PHO-TR155 revision material continued through March 1970.
+- additional PHO-TR155 revision material continued through March 1970;
+- the **Mission H-2 Display System configuration was in accordance with PHO-TR155 Revision C**;
+- Revision C was **implemented in March 1970**;
+- **no equipment configuration changes were necessary** for that implementation;
+- the same quarterly MCC-reconfiguration discussion also records two MRR connect changes and **1126 console label changes**.
 
-**Use:** authoritative for existence, issue date, and configuration-control lineage of H-2 PHO-TR155 Revision C.  
-**Do not use for:** console contents not reproduced in PHO-TR474.
+**Use:** authoritative for existence, issue date, implementation state, and the fact that Revision C did not require Display System equipment reconfiguration.  
+**Do not use for:** exact TELMU console contents, or to attribute all 1126 label changes specifically to Revision C, TELMU, or PC+2 inverter monitoring.
 
 ## B. Adjacent-mission continuity evidence
 
@@ -65,6 +69,8 @@ Highest priority:
 The repository may state that:
 
 - H-2 PHO-TR155 Revision C existed and was issued on 1970-03-06;
+- the Mission H-2 Display System was implemented in accordance with Revision C during March 1970;
+- Revision C implementation required **no equipment configuration changes**;
 - `GC0071V` and `GC0155F` are source-backed LM inverter-bus electrical measurements;
 - cross-mission evidence supports TELMU station-family ownership.
 
@@ -75,7 +81,8 @@ The repository must **not** state as Apollo 13 fact, absent recovered H-2 config
 - exact MSK/DRK action;
 - exact live sampling/display cadence;
 - exact field precision or latency;
-- exact CONTROL equivalent presentation.
+- exact CONTROL equivalent presentation;
+- that the 1126 quarterly console-label changes were specifically TELMU or Revision-C inverter-display changes.
 
 ## Related research
 
@@ -86,3 +93,4 @@ The repository must **not** state as Apollo 13 fact, absent recovered H-2 config
 - `resources/research/121_pc2_inverter_telmu_indicator_continuity_boundary.md`
 - `resources/research/122_pc2_inverter_onboard_ground_monitoring_boundary.md`
 - `resources/research/123_pc2_pho_tr155_h2_revision_c_provenance_boundary.md`
+- `resources/research/124_pc2_pho_tr155_h2_display_system_implementation_boundary.md`
