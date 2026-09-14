@@ -84,10 +84,19 @@ Examples:
 - Apollo 14 LM-8 DPS final flight evaluation: https://ntrs.nasa.gov/citations/19730021081
 - Apollo 15 LM-10 DPS final flight evaluation: https://ntrs.nasa.gov/citations/19730023018
 
+### Adjacent-report provenance useful for Apollo 13 retrieval
+
+Primary NTRS catalog records establish a repeated contractor/reporting lineage:
+
+- Apollo 10 LM-4: R. K. M. Seto, TRW Systems Group, `TRW-11176-H314-R0-001`, `NASA-CR-101869`, contract `NAS9-8166`.
+- Apollo 12: R. K. M. Seto / R. L. Barrows, `TRW-11176-H585-R0-00-SUPPL-5`, `MSC-01855-SUPPL-5`, `NASA-TM-X-68933`, contract `NAS9-8166`.
+- Apollo 14 LM-8: A. T. Avvenire / S. C. Wood, TRW Systems Group, `TRW-17618-H219-R0-00-SUPPL-5`, `MSC-04112-SUPPL-5`, `NASA-TM-X-69491`, contract `NAS9-8166`.
+
+This supports using `TRW Systems Group` and `NAS9-8166` as search terms for the missing Apollo 13 report. It does **not** prove an Apollo 13 TRW report number, author, or numerical applicability.
+
 ## Project rule
 
 For historical PC+2 numerical validation, keep **commanded throttle state**, **delivered thrust history**, **specific impulse/mass flow**, and **pressurization/blowdown state** as separate concepts until primary evidence supports collapsing any of them.
-
 
 ## Apollo 13 Mission Report Supplement 2 — publication status and retrieval
 
@@ -115,8 +124,14 @@ Representative sources:
 
 ### Retrieval boundary
 
-The October 1970 publication date is now established. A direct public copy/report identifier was not recovered in this pass. The Apollo Flight Journal and Virtual AGC Apollo 13 document lists expose Supplement 1 but not Supplement 2.
+The October 1970 publication date is established. A direct public copy/report identifier is still unrecovered. Exact-title and `MSC-02680-SUPPL-2` searches do not currently expose an authoritative direct record.
 
-### Archival priority
+`MSC-02680-SUPPL-2` remains a **structurally plausible archival search key only**. Do not cite it as the verified report number until a primary catalog record, scan, cover page, citation, or distribution record confirms it.
 
-Treat this exact published title as the highest-priority LM-7 propulsion search target. Search report-number cross-references, MSC/JSC/NARA holdings, contractor indexes, and citations from adjacent DPS evaluations before substituting adjacent-mission numerical values.
+### Refined archival priority after research note 141
+
+Search using the combined primary-supported provenance tuple:
+
+`Apollo 13 + LM-7 + Descent Propulsion System Final Flight Evaluation + October 1970 + TRW Systems Group + NAS9-8166 + MSC-02680`
+
+Prioritize NASA/NTRS catalog backfiles, MSC/JSC report indexes, NARA technical-report holdings, and TRW/Northrop Grumman legacy bibliographies before substituting adjacent-mission numerical values.
