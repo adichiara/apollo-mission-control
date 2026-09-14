@@ -28,14 +28,27 @@ A scenario supplies the starting problem. It does not enumerate all possible pla
 Current research has identified direct evidence for this type of architecture:
 
 - Grumman LED 500-5, *LMS Math Model — Equations of Motion, Subsystem Interfaces and Visual Display Drive Equations*, 22 April 1965;
+- Grumman LED-440-3, *LEM Mission Simulator (LMS) Math Model: True Motion Equations*, August 1965, whose separately reconstructed model flow exposes interfaces among propulsion, stabilization/control, weight/balance, disturbances, and true-motion integration;
 - Grumman LED 500-16, *LEM Guidance Computer (LGC) Math Model for the Full Mission Engineering Simulator (FMES) and LEM Mission Simulator (LMS)*, 8 June 1966;
 - Link Group's *Proposal for LEM Mission Simulator, Volume II, Technical Addendum*, whose surviving scan contains LMS mathematical-equation flowcharts;
 - a Grumman memo studying the effect of 50-millisecond LMS integration steps on simulated Abort Attitude Control System response;
-- LMS/AMS instructor material documenting subsystem simulation and malfunction insertion.
+- North American Aviation's 1965 preliminary *Apollo Mission Simulator Instructor Handbook, Volume II*, which directly documents five operational-program classes, a continually updated equations-of-motion feedback loop, manual/preprogrammed/time-dependent malfunction insertion, and separable simulator/telemetry/interface paths;
+- the separately archived *Lunar Module Mission Simulator Instructor's Handbook, Volume I*, whose direct extraction remains pending.
 
-These sources establish that equations of motion, subsystem interfaces, model partitions, numerical integration behavior, and display-driving outputs were explicit simulator concerns. They do not yet establish every equation, constant, or Apollo-13-specific configuration we should implement.
+These sources establish that equations of motion, subsystem interfaces, model partitions, numerical integration behavior, display-driving outputs, and malfunction placement were explicit simulator concerns. The AMS handbook also shows that telemetry could be derived from simulated systems or affected through a direct telemetry malfunction, strengthening the project's physical-truth/observation separation. They do not yet establish every equation, constant, or Apollo-13-specific configuration we should implement.
 
-See research notes 127–129 and resources/source-catalog/APOLLO_SIMULATION_ENGINE_SOURCES.md.
+The public 1965 AMS handbook is preliminary initial-configuration evidence and explicitly is not design-requirements data. It must not be silently generalized to accepted Block II/Apollo 13 behavior or conflated with the LMS handbook lineage.
+
+See research notes 127–130 and 134–136 and resources/source-catalog/APOLLO_SIMULATION_ENGINE_SOURCES.md. LED-440-3 and LED 500-5 remain distinct document identities unless future primary-source review establishes their relationship.
+
+## Modern simulator reference boundary
+
+Orbiter and Project Apollo–NASSP may be used to review implementation choices, discover missing mechanisms and primary-source leads, or construct independently specified comparison cases. They are not evidence of historical Apollo behavior.
+
+- Orbiter is MIT-licensed and useful for numerical integration, state propagation, timestep, and convergence review.
+- NASSP is GPL-licensed and useful for Apollo subsystem reconnaissance, but its code must not be copied into this project without a deliberate license decision. Its values and equations must be traced to primary documents, and its explicit approximations must not become hidden project assumptions.
+
+Research note 136 records this boundary. No modern simulator dependency is currently selected.
 
 ## Core architecture rule
 
@@ -320,6 +333,12 @@ A simulator-era equation may be adopted only after checking whether it describes
 
 Do not build a broad subsystem framework just because this architecture anticipates one.
 
-Implementation begins after the current LMS equation/model extraction identifies enough of the original dynamics/propulsion boundary to choose a defensible first state vector and integration contract.
+Research note 134 partially clears this gate at the interface level. The first proof may use:
 
-Until then, the existing historical PC+2 event model remains the validation scaffold and deployed test path.
+- time, mass, vector velocity, optional position, accumulated impulse, and explicit frame metadata as state;
+- separate propulsion, prescribed-attitude/thrust-direction, mass-properties, dynamics, and observation-product boundaries;
+- an assumption-visible deterministic integrator with convergence and correct/early/late/wrong-input ordering tests.
+
+This authorizes a **model proof**, not a historically validated Apollo 13 PC+2 propagator. Mission-specific thrust history, mass epoch, coordinate-frame mapping, and numerical acceptance tolerance must remain explicit/unfrozen until their primary sources are extracted.
+
+The existing historical PC+2 event model remains the deployed integration scaffold while the numerical proof is developed beside it.
