@@ -6,6 +6,18 @@ Purpose: track primary evidence for the missing Apollo 13/H-2 MCC Operational Co
 
 ## A. Primary mission-era provenance
 
+### A0. PHO-TR460 — earlier Mission H-2 PHO-TR155 data-pack lineage
+
+**Organization:** Philco-Ford / Houston Operations  
+**NASA NTRS:** 19690029816  
+**URL:** https://ntrs.nasa.gov/api/citations/19690029816/downloads/19690029816.pdf?attachment=true  
+**Authority:** primary contemporaneous contractor record.
+
+Its MCC Operational Configuration Documentation and Testing section records earlier Mission H-2 PHO-TR155 work as updates to multiple individually identified data-pack products, including `FDB`, `CSB`, `FCOB`, `LSB`, `SLV`, `FSB`, `ESB`, `MOD`, `PCB`, and `OSB` revisions. The same H-2 entry records a preliminary card deck and listing issued to IBM.
+
+**Use:** establishes that H-2 PHO-TR155 configuration work used a family of data-pack products rather than an obviously TELMU-specific single artifact, and provides better archival search terms.  
+**Do not use for:** expanding the pack abbreviations from generic acronym lists, assigning pack contents, treating the later Revision N reference as TELMU console-09 loading, or reconstructing IBM/card-deck internals.
+
 ### A1. PHO-TR474 — Houston Operations progress report
 
 **Organization:** Philco-Ford / Houston Operations  
@@ -39,7 +51,7 @@ Mission H-2 telemetry-format entries establish:
 - a Format-30/master comparison between H-2 Rev. 4 and H-3 Rev. 1 was prepared on 1970-03-18.
 
 **Use:** authoritative for existence, dates, implementation state, and the relationship between H-2 telemetry-format configuration and PHO-TR155.  
-**Do not use for:** exact TELMU console contents, exact parameter sample rates/loading, or to attribute all 1126 label changes specifically to Revision C, TELMU, or PC+2 inverter monitoring.
+**Do not use for:** exact TELMU console contents, exact parameter sample rates/loading, to treat generic data-pack Revision N as TELMU-specific, or to attribute all 1126 label changes specifically to Revision C, TELMU, or PC+2 inverter monitoring.
 
 ### A2. Mission H-2 TDFCB Revision 4 — identified, not yet recovered
 
@@ -60,6 +72,14 @@ The surviving Philco report shows that TDFCB Rev. 4 carried mission-specific tel
 - March 1970 Format-30 compare material.
 
 **Use if recovered:** establish Apollo 13/H-2 measurement membership, telemetry formats/cadence, Flight Control routing products, and possibly the exact ground-side evidence path for `GC0071V` / `GC0155F`.
+
+### A3. PHO-TR155 data-pack family / Mission H-2 Revision N — identified, scope unresolved
+
+PHO-TR474 records **Mission H-2 data-pack Revision N** on 6 March 1970. PHO-TR460 establishes that earlier H-2 PHO-TR155 work involved multiple named data-pack products.
+
+**Current boundary:** Revision N is a valid archival target but cannot be described as TELMU console-09 loading unless the actual package, a PHO-TR155 data-pack key/index, or equivalent authoritative contents record is recovered.
+
+**Highest-value recovery:** a PHO-TR155 contents/index key mapping the pack abbreviations and Revision N scope, followed by Revision N itself.
 
 ## B. Adjacent-mission continuity evidence
 
@@ -90,10 +110,11 @@ Highest priority:
 
 1. **Mission H-2 TDFCB Revision 4**, delivered 1970-01-28, especially its special LM Flight Control and PCMGS listings;
 2. **PHO-TR155, Mission H-2, Revision C**, issued 1970-03-06;
-3. **Mission H-2 data pack Revision N**, dated 1970-03-06;
-4. H-2 TELMU console-09 operational-configuration/loading sheets;
-5. H-2 TELMU console handbook or controller log;
-6. H-2 display-request/MSK inventory naming `GC0071V` and/or `GC0155F`.
+3. **PHO-TR155 data-pack key/index/contents record** mapping the H-2 pack abbreviations and Revision N scope;
+4. **Mission H-2 data-pack Revision N**, dated 1970-03-06, with its scope left unspecified until recovered;
+5. H-2 TELMU console-09 operational-configuration/loading sheets;
+6. H-2 TELMU console handbook or controller log;
+7. H-2 display-request/MSK inventory naming `GC0071V` and/or `GC0155F`.
 
 ## D. Current historical boundary
 
@@ -102,6 +123,8 @@ The repository may state that:
 - H-2 PHO-TR155 Revision C existed and was issued on 1970-03-06;
 - the Mission H-2 Display System was implemented in accordance with Revision C during March 1970;
 - Revision C implementation required **no equipment configuration changes**;
+- earlier H-2 PHO-TR155 configuration work used multiple named data-pack products and a preliminary IBM card deck/listing;
+- PHO-TR474 later records H-2 data-pack Revision N, but its exact pack scope is unrecovered;
 - Mission H-2 telemetry-format configuration was controlled by **TDFCB Revision 4**, delivered 1970-01-28;
 - its mission-specific products included LM Flight Control, PCMGS, high-speed/wideband, index, and compare material;
 - Philco explicitly checked the H-2 Rev. 4 TDFCB PCMGS against PHO-TR155;
@@ -117,6 +140,8 @@ The repository must **not** state as Apollo 13 fact, absent recovered H-2 config
 - exact field precision or latency;
 - exact CONTROL equivalent presentation;
 - that `GC0071V` / `GC0155F` are definitely present in a specific unrecovered H-2 TDFCB listing;
+- that Mission H-2 data-pack Revision N is specifically the TELMU console-09 loading package;
+- unsupported expansions or contents for the PHO-TR155 pack abbreviations;
 - that the 1126 quarterly console-label changes were specifically TELMU or Revision-C inverter-display changes.
 
 ## Related research
@@ -130,3 +155,4 @@ The repository must **not** state as Apollo 13 fact, absent recovered H-2 config
 - `resources/research/123_pc2_pho_tr155_h2_revision_c_provenance_boundary.md`
 - `resources/research/124_pc2_pho_tr155_h2_display_system_implementation_boundary.md`
 - `resources/research/125_pc2_h2_tdfcb_rev4_configuration_boundary.md`
+- `resources/research/126_pc2_h2_photr155_data_pack_lineage_boundary.md`
