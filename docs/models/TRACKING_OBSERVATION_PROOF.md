@@ -100,3 +100,12 @@ A historical scenario must source, as applicable:
 - controller-visible precision and presentation.
 
 This proof supplies only the reusable causal separation.
+
+
+## Facilitator validation API
+
+The combined proof endpoint is:
+
+`POST /api/admin/model-proof/trajectory-tracking`
+
+The endpoint deliberately returns the translational result and the downstream tracking observation as separate objects. This makes the truth/observation boundary inspectable during model development while preserving the rule that player-facing products must consume only the observation side.
