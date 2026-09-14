@@ -1,0 +1,81 @@
+{
+  "schema_version": "0.1-guidance-monitoring-profile",
+  "profile_id": "apollo11_g_powered_descent_monitoring_partial",
+  "mission_profile_id": "apollo11_g",
+  "status": "partial historical monitoring profile; freshness unresolved",
+  "applicability": "Apollo 11 LM powered-descent Mission Control guidance monitoring; architecture/reference use only until observation timing is source-bounded",
+  "comparisons": [
+    {
+      "comparison_id": "ags_pgns_inplane_problem_detection",
+      "first_source": "AGS",
+      "second_source": "PGNS",
+      "purpose": "Detect an in-plane disagreement requiring isolation with an independent ground comparison",
+      "tolerances": {
+        "radial_velocity_fps": 10.0,
+        "downrange_velocity_fps": 10.0
+      },
+      "max_time_separation_s": null,
+      "provenance": [
+        "MSC Internal Note 70-FM-20, The Apollo 11 Adventure, Figure 4 MCC velocity residual monitoring"
+      ],
+      "evidence_note": "Apollo 11 Figure 4 gives 10-fps radial and downrange limits in the powered-descent in-plane monitoring path. Exact observation age/cadence for an executable comparison remains unfrozen."
+    },
+    {
+      "comparison_id": "pfp_pgns_inplane_isolation",
+      "first_source": "MSFN_POWERED_FLIGHT_PROCESSOR",
+      "second_source": "PGNS",
+      "purpose": "Use an independent ground-derived comparison to help isolate whether PGNS or AGS is the discrepant source",
+      "tolerances": {
+        "radial_velocity_fps": 10.0,
+        "downrange_velocity_fps": 10.0
+      },
+      "max_time_separation_s": null,
+      "provenance": [
+        "MSC Internal Note 70-FM-20, The Apollo 11 Adventure, Figure 4 MCC velocity residual monitoring"
+      ],
+      "evidence_note": "The Apollo 11 monitoring flow uses powered-flight-processor/PGNS in-plane residuals after an AGS/PGNS discrepancy. The 10-fps isolation limits are source-bounded; freshness is not."
+    },
+    {
+      "comparison_id": "pfp_pgns_pgns_failure_limits",
+      "first_source": "MSFN_POWERED_FLIGHT_PROCESSOR",
+      "second_source": "PGNS",
+      "purpose": "PGNS failure-limit comparison after a possible PGNS discrepancy has been isolated",
+      "tolerances": {
+        "radial_velocity_fps": 35.0,
+        "downrange_velocity_fps": 30.0
+      },
+      "max_time_separation_s": null,
+      "provenance": [
+        "MSC Internal Note 70-FM-20, The Apollo 11 Adventure, Figure 4 MCC velocity residual monitoring",
+        "Apollo 11 Mission Rules, powered-descent rule 3-50"
+      ],
+      "evidence_note": "Apollo 11 Figure 4 gives 35-fps radial and 30-fps downrange limits. Mission Rule 3-50 makes PGNS navigation errors violating PGNS failure limits an abort basis before landing-radar incorporation. This profile does not itself make the abort decision."
+    },
+    {
+      "comparison_id": "ags_pgns_crossrange_problem_detection",
+      "first_source": "AGS",
+      "second_source": "PGNS",
+      "purpose": "Detect crossrange guidance disagreement requiring further isolation",
+      "tolerances": {
+        "crossrange_velocity_fps": 20.0
+      },
+      "max_time_separation_s": null,
+      "provenance": [
+        "MSC Internal Note 70-FM-20, The Apollo 11 Adventure, Figure 4 MCC velocity residual monitoring"
+      ],
+      "evidence_note": "Apollo 11 Figure 4 shows a 20-fps AGS/PGNS crossrange monitoring limit. Other crossrange/misalignment branches remain intentionally unencoded until their labels and applicability are independently verified."
+    }
+  ],
+  "unresolved": [
+    "maximum permissible observation-time separation / freshness for each comparison",
+    "exact controller display update cadence and sample synchronization",
+    "exact descent attitude-reference comparison limits",
+    "remaining crossrange/misalignment flowchart thresholds not independently verified",
+    "mapping from these monitoring results to the complete post-program-alarm GO/abort decision rule"
+  ],
+  "sources": [
+    "NASA MSC Internal Note 70-FM-20, The Apollo 11 Adventure, 5 February 1970, Guidance Analysis Section and Figure 4",
+    "Apollo 11 Mission Rules, powered-descent rule 3-50",
+    "NASA Apollo 11 Mission Report, November 1969"
+  ]
+}
