@@ -89,7 +89,7 @@ Examples:
 For historical PC+2 numerical validation, keep **commanded throttle state**, **delivered thrust history**, **specific impulse/mass flow**, and **pressurization/blowdown state** as separate concepts until primary evidence supports collapsing any of them.
 
 
-## Apollo 13 Mission Report Appendix E — planned Supplement 2
+## Apollo 13 Mission Report Supplement 2 — publication status and retrieval
 
 - Source: *Apollo 13 Mission Report*, September 1970
 - NTRS: https://ntrs.nasa.gov/citations/19710003598
@@ -103,10 +103,20 @@ Appendix E lists:
 - title: *Descent Propulsion System Final Flight Evaluation*;
 - status: **Preparation**.
 
-### Boundary
+### Later official status
 
-This establishes that the report was planned/in preparation in September 1970. It does not establish that a final version was issued or that the currently public archive contains it.
+Later NASA mission-report supplement tables (Apollo 14 through at least Apollo 16, with Apollo 17 as an additional cross-check) list Apollo 13 Supplement 2 with publication date **October 1970**.
+
+Representative sources:
+
+- Apollo 14 Mission Report: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap14fj/pdf/a14_mission-report.pdf
+- Apollo 15 Mission Report Appendix E: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a15/a15mrp9.pdf
+- Apollo 16 Mission Report, NTRS 19720026127: https://ntrs.nasa.gov/citations/19720026127
+
+### Retrieval boundary
+
+The October 1970 publication date is now established. A direct public copy/report identifier was not recovered in this pass. The Apollo Flight Journal and Virtual AGC Apollo 13 document lists expose Supplement 1 but not Supplement 2.
 
 ### Archival priority
 
-Treat this exact title as the highest-priority LM-7 propulsion search target. Search report-number cross-references, TRW records, MSC/JSC archives, NARA holdings, contractor indexes, and draft memoranda before substituting adjacent-mission final-flight evaluations.
+Treat this exact published title as the highest-priority LM-7 propulsion search target. Search report-number cross-references, MSC/JSC/NARA holdings, contractor indexes, and citations from adjacent DPS evaluations before substituting adjacent-mission numerical values.
