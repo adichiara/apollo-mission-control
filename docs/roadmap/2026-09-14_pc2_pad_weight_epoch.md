@@ -1,7 +1,7 @@
 # PC+2 numerical-validation roadmap — pad-weight epoch
 
 Date: 2026-09-15
-Research notes: `resources/research/137_pc2_pad_weight_epoch_boundary.md` through `resources/research/158_pc2_no_new_gda_trim_load.md`
+Research notes: `resources/research/137_pc2_pad_weight_epoch_boundary.md` through `resources/research/159_luminary131_v34_n47_software_path.md`
 
 ## Current resolved boundary
 
@@ -13,9 +13,11 @@ Research note 152 identified the ~59-hour interim PC+2 angular GDA pair (`pitch 
 
 Research note 158 resolves the previously assumed missing-final-trim problem differently. During the PC+2 two-hour activation at GET 075:07–075:09, Mission Control explicitly inserted `VERB 34 ENTER` **after Noun 47**, terminating the DAP-loading sequence before Noun 48 gimbal-trim entry. Haise asked whether this meant the gimbals already looked all right; Duke answered affirmatively and said there was nothing else on the page. The later burn-rules exchange also records Haise's uncorrected readback that there were **no trim requirements on this burn**. The best-supported model is therefore **no new crew-entered PC+2 trim**, not an unrecovered final Noun 48 pair.
 
+Research note 159 independently verifies that interpretation in Apollo 13's **Luminary 131 flight-software source**. In R03/Verb 48, the Noun 47 response dispatcher sends `V34E` to `ENDR03` and `ENDEXT`; only `V33E PROCEED` continues through mass/moment processing to `DAPDATA3`, which displays Noun 48, and a later proceed response can invoke `TRIMGIMB`. Thus the PC+2 V34 instruction selected a real computer termination branch before N48. This proves the crew/computer behavior but still does not reveal CONTROL's rationale for choosing the no-update branch.
+
 Research note 153 establishes PC+2 execution-state evidence. Research note 155 corrects note 154's overbroad unit reinterpretation: the April FCD LM CONTROL narrative reports the PC+2 ignition roll-GDA state in **degrees**, approximately `-2°`, a `-1.2°` change from pre-ignition, implying approximately `-0.8°` immediately before ignition. This is retained/observed execution-state evidence and must not be converted into a supposed final Noun 48 command.
 
-Research note 156 independently showed that the final P30 LM maneuver PAD read up at GET 077:55:24 did **not** contain a GDA trim pair. Note 158 now explains that omission consistently with the activation procedure: the crew was deliberately not taken through a new Noun 48 entry.
+Research note 156 independently showed that the final P30 LM maneuver PAD read up at GET 077:55:24 did **not** contain a GDA trim pair. Notes 158–159 now explain that omission consistently with the activation procedure and software: the crew was deliberately not taken through a new Noun 48 entry.
 
 The September 1970 *Apollo 13 Mission Report* independently provides a postflight PC+2 GDA actuator-displacement trace explicitly in **inches**: initial pitch/roll approximately `+0.13 / -0.28 in`, roll maximum excursion `-0.44 in`, steady-state pitch/roll `-0.21 / -0.55 in`, and cutoff pitch/roll `+0.23 / -0.85 in`.
 
@@ -44,4 +46,4 @@ Priority order:
 
 ## Integration rule
 
-Do not force a numerical DPS model to reproduce `861.5 ft/s` by assuming either `95932 lb` or `95424.0 lb` is the exact RTCC targeting mass. Preserve provenance. For trim/GDA, model an explicit update/no-update decision and distinguish any computed recommendation from a crew-entered Noun 48 value and from retained/observed gimbal state. For PC+2, primary operational evidence now supports **no new Noun 48 entry**. PC+2 `job_number`, the calculation-level basis for the no-update decision, exact retained two-axis pre-ignition gimbal state, and explicit calculation-level `T+55` linkage remain unknown until directly sourced.
+Do not force a numerical DPS model to reproduce `861.5 ft/s` by assuming either `95932 lb` or `95424.0 lb` is the exact RTCC targeting mass. Preserve provenance. For trim/GDA, model an explicit update/no-update decision and distinguish any computed recommendation from a crew-entered Noun 48 value and from retained/observed gimbal state. For PC+2, primary operational evidence plus Apollo 13 flight-software evidence now supports **V34 termination at Noun 47, before Noun 48**. PC+2 `job_number`, the calculation-level basis for the no-update decision, exact retained two-axis pre-ignition gimbal state, and explicit calculation-level `T+55` linkage remain unknown until directly sourced.
