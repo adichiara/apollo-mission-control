@@ -125,7 +125,7 @@ class WebCrewResponseTests(unittest.TestCase):
             "/api/session/admin/injection",
             json={
                 "injection_id": "web-test-inverter-warning",
-                "target": "lm_inverter_warning",
+                "target": "crew_inverter_warning_report",
                 "value": True,
                 "evidence_class": "source_bounded_test",
                 "provenance": "synthetic warning for sourced inverter contingency path",
@@ -217,7 +217,7 @@ class WebCrewResponseTests(unittest.TestCase):
             "/api/session/admin/injection",
             json={
                 "injection_id": "web-test-inverter-warning-post-transfer",
-                "target": "lm_inverter_warning",
+                "target": "crew_inverter_warning_report",
                 "value": True,
                 "evidence_class": "source_bounded_test",
                 "provenance": "synthetic fresh post-transfer caution observation",
