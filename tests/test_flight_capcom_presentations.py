@@ -52,6 +52,22 @@ class FlightCapcomPresentationTests(unittest.TestCase):
         keys = {field.key for field in presentation.fields}
         self.assertEqual(keys, {"comm.air_ground_quality", "ground.pc2.final_pad", "crew.report_stream"})
 
+    def test_capcom_can_show_explicit_crew_inverter_caution_report(self):
+        projection = ProjectionSet(
+            "CAPCOM",
+            {
+                "comm.air_ground_quality": Product("clear", validity=Validity.VALID, source_layer="communications", provenance="test"),
+                "ground.pc2.final_pad": Product({"tig_get_s": 1.0}, validity=Validity.VALID, source_layer="ground-derived/procedure", provenance="test"),
+                "crew.report_stream": Product([], validity=Validity.VALID, source_layer="crew-report", provenance="test"),
+                "crew.inverter_warning_report": Product(True, validity=Validity.VALID, source_layer="crew-report", provenance="test"),
+            },
+        )
+        presentation = build_pc2_capcom_presentation(projection)
+        fields = {field.key: field for field in presentation.fields}
+        self.assertTrue(fields["crew.inverter_warning_report"].value)
+        self.assertEqual(fields["crew.inverter_warning_report"].source_layer, "crew-report")
+        self.assertIn("not direct ground telemetry", fields["crew.inverter_warning_report"].historical_analogue)
+
     def test_presentations_reject_wrong_station(self):
         with self.assertRaises(ValueError):
             build_pc2_flight_presentation(ProjectionSet("CAPCOM"))
