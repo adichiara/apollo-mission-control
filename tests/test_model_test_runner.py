@@ -14,7 +14,13 @@ class ModelTestRunnerTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         for required in ("Download report", "Copy report", "schema_version",
                          "build_before", "build_after", "rocket equation",
-                         "step refinement", "INCOMPLETE", "AbortController"):
+                         "step refinement", "INCOMPLETE", "AbortController",
+                         "Causal Model Lab", "Trajectory → tracking observation",
+                         "Resource → power → observation",
+                         "/api/admin/model-proof/trajectory-tracking",
+                         "/api/admin/model-proof/resource-power-observation",
+                         "Authoritative trajectory", "Controller-visible observation",
+                         "causal_runs"):
             self.assertIn(required, response.text)
         self.assertNotIn("/api/session/create", response.text)
         self.assertNotIn("/api/session/advance", response.text)
