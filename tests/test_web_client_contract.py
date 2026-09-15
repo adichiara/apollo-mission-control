@@ -69,7 +69,7 @@ class WebClientContractTests(unittest.TestCase):
         self.assertIn("TEST UNKNOWN-CAUSE BLOCK", html)
         self.assertIn("TEST RULE-CAUSED BLOCK", html)
         self.assertIn("post-stop FLIGHT approval or CAPCOM transmission", html)
-        self.assertIn("thrust level remains unspecified", html)
+        self.assertIn("Thrust level remains unspecified", html)
 
     def test_admin_engine_off_override_has_no_dead_item_id_input(self):
         html = (ROOT / "web" / "admin.html").read_text(encoding="utf-8")
