@@ -192,6 +192,12 @@ The resulting architecture is:
 
 Apollo 11 constants live in a historical profile, not in either generic model. Radar beam/terrain geometry, exact Apollo radar-axis reference computation, weighting/filter equations, guidance-cycle cadence, and controller products remain historical configuration/model work.
 
+### Numerical integration provenance boundary
+
+LMS source evidence shows that timestep sensitivity was explicitly studied, but the currently recovered title-level evidence is model-specific: a 50 ms integration-step study for Abort Attitude Control System response. It does not establish one global LMS timestep.
+
+Until direct LMS math-model or correlation evidence says otherwise, each numerical model must declare its own integration/update policy. Step size remains explicit project configuration, and numerical refinement/sensitivity tests are required rather than importing an unsourced simulator-wide constant. See research note 216.
+
 ### Prebriefed deterministic crew procedures
 
 Some source-backed crew procedures are learned before the active scenario window rather than transmitted in response to a current controller action. The simulated-crew layer therefore supports a second pattern:
