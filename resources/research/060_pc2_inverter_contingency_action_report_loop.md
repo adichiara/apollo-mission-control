@@ -1,7 +1,7 @@
 # Apollo 13 PC+2 — inverter contingency action/report loop
 
 Date: 2026-09-12  
-Status: **REVIEWED-PARTIAL — sufficient to define the decision/action/re-observation loop; exact alternate-inverter identity, switch position, and response timing remain unresolved.**
+Status: **REVIEWED / IMPLEMENTED BOUNDARY — sufficient to define the decision/action/re-observation loop. Research notes 113–114 subsequently resolve alternate inverter 1 and the inverter-2 → inverter-1 cockpit transfer sequence. Numeric post-transfer dwell, crew-member assignment, and exact hypothetical controller voice routing remain unresolved.**
 
 ## Purpose
 
@@ -9,7 +9,7 @@ Research note 059 established that the PC+2 inverter criterion is not a simple w
 
 This note asks the next implementation question:
 
-> What minimum controller/CAPCOM/crew exchange can be represented without inventing an Apollo 13 inverter-switch procedure that has not been recovered?
+> What minimum controller/CAPCOM/crew exchange preserves the sourced inverter contingency while keeping crew action, completion report, and fresh post-transfer observation distinct?
 
 ## 1. Mission-specific rule wording
 
@@ -73,7 +73,7 @@ This event should record:
 - action requested (`switch_lm_inverter`);
 - provenance/reference.
 
-It should **not** encode an inverter number unless sourced.
+Research notes 113–114 now supply the mission-specific identity and transfer sequence. Current implementation may encode inverter 2 → inverter 1 and the three sourced controls, while still avoiding invented controller wording or response timing.
 
 ### B. Crew operational action
 
@@ -121,17 +121,14 @@ Implementation should therefore evaluate the positive rule only from an observat
 
 ## 6. Unresolved procedure details
 
-The reviewed primary sources do **not** establish for this PC+2 contingency:
+The current primary-source record still does **not** establish for this PC+2 contingency:
 
-- which inverter was initially selected at the moment of a hypothetical warning;
-- which alternate inverter would be selected;
-- exact switch/circuit-breaker positions;
 - exact crew member performing the action;
 - exact controller who would first call the warning;
 - exact delay before the warning is judged again;
 - whether the ground could independently confirm the switch position or relied on crew report/procedure execution.
 
-A surviving flown Apollo 13 LM-7 Contingency Checklist is cataloged by the Museum of Flight, but the accessible record reviewed here does not expose a page resolving this specific inverter action. It is a future source target, not evidence for details not visible in the record.
+Subsequent research recovered the Apollo 13 LM Malfunction Procedures INVERTER caution flowchart and resolved the transfer controls; see research note 114. The remaining items above stay unfrozen.
 
 ## 7. Implementation consequence
 
@@ -163,4 +160,4 @@ Selection should again follow strongest accessible primary evidence rather than 
 - NASA Flight Control Division, *Mission Operations Report — Apollo 13*, 28 Apr 1970.
 - Apollo 13 Flight Journal / underlying air-ground record, 076:30:31–076:38 GET, PC+2 burn-rule read-up and crew readback.
 - NASA, *Apollo Experience Report — Lunar Module Instrumentation Subsystem*, NASA report 19720018206, inverter-caution processing.
-- The Museum of Flight Archives, Apollo 11 and 13 Checklists collection, record of the flown Apollo 13 LM-7 Contingency Checklist (source-location lead only; specific inverter procedure not recovered from the accessible record).
+- Apollo 13, *LM Malfunction Procedures*, LMA790-3-LM, INVERTER caution flowchart; see research note 114.
