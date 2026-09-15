@@ -41,8 +41,9 @@ def apply_operational_action(state: PC2State, action: OperationalAction) -> None
     state.get_s = action.get_s
 
     if action.action == "switch_lm_inverter":
-        # Exact inverter identity and switch chronology remain unresolved for
-        # PC+2, so this records only that a switch attempt occurred.
+        # Apollo 13 LM malfunction procedures source the inverter-2 to
+        # inverter-1 transfer sequence. This state records only that the crew
+        # action occurred; the post-transfer caution remains a separate observation.
         state.lm_inverter_switch_attempted = True
         state.lm_inverter_switch_attempt_get_s = action.get_s
     elif action.action == "restart_manual_ullage":

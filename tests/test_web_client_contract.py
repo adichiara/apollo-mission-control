@@ -49,6 +49,17 @@ class WebClientContractTests(unittest.TestCase):
         self.assertIn("trajectory→tracking", html)
         self.assertIn("resource→power→observation", html)
 
+    def test_contingency_page_exposes_inverter_crew_reobservation_chain(self):
+        html = (ROOT / "web" / "contingency.html").read_text(encoding="utf-8")
+        self.assertIn("PC+2 Contingency Tests", html)
+        self.assertIn("Inverter transfer / fresh re-observation chain", html)
+        self.assertIn("/api/session/flight/test-flight/inverter-transfer", html)
+        self.assertIn("/api/session/crew/inverter-transfer/", html)
+        self.assertIn("/api/session/crew/inverter-transfer-report/", html)
+        self.assertIn("/api/session/admin/inverter-rule", html)
+        self.assertIn("CB(11) EPS: INV 1", html)
+        self.assertIn("0.1 s ordering increment is test infrastructure", html)
+
     def test_admin_engine_off_override_has_no_dead_item_id_input(self):
         html = (ROOT / "web" / "admin.html").read_text(encoding="utf-8")
         self.assertIn("APPLY ENGINE-OFF RESPONSE", html)

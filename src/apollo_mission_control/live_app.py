@@ -23,7 +23,7 @@ def build_info() -> dict[str, Any]:
 
 @app.get("/contingency", include_in_schema=False)
 def contingency_console() -> FileResponse:
-    """Serve the guided PC+2 delta-P contingency validation console."""
+    """Serve guided PC+2 contingency-chain validation controls."""
     return FileResponse(WEB_ROOT / "contingency.html")
 
 

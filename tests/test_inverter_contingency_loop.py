@@ -61,7 +61,7 @@ class InverterContingencyLoopTests(unittest.TestCase):
             exchange,
             event_id="capcom-switch-inverter",
             get_s=hms_to_seconds("79:29:01"),
-            provenance="Source-bounded procedural test; alternate inverter identity unresolved.",
+            provenance="Source-bounded procedural test; inverter 2 to inverter 1 sequence sourced by Apollo 13 LM Malfunction Procedures.",
         )
         apply_operational_action(
             state,
@@ -114,6 +114,16 @@ class InverterContingencyLoopTests(unittest.TestCase):
         self.assertEqual([event.kind for event in action_events], ["instruction", "completion_report"])
         self.assertEqual(action_events[0].sender, "CAPCOM")
         self.assertEqual(action_events[1].sender, "CREW")
+        self.assertEqual(action_events[0].parameters["from_inverter"], 2)
+        self.assertEqual(action_events[0].parameters["to_inverter"], 1)
+        self.assertEqual(
+            action_events[0].parameters["control_sequence"],
+            [
+                "CB(11) EPS: INV 1 — close",
+                "INVERTER — 1",
+                "CB(16) EPS: INV 2 — open",
+            ],
+        )
 
         # Rule evaluation still does not issue an engine command or abort.
         self.assertTrue(state.engine_running)

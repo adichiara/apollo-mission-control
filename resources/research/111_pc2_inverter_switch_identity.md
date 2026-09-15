@@ -52,13 +52,12 @@ post-switch inverter-light observation
 light remains present → shutdown criterion satisfied
 ```
 
-Do not encode a named `inverter 2 → inverter 1` post-warning action until direct mission-specific procedure evidence is recovered, even though inverter 1 is the architecturally obvious redundant unit.
+This restriction was later closed by research notes 113–114. The current canonical action is the sourced inverter 2 → inverter 1 transfer using the Apollo 13 LM Malfunction Procedures sequence.
 
 ## 5. What remains unresolved
 
 Do not invent:
 
-- exact post-warning switch-toggle/circuit-breaker chronology;
 - a fixed persistence timer for the light;
 - automatic engine cutoff when the warning appears;
 - automatic ground knowledge that the switch occurred unless represented by crew report/procedure state;
@@ -72,3 +71,7 @@ The LM-5-and-later caution-inhibit design documented in the LM instrumentation e
 2. NASA Apollo 13 Mission Commentary / air-ground transcript, ~72:48–73:15, ~74:55–75:15, and ~76:30–76:38 GET. https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf-hr/a13-pao-transcript.pdf
 3. NASA Flight Control Division, *Mission Operations Report — Apollo 13*, 28 Apr 1970. https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf
 4. NASA, *Apollo Experience Report — Lunar Module Instrumentation Subsystem*, NASA report 19720018206. https://www.ibiblio.org/apollo/Documents/19720018206.pdf
+
+## Later resolution
+
+Research note 113 resolves alternate inverter 1 identity. Research note 114 recovers the inverter-2 → inverter-1 cockpit transfer sequence. Those later notes are canonical for the post-warning action.

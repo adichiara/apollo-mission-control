@@ -76,6 +76,18 @@ class PlayerSessionSnapshot:
         return asdict(self)
 
 
+PC2_INVERTER_TRANSFER_SEQUENCE = (
+    "CB(11) EPS: INV 1 — close",
+    "INVERTER — 1",
+    "CB(16) EPS: INV 2 — open",
+)
+PC2_INVERTER_TRANSFER_PROVENANCE = (
+    "Apollo 13 LM Malfunction Procedures INVERTER caution flowchart; "
+    "inverter 2 operating, alternate transfer to inverter 1; "
+    "no numeric post-transfer dwell established"
+)
+
+
 @dataclass(frozen=True)
 class BundledPlayerSessionSnapshot:
     """Serializable snapshot for a player owning multiple original stations.
@@ -112,7 +124,14 @@ def _build_pc2_simulated_crew() -> SimulatedCrew:
                     "Apollo 13 PC+2 ground-call shutdown rule; "
                     "exact cockpit choreography and response latency unresolved"
                 ),
-            )
+            ),
+            "switch_lm_inverter": CrewInstructionRule(
+                capcom_action="switch_lm_inverter",
+                acknowledgement="received",
+                crew_action="switch_lm_inverter",
+                forwarded_parameters=("from_inverter", "to_inverter", "control_sequence"),
+                provenance=PC2_INVERTER_TRANSFER_PROVENANCE,
+            ),
         },
     )
 
@@ -616,6 +635,40 @@ class PC2Session:
                 "criterion": "fuel_oxidizer_delta_p",
                 "observed_delta_p_psi": product.value,
                 "routing_note": "project CAPCOM queue; exact internal Apollo routing unresolved",
+            },
+            basis=basis,
+        )
+
+    def queue_inverter_transfer_instruction(
+        self,
+        flight_player_id: str,
+        *,
+        basis: str,
+    ) -> CapcomQueueItem:
+        """Queue the sourced inverter-2 to inverter-1 contingency transfer.
+
+        This models FLIGHT approval and CAPCOM transport as project workflow
+        boundaries. The exact historical front-room voice sequence for the
+        hypothetical failure remains unresolved.
+        """
+        if not self.owns_station(flight_player_id, "FLIGHT"):
+            raise ValueError("Only FLIGHT can approve the inverter-transfer instruction")
+        if not self.state.lm_inverter_warning:
+            raise ValueError("Inverter transfer requires a current inverter-warning observation")
+        if self.state.lm_inverter_switch_attempted:
+            raise ValueError("Inverter transfer has already been attempted")
+
+        return self._queue_capcom_item(
+            requested_by="FLIGHT",
+            action="switch_lm_inverter",
+            parameters={
+                "from_inverter": 2,
+                "to_inverter": 1,
+                "control_sequence": list(PC2_INVERTER_TRANSFER_SEQUENCE),
+                "routing_note": (
+                    "project FLIGHT→CAPCOM queue; exact hypothetical Apollo "
+                    "front-room call sequence unresolved"
+                ),
             },
             basis=basis,
         )

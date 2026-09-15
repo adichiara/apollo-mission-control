@@ -9,6 +9,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
+from .pc2_session import PC2_INVERTER_TRANSFER_SEQUENCE
+
 
 @dataclass(frozen=True)
 class ProcedureCommunication:
@@ -43,10 +45,10 @@ def record_inverter_switch_instruction(
     get_s: float,
     provenance: str,
 ) -> None:
-    """Record a CAPCOM request to perform the PC+2 inverter-switch contingency.
+    """Record a CAPCOM request for the sourced inverter-2 → inverter-1 transfer.
 
-    Exact alternate-inverter identity remains unresolved, so no inverter number
-    is accepted here.
+    The action remains a communication event only; it does not mutate spacecraft
+    state or assert whether the post-transfer caution clears.
     """
     log.record(
         ProcedureCommunication(
@@ -56,7 +58,11 @@ def record_inverter_switch_instruction(
             recipient="CREW",
             kind="instruction",
             action="switch_lm_inverter",
-            parameters={},
+            parameters={
+                "from_inverter": 2,
+                "to_inverter": 1,
+                "control_sequence": list(PC2_INVERTER_TRANSFER_SEQUENCE),
+            },
             provenance=provenance,
         )
     )
