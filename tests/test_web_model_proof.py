@@ -325,6 +325,59 @@ class WebModelProofTests(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertIn("must be empty", response.json()["detail"])
 
+    def test_guidance_alarm_endpoint_preserves_restart_without_mission_decision(self):
+        payload = {
+            "state_time_s": 10.0,
+            "active_program": "P_SYNTH",
+            "alarm_code": "A1",
+            "alarm_meaning": "synthetic restart alarm",
+            "software_restart": True,
+            "restart_protected_programs": ["P_SYNTH"],
+            "event_time_s": 11.0,
+            "source": "synthetic_program_detected",
+            "applicability": "API guidance alarm test",
+            "provenance": ["synthetic"],
+        }
+        response = self.client.post(
+            "/api/admin/model-proof/guidance-alarm",
+            json=payload,
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(
+            body["model_status"],
+            "guidance_alarm_model_proof_not_historically_validated",
+        )
+        self.assertTrue(body["restart_occurred"])
+        self.assertTrue(body["restart_protected_recovery"])
+        self.assertEqual(
+            body["state"]["recovery_status"],
+            "restart_protected_program_resumed",
+        )
+        self.assertNotIn("abort", body)
+        self.assertNotIn("continue", body)
+
+    def test_guidance_alarm_endpoint_exposes_unprotected_restart_as_unspecified(self):
+        payload = {
+            "active_program": "P_OTHER",
+            "alarm_code": "A1",
+            "alarm_meaning": "synthetic restart alarm",
+            "software_restart": True,
+            "restart_protected_programs": ["P_SYNTH"],
+            "event_time_s": 1.0,
+        }
+        response = self.client.post(
+            "/api/admin/model-proof/guidance-alarm",
+            json=payload,
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertFalse(body["restart_protected_recovery"])
+        self.assertEqual(
+            body["state"]["recovery_status"],
+            "restart_occurred_program_recovery_unspecified",
+        )
+
     def test_guidance_crosscheck_endpoint_preserves_pairwise_boundary(self):
         payload = {
             "first": {
