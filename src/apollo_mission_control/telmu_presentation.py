@@ -78,9 +78,11 @@ def build_pc2_telmu_presentation(projection: ProjectionSet) -> TelmuPresentation
 
     The Apollo 13 Mission Operations Report establishes the burn power-up,
     approximately 38-40 A burn-configuration requirement, immediate post-burn
-    power-down, and inverter-warning shutdown criterion.  Exact TELMU CRT
-    routing/layout is unresolved, so these products are grouped as a project
-    rendering rather than represented as a historical screen.
+    power-down, and inverter-warning shutdown criterion. Reviewed LM
+    instrumentation schematics do not establish direct ground telemetry of the
+    derived INVERTER caution, so that caution is not rendered as a TELMU field.
+    Exact TELMU CRT routing/layout is unresolved, so the remaining products are
+    grouped as a project rendering rather than represented as a historical screen.
 
     Hidden integrity annotations and deferred project gaps are not rendered.
     The 38-40 A value is explicitly a documented reference range, not a live
@@ -113,12 +115,6 @@ def build_pc2_telmu_presentation(projection: ProjectionSet) -> TelmuPresentation
         ),
         _section(
             "INVERTER / ELECTRICAL CONTINGENCY",
-            _field(
-                projection,
-                "lm.inverter_warning",
-                "INVERTER WARN",
-                historical_analogue="PC+2 shutdown rules include an inverter light remaining after switching inverters; exact TELMU CRT/telemetry field is unresolved",
-            ),
             _field(
                 projection,
                 "lm.inverter_switch_attempted",
