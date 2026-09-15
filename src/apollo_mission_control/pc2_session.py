@@ -22,6 +22,7 @@ from .guido_presentation import build_pc2_guido_presentation
 from .inco_presentation import build_pc2_inco_presentation
 from .pc2_event_rules import PC2_EVENT_RULES
 from .pc2_nominal import PC2State, SimEvent, apply_event, build_events
+from .restart_logic import RestartEvaluation
 from .scenario_injection import StateInjection, apply_state_injection
 from .session_runtime import SessionStatus
 from .simulated_crew import CrewInstructionRule, CrewProcedureRule, SimulatedCrew
@@ -184,6 +185,7 @@ class PC2Session:
     readiness_reports: list[ReadinessReport] = field(default_factory=list)
     capcom_queue: list[CapcomQueueItem] = field(default_factory=list)
     simulated_crew: SimulatedCrew = field(default_factory=_build_pc2_simulated_crew)
+    restart_evaluation: RestartEvaluation | None = None
     audit_log: list[SessionAuditEvent] = field(default_factory=list)
     _audit_sequence: int = 0
     _next_capcom_item_id: int = 1
