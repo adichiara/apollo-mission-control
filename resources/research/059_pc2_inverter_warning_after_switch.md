@@ -1,7 +1,7 @@
 # Apollo 13 PC+2 — inverter warning after switching inverters
 
 Date: 2026-09-12  
-Status: **REVIEWED-PARTIAL — sufficient to separate the inverter caution indication from the switch action and to identify the LM-5-and-later caution-generation path. Research note 112 corrects first-playable initial selection to inverter 2; exact post-warning alternate-selection procedure/timing and controller information path remain unresolved.**
+Status: **REVIEWED / SUPERSEDED IN PART — the caution/action separation remains valid. Research notes 112–114 subsequently resolve initial inverter 2, alternate inverter 1, and the three-control transfer sequence. Numeric post-transfer dwell and exact controller display/routing remain unresolved.**
 
 ## Purpose
 
@@ -38,7 +38,7 @@ Research note 112 revisits the actual Apollo 13 PC+2 read-up. At the -4 minute c
 
 That direct mission-specific instruction overrides the generic LM handbook convention used in the earlier note-111 synthesis. The current first-playable initial source is therefore **inverter 2**, not inverter 1.
 
-The reviewed shutdown-rule source still does not name the alternate inverter after a warning. Although the redundant architecture makes inverter 1 the obvious alternate, this project does not promote that implication into recovered Apollo 13 procedure text.
+Later primary-source work closes this boundary. Research note 113 identifies inverter 1 as the only alternate in the mission-specific inverter-2 starting state, and research note 114 recovers the Apollo 13 LM Malfunction Procedures transfer sequence: close the inverter-1 feeder breaker, select inverter 1, then open the inverter-2 feeder breaker.
 
 ## 5. Implementation boundary
 
@@ -59,12 +59,10 @@ warning remains present after that switch
 
 without inventing a fixed delay.
 
-Initial PC+2 configuration is inverter 2. The exact named alternate action remains unfrozen pending direct mission-specific evidence.
+Initial PC+2 configuration is inverter 2. The sourced alternate action is the inverter-2 → inverter-1 transfer recovered in research note 114. The post-transfer caution remains a separate fresh observation; no numeric dwell is invented.
 
 ## 6. What remains unresolved
 
-- exact cockpit switch/breaker chronology after the warning;
-- explicit Apollo 13 naming of the alternate inverter used after the warning;
 - any required waiting interval before judging the post-switch light;
 - exact telemetry word / TELMU or CONTROL display field used to observe the warning;
 - whether the switch action was independently visible to the ground or known only from crew report/procedure execution.
@@ -95,3 +93,5 @@ rule interpretation
 - NASA Apollo 13 technical/PAO air-ground transcript, ~72:48–73:15, ~74:55–75:15, and ~76:30–76:38 GET.
 - NASA, *Apollo Experience Report — Lunar Module Instrumentation Subsystem*, NASA report 19720018206.
 - Research note 112 for the mission-specific PC+2 selection correction.
+- Research note 113 for alternate inverter 1 identity.
+- Research note 114 for the sourced inverter-2 → inverter-1 cockpit transfer sequence.
