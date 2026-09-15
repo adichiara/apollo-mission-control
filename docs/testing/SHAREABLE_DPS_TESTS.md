@@ -44,6 +44,22 @@ Inputs include synthetic initial state, thrust/coast duration, mass/Isp, numeric
 
 The page intentionally presents the authoritative trajectory and downstream observation separately. The geometric-truth calculation remains an internal causal boundary rather than being relabeled as a controller product.
 
+## Exercise malfunction → explicit causal insertions
+
+The lab exposes:
+
+`POST /api/admin/model-proof/malfunction-plan`
+
+This proof models the exercise/simulator-control layer recovered from Apollo simulator documentation:
+
+`exercise malfunction intent → one or more explicit causal insertions`
+
+A single synthetic malfunction can emit multiple insertions at distinct layers such as `vehicle_system` and `telemetry`. The scheduler also supports manual, preprogrammed, and time-dependent activation semantics.
+
+The proof deliberately stops there. It does not apply the insertions to downstream subsystem, telemetry, controller-product, or mission-outcome models.
+
+The timed-plan test can also demonstrate that an insertion is rejected before its configured activation time.
+
 ## Resource → power → observation
 
 The site also exposes:
