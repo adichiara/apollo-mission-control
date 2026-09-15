@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "claims": [
+    {
+      "claim": "yaw GDA: `6.75°`",
+      "withdrawn_by": "resources/research/153_pc2_final_gda_supersession_boundary.md",
+      "replacement": "Record the second ~59-hour GDA value conservatively as roll 6.75° / a second DPS GDA angular value; the accepted crew readback and LM CONTROL evidence support roll."
+    },
+    {
+      "claim": "pitch `5.86°`, yaw `6.75°`",
+      "withdrawn_by": "resources/research/153_pc2_final_gda_supersession_boundary.md",
+      "replacement": "Use pitch 5.86° / roll 6.75° or 'two DPS GDA angular values'; do not normalize the second value to yaw."
+    },
+    {
+      "claim": "are inches, not degrees",
+      "withdrawn_by": "resources/research/155_pc2_gda_dual_units_and_calibration.md",
+      "replacement": "The LM CONTROL -2 / -1.2 execution narrative is in degrees; the separate Mission Report maneuver-performance table is in inches."
+    },
+    {
+      "claim": "actuator displacement in **inches**, not degrees",
+      "withdrawn_by": "resources/research/155_pc2_gda_dual_units_and_calibration.md",
+      "replacement": "LM CONTROL execution values are angular degrees; Mission Report postflight GDA telemetry values are linear actuator inches."
+    }
+  ]
+}
