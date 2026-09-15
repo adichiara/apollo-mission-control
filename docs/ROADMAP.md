@@ -165,7 +165,7 @@ The deployed nominal and ΔP paths are validated, but the project is **not yet a
 
 ## Causal composition validation
 
-A synthetic integration test now verifies a multi-model chain in which finite resource depletion changes electrical source availability, which changes equipment supply, which changes tracking-observation availability. This is architecture validation only; no Apollo resource/power/tracking constants are asserted.
+A synthetic integration test and facilitator validation endpoint now verify a multi-model chain in which finite resource depletion changes electrical source availability, which changes equipment supply, which changes tracking-observation availability. The composed API rejects direct source-availability override. This is architecture validation only; no Apollo resource/power/tracking constants are asserted.
 
 ## Validation status
 

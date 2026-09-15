@@ -25,3 +25,8 @@ This is the pattern future sourced scenario integrations should follow:
 ## Boundary
 
 The test is fully synthetic. No Apollo battery, electrical, or tracking constants are asserted.
+
+
+## Validation-harness integration
+
+Facilitator-only API endpoints now expose the resource and electrical models independently and the composed resource→power→tracking chain. Contract tests exercise before/after depletion and verify that direct source-availability override is rejected in the composed endpoint.

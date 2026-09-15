@@ -168,6 +168,163 @@ class WebModelProofTests(unittest.TestCase):
         self.assertFalse(observation["available"])
         self.assertFalse(observation["valid"])
 
+    def test_resource_inventory_endpoint_exposes_depletion_and_shortfall(self):
+        payload = {
+            "initial_time_s": 0.0,
+            "initial_quantities": {"energy": 5.0},
+            "resources": [
+                {
+                    "resource_id": "energy",
+                    "unit": "unit",
+                    "minimum_quantity": 0.0,
+                    "maximum_quantity": 5.0,
+                }
+            ],
+            "segments": [
+                {
+                    "duration_s": 6.0,
+                    "rates_per_s": {"energy": 1.0},
+                    "label": "synthetic_load",
+                }
+            ],
+            "applicability": "API resource test",
+            "provenance": ["synthetic"],
+        }
+        response = self.client.post(
+            "/api/admin/model-proof/resource-inventory",
+            json=payload,
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(
+            body["model_status"],
+            "resource_inventory_model_proof_not_historically_validated",
+        )
+        self.assertEqual(body["final_state"]["quantities"]["energy"], 0.0)
+        self.assertEqual(body["unsatisfied_consumption"]["energy"], 1.0)
+        self.assertEqual(body["boundary_events"][0]["time_s"], 5.0)
+
+    def test_electrical_bus_endpoint_exposes_equipment_availability(self):
+        payload = {
+            "bus_id": "BUS",
+            "sources": [{"source_id": "S", "max_power_w": 100.0}],
+            "loads": [{"load_id": "receiver", "power_w": 20.0, "priority": 0}],
+            "source_available": {"S": False},
+            "load_commanded_on": {"receiver": True},
+            "bus_enabled": True,
+            "applicability": "API electrical test",
+        }
+        response = self.client.post(
+            "/api/admin/model-proof/electrical-bus",
+            json=payload,
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(
+            body["model_status"],
+            "electrical_bus_model_proof_not_historically_validated",
+        )
+        self.assertFalse(body["loads"][0]["supplied"])
+        self.assertEqual(body["loads"][0]["reason"], "no_available_source")
+
+    def _resource_power_observation_payload(self, duration_s):
+        return {
+            "resource_inventory": {
+                "initial_time_s": 0.0,
+                "initial_quantities": {"energy": 5.0},
+                "resources": [
+                    {
+                        "resource_id": "energy",
+                        "unit": "unit",
+                        "minimum_quantity": 0.0,
+                        "maximum_quantity": 5.0,
+                    }
+                ],
+                "segments": [
+                    {
+                        "duration_s": duration_s,
+                        "rates_per_s": {"energy": 1.0},
+                        "label": "synthetic_load",
+                    }
+                ],
+                "applicability": "API causal-chain test",
+            },
+            "source_rules": [
+                {
+                    "source_id": "BATTERY",
+                    "resource_id": "energy",
+                    "minimum_operating_quantity": 0.0,
+                    "available_at_threshold": False,
+                    "provenance": "synthetic coupling",
+                }
+            ],
+            "source_hardware_available": {"BATTERY": True},
+            "electrical_bus": {
+                "bus_id": "DATA_BUS",
+                "sources": [{"source_id": "BATTERY", "max_power_w": 100.0}],
+                "loads": [
+                    {
+                        "load_id": "TRACKING_RECEIVER",
+                        "power_w": 20.0,
+                        "priority": 0,
+                    }
+                ],
+                "load_commanded_on": {"TRACKING_RECEIVER": True},
+                "bus_enabled": True,
+                "applicability": "API causal-chain electrical test",
+            },
+            "observation_load_id": "TRACKING_RECEIVER",
+            "vehicle_time_s": duration_s,
+            "vehicle_position_m": [1000.0, 0.0, 0.0],
+            "vehicle_velocity_m_s": [1.0, 0.0, 0.0],
+            "vehicle_mass_kg": 1000.0,
+            "station_position_m": [0.0, 0.0, 0.0],
+            "observation": {
+                "upstream_valid": True,
+                "source": "synthetic powered tracking product",
+            },
+        }
+
+    def test_resource_power_observation_endpoint_propagates_causal_outage(self):
+        before = self.client.post(
+            "/api/admin/model-proof/resource-power-observation",
+            json=self._resource_power_observation_payload(4.0),
+        )
+        after = self.client.post(
+            "/api/admin/model-proof/resource-power-observation",
+            json=self._resource_power_observation_payload(6.0),
+        )
+
+        self.assertEqual(before.status_code, 200)
+        self.assertEqual(after.status_code, 200)
+
+        before_body = before.json()
+        after_body = after.json()
+
+        self.assertEqual(
+            before_body["model_status"],
+            "resource_power_observation_chain_not_historically_validated",
+        )
+        self.assertTrue(before_body["source_coupling"][0]["available"])
+        self.assertTrue(before_body["electrical_bus"]["loads"][0]["supplied"])
+        self.assertTrue(before_body["tracking_observation"]["available"])
+        self.assertIsNotNone(before_body["tracking_observation"]["range_m"])
+
+        self.assertFalse(after_body["source_coupling"][0]["available"])
+        self.assertFalse(after_body["electrical_bus"]["loads"][0]["supplied"])
+        self.assertFalse(after_body["tracking_observation"]["available"])
+        self.assertIsNone(after_body["tracking_observation"]["range_m"])
+
+    def test_resource_power_chain_rejects_direct_source_availability_override(self):
+        payload = self._resource_power_observation_payload(4.0)
+        payload["electrical_bus"]["source_available"] = {"BATTERY": True}
+        response = self.client.post(
+            "/api/admin/model-proof/resource-power-observation",
+            json=payload,
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("must be empty", response.json()["detail"])
+
     def test_endpoint_rejects_unphysical_direction(self):
         self.payload["segments"][0]["direction"] = [0.0, 0.0, 0.0]
         response = self.client.post("/api/admin/model-proof/dps-burn", json=self.payload)

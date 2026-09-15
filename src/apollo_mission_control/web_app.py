@@ -34,6 +34,13 @@ from .crew_response import (
     command_dps_shutdown_from_callout,
     record_crew_receipt,
 )
+from .electrical_power_model import (
+    ElectricalBusConfig,
+    ElectricalBusState,
+    ElectricalLoadSpec,
+    ElectricalSourceSpec,
+    evaluate_electrical_bus,
+)
 from .mission_profiles import (
     MissionProfileRecord,
     discover_mission_profiles,
@@ -46,6 +53,17 @@ from .model_profiles import (
     get_model_profile,
 )
 from .realtime_clock import RealtimeSessionClock
+from .resource_inventory_model import (
+    ResourceFlowSegment,
+    ResourceInventoryConfig,
+    ResourceInventoryState,
+    ResourceSpec,
+    simulate_resource_inventory,
+)
+from .resource_power_coupling import (
+    ResourceElectricalSourceRule,
+    derive_electrical_source_availability,
+)
 from .runtime_adapters import (
     create_runtime,
     has_runtime_adapter,
@@ -229,6 +247,107 @@ class TrajectoryTrackingModelProofRequest(BaseModel):
     )
     observation: TrackingObservationRequest = Field(
         default_factory=TrackingObservationRequest
+    )
+
+
+class ResourceSpecRequest(BaseModel):
+    resource_id: str = Field(min_length=1, max_length=128)
+    unit: str = Field(min_length=1, max_length=32)
+    minimum_quantity: float = 0.0
+    maximum_quantity: float | None = None
+
+
+class ResourceFlowSegmentRequest(BaseModel):
+    duration_s: float = Field(ge=0.0, le=10_000_000.0)
+    rates_per_s: dict[str, float] = Field(default_factory=dict)
+    label: str = Field(default="flow", min_length=1, max_length=128)
+
+
+class ResourceInventoryModelProofRequest(BaseModel):
+    initial_time_s: float = 0.0
+    initial_quantities: dict[str, float]
+    resources: list[ResourceSpecRequest] = Field(min_length=1, max_length=100)
+    segments: list[ResourceFlowSegmentRequest] = Field(min_length=1, max_length=500)
+    applicability: str = Field(
+        default="generic resource inventory API proof; not mission validated",
+        min_length=1,
+        max_length=500,
+    )
+    provenance: list[str] = Field(default_factory=list, max_length=20)
+
+
+class ElectricalSourceRequest(BaseModel):
+    source_id: str = Field(min_length=1, max_length=128)
+    max_power_w: float = Field(ge=0.0, le=1.0e12)
+
+
+class ElectricalLoadRequest(BaseModel):
+    load_id: str = Field(min_length=1, max_length=128)
+    power_w: float = Field(ge=0.0, le=1.0e12)
+    priority: int = Field(default=0, ge=-1_000_000, le=1_000_000)
+
+
+class ElectricalBusModelProofRequest(BaseModel):
+    bus_id: str = Field(min_length=1, max_length=128)
+    sources: list[ElectricalSourceRequest] = Field(min_length=1, max_length=100)
+    loads: list[ElectricalLoadRequest] = Field(default_factory=list, max_length=500)
+    source_available: dict[str, bool] = Field(default_factory=dict)
+    load_commanded_on: dict[str, bool] = Field(default_factory=dict)
+    bus_enabled: bool = True
+    applicability: str = Field(
+        default="generic electrical bus API proof; not mission validated",
+        min_length=1,
+        max_length=500,
+    )
+    provenance: list[str] = Field(default_factory=list, max_length=20)
+
+
+class ResourceElectricalSourceRuleRequest(BaseModel):
+    source_id: str = Field(min_length=1, max_length=128)
+    resource_id: str = Field(min_length=1, max_length=128)
+    minimum_operating_quantity: float = 0.0
+    available_at_threshold: bool = False
+    provenance: str = Field(
+        default="caller-supplied resource/power coupling",
+        min_length=1,
+        max_length=1000,
+    )
+
+
+class PoweredTrackingObservationRequest(BaseModel):
+    receive_delay_s: float = Field(default=0.0, ge=0.0, le=86_400.0)
+    range_bias_m: float = Field(default=0.0, ge=-1.0e9, le=1.0e9)
+    range_rate_bias_m_s: float = Field(default=0.0, ge=-1.0e6, le=1.0e6)
+    upstream_valid: bool = True
+    source: str = Field(
+        default="generic resource-power tracking proof",
+        min_length=1,
+        max_length=500,
+    )
+    provenance: list[str] = Field(default_factory=list, max_length=20)
+
+
+class ResourcePowerObservationChainRequest(BaseModel):
+    resource_inventory: ResourceInventoryModelProofRequest
+    source_rules: list[ResourceElectricalSourceRuleRequest] = Field(
+        min_length=1,
+        max_length=100,
+    )
+    source_hardware_available: dict[str, bool] = Field(default_factory=dict)
+    electrical_bus: ElectricalBusModelProofRequest
+    observation_load_id: str = Field(min_length=1, max_length=128)
+    vehicle_time_s: float
+    vehicle_position_m: list[float] = Field(min_length=3, max_length=3)
+    vehicle_velocity_m_s: list[float] = Field(min_length=3, max_length=3)
+    vehicle_mass_kg: float = Field(gt=0.0, le=1.0e9)
+    station_position_m: list[float] = Field(min_length=3, max_length=3)
+    station_velocity_m_s: list[float] = Field(
+        default_factory=lambda: [0.0, 0.0, 0.0],
+        min_length=3,
+        max_length=3,
+    )
+    observation: PoweredTrackingObservationRequest = Field(
+        default_factory=PoweredTrackingObservationRequest
     )
 
 
@@ -810,6 +929,189 @@ def trajectory_tracking_model_proof(
     return {
         "model_status": "trajectory_tracking_chain_not_historically_validated",
         "trajectory": trajectory.to_dict(),
+        "tracking_observation": observation.to_dict(),
+    }
+
+
+
+
+def _resource_inventory_from_request(
+    request: ResourceInventoryModelProofRequest,
+):
+    return simulate_resource_inventory(
+        ResourceInventoryState(
+            time_s=request.initial_time_s,
+            quantities=request.initial_quantities,
+        ),
+        [
+            ResourceFlowSegment(
+                duration_s=segment.duration_s,
+                rates_per_s=segment.rates_per_s,
+                label=segment.label,
+            )
+            for segment in request.segments
+        ],
+        ResourceInventoryConfig(
+            resources=tuple(
+                ResourceSpec(
+                    resource_id=resource.resource_id,
+                    unit=resource.unit,
+                    minimum_quantity=resource.minimum_quantity,
+                    maximum_quantity=resource.maximum_quantity,
+                )
+                for resource in request.resources
+            ),
+            applicability=request.applicability,
+            provenance=tuple(request.provenance),
+        ),
+    )
+
+
+def _electrical_bus_from_request(
+    request: ElectricalBusModelProofRequest,
+    *,
+    source_available: dict[str, bool] | None = None,
+):
+    return evaluate_electrical_bus(
+        ElectricalBusConfig(
+            bus_id=request.bus_id,
+            sources=tuple(
+                ElectricalSourceSpec(
+                    source_id=source.source_id,
+                    max_power_w=source.max_power_w,
+                )
+                for source in request.sources
+            ),
+            loads=tuple(
+                ElectricalLoadSpec(
+                    load_id=load.load_id,
+                    power_w=load.power_w,
+                    priority=load.priority,
+                )
+                for load in request.loads
+            ),
+            applicability=request.applicability,
+            provenance=tuple(request.provenance),
+        ),
+        ElectricalBusState(
+            source_available=(
+                request.source_available
+                if source_available is None
+                else source_available
+            ),
+            load_commanded_on=request.load_commanded_on,
+            bus_enabled=request.bus_enabled,
+        ),
+    )
+
+
+@app.post(
+    "/api/admin/model-proof/resource-inventory",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def resource_inventory_model_proof(
+    request: ResourceInventoryModelProofRequest,
+) -> dict[str, object]:
+    result = _domain_call(lambda: _resource_inventory_from_request(request))
+    return result.to_dict()
+
+
+@app.post(
+    "/api/admin/model-proof/electrical-bus",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def electrical_bus_model_proof(
+    request: ElectricalBusModelProofRequest,
+) -> dict[str, object]:
+    result = _domain_call(lambda: _electrical_bus_from_request(request))
+    return result.to_dict()
+
+
+@app.post(
+    "/api/admin/model-proof/resource-power-observation",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def resource_power_observation_model_proof(
+    request: ResourcePowerObservationChainRequest,
+) -> dict[str, object]:
+    """Run resource -> source -> bus/load -> tracking observation causality."""
+
+    if request.electrical_bus.source_available:
+        raise HTTPException(
+            status_code=400,
+            detail=(
+                "resource-power-observation derives source availability from "
+                "source_rules; electrical_bus.source_available must be empty"
+            ),
+        )
+
+    resource = _domain_call(
+        lambda: _resource_inventory_from_request(request.resource_inventory)
+    )
+    source_coupling = _domain_call(
+        lambda: derive_electrical_source_availability(
+            resource.final_state,
+            [
+                ResourceElectricalSourceRule(
+                    source_id=rule.source_id,
+                    resource_id=rule.resource_id,
+                    minimum_operating_quantity=rule.minimum_operating_quantity,
+                    available_at_threshold=rule.available_at_threshold,
+                    provenance=rule.provenance,
+                )
+                for rule in request.source_rules
+            ],
+            upstream_availability=request.source_hardware_available,
+        )
+    )
+    derived_source_available = {
+        result.source_id: result.available for result in source_coupling
+    }
+    electrical = _domain_call(
+        lambda: _electrical_bus_from_request(
+            request.electrical_bus,
+            source_available=derived_source_available,
+        )
+    )
+    load_result = _domain_call(
+        lambda: electrical.load(request.observation_load_id)
+    )
+
+    truth = _domain_call(
+        lambda: compute_geometric_tracking_truth(
+            TranslationalState(
+                time_s=request.vehicle_time_s,
+                position_m=tuple(request.vehicle_position_m),
+                velocity_m_s=tuple(request.vehicle_velocity_m_s),
+                mass_kg=request.vehicle_mass_kg,
+            ),
+            TrackingStationState(
+                position_m=tuple(request.station_position_m),
+                velocity_m_s=tuple(request.station_velocity_m_s),
+            ),
+        )
+    )
+    observation = _domain_call(
+        lambda: produce_tracking_observation(
+            truth,
+            TrackingObservationConfig(
+                receive_delay_s=request.observation.receive_delay_s,
+                range_bias_m=request.observation.range_bias_m,
+                range_rate_bias_m_s=request.observation.range_rate_bias_m_s,
+                available=load_result.supplied,
+                valid=load_result.supplied and request.observation.upstream_valid,
+                source=request.observation.source,
+                provenance=tuple(request.observation.provenance),
+            ),
+        )
+    )
+
+    return {
+        "model_status": "resource_power_observation_chain_not_historically_validated",
+        "resource_inventory": resource.to_dict(),
+        "source_coupling": [result.to_dict() for result in source_coupling],
+        "electrical_bus": electrical.to_dict(),
+        "observation_load_id": request.observation_load_id,
         "tracking_observation": observation.to_dict(),
     }
 
