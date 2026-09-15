@@ -325,6 +325,169 @@ class WebModelProofTests(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertIn("must be empty", response.json()["detail"])
 
+    def test_guidance_crosscheck_endpoint_preserves_pairwise_boundary(self):
+        payload = {
+            "first": {
+                "source": "PRIMARY",
+                "time_s": 10.0,
+                "valid": True,
+                "values": {"radial_velocity": 100.0},
+                "provenance": ["synthetic"],
+            },
+            "second": {
+                "source": "BACKUP",
+                "time_s": 10.5,
+                "valid": True,
+                "values": {"radial_velocity": 101.0},
+                "provenance": ["synthetic"],
+            },
+            "tolerances": {"radial_velocity": 2.0},
+            "max_time_separation_s": 1.0,
+            "applicability": "API guidance cross-check test",
+            "provenance": ["synthetic"],
+        }
+        response = self.client.post(
+            "/api/admin/model-proof/guidance-crosscheck",
+            json=payload,
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(
+            body["model_status"],
+            "guidance_crosscheck_model_not_historically_validated",
+        )
+        self.assertTrue(body["comparable"])
+        self.assertTrue(body["agreement"])
+        self.assertNotIn("truth_source", body)
+        self.assertNotIn("abort", body)
+
+    def test_guidance_consensus_endpoint_exposes_two_of_three_without_failure_label(self):
+        payload = {
+            "observations": [
+                {
+                    "source": "PRIMARY",
+                    "time_s": 10.0,
+                    "valid": True,
+                    "values": {"radial_velocity": 100.0},
+                },
+                {
+                    "source": "BACKUP",
+                    "time_s": 10.0,
+                    "valid": True,
+                    "values": {"radial_velocity": 101.0},
+                },
+                {
+                    "source": "GROUND",
+                    "time_s": 10.0,
+                    "valid": True,
+                    "values": {"radial_velocity": 120.0},
+                },
+            ],
+            "tolerances": {"radial_velocity": 2.0},
+            "max_time_separation_s": 1.0,
+            "minimum_agreeing_sources": 2,
+            "applicability": "API guidance consensus test",
+            "provenance": ["synthetic"],
+        }
+        response = self.client.post(
+            "/api/admin/model-proof/guidance-consensus",
+            json=payload,
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(
+            body["model_status"],
+            "guidance_multisource_consensus_not_historically_validated",
+        )
+        field = body["fields"][0]
+        self.assertEqual(field["status"], "consensus")
+        self.assertEqual(field["consensus_sources"], ["PRIMARY", "BACKUP"])
+        self.assertEqual(field["outside_consensus_sources"], ["GROUND"])
+        self.assertNotIn("failed_sources", body)
+        self.assertNotIn("truth_source", body)
+
+    def _landing_radar_chain_payload(self):
+        return {
+            "time_s": 10.0,
+            "guidance_time_s": 10.0,
+            "data_good": True,
+            "data_good_since_s": 5.0,
+            "range_scale_last_changed_s": 8.0,
+            "source": "synthetic radar",
+            "channels": {
+                "altitude": {
+                    "measured_value": 1040.0,
+                    "reference_value": 1000.0,
+                    "unit": "m",
+                    "valid": True,
+                },
+                "velocity_axis": {
+                    "measured_value": 105.0,
+                    "reference_value": 100.0,
+                    "unit": "m/s",
+                    "valid": True,
+                },
+            },
+            "min_data_good_duration_s": 4.0,
+            "min_range_scale_stable_s": 1.0,
+            "scale_stability_channels": ["altitude"],
+            "residual_rules": {
+                "altitude": {
+                    "fixed_tolerance": 200.0,
+                    "proportional_tolerance": 0.125,
+                },
+                "velocity_axis": {
+                    "fixed_tolerance": 7.5,
+                    "proportional_tolerance": 0.125,
+                },
+            },
+            "updates_enabled": True,
+            "estimated_velocity_m_s": [500.0, 0.0, 0.0],
+            "velocity_update_speed_threshold_m_s": 600.0,
+            "altitude_channel": "altitude",
+            "velocity_channel": "velocity_axis",
+            "applicability": "API landing-radar chain test",
+            "provenance": ["synthetic"],
+        }
+
+    def test_landing_radar_chain_exposes_quality_before_update_eligibility(self):
+        response = self.client.post(
+            "/api/admin/model-proof/landing-radar-quality-update",
+            json=self._landing_radar_chain_payload(),
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(
+            body["model_status"],
+            "landing_radar_quality_update_chain_not_historically_validated",
+        )
+        self.assertTrue(body["quality"]["data_good_qualified"])
+        by_channel = {
+            item["channel"]: item for item in body["quality"]["channels"]
+        }
+        self.assertTrue(by_channel["altitude"]["accepted"])
+        self.assertTrue(by_channel["velocity_axis"]["accepted"])
+        self.assertEqual(body["qualified_measurement"]["altitude_m"], 1040.0)
+        self.assertEqual(
+            body["qualified_measurement"]["velocity_m_s"],
+            [105.0, 0.0, 0.0],
+        )
+        self.assertTrue(body["update_assessment"]["altitude_eligible"])
+        self.assertTrue(body["update_assessment"]["velocity_eligible"])
+
+    def test_landing_radar_chain_rejects_implicit_unit_conversion(self):
+        payload = self._landing_radar_chain_payload()
+        payload["channels"]["altitude"]["unit"] = "ft"
+        response = self.client.post(
+            "/api/admin/model-proof/landing-radar-quality-update",
+            json=payload,
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertIn(
+            "no implicit conversion",
+            response.json()["detail"],
+        )
+
     def test_endpoint_rejects_unphysical_direction(self):
         self.payload["segments"][0]["direction"] = [0.0, 0.0, 0.0]
         response = self.client.post("/api/admin/model-proof/dps-burn", json=self.payload)
