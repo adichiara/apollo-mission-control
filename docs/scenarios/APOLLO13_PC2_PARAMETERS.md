@@ -170,10 +170,13 @@ Apollo-wide LM instrumentation evidence supports distinct three-axis attitude-er
 |---|---|---|---|---|
 | `lm.power.mode` | enum | — | low-power at start; transitions to burn configuration | TELMU |
 | `lm.power.current_a` | float | A | about 38–40 A in burn configuration | TELMU |
-| `lm.inverter_warning` | bool | — | false | TELMU/CONTROL |
+| `lm.inverter_warning` | bool | — | false | onboard/crew-side state; not direct ground telemetry |
+| `crew_inverter_warning_report` | bool/null | — | null until explicitly reported | CAPCOM / ground rule evidence |
 | `lm.powerdown.status` | enum | — | `not_started` at start | TELMU |
 
 Full water/O2/thermal inventories are deferred unless they affect a live decision in this interval.
+
+Research note 117 supersedes any earlier interpretation of `lm.inverter_warning` as a direct TELMU/CONTROL telemetry value. Reviewed primary schematics establish PCMTEA paths for inverter-bus voltage/frequency (`GC0071V` / `GC0155F`) but not for the derived `GL4046` caution or selector position. Exact Mission H-2 live loading and controller display for the voltage/frequency measurements remain unresolved.
 
 ## Communications / data path
 
