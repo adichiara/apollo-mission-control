@@ -27,21 +27,23 @@ Added `src/apollo_mission_control/procedural_exchange.py` with a minimal procedu
 
 For the inverter rule, the exchange records only the sourced action name `switch_lm_inverter`; it rejects the temptation to invent an inverter number.
 
-Expanded scenario injection to support a researched `lm_inverter_warning` observation target.
+Expanded scenario injection initially to support an `lm_inverter_warning` observation target.
 
-Tightened the shutdown-rule evaluator so an inverter warning observed before—or only coincident with—the switch does not satisfy the positive rule. A distinct later post-switch observation is required. No persistence timer is introduced.
+**Correction (2026-09-15):** research note 117 subsequently established a stronger information boundary. The reviewed primary schematics do not establish direct ground telemetry of the derived INVERTER caution. The implementation now keeps `lm_inverter_warning` as onboard state and uses a separate `crew_inverter_warning_report` observation for ground rule evaluation. A hidden onboard caution alone cannot authorize the transfer or satisfy the rule.
+
+The shutdown-rule evaluator requires a distinct later post-switch **crew report** before the positive rule can trigger. No persistence timer is introduced.
 
 Added `tests/test_inverter_contingency_loop.py` covering the first small end-to-end source-bounded loop:
 
 ```text
-synthetic warning observation
+synthetic crew warning report
     -> rule NOT_EVALUABLE
 CAPCOM instruction
     -> crew switch action
     -> crew completion report
 unchanged pre-switch warning only
     -> rule still NOT_EVALUABLE
-distinct post-switch warning observation
+distinct post-switch crew warning report
     -> rule TRIGGERED
 ```
 
