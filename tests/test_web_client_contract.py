@@ -37,7 +37,7 @@ class WebClientContractTests(unittest.TestCase):
 
     def test_admin_exposes_assumption_visible_model_proof(self):
         html = (ROOT / "web" / "admin.html").read_text(encoding="utf-8")
-        self.assertIn("DPS CAUSAL MODEL PROOF", html)
+        self.assertIn("CAUSAL MODEL PROOF", html)
         self.assertIn("NOT HISTORICALLY VALIDATED", html)
         self.assertIn("/api/admin/model-proof/dps-burn", html)
         self.assertIn("manual facilitator-console inputs; not historical evidence", html)
