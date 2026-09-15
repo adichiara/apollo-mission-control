@@ -64,6 +64,38 @@ class DocumentationAuditTests(unittest.TestCase):
             self.assertEqual(len(hits), 1)
             self.assertIn("docs/derived.md", hits[0])
 
+
+    def test_withdrawn_claims_reject_malformed_json(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "resources" / "audits").mkdir(parents=True)
+            (root / "resources" / "audits" / "withdrawn_claims.json").write_text(
+                "{not-json",
+                encoding="utf-8",
+            )
+            with self.assertRaises(json.JSONDecodeError):
+                load_withdrawn_claims(root)
+
+    def test_withdrawn_claims_reject_missing_withdrawn_by_path(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "resources" / "audits").mkdir(parents=True)
+            config = {
+                "schema_version": 1,
+                "claims": [
+                    {
+                        "claim": "retired assertion",
+                        "withdrawn_by": "resources/research/999_missing.md",
+                    }
+                ],
+            }
+            (root / "resources" / "audits" / "withdrawn_claims.json").write_text(
+                json.dumps(config),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "does not exist"):
+                load_withdrawn_claims(root)
+
     def test_withdrawn_claim_list_does_not_match_itself(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

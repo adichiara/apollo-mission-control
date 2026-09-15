@@ -135,6 +135,7 @@ def http_status(url: str, timeout: int) -> str:
     except urllib.error.HTTPError as exc:
         return str(exc.code)
     except Exception as exc:
+        # Network/TLS failures must remain distinguishable from HTTP failures.
         return f"ERROR:{type(exc).__name__}"
 
 
