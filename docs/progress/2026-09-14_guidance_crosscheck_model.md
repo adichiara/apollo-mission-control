@@ -20,7 +20,7 @@ This is reusable for Apollo 11 powered descent, Apollo 13 PGNS/AGS checks, and f
 
 ## Apollo 11 profile advance
 
-Research note 146 and `data/guidance_monitoring_profiles/apollo11_g_powered_descent_monitoring_partial.json` now source-bound part of the Apollo 11 configuration:
+Research note 166 and `data/guidance_monitoring_profiles/apollo11_g_powered_descent_monitoring_partial.json` now source-bound part of the Apollo 11 configuration:
 
 - AGS-PGNS in-plane problem-detection limits: 10 fps radial / 10 fps downrange;
 - powered-flight-processor/PGNS isolation limits: 10 fps radial / 10 fps downrange;
