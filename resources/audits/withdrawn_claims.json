@@ -53,7 +53,7 @@
     },
     {
       "claim": "exact PC+2 inverter identity/selection",
-      "withdrawn_by": "resources/research/112_pc2_inverter_selected_for_burn.md",
+      "withdrawn_by": "resources/research/112_pc2_inverter_selection_correction.md",
       "replacement": "The mission-specific PC+2 configuration retained inverter 2."
     },
     {
