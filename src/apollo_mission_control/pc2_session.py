@@ -675,8 +675,11 @@ class PC2Session:
         """
         if not self.owns_station(flight_player_id, "FLIGHT"):
             raise ValueError("Only FLIGHT can approve the inverter-transfer instruction")
-        if not self.state.lm_inverter_warning:
-            raise ValueError("Inverter transfer requires a current inverter-warning observation")
+        if self.state.crew_inverter_warning_report is not True:
+            raise ValueError(
+                "Inverter transfer requires a current crew report of the onboard "
+                "INVERTER caution"
+            )
         if self.state.lm_inverter_switch_attempted:
             raise ValueError("Inverter transfer has already been attempted")
 
