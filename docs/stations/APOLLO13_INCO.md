@@ -487,7 +487,7 @@ This is direct evidence for the project’s simulator philosophy:
 
 1. Apollo 13 Mission Operations Report, Appendix I — INCO.
 2. AS-508 MCC/MSFN Mission Configuration/System Description, March 1970.
-3. R. W. Winkelman et al., *Telemetry and Communications to Apollo*, 1970.
+3. Alan Glines and Joseph A. Lazzaro, *Telemetry and Communications to Apollo Flight Controllers*, International Telemetering Conference, 1970; NTRS 19710030221.
 4. Apollo 13 Technical Air-to-Ground Voice Transcript.
 
 ## Mission-report evidence

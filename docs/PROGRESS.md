@@ -208,7 +208,7 @@ Therefore "Apollo 13 baseline" means reusable platform architecture, not that la
 - Confirmed that Apollo 13 premission training was broken into documented mission-phase simulations rather than one generic full-mission simulation.
 - Cataloged named simulation families including LM activation/descent, descent abort, ascent, launch abort, reentry, LOI/DOI, TEI, FIDO/BSE math-model, network, and communications/data-flow validation.
 - Added scenario evidence levels so a named historical simulation category is not mistaken for a fully reconstructable scenario.
-- Recorded the Apollo 11 computer-failure/program-alarm simulation as a high-priority case to reconstruct from stronger source material.
+- Recorded two distinct Apollo 11 computer-related simulation evidence threads: Honeycutt's computer-failure-light recollection and Koos's 1201/1202 program-alarm abort/debrief account. They must not be merged without stronger linking evidence.
 - Recorded Harold Miller's account that simulations were intended to exercise procedures, ground rules, teamwork, and communications and that simulated data was routed through the control-center system.
 
 ### New documents

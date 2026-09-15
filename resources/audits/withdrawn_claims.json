@@ -20,6 +20,21 @@
       "claim": "actuator displacement in **inches**, not degrees",
       "withdrawn_by": "resources/research/155_pc2_gda_dual_units_and_calibration.md",
       "replacement": "LM CONTROL execution values are angular degrees; Mission Report postflight GDA telemetry values are linear actuator inches."
+    },
+    {
+      "claim": "- P21 — LGC Update",
+      "withdrawn_by": "resources/research/016_apollo13_lm_data_links.md",
+      "replacement": "P21 is Ground Track Determination; P27 is LGC Update. For the AGS Initialization/Update downlist, retain R47 and do not assign another major-program number until sourced."
+    },
+    {
+      "claim": "R. W. Winkelman et al., *Telemetry and Communications to Apollo*, 1970.",
+      "withdrawn_by": "resources/research/018_apollo13_inco_station.md",
+      "replacement": "Alan Glines and Joseph A. Lazzaro, Telemetry and Communications to Apollo Flight Controllers, International Telemetering Conference, 1970; NTRS 19710030221."
+    },
+    {
+      "claim": "computer-failure/program-alarm simulation",
+      "withdrawn_by": "resources/research/011_apollo_simulation_cases.md",
+      "replacement": "Keep Honeycutt's computer-failure-light recollection distinct from Koos's 1201/1202 program-alarm abort/debrief account unless stronger evidence links them."
     }
   ]
 }
