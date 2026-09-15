@@ -2,7 +2,7 @@
 
 Date: 2026-09-15
 
-> **Correction (research note 154):** the LM CONTROL GDA quantities cited below are **actuator displacement in inches, not degrees**. The supersession conclusion remains valid, but the physical quantity must not be represented as an angular trim. The corrected pre-ignition roll-GDA displacement is approximately `-0.8 in`, followed by approximately `-2 in` at ignition.
+> **Correction (research note 155):** primary LM hardware documentation and the Apollo 13 FCD report establish that the LM CONTROL quantities below are angular GDA/engine-gimbal position in **degrees**. Research note 154 correctly identified the separate Mission Report telemetry table as actuator displacement in inches but overgeneralized that unit to this narrative. The pre-ignition roll-GDA angle is approximately `-0.8°`, followed by approximately `-2°` at ignition.
 
 ## Question
 
@@ -14,17 +14,17 @@ NASA Manned Spacecraft Center, Flight Control Division, *Mission Operations Repo
 
 NASA/Apollo Journal scan: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf/a13-mission-ops-report-19700428.pdf
 
-LM CONTROL reports that the crew powered up for PC+2 at GET 78:00, maneuvered to final burn attitude at 79:17, and ignited at 79:27:38. At ignition, the **roll GDA actuator displacement** moved to approximately `-2 in`, described as a delta of `-1.2 in` from its pre-ignition value. This implies a pre-ignition roll-GDA displacement of approximately `-0.8 in` (`-2.0 - (-1.2)`). The report treats the motion as an unexpected compliance response, not as a commanded trim update at ignition.
+LM CONTROL reports that the crew powered up for PC+2 at GET 78:00, maneuvered to final burn attitude at 79:17, and ignited at 79:27:38. At ignition, the **roll GDA** moved to approximately `-2°`, described as a delta of `-1.2°` from its pre-ignition value. This implies a pre-ignition roll-GDA angle of approximately `-0.8°` (`-2.0 - (-1.2)`). The report treats the motion as an unexpected compliance response, not as a commanded trim update at ignition.
 
 The same mission report's Flight Dynamics chronology states that the final PC+2 pad went to the crew at about GET 78 hours based on the GYM 289 vector.
 
 ## Finding
 
-The ~59-hour trim pair cannot have survived unchanged into PC+2 ignition. The restored air-ground record at GET ~59:03 carried an interim pair of `5.86°` and `6.75°` and explicitly said the angles would be updated. The mission-specific LM CONTROL postflight report independently bounds the later roll-axis actuator state: immediately before PC+2 ignition the roll GDA displacement was approximately `-0.8 in`, then moved to approximately `-2 in` as the engine responded at ignition.
+The ~59-hour trim pair cannot have survived unchanged into PC+2 ignition. The restored air-ground record at GET ~59:03 carried an interim pair of `5.86°` and `6.75°` and explicitly said the angles would be updated. The mission-specific LM CONTROL postflight report independently bounds the later roll-axis state: immediately before PC+2 ignition the roll GDA angle was approximately `-0.8°`, then moved to approximately `-2°` as the engine responded at ignition.
 
 Therefore the historical product lifecycle contains at least:
 
-`~59 h interim angular trim (update expected) -> later superseding trim/state -> ~79:27 pre-ignition roll GDA actuator ≈ -0.8 in -> ignition compliance response ≈ -2 in`
+`~59 h interim angular trim (update expected) -> later superseding trim/state -> ~79:27 pre-ignition roll GDA ≈ -0.8° -> ignition compliance response ≈ -2°`
 
 The complete later commanded angular trim pair is still not recovered.
 
@@ -37,18 +37,18 @@ Research note 152 and several derivative project documents called the second ~59
 Do not infer:
 
 - the final commanded pitch/roll angular trim pair;
-- that the approximately `-0.8 in` actuator displacement was a pad-printed value;
-- a degrees↔inches conversion without sourced GDA geometry/calibration;
+- that the approximately `-0.8°` state was a pad-printed value;
+- an exact degrees↔inches flight-unit conversion from generic hardware limits;
 - which numbered mass-properties job produced the superseding trim;
 - that the superseding trim came specifically from `T+55`;
 - that the GYM 289 targeting vector itself encoded the GDA values;
 - exact compliance mechanics beyond what LM CONTROL reports.
 
-The `-0.8 in` value is approximate arithmetic derived directly from the report's approximate `-2 in` state and `-1.2 in` delta.
+The `-0.8°` value is approximate arithmetic derived directly from the report's approximate `-2°` state and `-1.2°` delta.
 
 ## Simulation implication
 
-Represent commanded angular trim separately from observed actuator displacement and engine-compliance response. A maneuver product may be superseded before execution, and ignition can produce a further physical GDA displacement without implying a new targeting product.
+Represent commanded angular trim separately from observed GDA/engine-gimbal angular position, linear actuator displacement, and engine-compliance response. Research note 155 establishes the generic hardware scale ±2 in ↔ ±6°, but it is not an exact LM-7 calibration.
 
 ## Next archival target
 
