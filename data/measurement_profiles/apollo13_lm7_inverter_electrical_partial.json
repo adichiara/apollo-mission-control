@@ -1,0 +1,51 @@
+{
+  "schema_version": "0.1-measurement-profile",
+  "profile_id": "apollo13_lm7_inverter_electrical_partial",
+  "mission_profile_id": "apollo13_h2",
+  "vehicle_effectivity_id": "apollo13_lm7",
+  "status": "partial historical vehicle-measurement profile; H-2 live telemetry loading and controller presentation unresolved",
+  "applicability": "Apollo 13 LM-7 inverter-bus voltage/frequency measurement boundary only; does not assert Mission H-2 live PCM placement, sample cadence, MCC routing, or controller display",
+  "measurement_mapping_executable": true,
+  "historical_ground_product_executable": false,
+  "measurements": [
+    {
+      "measurement_id": "GC0071V",
+      "description": "VOLT INVERTER BUS",
+      "kind": "analog",
+      "source_kind": "variable",
+      "source_key": "inverter_bus_voltage_v_ac",
+      "fixed_value": null,
+      "unit": "V ac",
+      "provenance": [
+        "Lunar Module 7, 8, & 9 Elementary Functional Diagrams, LED-267-37C, measurement index: GC0071V VOLT INVERTER BUS",
+        "NASA TN D-6845 / MSC-S-294, Apollo Experience Report — Lunar Module Instrumentation Subsystem, Figure 27: GC0071 inverter-bus voltage path through isolation to Telemetry PCMTEA"
+      ],
+      "evidence_note": "The LM-7/8/9 measurement index establishes the GC0071V identity for the Apollo 13 vehicle family. Figure 27 independently establishes the inverter-bus voltage measurement and PCMTEA telemetry path. The project source_key is an implementation name, not a historical variable identifier."
+    },
+    {
+      "measurement_id": "GC0155F",
+      "description": "FREQ INVERTER BUS",
+      "kind": "analog",
+      "source_kind": "variable",
+      "source_key": "inverter_bus_frequency_hz",
+      "fixed_value": null,
+      "unit": "Hz",
+      "provenance": [
+        "Lunar Module 7, 8, & 9 Elementary Functional Diagrams, LED-267-37C, measurement index: GC0155F FREQ INVERTER BUS",
+        "NASA TN D-6845 / MSC-S-294, Apollo Experience Report — Lunar Module Instrumentation Subsystem, Figure 27: GC0155 inverter-bus frequency path through isolation to Telemetry PCMTEA"
+      ],
+      "evidence_note": "The LM-7/8/9 measurement index establishes the GC0155F identity for the Apollo 13 vehicle family. Figure 27 independently establishes the inverter-bus frequency measurement and PCMTEA telemetry path. The project source_key is an implementation name, not a historical variable identifier."
+    }
+  ],
+  "downstream_gates": [
+    "Mission H-2 TDFCB Revision 4 contents have not been recovered, so live Apollo 13 PCM format placement for GC0071V/GC0155F is unresolved",
+    "Apollo 13 sample cadence for GC0071V/GC0155F is unresolved; LM-10 rates must not be imported",
+    "exact MSFN/CCATS/RTCC processing and TELMU/CONTROL display routing are unresolved",
+    "exact Apollo 13 CRT/MSK field, precision, refresh cadence, and end-to-end display latency are unresolved"
+  ],
+  "sources": [
+    "NASA TN D-6845 / MSC-S-294, Apollo Experience Report — Lunar Module Instrumentation Subsystem, June 1972, Figure 27",
+    "Lunar Module 7, 8, & 9 Elementary Functional Diagrams, LED-267-37C, measurement index",
+    "Philco-Ford PHO-TR474, 10 April 1970, Mission H-2 TDFCB Revision 4 configuration-control reporting"
+  ]
+}
