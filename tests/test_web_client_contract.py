@@ -42,6 +42,13 @@ class WebClientContractTests(unittest.TestCase):
         self.assertIn("/api/admin/model-proof/dps-burn", html)
         self.assertIn("manual facilitator-console inputs; not historical evidence", html)
 
+    def test_admin_links_to_causal_model_lab(self):
+        html = (ROOT / "web" / "admin.html").read_text(encoding="utf-8")
+        self.assertIn("OPEN CAUSAL MODEL LAB", html)
+        self.assertIn("/model-tests", html)
+        self.assertIn("trajectory→tracking", html)
+        self.assertIn("resource→power→observation", html)
+
     def test_admin_engine_off_override_has_no_dead_item_id_input(self):
         html = (ROOT / "web" / "admin.html").read_text(encoding="utf-8")
         self.assertIn("APPLY ENGINE-OFF RESPONSE", html)
