@@ -58,6 +58,39 @@ The **Compare before/after depletion** control runs the same chain on both sides
 
 The composed endpoint still rejects direct electrical-source availability override. Source availability must derive from the configured resource coupling.
 
+## Guidance comparison / consensus
+
+The lab exposes:
+
+- `POST /api/admin/model-proof/guidance-crosscheck`
+- `POST /api/admin/model-proof/guidance-consensus`
+
+These proof surfaces accept synthetic independent observations, caller-supplied tolerances, observation times/freshness limits, and (for consensus) quorum.
+
+They deliberately do **not**:
+
+- identify a hidden-truth source;
+- label a source outside consensus as failed;
+- issue GO/NO-GO or abort/continue.
+
+The browser can run pairwise comparison, three-source consensus, and a stale-source case while showing pairwise residual/freshness evidence separately from agreement topology.
+
+## Landing-radar quality → update eligibility
+
+The lab exposes:
+
+`POST /api/admin/model-proof/landing-radar-quality-update`
+
+The chain is:
+
+`raw radar/Data Good state → measurement qualification → qualified channels → update eligibility`
+
+The composed API uses the existing generic measurement-quality and update-gate models. A rejected quality channel is withheld from the downstream update assessment instead of being silently passed through.
+
+The proof requires explicit SI units (`m` and `m/s`) for channels mapped into the update gate. It rejects other units rather than performing an undocumented implicit conversion.
+
+The downstream estimator/filter remains outside this proof.
+
 ## Evidence boundary
 
 Every site-facing proof is explicitly labeled **NOT HISTORICALLY VALIDATED**.
