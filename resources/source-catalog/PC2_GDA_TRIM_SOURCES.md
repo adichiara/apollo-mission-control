@@ -76,6 +76,7 @@ This omission is now consistent with, but is not the sole evidence for, the no-n
 - Report: MSC-02680
 - Date: 1970-04-28
 - Accessible scan: https://faculty.tamuc.edu/cdavis/resources/apollo_press/Apollo%2013%20Mission%20Operations%20Report.pdf
+- Alternate searchable scan: https://www.ccas.us/CCAS_NASA_PressKits/Apollo_Missions/Apollo13_MissionOperationsReport.pdf
 - Source class: primary mission-specific postflight report
 
 ### Supports
@@ -86,18 +87,19 @@ This omission is now consistent with, but is not the sole evidence for, the no-n
 - a separate mission-specific **T+25 RTCC mass-properties run** where Flight Dynamics explicitly decided that no trim update was needed because pitch/yaw trims were within `0.01°` of the T+6 values;
 - Flight Director final-preparation ground rules after the ~74:00 GET White Team handover explicitly include **“No PC+2 maneuver trims were required”**;
 - the report subsequently records a PC+2 maneuver-pad update at 75:35 GET;
-- PC+2 execution-state GDA observations.
+- PC+2 execution-state GDA observations;
+- most importantly for the retained-state rationale, the CONTROL PC+2 narrative says the ignition roll-GDA motion was unexpected because **the ground felt the GDA settings at the end of the report's `MCC-3`, with its 40% thrust compliance, would provide the optimum GDA alignment**.
 
 ### Boundary
 
-`T+55` is supported as a deck/reference-epoch family. The report does **not** identify a PC+2 numbered job, calculation timestamp, printed T+55 deck contents, candidate comparison values, or a direct calculation-level link from T+55 to `5.86° / 6.75°`. The T+25 case establishes a `run -> compare -> update/no-update` workflow, but its `0.01°` criterion must not be transferred to PC+2. The Flight Director ground rule proves the final no-trim disposition existed by the final preparation period; it does not state the upstream numerical rationale or exact moment the decision was first made.
+`T+55` is supported as a deck/reference-epoch family. The report does **not** identify a PC+2 numbered job, calculation timestamp, printed T+55 deck contents, candidate comparison values, or a direct calculation-level link from T+55 to `5.86° / 6.75°`. The T+25 case establishes a `run -> compare -> update/no-update` workflow, but its `0.01°` criterion must not be transferred to PC+2. The Flight Director ground rule proves the final no-trim disposition existed by the final preparation period. The CONTROL narrative now supplies the operational rationale for retaining the existing state, but not the upstream numerical calculation that caused controllers to judge it optimum. Preserve the report's `MCC-3` label unless separately reconciled from primary records.
 
 ## Current synthesis
 
 Do not search for or invent a “final PC+2 Noun 48 pair” as though one must have existed. Current primary operational, controller, and software evidence supports:
 
-`mass-properties deck/reference state -> calculation -> candidate trim -> controller comparison -> explicit no-trim ground-rule disposition -> Noun 46 configuration -> Noun 47 display -> VERB 34 termination -> software exits R03 before Noun 48 -> no new Noun 48 crew entry -> retained gimbal state -> powered-flight GDA response`.
+`mass-properties deck/reference state -> calculation/comparison [details unresolved] -> preceding DPS powered-flight compliance establishes GDA state -> ground judges retained state optimum for PC+2 -> explicit no-trim ground-rule disposition -> Noun 46 configuration -> Noun 47 display -> VERB 34 termination -> software exits R03 before Noun 48 -> no new Noun 48 crew entry -> retained gimbal state -> powered-flight GDA response`.
 
-Apollo 13 independently demonstrates the comparison/no-update stage at T+25, explicitly establishes an LM-burn T+55 deck family, and explicitly records the PC+2 no-trim outcome as a Flight Director ground rule. The exact PC+2 calculation/job, candidate values, comparison criterion, and calculation-level T+55 linkage remain unresolved.
+Apollo 13 independently demonstrates the comparison/no-update stage at T+25, explicitly establishes an LM-burn T+55 deck family, records the PC+2 no-trim outcome as a Flight Director ground rule, and now directly documents CONTROL's expectation that the previously complied GDA state was optimum for PC+2. The exact PC+2 calculation/job, candidate values, comparison criterion, and calculation-level T+55 linkage remain unresolved.
 
-The next archival target is a controller-side artifact **upstream of the documented ground rule** that joins the T+55 deck family to the PC+2 candidate trim and no-update rationale: ideally calculation time/job identity, candidate trim, current/reference trim, comparison delta/tolerance, and disposition.
+The next archival target is a controller-side artifact **upstream of the documented retained-state judgment**: ideally calculation time/job identity, candidate trim, current/reference trim, comparison delta/tolerance, and direct T+55 deck linkage.
