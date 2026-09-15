@@ -29,6 +29,7 @@ from .causal_translational_model import (
     TranslationalState,
     simulate_translational_maneuver,
 )
+from .controller_products import project_controller_products
 from .crew_response import (
     apply_session_engine_off_response,
     command_dps_shutdown_from_callout,
@@ -112,6 +113,7 @@ from .session_shutdown_evidence import (
     assess_session_shutdown_evidence,
     record_crew_shutdown_report,
 )
+from .shutdown_rules import evaluate_pc2_shutdown_rules
 from .tracking_observation import (
     TrackingObservationConfig,
     TrackingStationState,
@@ -938,6 +940,32 @@ def crew_receipt(item_id: int, request: CrewReceiptRequest) -> dict[str, Any]:
                 response=request.response,
             )
         )
+
+
+@app.get(
+    "/api/session/admin/inverter-rule",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def inverter_rule_validation() -> dict[str, Any]:
+    """Expose the derived inverter rule state for facilitator validation only."""
+    with _lock:
+        _require_runtime_capability("pc2_inverter_transfer")
+        session = _sync_session()
+        evaluations = _domain_call(
+            lambda: evaluate_pc2_shutdown_rules(
+                project_controller_products(session.state, session.fixture),
+                session.fixture,
+            )
+        )
+        rule = evaluations["persistent_inverter_warning"]
+        return {
+            "rule_id": rule.rule_id,
+            "state": rule.state.value,
+            "owner": rule.owner,
+            "basis": rule.basis,
+            "observation": rule.observation,
+            "validation_only": True,
+        }
 
 
 @app.post(
