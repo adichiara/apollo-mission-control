@@ -22,6 +22,21 @@ Date: 2026-09-15
 
 This proves the computer/procedural branch, not CONTROL's reason for selecting it. It does not recover the candidate trim, tolerance, retained two-axis state, or mass-properties job behind the no-update decision.
 
+## NASA Apollo 13 air-to-ground transcript — 61:29 free-return DPS burn
+
+- Relevant GET: approximately `061:10`
+- NASA PAO/air-to-ground transcript; searchable transcript derivative used for navigation
+- Source class: primary mission voice transcription
+
+### Supports
+
+- Immediately before the 61:29 contingency free-return DPS burn, CAPCOM explicitly says the GDA settings are **"go as they are."**
+- This provides a direct operational bridge from the pre-burn accepted GDA state into the powered maneuver.
+
+### Boundary
+
+It does not prove that the post-burn complied GDA angles equal the earlier commanded `5.86° / 6.75°` pair. CONTROL later describes the 40%-thrust compliance as the state-setting event relevant to PC+2.
+
 ## NASA Apollo 13 air-to-ground transcript — PC+2 two-hour activation
 
 - Relevant GET: `075:07:43`–`075:08:35`
@@ -75,7 +90,7 @@ This omission is now consistent with, but is not the sole evidence for, the no-n
 
 - Report: MSC-02680
 - Date: 1970-04-28
-- Accessible scan: https://faculty.tamuc.edu/cdavis/resources/apollo_press/Apollo%2013%20Mission%20Operations%20Report.pdf
+- NASA scan: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf
 - Alternate searchable scan: https://www.ccas.us/CCAS_NASA_PressKits/Apollo_Missions/Apollo13_MissionOperationsReport.pdf
 - Source class: primary mission-specific postflight report
 
@@ -86,20 +101,18 @@ This omission is now consistent with, but is not the sole evidence for, the no-n
 - CONTROL's disputed trim basis used **premission mass properties**, explicitly described as not the best data available;
 - a separate mission-specific **T+25 RTCC mass-properties run** where Flight Dynamics explicitly decided that no trim update was needed because pitch/yaw trims were within `0.01°` of the T+6 values;
 - Flight Director final-preparation ground rules after the ~74:00 GET White Team handover explicitly include **“No PC+2 maneuver trims were required”**;
-- the report subsequently records a PC+2 maneuver-pad update at 75:35 GET;
 - PC+2 execution-state GDA observations;
-- most importantly for the retained-state rationale, the CONTROL PC+2 narrative says the ignition roll-GDA motion was unexpected because **the ground felt the GDA settings at the end of the report's `MCC-3`, with its 40% thrust compliance, would provide the optimum GDA alignment**.
+- CONTROL says the ignition roll-GDA motion was unexpected because the ground expected the GDA settings at the end of `MCC-3`, with its 40% thrust compliance, to provide optimum PC+2 alignment;
+- the report's LM CONTROL section itself labels the **61:29 contingency free-return DPS burn** `MCC-3 - DPS 1` and the following coast `POST MCC-3 TLC`, reconciling that wording with the same report's mission-summary convention that calls the 61:29 maneuver MCC-4 and the originally planned pre-accident MCC-3 not required.
 
 ### Boundary
 
-`T+55` is supported as a deck/reference-epoch family. The report does **not** identify a PC+2 numbered job, calculation timestamp, printed T+55 deck contents, candidate comparison values, or a direct calculation-level link from T+55 to `5.86° / 6.75°`. The T+25 case establishes a `run -> compare -> update/no-update` workflow, but its `0.01°` criterion must not be transferred to PC+2. The Flight Director ground rule proves the final no-trim disposition existed by the final preparation period. The CONTROL narrative now supplies the operational rationale for retaining the existing state, but not the upstream numerical calculation that caused controllers to judge it optimum. Preserve the report's `MCC-3` label unless separately reconciled from primary records.
+`T+55` is supported as a deck/reference-epoch family. The report does **not** identify a PC+2 numbered job, calculation timestamp, printed T+55 deck contents, candidate comparison values, or a direct calculation-level link from T+55 to `5.86° / 6.75°`. The T+25 case establishes a `run -> compare -> update/no-update` workflow, but its `0.01°` criterion must not be transferred to PC+2. The nomenclature reconciliation identifies CONTROL's state-setting maneuver but does not recover its post-compliance numerical GDA state.
 
 ## Current synthesis
 
 Do not search for or invent a “final PC+2 Noun 48 pair” as though one must have existed. Current primary operational, controller, and software evidence supports:
 
-`mass-properties deck/reference state -> calculation/comparison [details unresolved] -> preceding DPS powered-flight compliance establishes GDA state -> ground judges retained state optimum for PC+2 -> explicit no-trim ground-rule disposition -> Noun 46 configuration -> Noun 47 display -> VERB 34 termination -> software exits R03 before Noun 48 -> no new Noun 48 crew entry -> retained gimbal state -> powered-flight GDA response`.
+`mass-properties deck/reference state -> calculation/comparison [details unresolved] -> pre-61:29 GDA state accepted ("go as they are") -> 61:29 free-return DPS maneuver -> 40%-thrust compliance establishes post-burn GDA state -> ground judges that state optimum for PC+2 -> explicit no-trim ground-rule disposition -> Noun 46 configuration -> Noun 47 display -> VERB 34 termination -> software exits R03 before Noun 48 -> no new Noun 48 crew entry -> retained gimbal state -> powered-flight GDA response`.
 
-Apollo 13 independently demonstrates the comparison/no-update stage at T+25, explicitly establishes an LM-burn T+55 deck family, records the PC+2 no-trim outcome as a Flight Director ground rule, and now directly documents CONTROL's expectation that the previously complied GDA state was optimum for PC+2. The exact PC+2 calculation/job, candidate values, comparison criterion, and calculation-level T+55 linkage remain unresolved.
-
-The next archival target is a controller-side artifact **upstream of the documented retained-state judgment**: ideally calculation time/job identity, candidate trim, current/reference trim, comparison delta/tolerance, and direct T+55 deck linkage.
+The next archival target is a controller-side artifact **upstream of the documented retained-state judgment**: post-61:29 reference angles, PC+2 candidate trim, comparison delta/tolerance, calculation time/job identity, and direct T+55 deck linkage.
