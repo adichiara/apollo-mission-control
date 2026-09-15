@@ -46,5 +46,5 @@ A future Apollo 11 descent runtime can implement the same lifecycle/session cont
 ## Next
 
 1. Validate this refactor through full CI/network smoke.
-2. Define the minimum Apollo 11 descent state/observation model from research note 162.
+2. Define the minimum Apollo 11 descent state/observation model from research note 200.
 3. Implement the first scenario-neutral guidance/observation primitives only where both the existing engine architecture and the second reference require them.
