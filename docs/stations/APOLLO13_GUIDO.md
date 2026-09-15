@@ -177,10 +177,9 @@ It includes state vectors, body-rate/alignment quantities, CDU state, guidance s
 
 ## AGS Initialization/Update list
 
-Transmitted during:
+The list is associated with AGS initialization/update data-link activity, including **R47 — AGS Initialization**.
 
-- P21 — LGC Update
-- R47 — AGS Initialization
+A previous project revision also labeled P21 as "LGC Update." Research note 016 withdraws that mapping: independent Apollo GN&CS program documentation identifies **P21 as Ground Track Determination** and **P27 as LGC Update**. The exact R-567 list-selection condition must be sourced directly before assigning another major-program number here.
 
 It contains the LM/CSM state-vector and guidance quantities required to support AGS initialization/update.
 
