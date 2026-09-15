@@ -21,7 +21,6 @@ class TelmuPresentationTests(unittest.TestCase):
             {
                 "lm.power.mode": Product("burn_configuration", validity=Validity.VALID, source_layer="physical/configuration", provenance="test"),
                 "lm.power.burn_configuration_expected_current_range_a": Product([38.0, 40.0], units="A", validity=Validity.VALID, source_layer="mission-report/reference", provenance="test"),
-                "lm.inverter_warning": Product(False, validity=Validity.VALID, source_layer="onboard/telemetry", provenance="test"),
                 "lm.inverter_switch_attempted": Product(False, validity=Validity.VALID, source_layer="crew/procedure-event", provenance="test"),
                 "lm.inverter_switch_attempt_get_s": Product(None, units="s GET", validity=Validity.UNAVAILABLE, source_layer="crew/procedure-event", provenance="test"),
                 "lm.powerdown.started": Product(False, validity=Validity.VALID, source_layer="physical/configuration", provenance="test"),
@@ -48,23 +47,22 @@ class TelmuPresentationTests(unittest.TestCase):
         keys = {field.key for section in presentation.sections for field in section.fields}
         self.assertNotIn("lm.power.current_a", keys)
 
-    def test_inverter_action_and_warning_remain_distinct(self):
+    def test_direct_inverter_caution_is_not_rendered_as_telmu_telemetry(self):
         presentation = build_pc2_telmu_presentation(self._projection())
         fields = {field.key: field for section in presentation.sections for field in section.fields}
-        self.assertIn("lm.inverter_warning", fields)
+        self.assertNotIn("lm.inverter_warning", fields)
         self.assertIn("lm.inverter_switch_attempted", fields)
-        self.assertNotEqual(fields["lm.inverter_warning"].label, fields["lm.inverter_switch_attempted"].label)
 
     def test_hidden_integrity_metadata_is_not_rendered(self):
         projection = self._projection()
         projection.annotate_integrity(
-            "lm.inverter_warning",
+            "lm.inverter_switch_attempted",
             integrity=ProductIntegrity.INCORRECT,
             integrity_reason="synthetic hidden fault",
         )
         presentation = build_pc2_telmu_presentation(projection)
         fields = {field.key: field for section in presentation.sections for field in section.fields}
-        self.assertFalse(hasattr(fields["lm.inverter_warning"], "integrity"))
+        self.assertFalse(hasattr(fields["lm.inverter_switch_attempted"], "integrity"))
 
     def test_rejects_non_telmu_projection(self):
         with self.assertRaises(ValueError):
