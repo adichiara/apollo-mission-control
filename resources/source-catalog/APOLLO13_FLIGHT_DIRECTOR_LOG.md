@@ -7,16 +7,24 @@ Date: 2026-09-15
 - Title: **Apollo 13, Flight Director Log**
 - Record type: handwritten Flight Director operational log, complete mission
 - Apollo 13 Flight Journal document index: `https://apollojournals.org/afj/ap13fj/a13-documents.html`
-- Direct scan linked by the index: `https://apollojournals.org/afj/ap13fj/pdf-hr/fdlog/01-a13-fdlog.pdf`
+- Direct high-resolution scan linked by the index: `https://apollojournals.org/afj/ap13fj/pdf-hr/fdlog/01-a13-fdlog.pdf`
 - Listed size: 378 MB
 - Collection note: the Flight Journal states that Andy Anderson acquired high-resolution scans of original files from the University of Houston–Clear Lake or National Archives–Fort Worth and cleaned them to improve graphics/images.
 - Independent navigation/provenance: Virtual AGC's document-library change log describes the Apollo 13 Flight Director log as the flight directors' handwritten logs throughout the mission and credits University of Houston–Clear Lake archival access.
+
+## Searchable derivative discovered in research note 164
+
+Virtual AGC/ibiblio also exposes `00 A13 Flight Director Log - OCR.pdf` in its Apollo Documents directory. The directory lists this OCR derivative at **231 MB**, dated 2022-07-08. This is a navigation/search aid for the same handwritten-log evidence family; findings from OCR must be checked against page images before being treated as historical evidence.
+
+Directory: `https://www.ibiblio.org/apollo/Documents/`
+
+This materially improves the archival workflow because the 378 MB image-oriented scan no longer has to be approached only by manual page-by-page inspection. Search the OCR derivative first for candidate pages, then verify handwriting directly in the high-resolution scan.
 
 ## Current PC+2 use
 
 Highest-priority unresolved inspection interval: approximately **59–74 GET**, spanning the mass-properties/trim reconciliation, free-return burn aftermath, and final PC+2 preparation before the documented White Team no-trim ground rule.
 
-Search visually for references to:
+Search OCR and then verify page images for references to:
 
 - PC+2 / pericynthion-plus-two;
 - mass properties / weights / CG;
@@ -27,7 +35,7 @@ Search visually for references to:
 
 ## Evidence boundary
 
-The scan's existence and provenance are cataloged here. No PC+2 numerical content is attributed to the handwritten log until the relevant pages are actually inspected. Modern auction descriptions and document-library summaries are navigation/provenance aids only, not evidence for mission values.
+The scan's existence, provenance, and the OCR derivative are cataloged here. No PC+2 numerical content is attributed to the handwritten log until the relevant pages are actually inspected and handwriting is verified. OCR is explicitly non-authoritative because handwritten recognition may be incomplete or wrong. Modern auction descriptions and document-library summaries are navigation/provenance aids only, not evidence for mission values.
 
 ## Relationship to existing catalogs
 
