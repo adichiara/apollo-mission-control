@@ -101,6 +101,13 @@ class PC2State:
     # Operational action state, kept separate from fault/scenario injection.
     lm_inverter_switch_attempted: bool = False
     lm_inverter_switch_attempt_get_s: float | None = None
+    # Synthetic/validation representation of a premature in-burn DPS stop.
+    # Cause classification is explicit because absence of a modeled shutdown
+    # criterion is not proof that restart is historically authorized.
+    premature_dps_stop_observed: bool = False
+    premature_dps_stop_get_s: float | None = None
+    premature_dps_stop_cause_known_non_rule: bool = False
+    restart_noun97_flashing: bool | None = None
     # Source-backed PC+2 premature-shutdown restart actions. These fields record
     # crew actions/commands only; they do not force a successful engine restart.
     restart_manual_ullage_attempted: bool = False
