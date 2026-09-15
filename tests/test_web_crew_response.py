@@ -196,8 +196,23 @@ class WebCrewResponseTests(unittest.TestCase):
             "not_asserted",
         )
 
+        before_fresh_observation = self.client.get(
+            "/api/session/admin/inverter-rule"
+        )
+        self.assertEqual(before_fresh_observation.status_code, 200)
+        self.assertEqual(
+            before_fresh_observation.json()["state"],
+            "not_evaluable",
+        )
+
         # The crew report does not itself create a new caution observation.
-        # A separate post-transfer source observation must be supplied.
+        # Advance only to establish ordering; no source-based dwell is implied.
+        status = self.client.get("/api/session/status").json()
+        advance = self.client.post(
+            "/api/session/advance",
+            json={"target_get_s": status["get_s"] + 0.1},
+        )
+        self.assertEqual(advance.status_code, 200)
         post_observation = self.client.post(
             "/api/session/admin/injection",
             json={
@@ -209,6 +224,14 @@ class WebCrewResponseTests(unittest.TestCase):
             },
         )
         self.assertEqual(post_observation.status_code, 200)
+        after_fresh_observation = self.client.get(
+            "/api/session/admin/inverter-rule"
+        )
+        self.assertEqual(after_fresh_observation.status_code, 200)
+        self.assertEqual(
+            after_fresh_observation.json()["state"],
+            "triggered",
+        )
 
         audit = self.client.get("/api/session/audit")
         self.assertEqual(audit.status_code, 200)
