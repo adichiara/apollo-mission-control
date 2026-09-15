@@ -37,6 +37,11 @@ It now exposes three model-proof surfaces:
    - preserves the boundary from raw Data Good/channel state through qualification and qualified measurement into update eligibility;
    - rejects implicit unit conversion at the API boundary.
 
+6. **Guidance-computer alarm → restart recovery**
+   - calls `/api/admin/model-proof/guidance-alarm`;
+   - exposes caller-supplied alarm/restart classification and restart-protection configuration;
+   - shows alarm indication/restart/recovery state without producing an abort/continue decision.
+
 The admin MODEL drawer now links to the Causal Model Lab while keeping the fast single-burn proof available in-place.
 
 ## Validation boundary
