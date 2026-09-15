@@ -1,16 +1,59 @@
 <!doctype html>
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DPS test runner</title>
-<style>body{background:#07121b;color:#eef6fb;font:16px system-ui;max-width:900px;margin:24px auto;padding:16px}button,input,textarea{font:inherit;padding:10px;margin:6px 0}button{cursor:pointer}textarea{width:95%}pre{white-space:pre-wrap;overflow-wrap:anywhere}a{color:#55b4ff}</style>
-<h1>DPS test runner</h1>
-<p>Synthetic numerical tests of the real server API. PASS does not establish Apollo 13 accuracy, crew behavior, or live-session integration. Running these tests does not reset or modify a mission.</p>
+<title>Apollo Causal Model Lab</title>
+<style>body{background:#07121b;color:#eef6fb;font:16px system-ui;max-width:900px;margin:24px auto;padding:16px}button,input,textarea{font:inherit;padding:10px;margin:6px 0}button{cursor:pointer}textarea{width:95%}pre{white-space:pre-wrap;overflow-wrap:anywhere}a{color:#55b4ff}.labnav{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.labnav a{border:1px solid #294a60;border-radius:6px;padding:8px 10px;text-decoration:none;background:#0d2231}.panel{border:1px solid #294a60;border-radius:9px;background:#0d2231;padding:14px;margin:16px 0}.panel h2{margin-top:0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.field{display:grid;gap:4px}.field input{width:100%;margin:0;background:#07121b;color:#eef6fb;border:1px solid #294a60;border-radius:5px}.chain{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;margin:12px 0}.stage{flex:1 1 180px;border:1px solid #294a60;background:#091923;border-radius:7px;padding:9px}.stage b{display:block;color:#9db1bf;font-size:12px;text-transform:uppercase;margin-bottom:5px}.arrow{align-self:center;color:#55b4ff;font-weight:800}.badge{display:inline-block;border:1px solid #294a60;border-radius:999px;padding:3px 7px}.good{color:#72e79c}.bad{color:#ff7979}.warn{color:#ffd166}.raw{margin-top:10px;border-top:1px solid #294a60;padding-top:10px}.actions{display:flex;gap:8px;flex-wrap:wrap}.note{color:#9db1bf;font-size:13px}.boundary{border:1px solid #7a6421;background:#30270d;padding:9px;border-radius:7px;margin:10px 0}@media(max-width:760px){.grid{grid-template-columns:1fr}.arrow{display:none}}
+</style>
+<h1>Apollo Causal Model Lab</h1>
+<p>Site-facing validation of reusable causal-engine components through the real server API. PASS establishes only the stated synthetic model/API checks; it does not establish Apollo accuracy, crew behavior, or live-session integration. These tests do not reset or modify a mission.</p>
 <a href="/admin">Back to test console</a>
+<div class="labnav"><a href="#suite">DPS suite</a><a href="#trajectory">Trajectory → tracking</a><a href="#resource">Resource → power → observation</a><a href="/admin">Test console</a></div>
 <p><label>Facilitator token <input id="token" type="password" autocomplete="off"></label></p>
-<button id="run">Run standard suite</button>
+<div class="boundary"><b>CAUSAL MODEL LAB — NOT HISTORICALLY VALIDATED.</b> These controls exercise reusable causal-engine components with explicit synthetic inputs. They do not establish Apollo constants, historical accuracy, or player-facing display fidelity.</div>
+<span id="suite"></span><button id="run">Run standard suite</button>
 <button id="download" disabled>Download report</button>
 <button id="copy" disabled>Copy report</button>
 <p><label>Notes to include<textarea id="notes" placeholder="What you noticed; do not include passwords or tokens."></textarea></label></p>
 <p id="status" role="status">Ready. Export before leaving this page.</p><pre id="results"></pre>
+
+<section id="trajectory" class="panel">
+<h2>Trajectory → tracking observation</h2>
+<p class="note">Exercises the server chain: propulsion/trajectory state → geometric tracking truth → delayed/biased/available controller observation. Hidden trajectory state and the controller-visible observation are shown separately.</p>
+<div class="grid">
+<label class="field">Duration (s)<input id="trDuration" type="number" value="10" step="1"></label>
+<label class="field">Thrust (N)<input id="trThrust" type="number" value="0" step="100"></label>
+<label class="field">Initial mass (kg)<input id="trMass" type="number" value="1000" step="10"></label>
+<label class="field">Dry mass (kg)<input id="trDry" type="number" value="500" step="10"></label>
+<label class="field">Specific impulse (s)<input id="trIsp" type="number" value="300" step="1"></label>
+<label class="field">Max step (s)<input id="trStep" type="number" value="0.25" step="0.05"></label>
+<label class="field">Initial X position (m)<input id="trX" type="number" value="1000"></label>
+<label class="field">Initial Y position (m)<input id="trY" type="number" value="0"></label>
+<label class="field">Initial Y velocity (m/s)<input id="trVy" type="number" value="10"></label>
+<label class="field">Receive delay (s)<input id="trDelay" type="number" value="2" step="0.1"></label>
+<label class="field">Range bias (m)<input id="trRangeBias" type="number" value="5" step="0.1"></label>
+<label class="field">Range-rate bias (m/s)<input id="trRateBias" type="number" value="0.25" step="0.01"></label>
+</div>
+<p><label><input id="trAvailable" type="checkbox" checked> observation available</label> &nbsp; <label><input id="trValid" type="checkbox" checked> upstream data valid</label></p>
+<div class="actions"><button id="runTrajectory">Run trajectory chain</button><button id="trOutage">Run observation outage</button></div>
+<div id="trajectoryTrace" class="chain"><div class="stage"><b>Authoritative trajectory</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Geometric tracking truth</b>Computed server-side</div><div class="arrow">→</div><div class="stage"><b>Controller-visible observation</b>Not run</div></div>
+<details class="raw"><summary>Raw trajectory-chain JSON</summary><pre id="trajectoryRaw">No run yet.</pre></details>
+</section>
+
+<section id="resource" class="panel">
+<h2>Resource → power → observation</h2>
+<p class="note">Exercises explicit cross-model coupling. Resource state determines electrical-source availability; the bus determines whether the receiver is powered; only then can the tracking observation be available.</p>
+<div class="grid">
+<label class="field">Initial resource (units)<input id="rpInitial" type="number" value="5" step="0.5"></label>
+<label class="field">Consumption rate (units/s)<input id="rpRate" type="number" value="1" step="0.1"></label>
+<label class="field">Elapsed duration (s)<input id="rpDuration" type="number" value="4" step="0.5"></label>
+<label class="field">Operating threshold<input id="rpThreshold" type="number" value="0" step="0.1"></label>
+<label class="field">Source capacity (W)<input id="rpSourceW" type="number" value="100" step="10"></label>
+<label class="field">Receiver load (W)<input id="rpLoadW" type="number" value="20" step="5"></label>
+</div>
+<div class="actions"><button id="runResource">Run causal chain</button><button id="runBeforeAfter">Compare before/after depletion</button></div>
+<div id="resourceTrace" class="chain"><div class="stage"><b>Resource inventory</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Electrical source</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Powered load</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Controller observation</b>Not run</div></div>
+<details class="raw"><summary>Raw resource-power JSON</summary><pre id="resourceRaw">No run yet.</pre></details>
+</section>
+
 <script>
 const $=id=>document.getElementById(id);
 $('token').value=localStorage.getItem('apollo_facilitator_token')||sessionStorage.getItem('apollo_facilitator_token')||'';
@@ -111,10 +154,100 @@ $('run').onclick=async()=>{
  $('run').disabled=false;$('download').disabled=false;$('copy').disabled=false;
  }
 };
-function serialized(){return JSON.stringify({...report,notes:$('notes').value},null,2)}
+function serialized(){return JSON.stringify({...report,causal_runs:causalRuns,notes:$('notes').value},null,2)}
 $('download').onclick=()=>{
  const url=URL.createObjectURL(new Blob([serialized()],{type:'application/json'}));
  const a=document.createElement('a');a.href=url;a.download='apollo-dps-test-'+report.started_at.replace(/[:.]/g,'-')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 };
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText(serialized());$('status').textContent='Report copied.'}catch{$('status').textContent='Clipboard unavailable. Use Download report.'}};
+
+const causalRuns=[];
+function num(id){return Number($(id).value)}
+function scalar(v,d=3){return typeof v==='number'&&Number.isFinite(v)?Number(v.toFixed(d)):v}
+function vec(v){return Array.isArray(v)?'['+v.map(x=>scalar(x)).join(', ')+']':String(v??'—')}
+function statusBadge(ok,yes='YES',no='NO'){return '<span class="badge '+(ok?'good':'bad')+'">'+(ok?yes:no)+'</span>'}
+function traceStage(title,html){return '<div class="stage"><b>'+title+'</b>'+html+'</div>'}
+function arrow(){return '<div class="arrow">→</div>'}
+function recordCausal(name,requestPayload,responsePayload){causalRuns.push({name,at:new Date().toISOString(),request:requestPayload,response:responsePayload})}
+
+function trajectoryPayload(){
+ return {
+  initial_time_s:0,
+  initial_position_m:[num('trX'),num('trY'),0],
+  initial_velocity_m_s:[0,num('trVy'),0],
+  initial_mass_kg:num('trMass'),dry_mass_kg:num('trDry'),specific_impulse_s:num('trIsp'),
+  gravitational_parameter_m3_s2:0,gravity_center_m:[0,0,0],max_step_s:num('trStep'),
+  applicability:'site causal-model lab trajectory proof; not mission validated',
+  provenance:['Synthetic browser inputs; not Apollo constants'],
+  segments:[{duration_s:num('trDuration'),thrust_n:num('trThrust'),direction:[1,0,0],regime:num('trThrust')===0?'coast':'synthetic-thrust'}],
+  station_position_m:[0,0,0],station_velocity_m_s:[0,0,0],
+  observation:{receive_delay_s:num('trDelay'),range_bias_m:num('trRangeBias'),range_rate_bias_m_s:num('trRateBias'),
+   available:$('trAvailable').checked,valid:$('trValid').checked,source:'site causal-model lab tracking product',
+   provenance:['Synthetic observation configuration']}
+ };
+}
+async function runTrajectory(outage=false){
+ const p=trajectoryPayload();
+ if(outage){p.observation.available=false;p.observation.valid=false}
+ $('trajectoryRaw').textContent='Running…';
+ try{
+  const r=await request('/api/admin/model-proof/trajectory-tracking',p);
+  recordCausal('trajectory-tracking',p,r);
+  const fs=r.trajectory.final_state,o=r.tracking_observation;
+  $('trajectoryTrace').innerHTML=
+   traceStage('Authoritative trajectory','<div>t = '+scalar(fs.time_s)+' s</div><div>position = '+vec(fs.position_m)+' m</div><div>velocity = '+vec(fs.velocity_m_s)+' m/s</div><div>mass = '+scalar(fs.mass_kg)+' kg</div>')+
+   arrow()+traceStage('Geometric tracking truth','<div class="note">Derived server-side from hidden vehicle/station state before observation effects.</div>')+
+   arrow()+traceStage('Controller-visible observation','<div>available '+statusBadge(o.available)+'</div><div>valid '+statusBadge(o.valid)+'</div><div>range = '+scalar(o.range_m)+' m</div><div>range rate = '+scalar(o.range_rate_m_s)+' m/s</div><div>age = '+scalar(o.age_s)+' s</div>');
+  $('trajectoryRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){$('trajectoryRaw').textContent=String(e.message||e)}
+}
+$('runTrajectory').onclick=()=>runTrajectory(false);
+$('trOutage').onclick=()=>runTrajectory(true);
+
+function resourcePayload(duration=num('rpDuration')){
+ return {
+  resource_inventory:{initial_time_s:0,initial_quantities:{energy:num('rpInitial')},
+   resources:[{resource_id:'energy',unit:'synthetic-unit',minimum_quantity:0,maximum_quantity:num('rpInitial')}],
+   segments:[{duration_s:duration,rates_per_s:{energy:num('rpRate')},label:'synthetic_receiver_support'}],
+   applicability:'site causal-model lab resource proof; not mission validated',
+   provenance:['Synthetic browser inputs; not Apollo constants']},
+  source_rules:[{source_id:'BATTERY',resource_id:'energy',minimum_operating_quantity:num('rpThreshold'),available_at_threshold:false,provenance:'Synthetic explicit coupling'}],
+  source_hardware_available:{BATTERY:true},
+  electrical_bus:{bus_id:'DATA_BUS',sources:[{source_id:'BATTERY',max_power_w:num('rpSourceW')}],
+   loads:[{load_id:'TRACKING_RECEIVER',power_w:num('rpLoadW'),priority:0}],
+   source_available:{},load_commanded_on:{TRACKING_RECEIVER:true},bus_enabled:true,
+   applicability:'site causal-model lab electrical proof; not mission validated',provenance:['Synthetic browser inputs']},
+  observation_load_id:'TRACKING_RECEIVER',vehicle_time_s:duration,
+  vehicle_position_m:[1000,0,0],vehicle_velocity_m_s:[1,0,0],vehicle_mass_kg:1000,
+  station_position_m:[0,0,0],station_velocity_m_s:[0,0,0],
+  observation:{receive_delay_s:0,range_bias_m:0,range_rate_bias_m_s:0,upstream_valid:true,
+   source:'site causal-model lab powered tracking product',provenance:['Synthetic observation configuration']}
+ };
+}
+async function runResource(duration=num('rpDuration'),label='resource-power-observation'){
+ const p=resourcePayload(duration);
+ const r=await request('/api/admin/model-proof/resource-power-observation',p);
+ recordCausal(label,p,r);
+ const q=r.resource_inventory.final_state.quantities.energy,sc=r.source_coupling[0],load=r.electrical_bus.loads.find(x=>x.load_id==='TRACKING_RECEIVER'),o=r.tracking_observation;
+ $('resourceTrace').innerHTML=
+  traceStage('Resource inventory','<div>remaining = '+scalar(q)+' units</div><div>t = '+scalar(r.resource_inventory.final_state.time_s)+' s</div>')+
+  arrow()+traceStage('Electrical source','<div>available '+statusBadge(sc.available)+'</div><div>'+String(sc.reason||'')+'</div>')+
+  arrow()+traceStage('Powered load','<div>receiver supplied '+statusBadge(load.supplied)+'</div><div>'+String(load.reason||'')+'</div>')+
+  arrow()+traceStage('Controller observation','<div>available '+statusBadge(o.available)+'</div><div>range = '+scalar(o.range_m)+' m</div>');
+ $('resourceRaw').textContent=JSON.stringify(r,null,2);
+ return r;
+}
+$('runResource').onclick=async()=>{try{await runResource()}catch(e){$('resourceRaw').textContent=String(e.message||e)}};
+$('runBeforeAfter').onclick=async()=>{
+ try{
+  const rate=Math.max(num('rpRate'),1e-9),initial=num('rpInitial'),depletion=initial/rate;
+  const before=Math.max(0,depletion-1),after=depletion+1;
+  const a=await runResource(before,'resource-before-depletion');
+  const b=await runResource(after,'resource-after-depletion');
+  $('resourceRaw').textContent=JSON.stringify({comparison:{before_s:before,after_s:after},before:a,after:b},null,2);
+  const ao=a.tracking_observation.available,bo=b.tracking_observation.available;
+  $('resourceTrace').insertAdjacentHTML('beforeend',arrow()+traceStage('Comparison','<div>before depletion: '+statusBadge(ao,'OBS AVAILABLE','OBS LOST')+'</div><div>after depletion: '+statusBadge(bo,'OBS AVAILABLE','OBS LOST')+'</div>'));
+ }catch(e){$('resourceRaw').textContent=String(e.message||e)}
+};
+
 </script></html>

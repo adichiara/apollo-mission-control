@@ -1,30 +1,86 @@
-# Shareable DPS tests
+# Shareable causal-model tests
 
-Open /admin, select MODEL, then RUN SHAREABLE TEST SUITE (or open /model-tests).
+Open `/admin`, select **MODEL**, then **OPEN CAUSAL MODEL LAB** (or open `/model-tests` directly).
 Enter the facilitator token if it is not already available from the test console.
-Click Run standard suite. Add observations in Notes and Download report.
-Attach that JSON file in the project chat, including when tests fail.
 
-The runner sends ten fixed synthetic profiles to the actual server model API.
-It checks mass, impulse, an independent analytic rocket-equation expectation,
-step refinement, cutoff ordering, lower thrust, direction, omitted burn,
-combined errors, repeatability, and build identity before/after the suite.
+The page is validation infrastructure. It does not create, reset, advance, or modify a mission session.
 
-Exports include schema/suite versions, UTC timestamps, build metadata,
-complete request/response pairs, checks with expected/actual values and
-tolerances, errors, and optional notes. Tokens and request headers are excluded.
-Do not put secrets in notes. Reports remain in memory until downloaded/copied.
-Leaving or refreshing the page loses the current report.
+## DPS numerical suite
 
-PASS means numerical/API checks passed. It does not validate historical Apollo
-parameters, live crew interaction, trajectory propagation, or station products.
-INCOMPLETE preserves partial results after an HTTP error or 30-second timeout.
-No session is created, reset, advanced, or modified.
+Click **Run standard suite** to exercise the mission-neutral DPS model through the protected server API.
 
-To reproduce a case, submit its request object to
-POST /api/admin/model-proof/dps-burn on the recorded build with facilitator
-authorization. Compare using the exported tolerances, not rounded screenshots.
+The suite checks:
 
-Implementation verification uses repository CI; browser interaction still
-requires a human run. The canonical roadmap remains unchanged because PR #28
-owns it; this runner supports the current causal-engine validation priority.
+- mass depletion;
+- impulse;
+- an independent rocket-equation expectation;
+- numerical step refinement;
+- early/nominal/late cutoff ordering;
+- lower thrust;
+- thrust direction;
+- omitted burn;
+- combined errors;
+- repeatability;
+- multi-segment behavior;
+- cutoff followed by coast;
+- linear thrust ramps;
+- segment-specific effective-Isp override behavior;
+- propellant-floor rejection;
+- build identity before/after the suite.
+
+Add observations in Notes and download/copy the JSON report when a durable test record is needed.
+
+## Trajectory → tracking observation
+
+The site now exposes the composed endpoint:
+
+`POST /api/admin/model-proof/trajectory-tracking`
+
+The browser shows the causal separation between:
+
+`authoritative trajectory → geometric tracking truth → controller-visible observation`
+
+Inputs include synthetic initial state, thrust/coast duration, mass/Isp, numerical step, observation delay/bias, availability, and validity.
+
+The page intentionally presents the authoritative trajectory and downstream observation separately. The geometric-truth calculation remains an internal causal boundary rather than being relabeled as a controller product.
+
+## Resource → power → observation
+
+The site also exposes:
+
+`POST /api/admin/model-proof/resource-power-observation`
+
+The browser trace is:
+
+`finite resource → electrical source availability → powered receiver → controller observation`
+
+The **Compare before/after depletion** control runs the same chain on both sides of the calculated depletion boundary so the downstream loss of observation can be inspected without a scripted "tracking failed" outcome.
+
+The composed endpoint still rejects direct electrical-source availability override. Source availability must derive from the configured resource coupling.
+
+## Evidence boundary
+
+Every site-facing proof is explicitly labeled **NOT HISTORICALLY VALIDATED**.
+
+The default values are synthetic test values, not Apollo constants. A successful run demonstrates model/API causality and numerical behavior only. It does not establish:
+
+- Apollo 11 or Apollo 13 historical accuracy;
+- historical subsystem constants;
+- historical display resolution;
+- crew behavior;
+- controller procedures;
+- player-facing station fidelity.
+
+## Reports
+
+DPS suite exports include schema/suite versions, UTC timestamps, build metadata, complete request/response pairs, checks with expected/actual values and tolerances, errors, and optional notes.
+
+Interactive causal-chain runs are also appended to the export as `causal_runs` when a DPS report exists.
+
+Facilitator tokens and request headers are excluded. Do not put secrets in notes. Browser report state is in-memory and is lost on refresh/navigation unless copied or downloaded.
+
+## Reproduction
+
+Use the recorded request object against the same endpoint/build with facilitator authorization. Compare numerical values using explicit tolerances rather than rounded screenshots.
+
+Implementation verification uses repository CI. Browser interaction against the deployed site remains a separate live-validation step.
