@@ -4,10 +4,11 @@ The actor separates:
 1. transmitted CAPCOM instruction;
 2. crew receipt/acknowledgement;
 3. supported crew operational action;
-4. downstream physical/subsystem response.
+4. source-backed procedures briefed before the active runtime interval;
+5. downstream physical/subsystem response.
 
 Rules are supplied by the scenario/runtime. No response delay, physical effect,
-or mission decision is invented by this module.
+mission decision, or unrecorded live transmission is invented by this module.
 """
 
 from __future__ import annotations
@@ -67,6 +68,37 @@ class CrewInstructionRule:
 
 
 @dataclass(frozen=True)
+class CrewProcedureRule:
+    """Scenario-supplied procedure already briefed before active runtime."""
+
+    procedure_id: str
+    crew_action: str
+    parameters: Mapping[str, Any] = field(default_factory=dict)
+    repeatable: bool = False
+    provenance: str = "project-configured prebriefed crew procedure"
+
+    def validated(self) -> "CrewProcedureRule":
+        return CrewProcedureRule(
+            procedure_id=_text(self.procedure_id, "procedure_id"),
+            crew_action=_text(self.crew_action, "crew_action"),
+            parameters=dict(self.parameters),
+            repeatable=bool(self.repeatable),
+            provenance=_text(self.provenance, "provenance"),
+        )
+
+
+@dataclass(frozen=True)
+class CrewProcedureAction:
+    action_id: str
+    procedure_id: str
+    crew_id: str
+    get_s: float
+    action: str
+    parameters: dict[str, Any]
+    provenance: str
+
+
+@dataclass(frozen=True)
 class CrewReceipt:
     capcom_item_id: int
     crew_id: str
@@ -93,8 +125,10 @@ class SimulatedCrew:
 
     crew_id: str
     rules: Mapping[str, CrewInstructionRule]
+    procedures: Mapping[str, CrewProcedureRule] = field(default_factory=dict)
     receipts: dict[int, CrewReceipt] = field(default_factory=dict)
     actions: dict[int, CrewOperationalAction] = field(default_factory=dict)
+    procedure_actions: list[CrewProcedureAction] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         self.crew_id = _text(self.crew_id, "crew_id")
@@ -112,6 +146,18 @@ class SimulatedCrew:
         if not normalized:
             raise ValueError("at least one simulated crew rule is required")
         self.rules = normalized
+
+        procedures: dict[str, CrewProcedureRule] = {}
+        for raw_key, raw_rule in self.procedures.items():
+            key = _text(raw_key, "crew procedure key")
+            rule = raw_rule.validated()
+            if key != rule.procedure_id:
+                raise ValueError(
+                    f"crew procedure key {key!r} does not match procedure_id "
+                    f"{rule.procedure_id!r}"
+                )
+            procedures[key] = rule
+        self.procedures = procedures
 
     def rule_for(self, item: CapcomInstructionLike) -> CrewInstructionRule:
         if not isinstance(item, CapcomInstructionLike):
@@ -151,6 +197,45 @@ class SimulatedCrew:
         )
         self.receipts[item.item_id] = receipt
         return receipt
+
+    def perform_prebriefed_procedure(
+        self,
+        procedure_id: str,
+        *,
+        get_s: float,
+    ) -> CrewProcedureAction:
+        """Create a crew action from an explicitly configured prior briefing.
+
+        This path deliberately has no live CAPCOM receipt stage. It is for
+        procedures whose source record establishes that the crew had already
+        received the instruction before the active runtime interval.
+        """
+
+        key = _text(procedure_id, "procedure_id")
+        rule = self.procedures.get(key)
+        if rule is None:
+            raise ValueError(f"unsupported prebriefed crew procedure: {key}")
+
+        prior = [
+            action
+            for action in self.procedure_actions
+            if action.procedure_id == key
+        ]
+        if prior and not rule.repeatable:
+            raise ValueError(f"prebriefed crew procedure already performed: {key}")
+
+        action_get_s = _finite(get_s, "crew procedure get_s")
+        action = CrewProcedureAction(
+            action_id=f"crew-procedure-{key}-{len(prior) + 1}",
+            procedure_id=key,
+            crew_id=self.crew_id,
+            get_s=action_get_s,
+            action=rule.crew_action,
+            parameters=dict(rule.parameters),
+            provenance=rule.provenance,
+        )
+        self.procedure_actions.append(action)
+        return action
 
     def perform_supported_action(
         self,
