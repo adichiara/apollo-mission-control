@@ -8,94 +8,76 @@
 
 ### Supports
 
-- prelaunch lift-off (`T-6`) mass properties — weights, centers of gravity, and aerodynamic data — were generated and loaded into the RTCC;
-- critically, those `T-6` products were generated/loaded **by `T-2:46`**, demonstrating that the `T±N` label is not the generation/loading timestamp;
-- a `T+25` RTCC mass-properties run was compared against `T+6` pitch/yaw trims and did not require an update;
-- LM-burn mass-property decks were later updated to `T+55` decks before abort-maneuver work;
-- at approximately 59 hours GET, a PC+2 block-data pad for a DPS maneuver at 79:30 GET carried a trim that LM Control challenged;
-- LM Control later agreed with the Flight Dynamics data after the report states that LM Control had used **premission mass properties**, which were not the best data available;
-- taken together, the repeated `T-6`, `T+6`, `T+25`, and `T+55` usage establishes a mission-relative mass-properties **reference-state/epoch lineage**, with the reference label distinct from any separately documented generation/load time;
-- the ~59-hour trim dispute establishes that different mass-properties bases could propagate into a controller-visible maneuver product and require cross-console reconciliation.
+- lift-off (`T-6`) mass properties were generated and loaded into RTCC by `T-2:46`, proving `T±N` is not generation/loading time;
+- a `T+25` run was compared against `T+6` trims;
+- LM-burn mass-property decks were updated to `T+55` before abort work;
+- at ~59 hours GET, LM Control challenged a PC+2 DPS trim, then accepted Flight Dynamics data after having used inferior premission mass properties.
 
 ### Boundary
 
-The report supports interpreting `T+55` as a mass-properties reference state/epoch associated with approximately mission time +55 hours. It rules out simple deck-generation/loading time as the meaning of the label. It does not define whether the reference means an exact 55:00:00 GET state, a nominal/scheduled epoch, or a propagated state referenced to that mission time. It also does not provide the deck fields, mass/CG values, or derivation of the final P30 weights.
+The report establishes a mission-relative mass-properties reference-state/epoch lineage and operational provenance/reconciliation behavior. It does not define exact `T+55` epoch semantics, deck fields, or explicitly identify the accepted ~59-hour basis as the `T+55` deck.
 
-Critically, the report does **not** explicitly identify the accepted Flight Dynamics mass-properties basis in the ~59-hour trim dispute as the `T+55` deck. The chronology is compatible with that interpretation, but it is not source-proven and must remain an open link.
+## NASA MSC — Apollo 13 Mission Report
+
+- Date: 1970-09
+- Report: `MSC-02680`
+- NTRS: https://ntrs.nasa.gov/citations/19710003598
+- NTRS scan: https://ntrs.nasa.gov/api/citations/19710003598/downloads/19710003598.pdf
+- Source class: primary / mission-specific postflight mission report
+
+### Supports
+
+Appendix A, Table A-I, **Mass Properties**, gives event-indexed weights and mass-property quantities. Relevant post-accident rows include:
+
+- second midcourse correction: `95,959.9 lb` ignition / `95,647.1 lb` cutoff;
+- transearth injection (PC+2): **`95,424.0 lb` ignition / `87,456.0 lb` cutoff**;
+- third midcourse correction: `87,325.3 lb` ignition / `87,263.3 lb` cutoff;
+- fourth midcourse correction: `87,132.1 lb` ignition / `87,101.8 lb` cutoff.
+
+The PC+2/TEI ignition event mass is `508.0 lb` below the independently documented final P30 module-weight sum of `95,932 lb` (`62,480 + 33,452`).
+
+### Boundary
+
+The report does not explain the 508-lb accounting difference and does not prove that `95,424.0 lb` was the exact RTCC targeting input. Do not attribute the difference to a particular consumable, vent, module-accounting rule, epoch, or deck without direct evidence.
 
 ## NASA MSC Internal Note 71-FM-214 — Skylab RTCC Mass Properties System Requirements
 
 - Date: 1971-06-14
-- Author: E. Ray Hischke, Data Management Group, Mission Planning and Analysis Division
-- Report identifiers: `MSC-04378`, `MSC-IN-71-FM-214`, `NASA-TM-X-67442`
+- Author: E. Ray Hischke
+- Identifiers: `MSC-04378`, `MSC-IN-71-FM-214`, `NASA-TM-X-67442`
 - NTRS: https://ntrs.nasa.gov/citations/19720006192
-- Archival scan: https://www.ibiblio.org/apollo/Documents/71-FM-214%20-%20Skylab%20RTCC%20mass%20properties%20system%20requirements.pdf
-- Source class: primary NASA RTCC requirements documentation; post-Apollo-13 but explicitly describing Skylab as a carryover of the then-current Apollo RTCC Mass Properties System
+- Source class: primary NASA RTCC requirements documentation; explicitly describes Skylab as a carryover of the then-current Apollo RTCC Mass Properties System
 
 ### Supports
 
-- the Skylab RTCC Mass Properties System was intended as a carryover of the present Apollo RTCC Mass Properties System, with only minor modifications and deletions;
-- the documented architecture computed and maintained spacecraft weight and center of gravity;
-- module-level inputs could be summed into total mass properties for display or use by other computation units;
-- the digital-autopilot unit computed engine trim angles for an input spacecraft weight;
-- required centers of mass could be obtained from temporary or permanent propellant depletion tables;
-- depletion-table calculations explicitly related output weight, dry weight, mixture ratio, fuel weight, and oxidizer weight.
+- module summation into total weight/CG state;
+- engine-trim calculations driven by spacecraft weight/center of mass;
+- temporary/permanent propellant depletion tables and associated weight calculations.
 
 ### Boundary
 
-This source establishes a safe Apollo-era **architectural** model for mass-properties state, not the Apollo 13/H-2 deck contents. It does not prove that `T+55` was itself a propellant-depletion table, identify which temporary/permanent tables H-2 used, define the precise `T+N` reference-epoch convention, or map the H-2 deck to the final P30 weights.
+Architectural semantics only; not H-2 deck contents or `T+55` definition.
 
-## Apollo 10 — Operational Support Plan for the Real-Time Auxiliary Computing Facility, Flight Annex
+## Apollo 10/11 operational support material
 
-- Archival scan: https://www.ibiblio.org/apollo/Documents/Operational%20Support%20Plan%20for%20the%20Real-Time%20Auxiliary%20Computing%20Facility%20Apollo%2010%20Flight%20Annex.pdf
-- Source class: primary Apollo-era operational support documentation
-
-### Supports
-
-- mass properties and spacecraft weight were operational inputs to RCS/SPS support calculations;
-- the MRS program accepted updated mass-properties information as propellant was expended and vehicle configuration changed;
-- mass-properties products supported maneuver/control quantities including trim and DAP-related work.
-
-### Boundary
-
-Apollo 10 documentation establishes functional semantics only. It does not define Apollo 13/H-2 `T+55` deck structure or values.
-
-## Apollo 11 — Mission Operations Report
-
-- Mission-document index: https://www.apollojournals.org/afj/ap11fj/a11-documents.html
-- Source class: primary / mission operations report
-
-### Supports
-
-- RTACF mass-properties computations produced weight-CG tables;
-- those tables were used by RTACF and RTCC trajectory processors for pitch/yaw trim calculations;
-- mass-properties capability also supported entry-aerodynamics and DAP-load products.
-
-### Boundary
-
-These are Apollo 11 operational semantics, not Apollo 13 deck definitions.
+Primary Apollo-era RTACF/mission-operations documentation establishes that mass-properties products were operational inputs to trajectory, trim, DAP/control, entry-aerodynamics, and propellant-support calculations and were updated as vehicle configuration/propellant state changed. These sources do not define Apollo 13 deck values.
 
 ## Project rule
 
-For historical PC+2 validation, keep separate:
+For PC+2 validation keep separate:
 
-1. physical spacecraft mass/CG;
-2. mission-control mass-properties state/deck;
-3. module-level contributions and propellant-depletion state/tables within that computational layer;
-4. mission-relative reference-epoch label;
-5. actual generation/update/load timestamp when separately documented;
-6. provenance/version of the mass-properties basis used for a calculation;
-7. maneuver targeting/P30 weight values;
-8. controller-visible trim/trajectory products and cross-console reconciliation.
+1. hidden physical spacecraft mass/CG;
+2. official postflight event-indexed mass properties;
+3. mission-control RTCC mass-properties state/deck;
+4. module/depletion state;
+5. reference-epoch label;
+6. generation/update/load timestamp;
+7. provenance/version of calculation basis;
+8. P30 targeting/module weights;
+9. controller-visible trim/trajectory products.
 
-Do not label the documented `62480 lb` CSM and `33452 lb` LM P30 values as exact physical ignition masses until H-2-specific deck semantics or equivalent calculation records establish that relationship.
+Do not label the P30 `62480 + 33452 = 95932 lb` as exact physical ignition mass. Research note 147 additionally requires preserving the mission report's `95424.0 lb` PC+2/TEI ignition event mass as a distinct datum.
 
 ## Next archival targets
 
-The broad question of whether `T+55` is time-related is closed, and research note 145 also closes the possibility that the label merely denotes deck-generation/loading time. Research note 146 establishes that stale premission mass properties could produce a disputed PC+2 trim product, but does not prove that the accepted Flight Dynamics basis was specifically the `T+55` deck. The general Apollo RTCC mass-properties architecture is bounded by MSC-IN-71-FM-214.
-
-Prioritize mission-specific sources matching combinations of:
-
-`Apollo 13`, `H-2`, `RTCC`, `RTACF`, `ACF`, `mass properties`, `LM burn`, `T+55`, `T+25`, `T+6`, `trim`, `PC+2`, `block data`, `P30`, `weight-CG`, `reference epoch`, `depletion table`, `temporary table`, `permanent table`, `deck`.
-
-Highest-value recoveries would be H-2 RTCC/Flight Dynamics requirements, mass-property deck definitions/listings, processor input descriptions, or maneuver-support worksheets that define the precise `T+N` reference-epoch convention and explicitly identify which mass-properties job/deck supplied the accepted ~59-hour PC+2 DPS trim.
+Highest value is now H-2 RTCC/Flight Dynamics documentation, mass-property deck listings, processor descriptions, or maneuver worksheets that explicitly reconcile the `T+55` operational state, final P30 module weights, and `95424.0 lb` postflight PC+2 ignition event mass. Search terms should include `Apollo 13`, `H-2`, `RTCC`, `mass properties`, `T+55`, `PC+2`, `transearth injection`, `95424`, `95932`, `P30`, `weight-CG`, `depletion table`, and `deck`.
