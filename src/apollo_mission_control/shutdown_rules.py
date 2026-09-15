@@ -54,6 +54,7 @@ def evaluate_pc2_shutdown_rules(
     control = projections["CONTROL"]
     guido = projections["GUIDO"]
     telmu = projections["TELMU"]
+    capcom = projections["CAPCOM"]
 
     def deferred(rule_id: str, owner: str, basis: str) -> RuleEvaluation:
         return RuleEvaluation(rule_id, RuleState.NOT_EVALUABLE, owner, basis)
@@ -149,30 +150,36 @@ def evaluate_pc2_shutdown_rules(
     ces_failure = ces_product.value
     results["ces_dc_failure"] = RuleEvaluation("ces_dc_failure", RuleState.TRIGGERED if ces_failure else RuleState.CLEAR, "CONTROL", "control electronics system DC power failure", observation={"failure": ces_failure, "observation_age_s": _observation_age(ces_product)})
 
-    inverter_product = telmu.products["lm.inverter_warning"]
-    inverter_warning = bool(inverter_product.value)
-    warning_observed_get = inverter_product.source_time_get
+    inverter_product = capcom.products.get("crew.inverter_warning_report")
     switch_attempted = bool(telmu.products["lm.inverter_switch_attempted"].value)
     switch_get = telmu.products["lm.inverter_switch_attempt_get_s"].value
 
-    if not inverter_warning:
-        inverter_state = RuleState.CLEAR
-    elif not switch_attempted or switch_get is None:
+    if inverter_product is None:
         inverter_state = RuleState.NOT_EVALUABLE
-    elif warning_observed_get is None or warning_observed_get <= float(switch_get):
-        inverter_state = RuleState.NOT_EVALUABLE
+        inverter_warning = None
+        warning_observed_get = None
     else:
-        inverter_state = RuleState.TRIGGERED
+        inverter_warning = bool(inverter_product.value)
+        warning_observed_get = inverter_product.source_time_get
+        if not inverter_warning:
+            inverter_state = RuleState.CLEAR
+        elif not switch_attempted or switch_get is None:
+            inverter_state = RuleState.NOT_EVALUABLE
+        elif warning_observed_get is None or warning_observed_get <= float(switch_get):
+            inverter_state = RuleState.NOT_EVALUABLE
+        else:
+            inverter_state = RuleState.TRIGGERED
 
     results["persistent_inverter_warning"] = RuleEvaluation(
-        "persistent_inverter_warning", inverter_state, "TELMU/CONTROL",
-        "inverter warning remaining after switching inverters",
+        "persistent_inverter_warning", inverter_state, "CREW/CAPCOM",
+        "crew-reported onboard inverter warning remaining after switching inverters",
         observation={
-            "warning": inverter_warning,
-            "warning_observed_get_s": warning_observed_get,
-            "warning_observation_age_s": _observation_age(inverter_product),
+            "crew_reported_warning": inverter_warning,
+            "crew_report_observed_get_s": warning_observed_get,
+            "crew_report_observation_age_s": _observation_age(inverter_product),
             "switch_attempted": switch_attempted,
             "switch_get_s": switch_get,
+            "direct_caution_telemetry_assumed": False,
         },
     )
 
