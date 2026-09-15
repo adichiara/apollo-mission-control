@@ -363,6 +363,8 @@ This supports continued research into backroom relationships even if the final s
 - TELMU station-family continuity for those electrical measurements
 - TDFCB Rev. 4 deliverable families, including special LM Flight Control, PCMGS, high-speed/wideband, index, and compare products
 - PHO-TR155 data-pack lineage through the later Mission H-2 Revision N reference; exact pack scope is unrecovered
+- PHO-TR515 data-pack-circulation → PHO-TR155 configuration workflow
+- Flight Control recorder-requirements source class with console/measurement/subformat/pen assignment fields
 
 ## UNRESOLVED
 
@@ -377,6 +379,7 @@ This supports continued research into backroom relationships even if the final s
 - exact PC+2 inverter display cadence, precision, latency, and selector workflow
 - exact `GC0071V` / `GC0155F` membership/routing within unrecovered H-2 TDFCB Rev. 4 listings
 - exact meaning/content of the PHO-TR155 data-pack abbreviations and Revision N scope
+- whether any H-2 Flight Control Data Requirements / recorder product assigned `GC0071V` or `GC0155F` to TELMU/console 09
 
 ---
 
@@ -386,11 +389,12 @@ This supports continued research into backroom relationships even if the final s
 2. Locate **PHO-TR155 Mission H-2 Revision C** itself or its change pages.
 3. Locate a **PHO-TR155 data-pack key/index/contents record** that maps the H-2 pack abbreviations and identifies Revision N scope.
 4. Locate **Mission H-2 data-pack Revision N** itself; do not assume it is TELMU-specific until its scope is established.
-5. Locate H-2 TELMU console-09 operational-configuration/loading sheets or controller handbook.
-6. Identify exact telemetry identifiers for battery, water, oxygen, CO2, and thermal parameters.
-7. Determine whether consumable lifetime projections were shown on CRT, calculated in SSR, or communicated by another product.
-8. Reconstruct the CWEA/ground-warning relationship relevant to TELMU.
-9. Identify the exact H-2 presentation path for `GC0071V` / `GC0155F` without importing Apollo 15 indicator positions or later LM sample schedules.
+5. Locate Mission H-2 Flight Control Data Requirements / LM Systems branch requirements / recorder cross-reference material.
+6. Locate H-2 TELMU console-09 operational-configuration/loading sheets or controller handbook.
+7. Identify exact telemetry identifiers for battery, water, oxygen, CO2, and thermal parameters.
+8. Determine whether consumable lifetime projections were shown on CRT, calculated in SSR, or communicated by another product.
+9. Reconstruct the CWEA/ground-warning relationship relevant to TELMU.
+10. Identify the exact H-2 presentation path for `GC0071V` / `GC0155F` without importing Apollo 15 indicator positions or later LM sample schedules.
 
 ## Primary sources
 
@@ -398,6 +402,7 @@ This supports continued research into backroom relationships even if the final s
 - *Apollo 13 Mission Report*, sections 7.2.3–7.2.5.
 - Philco-Ford / Houston Operations, **PHO-TR460**, NASA NTRS 19690029816.
 - Philco-Ford / Houston Operations, **PHO-TR474**, 10 April 1970, NASA NTRS 19700016172.
+- Philco-Ford, **PHO-TR515**, MCC operational display-format standards/procedures, NASA NTRS 19730010501.
 
 
 ## 14A. LM-7 mission-era measurement/redline source
