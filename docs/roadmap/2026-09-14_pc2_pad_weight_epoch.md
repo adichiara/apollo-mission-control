@@ -1,7 +1,7 @@
 # PC+2 numerical-validation roadmap — pad-weight epoch
 
 Date: 2026-09-15
-Research notes: `resources/research/137_pc2_pad_weight_epoch_boundary.md` through `resources/research/159_luminary131_v34_n47_software_path.md`
+Research notes: `resources/research/137_pc2_pad_weight_epoch_boundary.md` through `resources/research/160_rtcc_mass_properties_no_update_precedent.md`
 
 ## Current resolved boundary
 
@@ -15,6 +15,8 @@ Research note 158 resolves the previously assumed missing-final-trim problem dif
 
 Research note 159 independently verifies that interpretation in Apollo 13's **Luminary 131 flight-software source**. In R03/Verb 48, the Noun 47 response dispatcher sends `V34E` to `ENDR03` and `ENDEXT`; only `V33E PROCEED` continues through mass/moment processing to `DAPDATA3`, which displays Noun 48, and a later proceed response can invoke `TRIMGIMB`. Thus the PC+2 V34 instruction selected a real computer termination branch before N48. This proves the crew/computer behavior but still does not reveal CONTROL's rationale for choosing the no-update branch.
 
+Research note 160 adds the strongest mission-specific precedent yet recovered for that controller-side rationale. In the same Apollo 13 Flight Dynamics report, the **T+25 RTCC mass properties were run but an update was not needed because the resulting pitch/yaw trims were within 0.01° of T+6**. This directly establishes a `new mass-properties run -> compare candidate trims with prior reference -> update/no-update decision` workflow. The `0.01°` criterion is documented only for that T+25/T+6 CSM/SPS case and must not be applied to PC+2 without direct evidence.
+
 Research note 153 establishes PC+2 execution-state evidence. Research note 155 corrects note 154's overbroad unit reinterpretation: the April FCD LM CONTROL narrative reports the PC+2 ignition roll-GDA state in **degrees**, approximately `-2°`, a `-1.2°` change from pre-ignition, implying approximately `-0.8°` immediately before ignition. This is retained/observed execution-state evidence and must not be converted into a supposed final Noun 48 command.
 
 Research note 156 independently showed that the final P30 LM maneuver PAD read up at GET 077:55:24 did **not** contain a GDA trim pair. Notes 158–159 now explain that omission consistently with the activation procedure and software: the crew was deliberately not taken through a new Noun 48 entry.
@@ -27,15 +29,15 @@ The September Mission Report gives PC+2/transearth-injection mass as `95,424.0 l
 
 ## Boundary retained
 
-Keep distinct physical mass/CG, postflight reconstructed event mass, RTCC mass-properties deck/state, module/depletion state, reference epoch, generation/load time, calculation provenance, calculation run, optional job identity, processor inputs/outputs, P30 module weights, computed/recommended trim, update/no-update decision, crew-entered Noun 48 trim, retained pre-existing gimbal state, observed engine-gimbal angular state, GDA linear actuator displacement, sampled/postflight actuator trace, ignition compliance response, and product lifecycle/finality.
+Keep distinct physical mass/CG, postflight reconstructed event mass, RTCC mass-properties deck/state, module/depletion state, reference epoch, generation/load time, calculation provenance, calculation run, optional job identity, processor inputs/outputs, candidate/recommended trim, trim comparison/reference, comparison criterion, update/no-update decision, P30 module weights, crew-entered Noun 48 trim, retained pre-existing gimbal state, observed engine-gimbal angular state, GDA linear actuator displacement, sampled/postflight actuator trace, ignition compliance response, and product lifecycle/finality.
 
-Do not infer the cause of the 508-lb difference; assign job 27 to PC+2; claim a numbered job or direct mathematical `T+55` derivation for `5.86° / 6.75°`; assume the earlier free-return pair remained numerically set at PC+2; invent a final PC+2 Noun 48 pair; treat generic 3°/in as exact LM-7 calibration; or substitute postflight actuator displacement for a crew-entered trim command.
+Do not infer the cause of the 508-lb difference; assign job 27 to PC+2; claim a numbered job or direct mathematical `T+55` derivation for `5.86° / 6.75°`; assume the earlier free-return pair remained numerically set at PC+2; invent a final PC+2 Noun 48 pair; transfer the T+25 `0.01°` no-update criterion to PC+2; treat generic 3°/in as exact LM-7 calibration; or substitute postflight actuator displacement for a crew-entered trim command.
 
 ## Next unresolved numerical inputs
 
 Priority order:
 
-1. recover an H-2 CONTROL/Flight Dynamics working sheet, Flight Director Log entry, GDA setup/checklist record, or mass-properties job output documenting the **basis for the PC+2 no-trim-update decision** — ideally a calculated trim, comparison tolerance, retained gimbal state, and/or job identity;
+1. recover the PC+2 equivalent of the documented T+25 comparison: an H-2 CONTROL/Flight Dynamics working sheet, Flight Director Log entry, GDA setup/checklist record, or mass-properties job output giving the **candidate trim, current/reference trim, comparison delta/tolerance, and/or job identity** behind the no-update decision;
 2. recover a direct record tying the accepted `5.86° / 6.75°` free-return trim to a specific `T+55` calculation run/job;
 3. recover the operational module/depletion accounting behind the final Noun 47 weights (`62480 / 33452 lb`) and the precise `T+N` reference-epoch convention;
 4. recover LM-7-specific GDA/engine acceptance calibration if a higher-fidelity degrees↔inches transform is needed;
@@ -46,4 +48,4 @@ Priority order:
 
 ## Integration rule
 
-Do not force a numerical DPS model to reproduce `861.5 ft/s` by assuming either `95932 lb` or `95424.0 lb` is the exact RTCC targeting mass. Preserve provenance. For trim/GDA, model an explicit update/no-update decision and distinguish any computed recommendation from a crew-entered Noun 48 value and from retained/observed gimbal state. For PC+2, primary operational evidence plus Apollo 13 flight-software evidence now supports **V34 termination at Noun 47, before Noun 48**. PC+2 `job_number`, the calculation-level basis for the no-update decision, exact retained two-axis pre-ignition gimbal state, and explicit calculation-level `T+55` linkage remain unknown until directly sourced.
+Do not force a numerical DPS model to reproduce `861.5 ft/s` by assuming either `95932 lb` or `95424.0 lb` is the exact RTCC targeting mass. Preserve provenance. For trim/GDA, model an explicit calculation/comparison/update decision and distinguish any computed recommendation from a crew-entered Noun 48 value and from retained/observed gimbal state. Apollo 13 now directly demonstrates that an RTCC mass-properties recalculation could leave the prior trim operationally unchanged after comparison; for PC+2, primary operational evidence plus Apollo 13 flight-software evidence supports **V34 termination at Noun 47, before Noun 48**, but the numerical comparison criterion remains unknown. PC+2 `job_number`, candidate trim, comparison delta/tolerance, exact retained two-axis pre-ignition gimbal state, and explicit calculation-level `T+55` linkage remain unknown until directly sourced.
