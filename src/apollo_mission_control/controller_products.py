@@ -180,18 +180,17 @@ def project_controller_products(state: PC2State, fixture: dict[str, Any]) -> dic
         {
             "lm.power.mode": _live_product(state, power_mode, source_layer="physical/configuration", provenance="pc2.state.lm.power.mode"),
             "lm.power.burn_configuration_expected_current_range_a": _reference_product(lm_power["burn_configuration_current_expected_range_a"], units="A", source_layer="mission-report/reference", provenance="pc2.fixture.lm_power.burn_configuration_current_expected_range_a"),
-            "lm.inverter_warning": _live_product(
-                state,
-                state.lm_inverter_warning,
-                source_layer="onboard/telemetry",
-                provenance="LM inverter caution from voltage/frequency caution-warning processing; exact PC+2 display route unresolved",
-                observed_get_s=state.lm_inverter_warning_observed_get_s,
-            ),
             "lm.inverter_switch_attempted": _live_product(state, state.lm_inverter_switch_attempted, source_layer="crew/procedure-event", provenance="pc2.state.operational_action.switch_lm_inverter"),
             "lm.inverter_switch_attempt_get_s": _live_product(state, state.lm_inverter_switch_attempt_get_s, units="s GET", source_layer="crew/procedure-event", provenance="pc2.state.operational_action.switch_lm_inverter", validity=Validity.VALID if state.lm_inverter_switch_attempted else Validity.UNAVAILABLE),
             "lm.powerdown.started": _live_product(state, state.powerdown_started, source_layer="physical/configuration", provenance="pc2.state.lm.powerdown"),
         },
-        ("lm.power.current_a", "lm.inverter_warning_exact_telemetry_word", "lm.inverter_warning_exact_control_telmu_field"),
+        (
+            "lm.power.current_a",
+            "lm.inverter_bus_voltage_v_ac",
+            "lm.inverter_bus_frequency_hz",
+            "lm.inverter_warning_direct_telemetry",
+            "lm.inverter_warning_exact_control_telmu_field",
+        ),
     )
 
     inco = ProjectionSet("INCO", {
@@ -218,5 +217,19 @@ def project_controller_products(state: PC2State, fixture: dict[str, Any]) -> dic
         "ground.pc2.final_load_complete": _live_product(state, state.final_load_complete, source_layer="ground/uplink-status", provenance="pc2.state.ground.pc2.final_load_complete"),
         "crew.report_stream": _live_product(state, [{"get_s": report.get_s, "report": report.report} for report in state.crew_reports], source_layer="crew-report", provenance="pc2.state.crew_reports"),
     })
+
+    if state.crew_inverter_warning_report is None:
+        capcom.deferred_fields += ("crew.inverter_warning_report",)
+    else:
+        capcom.products["crew.inverter_warning_report"] = _live_product(
+            state,
+            bool(state.crew_inverter_warning_report),
+            source_layer="crew-report",
+            provenance=(
+                "crew observation/report of onboard LM INVERTER caution; "
+                "reviewed primary schematics do not establish direct caution telemetry"
+            ),
+            observed_get_s=state.crew_inverter_warning_report_observed_get_s,
+        )
 
     return {p.station: p for p in (control, guido, fido_retro, telmu, inco, flight, capcom)}
