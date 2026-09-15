@@ -35,6 +35,31 @@
       "claim": "computer-failure/program-alarm simulation",
       "withdrawn_by": "resources/research/011_apollo_simulation_cases.md",
       "replacement": "Keep Honeycutt's computer-failure-light recollection distinct from Koos's 1201/1202 program-alarm abort/debrief account unless stronger evidence links them."
+    },
+    {
+      "claim": "Exact alternate-inverter identity remains unresolved",
+      "withdrawn_by": "resources/research/113_pc2_inverter_alternate_identity.md",
+      "replacement": "Apollo 13 PC+2 used inverter 2; the alternate is inverter 1."
+    },
+    {
+      "claim": "exact cockpit switch/breaker chronology after the warning",
+      "withdrawn_by": "resources/research/114_pc2_inverter_transfer_procedure.md",
+      "replacement": "Use CB(11) EPS: INV 1 — close → INVERTER — 1 → CB(16) EPS: INV 2 — open."
+    },
+    {
+      "claim": "exact post-warning switch-toggle/circuit-breaker chronology",
+      "withdrawn_by": "resources/research/114_pc2_inverter_transfer_procedure.md",
+      "replacement": "The Apollo 13 LM Malfunction Procedures source the inverter-2 → inverter-1 transfer sequence."
+    },
+    {
+      "claim": "exact PC+2 inverter identity/selection",
+      "withdrawn_by": "resources/research/112_pc2_inverter_selected_for_burn.md",
+      "replacement": "The mission-specific PC+2 configuration retained inverter 2."
+    },
+    {
+      "claim": "exact cockpit switch/circuit-breaker chronology",
+      "withdrawn_by": "resources/research/114_pc2_inverter_transfer_procedure.md",
+      "replacement": "The Apollo 13 LM Malfunction Procedures source the three-control transfer sequence."
     }
   ]
 }
