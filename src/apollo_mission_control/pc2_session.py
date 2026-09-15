@@ -24,7 +24,7 @@ from .pc2_event_rules import PC2_EVENT_RULES
 from .pc2_nominal import PC2State, SimEvent, apply_event, build_events
 from .scenario_injection import StateInjection, apply_state_injection
 from .session_runtime import SessionStatus
-from .simulated_crew import CrewInstructionRule, SimulatedCrew
+from .simulated_crew import CrewInstructionRule, CrewProcedureRule, SimulatedCrew
 from .shutdown_rules import RuleState, evaluate_pc2_shutdown_rules
 from .telmu_presentation import build_pc2_telmu_presentation
 
@@ -87,6 +87,18 @@ PC2_INVERTER_TRANSFER_PROVENANCE = (
     "no numeric post-transfer dwell established"
 )
 
+PC2_RESTART_SEQUENCE = (
+    "proceed_noun_97",
+    "manual_ullage",
+    "engine_start_push",
+    "descent_engine_command_override_on",
+)
+PC2_RESTART_PROVENANCE = (
+    "Apollo 13 PC+2 Mission Rules Review / contemporaneous air-ground read-up; "
+    "restart applies only to premature shutdown affirmatively outside listed "
+    "shutdown criteria; procedure was briefed before the active PC+2 interval"
+)
+
 
 @dataclass(frozen=True)
 class BundledPlayerSessionSnapshot:
@@ -132,6 +144,17 @@ def _build_pc2_simulated_crew() -> SimulatedCrew:
                 forwarded_parameters=("from_inverter", "to_inverter", "control_sequence"),
                 provenance=PC2_INVERTER_TRANSFER_PROVENANCE,
             ),
+        },
+        procedures={
+            "pc2_premature_shutdown_restart": CrewProcedureRule(
+                procedure_id="pc2_premature_shutdown_restart",
+                crew_action="execute_pc2_premature_shutdown_restart",
+                parameters={
+                    "sequence": list(PC2_RESTART_SEQUENCE),
+                },
+                repeatable=False,
+                provenance=PC2_RESTART_PROVENANCE,
+            )
         },
     )
 
