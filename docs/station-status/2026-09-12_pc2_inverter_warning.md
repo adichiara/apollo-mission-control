@@ -16,17 +16,18 @@ Research notes `059_pc2_inverter_warning_after_switch.md` and `060_pc2_inverter_
 
 Implementation now separates:
 
-- `lm.inverter_warning` — onboard caution/telemetry observation;
+- `lm.inverter_warning` — onboard caution state only; **not** asserted as direct ground telemetry;
+- `crew_inverter_warning_report` — explicit crew-observed/reported caution state used as ground evidence;
 - `lm.inverter_switch_attempted` — crew/procedural action event;
 - CAPCOM `instruction` event requesting the switch contingency;
 - crew `completion_report` event confirming the requested action was performed;
-- a **distinct later inverter-warning observation** required before the shutdown rule can trigger.
+- a **distinct later crew report of the caution state** required before the shutdown rule can trigger.
 
 This closes the first bounded controller/crew action-report loop. Later notes 112–114 resolve initial inverter 2, alternate inverter 1, and the three-control transfer sequence; the implementation still does not invent a timer.
 
 ### TELMU / CONTROL
 
-Remain **B** because the exact telemetry/display route and exact discipline call sequence for a hypothetical PC+2 inverter failure are unresolved. The simulator may expose the researched caution and rule semantics, but must not claim an exact Apollo 13 CRT field or backroom/front-room call chronology.
+Remain **B** because the exact H-2 display/loading and discipline call sequence for a hypothetical PC+2 inverter failure are unresolved. Research note 117 supersedes any earlier implication that the derived INVERTER caution itself can be exposed as direct TELMU/CONTROL telemetry: reviewed schematics establish ground telemetry for inverter-bus voltage/frequency, not a direct `GL4046` caution or selector-position channel. The caution reaches the ground model through crew observation/report unless stronger primary evidence is recovered.
 
 ### CAPCOM
 
@@ -35,7 +36,8 @@ Remains **B**. The mission-specific rule read-up/readback strengthens the eviden
 ## Unresolved
 
 - exact crew member who would execute the hypothetical switch;
-- exact telemetry word and TELMU/CONTROL display field;
+- exact H-2 loading/display path for source-backed inverter-bus voltage/frequency measurements `GC0071V` / `GC0155F`;
+- whether any later source establishes a direct `GL4046` caution telemetry path (the reviewed schematics do not);
 - whether the ground independently observed the switch position or knew it from crew procedure/reporting;
 - any historically specified dwell time before judging the post-switch caution;
 - exact internal TELMU/CONTROL → FLIGHT call sequence for this hypothetical failure.
