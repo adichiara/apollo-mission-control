@@ -110,6 +110,16 @@ def build_pc2_capcom_presentation(
                 "CREW REPORTS",
                 historical_analogue="Crew readbacks and burn-status reports are communications evidence, distinct from authoritative vehicle state",
             ),
+            _field(
+                projection,
+                "crew.inverter_warning_report",
+                "INVERTER CAUTION REPORT",
+                historical_analogue=(
+                    "Crew-reported state of the onboard INVERTER caution. "
+                    "Reviewed primary schematics establish underlying voltage/frequency "
+                    "telemetry but not direct ground telemetry of the derived caution."
+                ),
+            ),
         )
         if field is not None
     )
