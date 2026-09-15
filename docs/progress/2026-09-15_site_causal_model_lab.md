@@ -10,7 +10,7 @@ Keep causal-engine development inspectable through the existing deployed validat
 
 The existing `/model-tests` page has been expanded from a DPS-only runner into a **Causal Model Lab**.
 
-It now exposes three model-proof surfaces:
+It now exposes reusable model-proof surfaces including:
 
 1. **DPS numerical suite**
    - preserves the existing shareable synthetic regression suite;
@@ -41,6 +41,12 @@ It now exposes three model-proof surfaces:
    - calls `/api/admin/model-proof/guidance-alarm`;
    - exposes caller-supplied alarm/restart classification and restart-protection configuration;
    - shows alarm indication/restart/recovery state without producing an abort/continue decision.
+
+7. **Exercise malfunction → explicit causal insertions**
+   - calls `/api/admin/model-proof/malfunction-plan`;
+   - allows one exercise-level malfunction to expand into multiple explicit layer/target insertions;
+   - supports manual, preprogrammed, and time-dependent scheduling;
+   - never applies downstream effects or emits a diagnosis/outcome.
 
 The admin MODEL drawer now links to the Causal Model Lab while keeping the fast single-burn proof available in-place.
 

@@ -6,7 +6,7 @@
 <h1>Apollo Causal Model Lab</h1>
 <p>Site-facing validation of reusable causal-engine components through the real server API. PASS establishes only the stated synthetic model/API checks; it does not establish Apollo accuracy, crew behavior, or live-session integration. These tests do not reset or modify a mission.</p>
 <a href="/admin">Back to test console</a>
-<div class="labnav"><a href="#suite">DPS suite</a><a href="#trajectory">Trajectory → tracking</a><a href="#resource">Resource → power → observation</a><a href="#alarm">Guidance alarm/restart</a><a href="#guidance">Guidance comparison</a><a href="#radar">Landing radar</a><a href="/admin">Test console</a></div>
+<div class="labnav"><a href="#suite">DPS suite</a><a href="#trajectory">Trajectory → tracking</a><a href="#malfunction">Malfunction plan</a><a href="#resource">Resource → power → observation</a><a href="#alarm">Guidance alarm/restart</a><a href="#guidance">Guidance comparison</a><a href="#radar">Landing radar</a><a href="/admin">Test console</a></div>
 <p><label>Facilitator token <input id="token" type="password" autocomplete="off"></label></p>
 <div class="boundary"><b>CAUSAL MODEL LAB — NOT HISTORICALLY VALIDATED.</b> These controls exercise reusable causal-engine components with explicit synthetic inputs. They do not establish Apollo constants, historical accuracy, or player-facing display fidelity.</div>
 <span id="suite"></span><button id="run">Run standard suite</button>
@@ -36,6 +36,18 @@
 <div class="actions"><button id="runTrajectory">Run trajectory chain</button><button id="trOutage">Run observation outage</button></div>
 <div id="trajectoryTrace" class="chain"><div class="stage"><b>Authoritative trajectory</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Geometric tracking truth</b>Computed server-side</div><div class="arrow">→</div><div class="stage"><b>Controller-visible observation</b>Not run</div></div>
 <details class="raw"><summary>Raw trajectory-chain JSON</summary><pre id="trajectoryRaw">No run yet.</pre></details>
+</section>
+
+<section id="malfunction" class="panel">
+<h2>Exercise malfunction → explicit causal insertions</h2>
+<p class="note">Exercises the mission-neutral scheduler boundary recovered from Apollo simulator documentation. One exercise-level malfunction may activate multiple model-layer insertions, but this proof does not apply their downstream effects.</p>
+<div class="grid">
+<label class="field">Current time (s)<input id="mfNow" type="number" value="10" step="1"></label>
+<label class="field">Scheduled activation (s)<input id="mfDue" type="number" value="20" step="1"></label>
+</div>
+<div class="actions"><button id="runMalfunction">Run manual multi-layer plan</button><button id="runTimedMalfunction">Run due timed plan</button><button id="runEarlyMalfunction">Try timed plan early</button></div>
+<div id="malfunctionTrace" class="chain"><div class="stage"><b>Exercise failure intent</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Explicit insertions</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Downstream models</b>Not applied by scheduler</div></div>
+<details class="raw"><summary>Raw malfunction-plan JSON</summary><pre id="malfunctionRaw">No run yet.</pre></details>
 </section>
 
 <section id="resource" class="panel">
@@ -259,6 +271,45 @@ async function runTrajectory(outage=false){
 }
 $('runTrajectory').onclick=()=>runTrajectory(false);
 $('trOutage').onclick=()=>runTrajectory(true);
+
+function malfunctionPayload(mode='manual',now=num('mfNow')){
+ const timed=mode==='time_dependent';
+ return {
+  malfunction_id:timed?'synthetic_timed_failure':'synthetic_multilayer_failure',
+  description:timed?'synthetic scheduled source failure':'synthetic vehicle-system plus telemetry fault',
+  mode,
+  activation_time_s:timed?num('mfDue'):null,
+  current_time_s:now,
+  trigger_mode:timed?null:'manual',
+  insertions:timed?[
+   {insertion_id:'source_failure',layer:'vehicle_system',target:'source.available',value:false,provenance:'Synthetic browser input'}
+  ]:[
+   {insertion_id:'vehicle_failure',layer:'vehicle_system',target:'source.available',value:false,provenance:'Synthetic browser input'},
+   {insertion_id:'telemetry_fault',layer:'telemetry',target:'channel.valid',value:false,provenance:'Synthetic browser input'}
+  ],
+  provenance:'site causal-model lab malfunction-plan proof; not mission validated'
+ };
+}
+async function runMalfunction(mode='manual',early=false){
+ const p=malfunctionPayload(mode,early?num('mfDue')-1:(mode==='time_dependent'?num('mfDue'):num('mfNow')));
+ $('malfunctionRaw').textContent='Running…';
+ try{
+  const r=await request('/api/admin/model-proof/malfunction-plan',p);
+  recordCausal('malfunction-plan-'+mode+(early?'-early':''),p,r);
+  const a=r.activation;
+  $('malfunctionTrace').innerHTML=
+   traceStage('Exercise failure intent','<div>'+a.malfunction_id+'</div><div>mode = '+a.mode+'</div>')+
+   arrow()+traceStage('Explicit insertions',a.insertions.map(x=>'<div>'+x.layer+' → '+x.target+' = '+String(x.value)+'</div>').join(''))+
+   arrow()+traceStage('Downstream models','<div>applied '+statusBadge(a.applies_downstream_effects)+'</div><div class="note">The scheduler emits insertions only; subsystem/telemetry consequences remain separate.</div>');
+  $('malfunctionRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){
+  $('malfunctionTrace').innerHTML=traceStage('Exercise failure intent','<div>'+p.malfunction_id+'</div>')+arrow()+traceStage('Scheduling gate','<div class="badge bad">REJECTED</div><div>'+String(e.message||e)+'</div>')+arrow()+traceStage('Downstream models','<div>not reached</div>');
+  $('malfunctionRaw').textContent=String(e.message||e);
+ }
+}
+$('runMalfunction').onclick=()=>runMalfunction('manual',false);
+$('runTimedMalfunction').onclick=()=>runMalfunction('time_dependent',false);
+$('runEarlyMalfunction').onclick=()=>runMalfunction('time_dependent',true);
 
 function resourcePayload(duration=num('rpDuration')){
  return {
