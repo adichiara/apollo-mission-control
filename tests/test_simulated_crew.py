@@ -8,6 +8,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from apollo_mission_control.simulated_crew import (  # noqa: E402
     CrewInstructionRule,
+    CrewProcedureRule,
     SimulatedCrew,
 )
 
@@ -113,6 +114,70 @@ class SimulatedCrewTests(unittest.TestCase):
         crew.receive_instruction(item, get_s=10.0)
         with self.assertRaisesRegex(ValueError, "missing required parameter"):
             crew.perform_supported_action(item, get_s=10.0)
+
+    def test_prebriefed_procedure_steps_are_ordered_without_capcom_receipt(self):
+        crew = SimulatedCrew(
+            crew_id="CREW",
+            rules={},
+            procedures={
+                "restart": CrewProcedureRule(
+                    procedure_id="restart",
+                    steps=("proceed", "ullage", "engine_start"),
+                    provenance="synthetic pre-briefed procedure",
+                )
+            },
+        )
+        first = crew.perform_prebriefed_step(
+            "restart",
+            step_index=0,
+            get_s=20.0,
+        )
+        self.assertEqual(first.action, "proceed")
+        self.assertEqual(crew.receipts, {})
+        self.assertFalse(crew.procedure_complete("restart"))
+
+        second = crew.perform_prebriefed_step(
+            "restart",
+            step_index=1,
+            get_s=20.0,
+        )
+        third = crew.perform_prebriefed_step(
+            "restart",
+            step_index=2,
+            get_s=21.0,
+        )
+        self.assertEqual(second.action, "ullage")
+        self.assertEqual(third.action, "engine_start")
+        self.assertTrue(crew.procedure_complete("restart"))
+
+    def test_prebriefed_procedure_rejects_out_of_order_or_repeated_steps(self):
+        crew = SimulatedCrew(
+            crew_id="CREW",
+            rules={},
+            procedures={
+                "restart": CrewProcedureRule(
+                    procedure_id="restart",
+                    steps=("proceed", "ullage"),
+                )
+            },
+        )
+        with self.assertRaisesRegex(ValueError, "requires step 0 next"):
+            crew.perform_prebriefed_step(
+                "restart",
+                step_index=1,
+                get_s=20.0,
+            )
+        crew.perform_prebriefed_step("restart", step_index=0, get_s=20.0)
+        with self.assertRaisesRegex(ValueError, "requires step 1 next"):
+            crew.perform_prebriefed_step(
+                "restart",
+                step_index=0,
+                get_s=20.0,
+            )
+
+    def test_actor_requires_instruction_rule_or_prebriefed_procedure(self):
+        with self.assertRaisesRegex(ValueError, "at least one simulated crew"):
+            SimulatedCrew(crew_id="CREW", rules={}, procedures={})
 
     def test_rule_key_must_match_capcom_action(self):
         with self.assertRaisesRegex(ValueError, "does not match"):
