@@ -75,23 +75,26 @@ This omission is now consistent with, but is not the sole evidence for, the no-n
 
 - Report: MSC-02680
 - Date: 1970-04-28
-- Scan: https://apollojournals.org/alsj/a13/A13_MissionOpReport.pdf
+- Primary scan: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf
 - Source class: primary mission-specific postflight report
 
 ### Supports
 
 - `T+55` LM-burn mass-property-deck lineage;
 - ~59-hour CONTROL/Flight Dynamics trim disagreement and reconciliation;
-- PC+2 execution-state GDA observations.
+- PC+2 execution-state GDA observations;
+- a separate mission-specific **T+25 RTCC mass-properties run** where Flight Dynamics explicitly decided that no trim update was needed because pitch/yaw trims were within `0.01°` of the T+6 values.
 
 ### Boundary
 
-No recovered passage yet identifies the mass-properties job/comparison that supported the later PC+2 **no-update** decision.
+The T+25 case establishes a `run -> compare -> update/no-update` workflow, but its `0.01°` criterion must **not** be transferred to PC+2. No recovered passage yet identifies the PC+2 candidate trim, comparison delta/tolerance, retained state, or mass-properties job supporting the later no-update decision.
 
 ## Current synthesis
 
 Do not search for or invent a “final PC+2 Noun 48 pair” as though one must have existed. Current primary operational and software evidence supports:
 
-`computed/available trim information -> controller acceptance/no-update decision -> Noun 46 configuration -> Noun 47 display -> VERB 34 termination -> software exits R03 before Noun 48 -> no new Noun 48 crew entry -> retained gimbal state -> powered-flight GDA response`.
+`mass-properties run -> candidate trim -> controller comparison -> update/no-update decision -> Noun 46 configuration -> Noun 47 display -> VERB 34 termination -> software exits R03 before Noun 48 -> no new Noun 48 crew entry -> retained gimbal state -> powered-flight GDA response`.
 
-The next archival target is the controller-side basis for the no-update decision, not a presumed missing crew-entered trim pair.
+Apollo 13 independently demonstrates the comparison/no-update stage at T+25. The exact PC+2 comparison values and criterion remain unresolved.
+
+The next archival target is the controller-side basis for the PC+2 no-update decision: the equivalent of the documented T+25 comparison, ideally candidate trim, current/reference trim, comparison delta/tolerance, and calculation/job provenance.
