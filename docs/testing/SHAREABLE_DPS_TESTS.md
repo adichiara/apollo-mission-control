@@ -5,6 +5,21 @@ Enter the facilitator token if it is not already available from the test console
 
 The page is validation infrastructure. It does not create, reset, advance, or modify a mission session.
 
+## PC+2 action-consequence matrix
+
+The lab exposes:
+
+`POST /api/admin/model-proof/pc2-action-consequences`
+
+This reference-scenario proof runs four isolated authoritative PC+2 sessions through the same timing/action logic:
+
+- **correct** — timely FLIGHT GO preserves the P40/ignition chain;
+- **late** — GO after the P40 nominal milestone is accepted, but the already-missed event is not replayed;
+- **omitted** — no GO allows GET to continue while dependent nominal milestones are missed;
+- **wrong** — a non-FLIGHT actor's GO attempt is rejected, the gate stays pending, and GET still advances.
+
+“Late” is strictly D-016 missed-event ordering semantics. It is not a historical judgment that 79:24 GET was operationally too late, and it does not establish an allowable delay.
+
 ## DPS numerical suite
 
 Click **Run standard suite** to exercise the mission-neutral DPS model through the protected server API.
