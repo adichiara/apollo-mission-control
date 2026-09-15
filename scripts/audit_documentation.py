@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Inventory documentation links and report reproducible evidence-audit issues."""
+"""Inventory documentation links and enforce reproducible evidence-audit issues."""
 
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 import urllib.error
@@ -16,10 +17,25 @@ from urllib.parse import urldefrag
 URL_RE = re.compile(r"https?://[^\s)>\]}]+")
 MARKDOWN_LINK_RE = re.compile(r"!?\[[^]]*\]\(([^)]+)\)")
 NOTE_RE = re.compile(r"^(\d{3})_.*\.md$")
+TEXT_SUFFIXES = {
+    ".md", ".json", ".py", ".txt", ".toml", ".yml", ".yaml",
+    ".html", ".js", ".css", ".ini", ".cfg",
+}
+WITHDRAWN_CLAIMS_PATH = Path("resources/audits/withdrawn_claims.json")
 
 
 def markdown_files(root: Path) -> list[Path]:
     return sorted(p for p in root.rglob("*.md") if ".git" not in p.parts)
+
+
+def repository_text_files(root: Path) -> list[Path]:
+    return sorted(
+        p for p in root.rglob("*")
+        if p.is_file()
+        and ".git" not in p.parts
+        and p.suffix.lower() in TEXT_SUFFIXES
+        and p.relative_to(root) != WITHDRAWN_CLAIMS_PATH
+    )
 
 
 def clean_url(raw: str) -> str:
@@ -53,6 +69,57 @@ def check_note_ids(root: Path) -> dict[str, list[str]]:
     return {key: value for key, value in by_id.items() if len(value) > 1}
 
 
+def load_withdrawn_claims(root: Path) -> list[dict[str, str]]:
+    path = root / WITHDRAWN_CLAIMS_PATH
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, dict) or not isinstance(data.get("claims"), list):
+        raise ValueError("withdrawn claims file must contain a 'claims' list")
+
+    claims: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for item in data["claims"]:
+        if not isinstance(item, dict):
+            raise ValueError("withdrawn claim entries must be objects")
+        claim = item.get("claim")
+        withdrawn_by = item.get("withdrawn_by")
+        replacement = item.get("replacement", "")
+        if not isinstance(claim, str) or not claim:
+            raise ValueError("withdrawn claim text must be a non-empty string")
+        if not isinstance(withdrawn_by, str) or not withdrawn_by:
+            raise ValueError("withdrawn_by must be a non-empty path string")
+        if claim in seen:
+            raise ValueError(f"duplicate withdrawn claim string: {claim}")
+        seen.add(claim)
+        if not (root / withdrawn_by).exists():
+            raise ValueError(f"withdrawn_by path does not exist: {withdrawn_by}")
+        claims.append(
+            {
+                "claim": claim,
+                "withdrawn_by": withdrawn_by,
+                "replacement": replacement if isinstance(replacement, str) else "",
+            }
+        )
+    return claims
+
+
+def check_withdrawn_claims(
+    root: Path,
+    files: list[Path],
+    claims: list[dict[str, str]],
+) -> list[str]:
+    failures: list[str] = []
+    for path in files:
+        text = path.read_text(encoding="utf-8")
+        for item in claims:
+            claim = item["claim"]
+            if claim in text:
+                failures.append(
+                    f"{path.relative_to(root)} contains withdrawn claim {claim!r} "
+                    f"(withdrawn by {item['withdrawn_by']})"
+                )
+    return failures
+
+
 def external_urls(files: list[Path]) -> tuple[list[str], Counter[str]]:
     references: list[str] = []
     for path in files:
@@ -67,7 +134,7 @@ def http_status(url: str, timeout: int) -> str:
             return str(response.status)
     except urllib.error.HTTPError as exc:
         return str(exc.code)
-    except Exception as exc:  # Network/TLS failures must remain distinguishable from HTTP failures.
+    except Exception as exc:
         return f"ERROR:{type(exc).__name__}"
 
 
@@ -78,12 +145,21 @@ def main() -> int:
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parents[1]
-    files = markdown_files(root)
-    urls, counts = external_urls(files)
-    broken_internal = check_internal_links(root, files)
+    markdown = markdown_files(root)
+    text_files = repository_text_files(root)
+    urls, counts = external_urls(markdown)
+    broken_internal = check_internal_links(root, markdown)
     duplicate_notes = check_note_ids(root)
 
-    print(f"Markdown files: {len(files)}")
+    withdrawn_config_error: str | None = None
+    withdrawn_hits: list[str] = []
+    try:
+        withdrawn_claims = load_withdrawn_claims(root)
+        withdrawn_hits = check_withdrawn_claims(root, text_files, withdrawn_claims)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        withdrawn_config_error = str(exc)
+
+    print(f"Markdown files: {len(markdown)}")
     print(f"External URL references: {sum(counts.values())}")
     print(f"Unique external URLs: {len(urls)}")
     print(f"Broken internal links: {len(broken_internal)}")
@@ -92,6 +168,11 @@ def main() -> int:
     print(f"Duplicate research-note IDs: {len(duplicate_notes)}")
     for note_id, names in duplicate_notes.items():
         print(f"  {note_id}: {', '.join(names)}")
+    if withdrawn_config_error:
+        print(f"Withdrawn-claims configuration error: {withdrawn_config_error}")
+    print(f"Withdrawn-claim occurrences: {len(withdrawn_hits)}")
+    for failure in withdrawn_hits:
+        print(f"  {failure}")
 
     http_failures = 0
     if args.check_http:
@@ -102,7 +183,13 @@ def main() -> int:
             if status != "200":
                 http_failures += 1
 
-    return 1 if broken_internal or http_failures else 0
+    return 1 if (
+        broken_internal
+        or duplicate_notes
+        or withdrawn_config_error
+        or withdrawn_hits
+        or http_failures
+    ) else 0
 
 
 if __name__ == "__main__":
