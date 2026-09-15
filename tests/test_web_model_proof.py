@@ -168,6 +168,75 @@ class WebModelProofTests(unittest.TestCase):
         self.assertFalse(observation["available"])
         self.assertFalse(observation["valid"])
 
+    def test_malfunction_plan_endpoint_expands_one_failure_into_explicit_insertions_only(self):
+        payload = {
+            "malfunction_id": "synthetic-dual-layer",
+            "description": "synthetic vehicle plus telemetry fault",
+            "mode": "manual",
+            "current_time_s": 10.0,
+            "trigger_mode": "manual",
+            "insertions": [
+                {
+                    "insertion_id": "vehicle-source",
+                    "layer": "vehicle_system",
+                    "target": "electrical.source_available",
+                    "value": False,
+                    "provenance": "synthetic browser/API test",
+                },
+                {
+                    "insertion_id": "telemetry-channel",
+                    "layer": "telemetry",
+                    "target": "telemetry.channel_valid",
+                    "value": False,
+                    "provenance": "synthetic browser/API test",
+                },
+            ],
+            "provenance": "synthetic malfunction-plan API proof",
+        }
+        response = self.client.post(
+            "/api/admin/model-proof/malfunction-plan",
+            json=payload,
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(
+            body["model_status"],
+            "malfunction_plan_scheduler_proof_not_historically_validated",
+        )
+        activation = body["activation"]
+        self.assertFalse(activation["applies_downstream_effects"])
+        self.assertEqual(
+            [item["layer"] for item in activation["insertions"]],
+            ["vehicle_system", "telemetry"],
+        )
+        self.assertNotIn("outcome", activation)
+        self.assertNotIn("diagnosis", activation)
+
+    def test_time_dependent_malfunction_plan_endpoint_rejects_early_activation(self):
+        payload = {
+            "malfunction_id": "synthetic-timed",
+            "description": "synthetic timed failure",
+            "mode": "time_dependent",
+            "activation_time_s": 20.0,
+            "current_time_s": 19.0,
+            "insertions": [
+                {
+                    "insertion_id": "source",
+                    "layer": "vehicle_system",
+                    "target": "source.state",
+                    "value": "failed",
+                    "provenance": "synthetic browser/API test",
+                }
+            ],
+            "provenance": "synthetic timed plan proof",
+        }
+        response = self.client.post(
+            "/api/admin/model-proof/malfunction-plan",
+            json=payload,
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("not due until", response.json()["detail"])
+
     def test_resource_inventory_endpoint_exposes_depletion_and_shortfall(self):
         payload = {
             "initial_time_s": 0.0,
