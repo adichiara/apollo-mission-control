@@ -27,6 +27,16 @@ It now exposes three model-proof surfaces:
    - displays remaining resource, derived source availability, receiver supply state, and downstream tracking availability;
    - includes a before/after-depletion comparison that demonstrates model-to-model consequence propagation.
 
+4. **Guidance comparison / consensus**
+   - calls `/api/admin/model-proof/guidance-crosscheck` and `/api/admin/model-proof/guidance-consensus`;
+   - displays independent observations, residual/freshness relationships, and consensus topology separately;
+   - never selects hidden truth, diagnoses a failed source, or issues a mission decision.
+
+5. **Landing-radar quality → update eligibility**
+   - calls `/api/admin/model-proof/landing-radar-quality-update`;
+   - preserves the boundary from raw Data Good/channel state through qualification and qualified measurement into update eligibility;
+   - rejects implicit unit conversion at the API boundary.
+
 The admin MODEL drawer now links to the Causal Model Lab while keeping the fast single-burn proof available in-place.
 
 ## Validation boundary

@@ -41,6 +41,28 @@ from .electrical_power_model import (
     ElectricalSourceSpec,
     evaluate_electrical_bus,
 )
+from .guidance_crosscheck import (
+    GuidanceCrosscheckConfig,
+    GuidanceObservation,
+    compare_guidance_observations,
+)
+from .guidance_voting import (
+    GuidanceVotingConfig,
+    assess_guidance_consensus,
+)
+from .landing_radar_model import (
+    LandingRadarGuidanceContext,
+    LandingRadarMeasurement,
+    LandingRadarUpdateConfig,
+    assess_landing_radar_update,
+)
+from .landing_radar_quality import (
+    AffineResidualRule,
+    LandingRadarQualityConfig,
+    LandingRadarQualityInput,
+    RadarScalarChannel,
+    qualify_landing_radar_measurements,
+)
 from .mission_profiles import (
     MissionProfileRecord,
     discover_mission_profiles,
@@ -248,6 +270,81 @@ class TrajectoryTrackingModelProofRequest(BaseModel):
     observation: TrackingObservationRequest = Field(
         default_factory=TrackingObservationRequest
     )
+
+
+class GuidanceObservationRequest(BaseModel):
+    source: str = Field(min_length=1, max_length=128)
+    time_s: float
+    valid: bool = True
+    values: dict[str, float]
+    provenance: list[str] = Field(default_factory=list, max_length=20)
+
+
+class GuidanceCrosscheckModelProofRequest(BaseModel):
+    first: GuidanceObservationRequest
+    second: GuidanceObservationRequest
+    tolerances: dict[str, float]
+    max_time_separation_s: float = Field(ge=0.0, le=86_400.0)
+    applicability: str = Field(
+        default="generic guidance cross-check API proof; not mission validated",
+        min_length=1,
+        max_length=500,
+    )
+    provenance: list[str] = Field(default_factory=list, max_length=20)
+
+
+class GuidanceConsensusModelProofRequest(BaseModel):
+    observations: list[GuidanceObservationRequest] = Field(min_length=2, max_length=20)
+    tolerances: dict[str, float]
+    max_time_separation_s: float = Field(ge=0.0, le=86_400.0)
+    minimum_agreeing_sources: int = Field(default=2, ge=2, le=20)
+    applicability: str = Field(
+        default="generic guidance consensus API proof; not mission validated",
+        min_length=1,
+        max_length=500,
+    )
+    provenance: list[str] = Field(default_factory=list, max_length=20)
+
+
+class RadarScalarChannelRequest(BaseModel):
+    measured_value: float
+    reference_value: float
+    unit: str = Field(min_length=1, max_length=32)
+    valid: bool = True
+
+
+class AffineResidualRuleRequest(BaseModel):
+    fixed_tolerance: float = Field(ge=0.0)
+    proportional_tolerance: float = Field(default=0.0, ge=0.0)
+
+
+class LandingRadarQualityUpdateChainRequest(BaseModel):
+    time_s: float
+    guidance_time_s: float
+    data_good: bool = True
+    data_good_since_s: float | None = None
+    range_scale_last_changed_s: float | None = None
+    source: str = Field(
+        default="generic landing-radar chain API proof",
+        min_length=1,
+        max_length=500,
+    )
+    channels: dict[str, RadarScalarChannelRequest]
+    min_data_good_duration_s: float = Field(default=0.0, ge=0.0)
+    min_range_scale_stable_s: float | None = Field(default=None, ge=0.0)
+    scale_stability_channels: list[str] = Field(default_factory=list, max_length=20)
+    residual_rules: dict[str, AffineResidualRuleRequest]
+    updates_enabled: bool = True
+    estimated_velocity_m_s: list[float] = Field(min_length=3, max_length=3)
+    velocity_update_speed_threshold_m_s: float | None = Field(default=None, ge=0.0)
+    altitude_channel: str = Field(default="altitude", min_length=1, max_length=128)
+    velocity_channel: str = Field(default="velocity_axis", min_length=1, max_length=128)
+    applicability: str = Field(
+        default="generic landing-radar quality/update API proof; not mission validated",
+        min_length=1,
+        max_length=500,
+    )
+    provenance: list[str] = Field(default_factory=list, max_length=20)
 
 
 class ResourceSpecRequest(BaseModel):
@@ -1003,6 +1100,185 @@ def _electrical_bus_from_request(
             bus_enabled=request.bus_enabled,
         ),
     )
+
+
+def _guidance_observation_from_request(
+    request: GuidanceObservationRequest,
+) -> GuidanceObservation:
+    return GuidanceObservation(
+        source=request.source,
+        time_s=request.time_s,
+        valid=request.valid,
+        values=request.values,
+        provenance=tuple(request.provenance),
+    )
+
+
+@app.post(
+    "/api/admin/model-proof/guidance-crosscheck",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def guidance_crosscheck_model_proof(
+    request: GuidanceCrosscheckModelProofRequest,
+) -> dict[str, object]:
+    result = _domain_call(
+        lambda: compare_guidance_observations(
+            _guidance_observation_from_request(request.first),
+            _guidance_observation_from_request(request.second),
+            GuidanceCrosscheckConfig(
+                tolerances=request.tolerances,
+                max_time_separation_s=request.max_time_separation_s,
+                applicability=request.applicability,
+                provenance=tuple(request.provenance),
+            ),
+        )
+    )
+    return result.to_dict()
+
+
+@app.post(
+    "/api/admin/model-proof/guidance-consensus",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def guidance_consensus_model_proof(
+    request: GuidanceConsensusModelProofRequest,
+) -> dict[str, object]:
+    result = _domain_call(
+        lambda: assess_guidance_consensus(
+            [
+                _guidance_observation_from_request(observation)
+                for observation in request.observations
+            ],
+            GuidanceVotingConfig(
+                tolerances=request.tolerances,
+                max_time_separation_s=request.max_time_separation_s,
+                minimum_agreeing_sources=request.minimum_agreeing_sources,
+                applicability=request.applicability,
+                provenance=tuple(request.provenance),
+            ),
+        )
+    )
+    return result.to_dict()
+
+
+@app.post(
+    "/api/admin/model-proof/landing-radar-quality-update",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def landing_radar_quality_update_model_proof(
+    request: LandingRadarQualityUpdateChainRequest,
+) -> dict[str, object]:
+    quality = _domain_call(
+        lambda: qualify_landing_radar_measurements(
+            LandingRadarQualityInput(
+                time_s=request.time_s,
+                data_good=request.data_good,
+                data_good_since_s=request.data_good_since_s,
+                range_scale_last_changed_s=request.range_scale_last_changed_s,
+                source=request.source,
+                channels={
+                    name: RadarScalarChannel(
+                        measured_value=channel.measured_value,
+                        reference_value=channel.reference_value,
+                        unit=channel.unit,
+                        valid=channel.valid,
+                    )
+                    for name, channel in request.channels.items()
+                },
+            ),
+            LandingRadarQualityConfig(
+                min_data_good_duration_s=request.min_data_good_duration_s,
+                min_range_scale_stable_s=request.min_range_scale_stable_s,
+                scale_stability_channels=tuple(request.scale_stability_channels),
+                residual_rules={
+                    name: AffineResidualRule(
+                        fixed_tolerance=rule.fixed_tolerance,
+                        proportional_tolerance=rule.proportional_tolerance,
+                    )
+                    for name, rule in request.residual_rules.items()
+                },
+                applicability=request.applicability,
+                provenance=tuple(request.provenance),
+            ),
+        )
+    )
+
+    try:
+        altitude_quality = quality.channel(request.altitude_channel)
+    except ValueError:
+        altitude_quality = None
+    try:
+        velocity_quality = quality.channel(request.velocity_channel)
+    except ValueError:
+        velocity_quality = None
+
+    altitude_request = request.channels.get(request.altitude_channel)
+    velocity_request = request.channels.get(request.velocity_channel)
+
+    if altitude_request is not None and altitude_request.unit != "m":
+        raise HTTPException(
+            status_code=400,
+            detail="altitude_channel must use unit 'm'; no implicit conversion is performed",
+        )
+    if velocity_request is not None and velocity_request.unit != "m/s":
+        raise HTTPException(
+            status_code=400,
+            detail="velocity_channel must use unit 'm/s'; no implicit conversion is performed",
+        )
+
+    altitude_m = (
+        altitude_request.measured_value
+        if altitude_request is not None
+        and altitude_quality is not None
+        and altitude_quality.accepted
+        else None
+    )
+    velocity_m_s = (
+        (velocity_request.measured_value, 0.0, 0.0)
+        if velocity_request is not None
+        and velocity_quality is not None
+        and velocity_quality.accepted
+        else None
+    )
+
+    update = _domain_call(
+        lambda: assess_landing_radar_update(
+            LandingRadarMeasurement(
+                time_s=request.time_s,
+                data_good=quality.data_good_qualified,
+                altitude_m=altitude_m,
+                velocity_m_s=velocity_m_s,
+                source=request.source,
+            ),
+            LandingRadarGuidanceContext(
+                time_s=request.guidance_time_s,
+                updates_enabled=request.updates_enabled,
+                estimated_velocity_m_s=tuple(request.estimated_velocity_m_s),
+            ),
+            LandingRadarUpdateConfig(
+                velocity_update_speed_threshold_m_s=(
+                    request.velocity_update_speed_threshold_m_s
+                ),
+                applicability=request.applicability,
+                provenance=tuple(request.provenance),
+            ),
+        )
+    )
+
+    return {
+        "model_status": (
+            "landing_radar_quality_update_chain_not_historically_validated"
+        ),
+        "quality": quality.to_dict(),
+        "qualified_measurement": {
+            "time_s": request.time_s,
+            "data_good": quality.data_good_qualified,
+            "altitude_m": altitude_m,
+            "velocity_m_s": list(velocity_m_s) if velocity_m_s is not None else None,
+            "source": request.source,
+        },
+        "update_assessment": update.to_dict(),
+    }
 
 
 @app.post(
