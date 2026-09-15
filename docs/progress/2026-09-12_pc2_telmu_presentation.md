@@ -15,7 +15,8 @@ Date: 2026-09-12
 - Added `tests/test_telmu_presentation.py`.
 - Defined the first TELMU player view as an explicitly labeled project rendering rather than a claimed historical CRT transcription.
 - Labeled the documented 38–40 A figure as **BURN CONFIG CURRENT REF**, not live current telemetry.
-- Kept inverter warning, switch action, and switch timestamp distinct.
+- Originally kept inverter warning, switch action, and switch timestamp distinct.
+- **Correction (2026-09-15):** the direct inverter-warning field was removed from TELMU after research note 117 bounded the derived caution as crew-side unless a stronger direct telemetry source is recovered. Source-backed inverter-bus voltage/frequency remain separate future TELMU electrical products once H-2 loading/presentation is sufficiently sourced.
 - Omitted deferred actual current (`lm.power.current_a`) rather than presenting it as failed/unavailable historical telemetry.
 - Kept hidden product-integrity metadata outside the player presentation.
 
