@@ -1,13 +1,13 @@
 """Mission-neutral deterministic simulated flight-crew actor.
 
-The actor separates:
-1. transmitted CAPCOM instruction;
-2. crew receipt/acknowledgement;
-3. supported crew operational action;
-4. downstream physical/subsystem response.
+The actor supports two bounded procedure sources:
 
-Rules are supplied by the scenario/runtime. No response delay, physical effect,
-or mission decision is invented by this module.
+1. transmitted CAPCOM instruction → crew receipt → supported crew action; and
+2. scenario-supplied pre-briefed procedure → ordered crew steps.
+
+Downstream physical/subsystem response remains separate in both cases. Rules are
+supplied by the scenario/runtime. No response delay, physical effect, or mission
+decision is invented by this module.
 """
 
 from __future__ import annotations
@@ -67,6 +67,37 @@ class CrewInstructionRule:
 
 
 @dataclass(frozen=True)
+class CrewProcedureRule:
+    """Scenario-supplied ordered procedure already briefed to the crew."""
+
+    procedure_id: str
+    steps: tuple[str, ...]
+    provenance: str = "project-configured pre-briefed crew procedure"
+
+    def validated(self) -> "CrewProcedureRule":
+        procedure_id = _text(self.procedure_id, "procedure_id")
+        steps = tuple(_text(step, "procedure step") for step in self.steps)
+        if not steps:
+            raise ValueError("pre-briefed crew procedure requires at least one step")
+        return CrewProcedureRule(
+            procedure_id=procedure_id,
+            steps=steps,
+            provenance=_text(self.provenance, "provenance"),
+        )
+
+
+@dataclass(frozen=True)
+class CrewProcedureAction:
+    action_id: str
+    procedure_id: str
+    step_index: int
+    crew_id: str
+    get_s: float
+    action: str
+    provenance: str
+
+
+@dataclass(frozen=True)
 class CrewReceipt:
     capcom_item_id: int
     crew_id: str
@@ -93,8 +124,10 @@ class SimulatedCrew:
 
     crew_id: str
     rules: Mapping[str, CrewInstructionRule]
+    procedures: Mapping[str, CrewProcedureRule] = field(default_factory=dict)
     receipts: dict[int, CrewReceipt] = field(default_factory=dict)
     actions: dict[int, CrewOperationalAction] = field(default_factory=dict)
+    procedure_actions: dict[str, list[CrewProcedureAction]] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         self.crew_id = _text(self.crew_id, "crew_id")
@@ -109,9 +142,24 @@ class SimulatedCrew:
                     f"{rule.capcom_action!r}"
                 )
             normalized[key] = rule
-        if not normalized:
-            raise ValueError("at least one simulated crew rule is required")
         self.rules = normalized
+
+        normalized_procedures: dict[str, CrewProcedureRule] = {}
+        for raw_key, raw_rule in self.procedures.items():
+            key = _text(raw_key, "crew procedure key")
+            rule = raw_rule.validated()
+            if key != rule.procedure_id:
+                raise ValueError(
+                    f"crew procedure key {key!r} does not match procedure_id "
+                    f"{rule.procedure_id!r}"
+                )
+            normalized_procedures[key] = rule
+        self.procedures = normalized_procedures
+
+        if not self.rules and not self.procedures:
+            raise ValueError(
+                "at least one simulated crew instruction rule or pre-briefed procedure is required"
+            )
 
     def rule_for(self, item: CapcomInstructionLike) -> CrewInstructionRule:
         if not isinstance(item, CapcomInstructionLike):
@@ -190,3 +238,61 @@ class SimulatedCrew:
         )
         self.actions[item.item_id] = action
         return action
+
+    def perform_prebriefed_step(
+        self,
+        procedure_id: str,
+        *,
+        step_index: int,
+        get_s: float,
+    ) -> CrewProcedureAction:
+        """Perform one ordered step of a scenario-supplied pre-briefed procedure.
+
+        This path deliberately has no synthetic CAPCOM receipt. It is intended
+        for procedures already communicated before the triggering event. The
+        caller remains responsible for deciding whether the procedure is
+        applicable and for applying any downstream physical effects.
+        """
+        procedure_key = _text(procedure_id, "procedure_id")
+        rule = self.procedures.get(procedure_key)
+        if rule is None:
+            raise ValueError(f"unsupported pre-briefed crew procedure: {procedure_key}")
+        if not isinstance(step_index, int):
+            raise ValueError("procedure step_index must be an integer")
+        if step_index < 0 or step_index >= len(rule.steps):
+            raise ValueError(
+                f"procedure step_index {step_index} is outside 0..{len(rule.steps) - 1}"
+            )
+
+        prior = self.procedure_actions.setdefault(procedure_key, [])
+        expected_index = len(prior)
+        if step_index != expected_index:
+            raise ValueError(
+                f"pre-briefed procedure {procedure_key} requires step "
+                f"{expected_index} next, not {step_index}"
+            )
+
+        action_get_s = _finite(get_s, "crew procedure action get_s")
+        if prior and action_get_s < prior[-1].get_s:
+            raise ValueError("crew procedure action cannot precede the prior step")
+
+        action_name = rule.steps[step_index]
+        action = CrewProcedureAction(
+            action_id=f"crew-{procedure_key}-{step_index}",
+            procedure_id=procedure_key,
+            step_index=step_index,
+            crew_id=self.crew_id,
+            get_s=action_get_s,
+            action=action_name,
+            provenance=rule.provenance,
+        )
+        prior.append(action)
+        return action
+
+    def procedure_complete(self, procedure_id: str) -> bool:
+        """Return whether all configured steps have been performed in order."""
+        procedure_key = _text(procedure_id, "procedure_id")
+        rule = self.procedures.get(procedure_key)
+        if rule is None:
+            raise ValueError(f"unsupported pre-briefed crew procedure: {procedure_key}")
+        return len(self.procedure_actions.get(procedure_key, ())) == len(rule.steps)
