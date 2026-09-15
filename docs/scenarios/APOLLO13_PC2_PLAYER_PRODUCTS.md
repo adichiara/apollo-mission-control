@@ -175,7 +175,7 @@ For the implemented nonnominal branch, a threshold exceedance produces a CONTROL
 | Product | Class | Purpose |
 |---|---|---|
 | LM electrical-load/configuration product | B | verify burn power-up and post-burn power-down |
-| Inverter/electrical warning state | B | shutdown-rule support |
+| Inverter-bus electrical evidence / crew caution report | B | shutdown-rule support without assuming direct caution telemetry |
 | Limited consumables context | B | ensure burn configuration does not compromise return plan |
 
 ### Implemented first-pass player view
@@ -184,13 +184,13 @@ The current TELMU project rendering contains:
 
 - LM power/configuration mode;
 - documented **38–40 A burn-configuration current reference**;
-- inverter warning state;
 - inverter-switch action state and action GET;
+- no direct TELMU INVERTER-caution telemetry field; the caution state is represented to the ground through crew reporting;
 - post-burn power-down transition.
 
 The 38–40 A figure is explicitly rendered as **BURN CONFIG CURRENT REF**. It is a documented expected/required configuration load from the Mission Operations Report, not live measured current telemetry.
 
-The inverter warning and inverter-switch action remain distinct. A switch action does not imply that the warning cleared, and a warning does not automatically expose a diagnosis.
+The onboard INVERTER caution and inverter-switch action remain distinct. Reviewed primary schematics do not establish a direct ground telemetry tap for the derived caution. Ground rule evaluation therefore uses explicit crew reporting, while source-backed `GC0071V` / `GC0155F` electrical measurements remain a separate telemetry path whose exact H-2 loading/display is unresolved.
 
 ### Deferred
 
