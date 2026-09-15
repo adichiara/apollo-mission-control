@@ -102,8 +102,9 @@
 <label class="field">Max time separation (s)<input id="gcFreshness" type="number" value="1" step="0.1"></label>
 <label class="field">Ground observation time (s)<input id="gcGroundTime" type="number" value="10" step="0.1"></label>
 </div>
-<div class="actions"><button id="runCrosscheck">Run pairwise cross-check</button><button id="runConsensus">Run 3-source consensus</button><button id="runStaleConsensus">Make ground stale</button></div>
+<div class="actions"><button id="runCrosscheck">Run pairwise cross-check</button><button id="runConsensus">Run 3-source consensus</button><button id="runStaleConsensus">Make ground stale</button><button id="loadApollo11GuidanceProfile">Load Apollo 11 historical profile</button></div>
 <div id="guidanceTrace" class="chain"><div class="stage"><b>Independent observations</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Pairwise residuals / freshness</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Agreement topology</b>Not run</div></div>
+<div id="guidanceProfileTrace" class="chain"><div class="stage"><b>Historical profile</b>Not loaded</div><div class="arrow">→</div><div class="stage"><b>Timing evidence</b>Not loaded</div><div class="arrow">→</div><div class="stage"><b>Execution gate</b>Not loaded</div></div>
 <details class="raw"><summary>Raw guidance JSON</summary><pre id="guidanceRaw">No run yet.</pre></details>
 </section>
 
@@ -138,7 +139,7 @@ async function request(path,payload,expectedStatus=200){
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),30000);
  try{
  const response=await fetch(path,{method:payload?'POST':'GET',signal:controller.signal,
- headers:payload?{'Content-Type':'application/json','X-Apollo-Facilitator':$('token').value}:{},
+ headers:{'X-Apollo-Facilitator':$('token').value,...(payload?{'Content-Type':'application/json'}:{})},
  ...(payload?{body:JSON.stringify(payload)}:{})});
  if(response.status!==expectedStatus)throw Error('HTTP '+response.status+'; expected '+expectedStatus);
  return await response.json();
@@ -412,6 +413,22 @@ async function runGuidanceAlarm(mode='normal'){
 $('runAlarm').onclick=()=>runGuidanceAlarm('normal');
 $('runAlarmUnprotected').onclick=()=>runGuidanceAlarm('unprotected');
 $('runAlarmNoRestart').onclick=()=>runGuidanceAlarm('no-restart');
+
+async function loadApollo11GuidanceProfile(){
+ $('guidanceRaw').textContent='Loading historical profile…';
+ try{
+  const r=await request('/api/admin/model-proof/guidance-monitoring-profile/apollo11_g_powered_descent_monitoring_partial');
+  recordCausal('apollo11-guidance-monitoring-profile',{},r);
+  const t=r.timing_evidence||{};
+  const unresolved=r.comparisons.filter(x=>x.max_time_separation_s===null).length;
+  $('guidanceProfileTrace').innerHTML=
+   traceStage('Historical profile','<div>'+r.profile_id+'</div><div>'+r.comparisons.length+' source-pair comparisons</div><div class="note">Residual limits are source-backed profile data.</div>')+
+   arrow()+traceStage('Timing evidence','<div>MSFN tracking input = '+scalar(t.tracking_input_rate_hz)+' Hz</div><div>PFP processing = '+(t.processor_interval_s_options||[]).join(' / ')+' s</div><div>time quantization = '+(t.observation_time_quantization_s_options||[]).join(' / ')+' s</div><div>real-time lag = '+(t.real_time_lag_s??'unresolved')+'</div><div class="note">Cadence is not a comparison freshness rule.</div>')+
+   arrow()+traceStage('Execution gate','<div><span class="badge '+(r.historically_executable?'good':'warn')+'">'+String(r.execution_gate).toUpperCase()+'</span></div><div>'+unresolved+' comparisons lack max time separation</div><div class="note">'+r.gate_note+'</div>');
+  $('guidanceRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){$('guidanceRaw').textContent=String(e.message||e)}
+}
+$('loadApollo11GuidanceProfile').onclick=loadApollo11GuidanceProfile;
 
 function guidanceObservation(source,value,time=10,valid=true){
  return {source,time_s:time,valid,values:{radial_velocity:value},provenance:['Synthetic browser input']};
