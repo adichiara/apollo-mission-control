@@ -67,6 +67,37 @@ class CrewInstructionRule:
 
 
 @dataclass(frozen=True)
+class CrewProcedureRule:
+    """Scenario-supplied deterministic procedure learned before the active window."""
+
+    procedure_id: str
+    steps: tuple[str, ...]
+    provenance: str = "project-configured prebriefed crew procedure"
+
+    def validated(self) -> "CrewProcedureRule":
+        procedure_id = _text(self.procedure_id, "procedure_id")
+        steps = tuple(_text(step, "procedure step") for step in self.steps)
+        if not steps:
+            raise ValueError("prebriefed crew procedure requires at least one step")
+        return CrewProcedureRule(
+            procedure_id=procedure_id,
+            steps=steps,
+            provenance=_text(self.provenance, "provenance"),
+        )
+
+
+@dataclass(frozen=True)
+class CrewProcedureAction:
+    action_id: str
+    procedure_id: str
+    crew_id: str
+    get_s: float
+    action: str
+    sequence_index: int
+    provenance: str
+
+
+@dataclass(frozen=True)
 class CrewReceipt:
     capcom_item_id: int
     crew_id: str
@@ -93,8 +124,10 @@ class SimulatedCrew:
 
     crew_id: str
     rules: Mapping[str, CrewInstructionRule]
+    procedures: Mapping[str, CrewProcedureRule] = field(default_factory=dict)
     receipts: dict[int, CrewReceipt] = field(default_factory=dict)
     actions: dict[int, CrewOperationalAction] = field(default_factory=dict)
+    procedure_runs: dict[str, tuple[CrewProcedureAction, ...]] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         self.crew_id = _text(self.crew_id, "crew_id")
@@ -109,9 +142,21 @@ class SimulatedCrew:
                     f"{rule.capcom_action!r}"
                 )
             normalized[key] = rule
-        if not normalized:
-            raise ValueError("at least one simulated crew rule is required")
+        if not normalized and not self.procedures:
+            raise ValueError("at least one simulated crew instruction rule or procedure is required")
         self.rules = normalized
+
+        normalized_procedures: dict[str, CrewProcedureRule] = {}
+        for raw_key, raw_rule in self.procedures.items():
+            key = _text(raw_key, "crew procedure key")
+            rule = raw_rule.validated()
+            if key != rule.procedure_id:
+                raise ValueError(
+                    f"crew procedure key {key!r} does not match procedure_id "
+                    f"{rule.procedure_id!r}"
+                )
+            normalized_procedures[key] = rule
+        self.procedures = normalized_procedures
 
     def rule_for(self, item: CapcomInstructionLike) -> CrewInstructionRule:
         if not isinstance(item, CapcomInstructionLike):
@@ -190,3 +235,37 @@ class SimulatedCrew:
         )
         self.actions[item.item_id] = action
         return action
+
+    def perform_prebriefed_procedure(
+        self,
+        procedure_id: str,
+        *,
+        get_s: float,
+    ) -> tuple[CrewProcedureAction, ...]:
+        """Perform a source-bounded procedure already briefed before the active window.
+
+        The caller owns eligibility/preconditions. This method only emits the
+        configured operational steps in order and does not apply subsystem effects.
+        """
+        key = _text(procedure_id, "procedure_id")
+        rule = self.procedures.get(key)
+        if rule is None:
+            raise ValueError(f"unsupported prebriefed crew procedure: {key}")
+        if key in self.procedure_runs:
+            raise ValueError(f"prebriefed crew procedure already performed: {key}")
+        action_get_s = _finite(get_s, "procedure get_s")
+        actions = tuple(
+            CrewProcedureAction(
+                action_id=f"crew-{key}-{index + 1}",
+                procedure_id=key,
+                crew_id=self.crew_id,
+                get_s=action_get_s,
+                action=step,
+                sequence_index=index,
+                provenance=rule.provenance,
+            )
+            for index, step in enumerate(rule.steps)
+        )
+        self.procedure_runs[key] = actions
+        return actions
+
