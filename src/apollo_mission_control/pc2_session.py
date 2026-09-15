@@ -24,7 +24,7 @@ from .pc2_event_rules import PC2_EVENT_RULES
 from .pc2_nominal import PC2State, SimEvent, apply_event, build_events
 from .scenario_injection import StateInjection, apply_state_injection
 from .session_runtime import SessionStatus
-from .simulated_crew import CrewInstructionRule, SimulatedCrew
+from .simulated_crew import CrewInstructionRule, CrewProcedureRule, SimulatedCrew
 from .shutdown_rules import RuleState, evaluate_pc2_shutdown_rules
 from .telmu_presentation import build_pc2_telmu_presentation
 
@@ -74,6 +74,20 @@ class PlayerSessionSnapshot:
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
+
+
+PC2_RESTART_PROCEDURE_ID = "pc2_premature_shutdown_restart"
+PC2_RESTART_PROCEDURE_STEPS = (
+    "proceed_noun_97",
+    "restart_manual_ullage",
+    "press_engine_start",
+    "descent_engine_command_override_on",
+)
+PC2_RESTART_PROCEDURE_PROVENANCE = (
+    "Apollo 13 PC+2 Mission Rules Review and contemporaneous CAPCOM read-up; "
+    "pre-briefed in-burn premature-shutdown restart procedure; "
+    "no post-stop FLIGHT approval or response delay inferred"
+)
 
 
 PC2_INVERTER_TRANSFER_SEQUENCE = (
@@ -132,6 +146,13 @@ def _build_pc2_simulated_crew() -> SimulatedCrew:
                 forwarded_parameters=("from_inverter", "to_inverter", "control_sequence"),
                 provenance=PC2_INVERTER_TRANSFER_PROVENANCE,
             ),
+        },
+        procedures={
+            PC2_RESTART_PROCEDURE_ID: CrewProcedureRule(
+                procedure_id=PC2_RESTART_PROCEDURE_ID,
+                steps=PC2_RESTART_PROCEDURE_STEPS,
+                provenance=PC2_RESTART_PROCEDURE_PROVENANCE,
+            )
         },
     )
 
