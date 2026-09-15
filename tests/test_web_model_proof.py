@@ -610,6 +610,31 @@ class WebModelProofTests(unittest.TestCase):
             response.json()["detail"],
         )
 
+    def test_pc2_action_consequence_matrix_endpoint(self):
+        response = self.client.post(
+            "/api/admin/model-proof/pc2-action-consequences",
+            json={},
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(
+            body["model_status"],
+            "pc2_action_consequence_reference_probe",
+        )
+        cases = {item["action_class"]: item for item in body["cases"]}
+        self.assertTrue(cases["correct"]["engine_running"])
+        self.assertFalse(cases["late"]["engine_running"])
+        self.assertIn(
+            "p40_active_final_preburn",
+            cases["late"]["missed_events"],
+        )
+        self.assertIn(
+            "dps_ignition",
+            cases["omitted"]["missed_events"],
+        )
+        self.assertFalse(cases["wrong"]["action_accepted"])
+        self.assertIn("no historical grace interval", body["late_semantics"])
+
     def test_endpoint_rejects_unphysical_direction(self):
         self.payload["segments"][0]["direction"] = [0.0, 0.0, 0.0]
         response = self.client.post("/api/admin/model-proof/dps-burn", json=self.payload)
