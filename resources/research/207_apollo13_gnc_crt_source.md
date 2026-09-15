@@ -1,4 +1,4 @@
-# Research Note 013 — Apollo 13 GNC CRT Source Hunt
+# Research Note 207 — Apollo 13 GNC CRT Source Hunt
 
 **Date:** 2026-09-11  
 **Status:** SUPERSEDED — direct inspection completed in Research Notes 029–031

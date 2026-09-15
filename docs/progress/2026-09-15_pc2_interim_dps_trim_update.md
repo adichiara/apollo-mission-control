@@ -7,7 +7,7 @@ Research note: `resources/research/152_pc2_interim_dps_trim_update_boundary.md`
 
 - Re-examined the primary Apollo 13 Flight Control Division Mission Operations Report around the documented ~59-hour PC+2 mass-properties disagreement.
 - Cross-checked the restored mission-audio transcript for the corresponding controller-to-crew P30 sequence.
-- Recovered the interim DPS gimbal trim pair communicated at GET ~59:03: pitch `5.86°`, yaw `6.75°`.
+- Recovered the interim DPS gimbal trim pair communicated at GET ~59:03: pitch `5.86°` and second GDA value `6.75°`; Haise's accepted readback identifies the second axis as roll.
 - Preserved CAPCOM's explicit statement that these angles **will be updated**, preventing the interim pair from being misclassified as the final PC+2 trim.
 - Kept the primary-source boundary intact: the Flight Dynamics report establishes that the ~59-hour trim was challenged because LM Control had used inferior premission mass properties, but does not explicitly identify the accepted basis as `T+55` or provide a PC+2 mass-properties job number.
 - Distinguished the ~59-hour interim product from the Flight Dynamics report's later final PC+2 pad at ~78 hours based on the GYM 289 vector.

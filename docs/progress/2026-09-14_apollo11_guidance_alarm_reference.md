@@ -11,7 +11,7 @@ Date: 2026-09-14
 - Added Apollo 11 Mission G powered-descent model-readiness profile.
 - Added the actual-flight 102:37:30–102:43:22 powered-descent/program-alarm interval as a second historical scenario reference.
 - Deliberately assigned the reference an unsupported `apollo11_descent_v1` adapter so the catalog exposes it as non-executable.
-- Added research note 143 and a model-proof document.
+- Added research note 201 and a model-proof document.
 
 ## Source-backed Apollo 11 guidance boundary
 

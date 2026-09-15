@@ -221,6 +221,46 @@ The reusable platform is intended to support a range of historically grounded Ap
 
 PC+2-specific research may be used to validate a reusable mechanism. It should not be treated as a reason to model only mechanisms needed by PC+2 indefinitely.
 
+## D-022 — Integration gates may close on a sourced range, not only an exact value
+
+**Status:** Accepted  
+**Date:** 2026-09-15
+
+A model input that gates historical scenario integration may be closed two ways:
+
+- **Recovery** — the value is established from primary sources; or
+- **Demonstrated irrelevance** — the full sourced plausible range of the value is shown not to change any player-visible product at that product's actual resolution.
+
+Demonstrated irrelevance requires all of the following:
+
+- both ends of the range are themselves sourced, not estimated to bracket a guess;
+- the comparison is run against station products as controllers would read them, not against internal model state;
+- the result is recorded as a research note giving the range, the products checked, and the observed deltas;
+- a negative result keeps the gate closed and becomes the justification for continued archival work.
+
+When a gate closes this way, any value inside the sourced range may be frozen for play. The research note records that the specific choice is arbitrary within bounds and is not a historical claim. The underlying historical question remains open and is reclassified as not decision-relevant rather than answered.
+
+This is not permission to invent a value, to average competing sources, or to collapse an unresolved mechanism. It is the opposite: a way to decline to invent by first proving the invention is unnecessary.
+
+See `resources/research/137_pc2_pad_weight_epoch_boundary.md`,
+`138_pc2_rtcc_mass_property_deck_boundary.md`,
+`139_pc2_dps_performance_boundary.md`, and
+`147_pc2_mission_report_mass_properties_event_boundary.md`.
+
+## D-023 — A correction retires the superseded claim repository-wide
+
+**Status:** Accepted  
+**Date:** 2026-09-15
+
+A research note that withdraws a claim does not by itself correct the repository. The same change must retire that claim everywhere it appears, including derived station documents, scenario research, and source catalogs.
+
+`scripts/audit_documentation.py` enforces this and exits non-zero on:
+
+- any occurrence of a string on the withdrawn-claims list, which pairs each retired claim with the note that withdrew it;
+- duplicate research-note identifiers.
+
+The repository must not simultaneously assert a claim and its withdrawal. Where the two disagree, the audit fails rather than reporting and passing.
+
 ## Not yet decided
 
 The following are deliberately not decisions:

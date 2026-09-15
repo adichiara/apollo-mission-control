@@ -124,7 +124,7 @@ Owns:
 
 A scenario does not own controller-visible truth directly. Its injections enter the causal model at an appropriate layer.
 
-The cross-scenario fixture metadata contract currently includes scenario identity/title, mission, provenance/status class, runtime-adapter identity, mission-profile identity, mission-time bounds, and vehicle configuration. PC+2-specific state remains below that boundary. Research note 141 now supplies the second reference case used to judge what additional state should become common.
+The cross-scenario fixture metadata contract currently includes scenario identity/title, mission, provenance/status class, runtime-adapter identity, mission-profile identity, mission-time bounds, and vehicle configuration. PC+2-specific state remains below that boundary. Research note 200 now supplies the second reference case used to judge what additional state should become common.
 
 ### 3. Authoritative causal mission state
 

@@ -1,4 +1,4 @@
-# Research Note 012 — Apollo 13 EECOM Reference Station
+# Research Note 206 — Apollo 13 EECOM Reference Station
 
 **Date:** 2026-09-11  
 **Status:** REVIEWED-PARTIAL

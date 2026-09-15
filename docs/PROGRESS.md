@@ -366,7 +366,7 @@ EECOM, GNC, CONTROL, and TELMU all show the same important simulator principle: 
 ### New/updated documents
 
 - `docs/stations/APOLLO13_EECOM.md`
-- `resources/research/012_apollo13_eecom_reference_station.md`
+- `resources/research/206_apollo13_eecom_reference_station.md`
 
 ### Key simulation implication
 
@@ -401,8 +401,8 @@ The simulator should preserve the possibility that the correct information exist
 
 ### New notes
 
-- `resources/research/013_apollo13_gnc_crt_source.md`
-- `resources/research/014_mission_simulator_technical_sources.md`
+- `resources/research/207_apollo13_gnc_crt_source.md`
+- `resources/research/208_mission_simulator_technical_sources.md`
 
 ### Next
 
@@ -428,7 +428,7 @@ The simulator should preserve the possibility that the correct information exist
 
 ### New research note
 
-- `resources/research/015_simulator_configuration_fidelity.md`
+- `resources/research/209_simulator_configuration_fidelity.md`
 
 ### Architecture implication
 

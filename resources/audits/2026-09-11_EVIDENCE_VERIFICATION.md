@@ -44,7 +44,7 @@ HTTP reachability was treated separately from evidentiary validity. Four genuine
 ## Known limitations and integrity notes
 
 - `REVIEWED-PARTIAL` means the sections needed for the recorded claim were checked; it does not mean the entire source was transcribed.
-- Four pairs of research files share numeric prefixes 012–015. Their filenames and links are unambiguous, but the duplicate numbers are a provenance hazard. They are retained to avoid breaking historical links and are reported by the audit script.
+- The repository originally contained duplicate research-note identifiers. Under D-023, later-created duplicates were renumbered and references updated; duplicate identifiers are now a failing documentation-audit condition rather than a tolerated provenance hazard.
 - Smithsonian's catalog endpoint and one NASA oral-history PDF are unreliable for automated clients. Neither is the sole basis for a material implementation claim.
 - The source catalog is intentionally not an implementation whitelist. Entries marked `IDENTIFIED` require claim-level review before use.
 
@@ -99,13 +99,13 @@ The result describes each file's role in this audit. “Trace verified” means 
 | `resources/research/010_apollo13_controller_station_evidence.md` | Research note | Trace verified | Material claims trace to the cited primary source; stated partial-review limits remain. |
 | `resources/research/011_apollo_simulation_cases.md` | Research note | Trace verified | Material claims trace to the cited primary source; stated partial-review limits remain. |
 | `resources/research/012_apollo13_eecom_reconstruction.md` | Research note | Trace verified | Material claims trace to the cited primary source; stated partial-review limits remain. |
-| `resources/research/012_apollo13_eecom_reference_station.md` | Research note | Trace verified | Material claims trace to the cited primary source; stated partial-review limits remain. |
-| `resources/research/013_apollo13_gnc_crt_source.md` | Research note | Superseded/corrected | Original extraction limit is retained as history and linked to direct inspection. |
+| `resources/research/206_apollo13_eecom_reference_station.md` | Research note | Trace verified | Material claims trace to the cited primary source; stated partial-review limits remain. |
+| `resources/research/207_apollo13_gnc_crt_source.md` | Research note | Superseded/corrected | Original extraction limit is retained as history and linked to direct inspection. |
 | `resources/research/013_apollo13_gnc_reconstruction.md` | Research note | Corrected | Continuity conclusion updated after direct Apollo 13 inspection. |
 | `resources/research/014_apollo13_control_reconstruction.md` | Research note | Trace verified | Material claims trace to the cited primary source; stated partial-review limits remain. |
-| `resources/research/014_mission_simulator_technical_sources.md` | Research note | Source-qualified | Identified-source claims are valid; implementation authority is not asserted. |
+| `resources/research/208_mission_simulator_technical_sources.md` | Research note | Source-qualified | Identified-source claims are valid; implementation authority is not asserted. |
 | `resources/research/015_apollo13_telmu_reconstruction.md` | Research note | Trace verified | Material claims trace to the cited primary source; stated partial-review limits remain. |
-| `resources/research/015_simulator_configuration_fidelity.md` | Research note | Trace verified | Material claims trace to the cited primary source; stated partial-review limits remain. |
+| `resources/research/209_simulator_configuration_fidelity.md` | Research note | Trace verified | Material claims trace to the cited primary source; stated partial-review limits remain. |
 | `resources/research/016_apollo13_lm_data_links.md` | Research note | Trace verified | Material claims trace to the cited primary source; stated partial-review limits remain. |
 | `resources/research/017_telmu_control_source_conflict.md` | Research note | Trace verified | Material claims trace to the cited primary source; stated partial-review limits remain. |
 | `resources/research/018_apollo13_inco_station.md` | Research note | Trace verified | Material claims trace to the cited primary source; stated partial-review limits remain. |
