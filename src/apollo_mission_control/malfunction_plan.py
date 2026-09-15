@@ -60,6 +60,73 @@ class MalfunctionScheduler:
     plans: tuple[MalfunctionPlan, ...]
     activated: dict[str, MalfunctionActivation] = field(default_factory=dict)
 
+    def __post_init__(self) -> None:
+        normalized = tuple(validate_plan(plan) for plan in self.plans)
+        ids = [plan.malfunction_id for plan in normalized]
+        if len(ids) != len(set(ids)):
+            raise ValueError("duplicate malfunction_id values")
+        self.plans = normalized
+
+    def activate(
+        self,
+        malfunction_id: str,
+        *,
+        current_time_s: float,
+        trigger_mode: InsertionMode | None = None,
+    ) -> MalfunctionActivation:
+        key = _clean(malfunction_id, "malfunction_id")
+        if key in self.activated:
+            raise ValueError(f"malfunction already activated: {key}")
+        plan = next((item for item in self.plans if item.malfunction_id == key), None)
+        if plan is None:
+            raise ValueError(f"unknown malfunction plan: {key}")
+
+        now = float(current_time_s)
+        if not isfinite(now):
+            raise ValueError("current_time_s must be finite")
+
+        if plan.mode == InsertionMode.TIME_DEPENDENT:
+            assert plan.activation_time_s is not None
+            if now < plan.activation_time_s:
+                raise ValueError(
+                    f"time-dependent malfunction {key} is not due until "
+                    f"{plan.activation_time_s}"
+                )
+        else:
+            if trigger_mode is None:
+                raise ValueError(
+                    f"{plan.mode.value} malfunction activation requires trigger_mode"
+                )
+            mode = InsertionMode(trigger_mode)
+            if mode != plan.mode:
+                raise ValueError(
+                    f"trigger_mode {mode.value} does not match plan mode {plan.mode.value}"
+                )
+
+        activation = MalfunctionActivation(
+            malfunction_id=plan.malfunction_id,
+            activation_time_s=now,
+            mode=plan.mode,
+            insertions=plan.insertions,
+            provenance=plan.provenance,
+        )
+        self.activated[key] = activation
+        return activation
+
+    def activate_due(self, *, current_time_s: float) -> tuple[MalfunctionActivation, ...]:
+        result: list[MalfunctionActivation] = []
+        for plan in self.plans:
+            if plan.mode != InsertionMode.TIME_DEPENDENT:
+                continue
+            if plan.malfunction_id in self.activated:
+                continue
+            assert plan.activation_time_s is not None
+            if float(current_time_s) >= plan.activation_time_s:
+                result.append(
+                    self.activate(plan.malfunction_id, current_time_s=current_time_s)
+                )
+        return tuple(result)
+
 
 def _clean(value: str, name: str) -> str:
     result = str(value).strip()
@@ -129,13 +196,3 @@ def activation_to_dict(item: MalfunctionActivation) -> dict[str, Any]:
         "applies_downstream_effects": False,
     }
 
-
-def _scheduler_post_init(self: MalfunctionScheduler) -> None:
-    normalized = tuple(validate_plan(plan) for plan in self.plans)
-    ids = [plan.malfunction_id for plan in normalized]
-    if len(ids) != len(set(ids)):
-        raise ValueError("duplicate malfunction_id values")
-    self.plans = normalized
-
-
-MalfunctionScheduler.__post_init__ = _scheduler_post_init
