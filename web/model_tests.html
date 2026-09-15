@@ -6,7 +6,7 @@
 <h1>Apollo Causal Model Lab</h1>
 <p>Site-facing validation of reusable causal-engine components through the real server API. PASS establishes only the stated synthetic model/API checks; it does not establish Apollo accuracy, crew behavior, or live-session integration. These tests do not reset or modify a mission.</p>
 <a href="/admin">Back to test console</a>
-<div class="labnav"><a href="#suite">DPS suite</a><a href="#trajectory">Trajectory → tracking</a><a href="#resource">Resource → power → observation</a><a href="/admin">Test console</a></div>
+<div class="labnav"><a href="#suite">DPS suite</a><a href="#trajectory">Trajectory → tracking</a><a href="#resource">Resource → power → observation</a><a href="#guidance">Guidance comparison</a><a href="#radar">Landing radar</a><a href="/admin">Test console</a></div>
 <p><label>Facilitator token <input id="token" type="password" autocomplete="off"></label></p>
 <div class="boundary"><b>CAUSAL MODEL LAB — NOT HISTORICALLY VALIDATED.</b> These controls exercise reusable causal-engine components with explicit synthetic inputs. They do not establish Apollo constants, historical accuracy, or player-facing display fidelity.</div>
 <span id="suite"></span><button id="run">Run standard suite</button>
@@ -52,6 +52,46 @@
 <div class="actions"><button id="runResource">Run causal chain</button><button id="runBeforeAfter">Compare before/after depletion</button></div>
 <div id="resourceTrace" class="chain"><div class="stage"><b>Resource inventory</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Electrical source</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Powered load</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Controller observation</b>Not run</div></div>
 <details class="raw"><summary>Raw resource-power JSON</summary><pre id="resourceRaw">No run yet.</pre></details>
+</section>
+
+
+<section id="guidance" class="panel">
+<h2>Guidance comparison / multi-source consensus</h2>
+<p class="note">Compares independently produced observations without selecting hidden truth. A source outside consensus is not labeled failed, and this proof never produces GO/NO-GO or abort/continue.</p>
+<div class="grid">
+<label class="field">Primary value<input id="gcPrimary" type="number" value="100" step="0.1"></label>
+<label class="field">Backup value<input id="gcBackup" type="number" value="101" step="0.1"></label>
+<label class="field">Ground value<input id="gcGround" type="number" value="120" step="0.1"></label>
+<label class="field">Tolerance<input id="gcTolerance" type="number" value="2" step="0.1"></label>
+<label class="field">Max time separation (s)<input id="gcFreshness" type="number" value="1" step="0.1"></label>
+<label class="field">Ground observation time (s)<input id="gcGroundTime" type="number" value="10" step="0.1"></label>
+</div>
+<div class="actions"><button id="runCrosscheck">Run pairwise cross-check</button><button id="runConsensus">Run 3-source consensus</button><button id="runStaleConsensus">Make ground stale</button></div>
+<div id="guidanceTrace" class="chain"><div class="stage"><b>Independent observations</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Pairwise residuals / freshness</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Agreement topology</b>Not run</div></div>
+<details class="raw"><summary>Raw guidance JSON</summary><pre id="guidanceRaw">No run yet.</pre></details>
+</section>
+
+<section id="radar" class="panel">
+<h2>Landing-radar quality → update eligibility</h2>
+<p class="note">Exercises the separation between raw radar/Data Good state, measurement qualification, qualified channels, and eligibility for a downstream estimator. The estimator itself is not implemented here.</p>
+<div class="grid">
+<label class="field">Current time (s)<input id="lrTime" type="number" value="10" step="0.1"></label>
+<label class="field">Data Good since (s)<input id="lrGoodSince" type="number" value="5" step="0.1"></label>
+<label class="field">Range scale last changed (s)<input id="lrScaleChanged" type="number" value="8" step="0.1"></label>
+<label class="field">Altitude measured (m)<input id="lrAltMeasured" type="number" value="1040" step="1"></label>
+<label class="field">Altitude reference (m)<input id="lrAltReference" type="number" value="1000" step="1"></label>
+<label class="field">Altitude fixed tolerance (m)<input id="lrAltFixed" type="number" value="200" step="1"></label>
+<label class="field">Velocity measured (m/s)<input id="lrVelMeasured" type="number" value="105" step="0.1"></label>
+<label class="field">Velocity reference (m/s)<input id="lrVelReference" type="number" value="100" step="0.1"></label>
+<label class="field">Velocity fixed tolerance (m/s)<input id="lrVelFixed" type="number" value="7.5" step="0.1"></label>
+<label class="field">Proportional tolerance<input id="lrProportional" type="number" value="0.125" step="0.001"></label>
+<label class="field">Estimated speed (m/s)<input id="lrEstimatedSpeed" type="number" value="500" step="1"></label>
+<label class="field">Velocity-update threshold (m/s)<input id="lrSpeedThreshold" type="number" value="600" step="1"></label>
+</div>
+<p><label><input id="lrDataGood" type="checkbox" checked> raw Data Good</label> &nbsp; <label><input id="lrUpdatesEnabled" type="checkbox" checked> radar updates enabled</label></p>
+<div class="actions"><button id="runRadar">Run radar chain</button><button id="radarBadData">Break Data Good persistence</button><button id="radarDisableUpdates">Disable updates</button></div>
+<div id="radarTrace" class="chain"><div class="stage"><b>Raw radar state</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Measurement qualification</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Qualified measurement</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Update eligibility</b>Not run</div></div>
+<details class="raw"><summary>Raw radar-chain JSON</summary><pre id="radarRaw">No run yet.</pre></details>
 </section>
 
 <script>
@@ -249,5 +289,77 @@ $('runBeforeAfter').onclick=async()=>{
   $('resourceTrace').insertAdjacentHTML('beforeend',arrow()+traceStage('Comparison','<div>before depletion: '+statusBadge(ao,'OBS AVAILABLE','OBS LOST')+'</div><div>after depletion: '+statusBadge(bo,'OBS AVAILABLE','OBS LOST')+'</div>'));
  }catch(e){$('resourceRaw').textContent=String(e.message||e)}
 };
+
+
+function guidanceObservation(source,value,time=10,valid=true){
+ return {source,time_s:time,valid,values:{radial_velocity:value},provenance:['Synthetic browser input']};
+}
+async function runGuidancePair(){
+ const p={first:guidanceObservation('PRIMARY',num('gcPrimary')),second:guidanceObservation('BACKUP',num('gcBackup')),
+  tolerances:{radial_velocity:num('gcTolerance')},max_time_separation_s:num('gcFreshness'),
+  applicability:'site causal-model lab guidance cross-check; not mission validated',
+  provenance:['Synthetic browser inputs; not Apollo limits']};
+ $('guidanceRaw').textContent='Running…';
+ try{
+  const r=await request('/api/admin/model-proof/guidance-crosscheck',p);recordCausal('guidance-crosscheck',p,r);
+  const cmp=r.comparisons[0];
+  $('guidanceTrace').innerHTML=
+   traceStage('Independent observations','<div>PRIMARY = '+scalar(p.first.values.radial_velocity)+'</div><div>BACKUP = '+scalar(p.second.values.radial_velocity)+'</div>')+
+   arrow()+traceStage('Pairwise residuals / freshness','<div>|Δ| = '+scalar(cmp?.absolute_difference)+'</div><div>tolerance = '+scalar(cmp?.tolerance)+'</div><div>time separation = '+scalar(r.time_separation_s)+' s</div>')+
+   arrow()+traceStage('Agreement topology','<div>comparable '+statusBadge(r.comparable)+'</div><div>agreement '+(r.agreement===null?'<span class="badge warn">INDETERMINATE</span>':statusBadge(r.agreement,'AGREE','DISAGREE'))+'</div>');
+  $('guidanceRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){$('guidanceRaw').textContent=String(e.message||e)}
+}
+async function runGuidanceConsensus(stale=false){
+ const groundTime=stale?10+num('gcFreshness')+1:num('gcGroundTime');
+ const p={observations:[guidanceObservation('PRIMARY',num('gcPrimary')),guidanceObservation('BACKUP',num('gcBackup')),guidanceObservation('GROUND',num('gcGround'),groundTime)],
+  tolerances:{radial_velocity:num('gcTolerance')},max_time_separation_s:num('gcFreshness'),minimum_agreeing_sources:2,
+  applicability:'site causal-model lab guidance consensus; not mission validated',
+  provenance:['Synthetic browser inputs; not Apollo limits']};
+ $('guidanceRaw').textContent='Running…';
+ try{
+  const r=await request('/api/admin/model-proof/guidance-consensus',p);recordCausal(stale?'guidance-consensus-stale':'guidance-consensus',p,r);
+  const field=r.fields[0],pairs=field.pairwise.map(x=>x.first_source+'↔'+x.second_source+': '+(x.agrees?'agree':'no')).join('<br>');
+  $('guidanceTrace').innerHTML=
+   traceStage('Independent observations',p.observations.map(x=>'<div>'+x.source+' = '+scalar(x.values.radial_velocity)+' @ '+scalar(x.time_s)+' s</div>').join(''))+
+   arrow()+traceStage('Pairwise residuals / freshness',pairs||'No comparable pairs')+
+   arrow()+traceStage('Agreement topology','<div>status = <span class="badge '+(field.status==='consensus'?'good':'warn')+'">'+field.status.toUpperCase()+'</span></div><div>consensus = '+(field.consensus_sources.join(', ')||'none')+'</div><div>outside = '+(field.outside_consensus_sources.join(', ')||'none')+'</div><div class="note">Outside consensus is not a failure diagnosis.</div>');
+  $('guidanceRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){$('guidanceRaw').textContent=String(e.message||e)}
+}
+$('runCrosscheck').onclick=runGuidancePair;
+$('runConsensus').onclick=()=>runGuidanceConsensus(false);
+$('runStaleConsensus').onclick=()=>runGuidanceConsensus(true);
+
+function radarPayload(mode='normal'){
+ const now=num('lrTime'),goodSince=mode==='bad-data'?now-1:num('lrGoodSince'),updates=mode==='updates-off'?false:$('lrUpdatesEnabled').checked;
+ return {time_s:now,guidance_time_s:now,data_good:mode==='bad-data'?true:$('lrDataGood').checked,data_good_since_s:goodSince,
+  range_scale_last_changed_s:num('lrScaleChanged'),source:'site causal-model lab synthetic radar',
+  channels:{altitude:{measured_value:num('lrAltMeasured'),reference_value:num('lrAltReference'),unit:'m',valid:true},
+   velocity_axis:{measured_value:num('lrVelMeasured'),reference_value:num('lrVelReference'),unit:'m/s',valid:true}},
+  min_data_good_duration_s:4,min_range_scale_stable_s:1,scale_stability_channels:['altitude'],
+  residual_rules:{altitude:{fixed_tolerance:num('lrAltFixed'),proportional_tolerance:num('lrProportional')},
+   velocity_axis:{fixed_tolerance:num('lrVelFixed'),proportional_tolerance:num('lrProportional')}},
+  updates_enabled:updates,estimated_velocity_m_s:[num('lrEstimatedSpeed'),0,0],
+  velocity_update_speed_threshold_m_s:num('lrSpeedThreshold'),altitude_channel:'altitude',velocity_channel:'velocity_axis',
+  applicability:'site causal-model lab landing-radar proof; not mission validated',
+  provenance:['Synthetic browser inputs; not Apollo constants']};
+}
+async function runRadar(mode='normal'){
+ const p=radarPayload(mode);$('radarRaw').textContent='Running…';
+ try{
+  const r=await request('/api/admin/model-proof/landing-radar-quality-update',p);recordCausal('landing-radar-'+mode,p,r);
+  const q=r.quality,by=Object.fromEntries(q.channels.map(x=>[x.channel,x])),m=r.qualified_measurement,u=r.update_assessment;
+  $('radarTrace').innerHTML=
+   traceStage('Raw radar state','<div>Data Good '+statusBadge(p.data_good)+'</div><div>good since = '+scalar(p.data_good_since_s)+' s</div><div>scale changed = '+scalar(p.range_scale_last_changed_s)+' s</div>')+
+   arrow()+traceStage('Measurement qualification','<div>Data Good qualified '+statusBadge(q.data_good_qualified)+'</div><div>altitude '+statusBadge(by.altitude?.accepted,'ACCEPT','REJECT')+'</div><div>velocity '+statusBadge(by.velocity_axis?.accepted,'ACCEPT','REJECT')+'</div>')+
+   arrow()+traceStage('Qualified measurement','<div>altitude = '+scalar(m.altitude_m)+' m</div><div>velocity = '+vec(m.velocity_m_s)+' m/s</div>')+
+   arrow()+traceStage('Update eligibility','<div>updates enabled '+statusBadge(u.updates_enabled)+'</div><div>altitude '+statusBadge(u.altitude_eligible,'ELIGIBLE','BLOCKED')+'</div><div>velocity '+statusBadge(u.velocity_eligible,'ELIGIBLE','BLOCKED')+'</div><div class="note">'+(u.reasons.join(', ')||'no blocking reasons')+'</div>');
+  $('radarRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){$('radarRaw').textContent=String(e.message||e)}
+}
+$('runRadar').onclick=()=>runRadar('normal');
+$('radarBadData').onclick=()=>runRadar('bad-data');
+$('radarDisableUpdates').onclick=()=>runRadar('updates-off');
 
 </script></html>
