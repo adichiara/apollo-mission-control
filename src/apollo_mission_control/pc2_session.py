@@ -24,7 +24,7 @@ from .pc2_event_rules import PC2_EVENT_RULES
 from .pc2_nominal import PC2State, SimEvent, apply_event, build_events
 from .scenario_injection import StateInjection, apply_state_injection
 from .session_runtime import SessionStatus
-from .simulated_crew import CrewInstructionRule, SimulatedCrew
+from .simulated_crew import CrewInstructionRule, CrewProcedureRule, SimulatedCrew
 from .shutdown_rules import RuleState, evaluate_pc2_shutdown_rules
 from .telmu_presentation import build_pc2_telmu_presentation
 
@@ -81,6 +81,19 @@ PC2_INVERTER_TRANSFER_SEQUENCE = (
     "INVERTER — 1",
     "CB(16) EPS: INV 2 — open",
 )
+PC2_RESTART_PROCEDURE_ID = "pc2_premature_shutdown_restart"
+PC2_RESTART_PROCEDURE_SEQUENCE = (
+    "proceed_noun_97",
+    "restart_manual_ullage",
+    "press_engine_start",
+    "descent_engine_command_override_on",
+)
+PC2_RESTART_PROCEDURE_PROVENANCE = (
+    "Apollo 13 PC+2 Mission Rules Review and contemporaneous CAPCOM read-up; "
+    "procedure briefed before the playable window; no response delay asserted"
+)
+
+
 PC2_INVERTER_TRANSFER_PROVENANCE = (
     "Apollo 13 LM Malfunction Procedures INVERTER caution flowchart; "
     "inverter 2 operating, alternate transfer to inverter 1; "
@@ -114,6 +127,13 @@ class BundledPlayerSessionSnapshot:
 def _build_pc2_simulated_crew() -> SimulatedCrew:
     return SimulatedCrew(
         crew_id="CREW",
+        procedures={
+            PC2_RESTART_PROCEDURE_ID: CrewProcedureRule(
+                procedure_id=PC2_RESTART_PROCEDURE_ID,
+                steps=PC2_RESTART_PROCEDURE_SEQUENCE,
+                provenance=PC2_RESTART_PROCEDURE_PROVENANCE,
+            ),
+        },
         rules={
             "callout_dps_shutdown_criterion": CrewInstructionRule(
                 capcom_action="callout_dps_shutdown_criterion",
