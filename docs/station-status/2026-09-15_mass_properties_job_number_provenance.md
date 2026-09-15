@@ -7,7 +7,7 @@ Historical station maturity grades are unchanged. Research notes 151–154 stren
 
 ## FIDO / RETRO
 
-**Evidence strengthened.** Apollo 13 documentation proves numbered mass-properties job identity through late-entry job 27, while PC+2's job remains unknown. The ~59-hour PC+2 angular GDA product was explicitly interim. Research note 154 corrects the later execution quantity: LM CONTROL's reported roll-GDA values are actuator displacement in **inches**, not degrees.
+**Evidence strengthened.** Apollo 13 documentation proves numbered mass-properties job identity through late-entry job 27, while PC+2's job remains unknown. The ~59-hour PC+2 angular GDA product was explicitly interim. Research note 155 resolves the later execution quantity: LM CONTROL's reported roll-GDA values are angular degrees, while the separate September Mission Report maneuver-performance table reports linear actuator displacement in inches.
 
 For simulation, Flight Dynamics products may carry sourced mass-properties job identity and lifecycle/finality state. Do not invent PC+2's job number or complete final angular trim.
 
@@ -17,7 +17,7 @@ No maturity change. The evidence demonstrates an operational chain in which an i
 
 ## CONTROL
 
-**Evidence strengthened; maturity unchanged.** CONTROL's stale-premission-mass-properties disagreement with Flight Dynamics remains the controlling ~59-hour provenance event. The later primary record separates angular trim from physical GDA displacement. The September 1970 Mission Report gives a postflight PC+2 actuator trace in inches, including initial pitch/roll `+0.13 / -0.28 in`, steady-state `-0.21 / -0.55 in`, and cutoff `+0.23 / -0.85 in`.
+**Evidence strengthened; maturity unchanged.** CONTROL's stale-premission-mass-properties disagreement with Flight Dynamics remains the controlling ~59-hour provenance event. The later primary record separates commanded angular trim, angular GDA/engine-gimbal state, and physical actuator displacement. The September 1970 Mission Report gives a postflight PC+2 actuator trace in inches, including initial pitch/roll `+0.13 / -0.28 in`, steady-state `-0.21 / -0.55 in`, and cutoff `+0.23 / -0.85 in`.
 
 Represent commanded angular trim, actuator displacement, sampled/postflight actuator trace, and ignition compliance response separately. Do not derive degrees from inches without sourced GDA calibration.
 
