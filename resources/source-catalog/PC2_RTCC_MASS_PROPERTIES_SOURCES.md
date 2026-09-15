@@ -11,11 +11,12 @@
 - lift-off (`T-6`) mass properties were generated and loaded into RTCC by `T-2:46`, proving `T±N` is not generation/loading time;
 - a `T+25` run was compared against `T+6` trims;
 - LM-burn mass-property decks were updated to `T+55` before abort work;
-- at ~59 hours GET, LM Control challenged a PC+2 DPS trim, then accepted Flight Dynamics data after having used inferior premission mass properties.
+- at ~59 hours GET, LM Control challenged a PC+2 DPS trim, then accepted Flight Dynamics data after having used inferior premission mass properties;
+- in the later return/entry chronology, final stowage definitions were used to compute entry aerodynamics at approximately GET 122 hours, and those EOM aerodynamics were loaded into RTCC **based on mass properties job 27** (`L/D = .29052`).
 
 ### Boundary
 
-The report establishes a mission-relative mass-properties reference-state/epoch lineage and operational provenance/reconciliation behavior. It does not define exact `T+55` epoch semantics, deck fields, or explicitly identify the accepted ~59-hour basis as the `T+55` deck.
+The report establishes a mission-relative mass-properties reference-state/epoch lineage, operational provenance/reconciliation behavior, and direct H-2 evidence that a mass-properties computation could have a separately referencable **numbered job identity** preserved into a downstream operational product. It does not define exact `T+55` epoch semantics, deck fields, or explicitly identify the accepted ~59-hour basis as the `T+55` deck. **Job 27 is a late entry-aerodynamics job around GET 122 hours and must not be assigned to PC+2.** The PC+2 job number remains unknown.
 
 ## NASA MSC — Apollo 12 Flight Control Division postflight report, RETRO
 
@@ -112,13 +113,14 @@ For PC+2 validation keep separate:
 6. generation/update/load timestamp;
 7. provenance/version of calculation basis;
 8. controller-initiated mass-properties calculation run and computational venue/version;
-9. weight/CG table or equivalent processor input product;
-10. trajectory/trim processor invocation and pitch/yaw trim output;
-11. P30 targeting/module weights;
-12. controller-visible trim/trajectory products and reconciliation state.
+9. optional sourced mass-properties job identity/number;
+10. weight/CG table or equivalent processor input product;
+11. trajectory/trim processor invocation and pitch/yaw trim output;
+12. P30 targeting/module weights;
+13. controller-visible trim/trajectory products and reconciliation state.
 
-Do not label the P30 `62480 + 33452 = 95932 lb` as exact physical ignition mass. Do not retroactively use the mission report's `95424.0 lb` reconstructed PC+2/TEI ignition event mass as an operational targeting input.
+Do not label the P30 `62480 + 33452 = 95932 lb` as exact physical ignition mass. Do not retroactively use the mission report's `95424.0 lb` reconstructed PC+2/TEI ignition event mass as an operational targeting input. Do not assign the documented late-entry mass properties job 27 to PC+2.
 
 ## Next archival targets
 
-Highest value is now H-2 RTCC controller procedures, mass-property run sheets/listings, Flight Dynamics worksheets, processor descriptions, weight/CG tables, or maneuver worksheets that expose the **operational** module/depletion accounting behind the `T+55` state and explicitly connect a pre-PC+2 calculation run to the accepted trim and final P30 module weights. Search terms should include `Apollo 13`, `H-2`, `RTCC`, `RTACF`, `mass properties`, `T+55`, `PC+2`, `transearth injection`, `95932`, `P30`, `weight-CG`, `weight c.g.`, `trim`, `depletion table`, `offline computer`, `run`, and `deck`.
+Highest value is now H-2 RTCC controller procedures, mass-property run sheets/listings, Flight Dynamics/RETRO worksheets, processor descriptions, weight/CG tables, or maneuver worksheets that expose **numbered mass-properties jobs near GET 55–59 hours**, the operational module/depletion accounting behind the `T+55` state, and an explicit connection to the accepted trim and final P30 module weights. Search terms should include `Apollo 13`, `H-2`, `RTCC`, `RTACF`, `mass properties`, `mass properties job`, `job 27`, `job number`, `T+55`, `PC+2`, `transearth injection`, `95932`, `P30`, `weight-CG`, `weight c.g.`, `trim`, `depletion table`, `offline computer`, `run`, and `deck`.
