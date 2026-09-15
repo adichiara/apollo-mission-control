@@ -32,7 +32,9 @@ from .causal_translational_model import (
 from .crew_response import (
     apply_session_engine_off_response,
     command_dps_shutdown_from_callout,
+    perform_inverter_transfer_from_callout,
     record_crew_receipt,
+    record_inverter_transfer_completion_report,
 )
 from .electrical_power_model import (
     ElectricalBusConfig,
@@ -182,6 +184,26 @@ class ControlDeltaPCalloutRequest(BaseModel):
 class CrewReceiptRequest(BaseModel):
     crew_id: str = Field(default="CREW", min_length=1, max_length=64)
     response: str = Field(default="received", min_length=1, max_length=500)
+
+
+class InverterTransferQueueRequest(BaseModel):
+    basis: str = Field(min_length=1, max_length=1000)
+
+
+class CrewInverterTransferRequest(BaseModel):
+    crew_id: str = Field(default="CREW", min_length=1, max_length=64)
+    provenance: str = Field(
+        default=(
+            "Apollo 13 LM Malfunction Procedures INVERTER caution flowchart; "
+            "inverter 2 to inverter 1 transfer"
+        ),
+        min_length=1,
+        max_length=2000,
+    )
+
+
+class CrewInverterTransferReportRequest(BaseModel):
+    crew_id: str = Field(default="CREW", min_length=1, max_length=64)
 
 
 class CrewShutdownRequest(BaseModel):
@@ -829,6 +851,34 @@ def queue_capcom(player_id: str, request: CapcomQueueRequest) -> dict[str, Any]:
         }
 
 
+@app.post(
+    "/api/session/flight/{player_id}/inverter-transfer",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def queue_inverter_transfer(
+    player_id: str,
+    request: InverterTransferQueueRequest,
+) -> dict[str, Any]:
+    with _lock:
+        _require_runtime_capability("pc2_inverter_transfer")
+        session = _sync_session()
+        item = _domain_call(
+            lambda: session.queue_inverter_transfer_instruction(
+                player_id,
+                basis=request.basis,
+            )
+        )
+        return {
+            "item_id": item.item_id,
+            "get_s": item.get_s,
+            "requested_by": item.requested_by,
+            "action": item.action,
+            "parameters": item.parameters,
+            "basis": item.basis,
+            "transmitted": item.transmitted,
+        }
+
+
 @app.post("/api/session/control/{player_id}/delta-p-callout")
 def control_delta_p_callout(player_id: str, request: ControlDeltaPCalloutRequest) -> dict[str, Any]:
     with _lock:
@@ -879,6 +929,7 @@ def transmit_capcom(player_id: str, item_id: int) -> dict[str, Any]:
 )
 def crew_receipt(item_id: int, request: CrewReceiptRequest) -> dict[str, Any]:
     with _lock:
+        _require_runtime_capability("pc2_simulated_crew")
         session = _sync_session()
         return _domain_call(
             lambda: record_crew_receipt(
@@ -886,6 +937,55 @@ def crew_receipt(item_id: int, request: CrewReceiptRequest) -> dict[str, Any]:
                 item_id,
                 crew_id=request.crew_id,
                 response=request.response,
+            )
+        )
+
+
+@app.post(
+    "/api/session/crew/inverter-transfer/{item_id}",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def crew_inverter_transfer(
+    item_id: int,
+    request: CrewInverterTransferRequest,
+) -> dict[str, Any]:
+    with _lock:
+        _require_runtime_capability("pc2_inverter_transfer")
+        session = _sync_session()
+        action = _domain_call(
+            lambda: perform_inverter_transfer_from_callout(
+                session,
+                item_id,
+                crew_id=request.crew_id,
+                provenance=request.provenance,
+            )
+        )
+        return {
+            "action_id": action.action_id,
+            "get_s": action.get_s,
+            "actor": action.actor,
+            "action": action.action,
+            "parameters": action.parameters,
+            "provenance": action.provenance,
+        }
+
+
+@app.post(
+    "/api/session/crew/inverter-transfer-report/{item_id}",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def crew_inverter_transfer_report(
+    item_id: int,
+    request: CrewInverterTransferReportRequest,
+) -> dict[str, Any]:
+    with _lock:
+        _require_runtime_capability("pc2_inverter_transfer")
+        session = _sync_session()
+        return _domain_call(
+            lambda: record_inverter_transfer_completion_report(
+                session,
+                item_id,
+                crew_id=request.crew_id,
             )
         )
 
