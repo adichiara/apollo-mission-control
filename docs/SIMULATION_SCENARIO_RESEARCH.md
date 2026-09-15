@@ -73,28 +73,36 @@ Design implication:
 
 A scenario script should not directly place a diagnostic message on a controller screen unless the historical system itself would have generated that indication.
 
-## 4. Known documented injected case: Apollo 11 computer-failure/program-alarm simulation
+## 4. Apollo 11 computer-related simulation evidence — two distinct threads
 
-A strong documented example exists for the lunar landing team.
+Two strong source threads exist for lunar-landing computer-related training, but current evidence does **not** establish that they describe the same simulation run.
 
-Miller recalls that Jay Honeycutt, serving as simulation supervisor for the lunar landing, ran a case involving the onboard computer failure light.
+### Honeycutt / computer-failure-light recollection
 
-Other historical accounts identify a pre-Apollo-11 simulation in which a 1201/1202-type program alarm caused the controller team to call an abort. The debrief resulted in further work to determine which program alarms required abort and which permitted continuation.
+Harold Miller recalls Jay Honeycutt, serving as simulation supervisor for the lunar landing, running a case involving the onboard **computer failure light**.
 
-This case is important because it demonstrates:
+This establishes a Honeycutt-run computer-indication case. It does not establish the alarm identity, exact scripting, or that this was the later-described 1201/1202 program-alarm exercise.
 
-- simulation problems could expose missing decision rules
-- the correct outcome was not necessarily abort
-- a simulation could cause flight-rule/procedure changes
-- a simulated failure could later resemble an actual flight event
+### Koos / program-alarm abort-and-debrief account
+
+Separate NASA oral-history evidence from Richard H. Koos describes a final Apollo 11 landing simulation in which Koos inserted a **1201/1202 program alarm**. Steve Bales called for an abort; the debrief concluded that the team should not have aborted solely on that alarm, and follow-up work developed the response rules.
+
+Gene Kranz's oral history independently describes the same training lesson: the team aborted for computer program alarms, Koos challenged the decision in debrief, and Bales was tasked to develop rules for handling those alarms.
+
+This evidence demonstrates that:
+
+- simulation problems could expose missing decision rules;
+- the correct outcome was not necessarily abort;
+- a simulation could cause flight-rule/procedure changes;
+- a simulated failure could later resemble an actual flight event.
 
 ### Evidence status
 
-The existence of the computer-failure/program-alarm simulation is well supported.
+Treat the Honeycutt computer-failure-light recollection and the Koos program-alarm abort/debrief account as **distinct evidence threads unless a stronger source explicitly links them**.
 
-Exact scenario scripting, timing, telemetry injection method, and every alarm presented in the original case remain unresolved.
+For the Koos case, the program-alarm lesson and abort/debrief consequence are well supported. Exact scenario scripting, timing, telemetry injection method, and exact alarm identity within the 1201/1202 family remain unresolved in surviving evidence.
 
-Do not recreate the scenario in detail until stronger source material establishes those specifics.
+Do not merge the two accounts or recreate either case in greater detail than its sources support.
 
 ## 5. Apollo-13-type contingency simulation evidence
 
