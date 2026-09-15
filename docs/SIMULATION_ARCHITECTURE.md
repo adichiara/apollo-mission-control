@@ -174,7 +174,11 @@ This is the intended composition pattern for historical scenario work: source th
 
 A mission-neutral comparison model now accepts two independently produced guidance observations, caller-selected fields/tolerances, validity, and freshness constraints. It returns agreement/disagreement/indeterminate plus per-field differences without choosing a hidden-truth source or issuing a mission decision.
 
-This supports Apollo 11 PGNS/AGS comparison and later Apollo guidance cross-checks while keeping mission-specific fields and tolerances outside the generic engine. A separate historical guidance-monitoring profile catalog now stores source-pair/field/tolerance configuration. Profiles with unresolved freshness cannot be converted into executable cross-check configs, preventing a missing historical timing rule from becoming an invented software constant.
+This supports Apollo 11 PGNS/AGS comparison and later Apollo guidance cross-checks while keeping mission-specific fields and tolerances outside the generic engine. A separate historical guidance-monitoring profile catalog stores source-pair/field/tolerance configuration. Profiles with unresolved freshness cannot be converted into executable cross-check configs, preventing a missing historical timing rule from becoming an invented software constant.
+
+A separate mission-neutral multi-source consensus model now generalizes this to three or more independent sources with caller-supplied quorum. It identifies mutually agreeing source groups and distinguishes consensus, ambiguity, no consensus, and indeterminate state without labeling an outside source failed or selecting hidden truth.
+
+For Apollo 11, research note 210 documents the PGNCS/AGS/MSFN two-out-of-three monitoring topology. Research note 204 remains the source for several pairwise historical limits. The multi-source topology does **not** bypass the unresolved freshness/cadence gate.
 
 ### Landing-radar measurement and update boundary
 

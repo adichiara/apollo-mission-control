@@ -28,6 +28,10 @@
     "controller_observation": {
       "status": "partial",
       "note": "Alarm chronology and selected controller/crew communications are documented; exact GUIDO display fields, update cadence, and independent PGNS/AGS/radar observation products remain incomplete."
+    },
+    "guidance_monitoring": {
+      "status": "partial",
+      "note": "Apollo 11 powered-descent monitoring used PGNCS, AGS, and MSFN-derived velocity with a documented two-out-of-three comparison topology. Generic multi-source consensus machinery is implemented. Existing source-specific pairwise limits remain in the historical guidance-monitoring profile. Observation freshness/update cadence, exact phase/source-pair applicability, MSFN powered-flight processing, controller presentation, and operational response rules remain unresolved, so this domain is non-executable."
     }
   },
   "sources": [
@@ -37,7 +41,9 @@
     "NASA Oral History Project, Richard H. Koos interview, 24 August 2023",
     "Repository research note 200_second_reference_apollo11_descent_assessment.md",
     "Repository research note 204_apollo11_guidance_monitoring_fields_limits.md",
-    "Repository research note 205_apollo11_landing_radar_measurement_quality.md"
+    "Repository research note 205_apollo11_landing_radar_measurement_quality.md",
+    "Repository research note 210_apollo11_three_source_guidance_monitoring.md",
+    "MSC Internal Note 70-FM-80 / MSC-02419, Project Apollo: Lunar Descent and Ascent Trajectories, 21 April 1970"
   ],
   "deferred": [
     "complete Apollo 11 powered-descent state vector/trajectory initialization",
