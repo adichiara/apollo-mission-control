@@ -19,6 +19,11 @@ class ModelTestRunnerTests(unittest.TestCase):
                          "Resource → power → observation",
                          "/api/admin/model-proof/trajectory-tracking",
                          "/api/admin/model-proof/resource-power-observation",
+                         "/api/admin/model-proof/guidance-crosscheck",
+                         "/api/admin/model-proof/guidance-consensus",
+                         "/api/admin/model-proof/landing-radar-quality-update",
+                         "Guidance comparison / multi-source consensus",
+                         "Landing-radar quality → update eligibility",
                          "Authoritative trajectory", "Controller-visible observation",
                          "causal_runs"):
             self.assertIn(required, response.text)
