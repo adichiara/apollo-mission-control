@@ -8,6 +8,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from apollo_mission_control.simulated_crew import (  # noqa: E402
     CrewInstructionRule,
+    CrewProcedureRule,
     SimulatedCrew,
 )
 
@@ -113,6 +114,60 @@ class SimulatedCrewTests(unittest.TestCase):
         crew.receive_instruction(item, get_s=10.0)
         with self.assertRaisesRegex(ValueError, "missing required parameter"):
             crew.perform_supported_action(item, get_s=10.0)
+
+    def test_prebriefed_procedure_requires_no_live_capcom_receipt(self):
+        crew = SimulatedCrew(
+            crew_id="CREW",
+            rules={
+                "configure_system": CrewInstructionRule(
+                    capcom_action="configure_system",
+                    acknowledgement="Roger",
+                    crew_action="set_system_mode",
+                )
+            },
+            procedures={
+                "known_procedure": CrewProcedureRule(
+                    procedure_id="known_procedure",
+                    crew_action="perform_known_sequence",
+                    parameters={"sequence": ["a", "b", "c"]},
+                    provenance="synthetic prior briefing",
+                )
+            },
+        )
+
+        action = crew.perform_prebriefed_procedure(
+            "known_procedure",
+            get_s=20.0,
+        )
+        self.assertEqual(action.action, "perform_known_sequence")
+        self.assertEqual(action.parameters["sequence"], ["a", "b", "c"])
+        self.assertEqual(action.get_s, 20.0)
+        self.assertEqual(crew.receipts, {})
+
+    def test_nonrepeatable_prebriefed_procedure_rejects_duplicate(self):
+        crew = SimulatedCrew(
+            crew_id="CREW",
+            rules={
+                "configure_system": CrewInstructionRule(
+                    capcom_action="configure_system",
+                    acknowledgement="Roger",
+                    crew_action="set_system_mode",
+                )
+            },
+            procedures={
+                "known_procedure": CrewProcedureRule(
+                    procedure_id="known_procedure",
+                    crew_action="perform_known_sequence",
+                )
+            },
+        )
+        crew.perform_prebriefed_procedure("known_procedure", get_s=20.0)
+        with self.assertRaisesRegex(ValueError, "already performed"):
+            crew.perform_prebriefed_procedure("known_procedure", get_s=21.0)
+
+    def test_unsupported_prebriefed_procedure_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, "unsupported prebriefed"):
+            self.crew().perform_prebriefed_procedure("unknown", get_s=20.0)
 
     def test_rule_key_must_match_capcom_action(self):
         with self.assertRaisesRegex(ValueError, "does not match"):
