@@ -83,19 +83,21 @@ This omission is now consistent with, but is not the sole evidence for, the no-n
 - RTCC **LM-burn mass-property decks were updated to T+55 decks**;
 - ~59-hour CONTROL/Flight Dynamics trim disagreement and reconciliation;
 - CONTROL's disputed trim basis used **premission mass properties**, explicitly described as not the best data available;
-- PC+2 execution-state GDA observations;
-- a separate mission-specific **T+25 RTCC mass-properties run** where Flight Dynamics explicitly decided that no trim update was needed because pitch/yaw trims were within `0.01°` of the T+6 values.
+- a separate mission-specific **T+25 RTCC mass-properties run** where Flight Dynamics explicitly decided that no trim update was needed because pitch/yaw trims were within `0.01°` of the T+6 values;
+- Flight Director final-preparation ground rules after the ~74:00 GET White Team handover explicitly include **“No PC+2 maneuver trims were required”**;
+- the report subsequently records a PC+2 maneuver-pad update at 75:35 GET;
+- PC+2 execution-state GDA observations.
 
 ### Boundary
 
-`T+55` is supported as a deck/reference-epoch family. The report does **not** identify a PC+2 numbered job, calculation timestamp, printed T+55 deck contents, candidate comparison values, or a direct calculation-level link from T+55 to `5.86° / 6.75°`. The T+25 case establishes a `run -> compare -> update/no-update` workflow, but its `0.01°` criterion must not be transferred to PC+2.
+`T+55` is supported as a deck/reference-epoch family. The report does **not** identify a PC+2 numbered job, calculation timestamp, printed T+55 deck contents, candidate comparison values, or a direct calculation-level link from T+55 to `5.86° / 6.75°`. The T+25 case establishes a `run -> compare -> update/no-update` workflow, but its `0.01°` criterion must not be transferred to PC+2. The Flight Director ground rule proves the final no-trim disposition existed by the final preparation period; it does not state the upstream numerical rationale or exact moment the decision was first made.
 
 ## Current synthesis
 
-Do not search for or invent a “final PC+2 Noun 48 pair” as though one must have existed. Current primary operational and software evidence supports:
+Do not search for or invent a “final PC+2 Noun 48 pair” as though one must have existed. Current primary operational, controller, and software evidence supports:
 
-`mass-properties deck/reference state -> calculation -> candidate trim -> controller comparison -> update/no-update decision -> Noun 46 configuration -> Noun 47 display -> VERB 34 termination -> software exits R03 before Noun 48 -> no new Noun 48 crew entry -> retained gimbal state -> powered-flight GDA response`.
+`mass-properties deck/reference state -> calculation -> candidate trim -> controller comparison -> explicit no-trim ground-rule disposition -> Noun 46 configuration -> Noun 47 display -> VERB 34 termination -> software exits R03 before Noun 48 -> no new Noun 48 crew entry -> retained gimbal state -> powered-flight GDA response`.
 
-Apollo 13 independently demonstrates the comparison/no-update stage at T+25 and explicitly establishes an LM-burn T+55 deck family. The exact PC+2 calculation/job, candidate values, and comparison criterion remain unresolved.
+Apollo 13 independently demonstrates the comparison/no-update stage at T+25, explicitly establishes an LM-burn T+55 deck family, and explicitly records the PC+2 no-trim outcome as a Flight Director ground rule. The exact PC+2 calculation/job, candidate values, comparison criterion, and calculation-level T+55 linkage remain unresolved.
 
-The next archival target is a controller-side artifact that joins the documented T+55 deck family to the PC+2 candidate trim and no-update decision: ideally calculation time/job identity, candidate trim, current/reference trim, comparison delta/tolerance, and disposition.
+The next archival target is a controller-side artifact **upstream of the documented ground rule** that joins the T+55 deck family to the PC+2 candidate trim and no-update rationale: ideally calculation time/job identity, candidate trim, current/reference trim, comparison delta/tolerance, and disposition.
