@@ -373,7 +373,18 @@ Research note 134 partially clears this gate at the interface level. The first p
 - separate propulsion, prescribed-attitude/thrust-direction, mass-properties, dynamics, and observation-product boundaries;
 - an assumption-visible deterministic integrator with convergence and correct/early/late/wrong-input ordering tests.
 
-This authorizes a **model proof**, not a historically validated Apollo 13 PC+2 propagator. Mission-specific delivered-thrust/mass-flow history, exact mass/depletion convention, coordinate-frame mapping, and numerical acceptance tolerance must remain explicit/unfrozen until their primary sources are extracted. Research notes 137–138 establish final PAD weights plus an in-flight updated T+55 RTCC mass-property-deck lineage, but not exact physical ignition mass. Research note 139 establishes PC+2 command timing, terminal blowdown, and a mission-configuration nominal full-thrust value, while leaving startup transient, LM-7 thrust calibration, and effective Isp unresolved.
+This authorizes a **model proof**, not a historically validated Apollo 13 PC+2 propagator. Mission-specific delivered-thrust/mass-flow history, exact mass/depletion convention, coordinate-frame mapping, and numerical acceptance tolerance remain integration gates until closed under D-022.
+
+A gate closes by either:
+
+1. **recovery** of the required value/mechanism from primary sources; or
+2. **demonstrated irrelevance** across the full sourced plausible range, evaluated at the resolution of the actual player-visible station products.
+
+Demonstrated irrelevance must use sourced range endpoints, compare controller-readable products rather than hidden model state, and be recorded in a research note with the tested range and observed product deltas. If any player-visible product changes at its real resolution, the gate remains closed and archival work continues. A value frozen after an irrelevance result is an arbitrary in-range implementation choice, not a historical claim.
+
+This does not permit averaging conflicting sources, inventing a bracket, or collapsing an unresolved mechanism.
+
+Research notes 137–138 establish final PAD weights plus an in-flight updated T+55 RTCC mass-property-deck lineage, but not exact physical ignition mass. Research note 139 establishes PC+2 command timing, terminal blowdown, and a mission-configuration nominal full-thrust value, while leaving startup transient, LM-7 thrust calibration, and effective Isp unresolved. Research note 147 adds a separate mission-report PC+2 ignition/cutoff event-mass datum that must not be silently equated with the final P30 module-weight sum.
 
 ## Level-1 implementation status
 
