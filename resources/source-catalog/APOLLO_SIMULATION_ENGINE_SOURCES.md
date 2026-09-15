@@ -147,6 +147,7 @@ Virtual AGC has continued adding simulator material. Its 2025 additions include 
 - Evidence use: numerical-integration fidelity and timestep sensitivity in the LMS.
 - Status: exact report contents not yet extracted.
 - Key boundary: the title supports only that a 50 ms LMS integration step was studied for its effect on simulated AACS response. It does **not** establish a global LMS timestep or require this project to use 50 ms.
+- Consolidated source-hierarchy/integration boundary: `resources/research/216_lms_source_hierarchy_timestep_boundary.md`.
 
 ## Modern implementation references — Orbiter and Project Apollo–NASSP
 
