@@ -13,11 +13,30 @@
 - actual Flight Dynamics burn duration `4:23.82`;
 - staged PC+2 operational throttle profile: initial 12.6-percent region, 40-percent region, then maximum thrust;
 - terminal regulator-isolation/blowdown operation;
-- operational significance of non-instantaneous DPS thrust buildup, documented during a later Apollo 13 DPS maneuver.
+- operational significance of non-instantaneous DPS thrust buildup, documented during a later Apollo 13 DPS maneuver;
+- CONTROL's separate GDA/trim execution observations and the mass-properties/trim reconciliation history.
 
 ### Boundary
 
-The report does not provide a complete numerical LM-7 PC+2 thrust-versus-time or mass-flow history.
+The report does not provide a complete numerical LM-7 PC+2 thrust-versus-time or mass-flow history, nor does the recovered material identify the complete final commanded GDA trim pair or its mass-properties job number.
+
+## NASA — Apollo 13 technical/PAO air-to-ground transcription, final PC+2 P30 read-up
+
+- Relevant time: GET `077:55:24`
+- NASA transcript PDF: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap13fj/pdf-hr/a13-pao-transcript.pdf
+- Corrected transcript navigation: https://www.apollojournals.org/afj/ap13fj/13day4-leaving-moon.html
+- Source class: primary mission voice transcription; corrected transcript used as navigation aid
+
+### Supports
+
+- final transmitted P30 fields: TIG `079:27:38.30`, Noun 81 `+0833.0/-0050.9/-0213.9`, HP `+0020.5`, resultant `0861.5`, duration `4:24`, attitude `272/081`;
+- final communicated module weights `62480` lb CSM and `33452` lb LM;
+- two-jet 10-second ullage and staged throttle comments;
+- critically, after the attitude fields CAPCOM states **"the rest is N/A except for comments"** and does not transmit a GDA trim pair.
+
+### Boundary
+
+The omission proves only that the final crew-facing P30 targeting PAD did not contain GDA trim. It does not prove that no superseding trim existed, identify how it was generated or set, or connect it to a specific mass-properties job/`T+55` state. Treat the trajectory/P30 product and GDA trim product as separate provenance chains.
 
 ## NASA — Apollo 13 Mission Report
 
@@ -96,7 +115,7 @@ This supports using `TRW Systems Group` and `NAS9-8166` as search terms for the 
 
 ## Project rule
 
-For historical PC+2 numerical validation, keep **commanded throttle state**, **delivered thrust history**, **specific impulse/mass flow**, and **pressurization/blowdown state** as separate concepts until primary evidence supports collapsing any of them.
+For historical PC+2 numerical validation, keep **trajectory/P30 targeting product**, **GDA trim product**, **commanded throttle state**, **delivered thrust history**, **specific impulse/mass flow**, and **pressurization/blowdown state** as separate concepts until primary evidence supports collapsing any of them.
 
 ## Apollo 13 Mission Report Supplement 2 — publication status and retrieval
 
