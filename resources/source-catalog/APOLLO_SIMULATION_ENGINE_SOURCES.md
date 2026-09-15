@@ -186,3 +186,12 @@ The mission-simulator documents establish the need for causal/closed-loop behavi
 The surviving Apollo documentation now does more than merely support a generic closed-loop architecture. A direct **LEM Mission Simulator mathematical-model source has been located**, alongside simulator-description and instructor-handbook lineages that can expose subsystem abstraction and malfunction behavior.
 
 The project still should not claim recovery of the complete Apollo simulator software/model. The LED-440-3 reconstruction now constrains a separable propulsion/control/mass-properties/true-motion interface, but the original report and Apollo 13 profile inputs remain unextracted. The next research step is direct LMS/AMS model-document extraction and cross-checking against Apollo 13 LM-7/CSM spacecraft documentation before freezing equations, constants, coordinate frames, or historical acceptance tolerances.
+
+## LMS Console Directory — output/telemetry definition source
+
+- Date: 13 August 1971.
+- Public scan: https://www.ibiblio.org/apollo/Documents/LMS_Console_Directory.pdf
+- Evidence use: explicit LMS measurement dictionary fields, source-variable/output mapping, spacecraft effectivity, and telemetry-console channel-malfunction boundary.
+- Status: first-page searchable index text reviewed; full PDF viewer timed out, so row-level extraction remains pending.
+- Key boundary: 1971 LMS architecture evidence, not Apollo 13 H-2 measurement/channel authority.
+- Research record: `resources/research/217_lms_console_directory_output_boundary.md`.
