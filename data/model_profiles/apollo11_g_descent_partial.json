@@ -35,9 +35,9 @@
     "Grumman LAV-500-940, Program Alarms in Powered Descent - Apollo 11, 31 July 1969",
     "MIT/IL letter, Exegesis of the 1201 and 1202 Alarms Which Occurred During the Mission G Lunar Landing",
     "NASA Oral History Project, Richard H. Koos interview, 24 August 2023",
-    "Repository research note 162_second_reference_apollo11_descent_assessment.md",
-    "Repository research note 166_apollo11_guidance_monitoring_fields_limits.md",
-    "Repository research note 167_apollo11_landing_radar_measurement_quality.md"
+    "Repository research note 200_second_reference_apollo11_descent_assessment.md",
+    "Repository research note 204_apollo11_guidance_monitoring_fields_limits.md",
+    "Repository research note 205_apollo11_landing_radar_measurement_quality.md"
   ],
   "deferred": [
     "complete Apollo 11 powered-descent state vector/trajectory initialization",
