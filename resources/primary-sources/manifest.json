@@ -213,7 +213,7 @@
       "urls": [
         "https://repository.arizona.edu/bitstream/10150/607014/1/ITC_1970_70-11-5.pdf"
       ],
-      "note": "Conference proceedings, not a NASA publication; rights unverified, so link-only under the stated policy. Cited in the repository as 'R. W. Winkelman et al., Telemetry and Communications to Apollo', which the 2026-09-12 audit found to be the wrong author and a truncated title (see issue #3). Promote to a mirrored tier only if the International Telemetering Conference / University of Arizona repository terms are confirmed to permit redistribution."
+      "note": "Conference proceedings, not a NASA publication; rights unverified, so link-only under the stated policy. Correct project attribution is Alan Glines and Joseph A. Lazzaro, Telemetry and Communications to Apollo Flight Controllers, International Telemetering Conference, 1970; NTRS 19710030221. Promote to a mirrored tier only if the International Telemetering Conference / University of Arizona repository terms are confirmed to permit redistribution."
     },
     {
       "id": "ac-electronics-a13-guidance-navigation-summary",
