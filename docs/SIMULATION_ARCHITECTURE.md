@@ -192,6 +192,14 @@ The resulting architecture is:
 
 Apollo 11 constants live in a historical profile, not in either generic model. Radar beam/terrain geometry, exact Apollo radar-axis reference computation, weighting/filter equations, guidance-cycle cadence, and controller products remain historical configuration/model work.
 
+### Prebriefed deterministic crew procedures
+
+Some source-backed crew procedures are learned before the active scenario window rather than transmitted in response to a current controller action. The simulated-crew layer therefore supports a second pattern:
+
+`caller-validated eligibility → ordered prebriefed crew steps → separate subsystem response`
+
+This path does not decide eligibility, insert response delay, or apply physical effects. Apollo 13 PC+2 premature DPS restart is the first historical use; the procedure had already been read to and read back by the crew before the current playable begins, so no new post-stop FLIGHT approval or CAPCOM transmission is synthesized.
+
 ### Guidance-computer alarm/restart boundary
 
 A mission-neutral guidance-computer model now represents caller-defined alarm codes, program-alarm indication, software-restart classification, restart history, and restart-protected program recovery.
