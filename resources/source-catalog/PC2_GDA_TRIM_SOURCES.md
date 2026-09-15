@@ -102,17 +102,18 @@ This omission is now consistent with, but is not the sole evidence for, the no-n
 - a separate mission-specific **T+25 RTCC mass-properties run** where Flight Dynamics explicitly decided that no trim update was needed because pitch/yaw trims were within `0.01°` of the T+6 values;
 - Flight Director final-preparation ground rules after the ~74:00 GET White Team handover explicitly include **“No PC+2 maneuver trims were required”**;
 - PC+2 execution-state GDA observations;
-- CONTROL says the ignition roll-GDA motion was unexpected because the ground expected the GDA settings at the end of `MCC-3`, with its 40% thrust compliance, to provide optimum PC+2 alignment;
+- CONTROL reports that the roll GDA moved to approximately `-2°` at PC+2 ignition, a change of `-1.2°`; these approximate reported quantities imply an immediately pre-ignition roll position of about `-0.8°` by arithmetic;
+- CONTROL says that ignition roll-GDA motion was unexpected because the ground expected the GDA settings at the end of `MCC-3`, with its 40% thrust compliance, to provide optimum PC+2 alignment;
 - the report's LM CONTROL section itself labels the **61:29 contingency free-return DPS burn** `MCC-3 - DPS 1` and the following coast `POST MCC-3 TLC`, reconciling that wording with the same report's mission-summary convention that calls the 61:29 maneuver MCC-4 and the originally planned pre-accident MCC-3 not required.
 
 ### Boundary
 
-`T+55` is supported as a deck/reference-epoch family. The report does **not** identify a PC+2 numbered job, calculation timestamp, printed T+55 deck contents, candidate comparison values, or a direct calculation-level link from T+55 to `5.86° / 6.75°`. The T+25 case establishes a `run -> compare -> update/no-update` workflow, but its `0.01°` criterion must not be transferred to PC+2. The nomenclature reconciliation identifies CONTROL's state-setting maneuver but does not recover its post-compliance numerical GDA state.
+`T+55` is supported as a deck/reference-epoch family. The report does **not** identify a PC+2 numbered job, calculation timestamp, printed T+55 deck contents, candidate comparison values, or a direct calculation-level link from T+55 to `5.86° / 6.75°`. The T+25 case establishes a `run -> compare -> update/no-update` workflow, but its `0.01°` criterion must not be transferred to PC+2. The nomenclature reconciliation identifies CONTROL's state-setting maneuver but does not recover its exact post-compliance two-axis GDA state. The `~-0.8°` roll figure is a derived approximate pre-PC+2 value, not a separately reported trim and not proof of the exact 61:29 cutoff state.
 
 ## Current synthesis
 
 Do not search for or invent a “final PC+2 Noun 48 pair” as though one must have existed. Current primary operational, controller, and software evidence supports:
 
-`mass-properties deck/reference state -> calculation/comparison [details unresolved] -> pre-61:29 GDA state accepted ("go as they are") -> 61:29 free-return DPS maneuver -> 40%-thrust compliance establishes post-burn GDA state -> ground judges that state optimum for PC+2 -> explicit no-trim ground-rule disposition -> Noun 46 configuration -> Noun 47 display -> VERB 34 termination -> software exits R03 before Noun 48 -> no new Noun 48 crew entry -> retained gimbal state -> powered-flight GDA response`.
+`mass-properties deck/reference state -> calculation/comparison [details unresolved] -> pre-61:29 GDA state accepted ("go as they are") -> 61:29 free-return DPS maneuver -> 40%-thrust compliance establishes post-burn GDA state -> retained state carried through coast [roll immediately before PC+2 ≈ -0.8° derived] -> ground judges retained state optimum for PC+2 -> explicit no-trim ground-rule disposition -> Noun 46 configuration -> Noun 47 display -> VERB 34 termination -> software exits R03 before Noun 48 -> no new Noun 48 crew entry -> powered-flight GDA response`.
 
-The next archival target is a controller-side artifact **upstream of the documented retained-state judgment**: post-61:29 reference angles, PC+2 candidate trim, comparison delta/tolerance, calculation time/job identity, and direct T+55 deck linkage.
+The next archival target is a controller-side artifact **upstream of the documented retained-state judgment**: retained pitch/reference evidence, PC+2 candidate trim, comparison delta/tolerance, calculation time/job identity, and direct T+55 deck linkage.
