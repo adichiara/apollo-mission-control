@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>PC+2 ΔP Contingency Test</title>
+<title>PC+2 Contingency Tests</title>
 <style>
 :root{color-scheme:dark;--bg:#07121b;--panel:#0d2231;--line:#294a60;--txt:#eef6fb;--mut:#9db1bf;--good:#72e79c;--warn:#ffd166;--bad:#ff7979;--blue:#55b4ff}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:14px/1.35 system-ui,sans-serif;padding-bottom:48px}.app{max-width:760px;margin:auto;padding:10px 10px 40px}.top{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;margin-bottom:10px}.top h1{font-size:19px;margin:0}.top a{color:var(--blue)}.muted{color:var(--mut)}.panel{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:10px;margin:8px 0}.token{display:grid;grid-template-columns:1fr auto;gap:6px}.token input{width:100%;background:#07131c;border:1px solid var(--line);color:var(--txt);padding:9px;border-radius:6px}button{font:inherit;border:1px solid var(--line);background:#17364c;color:var(--txt);border-radius:7px;padding:9px 10px;cursor:pointer;transition:transform .08s ease,filter .08s ease,box-shadow .08s ease;touch-action:manipulation}button:active,button.pressed{transform:translateY(1px) scale(.985);filter:brightness(1.28);box-shadow:inset 0 0 0 1px #8dc9ef}button.primary{background:#1268b5}button.good{background:#155c35}button.bad{background:#642b2b}button:disabled{opacity:.45;cursor:default}.summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}.metric{background:#091923;border:1px solid #244254;border-radius:7px;padding:7px}.metric b{display:block;font-size:16px}.steps{display:grid;gap:7px}.step{display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:8px;background:#091923}.num{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font-weight:800;color:var(--mut)}.step.done{border-color:#286644}.step.done .num{color:var(--good);border-color:#286644}.step.active{border-color:#5b86a1}.step.active .num{color:var(--blue)}.step .name{font-weight:800}.step .why{font-size:12px;color:var(--mut)}.result{font:12px/1.35 ui-monospace,monospace;white-space:pre-wrap;background:#061019;border:1px solid #203b4e;border-radius:7px;padding:8px;min-height:52px}.evidence{font-size:13px}.pass{color:var(--good);font-weight:800}.fail{color:var(--bad);font-weight:800}.warn{color:var(--warn);font-weight:800}.screenNav{position:fixed;left:0;right:0;bottom:0;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);background:#081722;padding:4px;z-index:20}.screenNav button{border:0;background:transparent;color:var(--mut);padding:7px 2px}.screenNav button.active{color:var(--blue);font-weight:800}@media(max-width:620px){.app{padding:7px}.summary{grid-template-columns:1fr 1fr}.step{grid-template-columns:28px 1fr}.step button{grid-column:1/-1;width:100%}.token{grid-template-columns:1fr}.token button{width:100%}}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="top"><div><h1>PC+2 ΔP Contingency Test</h1><div class="muted">Guided validation of the failure-information-response chain.</div></div><a href="/admin">Admin</a></div>
+  <div class="top"><div><h1>PC+2 Contingency Tests</h1><div class="muted">Guided validation of source → controller → CAPCOM → crew → spacecraft/observation causal chains.</div></div><a href="/admin">Admin</a></div>
 
   <section class="panel">
     <div class="token"><input id="token" type="password" placeholder="Facilitator token"><button onclick="saveToken()">Use token</button></div>
@@ -18,6 +18,7 @@
   </section>
 
   <section class="panel">
+    <h2 style="margin-top:0">ΔP ground-callout shutdown chain</h2>
     <div class="summary">
       <div class="metric"><span class="muted">GET</span><b id="get">--:--:--</b></div>
       <div class="metric"><span class="muted">Session</span><b id="state">--</b></div>
@@ -40,10 +41,33 @@
   </section>
 
   <section class="panel evidence"><b>Result</b><div id="verdict" class="muted" style="margin:5px 0">Run the setup, then work downward one step at a time.</div><div id="result" class="result">Waiting.</div></section>
+
+  <section class="panel">
+    <h2 style="margin-top:0">Inverter transfer / fresh re-observation chain</h2>
+    <p class="muted">This is a separate synthetic contingency test. Setup resets the session at GET 79:28:15. The crew transfer uses the sourced Apollo 13 inverter-2 → inverter-1 control sequence; the warning condition itself is synthetic.</p>
+    <div class="summary">
+      <div class="metric"><span class="muted">GET</span><b id="iget">--:--:--</b></div>
+      <div class="metric"><span class="muted">Session</span><b id="istate">--</b></div>
+      <div class="metric"><span class="muted">CAPCOM item</span><b id="iitem">--</b></div>
+    </div>
+    <button class="primary" style="width:100%;margin-top:8px" onclick="setupInverter()">RESET + SET UP INVERTER TEST</button>
+    <div class="steps" style="margin-top:8px">
+      <div class="step" id="is1"><div class="num">1</div><div><div class="name">Introduce an inverter caution observation</div><div class="why">Synthetic warning only; Apollo 13 did not experience this PC+2 failure.</div></div><button onclick="injectInverter()">INJECT WARNING</button></div>
+      <div class="step" id="is2"><div class="num">2</div><div><div class="name">FLIGHT authorizes the alternate-inverter procedure</div><div class="why">Queues the sourced inverter 2 → inverter 1 transfer for CAPCOM. Exact hypothetical front-room voice routing is not claimed.</div></div><button onclick="queueInverter()">FLIGHT AUTHORIZE</button></div>
+      <div class="step" id="is3"><div class="num">3</div><div><div class="name">CAPCOM transmits</div><div class="why">Communication is separate from crew execution.</div></div><button onclick="transmitInverter()">CAPCOM TRANSMIT</button></div>
+      <div class="step" id="is4"><div class="num">4</div><div><div class="name">Crew receives the instruction</div><div class="why">Receipt is explicit and still does not change spacecraft state.</div></div><button onclick="receiveInverter()">CREW RECEIVES</button></div>
+      <div class="step" id="is5"><div class="num">5</div><div><div class="name">Crew performs sourced transfer</div><div class="why">CB(11) EPS: INV 1 close → INVERTER 1 → CB(16) EPS: INV 2 open.</div></div><button onclick="performInverter()">PERFORM TRANSFER</button></div>
+      <div class="step" id="is6"><div class="num">6</div><div><div class="name">Crew reports transfer complete</div><div class="why">The report must not imply whether the caution cleared or remained.</div></div><button onclick="reportInverter()">CREW REPORT</button></div>
+      <div class="step" id="is7"><div class="num">7</div><div><div class="name">Supply a fresh post-transfer caution observation</div><div class="why">A separate later observation is required. The 0.1 s ordering increment is test infrastructure, not a historical dwell.</div></div><button onclick="reobserveInverter()">FRESH WARNING</button></div>
+      <div class="step" id="is8"><div class="num">8</div><div><div class="name">Check derived inverter rule</div><div class="why">Expected: TRIGGERED only after the fresh warning, with no automatic engine shutdown.</div></div><button class="good" onclick="checkInverter()">CHECK RULE</button></div>
+    </div>
+  </section>
+
+  <section class="panel evidence"><b>Inverter result</b><div id="iverdict" class="muted" style="margin:5px 0">Run the inverter setup, then work downward.</div><div id="iresult" class="result">Waiting.</div></section>
 </div>
-<nav class="screenNav"><button onclick="location.href='/admin'">CONTROL</button><button class="active">CONTINGENCY TEST</button></nav>
+<nav class="screenNav"><button onclick="location.href='/admin'">CONTROL</button><button class="active">CONTINGENCY TESTS</button></nav>
 <script>
-let status=null,audit=[],itemId=null;
+let status=null,audit=[],itemId=null,inverterItemId=null;
 const kinds=['state_injection_applied','controller_shutdown_callout_decision','capcom_item_transmitted','crew_capcom_item_received','crew_dps_shutdown_commanded','dps_engine_off_physical_response','crew_dps_shutdown_reported'];
 const tokenKey='apollo_facilitator_token';
 const $=id=>document.getElementById(id);
@@ -59,8 +83,29 @@ function show(x){$('result').textContent=typeof x==='string'?x:pretty(x)}
 function err(e){$('verdict').className='fail';$('verdict').textContent='STOP: '+(e.message||e);show(e.message||e)}
 function latest(kind){return[...audit].reverse().find(x=>x.kind===kind)}
 function shutdownItemFromAudit(){let queues=audit.filter(x=>x.kind==='capcom_item_queued'&&x.details?.action==='callout_dps_shutdown_criterion');if(!queues.length)return null;let transmitted=new Set(audit.filter(x=>x.kind==='capcom_item_transmitted'&&x.details?.action==='callout_dps_shutdown_criterion').map(x=>x.details?.item_id));let received=new Set(audit.filter(x=>x.kind==='crew_capcom_item_received').map(x=>x.details?.item_id));let candidates=queues.filter(x=>transmitted.has(x.details?.item_id)&&!received.has(x.details?.item_id));if(!candidates.length)candidates=queues.filter(x=>!received.has(x.details?.item_id));if(!candidates.length)candidates=queues;return candidates[candidates.length-1]?.details?.item_id??null}
+function inverterQueueEvents(){return audit.filter(x=>x.kind==='capcom_item_queued'&&x.details?.action==='switch_lm_inverter')}
+function inverterItemFromAudit(){let q=inverterQueueEvents();return q.length?q[q.length-1].details?.item_id??null:null}
+function inverterEvents(kind){return audit.filter(x=>x.kind===kind&&(kind==='state_injection_applied'?x.details?.target==='lm_inverter_warning':true))}
+function inverterEventForItem(kind){let id=inverterItemFromAudit()??inverterItemId;return audit.find(x=>x.kind===kind&&x.details?.item_id===id)}
+function markInverterSteps(){
+ let injections=inverterEvents('state_injection_applied'),checks=[
+  injections.length>=1,
+  inverterQueueEvents().length>=1,
+  !!audit.find(x=>x.kind==='capcom_item_transmitted'&&x.details?.action==='switch_lm_inverter'),
+  !!inverterEventForItem('crew_capcom_item_received'),
+  !!inverterEventForItem('crew_inverter_transfer_performed'),
+  !!inverterEventForItem('crew_inverter_transfer_reported'),
+  injections.length>=2
+ ];
+ for(let i=0;i<7;i++){let el=$('is'+(i+1));if(!el)continue;el.classList.toggle('done',checks[i]);el.classList.toggle('active',!checks[i]&&(i===0||checks[i-1]))}
+ let end=$('is8');if(end)end.classList.toggle('active',checks[6]);
+ inverterItemId=inverterItemFromAudit()??inverterItemId;
+ if($('iitem'))$('iitem').textContent=inverterItemId??'--';
+ if($('iget'))$('iget').textContent=status?hms(status.get_s):'--:--:--';
+ if($('istate'))$('istate').textContent=(status?.status||'--').toUpperCase();
+}
 function markSteps(){for(let i=0;i<7;i++){let el=$('s'+(i+1));el.classList.toggle('done',!!latest(kinds[i]));el.classList.toggle('active',!latest(kinds[i])&&(i===0||!!latest(kinds[i-1])))}let e=$('s8');e.classList.toggle('active',!!latest(kinds[6]));itemId=shutdownItemFromAudit()??itemId;$('item').textContent=itemId??'--'}
-async function refresh(){try{status=await req('/api/session/status');audit=await req('/api/session/audit');$('get').textContent=hms(status.get_s);$('state').textContent=(status.status||'--').toUpperCase();markSteps()}catch(e){status=null;audit=[];$('get').textContent='--:--:--';$('state').textContent='--';markSteps()}}
+async function refresh(){try{status=await req('/api/session/status');audit=await req('/api/session/audit');$('get').textContent=hms(status.get_s);$('state').textContent=(status.status||'--').toUpperCase();markSteps();markInverterSteps()}catch(e){status=null;audit=[];$('get').textContent='--:--:--';$('state').textContent='--';markSteps();markInverterSteps()}}
 async function setup(){try{saveToken();$('verdict').className='muted';$('verdict').textContent='Setting up…';await post('/api/session/create');for(const [player_id,station] of [['test-flight','FLIGHT'],['test-control','CONTROL'],['test-capcom','CAPCOM']])await post('/api/session/join',{player_id,station});await post('/api/session/start');await post('/api/session/advance',{target_get_s:79*3600+17*60});await post('/api/session/flight/test-flight/decision',{go:true,basis:'guided delta-P contingency validation'});await post('/api/session/advance',{target_get_s:79*3600+28*60+15});itemId=null;await refresh();$('verdict').className='warn';$('verdict').textContent='READY: simulation is RUNNING at about GET 79:28:15 during the burn. Start with Step 1.';show('Setup complete. FLIGHT, CONTROL, and CAPCOM are assigned. The clock remains running because the session requires RUNNING state for controller and crew commands.')}catch(e){err(e)}}
 async function act(fn,msg){try{let x=await fn();await refresh();$('verdict').className='muted';$('verdict').textContent=msg;show(x);return x}catch(e){err(e)}}
 function inject(){return act(()=>post('/api/session/admin/injection',{injection_id:'guided-delta-p-26-'+Date.now(),target:'dps_fuel_oxidizer_delta_p_psi',value:26,evidence_class:'source_bounded_test',provenance:'guided synthetic contingency validation; 26 psi is not an Apollo 13 measurement'}),'Injected. CONTROL should now have the abnormal ground-observed condition.')}
@@ -72,6 +117,18 @@ function crewShutdown(){try{return act(()=>post(`/api/session/crew/shutdown/${ne
 function engineOff(){return act(()=>post('/api/session/admin/vehicle/dps-engine-off',{cause:'crew_stop_pushbutton'}),'Physical DPS engine-off response recorded.')}
 async function shutdownReport(){return act(async()=>{let crewReport=await post('/api/session/crew/shutdown-report',{});let groundSample=await post('/api/session/admin/injection',{injection_id:'guided-post-command-pressure-'+Date.now(),target:'dps_chamber_pressure_psi',value:100,evidence_class:'source_bounded_test',provenance:'guided synthetic fresh post-command chamber-pressure observation; 100 psi deliberately demonstrates that no engine-off pressure threshold is implied'});return{crew_report:crewReport,ground_pressure_sample:groundSample}},'Crew report and fresh post-command ground pressure observation recorded. CONTROL can now evaluate corroborated evidence.')}
 async function checkEvidence(){try{let x=await req('/api/session/control/test-control/shutdown-evidence');await refresh();let leaked=Object.prototype.hasOwnProperty.call(x,'engine_off_confirmed');if(x.state==='corroborated'&&!leaked){$('s8').classList.add('done');$('verdict').className='pass';$('verdict').textContent='PASS: CONTROL has corroborated shutdown evidence without receiving hidden engine truth.'}else{$('verdict').className='fail';$('verdict').textContent=`FAIL / REVIEW: evidence state is ${x.state||'unknown'}${leaked?' and hidden engine truth leaked into the controller view.':'.'}`}show(x)}catch(e){err(e)}}
+async function setupInverter(){try{saveToken();$('iverdict').className='muted';$('iverdict').textContent='Setting up…';await post('/api/session/create');for(const [player_id,station] of [['test-flight','FLIGHT'],['test-control','CONTROL'],['test-capcom','CAPCOM']])await post('/api/session/join',{player_id,station});await post('/api/session/start');await post('/api/session/advance',{target_get_s:79*3600+17*60});await post('/api/session/flight/test-flight/decision',{go:true,basis:'guided inverter contingency validation'});await post('/api/session/advance',{target_get_s:79*3600+28*60+15});inverterItemId=null;await refresh();$('iverdict').className='warn';$('iverdict').textContent='READY: session is RUNNING during the burn. Start inverter Step 1.';$('iresult').textContent='Setup complete. The warning and transfer are not yet present.'}catch(e){$('iverdict').className='fail';$('iverdict').textContent='STOP: '+(e.message||e);$('iresult').textContent=e.message||e}}
+async function iact(fn,msg){try{let x=await fn();await refresh();$('iverdict').className='muted';$('iverdict').textContent=msg;$('iresult').textContent=pretty(x);return x}catch(e){$('iverdict').className='fail';$('iverdict').textContent='STOP: '+(e.message||e);$('iresult').textContent=e.message||e}}
+function injectInverter(){return iact(()=>post('/api/session/admin/injection',{injection_id:'guided-inverter-warning-'+Date.now(),target:'lm_inverter_warning',value:true,evidence_class:'source_bounded_test',provenance:'guided synthetic inverter caution; Apollo 13 did not experience this PC+2 failure'}),'Synthetic caution observation recorded. The shutdown rule should still be not evaluable before a transfer attempt.')}
+async function queueInverter(){let x=await iact(()=>post('/api/session/flight/test-flight/inverter-transfer',{basis:'synthetic inverter warning observed; execute sourced alternate-inverter procedure'}),'FLIGHT authorized the sourced transfer and queued it for CAPCOM.');if(x?.item_id)inverterItemId=x.item_id;await refresh()}
+function needInverterItem(){inverterItemId=inverterItemFromAudit()??inverterItemId;if(!inverterItemId)throw Error('No inverter-transfer CAPCOM item exists. Complete FLIGHT authorization first.');return inverterItemId}
+function transmitInverter(){try{return iact(()=>post(`/api/session/capcom/test-capcom/transmit/${needInverterItem()}`),'CAPCOM transmitted the inverter-transfer instruction.')}catch(e){$('iverdict').className='fail';$('iverdict').textContent='STOP: '+(e.message||e)}}
+function receiveInverter(){try{return iact(()=>post(`/api/session/crew/receipt/${needInverterItem()}`,{}),'Crew receipt recorded; no transfer has occurred yet.')}catch(e){$('iverdict').className='fail';$('iverdict').textContent='STOP: '+(e.message||e)}}
+function performInverter(){try{return iact(()=>post(`/api/session/crew/inverter-transfer/${needInverterItem()}`,{}),'Crew performed the sourced inverter-2 → inverter-1 transfer. The caution outcome is still unknown.')}catch(e){$('iverdict').className='fail';$('iverdict').textContent='STOP: '+(e.message||e)}}
+function reportInverter(){try{return iact(()=>post(`/api/session/crew/inverter-transfer-report/${needInverterItem()}`,{}),'Crew completion report recorded. It does not determine the caution state.')}catch(e){$('iverdict').className='fail';$('iverdict').textContent='STOP: '+(e.message||e)}}
+async function reobserveInverter(){return iact(async()=>{let s=await req('/api/session/status');await post('/api/session/advance',{target_get_s:s.get_s+0.1});return post('/api/session/admin/injection',{injection_id:'guided-inverter-post-transfer-'+Date.now(),target:'lm_inverter_warning',value:true,evidence_class:'source_bounded_test',provenance:'guided synthetic fresh post-transfer caution; 0.1 s only establishes event ordering and is not a historical dwell'})},'Fresh post-transfer warning observation recorded.')}
+async function checkInverter(){try{let x=await req('/api/session/admin/inverter-rule');await refresh();let engineOff=audit.some(e=>e.kind==='dps_engine_off_physical_response');if(x.state==='triggered'&&!engineOff){$('is8').classList.add('done');$('iverdict').className='pass';$('iverdict').textContent='PASS: inverter rule triggers only after the fresh post-transfer observation, and no automatic engine shutdown occurred.'}else{$('iverdict').className='fail';$('iverdict').textContent='FAIL / REVIEW: rule='+x.state+', automatic engine-off event='+engineOff}$('iresult').textContent=pretty(x)}catch(e){$('iverdict').className='fail';$('iverdict').textContent='STOP: '+(e.message||e);$('iresult').textContent=e.message||e}}
+
 document.addEventListener('pointerdown',e=>{let b=e.target.closest('button');if(!b||b.disabled)return;b.classList.add('pressed');setTimeout(()=>b.classList.remove('pressed'),180)});
 window.addEventListener('storage',e=>{if(e.key===tokenKey){$('token').value=facilitatorToken();refresh()}});
 refresh();setInterval(refresh,2000);
