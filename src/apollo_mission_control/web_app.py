@@ -853,7 +853,6 @@ def queue_capcom(player_id: str, request: CapcomQueueRequest) -> dict[str, Any]:
 
 @app.post(
     "/api/session/flight/{player_id}/inverter-transfer",
-    dependencies=[Depends(_facilitator_guard)],
 )
 def queue_inverter_transfer(
     player_id: str,
