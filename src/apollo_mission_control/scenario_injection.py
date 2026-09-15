@@ -36,12 +36,14 @@ _ALLOWED_STATE_TARGETS = {
     "dps_chamber_pressure_psi",
     "dps_fuel_oxidizer_delta_p_psi",
     "lm_inverter_warning",
+    "crew_inverter_warning_report",
 }
 
 _OBSERVATION_TIME_FIELDS = {
     "dps_chamber_pressure_psi": "dps_chamber_pressure_observed_get_s",
     "dps_fuel_oxidizer_delta_p_psi": "dps_fuel_oxidizer_delta_p_observed_get_s",
     "lm_inverter_warning": "lm_inverter_warning_observed_get_s",
+    "crew_inverter_warning_report": "crew_inverter_warning_report_observed_get_s",
 }
 
 
