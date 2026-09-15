@@ -62,9 +62,24 @@ The PC+2/TEI ignition event mass is `508.0 lb` below the independently documente
 
 Architectural semantics only; not H-2 deck contents or `T+55` definition.
 
-## Apollo 10/11 operational support material
+## NASA MSC Mission Planning and Analysis Division — Apollo 11 Mission Support Section
 
-Primary Apollo-era RTACF/mission-operations documentation establishes that mass-properties products were operational inputs to trajectory, trim, DAP/control, entry-aerodynamics, and propellant-support calculations and were updated as vehicle configuration/propellant state changed. These sources do not define Apollo 13 deck values.
+- Mission: Apollo 11
+- Archival scan: https://www.ibiblio.org/apollo/NARA-SW/TheApollo11Adventure.pdf
+- Relevant section: Mission Support Section, pp. 2-79 ff.
+- Source class: primary NASA MSC Apollo operational-support documentation; architectural evidence, not Apollo 13 mission-specific values
+
+### Supports
+
+The RTACF computational-capability description explicitly states that mass-properties **weight-c.g. tables** were used by **RTACF and RTCC trajectory processors to compute pitch and yaw trim angles**. It also lists entry-aerodynamics and DAP-load mass-properties products. The separate constants-update capability included updates to mass-properties tables, aerodynamic tables, and thrust parameters.
+
+This establishes a documented Apollo operational data-flow boundary:
+
+`mass-properties weight/CG tables -> RTACF/RTCC trajectory processors -> pitch/yaw trim angles`
+
+### Boundary
+
+Do not infer that Apollo 13 used unchanged Apollo 11 software, constants, table layouts, or values. This source does not identify the H-2 `T+55` deck, accepted ~59-hour PC+2 trim basis, or final P30 module-weight calculation. It supports the architecture and provenance model only.
 
 ## Project rule
 
@@ -77,11 +92,13 @@ For PC+2 validation keep separate:
 5. reference-epoch label;
 6. generation/update/load timestamp;
 7. provenance/version of calculation basis;
-8. P30 targeting/module weights;
-9. controller-visible trim/trajectory products.
+8. weight/CG table or equivalent processor input product;
+9. trajectory/trim processor invocation and pitch/yaw trim output;
+10. P30 targeting/module weights;
+11. controller-visible trim/trajectory products and reconciliation state.
 
 Do not label the P30 `62480 + 33452 = 95932 lb` as exact physical ignition mass. Do not retroactively use the mission report's `95424.0 lb` reconstructed PC+2/TEI ignition event mass as an operational targeting input.
 
 ## Next archival targets
 
-Highest value is now H-2 RTCC/Flight Dynamics documentation, mass-property deck listings, processor descriptions, or maneuver worksheets that expose the **operational** module/depletion accounting behind the `T+55` state and final P30 module weights. Search terms should include `Apollo 13`, `H-2`, `RTCC`, `mass properties`, `T+55`, `PC+2`, `transearth injection`, `95932`, `P30`, `weight-CG`, `depletion table`, and `deck`.
+Highest value is now H-2 RTCC/RTACF/Flight Dynamics documentation, mass-property deck listings, weight/CG tables, processor descriptions, or maneuver worksheets that expose the **operational** module/depletion accounting behind the `T+55` state and identify the basis of the accepted PC+2 trim and final P30 module weights. Search terms should include `Apollo 13`, `H-2`, `RTCC`, `RTACF`, `mass properties`, `T+55`, `PC+2`, `transearth injection`, `95932`, `P30`, `weight-CG`, `weight c.g.`, `trim`, `depletion table`, and `deck`.
