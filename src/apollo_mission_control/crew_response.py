@@ -16,11 +16,20 @@ from dataclasses import asdict
 from typing import Any
 
 from .dps_response import apply_engine_off_response
+from .dps_restart_response import apply_pc2_restart_response
 from .operational_actions import OperationalAction, apply_operational_action
+from .restart_logic import (
+    RestartDisposition,
+    evaluate_premature_shutdown_restart,
+)
+from .shutdown_rules import evaluate_pc2_shutdown_rules
+from .controller_products import project_controller_products
 from .pc2_session import (
     PC2Session,
     PC2_INVERTER_TRANSFER_PROVENANCE,
     PC2_INVERTER_TRANSFER_SEQUENCE,
+    PC2_RESTART_PROCEDURE_ID,
+    PC2_RESTART_PROCEDURE_PROVENANCE,
 )
 
 
@@ -183,6 +192,143 @@ def record_inverter_transfer_completion_report(
         rule_provenance=action.provenance,
     )
     return asdict(event)
+
+
+def record_premature_dps_stop(
+    session: PC2Session,
+    *,
+    shutdown_cause_known_non_rule: bool,
+    noun97_flashing: bool | None,
+    cause: str = "premature_stop_mechanism_unspecified",
+) -> dict[str, Any]:
+    """Record an early physical engine stop and conservatively classify restart eligibility.
+
+    The stop event does not assert a valve/discrete mechanism. The facilitator/
+    scenario explicitly states whether the cause is affirmatively known to be
+    outside the listed shutdown criteria; absence of a modeled trigger is not enough.
+    """
+    if not session.state.engine_running:
+        raise ValueError("Premature DPS stop requires the engine to be running")
+
+    session.state.engine_running = False
+    session.state.throttle_phase = "off"
+
+    evaluations = evaluate_pc2_shutdown_rules(
+        project_controller_products(session.state, session.fixture),
+        session.fixture,
+    )
+    restart = evaluate_premature_shutdown_restart(
+        evaluations,
+        early_engine_stop_observed=True,
+        shutdown_cause_known_non_rule=shutdown_cause_known_non_rule,
+        noun97_flashing=noun97_flashing,
+    )
+    session.restart_evaluation = restart
+    event = session._audit(
+        "dps_premature_engine_stop",
+        "VEHICLE",
+        cause=cause,
+        stop_mechanism="unspecified",
+        shutdown_cause_known_non_rule=shutdown_cause_known_non_rule,
+        noun97_flashing=noun97_flashing,
+        restart_disposition=restart.disposition.value,
+        restart_basis=restart.basis,
+        triggered_rule_ids=list(restart.triggered_rule_ids),
+        unresolved_rule_ids=list(restart.unresolved_rule_ids),
+    )
+    return {
+        "event": asdict(event),
+        "restart_evaluation": {
+            "disposition": restart.disposition.value,
+            "basis": restart.basis,
+            "triggered_rule_ids": list(restart.triggered_rule_ids),
+            "unresolved_rule_ids": list(restart.unresolved_rule_ids),
+            "noun97_flashing": restart.noun97_flashing,
+        },
+    }
+
+
+def perform_prebriefed_pc2_restart_procedure(
+    session: PC2Session,
+    *,
+    crew_id: str = "CREW",
+) -> list[dict[str, Any]]:
+    """Execute the prebriefed crew restart sequence only when restart is eligible."""
+    restart = session.restart_evaluation
+    if restart is None:
+        raise ValueError("Restart procedure requires a classified premature engine stop")
+    if restart.disposition != RestartDisposition.RESTART_ELIGIBLE:
+        raise ValueError(
+            f"Restart procedure requires restart_eligible disposition, got {restart.disposition.value}"
+        )
+
+    crew_actions = session.simulated_crew.perform_prebriefed_procedure(
+        PC2_RESTART_PROCEDURE_ID,
+        get_s=float(session.state.get_s),
+    )
+    recorded: list[dict[str, Any]] = []
+    for crew_action in crew_actions:
+        if crew_action.action == "proceed_noun_97":
+            event = session._audit(
+                "crew_restart_procedure_step",
+                crew_id,
+                procedure_id=crew_action.procedure_id,
+                action=crew_action.action,
+                sequence_index=crew_action.sequence_index,
+                provenance=crew_action.provenance,
+                state_effect="none_modeled",
+            )
+            recorded.append(asdict(event))
+            continue
+
+        action = OperationalAction(
+            action_id=crew_action.action_id,
+            get_s=crew_action.get_s,
+            actor=crew_id,
+            action=crew_action.action,
+            parameters={},
+            provenance=PC2_RESTART_PROCEDURE_PROVENANCE,
+        )
+        apply_operational_action(session.state, action)
+        event = session._audit(
+            "crew_restart_procedure_step",
+            crew_id,
+            procedure_id=crew_action.procedure_id,
+            action=crew_action.action,
+            action_id=crew_action.action_id,
+            sequence_index=crew_action.sequence_index,
+            provenance=crew_action.provenance,
+        )
+        recorded.append(asdict(event))
+
+    return recorded
+
+
+def apply_session_restart_response(
+    session: PC2Session,
+    *,
+    cause: str = "pc2_manual_restart_sequence",
+) -> dict[str, Any]:
+    """Apply successful physical restart only after eligibility and crew procedure."""
+    restart = session.restart_evaluation
+    if restart is None:
+        raise ValueError("Physical DPS restart requires a classified premature stop")
+    response = apply_pc2_restart_response(
+        session.state,
+        restart,
+        get_s=float(session.state.get_s),
+        cause=cause,
+    )
+    session._audit(
+        "dps_restart_physical_response",
+        "VEHICLE",
+        cause=response.cause,
+        engine_on_command_received=response.engine_on_command_received,
+        pilot_valves_commanded_open=response.pilot_valves_commanded_open,
+        propellant_shutoff_valves_commanded_open=response.propellant_shutoff_valves_commanded_open,
+        thrust_level_known=response.thrust_level_known,
+    )
+    return asdict(response)
 
 
 def apply_session_engine_off_response(
