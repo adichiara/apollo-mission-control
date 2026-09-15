@@ -447,6 +447,30 @@ class WebModelProofTests(unittest.TestCase):
             "restart_occurred_program_recovery_unspecified",
         )
 
+    def test_historical_guidance_profile_exposes_cadence_but_blocks_execution(self):
+        response = self.client.get(
+            "/api/admin/model-proof/guidance-monitoring-profile/"
+            "apollo11_g_powered_descent_monitoring_partial"
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertFalse(body["historically_executable"])
+        self.assertEqual(body["execution_gate"], "blocked")
+        timing = body["timing_evidence"]
+        self.assertEqual(timing["tracking_input_rate_hz"], 10.0)
+        self.assertEqual(timing["processor_interval_s_options"], [0.2, 0.4])
+        self.assertFalse(timing["is_comparison_freshness_rule"])
+        self.assertTrue(
+            all(
+                item["max_time_separation_s"] is None
+                for item in body["comparisons"]
+            )
+        )
+        self.assertIn(
+            "not an inter-source comparison freshness rule",
+            body["gate_note"],
+        )
+
     def test_guidance_crosscheck_endpoint_preserves_pairwise_boundary(self):
         payload = {
             "first": {
