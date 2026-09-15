@@ -212,13 +212,13 @@ See:
 
 ## 11. Second engineering reference — Apollo 11 powered descent / program alarms
 
-Research note 162 selects the actual Apollo 11 powered-descent alarm interval as the next architecture pressure test after PC+2.
+Research note 200 selects the actual Apollo 11 powered-descent alarm interval as the next architecture pressure test after PC+2.
 
 This does **not** make Apollo 11 descent the only next playable scenario. Its purpose is to force the reusable engine to support a substantially different causal chain: landing radar → PGNS/AGS guidance observations → LGC program/restart alarms → continuously evolving descent trajectory → controller continue/abort judgment.
 
 The separately documented preflight program-alarm simulation remains a valuable future SimSup scenario, but Richard Koos explicitly could not recall whether its injected alarm was 1201 or 1202 and surviving evidence does not yet establish exact injection timing. Those gaps must not be silently filled from the actual flight.
 
-See `resources/research/162_second_reference_apollo11_descent_assessment.md`.
+See `resources/research/200_second_reference_apollo11_descent_assessment.md`.
 
 ## 12. Research sufficiency rule for scenario work
 
