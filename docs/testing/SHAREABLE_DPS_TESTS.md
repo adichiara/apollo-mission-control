@@ -122,6 +122,21 @@ They deliberately do **not**:
 
 The browser can run pairwise comparison, three-source consensus, and a stale-source case while showing pairwise residual/freshness evidence separately from agreement topology.
 
+### Apollo 11 historical monitoring profile
+
+The guidance section can load the non-executable Apollo 11/Mission G monitoring profile through:
+
+`GET /api/admin/model-proof/guidance-monitoring-profile/apollo11_g_powered_descent_monitoring_partial`
+
+The profile now exposes source-backed Mission G MSFN/PFP timing evidence:
+
+- tracking input: **10 measurements/s**;
+- expected PFP processing intervals: **0.2 or 0.4 s**;
+- observation-time quantization: **0.2 or 0.4 s**;
+- numeric PFP real-time lag: unresolved.
+
+The UI deliberately shows the historical execution gate as **BLOCKED** because those processor/input cadences are not the maximum permissible time separation between PGNCS, AGS, and MSFN/PFP observations. Every comparison retains `max_time_separation_s = null`.
+
 ## Landing-radar quality → update eligibility
 
 The lab exposes:

@@ -47,6 +47,31 @@ def _optional_nonnegative_number(data: dict[str, Any], key: str) -> float | None
 
 
 @dataclass(frozen=True)
+class GuidanceMonitoringTimingEvidence:
+    """Source-backed processor/update timing that is not a freshness rule."""
+
+    tracking_input_rate_hz: float | None
+    processor_interval_s_options: tuple[float, ...]
+    observation_time_quantization_s_options: tuple[float, ...]
+    real_time_lag_s: float | None
+    provenance: tuple[str, ...]
+    evidence_note: str
+
+    def to_public_dict(self) -> dict[str, object]:
+        return {
+            "tracking_input_rate_hz": self.tracking_input_rate_hz,
+            "processor_interval_s_options": list(self.processor_interval_s_options),
+            "observation_time_quantization_s_options": list(
+                self.observation_time_quantization_s_options
+            ),
+            "real_time_lag_s": self.real_time_lag_s,
+            "provenance": list(self.provenance),
+            "evidence_note": self.evidence_note,
+            "is_comparison_freshness_rule": False,
+        }
+
+
+@dataclass(frozen=True)
 class GuidanceMonitoringComparisonRecord:
     comparison_id: str
     first_source: str
@@ -104,6 +129,7 @@ class GuidanceMonitoringProfileRecord:
     status: str
     applicability: str
     comparisons: tuple[GuidanceMonitoringComparisonRecord, ...]
+    timing_evidence: GuidanceMonitoringTimingEvidence | None
     unresolved: tuple[str, ...]
     source_count: int
     profile_path: Path
@@ -124,6 +150,9 @@ class GuidanceMonitoringProfileRecord:
             "status": self.status,
             "applicability": self.applicability,
             "comparisons": [record.to_public_dict() for record in self.comparisons],
+            "timing_evidence": (
+                None if self.timing_evidence is None else self.timing_evidence.to_public_dict()
+            ),
             "unresolved": list(self.unresolved),
             "source_count": self.source_count,
         }
@@ -167,6 +196,61 @@ def _comparison(payload: Any) -> GuidanceMonitoringComparisonRecord:
         max_time_separation_s=_optional_nonnegative_number(
             payload, "max_time_separation_s"
         ),
+        provenance=tuple(item.strip() for item in raw_provenance),
+        evidence_note=_text(payload, "evidence_note"),
+    )
+
+
+def _timing_evidence(payload: Any) -> GuidanceMonitoringTimingEvidence | None:
+    if payload is None:
+        return None
+    if not isinstance(payload, dict):
+        raise ValueError("guidance monitoring timing_evidence must be an object or null")
+
+    def optional_positive(key: str) -> float | None:
+        value = payload.get(key)
+        if value is None:
+            return None
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            raise ValueError(f"guidance monitoring timing {key!r} must be numeric or null")
+        number = float(value)
+        if number <= 0.0:
+            raise ValueError(f"guidance monitoring timing {key!r} must be positive")
+        return number
+
+    def positive_options(key: str) -> tuple[float, ...]:
+        raw = payload.get(key, [])
+        if not isinstance(raw, list):
+            raise ValueError(f"guidance monitoring timing {key!r} must be a list")
+        values: list[float] = []
+        for value in raw:
+            if isinstance(value, bool) or not isinstance(value, (int, float)):
+                raise ValueError(
+                    f"guidance monitoring timing {key!r} entries must be numeric"
+                )
+            number = float(value)
+            if number <= 0.0:
+                raise ValueError(
+                    f"guidance monitoring timing {key!r} entries must be positive"
+                )
+            values.append(number)
+        return tuple(values)
+
+    raw_provenance = payload.get("provenance", [])
+    if not isinstance(raw_provenance, list) or not all(
+        isinstance(item, str) and item.strip() for item in raw_provenance
+    ):
+        raise ValueError("guidance monitoring timing provenance must be strings")
+
+    return GuidanceMonitoringTimingEvidence(
+        tracking_input_rate_hz=optional_positive("tracking_input_rate_hz"),
+        processor_interval_s_options=positive_options(
+            "processor_interval_s_options"
+        ),
+        observation_time_quantization_s_options=positive_options(
+            "observation_time_quantization_s_options"
+        ),
+        real_time_lag_s=optional_positive("real_time_lag_s"),
         provenance=tuple(item.strip() for item in raw_provenance),
         evidence_note=_text(payload, "evidence_note"),
     )
@@ -216,6 +300,7 @@ def load_guidance_monitoring_profile(
         status=_text(data, "status"),
         applicability=_text(data, "applicability"),
         comparisons=comparisons,
+        timing_evidence=_timing_evidence(data.get("timing_evidence")),
         unresolved=tuple(item.strip() for item in raw_unresolved),
         source_count=len(raw_sources),
         profile_path=profile_path,
