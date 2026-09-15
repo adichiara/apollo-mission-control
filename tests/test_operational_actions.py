@@ -33,10 +33,10 @@ class OperationalActionTests(unittest.TestCase):
             StateInjection(
                 injection_id=f"test-warning-{get_hms}",
                 get_s=hms_to_seconds(get_hms),
-                target="lm_inverter_warning",
+                target="crew_inverter_warning_report",
                 value=True,
                 evidence_class=EvidenceClass.SOURCE_BOUNDED_TEST,
-                provenance="Synthetic implementation test of documented inverter rule ordering.",
+                provenance="Synthetic crew report for documented inverter rule ordering; direct caution telemetry is not assumed.",
             ),
         )
 
@@ -84,8 +84,37 @@ class OperationalActionTests(unittest.TestCase):
         )
         apply_operational_action(state, action)
         self.assertFalse(state.lm_inverter_warning)
+        self.assertIsNone(state.crew_inverter_warning_report)
         evaluations = evaluate_pc2_shutdown_rules(project_controller_products(state, self.fixture), self.fixture)
-        self.assertEqual(evaluations["persistent_inverter_warning"].state, RuleState.CLEAR)
+        self.assertEqual(
+            evaluations["persistent_inverter_warning"].state,
+            RuleState.NOT_EVALUABLE,
+        )
+
+    def test_hidden_onboard_warning_is_not_ground_rule_evidence(self):
+        state = self.burn_state()
+        apply_state_injection(
+            state,
+            StateInjection(
+                injection_id="hidden-onboard-warning",
+                get_s=hms_to_seconds("79:29:00"),
+                target="lm_inverter_warning",
+                value=True,
+                evidence_class=EvidenceClass.SOURCE_BOUNDED_TEST,
+                provenance=(
+                    "Synthetic onboard caution state. Reviewed schematics do not "
+                    "establish direct ground telemetry of this derived caution."
+                ),
+            ),
+        )
+        projections = project_controller_products(state, self.fixture)
+        self.assertNotIn("lm.inverter_warning", projections["TELMU"].products)
+        self.assertNotIn("crew.inverter_warning_report", projections["CAPCOM"].products)
+        evaluations = evaluate_pc2_shutdown_rules(projections, self.fixture)
+        self.assertEqual(
+            evaluations["persistent_inverter_warning"].state,
+            RuleState.NOT_EVALUABLE,
+        )
 
 
 if __name__ == "__main__":
