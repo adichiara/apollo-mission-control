@@ -2,9 +2,11 @@
 
 Date: 2026-09-15
 
+> **Correction (research note 155):** this note correctly establishes that the September Mission Report maneuver-performance table reports GDA actuator displacement in **inches**, but it incorrectly generalized that unit to the separate April FCD LM CONTROL narrative. The LM CONTROL `-2` / `-1.2` quantities are printed in **degrees**. Primary LM hardware documentation explicitly supports both representations: ±2 in actuator stroke corresponds to ±6° engine-gimbal position (generic nominal scale, not an exact LM-7 calibration).
+
 ## Question
 
-Can a mission-specific primary source sharpen the final PC+2 GDA boundary and verify the physical units of the actuator values used in research note 153?
+Can a mission-specific primary source sharpen the final PC+2 GDA boundary and verify the physical units of the actuator values in the September Mission Report table?
 
 ## Primary source
 
@@ -24,40 +26,39 @@ The mission report's maneuver-performance table explicitly labels **Gimbal drive
 
 The table is a postflight maneuver-performance product, not the preburn P30/GDA pad.
 
-## Correction to note 153
+## Unit boundary corrected by note 155
 
-Research note 153 interpreted the LM CONTROL report's approximately `-2` roll-GDA state and `-1.2` ignition change as degrees. That was unsupported. The mission report establishes the relevant GDA physical reporting convention as **actuator displacement in inches**. Note 153 has been corrected accordingly: its inferred pre-ignition value is approximately `-0.8 in`, not `-0.8°`.
+These table values are linear actuator displacement. They must remain distinct from commanded angular trim. However, the separate LM CONTROL narrative reports its ignition GDA event in degrees, not inches. Apollo LM hardware documentation confirms that GDA state can legitimately be represented both as linear actuator stroke and as resulting engine-gimbal angle.
 
-This correction does **not** invalidate the supersession finding. The ~59-hour values were explicitly angular trim values (`5.86°`, `6.75°`) and explicitly update-expected; the later execution record is a distinct actuator-displacement product. They must not be numerically compared as if they were the same quantity.
+## Resolved boundary
 
-## New resolved boundary
-
-PC+2 now has three distinct trim/GDA evidence layers:
+PC+2 has distinct trim/GDA evidence layers:
 
 1. **~59 h crew-facing interim angular trim:** `5.86° / 6.75°`, update explicitly expected;
 2. **final commanded angular trim:** still unrecovered;
-3. **postflight physical GDA actuator displacement trace:** mission report values in inches, including initial `+0.13 / -0.28 in` pitch/roll and later maneuver values.
-
-The LM CONTROL narrative's larger ignition transient and the Mission Report's tabulated values should not be forced into one number without establishing their exact sampling/definition conventions.
+3. **LM CONTROL execution angular state:** roll approximately `-0.8°` pre-ignition, moving to approximately `-2°` at ignition;
+4. **postflight physical GDA actuator displacement trace:** Mission Report values in inches, including initial `+0.13 / -0.28 in` pitch/roll and later maneuver values;
+5. **generic hardware relationship:** ±2 in stroke ↔ ±6° gimbal position, nominally 3°/in, with published tolerances.
 
 ## Evidence boundary
 
 Do not:
 
-- convert actuator inches to engine-gimbal degrees without sourced geometry/calibration;
+- treat the generic 3°/in hardware scale as exact LM-7 calibration;
 - substitute the postflight `+0.13 / -0.28 in` initial actuator values for the missing final commanded angular trim;
 - assume the tabulated `initial` sample is identical in time/definition to LM CONTROL's immediately-pre-ignition narrative state;
-- infer the PC+2 mass-properties job number or explicit `T+55` linkage;
-- discard either primary record merely because their reported actuator values differ; their sampling/processing conventions are not yet reconciled.
+- infer the PC+2 mass-properties job number or explicit `T+55` linkage.
+
+The nominal scale makes `-0.28 in` correspond to about `-0.84°`, close to LM CONTROL's approximate pre-ignition `-0.8°`; note 155 treats this only as a consistency cross-check, not proof of sample identity.
 
 ## Simulation implication
 
 The data model should distinguish at minimum:
 
-`commanded_trim_angle -> commanded/observed actuator displacement -> sampled telemetry/postflight actuator trace`
+`commanded_trim_angle -> observed_engine_gimbal_angle <-> actuator_displacement -> sampled_telemetry/postflight_trace`
 
-with units and provenance mandatory. This prevents a controller product expressed in degrees from being silently mixed with a GDA hardware displacement expressed in inches.
+with units and provenance mandatory. A generic nominal hardware transform may use ±2 in ↔ ±6°, while historical replay should preserve source-native quantities.
 
 ## Next archival target
 
-Recover the final ~78-hour PC+2 angular GDA pad/working sheet. In parallel, locate LM GDA calibration/geometry documentation or the Mission Report Supplement 2 propulsion evaluation so angular trim can be related to actuator displacement only if the primary record supports that conversion.
+Recover the final ~78-hour PC+2 angular GDA pad/working sheet. For higher-fidelity conversion, locate LM-7-specific GDA/engine acceptance calibration rather than assuming the generic nominal hardware scale is exact.
