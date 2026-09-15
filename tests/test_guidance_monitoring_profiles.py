@@ -37,6 +37,28 @@ class GuidanceMonitoringProfileTests(unittest.TestCase):
         crossrange = profile.comparison("ags_pgns_crossrange_problem_detection")
         self.assertEqual(crossrange.tolerances["crossrange_velocity_fps"], 20.0)
 
+    def test_apollo11_profile_exposes_processor_timing_without_closing_freshness(self):
+        profile = get_guidance_monitoring_profile(
+            "apollo11_g_powered_descent_monitoring_partial"
+        )
+        timing = profile.timing_evidence
+        self.assertIsNotNone(timing)
+        self.assertEqual(timing.tracking_input_rate_hz, 10.0)
+        self.assertEqual(timing.processor_interval_s_options, (0.2, 0.4))
+        self.assertEqual(
+            timing.observation_time_quantization_s_options,
+            (0.2, 0.4),
+        )
+        self.assertIsNone(timing.real_time_lag_s)
+        public = profile.to_public_dict()
+        self.assertFalse(
+            public["timing_evidence"]["is_comparison_freshness_rule"]
+        )
+        self.assertIn(
+            "inter-source observation-time separation",
+            " ".join(profile.unresolved),
+        )
+
     def test_unresolved_freshness_blocks_historical_execution(self):
         profile = get_guidance_monitoring_profile(
             "apollo11_g_powered_descent_monitoring_partial"
