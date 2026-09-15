@@ -61,3 +61,10 @@ The browser does not provide a way to force downstream electrical-source state i
 As additional reusable causal-engine domains become useful enough for active development, their facilitator-facing proof should be added to the existing Causal Model Lab (or a clearly linked successor section) at the same time the model/API proof is integrated.
 
 This is validation/test presentation, not the eventual historical player station UI.
+
+
+8. **PC+2 correct / late / omitted / wrong action matrix**
+   - calls `/api/admin/model-proof/pc2-action-consequences`;
+   - runs four isolated authoritative reference sessions;
+   - proves timely GO, missed-milestone late GO, omitted GO, and wrong-actor GO produce different downstream state/audit outcomes;
+   - defines “late” only as D-016 missed-event ordering, not as a historical grace-period threshold.
