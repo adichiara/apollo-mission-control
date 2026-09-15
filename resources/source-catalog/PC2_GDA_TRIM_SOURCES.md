@@ -2,6 +2,26 @@
 
 Date: 2026-09-15
 
+## Apollo 13 Luminary 1C / Luminary 131 source listing — Verb 48 DAP-load routine
+
+- File: `EXTENDED_VERBS.agc`
+- Listing: https://www.ibiblio.org/apollo/listings/Luminary131/EXTENDED_VERBS.agc.html
+- Relevant printed pages: 297–298
+- Relevant labels: `DAPDATA2`, `ENDR03`, `DAPDAT2`, `DAPDATA3`, `DPDAT3`, `TRIMGIMB`
+- Source class: Apollo 13 mission flight-software source listing, transcribed from MIT Museum program-listing material
+
+### Supports
+
+- R03 explicitly reaches Noun 47 as the mass-load step.
+- At the Noun 47 response dispatch, `V34E` branches to `ENDR03` and then `ENDEXT`.
+- The `V33E` proceed branch instead performs mass/moment processing and reaches `DAPDATA3`.
+- `DAPDATA3` explicitly displays Noun 48 and requests a response; a later proceed response invokes `TRIMGIMB`.
+- The PC+2 instruction to enter V34 after N47 therefore selected a real software termination path before N48.
+
+### Boundary
+
+This proves the computer/procedural branch, not CONTROL's reason for selecting it. It does not recover the candidate trim, tolerance, retained two-axis state, or mass-properties job behind the no-update decision.
+
 ## NASA Apollo 13 air-to-ground transcript — PC+2 two-hour activation
 
 - Relevant GET: `075:07:43`–`075:08:35`
@@ -14,7 +34,7 @@ Date: 2026-09-15
 - CAPCOM instructs `VERB 34 ENTER` immediately after Noun 47 during the PC+2 DAP-loading procedure.
 - Haise explicitly asks whether the instruction means the gimbals already look all right.
 - Duke answers affirmatively and says there is nothing else on page 14.
-- The procedure therefore terminates before the normal Noun 48 engine-gimbal trim entry.
+- Combined with the Luminary 131 source above, the instruction is now software-confirmed to terminate the routine before Noun 48.
 
 ### Boundary
 
@@ -35,7 +55,7 @@ This establishes **no new crew-entered Noun 48 trim during this PC+2 activation 
 
 ### Boundary
 
-The phrasing is not sufficient by itself to reconstruct the controller-side rationale or exact pre-ignition gimbal angles. It is strongest when combined with the explicit `VERB 34`-before-Noun-48 procedure above.
+The phrasing is not sufficient by itself to reconstruct the controller-side rationale or exact pre-ignition gimbal angles. It is strongest when combined with the explicit `VERB 34`-before-Noun-48 procedure and the Luminary branch evidence above.
 
 ## NASA Apollo 13 final P30 read-up
 
@@ -70,8 +90,8 @@ No recovered passage yet identifies the mass-properties job/comparison that supp
 
 ## Current synthesis
 
-Do not search for or invent a “final PC+2 Noun 48 pair” as though one must have existed. Current primary operational evidence supports:
+Do not search for or invent a “final PC+2 Noun 48 pair” as though one must have existed. Current primary operational and software evidence supports:
 
-`computed/available trim information -> controller acceptance/no-update decision -> Noun 46 configuration -> Noun 47 weights -> VERB 34 termination -> no new Noun 48 crew entry -> retained gimbal state -> powered-flight GDA response`.
+`computed/available trim information -> controller acceptance/no-update decision -> Noun 46 configuration -> Noun 47 display -> VERB 34 termination -> software exits R03 before Noun 48 -> no new Noun 48 crew entry -> retained gimbal state -> powered-flight GDA response`.
 
 The next archival target is the controller-side basis for the no-update decision, not a presumed missing crew-entered trim pair.
