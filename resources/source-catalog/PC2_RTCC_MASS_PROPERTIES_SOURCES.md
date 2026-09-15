@@ -12,11 +12,30 @@
 - a `T+25` run was compared against `T+6` trims;
 - LM-burn mass-property decks were updated to `T+55` before abort work;
 - at ~59 hours GET, LM Control challenged a PC+2 DPS trim, then accepted Flight Dynamics data after having used inferior premission mass properties;
+- the final PC+2 pad was sent at about GET 78 hours based on the GYM 289 vector;
 - in the later return/entry chronology, final stowage definitions were used to compute entry aerodynamics at approximately GET 122 hours, and those EOM aerodynamics were loaded into RTCC **based on mass properties job 27** (`L/D = .29052`).
 
 ### Boundary
 
 The report establishes a mission-relative mass-properties reference-state/epoch lineage, operational provenance/reconciliation behavior, and direct H-2 evidence that a mass-properties computation could have a separately referencable **numbered job identity** preserved into a downstream operational product. It does not define exact `T+55` epoch semantics, deck fields, or explicitly identify the accepted ~59-hour basis as the `T+55` deck. **Job 27 is a late entry-aerodynamics job around GET 122 hours and must not be assigned to PC+2.** The PC+2 job number remains unknown.
+
+## Apollo 13 restored mission-audio transcript — GET ~59:01–59:05
+
+- Presentation: https://apollo13realtime.org/
+- Source class: restored/edited transcript of mission audio; corroborating operational evidence, not a substitute for the Flight Control Division primary report
+
+### Supports
+
+At GET 59:01–59:05 CAPCOM reads a P30 pad for a PC+2 DPS abort and gives DPS gimbal trim values:
+
+- pitch `5.86°`;
+- yaw `6.75°`.
+
+CAPCOM explicitly says these two angles **will be updated**, and the crew confirms them as DPS gimbal angles/GDAs.
+
+### Boundary
+
+These are recovered **interim/update-expected** trim values associated with the ~59-hour PC+2 product. Do not treat them as the final PC+2 trim, assign them specifically to the `T+55` deck, infer a job number, or assume they survived unchanged into the final ~78-hour GYM 289/P30 solution.
 
 ## NASA MSC — Apollo 12 Flight Control Division postflight report, RETRO
 
@@ -117,10 +136,10 @@ For PC+2 validation keep separate:
 10. weight/CG table or equivalent processor input product;
 11. trajectory/trim processor invocation and pitch/yaw trim output;
 12. P30 targeting/module weights;
-13. controller-visible trim/trajectory products and reconciliation state.
+13. controller-visible trim/trajectory products, including lifecycle/finality and reconciliation state.
 
-Do not label the P30 `62480 + 33452 = 95932 lb` as exact physical ignition mass. Do not retroactively use the mission report's `95424.0 lb` reconstructed PC+2/TEI ignition event mass as an operational targeting input. Do not assign the documented late-entry mass properties job 27 to PC+2.
+Do not label the P30 `62480 + 33452 = 95932 lb` as exact physical ignition mass. Do not retroactively use the mission report's `95424.0 lb` reconstructed PC+2/TEI ignition event mass as an operational targeting input. Do not assign the documented late-entry mass properties job 27 to PC+2. Do not treat the ~59-hour `5.86° / 6.75°` pair as final.
 
 ## Next archival targets
 
-Highest value is now H-2 RTCC controller procedures, mass-property run sheets/listings, Flight Dynamics/RETRO worksheets, processor descriptions, weight/CG tables, or maneuver worksheets that expose **numbered mass-properties jobs near GET 55–59 hours**, the operational module/depletion accounting behind the `T+55` state, and an explicit connection to the accepted trim and final P30 module weights. Search terms should include `Apollo 13`, `H-2`, `RTCC`, `RTACF`, `mass properties`, `mass properties job`, `job 27`, `job number`, `T+55`, `PC+2`, `transearth injection`, `95932`, `P30`, `weight-CG`, `weight c.g.`, `trim`, `depletion table`, `offline computer`, `run`, and `deck`.
+Highest value is now the Apollo 13 Flight Director Log plus H-2 RTCC controller procedures, mass-property run sheets/listings, Flight Dynamics/RETRO worksheets, processor descriptions, weight/CG tables, or maneuver worksheets spanning **GET 55–59 and 77–78 hours**. Seek the numbered job/run and `T+55` basis behind the interim `5.86° / 6.75°` trim and any later replacement trim, plus an explicit connection to the final GYM 289/P30 product and `62480 / 33452 lb` module weights. Search terms should include `Apollo 13`, `H-2`, `RTCC`, `RTACF`, `mass properties`, `mass properties job`, `job 27`, `job number`, `T+55`, `PC+2`, `transearth injection`, `95932`, `P30`, `5.86`, `6.75`, `GDA`, `GYM 289`, `weight-CG`, `weight c.g.`, `trim`, `depletion table`, `offline computer`, `run`, and `deck`.
