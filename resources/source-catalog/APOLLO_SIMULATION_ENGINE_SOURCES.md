@@ -100,7 +100,8 @@ This catalog separates evidence about how Apollo simulation/training worked from
   - Volume III described as containing complete simulated-malfunction and simulation-output tables, including program/math-model designators.
 - Architecture relevance: direct primary evidence for causal feedback, simulator model partitioning, output variables, external interfaces, and separate physical/observation failure paths.
 - Key boundaries: this is the **AMS**, not LMS, handbook; it is preliminary initial-configuration material and explicitly not design-requirements data. Later accepted, Block II, and Apollo-13 behavior must be checked before importing details.
-- Detailed extraction: `resources/research/135_public_ams_instructor_handbook_extraction.md`.
+- Detailed extraction: `resources/research/135_public_ams_instructor_handbook_extraction.md` and `resources/research/215_ams_model_partition_malfunction_boundaries.md`.
+- Architecture extraction now additionally records the five-program partition, subsystem-normal/malfunctioned real-time behavior, manual/preprogrammed/time-dependent malfunction insertion, multi-code realization of one training malfunction, and telemetry-channel fault insertion as a distinct layer.
 
 ## Virtual AGC document-library continuity
 
