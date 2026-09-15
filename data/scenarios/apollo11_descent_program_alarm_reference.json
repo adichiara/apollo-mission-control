@@ -25,7 +25,7 @@
     "Apollo 11 Technical Air-to-Ground Voice Transcription",
     "Grumman LAV-500-940, Program Alarms in Powered Descent - Apollo 11, 31 July 1969",
     "NASA Oral History Project, Richard H. Koos interview, 24 August 2023",
-    "Repository research note 162_second_reference_apollo11_descent_assessment.md"
+    "Repository research note 200_second_reference_apollo11_descent_assessment.md"
   ],
   "reference_events": [
     {"get_hms": "102:37:51", "event": "landing_radar_data_good"},
