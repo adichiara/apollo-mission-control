@@ -14,11 +14,30 @@
 - staged PC+2 operational throttle profile: initial 12.6-percent region, 40-percent region, then maximum thrust;
 - terminal regulator-isolation/blowdown operation;
 - operational significance of non-instantaneous DPS thrust buildup, documented during a later Apollo 13 DPS maneuver;
-- CONTROL's separate GDA/trim execution observations and the mass-properties/trim reconciliation history.
+- CONTROL's separate GDA/trim execution observations and the mass-properties/trim reconciliation history;
+- RTCC LM-burn mass-property decks updated to `T+55` before early LM ingress;
+- ~59-hour CONTROL challenge to Flight Dynamics trim because CONTROL had used premission mass properties, followed by agreement with Flight Dynamics.
 
 ### Boundary
 
-The report does not provide a complete numerical LM-7 PC+2 thrust-versus-time or mass-flow history, nor does the recovered material identify the complete final commanded GDA trim pair or its mass-properties job number.
+The report does not provide a complete numerical LM-7 PC+2 thrust-versus-time or mass-flow history, nor does the recovered material identify the complete later PC+2 commanded GDA trim pair or its mass-properties job number. The surrounding T+55 narrative does not by itself prove a numbered job or exact calculation provenance for a particular trim pair.
+
+## NASA — Apollo 13 technical air-to-ground transcription, ~59-hour contingency PC+2 and 61:29 free-return DPS burn
+
+- Relevant times: GET ~`059:03` and `060:53`
+- Corrected transcript navigation: https://www.apollojournals.org/afj/ap13fj/09day3-lifeboat.html
+- Source class: primary mission voice transcription; corrected transcript used as navigation aid
+
+### Supports
+
+- ~59-hour contingency PC+2 GDA pair: pitch `5.86°`, roll `6.75°`;
+- CAPCOM explicitly says the PC+2 pair **will be updated**;
+- for the actual free-return DPS maneuver at TIG `061:29:42.84`, CAPCOM transmits the **same** pitch `5.86°`, roll `6.75°` pair;
+- the free-return burn read-up also gives 5 seconds at 10-percent throttle followed by 40 percent and two-jet 10-second ullage.
+
+### Boundary
+
+This proves that `5.86° / 6.75°` became an operationally accepted near-term DPS trim and was used for the actual free-return burn; it was not merely a discarded contingency value. It does not prove a specific numbered mass-properties job, a direct mathematical derivation from T+55, or that the pair remained final for PC+2. Preserve maneuver applicability and lifecycle/finality separately.
 
 ## NASA — Apollo 13 technical/PAO air-to-ground transcription, final PC+2 P30 read-up
 
@@ -36,7 +55,7 @@ The report does not provide a complete numerical LM-7 PC+2 thrust-versus-time or
 
 ### Boundary
 
-The omission proves only that the final crew-facing P30 targeting PAD did not contain GDA trim. It does not prove that no superseding trim existed, identify how it was generated or set, or connect it to a specific mass-properties job/`T+55` state. Treat the trajectory/P30 product and GDA trim product as separate provenance chains.
+The omission proves only that the final crew-facing P30 targeting PAD did not contain GDA trim. It does not prove that no later/superseding trim existed, identify how it was generated or set, or connect it to a specific mass-properties job/`T+55` state. Treat the trajectory/P30 product and GDA trim product as separate provenance chains.
 
 ## NASA — Apollo 13 Mission Report
 
@@ -115,7 +134,7 @@ This supports using `TRW Systems Group` and `NAS9-8166` as search terms for the 
 
 ## Project rule
 
-For historical PC+2 numerical validation, keep **trajectory/P30 targeting product**, **GDA trim product**, **commanded throttle state**, **delivered thrust history**, **specific impulse/mass flow**, and **pressurization/blowdown state** as separate concepts until primary evidence supports collapsing any of them.
+For historical PC+2 numerical validation, keep **trajectory/P30 targeting product**, **GDA trim product**, **trim maneuver applicability/finality**, **commanded throttle state**, **delivered thrust history**, **specific impulse/mass flow**, and **pressurization/blowdown state** as separate concepts until primary evidence supports collapsing any of them.
 
 ## Apollo 13 Mission Report Supplement 2 — publication status and retrieval
 
