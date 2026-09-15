@@ -6,9 +6,17 @@
 <h1>Apollo Causal Model Lab</h1>
 <p>Site-facing validation of reusable causal-engine components through the real server API. PASS establishes only the stated synthetic model/API checks; it does not establish Apollo accuracy, crew behavior, or live-session integration. These tests do not reset or modify a mission.</p>
 <a href="/admin">Back to test console</a>
-<div class="labnav"><a href="#suite">DPS suite</a><a href="#trajectory">Trajectory → tracking</a><a href="#malfunction">Malfunction plan</a><a href="#resource">Resource → power → observation</a><a href="#alarm">Guidance alarm/restart</a><a href="#guidance">Guidance comparison</a><a href="#radar">Landing radar</a><a href="/admin">Test console</a></div>
+<div class="labnav"><a href="#consequences">Action consequences</a><a href="#suite">DPS suite</a><a href="#trajectory">Trajectory → tracking</a><a href="#malfunction">Malfunction plan</a><a href="#resource">Resource → power → observation</a><a href="#alarm">Guidance alarm/restart</a><a href="#guidance">Guidance comparison</a><a href="#radar">Landing radar</a><a href="/admin">Test console</a></div>
 <p><label>Facilitator token <input id="token" type="password" autocomplete="off"></label></p>
 <div class="boundary"><b>CAUSAL MODEL LAB — NOT HISTORICALLY VALIDATED.</b> These controls exercise reusable causal-engine components with explicit synthetic inputs. They do not establish Apollo constants, historical accuracy, or player-facing display fidelity.</div>
+<section id="consequences" class="panel">
+<h2>PC+2 correct / late / omitted / wrong action matrix</h2>
+<p class="note">Runs four isolated reference-scenario sessions through the authoritative PC+2 timing/action logic. “Late” means a scheduled nominal milestone was already missed under D-016; it does not define a historical grace period or allowable-delay threshold.</p>
+<div class="actions"><button id="runConsequences">Run consequence matrix</button></div>
+<div id="consequenceTrace" class="chain"><div class="stage"><b>Correct</b>Not run</div><div class="stage"><b>Late</b>Not run</div><div class="stage"><b>Omitted</b>Not run</div><div class="stage"><b>Wrong actor</b>Not run</div></div>
+<details class="raw"><summary>Raw consequence-matrix JSON</summary><pre id="consequenceRaw">No run yet.</pre></details>
+</section>
+
 <span id="suite"></span><button id="run">Run standard suite</button>
 <button id="download" disabled>Download report</button>
 <button id="copy" disabled>Copy report</button>
@@ -230,6 +238,29 @@ $('download').onclick=()=>{
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText(serialized());$('status').textContent='Report copied.'}catch{$('status').textContent='Clipboard unavailable. Use Download report.'}};
 
 const causalRuns=[];
+async function runConsequenceMatrix(){
+ $('consequenceRaw').textContent='Running…';
+ try{
+  const r=await request('/api/admin/model-proof/pc2-action-consequences',{});
+  recordCausal('pc2-action-consequence-matrix',{},r);
+  const by=Object.fromEntries(r.cases.map(x=>[x.action_class,x]));
+  function card(label,x){
+   return traceStage(label,
+    '<div>action accepted: '+(x.action_accepted===null?'OMITTED':statusBadge(!!x.action_accepted,'YES','NO'))+'</div>'+
+    '<div>FLIGHT GO: '+statusBadge(x.flight_go)+'</div>'+
+    '<div>P40 active: '+statusBadge(x.p40_active)+'</div>'+
+    '<div>engine running: '+statusBadge(x.engine_running)+'</div>'+
+    '<div>missed: '+(x.missed_events.join(', ')||'none')+'</div>'+
+    (x.rejection_reason?'<div class="note">'+x.rejection_reason+'</div>':'')+
+    '<div class="note">'+x.note+'</div>');
+  }
+  $('consequenceTrace').innerHTML=card('Correct',by.correct)+card('Late',by.late)+card('Omitted',by.omitted)+card('Wrong actor',by.wrong);
+  $('consequenceRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){$('consequenceRaw').textContent=String(e.message||e)}
+}
+$('runConsequences').onclick=runConsequenceMatrix;
+
+
 function num(id){return Number($(id).value)}
 function scalar(v,d=3){return typeof v==='number'&&Number.isFinite(v)?Number(v.toFixed(d)):v}
 function vec(v){return Array.isArray(v)?'['+v.map(x=>scalar(x)).join(', ')+']':String(v??'—')}
