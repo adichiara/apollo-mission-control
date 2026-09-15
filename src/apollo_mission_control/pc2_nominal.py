@@ -94,10 +94,16 @@ class PC2State:
     attitude_error_observed_get_s: float | None = None
     body_rate_xyz_deg_s: dict[str, float] | None = None
     body_rate_observed_get_s: float | None = None
-    # Runtime inverter caution observation. The exact PC+2 telemetry/display
-    # route remains unresolved, but the caution-generation path is documented.
+    # Onboard INVERTER caution state. Reviewed LM schematics do not establish
+    # a direct Apollo 13 PCM ground path for this derived caution; keep it
+    # separate from what controllers learn through crew reporting.
     lm_inverter_warning: bool = False
     lm_inverter_warning_observed_get_s: float | None = None
+    # Crew-observed/reported caution state is a separate information channel.
+    # None means no current report has been supplied; False is an explicit
+    # report that the caution is not present.
+    crew_inverter_warning_report: bool | None = None
+    crew_inverter_warning_report_observed_get_s: float | None = None
     # Operational action state, kept separate from fault/scenario injection.
     lm_inverter_switch_attempted: bool = False
     lm_inverter_switch_attempt_get_s: float | None = None
