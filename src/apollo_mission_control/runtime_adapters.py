@@ -54,6 +54,7 @@ _ADAPTERS: dict[str, RuntimeAdapter] = {
                 "state_injection",
                 "pc2_delta_p",
                 "pc2_dps_shutdown",
+                "pc2_inverter_transfer",
             }
         ),
     ),
