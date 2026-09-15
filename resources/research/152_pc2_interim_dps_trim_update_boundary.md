@@ -21,9 +21,9 @@ This remains the controlling mission-specific primary evidence for provenance an
 The Apollo 13 Flight Journal / Apollo 13 Real-time transcript preserves the air-ground exchange beginning at GET 59:01:39. CAPCOM reads a P30 pad for a PC+2 DPS abort and at 59:03:19 gives two gimbal trim angles, explicitly saying they **will be updated**. The values read are:
 
 - pitch GDA: `5.86°`
-- yaw GDA: `6.75°`
+- second GDA value: `6.75°` (Haise's accepted readback identifies this axis as roll)
 
-The crew confirms these as DPS gimbal angles/GDAs in the readback.
+The crew confirms these as DPS gimbal angles/GDAs in the readback. Research note 153 later corrects the axis label: the exchange is inconsistent, but Haise's accepted readback and LM CONTROL evidence support treating the second value as roll rather than normalizing it to yaw.
 
 Transcript presentation: https://apollo13realtime.org/ (GET 059:01–059:05)
 
