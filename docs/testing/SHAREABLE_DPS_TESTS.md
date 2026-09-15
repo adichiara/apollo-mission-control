@@ -58,6 +58,22 @@ The **Compare before/after depletion** control runs the same chain on both sides
 
 The composed endpoint still rejects direct electrical-source availability override. Source availability must derive from the configured resource coupling.
 
+## Guidance-computer alarm → restart recovery
+
+The lab exposes:
+
+`POST /api/admin/model-proof/guidance-alarm`
+
+The browser supplies the active program, alarm code/meaning, whether the alarm invokes software restart, and whether the active program is restart-protected.
+
+The visible chain is:
+
+`program state → alarm classification → optional software restart → recovery state`
+
+Alarm/restart classification is caller supplied. The generic model does not emulate AGC scheduling, infer guidance validity, or issue an abort/continue recommendation.
+
+The default browser values are synthetic; historical Apollo alarm/program values remain profile/source data, not generic UI defaults.
+
 ## Guidance comparison / consensus
 
 The lab exposes:
