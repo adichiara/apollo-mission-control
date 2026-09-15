@@ -6,7 +6,7 @@
 <h1>Apollo Causal Model Lab</h1>
 <p>Site-facing validation of reusable causal-engine components through the real server API. PASS establishes only the stated synthetic model/API checks; it does not establish Apollo accuracy, crew behavior, or live-session integration. These tests do not reset or modify a mission.</p>
 <a href="/admin">Back to test console</a>
-<div class="labnav"><a href="#suite">DPS suite</a><a href="#trajectory">Trajectory → tracking</a><a href="#resource">Resource → power → observation</a><a href="#guidance">Guidance comparison</a><a href="#radar">Landing radar</a><a href="/admin">Test console</a></div>
+<div class="labnav"><a href="#suite">DPS suite</a><a href="#trajectory">Trajectory → tracking</a><a href="#resource">Resource → power → observation</a><a href="#alarm">Guidance alarm/restart</a><a href="#guidance">Guidance comparison</a><a href="#radar">Landing radar</a><a href="/admin">Test console</a></div>
 <p><label>Facilitator token <input id="token" type="password" autocomplete="off"></label></p>
 <div class="boundary"><b>CAUSAL MODEL LAB — NOT HISTORICALLY VALIDATED.</b> These controls exercise reusable causal-engine components with explicit synthetic inputs. They do not establish Apollo constants, historical accuracy, or player-facing display fidelity.</div>
 <span id="suite"></span><button id="run">Run standard suite</button>
@@ -54,6 +54,22 @@
 <details class="raw"><summary>Raw resource-power JSON</summary><pre id="resourceRaw">No run yet.</pre></details>
 </section>
 
+
+<section id="alarm" class="panel">
+<h2>Guidance-computer alarm → restart recovery</h2>
+<p class="note">Exercises the generic alarm/restart state transition. Alarm meaning, restart classification, and restart-protected program identity are explicit synthetic inputs. The proof does not decide whether the mission should abort or continue.</p>
+<div class="grid">
+<label class="field">Active program<input id="gaProgram" value="P_SYNTH"></label>
+<label class="field">Alarm code<input id="gaCode" value="A1"></label>
+<label class="field">Alarm meaning<input id="gaMeaning" value="synthetic restart alarm"></label>
+<label class="field">Initial time (s)<input id="gaStateTime" type="number" value="10" step="0.1"></label>
+<label class="field">Alarm event time (s)<input id="gaEventTime" type="number" value="11" step="0.1"></label>
+</div>
+<p><label><input id="gaRestart" type="checkbox" checked> alarm invokes software restart</label> &nbsp; <label><input id="gaProtected" type="checkbox" checked> active program is restart-protected</label></p>
+<div class="actions"><button id="runAlarm">Run alarm transition</button><button id="runAlarmUnprotected">Run unprotected restart</button><button id="runAlarmNoRestart">Run non-restart alarm</button></div>
+<div id="alarmTrace" class="chain"><div class="stage"><b>Program state</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Alarm classification</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Software restart</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Recovery state</b>Not run</div></div>
+<details class="raw"><summary>Raw guidance-alarm JSON</summary><pre id="alarmRaw">No run yet.</pre></details>
+</section>
 
 <section id="guidance" class="panel">
 <h2>Guidance comparison / multi-source consensus</h2>
@@ -290,6 +306,30 @@ $('runBeforeAfter').onclick=async()=>{
  }catch(e){$('resourceRaw').textContent=String(e.message||e)}
 };
 
+
+async function runGuidanceAlarm(mode='normal'){
+ const protectedProgram=mode==='unprotected'?false:$('gaProtected').checked;
+ const restart=mode==='no-restart'?false:$('gaRestart').checked;
+ const program=$('gaProgram').value.trim()||'P_SYNTH',code=$('gaCode').value.trim()||'A1';
+ const p={state_time_s:num('gaStateTime'),active_program:program,alarm_code:code,
+  alarm_meaning:$('gaMeaning').value.trim()||'synthetic alarm',software_restart:restart,
+  restart_protected_programs:protectedProgram?[program]:[],event_time_s:num('gaEventTime'),
+  source:'site_causal_model_lab',applicability:'site causal-model lab guidance alarm proof; not mission validated',
+  provenance:['Synthetic browser inputs; alarm/restart classification is caller supplied']};
+ $('alarmRaw').textContent='Running…';
+ try{
+  const r=await request('/api/admin/model-proof/guidance-alarm',p);recordCausal('guidance-alarm-'+mode,p,r);
+  $('alarmTrace').innerHTML=
+   traceStage('Program state','<div>program = '+program+'</div><div>time = '+scalar(p.state_time_s)+' s</div>')+
+   arrow()+traceStage('Alarm classification','<div>code = '+code+'</div><div>'+p.alarm_meaning+'</div><div>restart-classified '+statusBadge(p.software_restart)+'</div>')+
+   arrow()+traceStage('Software restart','<div>restart occurred '+statusBadge(r.restart_occurred)+'</div><div>restart count = '+r.state.restart_count+'</div>')+
+   arrow()+traceStage('Recovery state','<div>'+r.state.recovery_status+'</div><div>protected recovery '+statusBadge(r.restart_protected_recovery)+'</div><div class="note">No abort/continue decision is generated.</div>');
+  $('alarmRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){$('alarmRaw').textContent=String(e.message||e)}
+}
+$('runAlarm').onclick=()=>runGuidanceAlarm('normal');
+$('runAlarmUnprotected').onclick=()=>runGuidanceAlarm('unprotected');
+$('runAlarmNoRestart').onclick=()=>runGuidanceAlarm('no-restart');
 
 function guidanceObservation(source,value,time=10,valid=true){
  return {source,time_s:time,valid,values:{radial_velocity:value},provenance:['Synthetic browser input']};
