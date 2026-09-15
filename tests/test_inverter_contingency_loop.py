@@ -35,14 +35,14 @@ class InverterContingencyLoopTests(unittest.TestCase):
         )
         self.assertTrue(state.engine_running)
 
-        # Synthetic, source-bounded warning observation. This is not a claim
+        # Synthetic, source-bounded crew warning report. This is not a claim
         # that Apollo 13 experienced an inverter fault during PC+2.
         apply_state_injection(
             state,
             StateInjection(
                 injection_id="test-inverter-warning-pre-switch",
                 get_s=hms_to_seconds("79:29:00"),
-                target="lm_inverter_warning",
+                target="crew_inverter_warning_report",
                 value=True,
                 evidence_class=EvidenceClass.SOURCE_BOUNDED_TEST,
                 provenance="Synthetic observation for documented PC+2 inverter rule path.",
@@ -81,8 +81,8 @@ class InverterContingencyLoopTests(unittest.TestCase):
             provenance="Synthetic completion report for the documented action sequence.",
         )
 
-        # The original warning alone is not enough after the switch. A distinct
-        # post-switch observation is required.
+        # The original crew report alone is not enough after the switch. A distinct
+        # post-switch crew report is required.
         evaluations = evaluate_pc2_shutdown_rules(
             project_controller_products(state, self.fixture), self.fixture
         )
@@ -96,10 +96,10 @@ class InverterContingencyLoopTests(unittest.TestCase):
             StateInjection(
                 injection_id="test-inverter-warning-post-switch",
                 get_s=hms_to_seconds("79:29:04"),
-                target="lm_inverter_warning",
+                target="crew_inverter_warning_report",
                 value=True,
                 evidence_class=EvidenceClass.SOURCE_BOUNDED_TEST,
-                provenance="Synthetic post-switch observation; no persistence interval asserted.",
+                provenance="Synthetic post-switch crew report; no persistence interval asserted.",
             ),
         )
         evaluations = evaluate_pc2_shutdown_rules(
