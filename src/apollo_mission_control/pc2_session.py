@@ -76,7 +76,6 @@ class PlayerSessionSnapshot:
         return asdict(self)
 
 
-@dataclass(frozen=True)
 PC2_INVERTER_TRANSFER_SEQUENCE = (
     "CB(11) EPS: INV 1 — close",
     "INVERTER — 1",
@@ -89,6 +88,7 @@ PC2_INVERTER_TRANSFER_PROVENANCE = (
 )
 
 
+@dataclass(frozen=True)
 class BundledPlayerSessionSnapshot:
     """Serializable snapshot for a player owning multiple original stations.
 
