@@ -1,7 +1,7 @@
 # Apollo 13 PC+2 — alternate inverter identity after an inverter warning
 
 Date: 2026-09-13  
-Status: **RESOLVED for first-playable inverter identity; exact cockpit transfer chronology remains unresolved.**
+Status: **RESOLVED for alternate inverter identity; transfer chronology subsequently resolved by research note 114.**
 
 ## Question
 
@@ -32,7 +32,7 @@ Thus, in the mission-specific PC+2 state where inverter 2 is the selected source
 
 ## Interpretation
 
-This closes the **identity** question without claiming recovery of an unrecorded Apollo 13 malfunction checklist sequence.
+This note closes the **identity** question. Research note 114 subsequently recovers the Apollo 13 LM Malfunction Procedures sequence for the transfer itself.
 
 Canonical first-playable mapping:
 
@@ -54,8 +54,7 @@ The mapping `inverter 2 → inverter 1` is therefore an **architecture-constrain
 
 This note does **not** establish:
 
-- the exact switch and circuit-breaker chronology used to transfer from inverter 2 to inverter 1 during a hypothetical in-burn failure;
-- whether a reset action was required before or after the transfer;
+- whether a MASTER ALARM reset is operationally relevant to the PC+2 shutdown decision beyond the separate INVERTER caution state;
 - which crew member would execute the action;
 - any dwell/persistence time before judging the warning;
 - whether TELMU/CONTROL could independently observe the selected inverter position;
@@ -66,9 +65,9 @@ Those details remain unfrozen unless a direct procedural source is recovered or 
 
 ## First-playable consequence
 
-It is now acceptable to label the alternate inverter identity as **inverter 1** in scenario state, facilitator evidence, and player-facing procedure material, provided the UI/documentation does not imply that the exact historical switch/breaker sequence has been reconstructed.
+It is acceptable to label the alternate inverter identity as **inverter 1**. Research note 114 additionally authorizes the sourced sequence `CB(11) EPS: INV 1 — close` → `INVERTER — 1` → `CB(16) EPS: INV 2 — open`.
 
-No automatic transfer, timing assumption, or hidden-state shortcut is authorized.
+No automatic transfer, numeric dwell, crew-member assignment, or hidden-state shortcut is authorized.
 
 ## Sources
 
@@ -80,4 +79,5 @@ No automatic transfer, timing assumption, or hidden-state shortcut is authorized
 
 - Note 111 remains superseded on its initial PC+2 inverter-selection synthesis.
 - Note 112 remains canonical for the mission-specific **initial inverter 2** selection.
-- This note resolves the remaining **alternate identity** question while preserving uncertainty about exact transfer procedure.
+- This note resolves the remaining **alternate identity** question.
+- Note 114 is canonical for the exact inverter-2 → inverter-1 transfer procedure.
