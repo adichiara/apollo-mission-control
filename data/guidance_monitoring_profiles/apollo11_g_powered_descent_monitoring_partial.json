@@ -2,8 +2,8 @@
   "schema_version": "0.1-guidance-monitoring-profile",
   "profile_id": "apollo11_g_powered_descent_monitoring_partial",
   "mission_profile_id": "apollo11_g",
-  "status": "partial historical monitoring profile; freshness unresolved",
-  "applicability": "Apollo 11 LM powered-descent Mission Control guidance monitoring; architecture/reference use only until observation timing is source-bounded",
+  "status": "partial historical monitoring profile; MSFN/PFP processor cadence sourced, inter-source freshness unresolved",
+  "applicability": "Apollo 11 / Mission G LM powered-descent Mission Control guidance monitoring; source-backed MSFN/PFP timing metadata is inspectable, but comparisons remain non-executable until inter-source observation freshness is source-bounded",
   "comparisons": [
     {
       "comparison_id": "ags_pgns_inplane_problem_detection",
@@ -11,8 +11,8 @@
       "second_source": "PGNS",
       "purpose": "Detect an in-plane disagreement requiring isolation with an independent ground comparison",
       "tolerances": {
-        "radial_velocity_fps": 10.0,
-        "downrange_velocity_fps": 10.0
+        "radial_velocity_fps": 10,
+        "downrange_velocity_fps": 10
       },
       "max_time_separation_s": null,
       "provenance": [
@@ -26,8 +26,8 @@
       "second_source": "PGNS",
       "purpose": "Use an independent ground-derived comparison to help isolate whether PGNS or AGS is the discrepant source",
       "tolerances": {
-        "radial_velocity_fps": 10.0,
-        "downrange_velocity_fps": 10.0
+        "radial_velocity_fps": 10,
+        "downrange_velocity_fps": 10
       },
       "max_time_separation_s": null,
       "provenance": [
@@ -41,8 +41,8 @@
       "second_source": "PGNS",
       "purpose": "PGNS failure-limit comparison after a possible PGNS discrepancy has been isolated",
       "tolerances": {
-        "radial_velocity_fps": 35.0,
-        "downrange_velocity_fps": 30.0
+        "radial_velocity_fps": 35,
+        "downrange_velocity_fps": 30
       },
       "max_time_separation_s": null,
       "provenance": [
@@ -57,7 +57,7 @@
       "second_source": "PGNS",
       "purpose": "Detect crossrange guidance disagreement requiring further isolation",
       "tolerances": {
-        "crossrange_velocity_fps": 20.0
+        "crossrange_velocity_fps": 20
       },
       "max_time_separation_s": null,
       "provenance": [
@@ -67,8 +67,9 @@
     }
   ],
   "unresolved": [
-    "maximum permissible observation-time separation / freshness for each comparison",
-    "exact controller display update cadence and sample synchronization",
+    "maximum permissible inter-source observation-time separation / freshness for each PGNCS/AGS/MSFN comparison",
+    "exact controller display refresh cadence and cross-source sample synchronization",
+    "numeric powered-flight-processor real-time lag TL if required for controller-product timing",
     "exact descent attitude-reference comparison limits",
     "remaining crossrange/misalignment flowchart thresholds not independently verified",
     "mapping from these monitoring results to the complete post-program-alarm GO/abort decision rule"
@@ -76,6 +77,23 @@
   "sources": [
     "NASA MSC Internal Note 70-FM-20, The Apollo 11 Adventure, 5 February 1970, Guidance Analysis Section and Figure 4",
     "Apollo 11 Mission Rules, powered-descent rule 3-50",
-    "NASA Apollo 11 Mission Report, November 1969"
-  ]
+    "NASA Apollo 11 Mission Report, November 1969",
+    "MSC Internal Note 69-FM-36, RTCC Requirements for Mission G: MSFN Tracking Data Processor for Powered Flight Lunar Ascent/Descent Navigation, 7 February 1969"
+  ],
+  "timing_evidence": {
+    "tracking_input_rate_hz": 10,
+    "processor_interval_s_options": [
+      0.2,
+      0.4
+    ],
+    "observation_time_quantization_s_options": [
+      0.2,
+      0.4
+    ],
+    "real_time_lag_s": null,
+    "provenance": [
+      "MSC Internal Note 69-FM-36, RTCC Requirements for Mission G: MSFN Tracking Data Processor for Powered Flight Lunar Ascent/Descent Navigation, 7 February 1969"
+    ],
+    "evidence_note": "Mission G requirements expect high-speed S-band tracking at 10 measurements/s and PFP measurement processing at 0.2- or 0.4-second intervals, with output time-tagging. These processor/input cadences are not a maximum permissible PGNCS/AGS/MSFN observation-time separation and do not close the historical freshness gate."
+  }
 }
