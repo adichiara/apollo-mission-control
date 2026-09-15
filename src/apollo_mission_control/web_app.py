@@ -41,6 +41,13 @@ from .electrical_power_model import (
     ElectricalSourceSpec,
     evaluate_electrical_bus,
 )
+from .guidance_computer_model import (
+    GuidanceComputerConfig,
+    GuidanceComputerState,
+    ProgramAlarmEvent,
+    ProgramAlarmRule,
+    apply_program_alarm,
+)
 from .guidance_crosscheck import (
     GuidanceCrosscheckConfig,
     GuidanceObservation,
@@ -270,6 +277,23 @@ class TrajectoryTrackingModelProofRequest(BaseModel):
     observation: TrackingObservationRequest = Field(
         default_factory=TrackingObservationRequest
     )
+
+
+class GuidanceAlarmModelProofRequest(BaseModel):
+    state_time_s: float = 0.0
+    active_program: str = Field(min_length=1, max_length=128)
+    alarm_code: str = Field(min_length=1, max_length=64)
+    alarm_meaning: str = Field(min_length=1, max_length=500)
+    software_restart: bool = True
+    restart_protected_programs: list[str] = Field(default_factory=list, max_length=50)
+    event_time_s: float
+    source: str = Field(default="synthetic_program_detected", min_length=1, max_length=128)
+    applicability: str = Field(
+        default="generic guidance-computer alarm API proof; not mission validated",
+        min_length=1,
+        max_length=500,
+    )
+    provenance: list[str] = Field(default_factory=list, max_length=20)
 
 
 class GuidanceObservationRequest(BaseModel):
@@ -1100,6 +1124,43 @@ def _electrical_bus_from_request(
             bus_enabled=request.bus_enabled,
         ),
     )
+
+
+@app.post(
+    "/api/admin/model-proof/guidance-alarm",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def guidance_alarm_model_proof(
+    request: GuidanceAlarmModelProofRequest,
+) -> dict[str, object]:
+    result = _domain_call(
+        lambda: apply_program_alarm(
+            GuidanceComputerState(
+                time_s=request.state_time_s,
+                active_program=request.active_program,
+            ),
+            ProgramAlarmEvent(
+                time_s=request.event_time_s,
+                code=request.alarm_code,
+                source=request.source,
+            ),
+            GuidanceComputerConfig(
+                alarm_rules={
+                    request.alarm_code: ProgramAlarmRule(
+                        code=request.alarm_code,
+                        meaning=request.alarm_meaning,
+                        software_restart=request.software_restart,
+                    )
+                },
+                restart_protected_programs=tuple(
+                    request.restart_protected_programs
+                ),
+                applicability=request.applicability,
+                provenance=tuple(request.provenance),
+            ),
+        )
+    )
+    return result.to_dict()
 
 
 def _guidance_observation_from_request(
