@@ -76,6 +76,14 @@ from .landing_radar_quality import (
     RadarScalarChannel,
     qualify_landing_radar_measurements,
 )
+from .malfunction_plan import (
+    CausalInsertion,
+    InsertionLayer,
+    InsertionMode,
+    MalfunctionPlan,
+    MalfunctionScheduler,
+    activation_to_dict,
+)
 from .mission_profiles import (
     MissionProfileRecord,
     discover_mission_profiles,
@@ -418,6 +426,25 @@ class LandingRadarQualityUpdateChainRequest(BaseModel):
         max_length=500,
     )
     provenance: list[str] = Field(default_factory=list, max_length=20)
+
+
+class CausalInsertionRequest(BaseModel):
+    insertion_id: str = Field(min_length=1, max_length=128)
+    layer: InsertionLayer
+    target: str = Field(min_length=1, max_length=256)
+    value: Any
+    provenance: str = Field(min_length=1, max_length=1000)
+
+
+class MalfunctionPlanProofRequest(BaseModel):
+    malfunction_id: str = Field(min_length=1, max_length=128)
+    description: str = Field(min_length=1, max_length=500)
+    mode: InsertionMode
+    activation_time_s: float | None = None
+    current_time_s: float
+    trigger_mode: InsertionMode | None = None
+    insertions: list[CausalInsertionRequest] = Field(min_length=1, max_length=50)
+    provenance: str = Field(min_length=1, max_length=1000)
 
 
 class ResourceSpecRequest(BaseModel):
@@ -1542,6 +1569,48 @@ def landing_radar_quality_update_model_proof(
             "source": request.source,
         },
         "update_assessment": update.to_dict(),
+    }
+
+
+@app.post(
+    "/api/admin/model-proof/malfunction-plan",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def malfunction_plan_model_proof(
+    request: MalfunctionPlanProofRequest,
+) -> dict[str, Any]:
+    plan = MalfunctionPlan(
+        malfunction_id=request.malfunction_id,
+        description=request.description,
+        mode=request.mode,
+        activation_time_s=request.activation_time_s,
+        insertions=tuple(
+            CausalInsertion(
+                insertion_id=item.insertion_id,
+                layer=item.layer,
+                target=item.target,
+                value=item.value,
+                provenance=item.provenance,
+            )
+            for item in request.insertions
+        ),
+        provenance=request.provenance,
+    )
+    scheduler = _domain_call(lambda: MalfunctionScheduler((plan,)))
+    activation = _domain_call(
+        lambda: scheduler.activate(
+            request.malfunction_id,
+            current_time_s=request.current_time_s,
+            trigger_mode=request.trigger_mode,
+        )
+    )
+    return {
+        "model_status": "malfunction_plan_scheduler_proof_not_historically_validated",
+        "activation": activation_to_dict(activation),
+        "note": (
+            "Activation emits explicit causal insertions only; downstream model "
+            "effects are not applied by this endpoint."
+        ),
     }
 
 
