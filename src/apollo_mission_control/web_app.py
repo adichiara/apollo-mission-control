@@ -32,10 +32,13 @@ from .causal_translational_model import (
 from .controller_products import project_controller_products
 from .crew_response import (
     apply_session_engine_off_response,
+    apply_session_restart_response,
     command_dps_shutdown_from_callout,
     perform_inverter_transfer_from_callout,
+    perform_prebriefed_pc2_restart_procedure,
     record_crew_receipt,
     record_inverter_transfer_completion_report,
+    record_premature_dps_stop,
 )
 from .electrical_power_model import (
     ElectricalBusConfig,
@@ -222,6 +225,28 @@ class CrewShutdownRequest(BaseModel):
 
 class CrewShutdownReportRequest(BaseModel):
     crew_id: str = Field(default="CREW", min_length=1, max_length=64)
+
+
+class PrematureDPSStopRequest(BaseModel):
+    shutdown_cause_known_non_rule: bool = False
+    noun97_flashing: bool | None = None
+    cause: str = Field(
+        default="premature_stop_mechanism_unspecified",
+        min_length=1,
+        max_length=256,
+    )
+
+
+class CrewRestartProcedureRequest(BaseModel):
+    crew_id: str = Field(default="CREW", min_length=1, max_length=64)
+
+
+class DPSRestartResponseRequest(BaseModel):
+    cause: str = Field(
+        default="pc2_manual_restart_sequence",
+        min_length=1,
+        max_length=256,
+    )
 
 
 class EngineOffResponseRequest(BaseModel):
@@ -1052,6 +1077,57 @@ def crew_shutdown_report(request: CrewShutdownReportRequest) -> dict[str, Any]:
         _require_runtime_capability("pc2_dps_shutdown")
         session = _sync_session()
         return _domain_call(lambda: record_crew_shutdown_report(session, crew_id=request.crew_id))
+
+
+@app.post(
+    "/api/session/admin/vehicle/dps-premature-stop",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def dps_premature_stop(request: PrematureDPSStopRequest) -> dict[str, Any]:
+    with _lock:
+        _require_runtime_capability("pc2_dps_restart")
+        session = _sync_session()
+        return _domain_call(
+            lambda: record_premature_dps_stop(
+                session,
+                shutdown_cause_known_non_rule=request.shutdown_cause_known_non_rule,
+                noun97_flashing=request.noun97_flashing,
+                cause=request.cause,
+            )
+        )
+
+
+@app.post(
+    "/api/session/crew/restart-procedure",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def crew_restart_procedure(request: CrewRestartProcedureRequest) -> dict[str, Any]:
+    with _lock:
+        _require_runtime_capability("pc2_dps_restart")
+        session = _sync_session()
+        events = _domain_call(
+            lambda: perform_prebriefed_pc2_restart_procedure(
+                session,
+                crew_id=request.crew_id,
+            )
+        )
+        return {"events": events}
+
+
+@app.post(
+    "/api/session/admin/vehicle/dps-restart",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def dps_restart_response(request: DPSRestartResponseRequest) -> dict[str, Any]:
+    with _lock:
+        _require_runtime_capability("pc2_dps_restart")
+        session = _sync_session()
+        return _domain_call(
+            lambda: apply_session_restart_response(
+                session,
+                cause=request.cause,
+            )
+        )
 
 
 @app.post(

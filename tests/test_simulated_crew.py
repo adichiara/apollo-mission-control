@@ -8,6 +8,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from apollo_mission_control.simulated_crew import (  # noqa: E402
     CrewInstructionRule,
+    CrewProcedureRule,
     SimulatedCrew,
 )
 
@@ -127,6 +128,43 @@ class SimulatedCrewTests(unittest.TestCase):
                 },
             )
 
+
+    def test_prebriefed_procedure_emits_configured_steps_without_capcom_item(self):
+        crew = SimulatedCrew(
+            crew_id="CREW",
+            rules={},
+            procedures={
+                "restart": CrewProcedureRule(
+                    procedure_id="restart",
+                    steps=("proceed", "ullage", "engine_start"),
+                    provenance="synthetic prebrief",
+                )
+            },
+        )
+        actions = crew.perform_prebriefed_procedure("restart", get_s=20.0)
+        self.assertEqual([item.action for item in actions], ["proceed", "ullage", "engine_start"])
+        self.assertEqual([item.sequence_index for item in actions], [0, 1, 2])
+        self.assertTrue(all(item.get_s == 20.0 for item in actions))
+        self.assertEqual(actions[0].provenance, "synthetic prebrief")
+
+        with self.assertRaisesRegex(ValueError, "already performed"):
+            crew.perform_prebriefed_procedure("restart", get_s=21.0)
+
+    def test_prebriefed_procedure_does_not_require_instruction_rules(self):
+        crew = SimulatedCrew(
+            crew_id="CREW",
+            rules={},
+            procedures={
+                "procedure": CrewProcedureRule(
+                    procedure_id="procedure",
+                    steps=("step_one",),
+                )
+            },
+        )
+        self.assertEqual(
+            crew.perform_prebriefed_procedure("procedure", get_s=1.0)[0].action,
+            "step_one",
+        )
 
 if __name__ == "__main__":
     unittest.main()
