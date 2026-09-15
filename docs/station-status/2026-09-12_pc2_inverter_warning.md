@@ -22,7 +22,7 @@ Implementation now separates:
 - crew `completion_report` event confirming the requested action was performed;
 - a **distinct later inverter-warning observation** required before the shutdown rule can trigger.
 
-This closes the first bounded controller/crew action-report loop without inventing a timer or inverter identity.
+This closes the first bounded controller/crew action-report loop. Later notes 112–114 resolve initial inverter 2, alternate inverter 1, and the three-control transfer sequence; the implementation still does not invent a timer.
 
 ### TELMU / CONTROL
 
@@ -34,12 +34,10 @@ Remains **B**. The mission-specific rule read-up/readback strengthens the eviden
 
 ## Unresolved
 
-- exact PC+2 inverter identity/selection;
-- exact cockpit switch/circuit-breaker chronology;
 - exact crew member who would execute the hypothetical switch;
 - exact telemetry word and TELMU/CONTROL display field;
 - whether the ground independently observed the switch position or knew it from crew procedure/reporting;
 - any historically specified dwell time before judging the post-switch caution;
 - exact internal TELMU/CONTROL → FLIGHT call sequence for this hypothetical failure.
 
-A surviving flown Apollo 13 LM-7 Contingency Checklist is now cataloged as a future primary-source target, but the accessible catalog record reviewed so far does not expose the specific inverter procedure. These gaps therefore remain explicit and keep the three stations at maturity B.
+The Apollo 13 LM Malfunction Procedures subsequently resolved the transfer controls (research note 114). The remaining timing, display/routing, crew-assignment, and hypothetical front-room coordination gaps remain explicit and keep the three stations at maturity B.
