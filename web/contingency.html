@@ -64,10 +64,34 @@
   </section>
 
   <section class="panel evidence"><b>Inverter result</b><div id="iverdict" class="muted" style="margin:5px 0">Run the inverter setup, then work downward.</div><div id="iresult" class="result">Waiting.</div></section>
+
+  <section class="panel">
+    <h2 style="margin-top:0">Premature DPS stop / prebriefed restart chain</h2>
+    <p class="muted">This test exercises the documented PC+2 restart branch for an early engine stop whose cause is affirmatively outside the listed shutdown criteria. The restart procedure was briefed before the burn; this path must not invent a new post-stop FLIGHT approval or CAPCOM transmission.</p>
+    <div class="summary">
+      <div class="metric"><span class="muted">GET</span><b id="rget">--:--:--</b></div>
+      <div class="metric"><span class="muted">Session</span><b id="rstate">--</b></div>
+      <div class="metric"><span class="muted">Restart disposition</span><b id="rdisp">--</b></div>
+    </div>
+    <button class="primary" style="width:100%;margin-top:8px" onclick="setupRestart()">RESET + SET UP RESTART TEST</button>
+    <div class="steps" style="margin-top:8px">
+      <div class="step" id="rs1"><div class="num">1</div><div><div class="name">Apply a synthetic premature engine stop</div><div class="why">Cause is explicitly classified as non-rule and Noun 97 is present. This makes the documented restart branch eligible without pretending that the absence of a modeled trigger proves eligibility.</div></div><button onclick="eligibleRestartStop()">PREMATURE STOP</button></div>
+      <div class="step" id="rs2"><div class="num">2</div><div><div class="name">Crew executes the prebriefed procedure</div><div class="why">PRO on Noun 97 → manual ullage → Engine Start push → Descent Engine Command Override on. No new CAPCOM item should exist.</div></div><button onclick="runRestartProcedure()">CREW PROCEDURE</button></div>
+      <div class="step" id="rs3"><div class="num">3</div><div><div class="name">Vehicle receives explicit restart response</div><div class="why">Crew commands alone do not restart the engine. The physical engine-on response remains a separate facilitator/vehicle event and does not invent thrust level.</div></div><button onclick="applyRestartResponse()">ENGINE-ON RESPONSE</button></div>
+      <div class="step" id="rs4"><div class="num">4</div><div><div class="name">Verify causal separation</div><div class="why">Expected: eligible stop → four crew procedure steps → explicit physical response, with no post-stop FLIGHT/CAPCOM instruction inserted.</div></div><button class="good" onclick="checkRestart()">CHECK RESTART CHAIN</button></div>
+    </div>
+    <div class="actions" style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px">
+      <button onclick="testUnknownRestartBlock()">TEST UNKNOWN-CAUSE BLOCK</button>
+      <button onclick="testRuleRestartBlock()">TEST RULE-CAUSED BLOCK</button>
+    </div>
+  </section>
+
+  <section class="panel evidence"><b>Restart result</b><div id="rverdict" class="muted" style="margin:5px 0">Run the restart setup, then work downward.</div><div id="rresult" class="result">Waiting.</div></section>
+
 </div>
 <nav class="screenNav"><button onclick="location.href='/admin'">CONTROL</button><button class="active">CONTINGENCY TESTS</button></nav>
 <script>
-let status=null,audit=[],itemId=null,inverterItemId=null;
+let status=null,audit=[],itemId=null,inverterItemId=null,restartEvaluation=null;
 const kinds=['state_injection_applied','controller_shutdown_callout_decision','capcom_item_transmitted','crew_capcom_item_received','crew_dps_shutdown_commanded','dps_engine_off_physical_response','crew_dps_shutdown_reported'];
 const tokenKey='apollo_facilitator_token';
 const $=id=>document.getElementById(id);
@@ -104,8 +128,21 @@ function markInverterSteps(){
  if($('iget'))$('iget').textContent=status?hms(status.get_s):'--:--:--';
  if($('istate'))$('istate').textContent=(status?.status||'--').toUpperCase();
 }
+
+function markRestartSteps(){
+  const stop=audit.find(x=>x.kind==='dps_premature_engine_stop');
+  const crewSteps=audit.filter(x=>x.kind==='crew_restart_procedure_step');
+  const physical=audit.find(x=>x.kind==='dps_restart_physical_response');
+  const checks=[!!stop,crewSteps.length>=4,!!physical];
+  for(let i=0;i<3;i++){let el=$('rs'+(i+1));if(!el)continue;el.classList.toggle('done',checks[i]);el.classList.toggle('active',!checks[i]&&(i===0||checks[i-1]))}
+  let end=$('rs4');if(end)end.classList.toggle('active',checks[2]);
+  if($('rget'))$('rget').textContent=status?hms(status.get_s):'--:--:--';
+  if($('rstate'))$('rstate').textContent=(status?.status||'--').toUpperCase();
+  if($('rdisp'))$('rdisp').textContent=restartEvaluation?.disposition?.toUpperCase()||'--';
+}
+
 function markSteps(){for(let i=0;i<7;i++){let el=$('s'+(i+1));el.classList.toggle('done',!!latest(kinds[i]));el.classList.toggle('active',!latest(kinds[i])&&(i===0||!!latest(kinds[i-1])))}let e=$('s8');e.classList.toggle('active',!!latest(kinds[6]));itemId=shutdownItemFromAudit()??itemId;$('item').textContent=itemId??'--'}
-async function refresh(){try{status=await req('/api/session/status');audit=await req('/api/session/audit');$('get').textContent=hms(status.get_s);$('state').textContent=(status.status||'--').toUpperCase();markSteps();markInverterSteps()}catch(e){status=null;audit=[];$('get').textContent='--:--:--';$('state').textContent='--';markSteps();markInverterSteps()}}
+async function refresh(){try{status=await req('/api/session/status');audit=await req('/api/session/audit');$('get').textContent=hms(status.get_s);$('state').textContent=(status.status||'--').toUpperCase();markSteps();markInverterSteps();markRestartSteps()}catch(e){status=null;audit=[];$('get').textContent='--:--:--';$('state').textContent='--';markSteps();markInverterSteps();markRestartSteps()}}
 async function setup(){try{saveToken();$('verdict').className='muted';$('verdict').textContent='Setting up…';await post('/api/session/create');for(const [player_id,station] of [['test-flight','FLIGHT'],['test-control','CONTROL'],['test-capcom','CAPCOM']])await post('/api/session/join',{player_id,station});await post('/api/session/start');await post('/api/session/advance',{target_get_s:79*3600+17*60});await post('/api/session/flight/test-flight/decision',{go:true,basis:'guided delta-P contingency validation'});await post('/api/session/advance',{target_get_s:79*3600+28*60+15});itemId=null;await refresh();$('verdict').className='warn';$('verdict').textContent='READY: simulation is RUNNING at about GET 79:28:15 during the burn. Start with Step 1.';show('Setup complete. FLIGHT, CONTROL, and CAPCOM are assigned. The clock remains running because the session requires RUNNING state for controller and crew commands.')}catch(e){err(e)}}
 async function act(fn,msg){try{let x=await fn();await refresh();$('verdict').className='muted';$('verdict').textContent=msg;show(x);return x}catch(e){err(e)}}
 function inject(){return act(()=>post('/api/session/admin/injection',{injection_id:'guided-delta-p-26-'+Date.now(),target:'dps_fuel_oxidizer_delta_p_psi',value:26,evidence_class:'source_bounded_test',provenance:'guided synthetic contingency validation; 26 psi is not an Apollo 13 measurement'}),'Injected. CONTROL should now have the abnormal ground-observed condition.')}
@@ -128,6 +165,82 @@ function performInverter(){try{return iact(()=>post(`/api/session/crew/inverter-
 function reportInverter(){try{return iact(()=>post(`/api/session/crew/inverter-transfer-report/${needInverterItem()}`,{}),'Crew completion report recorded. It does not determine the caution state.')}catch(e){$('iverdict').className='fail';$('iverdict').textContent='STOP: '+(e.message||e)}}
 async function reobserveInverter(){return iact(async()=>{let s=await req('/api/session/status');await post('/api/session/advance',{target_get_s:s.get_s+0.1});return post('/api/session/admin/injection',{injection_id:'guided-inverter-post-transfer-'+Date.now(),target:'lm_inverter_warning',value:true,evidence_class:'source_bounded_test',provenance:'guided synthetic fresh post-transfer caution; 0.1 s only establishes event ordering and is not a historical dwell'})},'Fresh post-transfer warning observation recorded.')}
 async function checkInverter(){try{let x=await req('/api/session/admin/inverter-rule');await refresh();let engineOff=audit.some(e=>e.kind==='dps_engine_off_physical_response');if(x.state==='triggered'&&!engineOff){$('is8').classList.add('done');$('iverdict').className='pass';$('iverdict').textContent='PASS: inverter rule triggers only after the fresh post-transfer observation, and no automatic engine shutdown occurred.'}else{$('iverdict').className='fail';$('iverdict').textContent='FAIL / REVIEW: rule='+x.state+', automatic engine-off event='+engineOff}$('iresult').textContent=pretty(x)}catch(e){$('iverdict').className='fail';$('iverdict').textContent='STOP: '+(e.message||e);$('iresult').textContent=e.message||e}}
+
+
+async function setupRestart(){
+  try{
+    saveToken();
+    $('rverdict').className='muted';$('rverdict').textContent='Setting up…';
+    await post('/api/session/create');
+    for(const [player_id,station] of [['test-flight','FLIGHT'],['test-control','CONTROL'],['test-capcom','CAPCOM']])await post('/api/session/join',{player_id,station});
+    await post('/api/session/start');
+    await post('/api/session/advance',{target_get_s:79*3600+17*60});
+    await post('/api/session/flight/test-flight/decision',{go:true,basis:'guided premature-stop restart validation'});
+    await post('/api/session/advance',{target_get_s:79*3600+29*60});
+    restartEvaluation=null;
+    await refresh();
+    $('rverdict').className='warn';$('rverdict').textContent='READY: session is RUNNING during PC+2. Start restart Step 1.';
+    $('rresult').textContent='Setup complete. No post-stop CAPCOM item exists; the restart procedure was prebriefed before the burn.';
+  }catch(e){restartErr(e)}
+}
+function restartErr(e){$('rverdict').className='fail';$('rverdict').textContent='STOP: '+(e.message||e);$('rresult').textContent=e.message||e}
+async function ract(fn,msg){
+  try{
+    let x=await fn();await refresh();$('rverdict').className='muted';$('rverdict').textContent=msg;$('rresult').textContent=pretty(x);return x
+  }catch(e){restartErr(e)}
+}
+async function eligibleRestartStop(){
+  let x=await ract(()=>post('/api/session/admin/vehicle/dps-premature-stop',{shutdown_cause_known_non_rule:true,noun97_flashing:true,cause:'guided synthetic non-rule premature stop'}),'Premature stop recorded. The restart evaluator should be RESTART_ELIGIBLE.');
+  if(x?.restart_evaluation){restartEvaluation=x.restart_evaluation;markRestartSteps()}
+}
+async function runRestartProcedure(){
+  let x=await ract(()=>post('/api/session/crew/restart-procedure',{}),'Crew performed the prebriefed four-step restart procedure. Commands alone must not restart the engine.');
+  return x
+}
+async function applyRestartResponse(){
+  return ract(()=>post('/api/session/admin/vehicle/dps-restart',{cause:'guided explicit restart response'}),'Explicit physical restart response applied. Thrust level remains unspecified.')
+}
+async function checkRestart(){
+  try{
+    await refresh();
+    const stop=audit.find(x=>x.kind==='dps_premature_engine_stop');
+    const steps=audit.filter(x=>x.kind==='crew_restart_procedure_step');
+    const physical=audit.find(x=>x.kind==='dps_restart_physical_response');
+    const capcomAfterStop=stop?audit.filter(x=>x.get_s>=stop.get_s&&(x.kind==='capcom_item_queued'||x.kind==='capcom_item_transmitted')):[];
+    if(stop&&steps.length>=4&&physical&&capcomAfterStop.length===0){
+      $('rs4').classList.add('done');$('rverdict').className='pass';
+      $('rverdict').textContent='PASS: prebriefed restart preserved eligibility → crew procedure → explicit vehicle response with no invented post-stop CAPCOM instruction.';
+    }else{
+      $('rverdict').className='fail';$('rverdict').textContent='FAIL / REVIEW: stop='+!!stop+', crew steps='+steps.length+', physical response='+!!physical+', post-stop CAPCOM events='+capcomAfterStop.length;
+    }
+    $('rresult').textContent=pretty({restart_evaluation:restartEvaluation,crew_steps:steps.map(x=>x.details?.action),physical_response:physical?.details||null,post_stop_capcom_events:capcomAfterStop});
+  }catch(e){restartErr(e)}
+}
+async function testUnknownRestartBlock(){
+  try{
+    await setupRestart();
+    let stop=await post('/api/session/admin/vehicle/dps-premature-stop',{shutdown_cause_known_non_rule:false,noun97_flashing:true,cause:'guided synthetic unknown-cause premature stop'});
+    restartEvaluation=stop.restart_evaluation;await refresh();
+    let blocked=false,detail='';
+    try{await post('/api/session/crew/restart-procedure',{})}catch(e){blocked=true;detail=e.message||String(e)}
+    if(restartEvaluation?.disposition==='insufficient_context'&&blocked){$('rverdict').className='pass';$('rverdict').textContent='PASS: unknown-cause stop remains INSUFFICIENT_CONTEXT and blocks the crew restart procedure.'}
+    else{$('rverdict').className='fail';$('rverdict').textContent='FAIL / REVIEW: unknown-cause branch did not block as expected.'}
+    $('rresult').textContent=pretty({restart_evaluation:restartEvaluation,procedure_blocked:blocked,detail});
+  }catch(e){restartErr(e)}
+}
+async function testRuleRestartBlock(){
+  try{
+    await setupRestart();
+    await post('/api/session/admin/injection',{injection_id:'guided-restart-rule-block-'+Date.now(),target:'dps_fuel_oxidizer_delta_p_psi',value:26,evidence_class:'source_bounded_test',provenance:'guided synthetic listed-rule blocker'});
+    let stop=await post('/api/session/admin/vehicle/dps-premature-stop',{shutdown_cause_known_non_rule:true,noun97_flashing:true,cause:'guided synthetic stop with listed shutdown criterion present'});
+    restartEvaluation=stop.restart_evaluation;await refresh();
+    let blocked=false,detail='';
+    try{await post('/api/session/crew/restart-procedure',{})}catch(e){blocked=true;detail=e.message||String(e)}
+    if(restartEvaluation?.disposition==='do_not_restart_rule_shutdown'&&blocked){$('rverdict').className='pass';$('rverdict').textContent='PASS: a listed shutdown criterion overrides the non-rule flag and blocks restart.'}
+    else{$('rverdict').className='fail';$('rverdict').textContent='FAIL / REVIEW: rule-caused branch did not block as expected.'}
+    $('rresult').textContent=pretty({restart_evaluation:restartEvaluation,procedure_blocked:blocked,detail});
+  }catch(e){restartErr(e)}
+}
 
 document.addEventListener('pointerdown',e=>{let b=e.target.closest('button');if(!b||b.disabled)return;b.classList.add('pressed');setTimeout(()=>b.classList.remove('pressed'),180)});
 window.addEventListener('storage',e=>{if(e.key===tokenKey){$('token').value=facilitatorToken();refresh()}});

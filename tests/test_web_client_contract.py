@@ -60,6 +60,17 @@ class WebClientContractTests(unittest.TestCase):
         self.assertIn("CB(11) EPS: INV 1", html)
         self.assertIn("0.1 s ordering increment is test infrastructure", html)
 
+    def test_contingency_page_exposes_prebriefed_restart_chain(self):
+        html = (ROOT / "web" / "contingency.html").read_text(encoding="utf-8")
+        self.assertIn("Premature DPS stop / prebriefed restart chain", html)
+        self.assertIn("/api/session/admin/vehicle/dps-premature-stop", html)
+        self.assertIn("/api/session/crew/restart-procedure", html)
+        self.assertIn("/api/session/admin/vehicle/dps-restart", html)
+        self.assertIn("TEST UNKNOWN-CAUSE BLOCK", html)
+        self.assertIn("TEST RULE-CAUSED BLOCK", html)
+        self.assertIn("post-stop FLIGHT approval or CAPCOM transmission", html)
+        self.assertIn("Thrust level remains unspecified", html)
+
     def test_admin_engine_off_override_has_no_dead_item_id_input(self):
         html = (ROOT / "web" / "admin.html").read_text(encoding="utf-8")
         self.assertIn("APPLY ENGINE-OFF RESPONSE", html)
