@@ -2,45 +2,46 @@
 
 Date: 2026-09-16
 
-## Apollo 13 Luminary 1C / Luminary 131 source listing — Verb 48 DAP-load routine
+## NASA Apollo 13 air-to-ground transcript — commanded trim
 
-- File: `EXTENDED_VERBS.agc`
-- Listing: https://www.ibiblio.org/apollo/listings/Luminary131/EXTENDED_VERBS.agc.html
-- Relevant printed pages: 297–298
-- Source class: Apollo 13 mission flight-software source listing
-
-### Supports
-R03 reaches Noun 47 as the mass-load step. `V34E` branches to termination before Noun 48; the PC+2 instruction to enter V34 after N47 therefore selected a real software termination path before N48.
-
-## NASA Apollo 13 air-to-ground transcript — ~59 GET provisional PC+2 pad
-
-- Relevant GET: approximately 59:03–59:05
+- Relevant GET: approximately 59:03–59:05 and 60:53–60:56
 - Source class: primary mission voice transcription
 
 ### Supports
-CAPCOM passes PC+2 DPS trim/GDA pitch `5.86°`, roll 6.75°, says the angles "will be updated," and accepts the crew readback.
-
-## NASA Apollo 13 Technical Air-to-Ground Voice Transmission — 61:29 free-return DPS burn
-
-- NASA PDF: https://www.nasa.gov/wp-content/uploads/2026/01/as13-tec.pdf
-- Relevant GET: `060:53:09`–`060:56:21`
-- Source class: primary mission voice transcription
-
-### Supports
-CAPCOM's P30 pad for the 61:29:42.84 free-return correction gives LM GDA pitch `5.86°`, roll `6.75°`; Haise reads it back and CAPCOM accepts it. The pad gives nominal throttling of 5 seconds at 10%, remainder at 40%.
+CAPCOM passes PC+2 DPS trim/GDA `5.86° / 6.75°` provisionally near 59 GET and later passes the same pair for the actual 61:29 free-return correction. This establishes a commanded/preburn angular reference, not invariant powered-flight actuator state.
 
 ## Apollo 13 Flight Director loop — preburn gimbal checkout
 
-- Relevant GET: approximately `61:03`–`61:12`
+- Relevant GET: approximately 61:03–61:12
 - Presentation/transcription: https://apollo13realtime.org/
-- Underlying source: recovered NASA mission-control audio; presentation credits NASA/NASA Johnson for source audio/transcription availability
+- Underlying source: recovered NASA mission-control audio
 - Source class: mission-control voice evidence
 
 ### Supports
-CONTROL explicitly directs gimbal rather than throttle trim and the DAP-set gimbal/throttle-test sequence. At about 61:11 CONTROL reports `Trim looks okay`; when FLIGHT asks how close the values are, CONTROL answers `within about 0.3` / `plenty close`, then reports readiness.
+CONTROL directs the preburn gimbal checkout, reports `Trim looks okay`, and answers FLIGHT's closeness question with `within about 0.3` / `plenty close`.
 
 ### Boundary
-This is an operational **preburn spacecraft gimbal-checkout** acceptance statement. It is not evidence that `0.3°` was the acceptance criterion for the earlier Flight Dynamics-versus-CONTROL mass-properties calculation disagreement, and it is not a PC+2 computational trim tolerance. Editorial annotations on the presentation site are not treated as primary evidence.
+This is spacecraft-checkout acceptance, not evidence of the earlier Flight Dynamics-versus-CONTROL computational criterion.
+
+## NASA/MSC Apollo 13 Mission Report — exact 61:29 GDA actuator summary
+
+- Report: *Apollo 13 Mission Report*, MSC-02680, September 1970
+- NTRS citation: `19710003598`
+- Relevant section: 6.4, Table 6.4-I
+- Source class: primary mission-specific postflight report
+
+### Supports
+For the second midcourse correction at ignition `61:29:43.49`, Table 6.4-I reports Gimbal Drive Actuator position in **inches**:
+
+- initial: pitch `-0.02`, roll `-0.34`;
+- maximum excursion: pitch `+0.31`, roll `-0.27`;
+- steady-state: pitch `+0.04`, roll `-0.51`;
+- cutoff: pitch `+0.10`, roll `-0.31`.
+
+The table also gives cutoff `61:30:17.72`, duration `34.23 s`, and post-trim velocity residual `[+0.2, 0.0, +0.3] ft/s`.
+
+### Boundary
+The GDA values are actuator displacement in inches, not trim angles in degrees. The source labels the second actuator axis `Roll`; preserve that label pending sourced geometry/convention mapping. The four phase values are a postflight summary, not a continuous telemetry trace. The velocity residual is a translational outcome and unrelated to GDA displacement.
 
 ## NASA Apollo 13 mission material — DPS automatic gimbal trim
 
@@ -48,7 +49,7 @@ This is an operational **preburn spacecraft gimbal-checkout** acceptance stateme
 - Source class: primary NASA Apollo 13 mission reference material
 
 ### Supports
-The descent engine is gimbaled; gimbal trim compensates for changing vehicle center of gravity and is automatically accomplished by PGNS or AGS. Therefore the initial commanded GDA pair must not be treated as invariant physical actuator position through powered flight.
+Gimbal trim compensates for changing vehicle center of gravity and can be automatically accomplished by PGNS or AGS; the initial commanded pair therefore must not be treated as invariant physical actuator position through powered flight.
 
 ## Apollo 13 LM131 flight software — trim-gimbal control law
 
@@ -57,49 +58,7 @@ The descent engine is gimbaled; gimbal trim compensates for changing vehicle cen
 - Source class: reconstructed final Apollo 13 LM flight-software listing preserving original program comments
 
 ### Supports
-Original comments describe trim-gimbal control operating with the descent engine and digital autopilot on. This independently bounds powered-flight behavior but does not reconstruct the missing ground mass-properties computation or actual 61:29 actuator history.
-
-## NASA/MSC Apollo 13 Mission Report — 61:29 powered-flight performance and velocity residual
-
-- Report: *Apollo 13 Mission Report*, MSC-02680, September 1970
-- NTRS citation: `19710003598`
-- Relevant sections: 6.4/Table 6.4-I, 6.6, and 8.7.4
-- Source class: primary mission-specific postflight report
-
-### Supports
-The free-return DPS maneuver used primary guidance/AUTO; primary-guidance performance was nominal, no vehicle attitude excursions were reported, and firing time was as predicted. Postflight propulsion reporting gives a 34.3-second firing, minimum throttle reported as 12% for the first 5 seconds, then approximately 37% for the remainder. Table 6.4-I gives ignition `61:29:43.49`, cutoff `61:30:17.72`, duration `34.23 s`, and explicitly labels the post-trim residual vector as **velocity residual after trim, ft/sec**: X `+0.2`, Y `0.0`, Z `+0.3`.
-
-### Boundary
-Stable vehicle attitude is not static-gimbal evidence. The postflight throttle values describe execution and should remain distinct from the nominal 10%/40% pad instruction. The `+0.2 / 0.0 / +0.3` values are translational velocity residuals, not GDA angles or gimbal errors; the `+0.3 ft/s` value is unrelated to CONTROL's preburn `within about 0.3` gimbal-checkout statement absent separate evidence.
-
-## Apollo 13 GN&C performance-analysis supplement — actuator-history target
-
-- NTRS citation: `19730017939`
-- Report: `MSC-02680-SUPPL-1` / `TRW-11176-H586-R0-00-SUPPL-1`
-- Date: September 1970
-- Source class: primary mission-specific postflight GN&C analysis
-
-### Supports
-NTRS metadata establishes that the report analyzes inflight Apollo 13 GN&C performance including the lunar-module digital autopilot. It is a high-priority source target for exact powered-flight GDA evidence.
-
-### Boundary
-No 61:29 gimbal-position value is attributed to this report until the relevant report pages/data are recovered and inspected.
-
-## NASA Apollo 13 mission commentary — post-61:29 revised PC+2 pad readback
-
-- Relevant GET: approximately `63:10`
-- Source class: primary mission voice/PAO transcription
-
-### Supports
-GDA should be "okay as is" with retained reference `5.85 / 6.74`, qualified by the crew's "hopefully." Not measured actuator telemetry.
-
-## NASA Apollo 13 air-to-ground transcript — PC+2 activation and burn rules
-
-- Relevant GET: `075:07:43` onward
-- Source class: primary mission voice transcription
-
-### Supports
-CAPCOM instructs `VERB 34 ENTER` immediately after Noun 47 and confirms the gimbals already look all right. Later ground rules state no PC+2 maneuver trims required. Final P30 targeting read-up omits a GDA pair.
+Original comments describe trim-gimbal control operating with the descent engine and digital autopilot on.
 
 ## NASA Flight Control Division Mission Operations Report — Apollo 13
 
@@ -107,13 +66,31 @@ CAPCOM instructs `VERB 34 ENTER` immediately after Noun 47 and confirms the gimb
 - Source class: primary mission-specific controller report
 
 ### Supports
-T-6 mass properties generated/loaded in RTCC; T+25 RTCC mass properties run with P/Y trim comparison; RTCC LM-burn decks updated to T+55; ~59 GET CONTROL/Flight Dynamics disagreement and reconciliation; CONTROL's challenged basis used premission mass properties; T+25 no-update because P/Y trims were within `0.01°` of T+6; no PC+2 maneuver trims required; powered-flight GDA behavior and expectation that 61:29 compliance would leave optimum PC+2 alignment.
+T-6 mass properties generated/loaded in RTCC; T+25 RTCC mass-properties run with P/Y trim comparison; RTCC LM-burn decks updated to T+55; ~59 GET CONTROL/Flight Dynamics disagreement and reconciliation; CONTROL's challenged basis used premission mass properties; T+25 no-update because P/Y trims were within `0.01°` of T+6; powered-flight GDA behavior and expectation that 61:29 compliance would leave optimum PC+2 alignment.
 
 ### Boundary
-The report does not identify the T+55 deck contents, downstream trim run, CONTROL alternative numerical trim, PC+2 ground-computation comparison criterion, job identity, or direct T+55-to-`5.86 / 6.75` calculation link.
+The report does not identify T+55 deck contents, a downstream trim run, CONTROL's alternative numerical trim, PC+2 computational comparison criterion, job identity, or a direct T+55-to-`5.86 / 6.75` calculation link.
+
+## NASA Apollo 13 mission commentary — later retained reference
+
+- Relevant GET: approximately 63:10
+- Source class: primary mission voice/PAO transcription
+
+### Supports
+GDA should be `okay as is` with retained reference `5.85 / 6.74`, qualified by the crew's `hopefully`. This is not measured actuator telemetry.
+
+## Apollo 13 GN&C performance-analysis supplement
+
+- NTRS citation: `19730017939`
+- Report: `MSC-02680-SUPPL-1` / `TRW-11176-H586-R0-00-SUPPL-1`
+- Date: September 1970
+- Source class: primary mission-specific postflight GN&C analysis
+
+### Status
+Still useful for finer DAP/telemetry interpretation, but no longer required to establish exact phase-summary GDA values for 61:29 because Mission Report Table 6.4-I supplies them directly.
 
 ## Current synthesis
 
-`mass-properties provenance [generation/load/update/run distinct] -> calculation/comparison [details unresolved] -> ~59 provisional PC+2 5.86 / 6.75 -> same pair commanded for 61:29 -> preburn gimbal checkout within ~0.3 judged plenty close -> primary-guidance/AUTO powered flight nominal with no reported vehicle attitude excursions; executed throttle ~12% then ~37% -> automatic trim available to compensate changing c.g. -> exact gimbal history/post-compliance state unrecovered -> post-trim translational velocity residual +0.2 / 0.0 / +0.3 ft/s -> later 5.85 / 6.74 "okay as is" reference -> no new PC+2 Noun 48 entry`.
+`mass-properties provenance [generation/load/update/run distinct] -> calculation/comparison [details unresolved] -> ~59 provisional 5.86 / 6.75 -> same pair commanded for 61:29 -> preburn checkout within ~0.3 judged plenty close -> powered flight under nominal primary guidance/AUTO -> measured GDA phase summary in inches (-0.02/-0.34 initial; +0.31/-0.27 max excursion; +0.04/-0.51 steady; +0.10/-0.31 cutoff) -> post-trim velocity residual +0.2/0.0/+0.3 ft/s -> later 5.85/6.74 "okay as is" reference`.
 
-The next archival target remains a T+55 generation/load record or downstream RTCC/RTACF LM-burn run/request/output tying the deck to the PC+2 candidate trim, plus real-time weight/c.g. inputs, CONTROL's competing trim, ground-computation comparison values/criterion, and job identity. In parallel, inspect `MSC-02680-SUPPL-1` and telemetry/controller products for actual GDA-position history during or immediately after 61:29. Keep the recovered `~0.3°` checkout acceptance and the postburn `+0.3 ft/s` velocity residual strictly separate from the unresolved computational criterion.
+The exact-value powered-flight actuator-history target is closed at the Mission Report's phase-summary resolution. The main unresolved archival target remains a T+55 generation/load record or downstream RTCC/RTACF LM-burn run/request/output tying the deck to the candidate trim, plus weight/c.g. inputs, CONTROL's competing trim, comparison values/criterion, and job identity. A secondary target is sourced actuator-inch/angular-trim calibration if the simulation requires conversion between those representations.
