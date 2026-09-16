@@ -635,6 +635,25 @@ class WebModelProofTests(unittest.TestCase):
         self.assertFalse(cases["wrong"]["action_accepted"])
         self.assertIn("no historical grace interval", body["late_semantics"])
 
+    def test_pc2_inverter_consequence_matrix_endpoint(self):
+        response = self.client.post(
+            "/api/admin/model-proof/pc2-inverter-consequences",
+            json={},
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(
+            body["model_status"],
+            "pc2_inverter_consequence_reference_probe",
+        )
+        cases = {item["action_class"]: item for item in body["cases"]}
+        self.assertEqual(cases["correct"]["pre_observation_rule_state"], "not_evaluable")
+        self.assertEqual(cases["correct"]["final_rule_state"], "triggered")
+        self.assertEqual(cases["omitted"]["final_rule_state"], "not_evaluable")
+        self.assertTrue(cases["wrong_order"]["action_rejected"])
+        self.assertEqual(cases["cleared"]["final_rule_state"], "clear")
+        self.assertIn("no historical dwell", body["ordering_increment_meaning"])
+
     def test_endpoint_rejects_unphysical_direction(self):
         self.payload["segments"][0]["direction"] = [0.0, 0.0, 0.0]
         response = self.client.post("/api/admin/model-proof/dps-burn", json=self.payload)
