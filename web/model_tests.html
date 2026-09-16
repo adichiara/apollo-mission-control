@@ -17,6 +17,14 @@
 <details class="raw"><summary>Raw consequence-matrix JSON</summary><pre id="consequenceRaw">No run yet.</pre></details>
 </section>
 
+<section id="inverter-consequences" class="panel">
+<h2>PC+2 inverter action / observation consequence matrix</h2>
+<p class="note">Runs four isolated inverter-contingency cases through the authoritative session, simulated crew, and shutdown-rule layers. The 0.1 s increment is only an event-order separator; it is not a historical dwell or reaction-time tolerance.</p>
+<div class="actions"><button id="runInverterConsequences">Run inverter consequence matrix</button></div>
+<div id="inverterConsequenceTrace" class="chain"><div class="stage"><b>Correct + fresh warning</b>Not run</div><div class="stage"><b>Omitted transfer</b>Not run</div><div class="stage"><b>Wrong order</b>Not run</div><div class="stage"><b>Warning clears</b>Not run</div></div>
+<details class="raw"><summary>Raw inverter-consequence JSON</summary><pre id="inverterConsequenceRaw">No run yet.</pre></details>
+</section>
+
 <span id="suite"></span><button id="run">Run standard suite</button>
 <button id="download" disabled>Download report</button>
 <button id="copy" disabled>Copy report</button>
@@ -259,6 +267,28 @@ async function runConsequenceMatrix(){
  }catch(e){$('consequenceRaw').textContent=String(e.message||e)}
 }
 $('runConsequences').onclick=runConsequenceMatrix;
+
+async function runInverterConsequenceMatrix(){
+ $('inverterConsequenceRaw').textContent='Running…';
+ try{
+  const r=await request('/api/admin/model-proof/pc2-inverter-consequences',{});
+  recordCausal('pc2-inverter-consequence-matrix',{},r);
+  const by=Object.fromEntries(r.cases.map(x=>[x.action_class,x]));
+  function card(label,x){
+   return traceStage(label,
+    '<div>transfer performed: '+statusBadge(x.transfer_performed)+'</div>'+
+    '<div>pre-observation rule: '+x.pre_observation_rule_state+'</div>'+
+    '<div>fresh observation: '+String(x.post_observation_value)+'</div>'+
+    '<div>final rule: <span class="badge '+(x.final_rule_state==='triggered'?'warn':'good')+'">'+x.final_rule_state.toUpperCase()+'</span></div>'+
+    '<div>engine running: '+statusBadge(x.engine_running)+'</div>'+
+    (x.rejection_reason?'<div class="note">'+x.rejection_reason+'</div>':'')+
+    '<div class="note">'+x.note+'</div>');
+  }
+  $('inverterConsequenceTrace').innerHTML=card('Correct + fresh warning',by.correct)+card('Omitted transfer',by.omitted)+card('Wrong order',by.wrong_order)+card('Warning clears',by.cleared);
+  $('inverterConsequenceRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){$('inverterConsequenceRaw').textContent=String(e.message||e)}
+}
+$('runInverterConsequences').onclick=runInverterConsequenceMatrix;
 
 
 function num(id){return Number($(id).value)}
