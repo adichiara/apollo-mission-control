@@ -2,7 +2,7 @@
 
 Date: 2026-09-16
 
-Research Notes 180–184 separate commanded trim, powered-flight control behavior, maneuver outcome, measured actuator state, and generic GDA mechanical calibration. Apollo 13 primary material establishes that DPS gimbal trim can change automatically during powered flight to compensate for changing center of gravity. Mission Report Table 6.4-I supplies mission-specific 61:29 GDA actuator positions in inches at initial, maximum-excursion, steady-state, and cutoff phases. NASA LM reference material now bounds the generic mechanism at ±2 inches stroke for ±6° engine tilt (nominal endpoint ratio 3°/in), but this does not establish the Apollo 13 crew-facing trim representation or LM-7-specific calibration.
+Research Notes 180–185 separate commanded trim, powered-flight control behavior, maneuver outcome, measured actuator state, generic GDA mechanical calibration, and LM-7-specific telemetry-channel semantics. Apollo 13 primary material establishes that DPS gimbal trim can change automatically during powered flight to compensate for changing center of gravity. Mission Report Table 6.4-I supplies mission-specific 61:29 GDA actuator positions in inches at initial, maximum-excursion, steady-state, and cutoff phases. NASA LM reference material bounds the generic mechanism at ±2 inches stroke for ±6° engine tilt (nominal endpoint ratio 3°/in). LM-7/8/9 engineering diagrams identify the actual Pitch and Roll GDA measurement channels and their opposite RET/EXT notation, but do not yet provide a safe numerical mapping from telemetry sign to actuator direction or to the crew-facing trim numbers.
 
 ## Priority 1 — ground-computation lineage
 
@@ -16,7 +16,7 @@ Best targets: weight/c.g. sheet, RTCC/RTACF request/output, job/run record, cont
 
 Recover CONTROL's competing numerical trim and the actual comparison/acceptance basis used when CONTROL challenged Flight Dynamics' solution. Do not apply the T+25 `0.01°` no-update comparison, the later `~0.3°` spacecraft-checkout statement, or the Mission Report's `+0.3 ft/s` post-trim velocity residual to this decision without direct evidence.
 
-## Priority 3 — trim representation / LM-7 calibration
+## Priority 3 — LM-7 telemetry calibration / trim representation
 
 The 61:29 postflight actuator state is documented in Table 6.4-I:
 
@@ -25,7 +25,9 @@ The 61:29 postflight actuator state is documented in Table 6.4-I:
 - steady-state: pitch `+0.04 in`, roll `-0.51 in`;
 - cutoff: pitch `+0.10 in`, roll `-0.31 in`.
 
-Generic NASA LM documentation establishes ±2 in actuator stroke corresponding to ±6° engine tilt, i.e. a nominal endpoint ratio of 3°/in. Do not use that generic ratio as an exact Apollo 13 telemetry conversion. Recover the primary definition of the crew-facing GDA trim-number reference/zero, axis/sign conventions, and preferably LM-7-specific calibration. Preserve the Mission Report's `Roll` axis label rather than silently translating conventions.
+`LED-267-37C` identifies `GH1313V` as `VOLT, PITCH GDA POS (RET/EXT)` and `GH1314V` as `VOLT, ROLL GDA POS (EXT/RET)`, plus separate LGC extend/retract command discretes. Preserve those axis-specific semantics. Next seek the measurement/calibration definition that maps GH1313V/GH1314V voltage and sign to engineering units and EXT/RET direction.
+
+Generic NASA LM documentation establishes ±2 in actuator stroke corresponding to ±6° engine tilt, i.e. a nominal endpoint ratio of 3°/in. Do not use that generic ratio as an exact Apollo 13 telemetry conversion. Separately recover the primary definition of the crew-facing GDA trim-number reference/zero and its mapping to actuator position.
 
 A continuous telemetry trace is only needed if a player-visible product requires finer temporal resolution than the four sourced phase values.
 
@@ -35,4 +37,4 @@ Use the postflight Apollo 13 Mission Report as the execution baseline: 34.23-sec
 
 ## Modeling rule meanwhile
 
-Use `5.86 / 6.75` only as a sourced commanded/preburn trim reference. For the actual 61:29 actuator state, use the four Table 6.4-I GDA inch values at their source resolution. A generic mechanism visualization may use nominal 3°/in only if explicitly identified as an approximation, never as recovered Apollo 13 angle telemetry. Do not infer the crew-facing trim-number zero/reference. The post-trim translational residual remains `[+0.2, 0.0, +0.3] ft/s` and is not an actuator quantity.
+Use `5.86 / 6.75` only as a sourced commanded/preburn trim reference. For the actual 61:29 actuator state, use the four Table 6.4-I GDA inch values at their source resolution. Preserve Pitch/Roll as the two hardware channel labels and retain the source's axis-specific RET/EXT metadata, but do not assign the signed inch values to EXT or RET until calibration evidence is recovered. A generic mechanism visualization may use nominal 3°/in only if explicitly identified as an approximation, never as recovered Apollo 13 angle telemetry. Do not infer the crew-facing trim-number zero/reference. The post-trim translational residual remains `[+0.2, 0.0, +0.3] ft/s` and is not an actuator quantity.
