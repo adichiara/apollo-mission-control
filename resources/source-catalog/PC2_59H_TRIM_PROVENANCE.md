@@ -1,7 +1,7 @@
 # Apollo 13 PC+2 ~59 GET trim-provenance sources
 
 Date: 2026-09-16  
-Related notes: `resources/research/170_pc2_59h_trim_provenance.md` through `resources/research/191_lm7_volume3_amendment79_current_official_set.md`
+Related notes: `resources/research/170_pc2_59h_trim_provenance.md` through `resources/research/192_lm7_preflight_weight_state_crosscheck.md`
 
 ## NASA/MSC Flight Control Division Mission Operations Report — Apollo 13
 
@@ -19,14 +19,25 @@ Primary mission-specific controller report. Supports T-6 generation/load, T+25 R
 - Table 3.3-8: `LM-7 Consumables Change Summary`, explicitly `to be used in conjunction with the LM sequential mass properties Table 3-3.2`.
 - Mission-event consumable accounting across separation, pre-PDI, touchdown, ascent, rendezvous/docking, and jettison.
 - Table 3.3-18: `LM-7 Propellant Loading Uncertainties`, including quantities whose uncertainty/values depend on actual loading.
-- Volume III purpose explicitly covers per-mission mass properties for planning, trajectory documentation, simulations, and consumable loading, with updating through actual consumables loading.
 
 ### Boundary
 This establishes **official data available preflight**, not **data selected by CONTROL**. Table 3-3.2 itself and its current LM-7 values still need direct recovery/verification. No Amendment 79 value is assigned to CONTROL's ~59 GET calculation without controller-selection evidence.
 
+## NASA Apollo 13 Review Board — Table 3-I weight summary
+
+- Report: *Report of Apollo 13 Review Board*, NASA-TM-X-65270, June 1970; NTRS 19700076776.
+- Source class: primary postflight NASA mission/accident-review report.
+- Table 3-I reports Lunar Module final separation weight **33,941 lb**, footnoted `CSM/LM separation`.
+
+### Provenance value
+This independently constrains the documented Apollo 13 LM separation mass state and differs by **68.7 lb** from the 17 March analysis-specific `33,872.3 lbm` value. It therefore confirms that the 17 March value must not be promoted as the current mission separation weight.
+
+### Boundary
+The Review Board table does not supply LM c.g., identify Amendment 79/Table 3-3.2 as its numerical source, explain the 68.7-lb difference, identify CONTROL's input, or represent the T+55 real-time mass state.
+
 ## NASA/Grumman LM-7 DPS weight characteristics — 17 March 1970
 
-Primary mission-specific analysis source. Gives a `33,872.3 lbm` LM separation weight and component weights but explicitly directs users to Volume III for current official mass properties. Retain as an analysis-specific preflight source, not CONTROL's assumed input.
+Primary mission-specific analysis source. Gives a `33,872.3 lbm` LM separation weight and component weights but explicitly directs users to Volume III for current official mass properties. Retain as an analysis-specific preflight source, not CONTROL's assumed input. Its separation weight is 68.7 lb below the later Apollo 13 Review Board mission-summary value; cause not established.
 
 ## NASA/MSC RTACF operational documentation / Apollo 11 support report
 
@@ -40,7 +51,11 @@ Voice establishes `5.86 / 6.75` as the ~59/61:29 commanded reference and the sep
 
 ## Current provenance chain
 
-`LM-7 official preflight source -> SNA-8-D-027(III) Rev 2 + Amendment 79 (1970-03-30) -> sequential Table 3-3.2 referenced -> CONTROL selection UNKNOWN`
+`1970-03-17 analysis-specific LM separation weight = 33,872.3 lbm -> not current-official authority`
+
+`LM-7 official preflight source -> SNA-8-D-027(III) Rev 2 + Amendment 79 (1970-03-30) -> sequential Table 3-3.2 referenced -> values/CONTROL selection UNKNOWN`
+
+`Apollo 13 Review Board mission summary -> CSM/LM separation weight = 33,941 lb -> relationship to Table 3-3.2/CONTROL/T+55 UNKNOWN`
 
 `T-6 -> generated -> loaded in RTCC`
 
