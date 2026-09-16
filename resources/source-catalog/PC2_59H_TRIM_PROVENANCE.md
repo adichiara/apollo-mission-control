@@ -1,7 +1,7 @@
 # Apollo 13 PC+2 ~59 GET trim-provenance sources
 
 Date: 2026-09-15  
-Related notes: `resources/research/170_pc2_59h_trim_provenance.md`, `resources/research/171_rtacf_mass_properties_trim_artifact_class.md`
+Related notes: `resources/research/170_pc2_59h_trim_provenance.md`, `resources/research/171_rtacf_mass_properties_trim_artifact_class.md`, `resources/research/172_apollo13_postflight_mass_properties_validation_bound.md`
 
 ## NASA/MSC Flight Control Division Mission Operations Report — Apollo 13
 
@@ -54,6 +54,26 @@ The time, maneuver, pad, and passed DPS-trim event coincide with the Flight Dyna
 
 This is Apollo 11 / Mission G architecture evidence, not Apollo 13 calculation provenance. It does not prove that Apollo 13 used the same RTACF program, job/request procedure, output format, or that `5.86 / 6.75` came from RTACF rather than RTCC. It also does not link a T+55 table directly to that pair.
 
+## NASA/MSC Apollo 13 Mission Report — Appendix A.5, Table A-I
+
+- Report: *Apollo 13 Mission Report*, MSC-02680, September 1970
+- NASA NTRS citation: 19710003598
+- Primary PDF: https://ntrs.nasa.gov/api/citations/19710003598/downloads/19710003598.pdf
+- Source class: primary mission-specific postflight engineering report
+
+### Supports
+
+For the event labeled **Second midcourse correction**, Table A-I reports:
+
+- ignition: 95,959.9 lb; c.g. X/Y/Z = 378.8 / 4.9 / 0.7 in;
+- cutoff: 95,647.1 lb; c.g. X/Y/Z = 379.4 / 5.0 / 0.7 in.
+
+The table also supplies moments/products of inertia and later mission-event mass properties.
+
+### Boundary
+
+The report describes these mass properties as conditions determined from **postflight analyses of expendable loadings and usage during flight**. They are not evidence that the same numerical values were loaded in the real-time T+55 Flight Dynamics deck, used by CONTROL, or consumed by the ~59 GET trim calculation. Treat them as a mission-specific postflight validation reference only.
+
 ## NASA Apollo 13 mission commentary — post-61:29 revised PC+2 pad
 
 - Relevant GET: approximately 63:05–63:10
@@ -74,6 +94,8 @@ The `0.01°` difference on each axis from the ~59 GET `5.86 / 6.75` solution doe
 
 `Apollo 13 RTCC LM-burn deck family updated to T+55 [mission-specific context] -> Flight Dynamics ~59 GET PC+2 calculation [job/deck linkage unresolved] -> passed DPS trim 5.86 / 6.75 -> LM CONTROL challenge using premission mass properties -> CONTROL later agrees with Flight Dynamics data -> 61:29 powered-flight compliance -> later PC+2 "as is" reference 5.85 / 6.74 [generation mechanism unresolved]`
 
+`Apollo 13 Mission Report Table A-I postflight reconstructed mass properties [validation layer; not real-time deck provenance]`
+
 ## Next source target
 
-Recover Apollo 13 weight/c.g. or mass-properties computation output and the associated RTACF/RTCC trajectory-processor trim artifact/request sheet for the ~59 GET disagreement, especially CONTROL's alternative values, comparison/acceptance basis, job identity, and explicit deck/input provenance.
+Recover Apollo 13 **real-time** weight/c.g. or mass-properties computation output and the associated RTACF/RTCC trajectory-processor trim artifact/request sheet for the ~59 GET disagreement. Compare recovered operational values with Table A-I only as a validation check. Highest-value fields remain CONTROL's alternative values, comparison/acceptance basis, job identity, and explicit T+55 deck/input provenance.
