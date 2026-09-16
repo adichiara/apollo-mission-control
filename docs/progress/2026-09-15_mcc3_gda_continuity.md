@@ -1,7 +1,7 @@
 # MCC-3 nomenclature and GDA continuity
 
 Date: 2026-09-15  
-Latest research note: `resources/research/175_gda_pair_reuse_free_return_burn.md`
+Latest research note: `resources/research/176_t55_lm_burn_deck_scope.md`
 
 ## Completed
 
@@ -17,10 +17,10 @@ Latest research note: `resources/research/175_gda_pair_reuse_free_return_burn.md
 - Note 172 added the Apollo 13 Mission Report postflight validation layer for the second midcourse correction: ignition 95,959.9 lb with c.g. 378.8 / 4.9 / 0.7 in; cutoff 95,647.1 lb with c.g. 379.4 / 5.0 / 0.7 in. These remain postflight values, not the real-time deck.
 - Note 173 established the T+55 RTCC LM-burn mass-property deck update as real-time operational evidence and recovered the T+25/T+6 `0.01°` no-update precedent.
 - Note 174 established that `T+6`, `T+25`, and `T+55` function as time-tagged mass-properties set/deck labels or reference epochs, not calculation timestamps or job identifiers.
-- **New in note 175:** primary NASA air-to-ground voice at 60:53–60:56 GET shows that the exact `5.86 / 6.75` pair previously passed on the provisional PC+2 pad was also passed and accepted as the commanded LM GDA pair for the 61:29 free-return DPS burn.
-- This closes the numerical bridge into CONTROL's later state-setting event: `5.86 / 6.75 commanded for 61:29 burn -> 40% powered-flight compliance -> resulting state expected optimum for PC+2`. Exact post-compliance actuator angles remain unrecovered.
+- Note 175 established that the exact `5.86 / 6.75` pair previously passed on the provisional PC+2 pad was also passed and accepted as the commanded LM GDA pair for the 61:29 free-return DPS burn.
+- **New in note 176:** the primary Flight Dynamics chronology explicitly scopes the T+55 update as **RTCC (LM burn) mass property decks**. Combined with the earlier mission-specific T+25 RTCC mass-properties run that explicitly produced/evaluated pitch/yaw trims, this narrows T+55 to the correct LM-burn computational domain without asserting direct lineage to `5.86 / 6.75`.
 - Kept commanded trim, post-compliance actuator state, and later `5.85 / 6.74` PC+2 reference readback as separate provenance layers.
 
 ## Next
 
-Search Apollo 13 archival/controller material specifically for the real-time weight/c.g. or mass-properties table, RTACF/RTCC trajectory-processor trim output, and associated job/request sheet behind the ~59 GET disagreement. Highest-value fields remain CONTROL's alternative numerical trim, explicit T+55-reference-deck-to-job linkage for `5.86 / 6.75`, PC+2-specific comparison/acceptance basis, and calculation/job identity. Also seek telemetry or a controller working sheet that records the exact two-axis GDA state after 61:29 powered-flight compliance.
+Search Apollo 13 archival/controller material specifically for the real-time T+55 weight/c.g. or mass-properties output, RTCC/RTACF LM-burn trim output, and associated job/request sheet behind the ~59 GET disagreement. Highest-value fields remain CONTROL's alternative numerical trim, explicit T+55-reference-deck-to-job linkage for `5.86 / 6.75`, PC+2-specific comparison/acceptance basis, and calculation/job identity. Also seek telemetry or a controller working sheet that records the exact two-axis GDA state after 61:29 powered-flight compliance.
