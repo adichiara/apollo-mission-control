@@ -1,14 +1,15 @@
 # Apollo 13 PC+2 ~59 GET trim-provenance sources
 
 Date: 2026-09-16  
-Related notes: `resources/research/170_pc2_59h_trim_provenance.md` through `resources/research/177_mass_properties_operation_verb_boundary.md`
+Related notes: `resources/research/170_pc2_59h_trim_provenance.md` through `resources/research/178_ntrs_19710010485_metadata_payload_mismatch.md`
 
 ## NASA/MSC Flight Control Division Mission Operations Report — Apollo 13
 
-- Date: 28 April 1970
+- Date printed on report: 28 April 1970
 - Organization: NASA Manned Spacecraft Center, Flight Control Division
-- NTRS record/download: `19710010485`
-- NASA History scan: `https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf`
+- NASA History/ALSJ scan: `https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf`
+- NTRS payload currently served at: `https://ntrs.nasa.gov/api/citations/19710010485/downloads/19710010485.pdf`
+- **Archive warning:** NTRS citation-page metadata for `19710010485` currently names *MSC Apollo 13 investigation team. Panel 3 - Flight operations and network Final report*, publication date 1 May 1970, report `NASA-TM-X-66933`, while the PDF payload at that citation is the 28 April Flight Control Division *Mission Operations Report — Apollo 13*. Treat `19710010485` as a NASA-hosted payload endpoint with a documented metadata/payload mismatch, not as an unambiguous bibliographic identifier for the Mission Operations Report. See research note 178.
 - Source class: primary mission-specific controller report
 
 ### Supports
