@@ -85,6 +85,7 @@ from .malfunction_plan import (
     MalfunctionScheduler,
     activation_to_dict,
 )
+from .measurement_profiles import get_measurement_profile
 from .mission_profiles import (
     MissionProfileRecord,
     discover_mission_profiles,
@@ -338,6 +339,11 @@ class TrajectoryTrackingModelProofRequest(BaseModel):
     observation: TrackingObservationRequest = Field(
         default_factory=TrackingObservationRequest
     )
+
+
+class HistoricalMeasurementProfileProofRequest(BaseModel):
+    profile_id: str = Field(min_length=1, max_length=128)
+    source_state: dict[str, Any] = Field(default_factory=dict)
 
 
 class GuidanceAlarmModelProofRequest(BaseModel):
@@ -1376,6 +1382,37 @@ def _electrical_bus_from_request(
             bus_enabled=request.bus_enabled,
         ),
     )
+
+
+@app.post(
+    "/api/admin/model-proof/historical-measurement-profile",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def historical_measurement_profile_model_proof(
+    request: HistoricalMeasurementProfileProofRequest,
+) -> dict[str, Any]:
+    profile = _domain_call(lambda: get_measurement_profile(request.profile_id))
+    outputs = _domain_call(lambda: profile.evaluate_source_state(request.source_state))
+
+    ground_gate = "open"
+    ground_gate_reason = None
+    try:
+        profile.require_historical_ground_product()
+    except ValueError as exc:
+        ground_gate = "blocked"
+        ground_gate_reason = str(exc)
+
+    return {
+        "model_status": "historical_measurement_profile_vehicle_boundary",
+        "profile": profile.to_public_dict(),
+        "vehicle_measurement_output": outputs.to_dict(),
+        "historical_ground_product_gate": ground_gate,
+        "historical_ground_product_gate_reason": ground_gate_reason,
+        "note": (
+            "Vehicle measurement execution does not imply live mission PCM loading, "
+            "MCC routing, or controller-display availability."
+        ),
+    }
 
 
 @app.post(

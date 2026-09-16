@@ -6,7 +6,7 @@
 <h1>Apollo Causal Model Lab</h1>
 <p>Site-facing validation of reusable causal-engine components through the real server API. PASS establishes only the stated synthetic model/API checks; it does not establish Apollo accuracy, crew behavior, or live-session integration. These tests do not reset or modify a mission.</p>
 <a href="/admin">Back to test console</a>
-<div class="labnav"><a href="#consequences">Action consequences</a><a href="#suite">DPS suite</a><a href="#trajectory">Trajectory → tracking</a><a href="#malfunction">Malfunction plan</a><a href="#resource">Resource → power → observation</a><a href="#alarm">Guidance alarm/restart</a><a href="#guidance">Guidance comparison</a><a href="#radar">Landing radar</a><a href="/admin">Test console</a></div>
+<div class="labnav"><a href="#consequences">Action consequences</a><a href="#suite">DPS suite</a><a href="#trajectory">Trajectory → tracking</a><a href="#malfunction">Malfunction plan</a><a href="#resource">Resource → power → observation</a><a href="#measurement-profile">Historical measurement profile</a><a href="#alarm">Guidance alarm/restart</a><a href="#guidance">Guidance comparison</a><a href="#radar">Landing radar</a><a href="/admin">Test console</a></div>
 <p><label>Facilitator token <input id="token" type="password" autocomplete="off"></label></p>
 <div class="boundary"><b>CAUSAL MODEL LAB — NOT HISTORICALLY VALIDATED.</b> These controls exercise reusable causal-engine components with explicit synthetic inputs. They do not establish Apollo constants, historical accuracy, or player-facing display fidelity.</div>
 <section id="consequences" class="panel">
@@ -80,6 +80,19 @@
 <div class="actions"><button id="runResource">Run causal chain</button><button id="runBeforeAfter">Compare before/after depletion</button></div>
 <div id="resourceTrace" class="chain"><div class="stage"><b>Resource inventory</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Electrical source</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Powered load</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Controller observation</b>Not run</div></div>
 <details class="raw"><summary>Raw resource-power JSON</summary><pre id="resourceRaw">No run yet.</pre></details>
+</section>
+
+
+<section id="measurement-profile" class="panel">
+<h2>Historical vehicle measurement profile → blocked ground product</h2>
+<p class="note">Runs the source-backed Apollo 13 LM-7 inverter-bus measurement profile at the spacecraft measurement boundary. The same proof must keep Mission H-2 PCM loading, MCC routing, cadence, and controller display blocked until sourced.</p>
+<div class="grid">
+<label class="field">Inverter bus voltage (V ac)<input id="hmVoltage" type="number" value="115" step="0.1"></label>
+<label class="field">Inverter bus frequency (Hz)<input id="hmFrequency" type="number" value="400" step="0.1"></label>
+</div>
+<div class="actions"><button id="runHistoricalMeasurement">Run Apollo 13 LM-7 profile</button></div>
+<div id="historicalMeasurementTrace" class="chain"><div class="stage"><b>Authoritative source state</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Vehicle measurements</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Historical ground product</b>Expected BLOCKED</div></div>
+<details class="raw"><summary>Raw historical measurement-profile JSON</summary><pre id="historicalMeasurementRaw">No run yet.</pre></details>
 </section>
 
 
@@ -418,6 +431,24 @@ $('runBeforeAfter').onclick=async()=>{
   $('resourceTrace').insertAdjacentHTML('beforeend',arrow()+traceStage('Comparison','<div>before depletion: '+statusBadge(ao,'OBS AVAILABLE','OBS LOST')+'</div><div>after depletion: '+statusBadge(bo,'OBS AVAILABLE','OBS LOST')+'</div>'));
  }catch(e){$('resourceRaw').textContent=String(e.message||e)}
 };
+
+
+async function runHistoricalMeasurementProfile(){
+ const p={profile_id:'apollo13_lm7_inverter_electrical_partial',source_state:{
+  inverter_bus_voltage_v_ac:num('hmVoltage'),inverter_bus_frequency_hz:num('hmFrequency')}};
+ $('historicalMeasurementRaw').textContent='Running…';
+ try{
+  const r=await request('/api/admin/model-proof/historical-measurement-profile',p);
+  recordCausal('apollo13-lm7-historical-measurement-profile',p,r);
+  const outputs=Object.fromEntries(r.vehicle_measurement_output.outputs.map(x=>[x.measurement_id,x]));
+  $('historicalMeasurementTrace').innerHTML=
+   traceStage('Authoritative source state','<div>bus voltage = '+scalar(p.source_state.inverter_bus_voltage_v_ac)+' V ac</div><div>bus frequency = '+scalar(p.source_state.inverter_bus_frequency_hz)+' Hz</div>')+
+   arrow()+traceStage('Vehicle measurements','<div>GC0071V = '+scalar(outputs.GC0071V?.value)+' V ac</div><div>GC0155F = '+scalar(outputs.GC0155F?.value)+' Hz</div><div class="note">'+r.profile.measurement_stage+'</div>')+
+   arrow()+traceStage('Historical ground product','<div>gate = <span class="badge '+(r.historical_ground_product_gate==='blocked'?'warn':'good')+'">'+r.historical_ground_product_gate.toUpperCase()+'</span></div><div class="note">'+(r.historical_ground_product_gate_reason||'open')+'</div>');
+  $('historicalMeasurementRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){$('historicalMeasurementRaw').textContent=String(e.message||e)}
+}
+$('runHistoricalMeasurement').onclick=runHistoricalMeasurementProfile;
 
 
 async function runGuidanceAlarm(mode='normal'){
