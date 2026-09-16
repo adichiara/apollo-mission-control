@@ -1,7 +1,7 @@
 # Station research status — MCC-3 nomenclature and GDA continuity
 
 Date: 2026-09-15  
-Latest research note: `resources/research/171_rtacf_mass_properties_trim_artifact_class.md`
+Latest research note: `resources/research/172_apollo13_postflight_mass_properties_validation_bound.md`
 
 ## CONTROL
 
@@ -25,8 +25,10 @@ The pre-61:29 checkout `~0.3°` observation remains hardware-checkout evidence o
 
 Contemporary Apollo 11 Flight Dynamics documentation adds architecture-level evidence that RTACF mass-properties computations produced **weight-c.g. tables used by RTACF and RTCC trajectory processors to compute pitch/yaw trim angles**. Because this is adjacent-mission evidence, it narrows the Apollo 13 archival search but does not establish which facility/program produced `5.86 / 6.75`.
 
-Still unresolved: the Apollo 13 weight/c.g./mass-properties input artifact, CONTROL's competing numerical values, acceptance criterion, RTCC/RTACF job/request identity, and direct proof that the Flight Dynamics calculation used the documented T+55 LM-burn deck family.
+**New validation boundary.** Apollo 13 Mission Report Table A-I supplies postflight mass/c.g./inertia values for significant mission events, including the second midcourse correction. These are authoritative mission-specific reconstructed values, but the report explicitly describes the table as based on postflight analysis of expendable loading and usage. They are therefore a validation reference, not evidence for the real-time T+55 deck or trim job.
+
+Still unresolved: the Apollo 13 real-time weight/c.g./mass-properties input artifact, CONTROL's competing numerical values, acceptance criterion, RTCC/RTACF job/request identity, and direct proof that the Flight Dynamics calculation used the documented T+55 LM-burn deck family.
 
 ## Simulator constraint
 
-Represent mass-properties input and computed trim output as separate provenance layers. The model may represent `5.86 / 6.75` as the source-backed Flight Dynamics PC+2 abort-pad trim solution and a competing CONTROL solution based on premission mass properties, but the competing values, exact computation path, and acceptance rule must remain unknown. Do not encode the Apollo 11 RTACF architecture as an Apollo 13 mission-specific implementation without direct evidence.
+Represent real-time mass-properties input, computed trim output, and postflight reconstructed mass properties as separate provenance layers. The model may represent `5.86 / 6.75` as the source-backed Flight Dynamics PC+2 abort-pad trim solution and may use Table A-I as a postflight validation target, but must not backfill the missing real-time controller deck with Table A-I values. Do not encode the Apollo 11 RTACF architecture as an Apollo 13 mission-specific implementation without direct evidence.
