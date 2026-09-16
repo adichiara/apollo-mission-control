@@ -59,18 +59,18 @@ The descent engine is gimbaled; gimbal trim compensates for changing vehicle cen
 ### Supports
 Original comments describe trim-gimbal control operating with the descent engine and digital autopilot on. This independently bounds powered-flight behavior but does not reconstruct the missing ground mass-properties computation or actual 61:29 actuator history.
 
-## NASA/MSC Apollo 13 Mission Report — 61:29 powered-flight performance
+## NASA/MSC Apollo 13 Mission Report — 61:29 powered-flight performance and velocity residual
 
 - Report: *Apollo 13 Mission Report*, MSC-02680, September 1970
 - NTRS citation: `19710003598`
-- Relevant sections: 6.6 and 8.7.4
+- Relevant sections: 6.4/Table 6.4-I, 6.6, and 8.7.4
 - Source class: primary mission-specific postflight report
 
 ### Supports
-The free-return DPS maneuver used primary guidance/AUTO; primary-guidance performance was nominal, no vehicle attitude excursions were reported, and firing time was as predicted. Postflight propulsion reporting gives a 34.3-second firing, minimum throttle reported as 12% for the first 5 seconds, then approximately 37% for the remainder.
+The free-return DPS maneuver used primary guidance/AUTO; primary-guidance performance was nominal, no vehicle attitude excursions were reported, and firing time was as predicted. Postflight propulsion reporting gives a 34.3-second firing, minimum throttle reported as 12% for the first 5 seconds, then approximately 37% for the remainder. Table 6.4-I gives ignition `61:29:43.49`, cutoff `61:30:17.72`, duration `34.23 s`, and explicitly labels the post-trim residual vector as **velocity residual after trim, ft/sec**: X `+0.2`, Y `0.0`, Z `+0.3`.
 
 ### Boundary
-Stable vehicle attitude is not static-gimbal evidence. The postflight throttle values describe execution and should remain distinct from the nominal 10%/40% pad instruction.
+Stable vehicle attitude is not static-gimbal evidence. The postflight throttle values describe execution and should remain distinct from the nominal 10%/40% pad instruction. The `+0.2 / 0.0 / +0.3` values are translational velocity residuals, not GDA angles or gimbal errors; the `+0.3 ft/s` value is unrelated to CONTROL's preburn `within about 0.3` gimbal-checkout statement absent separate evidence.
 
 ## Apollo 13 GN&C performance-analysis supplement — actuator-history target
 
@@ -114,6 +114,6 @@ The report does not identify the T+55 deck contents, downstream trim run, CONTRO
 
 ## Current synthesis
 
-`mass-properties provenance [generation/load/update/run distinct] -> calculation/comparison [details unresolved] -> ~59 provisional PC+2 5.86 / 6.75 -> same pair commanded for 61:29 -> preburn gimbal checkout within ~0.3 judged plenty close -> primary-guidance/AUTO powered flight nominal with no reported vehicle attitude excursions; executed throttle ~12% then ~37% -> automatic trim available to compensate changing c.g. -> exact gimbal history/post-compliance state unrecovered -> later 5.85 / 6.74 "okay as is" reference -> no new PC+2 Noun 48 entry`.
+`mass-properties provenance [generation/load/update/run distinct] -> calculation/comparison [details unresolved] -> ~59 provisional PC+2 5.86 / 6.75 -> same pair commanded for 61:29 -> preburn gimbal checkout within ~0.3 judged plenty close -> primary-guidance/AUTO powered flight nominal with no reported vehicle attitude excursions; executed throttle ~12% then ~37% -> automatic trim available to compensate changing c.g. -> exact gimbal history/post-compliance state unrecovered -> post-trim translational velocity residual +0.2 / 0.0 / +0.3 ft/s -> later 5.85 / 6.74 "okay as is" reference -> no new PC+2 Noun 48 entry`.
 
-The next archival target remains a T+55 generation/load record or downstream RTCC/RTACF LM-burn run/request/output tying the deck to the PC+2 candidate trim, plus real-time weight/c.g. inputs, CONTROL's competing trim, ground-computation comparison values/criterion, and job identity. In parallel, inspect `MSC-02680-SUPPL-1` and telemetry/controller products for actual GDA-position history during or immediately after 61:29. Keep the recovered `~0.3°` checkout acceptance strictly separate from the unresolved computational criterion.
+The next archival target remains a T+55 generation/load record or downstream RTCC/RTACF LM-burn run/request/output tying the deck to the PC+2 candidate trim, plus real-time weight/c.g. inputs, CONTROL's competing trim, ground-computation comparison values/criterion, and job identity. In parallel, inspect `MSC-02680-SUPPL-1` and telemetry/controller products for actual GDA-position history during or immediately after 61:29. Keep the recovered `~0.3°` checkout acceptance and the postburn `+0.3 ft/s` velocity residual strictly separate from the unresolved computational criterion.
