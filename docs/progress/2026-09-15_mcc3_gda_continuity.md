@@ -1,7 +1,7 @@
 # MCC-3 nomenclature and GDA continuity
 
 Date: 2026-09-15  
-Latest research note: `resources/research/171_rtacf_mass_properties_trim_artifact_class.md`
+Latest research note: `resources/research/172_apollo13_postflight_mass_properties_validation_bound.md`
 
 ## Completed
 
@@ -14,8 +14,9 @@ Latest research note: `resources/research/171_rtacf_mass_properties_trim_artifac
 - Note 170 joined the ~59 GET air-to-ground readback to the Flight Dynamics postflight chronology. The `5.86 / 6.75` pair is classified as the Flight Dynamics PC+2 abort-pad DPS trim solution passed to the crew at ~59 GET.
 - The same primary Flight Dynamics account says LM CONTROL challenged that passed trim using **premission mass properties**, then later agreed with Flight Dynamics' data.
 - Preserved the T+55 boundary: RTCC LM-burn decks were documented as updated to T+55, but no reviewed source explicitly ties the specific `5.86 / 6.75` calculation/job to a named T+55 deck.
-- **New in note 171:** contemporary Apollo 11 Flight Dynamics documentation identifies the relevant computational artifact class: RTACF mass-properties computations included **weight-c.g. tables used by RTACF and RTCC trajectory processors to compute pitch/yaw trim angles**. This is adjacent-mission architecture evidence only; it does not establish the Apollo 13 job path.
+- Note 171 identified the adjacent-mission computational artifact class: weight-c.g. tables used by RTACF/RTCC trajectory processors to compute pitch/yaw trim.
+- **New in note 172:** the Apollo 13 Mission Report Appendix A.5/Table A-I supplies mission-specific **postflight** mass properties for the second midcourse correction: ignition 95,959.9 lb with c.g. 378.8 / 4.9 / 0.7 in; cutoff 95,647.1 lb with c.g. 379.4 / 5.0 / 0.7 in. The report explicitly describes these values as postflight-analysis results, so they are retained as a validation layer and are not substituted for the missing real-time T+55/controller deck.
 
 ## Next
 
-Search Apollo 13 archival/controller material specifically for weight/c.g. or mass-properties tables, RTACF/RTCC trajectory-processor trim output, and associated job/request sheets behind the ~59 GET disagreement. Highest-value fields remain CONTROL's alternative numerical trim, input mass-properties identity, comparison/acceptance basis, calculation/job identity, and direct T+55 provenance.
+Search Apollo 13 archival/controller material specifically for the real-time weight/c.g. or mass-properties table, RTACF/RTCC trajectory-processor trim output, and associated job/request sheet behind the ~59 GET disagreement. Compare any recovered candidate against the postflight Table A-I values, but require independent provenance before treating it as the operational input. Highest-value fields remain CONTROL's alternative numerical trim, real-time input/deck identity, comparison/acceptance basis, calculation/job identity, and direct T+55 provenance.
