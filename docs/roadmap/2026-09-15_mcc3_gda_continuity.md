@@ -1,23 +1,24 @@
 # PC+2 controller-record roadmap — GDA state continuity
 
 Date: 2026-09-15  
-Latest research note: `resources/research/174_tplus_mass_properties_deck_semantics.md`
+Latest research note: `resources/research/175_gda_pair_reuse_free_return_burn.md`
 
 ## Roadmap refinement
 
-The historical chain now separates three numerical/state layers that must not be collapsed:
+The historical chain now separates four numerical/state layers that must not be collapsed:
 
-1. **~59 GET Flight Dynamics PC+2 abort-pad trim solution:** `5.86° / 6.75°`. Primary voice identifies the pair as DPS trim/GDA angles for PC+2; the Flight Dynamics chronology says the passed trim was challenged by LM CONTROL, which had used premission mass properties, and that CONTROL later agreed with Flight Dynamics' data.
-2. **Post-61:29 intended/retained PC+2 reference:** `5.85 / 6.74`, read back with "GDA should be okay as is" and qualified by "hopefully." This is not measured actuator telemetry.
-3. **Immediately pre-PC+2 execution-state roll:** approximately `-0.8°`, derived from CONTROL's approximate report that roll moved to about `-2°` by `-1.2°` at ignition. This remains derived/approximate.
+1. **~59 GET provisional Flight Dynamics PC+2 abort-pad trim:** `5.86° / 6.75°`. Primary voice identifies the pair as DPS trim/GDA angles for PC+2 and says the angles "will be updated" while instructing the crew to use them for the moment. The Flight Dynamics chronology says the passed trim was challenged by LM CONTROL, which had used premission mass properties, and that CONTROL later agreed with Flight Dynamics' data.
+2. **61:29 free-return DPS commanded trim:** primary NASA air-to-ground voice at 60:53–60:56 GET passes and confirms the same `5.86° / 6.75°` pair as the LM GDA angles for the intervening free-return burn. This directly carries the numerical pair into the maneuver whose 40% powered-flight compliance CONTROL later identified as setting the GDA state relevant to PC+2.
+3. **Post-61:29 intended/retained PC+2 reference:** `5.85 / 6.74`, read back with "GDA should be okay as is" and qualified by "hopefully." This is not measured actuator telemetry and must not be substituted for the exact post-compliance state.
+4. **Immediately pre-PC+2 execution-state roll:** approximately `-0.8°`, derived from CONTROL's approximate report that roll moved to about `-2°` by `-1.2°` at ignition. This remains derived/approximate.
 
-RTCC LM-burn mass-property decks were documented as updated to T+55 decks. Notes 173–174 refine the provenance: the Flight Control Division report uses real-time information and, within the same chronology, uses `T+6`, `T+25`, and `T+55` as time-tagged mass-properties set/deck labels. Treat `T+55` as a **reference epoch label**, not as a calculation timestamp or job number. The chronology places the T+55 update entry before LM ingress at 53:26/54:25 GET, so it does not support an assumption that the deck was generated/loaded exactly at 55:00 GET.
+The strengthened continuity chain is:
 
-The same mission-specific chronology provides an earlier mass-properties update precedent: the T+25 RTCC mass-properties run required no update because pitch/yaw trims were within `0.01°` of T+6. This directly establishes a time-tagged mass-properties run -> trim comparison -> update/no-update workflow on Apollo 13. It does **not** establish `0.01°` as the later PC+2 criterion.
+`~59 provisional PC+2 5.86 / 6.75 -> same pair commanded for 61:29 free-return DPS burn -> 40% powered-flight compliance -> exact resulting GDA state unrecovered -> CONTROL expects resulting state optimum for PC+2 -> later 5.85 / 6.74 "okay as is" reference -> no new PC+2 Noun 48 trim load`.
 
-Research note 171 adds adjacent-mission architecture evidence from the contemporary Apollo 11 Flight Dynamics record: RTACF mass-properties computations produced **weight-c.g. tables used by RTACF and RTCC trajectory processors to compute pitch/yaw trim angles**. This does not prove the Apollo 13 job path, but it narrows the archival artifact class to seek.
+RTCC LM-burn mass-property decks were documented as updated to T+55 decks. Notes 173–174 refine the provenance: `T+55` is a **reference epoch label**, not a calculation timestamp or job number. The earlier T+25 RTCC mass-properties run documents a mission-specific `mass-properties run -> trim comparison -> update/no-update` workflow, but its `0.01°` result is not a universal threshold and not evidence for the PC+2 criterion.
 
-Research note 172 adds a mission-specific **postflight validation layer** from Apollo 13 Mission Report Table A-I. For the second midcourse correction it reports ignition mass/c.g. `95,959.9 lb; 378.8 / 4.9 / 0.7 in` and cutoff `95,647.1 lb; 379.4 / 5.0 / 0.7 in`. Because the report states these are postflight-analysis values, they must not be treated as the real-time T+55/controller input deck.
+Research note 171 adds adjacent-mission architecture evidence that RTACF mass-properties computations produced weight-c.g. tables used by RTACF and RTCC trajectory processors to compute pitch/yaw trim angles. Research note 172 adds Apollo 13 postflight mass-properties values as a validation layer only; they are not the missing real-time deck.
 
 ## Highest-priority unresolved artifact
 
@@ -30,7 +31,7 @@ Search Apollo 13 archival/controller material specifically for the real-time mas
 5. calculation time and job/run/request identity;
 6. explicit linkage from the **T+55 reference-epoch deck** to the Flight Dynamics `5.86 / 6.75` solution;
 7. deck generation/load timestamp if recoverable, kept distinct from its T+55 reference epoch;
-8. comparison of any recovered operational mass-properties artifact with postflight Table A-I, without conflating the two provenance layers;
-9. if available, the later calculation/state record explaining the `5.85 / 6.74` post-61:29 retained-reference readback.
+8. telemetry or controller working-sheet evidence for the exact post-61:29 complied two-axis GDA state;
+9. the calculation/state record, if any, explaining the later `5.85 / 6.74` reference readback.
 
-Use the Apollo 13 T+25 `0.01°` no-update result as a search discriminator and workflow precedent only. Do not infer that it was a universal threshold or the PC+2 rule. Do not infer that Apollo 13 used the exact Apollo 11 RTACF program, request procedure, or output format. Do not substitute Apollo 13 postflight Table A-I values for the missing real-time deck.
+Do not infer that the exact post-compliance state was `5.86 / 6.75`, that `5.85 / 6.74` was measured telemetry, or that their `0.01°` per-axis difference was a PC+2 criterion. Keep commanded trim, powered-flight compliance state, pad/reference readback, and execution telemetry separate.
