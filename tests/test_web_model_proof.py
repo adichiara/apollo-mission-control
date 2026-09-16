@@ -394,6 +394,50 @@ class WebModelProofTests(unittest.TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertIn("must be empty", response.json()["detail"])
 
+    def test_historical_measurement_profile_endpoint_executes_vehicle_boundary_but_blocks_ground_product(self):
+        response = self.client.post(
+            "/api/admin/model-proof/historical-measurement-profile",
+            json={
+                "profile_id": "apollo13_lm7_inverter_electrical_partial",
+                "source_state": {
+                    "inverter_bus_voltage_v_ac": 115.0,
+                    "inverter_bus_frequency_hz": 400.0,
+                },
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(
+            body["model_status"],
+            "historical_measurement_profile_vehicle_boundary",
+        )
+        self.assertEqual(
+            body["profile"]["measurement_stage"],
+            "vehicle_measurement_output_pre_ground_loading",
+        )
+        outputs = {
+            item["measurement_id"]: item
+            for item in body["vehicle_measurement_output"]["outputs"]
+        }
+        self.assertEqual(outputs["GC0071V"]["value"], 115.0)
+        self.assertEqual(outputs["GC0155F"]["value"], 400.0)
+        self.assertEqual(body["historical_ground_product_gate"], "blocked")
+        self.assertIn(
+            "historical ground product is unresolved",
+            body["historical_ground_product_gate_reason"],
+        )
+
+    def test_historical_measurement_profile_endpoint_rejects_missing_source_variable(self):
+        response = self.client.post(
+            "/api/admin/model-proof/historical-measurement-profile",
+            json={
+                "profile_id": "apollo13_lm7_inverter_electrical_partial",
+                "source_state": {"inverter_bus_voltage_v_ac": 115.0},
+            },
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("missing source variable", response.json()["detail"])
+
     def test_guidance_alarm_endpoint_preserves_restart_without_mission_decision(self):
         payload = {
             "state_time_s": 10.0,
