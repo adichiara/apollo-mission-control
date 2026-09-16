@@ -1,7 +1,7 @@
 # Apollo 13 PC+2 ~59 GET trim-provenance sources
 
 Date: 2026-09-16  
-Related notes: `resources/research/170_pc2_59h_trim_provenance.md` through `resources/research/179_preburn_gda_checkout_acceptance_bound.md`
+Related notes: `resources/research/170_pc2_59h_trim_provenance.md` through `resources/research/181_free_return_powered_flight_performance_boundary.md`
 
 ## NASA/MSC Flight Control Division Mission Operations Report — Apollo 13
 
@@ -53,6 +53,15 @@ Contemporary adjacent-mission architecture evidence: RTACF mass-properties compu
 
 Postflight validation values for the second midcourse correction: ignition 95,959.9 lb, c.g. 378.8 / 4.9 / 0.7 in; cutoff 95,647.1 lb, c.g. 379.4 / 5.0 / 0.7 in. These are postflight values, not the real-time T+55 deck.
 
+The same mission report separately establishes that the 61:29 firing used primary guidance/AUTO with nominal guidance performance and no reported vehicle attitude excursions. Section 6.6 gives the executed firing as 34.3 seconds, ~12% minimum throttle for 5 seconds followed by approximately 37%. These postflight execution facts constrain simulation but do not recover trim-calculation provenance or exact GDA actuator history.
+
+## Apollo 13 GN&C performance-analysis supplement
+
+- NTRS citation: `19730017939`
+- Report: `MSC-02680-SUPPL-1` / `TRW-11176-H586-R0-00-SUPPL-1`
+
+Mission-specific primary postflight GN&C analysis including the LM digital autopilot. Treat as a priority archival target for the exact-actuator-state branch; do not attribute gimbal-position values until the relevant pages/data are inspected.
+
 ## Current provenance chain
 
 `T-6 -> generated -> loaded in RTCC`
@@ -61,8 +70,8 @@ Postflight validation values for the second midcourse correction: ignition 95,95
 
 `T+55 -> RTCC LM-burn decks updated -> generation/load/run consumption unresolved`
 
-`~59 Flight Dynamics PC+2 calculation -> 5.86 / 6.75 -> CONTROL challenge using premission mass properties -> reconciliation -> same pair commanded for 61:29 -> preburn spacecraft gimbal checkout within ~0.3 judged plenty close -> powered-flight compliance -> exact resulting GDA state unrecovered -> later PC+2 as-is reference 5.85 / 6.74`
+`~59 Flight Dynamics PC+2 calculation -> 5.86 / 6.75 -> CONTROL challenge using premission mass properties -> reconciliation -> same pair commanded for 61:29 -> preburn spacecraft gimbal checkout within ~0.3 judged plenty close -> primary-guidance/AUTO firing nominal, no reported attitude excursions -> automatic powered-flight trim available -> exact resulting GDA state unrecovered -> later PC+2 as-is reference 5.85 / 6.74`
 
 ## Next source target
 
-Recover Apollo 13 T+55 real-time weight/c.g. output plus an explicit generation/load or downstream RTACF/RTCC LM-burn run/request/output artifact. Highest-value fields remain CONTROL's alternative values, **ground-computation** PC+2 comparison/acceptance basis, job identity, explicit T+55-deck-to-`5.86 / 6.75` lineage, and exact post-61:29 complied GDA state. Do not substitute either the T+25 `0.01°` comparison or the 61:11 `~0.3°` spacecraft checkout for the missing computational criterion.
+Recover Apollo 13 T+55 real-time weight/c.g. output plus an explicit generation/load or downstream RTACF/RTCC LM-burn run/request/output artifact. Highest-value fields remain CONTROL's alternative values, **ground-computation** PC+2 comparison/acceptance basis, job identity, explicit T+55-deck-to-`5.86 / 6.75` lineage, and exact post-61:29 complied GDA state. In parallel, inspect the GN&C supplement and telemetry products for actual actuator history. Do not substitute the T+25 `0.01°`, the 61:11 `~0.3°` checkout, or stable vehicle attitude for the missing computational criterion or actuator telemetry.
