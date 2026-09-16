@@ -2,11 +2,11 @@
 
 Date: 2026-09-16
 
-Research Notes 180–189 separate commanded trim, powered-flight control behavior, maneuver outcome, measured actuator state, generic GDA mechanical calibration, LM-7-specific telemetry-channel semantics, the physical actuator-position feedback signal path, later-LM engineering-unit presentation, the post-free-return PC+2 GDA instruction, and the upstream mass-properties processor contract. Apollo 13 primary material establishes that DPS gimbal trim can change automatically during powered flight to compensate for changing center of gravity. Mission Report Table 6.4-I supplies mission-specific 61:29 GDA actuator positions in inches at initial, maximum-excursion, steady-state, and cutoff phases. NASA LM reference material bounds the generic mechanism at ±2 inches stroke for ±6° engine tilt. LM-7/8/9 engineering diagrams identify the actual Pitch and Roll GDA measurement channels and their opposite RET/EXT notation. The LM Operations Handbook places those channels on the GDA actuator-position feedback path, distinct from LGC trim commands. The LM-10-and-subsequent Instrumentation Packet further shows the same GH1313V/GH1314V measurement family presented in engineering units over `-6..+6 DEG`. Because that packet is later than LM-7, it is continuity evidence only and is not imported as an exact Apollo 13 calibration.
+Research Notes 180–190 separate commanded trim, powered-flight control behavior, maneuver outcome, measured actuator state, generic GDA mechanical calibration, LM-7-specific telemetry-channel semantics, the physical actuator-position feedback signal path, later-LM engineering-unit presentation, the post-free-return PC+2 GDA instruction, the upstream mass-properties processor contract, and the distinction between preflight LM-7 engineering mass-property data and the current official operational set.
 
-Note 188 corrects the post-61:29 PC+2 reference classification from an ambiguous OCR/readback interpretation. The NASA transcript has CAPCOM issuing a new PC+2 P30 pad and stating that the GDA `ought to be okay as it is from the last burn`, with pitch `5.85` and roll `6.74`. Treat this as a ground-issued desired/reference pair with a no-action disposition, not telemetry and not proof of a new trim computation.
+Note 188 classifies the later `5.85 / 6.74` pair as a ground-issued desired/reference pair with a no-action disposition. Note 189 establishes the generic processor contract `configuration + consumables -> mass-properties / weight-c.g. product -> RTACF/RTCC trajectory processor -> pitch/yaw trim`, while retaining the missing Apollo 13-specific consumption edge.
 
-Note 189 tightens the computational architecture using contemporary primary RTACF documentation. The Apollo 10 operational-support plan says Systems programs updated CSM/LM mass properties for consumables and configuration and computed CSM/LM mass properties for a specified configuration. The Apollo 11 mission-support report says resulting weight-c.g. tables were used by RTACF and RTCC trajectory processors to compute pitch/yaw trim angles. This establishes the processor contract and makes Apollo 13's T+55 **LM-burn** deck the correct class of upstream product for a DPS trim calculation. It still does not prove that the run producing `5.86 / 6.75` consumed that deck.
+Note 190 identifies a mission-specific preflight LM-7 source family. The 17 March 1970 LM-7 DPS weight-characteristics table gives a `33,872.3 lbm` LM separation weight and component weights, but explicitly says those mass properties were for that analysis and directs users to Volume III of the Spacecraft Operational Data Book for **current official mass-properties data**. Those values therefore must not be substituted for CONTROL's undocumented ~59 GET premission inputs.
 
 ## Priority 1 — mission-specific ground-computation lineage
 
@@ -14,33 +14,30 @@ Recover an Apollo 13 artifact that bridges:
 
 `T+55 LM-burn mass-properties deck -> weight/c.g. product -> specific RTCC/RTACF request/run -> trim output -> 5.86 / 6.75`
 
-Best targets: weight/c.g. sheet, RTCC/RTACF request/output, job/run record, controller working paper, or support-room product. The generic processor edge is now source-backed; the missing evidence is the mission-specific consumption edge.
+Best targets: weight/c.g. sheet, RTCC/RTACF request/output, job/run record, controller working paper, or support-room product. The generic processor edge is source-backed; the missing evidence is the mission-specific consumption edge.
 
-## Priority 2 — disagreement details
+## Priority 2 — CONTROL premission source and disagreement details
 
-Recover CONTROL's competing numerical trim and the actual comparison/acceptance basis used when CONTROL challenged Flight Dynamics' solution. The documented disagreement is consistent with competing mass-properties inputs: CONTROL used premission mass properties while Flight Dynamics had better available data. Do not invent CONTROL's numerical result or assume the better data were specifically T+55 without direct evidence. Do not apply the T+25 `0.01°` no-update comparison, the later `~0.3°` spacecraft-checkout statement, the `0.01°` per-axis difference between `5.86 / 6.75` and the later `5.85 / 6.74` PC+2 reference, or the Mission Report's `+0.3 ft/s` post-trim velocity residual to this decision without direct evidence.
+Recover the **Volume III Spacecraft Operational Data Book — Mass Properties** set/revision applicable to Apollo 13/LM-7, especially current official preflight docked CSM/LM weight/c.g. tables. Then seek evidence identifying which premission set CONTROL actually used.
+
+Recover CONTROL's competing numerical trim and the actual comparison/acceptance basis. Do not substitute the recovered Volume II LM-7 DPS-analysis values for CONTROL's inputs: that source explicitly points to Volume III for current official mass properties. Do not assume `premission` denotes a single immutable dataset.
+
+Do not apply the T+25 `0.01°` no-update comparison, the later `~0.3°` spacecraft-checkout statement, the `0.01°` per-axis difference between `5.86 / 6.75` and `5.85 / 6.74`, or the Mission Report's `+0.3 ft/s` post-trim velocity residual to this decision without direct evidence.
 
 ## Priority 3 — LM-7 telemetry calibration / trim representation
 
-The 61:29 postflight actuator state is documented in Table 6.4-I:
+The 61:29 postflight actuator state is documented in Table 6.4-I: initial pitch/roll `-0.02/-0.34 in`; maximum excursion `+0.31/-0.27 in`; steady-state `+0.04/-0.51 in`; cutoff `+0.10/-0.31 in`.
 
-- initial: pitch `-0.02 in`, roll `-0.34 in`;
-- maximum excursion: pitch `+0.31 in`, roll `-0.27 in`;
-- steady-state: pitch `+0.04 in`, roll `-0.51 in`;
-- cutoff: pitch `+0.10 in`, roll `-0.31 in`.
+`LED-267-37C` identifies `GH1313V` as Pitch GDA position and `GH1314V` as Roll GDA position, with axis-specific RET/EXT notation. The LM Operations Handbook independently shows actuator-position feedback returning from the GDA into the DECA. A later LM-10-and-subsequent Instrumentation Packet lists the same channel family over `-6..+6 DEG`; this is continuity evidence, not an asserted LM-7 calibration.
 
-`LED-267-37C` identifies `GH1313V` as `VOLT, PITCH GDA POS (RET/EXT)` and `GH1314V` as `VOLT, ROLL GDA POS (EXT/RET)`, plus separate LGC extend/retract command discretes. The LM Operations Handbook independently shows actuator-position feedback returning from the GDA into the DECA. The later LM-10-and-subsequent Instrumentation Packet lists the same channel family as Pitch/Roll GDA position with an engineering range of `-6..+6 DEG`. This establishes a documented angular engineering presentation for the later configuration, but not an exact LM-7 conversion.
-
-Next seek the LM-7 instrumentation/calibration or PCM definition that maps GH1313V/GH1314V raw/analog values to engineering degrees and establishes EXT/RET polarity. Separately recover the primary definition of the crew-facing GDA trim-number reference/zero and its mapping to actuator position. Do not equate the later-LM `-6..+6 DEG` telemetry range with the Apollo 13 `5.86 / 6.75` or `5.85 / 6.74` trim references without mission-specific evidence.
-
-A continuous telemetry trace is only needed if a player-visible product requires finer temporal resolution than the four sourced phase values.
+Next seek LM-7 instrumentation/calibration or PCM material mapping GH1313V/GH1314V to engineering degrees and establishing polarity, plus the primary definition of the crew-facing GDA trim-number reference/zero.
 
 ## Priority 4 — executed propulsion profile
 
-Use the postflight Apollo 13 Mission Report as the execution baseline: 34.23-second firing; propulsion narrative reports minimum throttle about 12% for the first 5 seconds, then approximately 37%. Preserve the nominal preburn `10% / 40%` pad values separately as planned/commanded procedure rather than telemetry.
+Use the Apollo 13 Mission Report execution baseline: approximately 34.3-second firing; minimum throttle about 12% for the first 5 seconds, then approximately 37%. Preserve nominal preburn `10% / 40%` values separately as planned/commanded procedure.
 
 ## Modeling rule meanwhile
 
-The causal engine may represent the source-backed generic Apollo processor contract `configuration + consumables -> mass-properties / weight-c.g. product -> RTACF/RTCC trajectory processor -> pitch/yaw trim`. For Apollo 13, represent the T+55 LM-burn deck update as an upstream mass-properties state, but leave `run_consumed` and the direct provenance edge to `5.86 / 6.75` unresolved. Represent CONTROL's premission mass-properties basis as a competing input-state class without inventing its output.
+Represent mass-property source state with `mission_specific`, `preflight_or_realtime`, `authority/currentness`, `configuration_scope`, `reference_epoch`, and `controller_selected_source`. For Apollo 13, T+55 may populate the upstream deck state but must not automatically set `run_consumed` or provenance-to-trim true. CONTROL's source remains `premission mass properties` with exact dataset and values unresolved.
 
-Use `5.86 / 6.75` only as a sourced commanded/preburn trim reference for the ~59/61:29 chain. Use `5.85 / 6.74` as a later CAPCOM-issued PC+2 desired/reference pair explicitly accompanied by `okay as it is from the last burn`; do not classify it as telemetry or as a demonstrated RTCC recomputation. For the actual 61:29 actuator state, use the four Table 6.4-I GDA inch values at their source resolution. Model LGC trim commands separately from physical GDA-position feedback. Preserve Pitch/Roll as the two hardware channel labels and retain the source's axis-specific RET/EXT metadata. It is acceptable to annotate the GH1313V/GH1314V family as having a documented later-LM angular engineering presentation (`-6..+6 DEG`), but Apollo 13 conversion coefficients and signed polarity remain unresolved. Do not convert the Mission Report inch values into asserted LM-7 telemetry degrees and do not infer the crew-facing trim-number zero/reference. The post-trim translational residual remains `[+0.2, 0.0, +0.3] ft/s` and is not an actuator quantity.
+Use `5.86 / 6.75` only as a sourced commanded/preburn trim reference for the ~59/61:29 chain. Use `5.85 / 6.74` as the later ground-issued PC+2 reference with `okay as it is` disposition. Use the four Mission Report GDA inch values for actual 61:29 actuator state at their source resolution. Do not infer LM-7 telemetry degrees, crew-facing trim zero/reference, or CONTROL's numerical alternative.
