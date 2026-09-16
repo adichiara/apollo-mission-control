@@ -2,7 +2,7 @@
 
 Date: 2026-09-16
 
-Research Notes 180–181 close modeling ambiguities but not the ground-computation provenance gap. Apollo 13 primary material establishes that DPS gimbal trim can change automatically during powered flight to compensate for changing center of gravity. Mission-specific postflight evidence further establishes nominal primary-guidance/AUTO performance during the 61:29 firing with no reported vehicle attitude excursions. Neither finding supplies exact actuator position history.
+Research Notes 180–182 close modeling and classification ambiguities but not the ground-computation provenance gap. Apollo 13 primary material establishes that DPS gimbal trim can change automatically during powered flight to compensate for changing center of gravity. Mission-specific postflight evidence further establishes nominal primary-guidance/AUTO performance during the 61:29 firing with no reported vehicle attitude excursions. Mission Report Table 6.4-I separately identifies post-trim velocity residuals of `+0.2 / 0.0 / +0.3 ft/s`; these are translational residuals, not GDA/gimbal angles. None of these findings supplies exact actuator position history.
 
 ## Priority 1 — ground-computation lineage
 
@@ -14,13 +14,13 @@ Best targets: weight/c.g. sheet, RTCC/RTACF request/output, job/run record, cont
 
 ## Priority 2 — disagreement details
 
-Recover CONTROL's competing numerical trim and the actual comparison/acceptance basis used when CONTROL challenged Flight Dynamics' solution. Do not apply the T+25 `0.01°` no-update comparison or the later `~0.3°` spacecraft-checkout statement to this decision without direct evidence.
+Recover CONTROL's competing numerical trim and the actual comparison/acceptance basis used when CONTROL challenged Flight Dynamics' solution. Do not apply the T+25 `0.01°` no-update comparison, the later `~0.3°` spacecraft-checkout statement, or the Mission Report's `+0.3 ft/s` post-trim velocity residual to this decision without direct evidence.
 
 ## Priority 3 — actuator-state branch
 
 Recover and inspect the Apollo 13 GN&C performance-analysis supplement (`NTRS 19730017939`, `MSC-02680-SUPPL-1`) and other mission telemetry/controller records for actual pitch/yaw GDA positions during and immediately after the 61:29 free-return burn.
 
-Current primary evidence permits a stable vehicle-attitude model for this maneuver: primary guidance/AUTO performance was nominal and no vehicle attitude excursions were reported. Do not convert that into static-gimbal evidence.
+Current primary evidence permits a stable vehicle-attitude model for this maneuver: primary guidance/AUTO performance was nominal and no vehicle attitude excursions were reported. Do not convert that into static-gimbal evidence. Table 6.4-I's velocity residual vector may be used as a maneuver-outcome validation quantity, not as actuator telemetry.
 
 ## Priority 4 — executed propulsion profile
 
@@ -28,4 +28,4 @@ Use the postflight Apollo 13 Mission Report as the execution baseline: 34.3-seco
 
 ## Modeling rule meanwhile
 
-Use `5.86 / 6.75` only as a sourced commanded/preburn trim reference. Model the 61:29 vehicle attitude response as nominal/stable if needed, but keep detailed powered-flight gimbal history unresolved or explicitly synthetic until separately validated.
+Use `5.86 / 6.75` only as a sourced commanded/preburn trim reference. Model the 61:29 vehicle attitude response as nominal/stable if needed and the post-trim translational residual as approximately `[+0.2, 0.0, +0.3] ft/s`, but keep detailed powered-flight gimbal history unresolved or explicitly synthetic until separately validated.
