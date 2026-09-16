@@ -51,19 +51,23 @@ The GDA values are actuator displacement in inches, not trim angles in degrees. 
 - Source class: primary LM-7/8/9 engineering documentation
 
 ### Supports
-The measurement index identifies:
-
-- `GH1313V` — `VOLT, PITCH GDA POS (RET/EXT)`;
-- `GH1314V` — `VOLT, ROLL GDA POS (EXT/RET)`;
-- `GH1318X` / `GH1319X` — pitch trim extend/retract from LGC;
-- `GH1343X` / `GH1344X` — roll trim extend/retract from LGC;
-- `GH1320X` — pitch GDA `(EXT/RET)`;
-- `GH1345X` — roll GDA `(RET/EXT)`.
-
-This validates Pitch/Roll as the LM-7 hardware GDA axis labels, shows axis-specific opposite extension/retraction notation, and distinguishes analog position measurements from LGC trim-command discretes.
+The measurement index identifies `GH1313V` as Pitch GDA position `(RET/EXT)` and `GH1314V` as Roll GDA position `(EXT/RET)`, plus separate pitch/roll LGC extend/retract command discretes. This validates Pitch/Roll as the LM-7 hardware GDA axis labels, shows axis-specific opposite extension/retraction notation, and distinguishes analog position measurements from LGC trim-command discretes.
 
 ### Boundary
-The recovered index does not itself define voltage-to-inch calibration, which numerical sign means EXT or RET in the Mission Report, or the mapping to crew-facing `5.86 / 6.75`. Preserve the polarity metadata without inventing a sign conversion.
+The recovered index does not itself define voltage-to-inch calibration, which numerical sign means EXT or RET in the Mission Report, or the mapping to crew-facing `5.86 / 6.75`.
+
+## Apollo Operations Handbook — GDA actuator-position feedback path
+
+- Document: *Apollo Operations Handbook, Lunar Module LM 10 and Subsequent, Volume I — Subsystems Data*
+- Relevant item: figure 2.1-50, *Descent Engine Control Assembly — Trim Control Diagram*
+- NASA scan: https://www.nasa.gov/wp-content/uploads/static/history/alsj/LM10HandbookVol1.pdf
+- Source class: primary NASA/Grumman subsystem documentation; later LM configuration used only as signal-path continuity evidence
+
+### Supports
+The diagram shows **ACTUATOR POSITION FEEDBACK** returning from the Gimbal Drive Actuator into the DECA and places the Pitch/Roll GDA-position measurement family on the actuator/feedback side of the architecture. LGC positive/negative trim-error inputs and extend/retract motor commands are separate paths. Combined with the LM-7/8/9 measurement index, this supports treating GH1313V/GH1314V as physical actuator-position observations rather than aliases for trim commands.
+
+### Boundary
+This does not supply LM-7 voltage-to-inch calibration, numerical polarity, or the crew-facing trim-number reference. It is not used to infer any conversion.
 
 ## NASA Apollo News Reference — generic LM GDA mechanical range
 
@@ -71,7 +75,7 @@ The recovered index does not itself define voltage-to-inch calibration, which nu
 - Source class: primary NASA LM reference material
 
 ### Supports
-The gimbal drive actuators extend/retract 2 inches from mid-position to tilt the descent engine a maximum of 6° along each axis. The LM News Reference specification gives stroke `+2 to -2 inches ±5%` and gimbal position `+6° to -6° ±5%`. The nominal endpoint ratio is therefore `3°/in`.
+The gimbal drive actuators extend/retract 2 inches from mid-position to tilt the descent engine a maximum of 6° along each axis. The nominal endpoint ratio is therefore `3°/in`.
 
 ### Boundary
 This is generic mechanism documentation, not an LM-7 calibration sheet. It does not define the crew-facing GDA trim-number zero/reference or sign convention, and the nominal endpoint ratio must not be used to convert the Apollo 13 `5.86 / 6.75` pair or Table 6.4-I values into asserted historical equivalents.
@@ -124,6 +128,6 @@ Still useful for finer DAP/telemetry interpretation, but no longer required to e
 
 ## Current synthesis
 
-`mass-properties provenance [generation/load/update/run distinct] -> calculation/comparison [details unresolved] -> ~59 provisional 5.86 / 6.75 -> same pair commanded for 61:29 -> preburn checkout within ~0.3 judged plenty close -> powered flight under nominal primary guidance/AUTO -> measured Pitch/Roll GDA phase summary in inches (-0.02/-0.34 initial; +0.31/-0.27 max excursion; +0.04/-0.51 steady; +0.10/-0.31 cutoff), with LM-7 hardware documentation confirming axis-specific RET/EXT semantics -> post-trim velocity residual +0.2/0.0/+0.3 ft/s -> later 5.85/6.74 "okay as is" reference`.
+`mass-properties provenance [generation/load/update/run distinct] -> calculation/comparison [details unresolved] -> ~59 provisional 5.86 / 6.75 -> same pair commanded for 61:29 -> preburn checkout within ~0.3 judged plenty close -> LGC trim-command path distinct from physical GH1313V/GH1314V actuator-position feedback -> powered flight under nominal primary guidance/AUTO -> measured Pitch/Roll GDA phase summary in inches (-0.02/-0.34 initial; +0.31/-0.27 max excursion; +0.04/-0.51 steady; +0.10/-0.31 cutoff) -> post-trim velocity residual +0.2/0.0/+0.3 ft/s -> later 5.85/6.74 "okay as is" reference`.
 
-The exact-value powered-flight actuator-history target is closed at the Mission Report's phase-summary resolution. Generic LM mechanical scale is bounded at nominal 3°/in, and LM-7/8/9 documentation now identifies the actual GDA measurement channels and polarity descriptors. The numerical telemetry calibration and crew-facing trim representation remain unresolved. The main archival target remains a T+55 generation/load record or downstream RTCC/RTACF LM-burn run/request/output tying the deck to the candidate trim, plus weight/c.g. inputs, CONTROL's competing trim, comparison values/criterion, and job identity.
+The exact-value powered-flight actuator-history target is closed at the Mission Report's phase-summary resolution. Generic LM mechanical scale is bounded at nominal 3°/in, LM-7/8/9 documentation identifies the GDA measurement channels and polarity descriptors, and the subsystem handbook confirms the physical actuator-position feedback signal class. Numerical telemetry calibration and crew-facing trim representation remain unresolved. The main archival target remains a T+55 generation/load record or downstream RTCC/RTACF LM-burn run/request/output tying the deck to the candidate trim, plus weight/c.g. inputs, CONTROL's competing trim, comparison values/criterion, and job identity.
