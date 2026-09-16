@@ -18,7 +18,7 @@ R03 reaches Noun 47 as the mass-load step. `V34E` branches to termination before
 - Source class: primary mission voice transcription
 
 ### Supports
-CAPCOM passes PC+2 DPS trim/GDA pitch `5.86°`, roll `6.75°`, says the angles "will be updated," and accepts the crew readback.
+CAPCOM passes PC+2 DPS trim/GDA pitch `5.86°`, roll 6.75°, says the angles "will be updated," and accepts the crew readback.
 
 ## NASA Apollo 13 Technical Air-to-Ground Voice Transmission — 61:29 free-return DPS burn
 
@@ -41,6 +41,23 @@ CONTROL explicitly directs gimbal rather than throttle trim and the DAP-set gimb
 
 ### Boundary
 This is an operational **preburn spacecraft gimbal-checkout** acceptance statement. It is not evidence that `0.3°` was the acceptance criterion for the earlier Flight Dynamics-versus-CONTROL mass-properties calculation disagreement, and it is not a PC+2 computational trim tolerance. Editorial annotations on the presentation site are not treated as primary evidence.
+
+## NASA Apollo 13 mission material — DPS automatic gimbal trim
+
+- Primary PDF: https://ntrs.nasa.gov/api/citations/19700076776/downloads/19700076776.pdf
+- Source class: primary NASA Apollo 13 mission reference material
+
+### Supports
+The descent engine is gimbaled; gimbal trim compensates for changing vehicle center of gravity and is automatically accomplished by PGNS or AGS. Therefore the initial commanded GDA pair must not be treated as invariant physical actuator position through powered flight.
+
+## Apollo 13 LM131 flight software — trim-gimbal control law
+
+- File: `TRIM_GIMBAL_CONTROL_SYSTEM.agc`
+- Listing: https://ibiblio.org/apollo/listings/LM131R1/TRIM_GIMBAL_CONTROL_SYSTEM.agc.html
+- Source class: reconstructed final Apollo 13 LM flight-software listing preserving original program comments
+
+### Supports
+Original comments describe trim-gimbal control operating with the descent engine and digital autopilot on. This independently bounds powered-flight behavior but does not reconstruct the missing ground mass-properties computation or actual 61:29 actuator history.
 
 ## NASA Apollo 13 mission commentary — post-61:29 revised PC+2 pad readback
 
@@ -71,6 +88,6 @@ The report does not identify the T+55 deck contents, downstream trim run, CONTRO
 
 ## Current synthesis
 
-`mass-properties provenance [generation/load/update/run distinct] -> calculation/comparison [details unresolved] -> ~59 provisional PC+2 5.86 / 6.75 -> same pair commanded for 61:29 -> preburn gimbal checkout within ~0.3 judged plenty close -> 40% powered-flight compliance -> exact post-compliance state unrecovered -> later 5.85 / 6.74 "okay as is" reference -> no new PC+2 Noun 48 entry`.
+`mass-properties provenance [generation/load/update/run distinct] -> calculation/comparison [details unresolved] -> ~59 provisional PC+2 5.86 / 6.75 -> same pair commanded for 61:29 -> preburn gimbal checkout within ~0.3 judged plenty close -> powered-flight automatic trim available to compensate changing c.g. -> exact gimbal history/post-compliance state unrecovered -> later 5.85 / 6.74 "okay as is" reference -> no new PC+2 Noun 48 entry`.
 
-The next archival target remains a T+55 generation/load record or downstream RTCC/RTACF LM-burn run/request/output tying the deck to the PC+2 candidate trim, plus real-time weight/c.g. inputs, CONTROL's competing trim, ground-computation comparison values/criterion, and job identity. Keep the recovered `~0.3°` checkout acceptance strictly separate from that unresolved computational criterion.
+The next archival target remains a T+55 generation/load record or downstream RTCC/RTACF LM-burn run/request/output tying the deck to the PC+2 candidate trim, plus real-time weight/c.g. inputs, CONTROL's competing trim, ground-computation comparison values/criterion, and job identity. A parallel target is actual GDA-position telemetry/controller evidence during or immediately after 61:29. Keep the recovered `~0.3°` checkout acceptance strictly separate from the unresolved computational criterion.
