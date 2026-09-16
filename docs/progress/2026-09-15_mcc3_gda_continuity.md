@@ -1,7 +1,7 @@
 # MCC-3 nomenclature and GDA continuity
 
 Date: 2026-09-15  
-Latest research note: `resources/research/170_pc2_59h_trim_provenance.md`
+Latest research note: `resources/research/171_rtacf_mass_properties_trim_artifact_class.md`
 
 ## Completed
 
@@ -11,10 +11,11 @@ Latest research note: `resources/research/170_pc2_59h_trim_provenance.md`
 - Recovered the pre-61:29 checkout observation `within about 0.3` / `plenty close`, classified only as hardware checkout evidence.
 - Derived approximate immediately pre-PC+2 roll-GDA position `~-0.8°` from CONTROL's reported ignition motion; retained it as approximate execution-state evidence only.
 - Recovered the post-61:29 PC+2 retained-reference readback `5.85 / 6.74`, qualified by the crew's "hopefully" and not treated as actuator telemetry.
-- **New in note 170:** joined the ~59 GET air-to-ground readback to the Flight Dynamics postflight chronology. The `5.86 / 6.75` pair is now classified as the Flight Dynamics PC+2 abort-pad DPS trim solution passed to the crew at ~59 GET.
-- The same primary Flight Dynamics account says LM CONTROL challenged that passed trim using **premission mass properties**, then later agreed with Flight Dynamics' data. This establishes a real mass-properties-dependent trim disagreement and identifies CONTROL's challenged basis.
+- Note 170 joined the ~59 GET air-to-ground readback to the Flight Dynamics postflight chronology. The `5.86 / 6.75` pair is classified as the Flight Dynamics PC+2 abort-pad DPS trim solution passed to the crew at ~59 GET.
+- The same primary Flight Dynamics account says LM CONTROL challenged that passed trim using **premission mass properties**, then later agreed with Flight Dynamics' data.
 - Preserved the T+55 boundary: RTCC LM-burn decks were documented as updated to T+55, but no reviewed source explicitly ties the specific `5.86 / 6.75` calculation/job to a named T+55 deck.
+- **New in note 171:** contemporary Apollo 11 Flight Dynamics documentation identifies the relevant computational artifact class: RTACF mass-properties computations included **weight-c.g. tables used by RTACF and RTCC trajectory processors to compute pitch/yaw trim angles**. This is adjacent-mission architecture evidence only; it does not establish the Apollo 13 job path.
 
 ## Next
 
-Search for the working artifact behind the ~59 GET CONTROL/Flight Dynamics disagreement. Highest-value fields are CONTROL's alternative numerical trim, comparison delta/acceptance basis, calculation time/job identity, and direct T+55 deck provenance. Separately retain the later `5.85 / 6.74` post-61:29 reference and actual actuator-state questions; do not infer a `0.01°` criterion from the two pairs.
+Search Apollo 13 archival/controller material specifically for weight/c.g. or mass-properties tables, RTACF/RTCC trajectory-processor trim output, and associated job/request sheets behind the ~59 GET disagreement. Highest-value fields remain CONTROL's alternative numerical trim, input mass-properties identity, comparison/acceptance basis, calculation/job identity, and direct T+55 provenance.
