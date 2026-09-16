@@ -187,6 +187,21 @@ The surviving Apollo documentation now does more than merely support a generic c
 
 The project still should not claim recovery of the complete Apollo simulator software/model. The LED-440-3 reconstruction now constrains a separable propulsion/control/mass-properties/true-motion interface, but the original report and Apollo 13 profile inputs remain unextracted. The next research step is direct LMS/AMS model-document extraction and cross-checking against Apollo 13 LM-7/CSM spacecraft documentation before freezing equations, constants, coordinate frames, or historical acceptance tolerances.
 
+## NASA RG 255 E.155B1 — Lunar Module Simulator project files / acceptance-test source lead
+
+- Record group: NASA/JSC Record Group 255.
+- Series: **E.155B1. Project Files on the Lunar Module Simulator**.
+- Date span: 1968–1970.
+- Extent: 2 ft.
+- Old accession: **72A794**.
+- Archive location: **A-23-16-6**.
+- Public inventory: https://www.ibiblio.org/apollo/NARA-SW/Rg255-1.pdf
+- Inventory contents explicitly include **acceptance test plans and procedures**, statements of work, progress/technical reports, operations manuals, correspondence, photographs, and drawings.
+- Contract context: most correspondence is described as involving Kollsman Instrument Corporation and NAS9-8634 for LM simulators at MSC and KSC.
+- Evidence use: establishes that formal LMS acceptance documentation survives as a targeted archival series.
+- Critical boundary: the inventory does **not** expose numerical acceptance criteria, correlation methods, reference cases, or subsystem tolerances. Do not treat the series description itself as a recovered mathematical-model validation specification.
+- Research record: `resources/research/219_lms_validation_acceptance_source_boundary.md`.
+
 ## LMS Console Directory — output/telemetry definition source
 
 - Date: 13 August 1971.
