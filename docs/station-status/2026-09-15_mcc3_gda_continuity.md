@@ -1,7 +1,7 @@
 # Station research status — MCC-3 nomenclature and GDA continuity
 
 Date: 2026-09-15  
-Latest research note: `resources/research/177_mass_properties_operation_verb_boundary.md`
+Latest research note: `resources/research/178_ntrs_19710010485_metadata_payload_mismatch.md`
 
 ## CONTROL
 
@@ -31,8 +31,10 @@ This verb-level distinction matters. The T+55 statement supports a deck update/r
 
 Contemporary Apollo 11 Flight Dynamics documentation remains architecture-level corroboration that RTACF mass-properties computations produced weight-c.g. tables used by RTACF and RTCC trajectory processors to compute pitch/yaw trim angles. Apollo 13 Mission Report Table A-I remains a separate postflight validation layer.
 
+**Archive-provenance warning added in note 178:** NTRS citation `19710010485` currently identifies an Apollo 13 investigation Panel 3 final report in its landing-page metadata, but its downloadable PDF payload is the 28 April Flight Control Division Mission Operations Report used here. The report's own cover and the independent NASA History/ALSJ scan establish document identity; the NTRS citation ID is not used as an unqualified bibliographic identifier.
+
 Still unresolved: T+55 weight/c.g./deck contents, generation/load event, downstream run/request/output, CONTROL's competing numerical values, PC+2-specific acceptance criterion, RTCC/RTACF job identity, direct T+55-to-`5.86 / 6.75` data lineage, and exact two-axis post-61:29 complied GDA state.
 
 ## Simulator constraint
 
-Represent `reference_epoch`, `processing_domain`, `generated`, `loaded`, `deck_updated/reference_set_selected`, and `run_consumed` as separate provenance fields/events. For T+55, only the reference epoch, RTCC LM-burn domain, and deck-update/reference-set state are currently source-backed. Likewise keep ground-computed trim, commanded/loaded burn trim, post-powered-flight complied actuator state, and later pad/reference values separate.
+Represent `reference_epoch`, `processing_domain`, `generated`, `loaded`, `deck_updated/reference_set_selected`, and `run_consumed` as separate provenance fields/events. For T+55, only the reference epoch, RTCC LM-burn domain, and deck-update/reference-set state are currently source-backed. Likewise keep ground-computed trim, commanded/loaded burn trim, post-powered-flight complied actuator state, and later pad/reference values separate. Source records should also separate archive `landing_page_metadata` from `payload_identity` when they conflict rather than silently choosing one.
