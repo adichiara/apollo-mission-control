@@ -1,7 +1,7 @@
 # PC+2 controller-record roadmap — GDA state continuity
 
 Date: 2026-09-15  
-Latest research note: `resources/research/177_mass_properties_operation_verb_boundary.md`
+Latest research note: `resources/research/178_ntrs_19710010485_metadata_payload_mismatch.md`
 
 ## Roadmap refinement
 
@@ -20,6 +20,8 @@ RTCC mass-property provenance is source-backed only in discrete operations. The 
 
 Research note 171 adds adjacent-mission architecture evidence that RTACF mass-properties computations produced weight-c.g. tables used by RTACF and RTCC trajectory processors to compute pitch/yaw trim angles. Research note 172 adds Apollo 13 postflight mass-properties values as a validation layer only.
 
+Research note 178 adds an archive-provenance gate: NTRS citation `19710010485` currently has metadata for a different Apollo 13 investigation report while serving the Flight Control Division Mission Operations Report as its PDF payload. Future archival identifiers must be checked at both metadata and payload levels; `19710010485` is not treated as an unambiguous bibliographic identifier for the Mission Operations Report.
+
 ## Highest-priority unresolved artifact
 
 Search Apollo 13 archival/controller material specifically for the real-time mass-properties/trim data-lineage chain behind the ~59 GET disagreement:
@@ -34,4 +36,4 @@ Search Apollo 13 archival/controller material specifically for the real-time mas
 8. telemetry or controller working-sheet evidence for the exact post-61:29 complied two-axis GDA state;
 9. the calculation/state record, if any, explaining the later `5.85 / 6.74` reference readback.
 
-Do not infer that `deck updated` means `generated`, `loaded`, or `run`; that the exact post-compliance state was `5.86 / 6.75`; that `5.85 / 6.74` was measured telemetry; that the `0.01°` differences establish a PC+2 criterion; or that T+55 directly generated either numerical pair.
+Do not infer that `deck updated` means `generated`, `loaded`, or `run`; that the exact post-compliance state was `5.86 / 6.75`; that `5.85 / 6.74` was measured telemetry; that the `0.01°` differences establish a PC+2 criterion; that T+55 directly generated either numerical pair; or that archive landing-page metadata necessarily describes the payload currently served under the same identifier.
