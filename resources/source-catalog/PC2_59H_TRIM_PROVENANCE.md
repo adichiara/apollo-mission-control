@@ -1,7 +1,7 @@
 # Apollo 13 PC+2 ~59 GET trim-provenance sources
 
 Date: 2026-09-16  
-Related notes: `resources/research/170_pc2_59h_trim_provenance.md`, `resources/research/171_rtacf_mass_properties_trim_artifact_class.md`, `resources/research/172_apollo13_postflight_mass_properties_validation_bound.md`, `resources/research/173_realtime_mass_properties_update_precedent.md`, `resources/research/174_tplus_mass_properties_deck_semantics.md`, `resources/research/175_gda_pair_reuse_free_return_burn.md`, `resources/research/176_t55_lm_burn_deck_scope.md`
+Related notes: `resources/research/170_pc2_59h_trim_provenance.md` through `resources/research/177_mass_properties_operation_verb_boundary.md`
 
 ## NASA/MSC Flight Control Division Mission Operations Report — Apollo 13
 
@@ -14,19 +14,20 @@ Related notes: `resources/research/170_pc2_59h_trim_provenance.md`, `resources/r
 ### Supports
 
 - The report describes Apollo 13 flight operations using real-time-available data.
-- The chronology explicitly says **"RTCC (LM burn) mass property decks were updated to T+55 decks."** This scopes T+55 to the RTCC LM-burn processing domain.
-- The earlier T+25 RTCC mass-properties run explicitly documents pitch/yaw trim comparison against T+6; no update was needed because the trims were within `0.01°`.
+- For T-6, mass properties (weights, c.g.'s, aerodynamics) were **generated** and **loaded in the RTCC** by T-2:46.
+- The T+25 RTCC mass properties were **run** and their pitch/yaw trims compared with T+6; no update was needed because they were within `0.01°`.
+- Later, **"RTCC (LM burn) mass property decks were updated to T+55 decks."**
 - A PC+2 abort/block-data pad was passed at approximately 59 GET.
 - LM CONTROL challenged the DPS trim on that pad using premission mass properties, then later agreed with Flight Dynamics' data.
 - CONTROL later expected the GDA state resulting from the 61:29 free-return maneuver's 40% powered-flight compliance to provide optimum PC+2 alignment.
 
 ### Joined provenance finding
 
-Within one mission-specific primary chronology, time-tagged RTCC mass-properties products are tied to pitch/yaw trim evaluation in the T+25 case, and the later T+55 decks are explicitly identified as RTCC LM-burn decks. This materially narrows the computational domain of the missing PC+2 lineage artifact.
+The chronology distinguishes `generated`, `loaded in the RTCC`, `mass properties were run`, and `decks were updated`. These operations are therefore retained as separate provenance events. T+55 is directly source-backed as an RTCC LM-burn deck update/reference-set state; the statement does not independently establish generation, load time, or a downstream trim run.
 
 ### Boundary
 
-The report does not print the T+55 deck contents, generation/load time, CONTROL's alternative trim, comparison delta, PC+2 acceptance criterion, RTCC/RTACF job identifier, or explicitly state that the `5.86 / 6.75` calculation consumed the T+55 deck. The T+25 `0.01°` result is not generalized into a PC+2 threshold.
+The report does not print the T+55 deck contents, generation/load time, downstream run/request/output, CONTROL's alternative trim, comparison delta, PC+2 acceptance criterion, RTCC/RTACF job identifier, or explicitly state that the `5.86 / 6.75` calculation consumed the T+55 deck. The T+25 `0.01°` result is not generalized into a PC+2 threshold.
 
 ## NASA Apollo 13 air-to-ground record — ~59:03 GET
 
@@ -46,9 +47,9 @@ The report does not print the T+55 deck contents, generation/load time, CONTROL'
 
 ### Supports
 
-- At 60:53:09, CAPCOM passes the P30 pad for the 61:29:42.84 free-return midcourse correction.
+- CAPCOM passes the P30 pad for the 61:29:42.84 free-return midcourse correction.
 - The pad explicitly gives LM GDA pitch `5.86°`, roll `6.75°`.
-- At 60:54:57, Haise reads the same pair back with the free-return pad; CAPCOM accepts the readback.
+- Haise reads the same pair back and CAPCOM accepts it.
 
 ### Boundary
 
@@ -98,9 +99,11 @@ The `0.01°` difference on each axis from `5.86 / 6.75` does not establish a com
 
 ## Current provenance chain
 
-`Apollo 13 T+25 RTCC mass-properties run -> P/Y trims compared with T+6 -> within 0.01° -> no update [mission-specific workflow precedent]`
+`T-6 mass properties -> generated -> loaded in RTCC [explicit operation precedent]`
 
-`Apollo 13 T+55 reference epoch -> explicitly RTCC LM-burn mass-property deck domain -> direct consuming job/output unresolved`
+`T+25 RTCC mass properties -> run -> P/Y trims compared with T+6 -> within 0.01° -> no update [explicit run precedent]`
+
+`T+55 reference epoch -> RTCC LM-burn mass-property decks updated -> generation/load/run consumption unresolved`
 
 `Apollo-era architecture: weight/c.g. table -> RTACF/RTCC trajectory processor -> pitch/yaw trim [adjacent-mission evidence]`
 
@@ -108,4 +111,4 @@ The `0.01°` difference on each axis from `5.86 / 6.75` does not establish a com
 
 ## Next source target
 
-Recover Apollo 13 T+55 real-time weight/c.g. or mass-properties output and associated RTACF/RTCC LM-burn trim artifact/request sheet. Highest-value fields remain CONTROL's alternative values, PC+2-specific comparison/acceptance basis, job identity, explicit T+55-deck-to-`5.86 / 6.75` data lineage, and the exact two-axis post-61:29 complied GDA state.
+Recover Apollo 13 T+55 real-time weight/c.g. output plus an explicit generation/load or downstream RTACF/RTCC LM-burn run/request/output artifact. Highest-value fields remain CONTROL's alternative values, PC+2-specific comparison/acceptance basis, job identity, explicit T+55-deck-to-`5.86 / 6.75` data lineage, and the exact two-axis post-61:29 complied GDA state.
