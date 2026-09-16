@@ -75,3 +75,10 @@ This is validation/test presentation, not the eventual historical player station
    - shows 10-Hz MSFN tracking input and 0.2/0.4-s PFP processing/time-tag cadence recovered from MSC Internal Note 69-FM-36;
    - explicitly displays the historical execution gate as blocked because processor cadence is not an inter-source freshness rule;
    - retains `max_time_separation_s = null` for all Apollo 11 comparisons.
+
+
+7. **Historical vehicle measurement profile → ground-product gate**
+   - calls `/api/admin/model-proof/historical-measurement-profile`;
+   - runs the partial Apollo 13 LM-7 inverter profile through the generic source→measurement mapper;
+   - exposes `GC0071V` and `GC0155F` at the vehicle-measurement boundary;
+   - keeps the Mission H-2 historical ground-product gate visibly blocked while PCM loading/routing/cadence/display evidence remains unresolved.
