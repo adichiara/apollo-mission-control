@@ -1,7 +1,7 @@
 # Apollo 13 PC+2 ~59 GET trim-provenance sources
 
 Date: 2026-09-16  
-Related notes: `resources/research/170_pc2_59h_trim_provenance.md` through `resources/research/181_free_return_powered_flight_performance_boundary.md`
+Related notes: `resources/research/170_pc2_59h_trim_provenance.md` through `resources/research/189_rtacf_mass_properties_processor_contract.md`
 
 ## NASA/MSC Flight Control Division Mission Operations Report — Apollo 13
 
@@ -20,6 +20,38 @@ Related notes: `resources/research/170_pc2_59h_trim_provenance.md` through `reso
 
 ### Boundary
 T+55 deck update is not proof of generation/load/downstream run. The report does not print T+55 deck contents, CONTROL's alternative trim, comparison delta, PC+2 computational acceptance criterion, job identity, or direct T+55-to-`5.86 / 6.75` linkage. T+25 `0.01°` is not generalized to PC+2.
+
+## NASA/MSC Operational Support Plan for the RTACF — Apollo 10 Flight Annex
+
+- Organization: NASA Manned Spacecraft Center
+- Source class: primary contemporary RTACF operations documentation; adjacent mission
+- Public scan: `https://www.ibiblio.org/apollo/Documents/Operational%20Support%20Plan%20for%20the%20Real-Time%20Auxiliary%20Computing%20Facility%20Apollo%2010%20Flight%20Annex.pdf`
+
+### Supports
+- RTACF Systems programs updated CSM and LM mass properties to reflect consumables usage and vehicle reconfiguration.
+- One Systems program computed mass properties for a specified CSM/LM configuration.
+
+### Boundary
+Architecture evidence only. It does not identify the Apollo 13 T+55 job, inputs, output values, or requestor.
+
+## MSC Internal Note 70-FM-20 — The Apollo 11 Adventure
+
+- Date: 5 February 1970
+- Organization: NASA Manned Spacecraft Center, Mission Planning and Analysis Division
+- Public scan: `https://www.ibiblio.org/apollo/NARA-SW/TheApollo11Adventure.pdf`
+- Source class: primary contemporary adjacent-mission mission-support report
+
+### Supports
+- RTACF mass-properties computations included **weight-c.g. tables**.
+- Those tables were used by **RTACF and RTCC trajectory processors to compute pitch and yaw trim angles**.
+- RTACF constants-update capability included mass-properties tables.
+
+### Provenance significance
+Together with the Apollo 10 operations plan, this establishes a source-backed generic processor contract:
+
+`configuration + consumables -> mass-properties / weight-c.g. product -> RTACF/RTCC trajectory processor -> pitch/yaw trim`
+
+Apollo 13's T+55 LM-burn deck is therefore the correct class of upstream product, but direct consumption by the `5.86 / 6.75` calculation remains unproven.
 
 ## NASA Apollo 13 air-to-ground — ~59:03 GET
 
@@ -42,10 +74,6 @@ CONTROL directs the gimbal-trim checkout. After the procedure CONTROL says `Trim
 ### Provenance significance
 This supplies a mission-specific **spacecraft checkout acceptance** value/context. It does not close the ~59 GET **ground-computation comparison** gap. The repository therefore models these as different acceptance layers.
 
-## MSC Internal Note 70-FM-20 — The Apollo 11 Adventure
-
-Contemporary adjacent-mission architecture evidence: RTACF mass-properties computations produced weight-c.g. tables used by RTACF and RTCC trajectory processors to compute pitch/yaw trim angles. This identifies an artifact class, not Apollo 13 calculation provenance.
-
 ## NASA/MSC Apollo 13 Mission Report — Appendix A.5, Table A-I
 
 - Report: *Apollo 13 Mission Report*, MSC-02680, September 1970
@@ -64,14 +92,16 @@ Mission-specific primary postflight GN&C analysis including the LM digital autop
 
 ## Current provenance chain
 
+`configuration + consumables -> [generic Apollo RTACF mass-properties processor contract] -> mass-properties / weight-c.g. product -> RTACF/RTCC trajectory processor -> pitch/yaw trim`
+
 `T-6 -> generated -> loaded in RTCC`
 
 `T+25 -> RTCC mass-properties run -> P/Y comparison -> within 0.01° -> no update`
 
-`T+55 -> RTCC LM-burn decks updated -> generation/load/run consumption unresolved`
+`T+55 -> RTCC LM-burn decks updated -> mission-specific generation/load/run consumption unresolved`
 
 `~59 Flight Dynamics PC+2 calculation -> 5.86 / 6.75 -> CONTROL challenge using premission mass properties -> reconciliation -> same pair commanded for 61:29 -> preburn spacecraft gimbal checkout within ~0.3 judged plenty close -> primary-guidance/AUTO firing nominal, no reported attitude excursions -> automatic powered-flight trim available -> exact resulting GDA state unrecovered -> later PC+2 as-is reference 5.85 / 6.74`
 
 ## Next source target
 
-Recover Apollo 13 T+55 real-time weight/c.g. output plus an explicit generation/load or downstream RTACF/RTCC LM-burn run/request/output artifact. Highest-value fields remain CONTROL's alternative values, **ground-computation** PC+2 comparison/acceptance basis, job identity, explicit T+55-deck-to-`5.86 / 6.75` lineage, and exact post-61:29 complied GDA state. In parallel, inspect the GN&C supplement and telemetry products for actual actuator history. Do not substitute the T+25 `0.01°`, the 61:11 `~0.3°` checkout, or stable vehicle attitude for the missing computational criterion or actuator telemetry.
+Recover Apollo 13 T+55 real-time weight/c.g. output plus an explicit generation/load or downstream RTACF/RTCC LM-burn run/request/output artifact. Highest-value fields remain CONTROL's alternative values, **ground-computation** PC+2 comparison/acceptance basis, job identity, and explicit T+55-deck-to-`5.86 / 6.75` lineage. The generic mass-properties-to-trim processor relationship is now closed; do not mistake that architecture closure for mission-specific run provenance. Do not substitute the T+25 `0.01°`, the 61:11 `~0.3°` checkout, or stable vehicle attitude for the missing computational criterion.
