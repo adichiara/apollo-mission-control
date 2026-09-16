@@ -68,3 +68,10 @@ This is validation/test presentation, not the eventual historical player station
    - runs four isolated authoritative reference sessions;
    - proves timely GO, missed-milestone late GO, omitted GO, and wrong-actor GO produce different downstream state/audit outcomes;
    - defines “late” only as D-016 missed-event ordering, not as a historical grace-period threshold.
+
+
+9. **Apollo 11 historical guidance-monitoring profile**
+   - loads the historical profile through the protected model-proof API;
+   - shows 10-Hz MSFN tracking input and 0.2/0.4-s PFP processing/time-tag cadence recovered from MSC Internal Note 69-FM-36;
+   - explicitly displays the historical execution gate as blocked because processor cadence is not an inter-source freshness rule;
+   - retains `max_time_separation_s = null` for all Apollo 11 comparisons.

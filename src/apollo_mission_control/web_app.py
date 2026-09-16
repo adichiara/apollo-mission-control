@@ -59,6 +59,7 @@ from .guidance_crosscheck import (
     GuidanceObservation,
     compare_guidance_observations,
 )
+from .guidance_monitoring_profiles import get_guidance_monitoring_profile
 from .guidance_voting import (
     GuidanceVotingConfig,
     assess_guidance_consensus,
@@ -1424,6 +1425,28 @@ def _guidance_observation_from_request(
         values=request.values,
         provenance=tuple(request.provenance),
     )
+
+
+@app.get(
+    "/api/admin/model-proof/guidance-monitoring-profile/{profile_id}",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def guidance_monitoring_profile_model_proof(profile_id: str) -> dict[str, Any]:
+    """Expose historical monitoring evidence without inventing executable freshness."""
+    profile = _domain_call(lambda: get_guidance_monitoring_profile(profile_id))
+    payload = profile.to_public_dict()
+    payload["historically_executable"] = all(
+        comparison.historically_executable for comparison in profile.comparisons
+    )
+    payload["execution_gate"] = (
+        "open" if payload["historically_executable"] else "blocked"
+    )
+    payload["gate_note"] = (
+        "Processor/input cadence evidence is not an inter-source comparison "
+        "freshness rule. Comparisons remain non-executable while "
+        "max_time_separation_s is unresolved."
+    )
+    return payload
 
 
 @app.post(
