@@ -90,6 +90,7 @@ from .mission_profiles import (
     get_mission_profile,
 )
 from .pc2_action_consequence_probe import run_pc2_action_consequence_matrix
+from .pc2_inverter_consequence_probe import run_pc2_inverter_consequence_matrix
 from .pc2_nominal import load_fixture
 from .model_profiles import (
     ModelProfileRecord,
@@ -1183,6 +1184,15 @@ def dps_engine_off_response(request: EngineOffResponseRequest) -> dict[str, Any]
 def pc2_action_consequence_model_proof() -> dict[str, Any]:
     fixture = load_fixture(ROOT / "data" / "scenarios" / "apollo13_pc2_nominal.json")
     return _domain_call(lambda: run_pc2_action_consequence_matrix(fixture))
+
+
+@app.post(
+    "/api/admin/model-proof/pc2-inverter-consequences",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def pc2_inverter_consequence_model_proof() -> dict[str, Any]:
+    fixture = load_fixture(ROOT / "data" / "scenarios" / "apollo13_pc2_nominal.json")
+    return _domain_call(lambda: run_pc2_inverter_consequence_matrix(fixture))
 
 
 @app.post(
