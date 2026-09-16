@@ -1,26 +1,44 @@
 # Apollo 13 PC+2 ~59 GET trim-provenance sources
 
 Date: 2026-09-15  
-Related notes: `resources/research/170_pc2_59h_trim_provenance.md`, `resources/research/171_rtacf_mass_properties_trim_artifact_class.md`, `resources/research/172_apollo13_postflight_mass_properties_validation_bound.md`
+Related notes: `resources/research/170_pc2_59h_trim_provenance.md`, `resources/research/171_rtacf_mass_properties_trim_artifact_class.md`, `resources/research/172_apollo13_postflight_mass_properties_validation_bound.md`, `resources/research/173_realtime_mass_properties_update_precedent.md`
 
 ## NASA/MSC Flight Control Division Mission Operations Report — Apollo 13
 
-- Report: MSC-02680
 - Date: 28 April 1970
-- Source class: primary mission-specific postflight controller report
-- Relevant section: Flight Dynamics chronology, PC+2 abort-pad activity at approximately 59 GET
+- Organization: NASA Manned Spacecraft Center, Flight Control Division
+- NTRS record/download: `19710010485`
+- NASA History scan: `https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf`
+- Source class: primary mission-specific controller report
+- Relevant section: Flight Dynamics chronology
 
-### Supports
+### Source-evidence policy
 
-- A PC+2 abort/block-data pad was passed at approximately 59 GET.
-- The DPS trim passed to the crew on that pad was challenged by LM CONTROL.
-- LM CONTROL later agreed with Flight Dynamics' data.
-- CONTROL's challenged solution had used premission mass properties, which the Flight Dynamics report explicitly says were not the best data available.
-- Elsewhere in the same Flight Dynamics chronology, RTCC LM-burn mass-property decks are documented as having been updated to T+55 decks.
+The report explicitly says that it describes Apollo 13 flight operations as seen in real time and that **no data is used except data available in real time**, even where post-mission information later showed the real-time data to be erroneous. Accordingly, chronology entries below are classified as operational real-time evidence rather than postflight reconstruction.
 
-### Boundary
+### T+25 mass-properties update precedent
 
-The report does not print CONTROL's alternative trim, comparison delta, acceptance criterion, RTCC/RTACF job identifier, or an explicit statement that the specific passed PC+2 trim calculation used a named T+55 deck. T+55 is therefore contextual deck-family provenance, not yet a direct calculation-level link.
+Before MCC-2, the chronology states that the **T+25 RTCC mass properties were run but an update was not needed because pitch/yaw trims were within `0.01°` of T+6**.
+
+Supports a mission-specific workflow:
+
+`time-tagged mass-properties set -> RTCC mass-properties run -> pitch/yaw trim comparison -> update/no-update decision`
+
+Boundary: `0.01°` is established only for this T+25-versus-T+6 decision. It is not evidence of a universal RTCC rule or the later PC+2 acceptance criterion.
+
+### T+55 and ~59 GET PC+2 provenance
+
+The same chronology states that:
+
+- RTCC **LM-burn mass-property decks were updated to T+55 decks**;
+- a PC+2 abort/block-data pad was passed at approximately 59 GET;
+- the DPS trim passed on that pad was challenged by LM CONTROL;
+- CONTROL had used **premission mass properties**, described as not the best data available;
+- CONTROL later agreed with Flight Dynamics' data.
+
+This places the T+55 deck family and the PC+2 trim dispute in the same explicitly real-time Flight Dynamics record. It strengthens the hypothesis that newer operational mass-properties data explain why Flight Dynamics' solution superseded CONTROL's premission calculation.
+
+Boundary: the report still does not print CONTROL's alternative trim, comparison delta, PC+2 acceptance criterion, RTCC/RTACF job identifier, or explicitly state that the specific passed PC+2 trim calculation consumed a named T+55 deck. T+55 therefore remains strong contextual real-time provenance, not a closed calculation-level link.
 
 ## NASA Apollo 13 air-to-ground / mission voice record — ~59:03 GET
 
@@ -57,8 +75,8 @@ This is Apollo 11 / Mission G architecture evidence, not Apollo 13 calculation p
 ## NASA/MSC Apollo 13 Mission Report — Appendix A.5, Table A-I
 
 - Report: *Apollo 13 Mission Report*, MSC-02680, September 1970
-- NASA NTRS citation: 19710003598
-- Primary PDF: https://ntrs.nasa.gov/api/citations/19710003598/downloads/19710003598.pdf
+- NASA NTRS citation: `19710003598`
+- Primary PDF: `https://ntrs.nasa.gov/api/citations/19710003598/downloads/19710003598.pdf`
 - Source class: primary mission-specific postflight engineering report
 
 ### Supports
@@ -86,16 +104,18 @@ The report describes these mass properties as conditions determined from **postf
 
 ### Boundary
 
-The `0.01°` difference on each axis from the ~59 GET `5.86 / 6.75` solution does not establish a comparison tolerance, recomputation method, or measured actuator change.
+The `0.01°` difference on each axis from the ~59 GET `5.86 / 6.75` solution does not establish a comparison tolerance, recomputation method, or measured actuator change. The separate T+25 `0.01°` no-update precedent does not justify importing that criterion into PC+2.
 
 ## Current provenance chain
 
+`Apollo 13 T+25 mass-properties run -> P/Y trims within 0.01° of T+6 -> no update [mission-specific real-time workflow precedent]`
+
 `Apollo-era mass-properties architecture: weight/c.g. table -> RTACF/RTCC trajectory processor -> pitch/yaw trim [Mission G architecture evidence]`
 
-`Apollo 13 RTCC LM-burn deck family updated to T+55 [mission-specific context] -> Flight Dynamics ~59 GET PC+2 calculation [job/deck linkage unresolved] -> passed DPS trim 5.86 / 6.75 -> LM CONTROL challenge using premission mass properties -> CONTROL later agrees with Flight Dynamics data -> 61:29 powered-flight compliance -> later PC+2 "as is" reference 5.85 / 6.74 [generation mechanism unresolved]`
+`Apollo 13 RTCC LM-burn deck family updated to T+55 [mission-specific real-time context] -> Flight Dynamics ~59 GET PC+2 calculation [job/deck linkage unresolved] -> passed DPS trim 5.86 / 6.75 -> LM CONTROL challenge using premission mass properties -> CONTROL later agrees with Flight Dynamics data -> 61:29 powered-flight compliance -> later PC+2 "as is" reference 5.85 / 6.74 [generation mechanism unresolved]`
 
 `Apollo 13 Mission Report Table A-I postflight reconstructed mass properties [validation layer; not real-time deck provenance]`
 
 ## Next source target
 
-Recover Apollo 13 **real-time** weight/c.g. or mass-properties computation output and the associated RTACF/RTCC trajectory-processor trim artifact/request sheet for the ~59 GET disagreement. Compare recovered operational values with Table A-I only as a validation check. Highest-value fields remain CONTROL's alternative values, comparison/acceptance basis, job identity, and explicit T+55 deck/input provenance.
+Recover Apollo 13 **real-time** weight/c.g. or mass-properties computation output and the associated RTACF/RTCC trajectory-processor trim artifact/request sheet for the ~59 GET disagreement. Use the T+25 wording/criterion as a search discriminator only. Highest-value fields remain CONTROL's alternative values, PC+2-specific comparison/acceptance basis, job identity, and explicit T+55 deck/input provenance.
