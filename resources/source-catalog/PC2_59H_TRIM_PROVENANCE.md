@@ -1,7 +1,7 @@
 # Apollo 13 PC+2 ~59 GET trim-provenance sources
 
 Date: 2026-09-15  
-Related note: `resources/research/170_pc2_59h_trim_provenance.md`
+Related notes: `resources/research/170_pc2_59h_trim_provenance.md`, `resources/research/171_rtacf_mass_properties_trim_artifact_class.md`
 
 ## NASA/MSC Flight Control Division Mission Operations Report — Apollo 13
 
@@ -37,7 +37,22 @@ The report does not print CONTROL's alternative trim, comparison delta, acceptan
 
 The time, maneuver, pad, and passed DPS-trim event coincide with the Flight Dynamics report's ~59 GET PC+2 abort-pad dispute. The pair can therefore be classified as the **Flight Dynamics PC+2 abort-pad trim solution passed to the crew at ~59 GET**.
 
-This is stronger than treating `5.86 / 6.75` as an unexplained interim pair, but it does not make the pair measured actuator telemetry or the final post-61:29 PC+2 state.
+## MSC Internal Note 70-FM-20 — The Apollo 11 Adventure
+
+- Date: 5 February 1970
+- Organization: NASA Manned Spacecraft Center, Flight Dynamics organization
+- Source class: primary contemporary adjacent-mission Flight Dynamics report
+- Relevant section: RTACF computational capability / mass properties
+
+### Supports
+
+- RTACF mass-properties computations included **weight-c.g. tables**.
+- Those weight-c.g. tables were used by **RTACF and RTCC trajectory processors to compute pitch and yaw trim angles**.
+- This identifies a concrete computational artifact chain to target when searching for the Apollo 13 ~59 GET trim disagreement.
+
+### Boundary
+
+This is Apollo 11 / Mission G architecture evidence, not Apollo 13 calculation provenance. It does not prove that Apollo 13 used the same RTACF program, job/request procedure, output format, or that `5.86 / 6.75` came from RTACF rather than RTCC. It also does not link a T+55 table directly to that pair.
 
 ## NASA Apollo 13 mission commentary — post-61:29 revised PC+2 pad
 
@@ -55,8 +70,10 @@ The `0.01°` difference on each axis from the ~59 GET `5.86 / 6.75` solution doe
 
 ## Current provenance chain
 
-`RTCC LM-burn deck family updated to T+55 [context] -> Flight Dynamics ~59 GET PC+2 calculation [job/deck linkage unresolved] -> passed DPS trim 5.86 / 6.75 -> LM CONTROL challenge using premission mass properties -> CONTROL later agrees with Flight Dynamics data -> 61:29 powered-flight compliance -> later PC+2 "as is" reference 5.85 / 6.74 [generation mechanism unresolved]`
+`Apollo-era mass-properties architecture: weight/c.g. table -> RTACF/RTCC trajectory processor -> pitch/yaw trim [Mission G architecture evidence]`
+
+`Apollo 13 RTCC LM-burn deck family updated to T+55 [mission-specific context] -> Flight Dynamics ~59 GET PC+2 calculation [job/deck linkage unresolved] -> passed DPS trim 5.86 / 6.75 -> LM CONTROL challenge using premission mass properties -> CONTROL later agrees with Flight Dynamics data -> 61:29 powered-flight compliance -> later PC+2 "as is" reference 5.85 / 6.74 [generation mechanism unresolved]`
 
 ## Next source target
 
-Recover the CONTROL/Flight Dynamics working artifact for the ~59 GET disagreement, especially CONTROL's alternative values, comparison/acceptance basis, RTCC job identity, and explicit deck/input provenance.
+Recover Apollo 13 weight/c.g. or mass-properties computation output and the associated RTACF/RTCC trajectory-processor trim artifact/request sheet for the ~59 GET disagreement, especially CONTROL's alternative values, comparison/acceptance basis, job identity, and explicit deck/input provenance.
