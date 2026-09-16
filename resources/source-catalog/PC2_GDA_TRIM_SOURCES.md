@@ -37,6 +37,24 @@ This proves the computer/procedural branch, not CONTROL's reason for selecting i
 
 It does not prove that the post-burn complied GDA angles equal the earlier commanded `5.86° / 6.75°` pair. CONTROL later describes the 40%-thrust compliance as the state-setting event relevant to PC+2.
 
+## NASA Apollo 13 mission commentary — post-61:29 revised PC+2 pad readback
+
+- Relevant transcript page header: approximately `GET 63:10:00`
+- NASA Apollo 13 mission commentary / air-to-ground transcript
+- Searchable NASA result text: `GDA should be okay as is, which hopefully is Pitch, 5.85 Yaw 6.74.`
+- Source class: primary mission voice/PAO transcription
+
+### Supports
+
+- After the 61:29 free-return maneuver, the crew reads back a revised PC+2 pad with the disposition that the **GDA should be okay as is**.
+- The same readback associates that intended retained reference with pitch `5.85` and a second GDA-axis value `6.74`.
+- The transcript renders the second axis as `Yaw`; preserve that transcription as a source caveat rather than silently normalizing it.
+- The pair is numerically `0.01°` below the earlier `5.86 / 6.75` interim pair.
+
+### Boundary
+
+The crew qualifies the numerical identification with **"hopefully"**. This is therefore evidence for an intended/retained PC+2 reference, not a measurement of post-compliance actuator position. The `0.01°` difference from the earlier pair must not be treated as a recovered PC+2 comparison tolerance, and the T+25 `0.01°` no-update precedent must not be imported into this event.
+
 ## NASA Apollo 13 air-to-ground transcript — PC+2 two-hour activation
 
 - Relevant GET: `075:07:43`–`075:08:35`
@@ -53,7 +71,7 @@ It does not prove that the post-burn complied GDA angles equal the earlier comma
 
 ### Boundary
 
-This establishes **no new crew-entered Noun 48 trim during this PC+2 activation sequence**. It does not identify the exact retained gimbal state, prove reuse of the earlier `5.86° / 6.75°` pair, or prove that no ground-computed candidate trim existed.
+This establishes **no new crew-entered Noun 48 trim during this PC+2 activation sequence**. It does not prove that the `5.85 / 6.74` pad/reference pair was the instantaneous actuator state or identify the ground-computed candidate trim.
 
 ## NASA Apollo 13 PAO/air-to-ground transcript — PC+2 burn rules
 
@@ -102,17 +120,18 @@ This omission is now consistent with, but is not the sole evidence for, the no-n
 - a separate mission-specific **T+25 RTCC mass-properties run** where Flight Dynamics explicitly decided that no trim update was needed because pitch/yaw trims were within `0.01°` of the T+6 values;
 - Flight Director final-preparation ground rules after the ~74:00 GET White Team handover explicitly include **“No PC+2 maneuver trims were required”**;
 - PC+2 execution-state GDA observations;
-- CONTROL says the ignition roll-GDA motion was unexpected because the ground expected the GDA settings at the end of `MCC-3`, with its 40% thrust compliance, to provide optimum PC+2 alignment;
+- CONTROL reports that the roll GDA moved to approximately `-2°` at PC+2 ignition, a change of `-1.2°`; these approximate reported quantities imply an immediately pre-ignition roll position of about `-0.8°` by arithmetic;
+- CONTROL says that ignition roll-GDA motion was unexpected because the ground expected the GDA settings at the end of `MCC-3`, with its 40% thrust compliance, to provide optimum PC+2 alignment;
 - the report's LM CONTROL section itself labels the **61:29 contingency free-return DPS burn** `MCC-3 - DPS 1` and the following coast `POST MCC-3 TLC`, reconciling that wording with the same report's mission-summary convention that calls the 61:29 maneuver MCC-4 and the originally planned pre-accident MCC-3 not required.
 
 ### Boundary
 
-`T+55` is supported as a deck/reference-epoch family. The report does **not** identify a PC+2 numbered job, calculation timestamp, printed T+55 deck contents, candidate comparison values, or a direct calculation-level link from T+55 to `5.86° / 6.75°`. The T+25 case establishes a `run -> compare -> update/no-update` workflow, but its `0.01°` criterion must not be transferred to PC+2. The nomenclature reconciliation identifies CONTROL's state-setting maneuver but does not recover its post-compliance numerical GDA state.
+`T+55` is supported as a deck/reference-epoch family. The report does **not** identify a PC+2 numbered job, calculation timestamp, printed T+55 deck contents, candidate comparison values, or a direct calculation-level link from T+55 to the operational GDA reference. The T+25 case establishes a `run -> compare -> update/no-update` workflow, but its `0.01°` criterion must not be transferred to PC+2. The nomenclature reconciliation identifies CONTROL's state-setting maneuver but does not recover its exact post-compliance two-axis actuator state. The `~-0.8°` roll figure is a derived approximate pre-PC+2 execution value; the separate `5.85 / 6.74` evidence is a crew pad/reference readback. Neither should be silently substituted for the missing RTCC candidate/reference comparison.
 
 ## Current synthesis
 
 Do not search for or invent a “final PC+2 Noun 48 pair” as though one must have existed. Current primary operational, controller, and software evidence supports:
 
-`mass-properties deck/reference state -> calculation/comparison [details unresolved] -> pre-61:29 GDA state accepted ("go as they are") -> 61:29 free-return DPS maneuver -> 40%-thrust compliance establishes post-burn GDA state -> ground judges that state optimum for PC+2 -> explicit no-trim ground-rule disposition -> Noun 46 configuration -> Noun 47 display -> VERB 34 termination -> software exits R03 before Noun 48 -> no new Noun 48 crew entry -> retained gimbal state -> powered-flight GDA response`.
+`mass-properties deck/reference state -> calculation/comparison [details unresolved] -> pre-61:29 GDA state accepted ("go as they are") -> 61:29 free-return DPS maneuver -> 40%-thrust compliance -> post-MCC-3 PC+2 reference read back as "okay as is" [5.85 / 6.74, qualified by "hopefully"] -> retained/reference state carried through coast -> ground judges no new PC+2 trim required -> Noun 46 configuration -> Noun 47 display -> VERB 34 termination -> software exits R03 before Noun 48 -> no new Noun 48 crew entry -> powered-flight GDA response [roll pre-ignition ≈ -0.8° derived from CONTROL motion report]`.
 
-The next archival target is a controller-side artifact **upstream of the documented retained-state judgment**: post-61:29 reference angles, PC+2 candidate trim, comparison delta/tolerance, calculation time/job identity, and direct T+55 deck linkage.
+The next archival target is a controller-side artifact **upstream of the documented no-update judgment**: PC+2 candidate trim, reference values actually used for comparison, comparison delta/tolerance, calculation time/job identity, and direct T+55 deck linkage. A telemetry/working-sheet bridge between the pad/reference pair and actual actuator state would also resolve the remaining state-reconciliation ambiguity.
