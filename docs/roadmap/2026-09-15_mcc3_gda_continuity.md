@@ -1,7 +1,7 @@
 # PC+2 controller-record roadmap — GDA state continuity
 
 Date: 2026-09-15  
-Latest research note: `resources/research/172_apollo13_postflight_mass_properties_validation_bound.md`
+Latest research note: `resources/research/173_realtime_mass_properties_update_precedent.md`
 
 ## Roadmap refinement
 
@@ -11,7 +11,9 @@ The historical chain now separates three numerical/state layers that must not be
 2. **Post-61:29 intended/retained PC+2 reference:** `5.85 / 6.74`, read back with "GDA should be okay as is" and qualified by "hopefully." This is not measured actuator telemetry.
 3. **Immediately pre-PC+2 execution-state roll:** approximately `-0.8°`, derived from CONTROL's approximate report that roll moved to about `-2°` by `-1.2°` at ignition. This remains derived/approximate.
 
-RTCC LM-burn mass-property decks were separately documented as updated to T+55 decks. That establishes the available Flight Dynamics mass-property context, but not a direct calculation-level `T+55 -> 5.86 / 6.75` link.
+RTCC LM-burn mass-property decks were documented as updated to T+55 decks. Research note 173 strengthens the provenance classification: the Flight Control Division report explicitly says it uses only information available in real time, so the T+55 update is operational real-time evidence rather than a postflight reconstruction.
+
+The same mission-specific chronology provides an earlier mass-properties update precedent: the T+25 RTCC mass-properties run required no update because pitch/yaw trims were within `0.01°` of T+6. This directly establishes a time-tagged mass-properties run -> trim comparison -> update/no-update workflow on Apollo 13. It does **not** establish `0.01°` as the later PC+2 criterion.
 
 Research note 171 adds adjacent-mission architecture evidence from the contemporary Apollo 11 Flight Dynamics record: RTACF mass-properties computations produced **weight-c.g. tables used by RTACF and RTCC trajectory processors to compute pitch/yaw trim angles**. This does not prove the Apollo 13 job path, but it narrows the archival artifact class to seek.
 
@@ -24,10 +26,10 @@ Search Apollo 13 archival/controller material specifically for the real-time mas
 1. weight/c.g. table or equivalent real-time mass-properties computation output;
 2. RTACF/RTCC trajectory-processor trim output or associated request/job sheet;
 3. LM CONTROL's alternative numerical trim from its premission-mass-properties calculation;
-4. comparison delta and acceptance/decision criterion;
+4. comparison delta and PC+2-specific acceptance/decision criterion;
 5. calculation time and job/run/request identity;
 6. explicit deck/input provenance for the Flight Dynamics `5.86 / 6.75` solution, ideally direct T+55 linkage;
 7. comparison of any recovered operational mass-properties artifact with postflight Table A-I, without conflating the two provenance layers;
 8. if available, the later calculation/state record explaining the `5.85 / 6.74` post-61:29 retained-reference readback.
 
-Do not infer that Apollo 13 used the exact Apollo 11 RTACF program, request procedure, or output format. Do not infer a PC+2 `0.01°` criterion from the numerical difference between `5.86 / 6.75` and `5.85 / 6.74`. Do not substitute Apollo 13 postflight Table A-I values for the missing real-time deck.
+Use the Apollo 13 T+25 `0.01°` no-update result as a search discriminator and workflow precedent only. Do not infer that it was a universal threshold or the PC+2 rule. Do not infer that Apollo 13 used the exact Apollo 11 RTACF program, request procedure, or output format. Do not substitute Apollo 13 postflight Table A-I values for the missing real-time deck.
