@@ -89,6 +89,20 @@ The **Compare before/after depletion** control runs the same chain on both sides
 
 The composed endpoint still rejects direct electrical-source availability override. Source availability must derive from the configured resource coupling.
 
+## Historical measurement profile boundary
+
+The lab exposes:
+
+`POST /api/admin/model-proof/historical-measurement-profile`
+
+The current historical case is `apollo13_lm7_inverter_electrical_partial`. It accepts project-named authoritative inverter-bus voltage/frequency source variables and evaluates the sourced LM-7-family measurement identities `GC0071V` and `GC0155F`.
+
+The proof must stop at:
+
+`authoritative source state → vehicle measurement output`
+
+It also exposes the profile's historical ground-product gate. For Apollo 13 H-2 that gate remains **blocked** because live PCM placement, sample cadence, exact MSFN/CCATS/RTCC routing, and TELMU/CONTROL presentation are not yet sourced. A successful vehicle-measurement evaluation is therefore not treated as a historical controller product.
+
 ## Guidance-computer alarm → restart recovery
 
 The lab exposes:
