@@ -43,6 +43,17 @@ The table also gives cutoff `61:30:17.72`, duration `34.23 s`, and post-trim vel
 ### Boundary
 The GDA values are actuator displacement in inches, not trim angles in degrees. The source labels the second actuator axis `Roll`; preserve that label pending sourced geometry/convention mapping. The four phase values are a postflight summary, not a continuous telemetry trace. The velocity residual is a translational outcome and unrelated to GDA displacement.
 
+## NASA Apollo News Reference — generic LM GDA mechanical range
+
+- NASA-hosted main-propulsion excerpt: https://www.nasa.gov/wp-content/uploads/static/history/alsj/LM09_Main_Propulsion_ppMP1-22.pdf
+- Source class: primary NASA LM reference material
+
+### Supports
+The gimbal drive actuators extend/retract 2 inches from mid-position to tilt the descent engine a maximum of 6° along each axis. The LM News Reference specification gives stroke `+2 to -2 inches ±5%` and gimbal position `+6° to -6° ±5%`. The nominal endpoint ratio is therefore `3°/in`.
+
+### Boundary
+This is generic mechanism documentation, not an LM-7 calibration sheet. It does not define the crew-facing GDA trim-number zero/reference or sign convention, and the nominal endpoint ratio must not be used to convert the Apollo 13 `5.86 / 6.75` pair or Table 6.4-I values into asserted historical equivalents.
+
 ## NASA Apollo 13 mission material — DPS automatic gimbal trim
 
 - Primary PDF: https://ntrs.nasa.gov/api/citations/19700076776/downloads/19700076776.pdf
@@ -93,4 +104,4 @@ Still useful for finer DAP/telemetry interpretation, but no longer required to e
 
 `mass-properties provenance [generation/load/update/run distinct] -> calculation/comparison [details unresolved] -> ~59 provisional 5.86 / 6.75 -> same pair commanded for 61:29 -> preburn checkout within ~0.3 judged plenty close -> powered flight under nominal primary guidance/AUTO -> measured GDA phase summary in inches (-0.02/-0.34 initial; +0.31/-0.27 max excursion; +0.04/-0.51 steady; +0.10/-0.31 cutoff) -> post-trim velocity residual +0.2/0.0/+0.3 ft/s -> later 5.85/6.74 "okay as is" reference`.
 
-The exact-value powered-flight actuator-history target is closed at the Mission Report's phase-summary resolution. The main unresolved archival target remains a T+55 generation/load record or downstream RTCC/RTACF LM-burn run/request/output tying the deck to the candidate trim, plus weight/c.g. inputs, CONTROL's competing trim, comparison values/criterion, and job identity. A secondary target is sourced actuator-inch/angular-trim calibration if the simulation requires conversion between those representations.
+The exact-value powered-flight actuator-history target is closed at the Mission Report's phase-summary resolution. Generic LM mechanical scale is also bounded at nominal 3°/in, but the crew-facing trim representation and LM-7 calibration remain unresolved. The main archival target remains a T+55 generation/load record or downstream RTCC/RTACF LM-burn run/request/output tying the deck to the candidate trim, plus weight/c.g. inputs, CONTROL's competing trim, comparison values/criterion, and job identity.
