@@ -1,7 +1,7 @@
 # MCC-3 nomenclature and GDA continuity
 
 Date: 2026-09-15  
-Latest research note: `resources/research/188_post_flyby_pc2_gda_instruction_semantics.md`
+Latest research note: `resources/research/189_rtacf_mass_properties_processor_contract.md`
 
 ## Completed
 
@@ -24,7 +24,8 @@ Latest research note: `resources/research/188_post_flyby_pc2_gda_instruction_sem
 - Note 179 recovered the context around CONTROL's `within about 0.3` / `plenty close` statement and established a spacecraft checkout acceptance layer separate from the unresolved computational comparison layer.
 - Notes 180–187 separated commanded trim, automatic powered-flight trim behavior, exact postflight actuator phase values, mechanism range, LM-7 channel semantics, feedback path, and later-LM engineering-unit presentation.
 - Note 188 corrected the post-free-return PC+2 reference semantics and retired the earlier `hopefully`/`Yaw` OCR caveat for this event.
+- Note 189 strengthened the upstream computational architecture from primary RTACF documentation: Systems programs updated CSM/LM mass properties for consumables/configuration, and Apollo weight-c.g. tables were used by RTACF/RTCC trajectory processors to compute pitch/yaw trim. This establishes the generic processor contract but deliberately does not promote the Apollo 13 T+55 deck update into an unproven `run_consumed` event.
 
 ## Next
 
-Search Apollo 13 archival/controller material specifically for a T+55 generation/load record or downstream RTCC/RTACF LM-burn run/request/output that bridges the T+55 deck to the ~59 GET trim solution. Highest-value fields remain the real-time T+55 weight/c.g. values, CONTROL's alternative numerical trim, explicit T+55-to-`5.86 / 6.75` run linkage, **PC+2 ground-computation** comparison/acceptance basis, and calculation/job identity. Do not reuse the `~0.3°` preburn checkout closeness, T+25 `0.01°` no-update result, or the `0.01°` difference between the two ground-issued GDA references as that missing criterion.
+Search Apollo 13 archival/controller material specifically for a T+55 weight/c.g. product or downstream RTCC/RTACF LM-burn request/run/output that bridges the now-source-backed generic processor contract to the ~59 GET trim solution. Highest-value fields remain the real-time T+55 weight/c.g. values, CONTROL's alternative numerical trim, explicit T+55-to-`5.86 / 6.75` run linkage, **PC+2 ground-computation** comparison/acceptance basis, and calculation/job identity. Do not reuse the `~0.3°` preburn checkout closeness, T+25 `0.01°` no-update result, or the `0.01°` difference between the two ground-issued GDA references as that missing criterion.
