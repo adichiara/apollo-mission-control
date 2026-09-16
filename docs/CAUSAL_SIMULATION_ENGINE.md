@@ -363,6 +363,22 @@ Every implemented numerical model must carry:
 
 A simulator-era equation may be adopted only after checking whether it describes the relevant LMS/FMES configuration and whether its constants/configuration are applicable to Apollo 13/LM-7.
 
+## Validation / acceptance boundary
+
+Research note 219 locates a NASA/JSC archival series for the Lunar Module Simulator (RG 255 E.155B1, 1968–1970) whose inventory explicitly includes **acceptance test plans and procedures**. This establishes that formal acceptance documentation existed and survives as a targeted source family, but the inventory does not disclose the tests' numerical criteria.
+
+Until those records or equivalent LMS validation/correlation documents are directly recovered, the project separates:
+
+1. **numerical/model verification** — convergence, invariants, and declared project numerical behavior;
+2. **historical source/profile validation** — comparison only against source-backed mission/vehicle targets or ranges;
+3. **measurement/output validation** — source state to sourced output representation without unsourced routing or hidden-truth leakage;
+4. **causal scenario validation** — action/crew/subsystem/observation consequence propagation;
+5. **live integration validation** — preservation of those boundaries through the deployed multi-client runtime.
+
+A project test passing one layer is not described as a historical LMS acceptance test. Historical error bounds, correlation tolerances, or pass/fail limits remain source-gated.
+
+The known LMS **Simulator Output Tables** (LMA-790-2-LMS Volume II, Section 7, accession *67-16127) are a complementary retrieval target because they may identify validation-observable outputs, but their existence alone does not establish acceptance tolerances.
+
 ## Near-term implementation gate
 
 Do not build a broad subsystem framework just because this architecture anticipates one.
