@@ -1,21 +1,20 @@
 # MCC-3 nomenclature and GDA continuity
 
 Date: 2026-09-15  
-Latest research note: `resources/research/169_post_mcc3_pc2_gda_as_is_readback.md`
+Latest research note: `resources/research/170_pc2_59h_trim_provenance.md`
 
 ## Completed
 
 - Reconciled the apparent `MCC-3` contradiction in the Flight Control Division report.
 - Established that LM CONTROL calls the 61:29 contingency free-return DPS burn `MCC-3 - DPS 1`, although trajectory/mission-summary material calls that maneuver MCC-4 and records the originally planned MCC-3 as omitted.
 - Added primary voice evidence immediately before the 61:29 burn: CAPCOM states that the GDA settings are "go as they are."
-- Tightened the retained-state chain: the PC+2 reference state was expected to remain acceptable after the 61:29 burn's 40% powered-flight compliance.
-- Recovered a numerical checkout observation from the primary controller loop: during the pre-61:29 gimbal/throttle test, CONTROL called the trim GO and reported it was "within about 0.3" and "plenty close."
-- Classified that `~0.3°` result strictly as a pre-burn checkout acceptance observation, not as the missing PC+2 RTCC trim-update tolerance.
-- Re-examined CONTROL's PC+2 ignition account and derived an approximate immediately pre-ignition roll-GDA position of `~-0.8°` from its reported move to about `-2°` by `-1.2°`.
-- Recovered a post-61:29 PC+2 pad readback in the NASA mission commentary: the crew says the GDA should be "okay as is," "hopefully" pitch `5.85` and second axis `6.74` (transcribed as "Yaw").
-- Classified `5.85 / 6.74` as an intended/retained reference readback, not measured post-compliance actuator telemetry; kept it distinct from the `~-0.8°` execution-state roll derivation.
-- Preserved the remaining numerical boundary: the upstream PC+2 candidate/reference comparison, criterion, job identity, and T+55 calculation linkage remain unrecovered.
+- Recovered the pre-61:29 checkout observation `within about 0.3` / `plenty close`, classified only as hardware checkout evidence.
+- Derived approximate immediately pre-PC+2 roll-GDA position `~-0.8°` from CONTROL's reported ignition motion; retained it as approximate execution-state evidence only.
+- Recovered the post-61:29 PC+2 retained-reference readback `5.85 / 6.74`, qualified by the crew's "hopefully" and not treated as actuator telemetry.
+- **New in note 170:** joined the ~59 GET air-to-ground readback to the Flight Dynamics postflight chronology. The `5.86 / 6.75` pair is now classified as the Flight Dynamics PC+2 abort-pad DPS trim solution passed to the crew at ~59 GET.
+- The same primary Flight Dynamics account says LM CONTROL challenged that passed trim using **premission mass properties**, then later agreed with Flight Dynamics' data. This establishes a real mass-properties-dependent trim disagreement and identifies CONTROL's challenged basis.
+- Preserved the T+55 boundary: RTCC LM-burn decks were documented as updated to T+55, but no reviewed source explicitly ties the specific `5.86 / 6.75` calculation/job to a named T+55 deck.
 
 ## Next
 
-Search controller/RTCC working artifacts for the numerical comparison behind the no-update decision: PC+2 candidate trim, reference used by controllers, comparison delta/criterion, calculation time/job identity, and direct T+55 mass-property provenance. Keep pad/reference values, hardware-checkout tolerances, measured actuator state, and mass-properties comparison criteria as separate provenance layers.
+Search for the working artifact behind the ~59 GET CONTROL/Flight Dynamics disagreement. Highest-value fields are CONTROL's alternative numerical trim, comparison delta/acceptance basis, calculation time/job identity, and direct T+55 deck provenance. Separately retain the later `5.85 / 6.74` post-61:29 reference and actual actuator-state questions; do not infer a `0.01°` criterion from the two pairs.
