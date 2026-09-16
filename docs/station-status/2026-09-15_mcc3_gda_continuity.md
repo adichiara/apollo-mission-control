@@ -1,7 +1,7 @@
 # Station research status — MCC-3 nomenclature and GDA continuity
 
 Date: 2026-09-15  
-Latest research note: `resources/research/173_realtime_mass_properties_update_precedent.md`
+Latest research note: `resources/research/174_tplus_mass_properties_deck_semantics.md`
 
 ## CONTROL
 
@@ -23,16 +23,18 @@ The pre-61:29 checkout `~0.3°` observation remains hardware-checkout evidence o
 
 **Improved.** The Flight Control Division Mission Operations Report explicitly states that it uses only data available in real time. Its statement that RTCC LM-burn mass-property decks were updated to T+55 decks is therefore direct evidence that this newer deck family was operationally available, not a later reconstruction.
 
+Research note 174 further constrains the deck semantics. The same chronology uses `T+6`, `T+25`, and `T+55` for time-tagged mass-properties sets/decks. `T+55` is therefore classified as a **mass-properties reference-epoch label**, not a calculation timestamp or RTCC job identifier. The T+55 update entry precedes the 53:26/54:25 LM-ingress entries in the chronology, so no exact 55:00 generation/load time may be inferred.
+
 The same Apollo 13 chronology documents an earlier T+25 RTCC mass-properties run in which no update was required because pitch/yaw trims were within `0.01°` of T+6. This establishes a mission-specific real-time workflow of time-tagged mass-properties computation -> trim comparison -> update/no-update decision. The `0.01°` value is scoped only to that T+25/T+6 decision.
 
-The ~59 GET `5.86 / 6.75` pair remains source-classified as the Flight Dynamics PC+2 abort-pad trim solution that CONTROL challenged and later accepted. The disagreement was explicitly mass-properties-dependent; CONTROL's challenged basis was premission mass properties. The coexistence of the real-time T+55 deck update materially strengthens the search hypothesis that newer operational mass properties underlay Flight Dynamics' preferred solution, but no reviewed source explicitly links the pair to a particular T+55 deck/job.
+The ~59 GET `5.86 / 6.75` pair remains source-classified as the Flight Dynamics PC+2 abort-pad trim solution that CONTROL challenged and later accepted. The disagreement was explicitly mass-properties-dependent; CONTROL's challenged basis was premission mass properties. The T+55 deck is a strong candidate for the newer operational mass-properties context, but no reviewed source explicitly links the pair to that deck/job.
 
 Contemporary Apollo 11 Flight Dynamics documentation adds architecture-level evidence that RTACF mass-properties computations produced **weight-c.g. tables used by RTACF and RTCC trajectory processors to compute pitch/yaw trim angles**. This narrows the artifact class but does not establish the Apollo 13 facility/program path.
 
 Apollo 13 Mission Report Table A-I remains a separate postflight validation layer, not evidence for the real-time T+55 deck or trim job.
 
-Still unresolved: the Apollo 13 real-time weight/c.g./mass-properties input artifact, CONTROL's competing numerical values, PC+2-specific acceptance criterion, RTCC/RTACF job/request identity, and direct proof that the Flight Dynamics `5.86 / 6.75` calculation used the documented T+55 LM-burn deck family.
+Still unresolved: the Apollo 13 real-time weight/c.g./mass-properties input artifact, T+55 deck contents and generation/load time, CONTROL's competing numerical values, PC+2-specific acceptance criterion, RTCC/RTACF job/request identity, and direct proof that the Flight Dynamics `5.86 / 6.75` calculation used the T+55 reference-epoch LM-burn deck.
 
 ## Simulator constraint
 
-A generic controller workflow may now model a time-tagged mass-properties run producing trim values that are compared with an earlier solution before an update/no-update decision; Apollo 13 directly documents that pattern at T+25. Do not encode `0.01°` as a universal threshold or as the PC+2 criterion. Represent real-time mass-properties input, computed trim output, and postflight reconstructed mass properties as separate provenance layers.
+Represent mass-properties **reference epoch**, deck generation/load timestamp, numerical deck contents, and downstream trim-job identity as separate provenance fields. A generic controller workflow may model a time-tagged mass-properties run producing trim values that are compared with an earlier solution before an update/no-update decision; Apollo 13 directly documents that pattern at T+25. Do not encode `0.01°` as a universal threshold or as the PC+2 criterion.
