@@ -1,28 +1,34 @@
 # Station research status — MCC-3 nomenclature and GDA continuity
 
 Date: 2026-09-15  
-Latest research note: `resources/research/167_free_return_gda_test_acceptance_bound.md`
+Latest research note: `resources/research/179_preburn_gda_checkout_acceptance_bound.md`
 
 ## CONTROL
 
-**Improved.** CONTROL's `MCC-3` label is reconciled to its own contingency sequence: it denotes the 61:29 free-return DPS burn. Its later PC+2 rationale therefore points specifically to the GDA state produced by that burn's 40% compliance.
+**Improved.** The Flight Dynamics primary account establishes that LM CONTROL challenged the DPS trim passed on the ~59 GET PC+2 abort pad because CONTROL had used **premission mass properties**; CONTROL later agreed with Flight Dynamics' data. The air-to-ground record identifies the passed pair as pitch `5.86°`, roll `6.75°`.
 
-The primary controller loop now also gives a numerical pre-burn checkout observation: CONTROL called the gimbal trim GO and said the observed result was "within about 0.3" and "plenty close." This constrains the 61:29 checkout but is not evidence for the later PC+2 mass-properties comparison tolerance.
+Primary mission voice also establishes that the same `5.86 / 6.75` pair was commanded for the 61:29 free-return DPS burn. The Flight Director loop now gives a more precise operational role for CONTROL immediately before that burn: CONTROL directs the gimbal-trim checkout, says `Trim looks okay`, and when FLIGHT asks how close the values are reports `within about 0.3` and `plenty close`, then reports readiness. This is classified as a **spacecraft preburn checkout acceptance**, not the missing Flight Dynamics/CONTROL ground-calculation comparison rule.
 
-Still unresolved: numerical post-burn GDA state and the calculation/comparison used to judge it optimum for PC+2.
+CONTROL later says the 40%-thrust compliance during the burn was expected to leave the GDA state optimum for PC+2.
+
+CONTROL's alternative numerical solution, exact mass-properties inputs, ground-computation comparison delta/acceptance rule, and exact post-compliance two-axis state remain unrecovered.
 
 ## FLIGHT / CAPCOM
 
-**Improved.** Primary voice evidence before the 61:29 burn records CAPCOM's explicit disposition that the GDA settings were "go as they are." FLIGHT's immediate checkout questioning also establishes that controller acceptance involved an explicit closeness check rather than an unexamined state carryover.
+**Improved.** Primary voice at ~59 GET identifies `5.86 / 6.75` as a provisional PC+2 DPS trim/GDA pair and says the angles "will be updated." At 60:53–60:56 GET, CAPCOM passes the same pair on the actual 61:29 free-return DPS pad and accepts Haise's readback. FLIGHT then explicitly queries CONTROL about preburn trim closeness; CONTROL's `~0.3` answer is accepted for proceeding. After the maneuver, a revised PC+2 pad says GDA should be "okay as is," with `5.85 / 6.74` read back and qualified by "hopefully."
 
 ## GUIDANCE
 
-**Boundary added.** Immediately after the 61:29 burn, the controller loop contains a `0.2` trim exchange. Because the record does not identify this as GDA angle trim, do not use it as the post-burn GDA state or as a PC+2 trim criterion without additional primary evidence.
+**Boundary retained.** The immediate post-61:29 `0.2` trim exchange remains unclassified as a GDA quantity absent explicit primary evidence.
 
-## Flight Dynamics / RTCC
+## Flight Dynamics / RTCC / RTACF
 
-**Unchanged unresolved priority.** Need candidate/reference values, comparison criterion, run/job identity, and direct T+55 deck linkage. The recovered `~0.3°` checkout observation must not be substituted for this missing criterion.
+**Improved but unresolved.** The Flight Control Division Mission Operations Report distinguishes T-6 mass properties generated/loaded in RTCC, T+25 RTCC mass properties run with pitch/yaw trim evaluation, and later RTCC LM-burn mass-property decks updated to T+55 decks. T+55 remains a reference-set/deck state, not proof of a generation/load/run event or direct `5.86 / 6.75` lineage.
+
+The T+25 `0.01°` no-update result and the 61:11 `~0.3°` spacecraft checkout are now explicitly separate acceptance contexts. Neither is generalized into the missing PC+2 ground-computation comparison criterion.
+
+Still unresolved: T+55 weight/c.g./deck contents, generation/load event, downstream run/request/output, CONTROL's competing numerical values, PC+2 ground-computation acceptance criterion, RTCC/RTACF job identity, direct T+55-to-`5.86 / 6.75` data lineage, and exact two-axis post-61:29 complied GDA state.
 
 ## Simulator constraint
 
-Represent the 61:29 burn as a state-changing powered-flight compliance event in the provenance chain. Keep commanded trim, checkout agreement, powered-flight complied state, and later mass-properties candidate trim as distinct model concepts unless primary evidence explicitly equates them.
+Represent `reference_epoch`, `processing_domain`, `generated`, `loaded`, `deck_updated/reference_set_selected`, and `run_consumed` separately. Also separate `computed_trim`, `commanded_trim`, `preburn_checkout_observed_delta`, `checkout_acceptance`, `powered_flight_compliance`, `postburn_actuator_state`, and `later_reference_value`. The `~0.3°` evidence may populate the checkout layer for this maneuver only; it must not populate a generic trim-calculation tolerance.
