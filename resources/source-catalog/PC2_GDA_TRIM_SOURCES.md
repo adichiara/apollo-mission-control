@@ -27,7 +27,7 @@ CAPCOM passes PC+2 DPS trim/GDA pitch `5.86°`, roll 6.75°, says the angles "wi
 - Source class: primary mission voice transcription
 
 ### Supports
-CAPCOM's P30 pad for the 61:29:42.84 free-return correction gives LM GDA pitch `5.86°`, roll `6.75°`; Haise reads it back and CAPCOM accepts it.
+CAPCOM's P30 pad for the 61:29:42.84 free-return correction gives LM GDA pitch `5.86°`, roll `6.75°`; Haise reads it back and CAPCOM accepts it. The pad gives nominal throttling of 5 seconds at 10%, remainder at 40%.
 
 ## Apollo 13 Flight Director loop — preburn gimbal checkout
 
@@ -59,6 +59,32 @@ The descent engine is gimbaled; gimbal trim compensates for changing vehicle cen
 ### Supports
 Original comments describe trim-gimbal control operating with the descent engine and digital autopilot on. This independently bounds powered-flight behavior but does not reconstruct the missing ground mass-properties computation or actual 61:29 actuator history.
 
+## NASA/MSC Apollo 13 Mission Report — 61:29 powered-flight performance
+
+- Report: *Apollo 13 Mission Report*, MSC-02680, September 1970
+- NTRS citation: `19710003598`
+- Relevant sections: 6.6 and 8.7.4
+- Source class: primary mission-specific postflight report
+
+### Supports
+The free-return DPS maneuver used primary guidance/AUTO; primary-guidance performance was nominal, no vehicle attitude excursions were reported, and firing time was as predicted. Postflight propulsion reporting gives a 34.3-second firing, minimum throttle reported as 12% for the first 5 seconds, then approximately 37% for the remainder.
+
+### Boundary
+Stable vehicle attitude is not static-gimbal evidence. The postflight throttle values describe execution and should remain distinct from the nominal 10%/40% pad instruction.
+
+## Apollo 13 GN&C performance-analysis supplement — actuator-history target
+
+- NTRS citation: `19730017939`
+- Report: `MSC-02680-SUPPL-1` / `TRW-11176-H586-R0-00-SUPPL-1`
+- Date: September 1970
+- Source class: primary mission-specific postflight GN&C analysis
+
+### Supports
+NTRS metadata establishes that the report analyzes inflight Apollo 13 GN&C performance including the lunar-module digital autopilot. It is a high-priority source target for exact powered-flight GDA evidence.
+
+### Boundary
+No 61:29 gimbal-position value is attributed to this report until the relevant report pages/data are recovered and inspected.
+
 ## NASA Apollo 13 mission commentary — post-61:29 revised PC+2 pad readback
 
 - Relevant GET: approximately `63:10`
@@ -88,6 +114,6 @@ The report does not identify the T+55 deck contents, downstream trim run, CONTRO
 
 ## Current synthesis
 
-`mass-properties provenance [generation/load/update/run distinct] -> calculation/comparison [details unresolved] -> ~59 provisional PC+2 5.86 / 6.75 -> same pair commanded for 61:29 -> preburn gimbal checkout within ~0.3 judged plenty close -> powered-flight automatic trim available to compensate changing c.g. -> exact gimbal history/post-compliance state unrecovered -> later 5.85 / 6.74 "okay as is" reference -> no new PC+2 Noun 48 entry`.
+`mass-properties provenance [generation/load/update/run distinct] -> calculation/comparison [details unresolved] -> ~59 provisional PC+2 5.86 / 6.75 -> same pair commanded for 61:29 -> preburn gimbal checkout within ~0.3 judged plenty close -> primary-guidance/AUTO powered flight nominal with no reported vehicle attitude excursions; executed throttle ~12% then ~37% -> automatic trim available to compensate changing c.g. -> exact gimbal history/post-compliance state unrecovered -> later 5.85 / 6.74 "okay as is" reference -> no new PC+2 Noun 48 entry`.
 
-The next archival target remains a T+55 generation/load record or downstream RTCC/RTACF LM-burn run/request/output tying the deck to the PC+2 candidate trim, plus real-time weight/c.g. inputs, CONTROL's competing trim, ground-computation comparison values/criterion, and job identity. A parallel target is actual GDA-position telemetry/controller evidence during or immediately after 61:29. Keep the recovered `~0.3°` checkout acceptance strictly separate from the unresolved computational criterion.
+The next archival target remains a T+55 generation/load record or downstream RTCC/RTACF LM-burn run/request/output tying the deck to the PC+2 candidate trim, plus real-time weight/c.g. inputs, CONTROL's competing trim, ground-computation comparison values/criterion, and job identity. In parallel, inspect `MSC-02680-SUPPL-1` and telemetry/controller products for actual GDA-position history during or immediately after 61:29. Keep the recovered `~0.3°` checkout acceptance strictly separate from the unresolved computational criterion.
