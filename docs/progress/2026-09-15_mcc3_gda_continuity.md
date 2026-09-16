@@ -1,7 +1,7 @@
 # MCC-3 nomenclature and GDA continuity
 
 Date: 2026-09-15  
-Latest research note: `resources/research/173_realtime_mass_properties_update_precedent.md`
+Latest research note: `resources/research/174_tplus_mass_properties_deck_semantics.md`
 
 ## Completed
 
@@ -15,10 +15,11 @@ Latest research note: `resources/research/173_realtime_mass_properties_update_pr
 - The same primary Flight Dynamics account says LM CONTROL challenged that passed trim using **premission mass properties**, then later agreed with Flight Dynamics' data.
 - Note 171 identified the adjacent-mission computational artifact class: weight-c.g. tables used by RTACF/RTCC trajectory processors to compute pitch/yaw trim.
 - Note 172 added the Apollo 13 Mission Report postflight validation layer for the second midcourse correction: ignition 95,959.9 lb with c.g. 378.8 / 4.9 / 0.7 in; cutoff 95,647.1 lb with c.g. 379.4 / 5.0 / 0.7 in. These remain postflight values, not the real-time deck.
-- **New in note 173:** the Flight Control Division report explicitly states that its narrative uses no data except information available in real time. The documented T+55 RTCC LM-burn mass-property deck update is therefore classified as real-time operational evidence.
-- **New in note 173:** recovered an Apollo 13 mission-specific mass-properties update precedent: the T+25 RTCC mass-properties run required no update because pitch/yaw trims were within `0.01°` of T+6. This establishes a real-time time-tagged mass-properties -> trim comparison -> update/no-update workflow.
+- Note 173 established the T+55 RTCC LM-burn mass-property deck update as real-time operational evidence and recovered the T+25/T+6 `0.01°` no-update precedent.
+- **New in note 174:** the Apollo 13 Flight Dynamics chronology itself shows that `T+6`, `T+25`, and `T+55` are time-tagged mass-properties set/deck labels or reference epochs. `T+55` must not be treated as a calculation timestamp or job identifier.
+- The chronology lists the T+55 deck update before the 53:26/54:25 LM-ingress entries, reinforcing that the label is not evidence that generation/loading occurred exactly at 55:00 GET.
 - Kept the `0.01°` boundary strict: it is evidence for the T+25/T+6 decision only, not a universal threshold and not evidence for the later PC+2 criterion.
 
 ## Next
 
-Search Apollo 13 archival/controller material specifically for the real-time weight/c.g. or mass-properties table, RTACF/RTCC trajectory-processor trim output, and associated job/request sheet behind the ~59 GET disagreement. Highest-value fields remain CONTROL's alternative numerical trim, explicit T+55-to-job linkage for `5.86 / 6.75`, PC+2-specific comparison/acceptance basis, and calculation/job identity. Use the T+25 `0.01°` precedent to recognize likely artifact language, not to fill the missing PC+2 value.
+Search Apollo 13 archival/controller material specifically for the real-time weight/c.g. or mass-properties table, RTACF/RTCC trajectory-processor trim output, and associated job/request sheet behind the ~59 GET disagreement. Highest-value fields remain CONTROL's alternative numerical trim, explicit T+55-reference-deck-to-job linkage for `5.86 / 6.75`, PC+2-specific comparison/acceptance basis, and calculation/job identity. Keep deck reference epoch, deck generation/load time, and downstream job identity as separate provenance fields.
