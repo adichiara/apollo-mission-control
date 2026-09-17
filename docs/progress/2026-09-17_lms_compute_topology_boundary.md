@@ -4,7 +4,7 @@ Date: 2026-09-17
 
 ## Completed
 
-Research note 230 adds deployed-system evidence that was missing from the simulator-architecture workstream.
+Research note 235 adds deployed-system evidence that was missing from the simulator-architecture workstream.
 
 A contemporaneous July 1970 technical article by Malcolm O. Brown and John G. Waters describes **each of the two LMS installations** as containing a **three-machine digital computer complex**, digital-conversion electronics, an accurate LM cockpit crew station, an infinity-optics visual system, and an instructor-operator console.
 
