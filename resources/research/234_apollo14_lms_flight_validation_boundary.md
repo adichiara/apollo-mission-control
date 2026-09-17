@@ -1,7 +1,7 @@
 # Research note 234 — Apollo 14 LMS flight-derived validation boundary
 
 Date: 2026-09-17  
-Status: **PRIMARY FLIGHT-DERIVED QUALITATIVE VALIDATION EVIDENCE; Apollo 17 adds operational-transfer corroboration; no numerical acceptance tolerance recovered**
+Status: **PRIMARY FLIGHT-DERIVED QUALITATIVE VALIDATION EVIDENCE; Apollo 15/17 add operational/visual-transfer corroboration; no numerical acceptance tolerance recovered**
 
 ## Question
 
@@ -26,6 +26,20 @@ Immediately before the powered-descent section, the crew-performance narrative s
 
 Same primary source, section 9.8 / pp. 9-5 to 9-6.
 
+## Corroborating primary evidence — Apollo 15
+
+The **Apollo 15 Mission Report** adds another direct postflight training-transfer statement during the terminal landing narrative.
+
+The report says that, based on **preflight experience with visual simulator displays**, descent rates appeared completely nominal and comfortable. It then states that the combination of **visual simulations** and LLTV flying provided excellent training for the manual portion of the lunar landing and that comfort and confidence existed throughout this phase.
+
+Primary source:
+
+- NASA, *Apollo 15 Mission Report*, pilot's report / powered descent and landing section.
+- Public mission-report copy: https://an.rsl.wustl.edu/apollo/data/A15/resources/A15_MissionReport.pdf
+- Searchable transcript presentation: https://apollojournals.org/alsj/a15/a15mr-9.htm
+
+This supports **visual-rate / manual-landing expectation transfer** rather than a numerical display-correlation claim.
+
 ## Corroborating primary evidence — Apollo 17
 
 The **Apollo 17 Mission Report** provides a different but compatible kind of postflight LMS validation.
@@ -47,10 +61,15 @@ For Apollo 14, postflight mission reporting treats at least these LMS fidelity c
 2. **torque-to-inertia response relationship**;
 3. **visual-scene / landing-site recognition fidelity**.
 
+Apollo 15 adds:
+
+4. **transfer of visual descent-rate expectations from simulator displays into the actual landing**;
+5. **usefulness of visual simulation as part of manual-landing preparation**.
+
 Apollo 17 independently adds:
 
-4. **transfer of trained instrument/out-the-window attention technique into actual lunar landing operations**;
-5. **usefulness of LMS training as part of preparation for manual landing control**.
+6. **transfer of trained instrument/out-the-window attention technique into actual lunar landing operations**;
+7. **usefulness of LMS training as part of preparation for manual landing control**.
 
 This is stronger than a generic statement that the LMS was “high fidelity.” It identifies concrete simulator behavior and training-transfer families that NASA postflight reporting linked to flown performance.
 
@@ -72,9 +91,10 @@ These mission reports do **not** provide:
 - an LMS integration timestep;
 - coordinate-frame definitions;
 - inertia tensor, mass properties, thrust/gimbal constants, or control-law gains;
-- the acceptance-test method used before either mission;
+- numerical visual-scene, display-rate, or terrain-recognition tolerances;
+- the acceptance-test method used before these missions;
 - the configuration/revision of the LMS math-model documents that produced the cited behavior;
-- proof that Apollo 14 or Apollo 17 LMS configurations were identical to the Apollo 13 H-2 configuration;
+- proof that Apollo 14/15/17 LMS configurations were identical to the Apollo 13 H-2 configuration;
 - a basis for importing later-mission constants into the PC+2 model.
 
 The phrases “nearly identical,” “high fidelity,” and operational-training attribution are therefore **qualitative validation conclusions**, not numerical D-022 intervals.
@@ -122,4 +142,5 @@ Instead, it adds a distinct postflight validation layer that can be used after t
 ## Sources
 
 - NASA, *Apollo 14 Mission Report*, MSC-04112, May 1971: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap14fj/pdf/a14_mission-report.pdf
+- NASA, *Apollo 15 Mission Report*: https://an.rsl.wustl.edu/apollo/data/A15/resources/A15_MissionReport.pdf
 - NASA, *Apollo 17 Mission Report*, NTRS `19730015117`: https://ntrs.nasa.gov/citations/19730015117
