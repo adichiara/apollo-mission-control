@@ -1,7 +1,7 @@
 # Research note 236 — Apollo 9 simulator-to-flight mismatch boundary
 
 Date: 2026-09-17  
-Status: **PRIMARY FLIGHT-DERIVED NEGATIVE VALIDATION EVIDENCE; simulator configuration/effectivity and numerical mismatch magnitude remain unresolved**
+Status: **PRIMARY FLIGHT-DERIVED NEGATIVE VALIDATION EVIDENCE; flight-side AGS variation magnitude identified; simulator-side same-input magnitude and exact configuration remain unresolved**
 
 ## Question
 
@@ -14,6 +14,8 @@ The **Apollo 9 Mission Report** provides a direct negative simulator-to-flight c
 After rendezvous-radar range/range-rate data were manually inserted into the Abort Guidance System (AGS), the crew observed that the AGS solution initially moved into good agreement with radar data. The pilots' report then states that the **abort-guidance range and range-rate information degraded much more rapidly in flight than it did in the simulator**.
 
 The same passage immediately provides a useful contrast: the LM pulse control mode was described as responding in a manner **very similar to that in the mission simulator**.
+
+The report also records that AGS solution variation during rendezvous was greater than expected, with variations reaching approximately **±3 ft/s about the mean**. This is a flight-side observable magnitude; it is not a simulator-vs-flight residual and does not provide the simulator-side variation under the same conditions.
 
 Primary source:
 
@@ -32,9 +34,10 @@ Apollo 9 flight experience supports a domain-specific validation result rather t
 
 ### Observed simulator/flight mismatch
 
-- AGS range/range-rate solution degradation between radar updates was perceived to occur materially faster in flight than in the simulator.
+- AGS range/range-rate solution degradation between radar updates was perceived to occur materially faster in flight than in the simulator;
+- flight-side AGS solution variation during rendezvous reached roughly ±3 ft/s about the mean.
 
-This is important because the two observations occur in the same rendezvous operational context. It shows why simulator validation must be attached to a **specific behavior/domain**, not generalized from one successful comparison to the whole simulator.
+This is important because the favorable and unfavorable observations occur in the same rendezvous operational context. It shows why simulator validation must be attached to a **specific behavior/domain**, not generalized from one successful comparison to the whole simulator.
 
 ## Likely causal domain implicated
 
@@ -76,21 +79,25 @@ The project may therefore classify this as **Apollo LM mission-simulation flight
 
 ## Numerical boundary
 
-The source says the degradation was **much more rapid** in flight. It does not supply, in this mission-report passage:
+The source provides one useful flight-side magnitude: AGS solution variation reached approximately **±3 ft/s about the mean** during rendezvous.
 
-- a simulator drift/degradation rate;
-- a flight drift/degradation rate;
-- a residual time history;
+It still does **not** supply a same-input comparison pair. In particular, the reviewed mission-report passage does not provide:
+
+- the simulator-side variation corresponding to the ±3 ft/s flight observation;
+- a simulator degradation/error-growth rate;
+- a flight degradation/error-growth rate over a defined common interval;
+- a common initial state and radar-update input;
+- a simulator-vs-flight residual time history;
 - a ratio between simulator and flight behavior;
-- a numerical tolerance or pass/fail criterion.
+- a numerical acceptance tolerance or pass/fail criterion.
 
-Therefore this is **not** a D-022 numerical interval.
+Therefore this is **not** a D-022 numerical interval. The ±3 ft/s value is a **flight-side validation observable** and a retrieval target for corresponding simulator/reference cases, not a tolerance.
 
 A future numerical reconstruction would need a common input/initial state and flight/simulator outputs at the same observable level before a defensible sensitivity range could be formed.
 
 ## Validation-framework consequence
 
-Flight-derived validation now needs at least three result classes:
+Flight-derived validation needs at least three result classes:
 
 1. **representative / favorable comparison** — behavior reported as similar to flight;
 2. **mismatch / negative comparison** — flight behavior departed materially from simulator expectation;
@@ -102,9 +109,9 @@ A recovered LMS/AGS model should not be judged historically credible merely beca
 
 ## Relationship to later AGS documentation
 
-A later Apollo Experience Report on the LM Abort Guidance System documents the AGS software-development and verification process, including closed-loop simulations, radar-filter tests, error models, and simulated-flight procedures. That material is a promising next source for understanding what simulator/reference behavior existed before flight.
+NASA TN D-7990, Pat M. Kurten's *Apollo Experience Report — Guidance and Control Systems: Lunar Module Abort Guidance System* (NTRS `19750018954`), documents the AGS verification process in detail. It establishes equation-level closed-loop simulation under nominal and 3σ dispersions, bit-by-bit interpretive computer simulation, a closed-loop AEA/vehicle interpretive flight simulator, 600-cycle Monte Carlo performance analysis, and mission-phase simulated-flight procedures whose criteria were derived as value bounds or bounded curves for AEA/display parameters.
 
-It must remain separate from the Apollo 9 flight observation until the exact model/test relationship is established.
+That source provides an Apollo-era verification methodology and likely reference-test lineage. It must remain separate from the Apollo 9 flight observation until a specific Apollo 9 radar-filter / between-update case is cross-walked to the applicable verification configuration.
 
 ## Project consequence
 
@@ -119,9 +126,11 @@ The reusable guidance/navigation validation architecture should support tests sh
 
 without assuming that post-update agreement proves correct between-update dynamics.
 
+The approximate ±3 ft/s flight-side variation should be retained as a candidate comparison observable, not used as a tolerance or injected simulator constant.
+
 ## Next research actions
 
 1. Review Apollo 9 Mission Report Supplement 3, *LM Abort Guidance System Postflight Analysis Report*, for quantitative explanation of rendezvous-state error growth.
-2. Review the later Apollo Experience Report — LM Abort Guidance System for radar-filter verification criteria and simulated-flight methodology.
+2. Extract the applicable radar-filter / simulated-flight test criteria from NASA TN D-7990 and identify whether its value bounds or bounded curves survive elsewhere.
 3. Search LMS/AGS integration and acceptance records for the radar-update / between-update propagation test case.
 4. Do not assign the Apollo 9 discrepancy to Apollo 13 LMS H-2 until configuration continuity is demonstrated.
