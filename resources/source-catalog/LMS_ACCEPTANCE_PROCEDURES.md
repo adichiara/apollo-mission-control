@@ -33,12 +33,22 @@ Use: independently corroborates that the purchase-order number reported on the `
 
 This crosswalk does **not** expose the acceptance procedure's technical contents, Modification Kit No. 1 scope, or mission-era effectivity.
 
+## NASA MSC corporate-index search boundary
+
+The NASA MSC *Corporate Author Index of Apollo Technical Documentation* is a primary index of Apollo documentation formally transmitted to MSC. It includes a distinct Link Group / General Precision corporate-author section and indexes other Apollo simulator material.
+
+Targeted searches for `1L5-102`, `L5-102`, `2-24481C`, and `MODIFICATION KIT` did not recover the acceptance procedure or an MSC accession.
+
+Source: https://www.ibiblio.org/apollo/NARASWoverflow/CorporateIndex.pdf
+
+Use: records that this primary-index discovery route has been attempted. The negative result is **not** evidence of nonexistence or non-transmittal; OCR and index-coverage limitations remain. Direct RG 255, contractor, Grumman, or surviving-manual recovery is still required.
+
 ## Required extraction after recovery
 
 For each directly supported test:
 
 `test/report revision → simulator configuration/effectivity → source/model → observable/output → units/representation → test stimulus → acceptance criterion/tolerance → result/correlation evidence`
 
-Do not infer any of these fields from the title, catalog description, or contract crosswalk.
+Do not infer any of these fields from the title, catalog description, contract crosswalk, or negative index search.
 
-Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
+Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/research/224_lms_msc_corporate_index_search_boundary.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
