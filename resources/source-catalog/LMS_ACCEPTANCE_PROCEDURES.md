@@ -1,6 +1,6 @@
 # LMS acceptance procedures — source catalog
 
-Status: **primary archival series identified; 1967 contractor report identity has an independently corroborated program/contract crosswalk; later LMS project-file contract keys recovered; technical contents remain unreviewed**
+Status: **primary archival series identified; 1967 contractor report identity has an independently corroborated program/contract crosswalk; later LMS project-file contract purpose recovered; subsystem technical contents remain unreviewed**
 
 ## Primary archival authority
 
@@ -10,7 +10,7 @@ The inventory additionally states that **most correspondence is with Kollsman In
 
 Source: https://www.ibiblio.org/apollo/NARA-SW/Rg255-1.pdf
 
-Use: establishes the existence and archival location class of formal LMS acceptance/project documentation and supplies concrete 1968–1970 contractor/contract retrieval keys. It does not expose numerical criteria or establish that `NAS9-8634` covered a particular LMS subsystem.
+Use: establishes the existence and archival location class of formal LMS acceptance/project documentation and establishes the top-level purpose of `NAS9-8634`: construction of LM simulators at both MSC and KSC. It does not expose numerical criteria, named deliverables, subsystem responsibility, or define whether “construction” meant complete new simulators, modifications/rebuilds, assemblies, or another implementation.
 
 The adjacent **E.155B** series separately says it contains some material relating to the **Mission Effects Projector (MEP) and External Visual Display Equipment (EVDE) of the Lunar Module mission simulator**, providing another direct retrieval route for visual-system acceptance/configuration context.
 
@@ -85,6 +85,6 @@ For each directly supported test:
 
 `test/report revision → simulator configuration/effectivity → source/model → observable/output → units/representation → test stimulus → acceptance criterion/tolerance → result/correlation evidence`
 
-For E.155B/E.155B1 visual/optical records, also extract explicit `vendor → contract → subsystem/component → site → configuration/date → discrepancy/change → acceptance/result` relationships. Do not infer vendor succession or contract scope from chronology or component provenance alone.
+For E.155B/E.155B1 visual/optical records, also extract explicit `vendor → contract → deliverable/subsystem/component → site → configuration/date → discrepancy/change → acceptance/result` relationships. Do not infer vendor succession, subsystem scope, or implementation meaning from chronology, component provenance, or the inventory's top-level word “construction” alone.
 
-Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/research/224_lms_msc_corporate_index_search_boundary.md`, `resources/research/225_lms_acceptance_manual_current_access_status.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/research/230_kollsman_ksc_lms_aot_provenance.md`, `resources/research/231_kollsman_aot_contract_separation.md`, `resources/research/232_nas9_8634_public_digital_retrieval_boundary.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
+Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/research/224_lms_msc_corporate_index_search_boundary.md`, `resources/research/225_lms_acceptance_manual_current_access_status.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/research/230_kollsman_ksc_lms_aot_provenance.md`, `resources/research/231_kollsman_aot_contract_separation.md`, `resources/research/232_nas9_8634_public_digital_retrieval_boundary.md`, `resources/research/233_nas9_8634_top_level_contract_scope.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
