@@ -1,13 +1,13 @@
 # Research note 234 — Apollo 14 LMS flight-derived validation boundary
 
 Date: 2026-09-17  
-Status: **PRIMARY FLIGHT-DERIVED QUALITATIVE VALIDATION EVIDENCE; no numerical acceptance tolerance recovered**
+Status: **PRIMARY FLIGHT-DERIVED QUALITATIVE VALIDATION EVIDENCE; Apollo 17 adds operational-transfer corroboration; no numerical acceptance tolerance recovered**
 
 ## Question
 
-Can a flown Apollo mission provide an independent validation boundary for what aspects of the Lunar Module Simulator were considered faithful to the actual vehicle, while the formal LMS acceptance/correlation criteria remain unrecovered?
+Can flown Apollo missions provide an independent validation boundary for what aspects of the Lunar Module Simulator were considered faithful/useful relative to the actual vehicle, while the formal LMS acceptance/correlation criteria remain unrecovered?
 
-## Primary evidence
+## Primary evidence — Apollo 14
 
 The **Apollo 14 Mission Report** provides two direct comparisons between preflight simulator experience and flight behavior.
 
@@ -26,6 +26,19 @@ Immediately before the powered-descent section, the crew-performance narrative s
 
 Same primary source, section 9.8 / pp. 9-5 to 9-6.
 
+## Corroborating primary evidence — Apollo 17
+
+The **Apollo 17 Mission Report** provides a different but compatible kind of postflight LMS validation.
+
+In the landing narrative, the report attributes the comfortable/safe manual landing approach partly to **lunar module simulator** training and partly to LLTV training. It also states that the Commander's technique of dividing attention between outside visual references and in-cockpit velocity/attitude displays was a technique practiced in the **lunar module simulator** and LLTV.
+
+Primary source:
+
+- NASA, *Apollo 17 Mission Report*, 1973, section covering lunar landing / manual landing phase, p. 10-12.
+- NTRS record/PDF: https://ntrs.nasa.gov/citations/19730015117
+
+This source does not supply a mathematical comparison like Apollo 14's steering/torque-to-inertia statement. Instead it supports **operational technique transfer** from LMS training to flight.
+
 ## What this establishes
 
 For Apollo 14, postflight mission reporting treats at least these LMS fidelity categories as materially validated by flight experience:
@@ -34,19 +47,24 @@ For Apollo 14, postflight mission reporting treats at least these LMS fidelity c
 2. **torque-to-inertia response relationship**;
 3. **visual-scene / landing-site recognition fidelity**.
 
-This is stronger than a generic statement that the LMS was “high fidelity.” It identifies concrete simulator behavior families that NASA compared favorably with the flown LM.
+Apollo 17 independently adds:
 
-The source also supports a useful validation architecture distinction:
+4. **transfer of trained instrument/out-the-window attention technique into actual lunar landing operations**;
+5. **usefulness of LMS training as part of preparation for manual landing control**.
+
+This is stronger than a generic statement that the LMS was “high fidelity.” It identifies concrete simulator behavior and training-transfer families that NASA postflight reporting linked to flown performance.
+
+The sources support two useful validation architecture distinctions:
 
 `simulator mathematical behavior → trained pilot expectation/control response → actual flight behavior → postflight qualitative comparison`
 
-and, separately:
+and
 
-`simulator visual scene → trained terrain/target recognition → actual lunar visual task → postflight qualitative comparison`.
+`simulator display/operational technique → trained observation/control strategy → actual lunar task → postflight transfer assessment`.
 
 ## What this does **not** establish
 
-The Apollo 14 Mission Report does **not** provide:
+These mission reports do **not** provide:
 
 - the actual LMS steering equations;
 - numerical torque-to-inertia values or tolerances;
@@ -54,12 +72,12 @@ The Apollo 14 Mission Report does **not** provide:
 - an LMS integration timestep;
 - coordinate-frame definitions;
 - inertia tensor, mass properties, thrust/gimbal constants, or control-law gains;
-- the acceptance-test method used before Apollo 14;
+- the acceptance-test method used before either mission;
 - the configuration/revision of the LMS math-model documents that produced the cited behavior;
-- proof that the Apollo 14 LMS configuration was identical to the Apollo 13 H-2 configuration;
-- a basis for importing Apollo 14 constants into the PC+2 model.
+- proof that Apollo 14 or Apollo 17 LMS configurations were identical to the Apollo 13 H-2 configuration;
+- a basis for importing later-mission constants into the PC+2 model.
 
-The phrases “nearly identical” and “high fidelity” are therefore **qualitative validation conclusions**, not numerical D-022 intervals.
+The phrases “nearly identical,” “high fidelity,” and operational-training attribution are therefore **qualitative validation conclusions**, not numerical D-022 intervals.
 
 ## Project consequence
 
@@ -77,17 +95,18 @@ This remains the target of RG 255 E.155B1 and the surviving acceptance-procedure
 
 Available chain:
 
-`simulator behavior → trained operator expectation → flown vehicle behavior → postflight comparison/conclusion`
+`simulator behavior/training technique → trained operator expectation/strategy → flown vehicle/task behavior → postflight comparison/conclusion`
 
-This evidence can validate **which model domains matter and whether broad behavior was credible**, but it cannot define numerical tolerances unless the source supplies them.
+This evidence can validate **which model domains and operator-facing effects mattered, and whether broad behavior/technique transfer was credible**, but it cannot define numerical tolerances unless the source supplies them.
 
-For this project, the Apollo 14 evidence specifically reinforces the importance of keeping the following reusable domains explicit and independently testable:
+For this project, the evidence reinforces the importance of keeping the following reusable domains explicit and independently testable:
 
 - guidance/steering computation;
 - mass/inertia and rotational dynamics coupling;
-- pilot/controller-visible visual/observation generation.
+- pilot/controller-visible visual/observation generation;
+- operator-facing display/attention information sufficient to support the trained control technique.
 
-It also supplies a cross-check target for future LMS source extraction: recovered steering equations and mass/inertia interfaces should be traceable to the same behavioral categories NASA later described as matching flight.
+It also supplies a cross-check target for future LMS source extraction: recovered steering equations, mass/inertia interfaces, and visual/display-generation paths should be traceable to the same behavioral categories NASA later described as matching or transferring to flight.
 
 ## Relationship to current LMS acceptance research
 
@@ -100,7 +119,7 @@ This note does **not** reduce the priority of retrieving:
 
 Instead, it adds a distinct postflight validation layer that can be used after those engineering sources are recovered.
 
-## Source
+## Sources
 
-NASA, *Apollo 14 Mission Report*, MSC-04112, May 1971. Public scan:
-https://www.nasa.gov/wp-content/uploads/static/history/afj/ap14fj/pdf/a14_mission-report.pdf
+- NASA, *Apollo 14 Mission Report*, MSC-04112, May 1971: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap14fj/pdf/a14_mission-report.pdf
+- NASA, *Apollo 17 Mission Report*, NTRS `19730015117`: https://ntrs.nasa.gov/citations/19730015117
