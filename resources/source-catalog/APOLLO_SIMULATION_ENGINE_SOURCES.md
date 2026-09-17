@@ -202,6 +202,18 @@ The project still should not claim recovery of the complete Apollo simulator sof
 - Critical boundary: the inventory does **not** expose numerical acceptance criteria, correlation methods, reference cases, or subsystem tolerances. Do not treat the series description itself as a recovered mathematical-model validation specification.
 - Research record: `resources/research/219_lms_validation_acceptance_source_boundary.md`.
 
+## Smithsonian NASM A19751446001 — Kollsman AOT from the KSC LMS
+
+- Object: *Alignment Optical Telescope, Lunar Module Simulator*.
+- Object ID: `A19751446001`.
+- Manufacturer: **Kollsman Instrument Company**.
+- Designer: **MIT Instrumentation Laboratory**.
+- Smithsonian record: https://www.si.edu/object/alignment-optical-telescope-lunar-module-simulator%3Anasm_A19751446001
+- Provenance evidence: Smithsonian states that this functioning AOT was originally part of the Lunar Module Simulator used for astronaut mission training at Kennedy Space Center; the LMS including the telescope was transferred to the Smithsonian in 1974.
+- Evidence use: independent object-level confirmation of a specific Kollsman-manufactured component in the KSC LMS; useful retrieval terms for E.155B1 include `AOT`, `alignment optical telescope`, and `optical subsystem`.
+- Critical boundary: the object record does not establish `NAS9-8634` procurement scope, MEP/EVDE responsibility, Farrand/Kollsman succession, Apollo 13 effectivity, Section 7 mapping, or Mission Control routing.
+- Research record: `resources/research/230_kollsman_ksc_lms_aot_provenance.md`.
+
 ## LMS Console Directory — output/telemetry definition source
 
 - Date: 13 August 1971.
