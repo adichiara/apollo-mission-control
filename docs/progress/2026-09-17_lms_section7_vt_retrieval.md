@@ -6,7 +6,7 @@ Date: 2026-09-17
 
 The `LMA-790-2-LMS` Volume II Section 7 retrieval target was rechecked against current archival finding aids and NASA/NARA indexing.
 
-A repository attribution error was found and corrected: the **James J. Avitabile Papers are not at the University of Houston-Clear Lake Archives**. The collection is **Ms-2001-057, Special Collections and University Archives, Virginia Tech, Blacksburg, Virginia**.
+A prior repository attribution for the James J. Avitabile Papers was found to be incorrect. The authoritative current holding is **Ms-2001-057, Special Collections and University Archives, Virginia Tech, Blacksburg, Virginia**.
 
 The current Virginia Tech finding aid establishes:
 
@@ -27,7 +27,7 @@ NASA/NARA corporate-index evidence independently identifies:
 
 ## D-023 correction
 
-The withdrawn-claims registry now retires the incorrect `University of Houston-Clear Lake Archives` attribution. Research note 220 and the Section 7 source catalog now carry the corrected repository and access path.
+The withdrawn-claims registry now protects the corrected repository attribution. Research note 220 and the Section 7 source catalog carry the current repository and access path.
 
 ## Evidence boundary
 
