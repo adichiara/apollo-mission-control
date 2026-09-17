@@ -4,12 +4,13 @@ Status: **active source catalog; qualitative postflight validation evidence only
 
 ## Purpose
 
-Track primary flight/postflight sources that compare Lunar Module Simulator behavior with the flown LM. This evidence class is separate from formal LMS acceptance/correlation documentation.
+Track primary flight/postflight sources that compare Lunar Module Simulator behavior or training transfer with the flown LM. This evidence class is separate from formal LMS acceptance/correlation documentation.
 
 Use these sources to identify:
 
 - simulator behavior families that NASA considered representative of flight;
-- operational observables worth preserving in reusable model boundaries;
+- operational techniques that transferred from simulator training into flight;
+- operator-facing observables worth preserving in reusable model boundaries;
 - postflight cross-check targets for recovered LMS equations/configuration.
 
 Do **not** convert qualitative phrases such as “nearly identical” or “high fidelity” into invented numerical tolerances.
@@ -50,6 +51,36 @@ Does not provide:
 - permission to import Apollo 14 values into Apollo 13 PC+2.
 
 Research record: `resources/research/234_apollo14_lms_flight_validation_boundary.md`.
+
+## Apollo 17 Mission Report — landing technique transfer
+
+- Document: *Apollo 17 Mission Report*
+- NTRS ID: `19730015117`
+- Date: 1973
+- NTRS record: https://ntrs.nasa.gov/citations/19730015117
+- Relevant location: lunar landing narrative, p. 10-12.
+
+### Direct validation evidence
+
+The mission report attributes the comfortable/safe manual landing approach partly to LMS training and partly to LLTV training. It also records that the Commander's technique of dividing attention between outside visual references and in-cockpit velocity/attitude displays was a technique practiced in the LMS and LLTV.
+
+### Evidence use
+
+Supports flight-derived qualitative validation of:
+
+1. operational transfer of instrument/out-the-window attention technique;
+2. LMS contribution to manual landing preparation.
+
+### Boundary
+
+This does not establish:
+
+- mathematical equivalence of Apollo 17 LMS and vehicle dynamics;
+- numerical display/visual tolerances;
+- LMS-only attribution, because the report explicitly also credits LLTV training;
+- Apollo 13 H-2 configuration applicability.
+
+Research synthesis: `resources/research/234_apollo14_lms_flight_validation_boundary.md`.
 
 ## Relationship to engineering acceptance evidence
 
