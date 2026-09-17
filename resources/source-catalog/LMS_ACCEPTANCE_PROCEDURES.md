@@ -1,14 +1,18 @@
 # LMS acceptance procedures — source catalog
 
-Status: **primary archival series identified; 1967 contractor report identity has an independently corroborated program/contract crosswalk, but technical contents remain unreviewed**
+Status: **primary archival series identified; 1967 contractor report identity has an independently corroborated program/contract crosswalk; later LMS project-file contract keys recovered; technical contents remain unreviewed**
 
 ## Primary archival authority
 
-NASA/NARA RG 255 preliminary inventory, series **E.155B1 — Project Files on the Lunar Module Simulator, 1968–1970**. The series description explicitly includes acceptance test plans and procedures, progress/technical reports, operations manuals, photographs, and drawings.
+NASA/NARA RG 255 preliminary inventory, series **E.155B1 — Project Files on the Lunar Module Simulator, 1968–1970**. The series description explicitly includes correspondence, memoranda, statement of work, program and procurement plans, acceptance test plans and procedures, progress and technical reports, operations manuals, photographs of surface models, and copies of drawings.
+
+The inventory additionally states that **most correspondence is with Kollsman Instrument Corporation** and relates to administration of **contract `NAS9-8634` for construction of LM simulators at both MSC and KSC**. It identifies old accession `72A794` and location `A-23-16-6`.
 
 Source: https://www.ibiblio.org/apollo/NARA-SW/Rg255-1.pdf
 
-Use: establishes the existence and archival location class of formal LMS acceptance documentation. It does not expose numerical criteria.
+Use: establishes the existence and archival location class of formal LMS acceptance/project documentation and supplies concrete 1968–1970 contractor/contract retrieval keys. It does not expose numerical criteria or establish that `NAS9-8634` covered a particular LMS subsystem.
+
+The adjacent **E.155B** series separately says it contains some material relating to the **Mission Effects Projector (MEP) and External Visual Display Equipment (EVDE) of the Lunar Module mission simulator**, providing another direct retrieval route for visual-system acceptance/configuration context.
 
 ## Named contractor-document lead
 
@@ -55,6 +59,6 @@ For each directly supported test:
 
 `test/report revision → simulator configuration/effectivity → source/model → observable/output → units/representation → test stimulus → acceptance criterion/tolerance → result/correlation evidence`
 
-Do not infer any of these fields from the title, catalog description, contract crosswalk, current sale status, or negative index search.
+For E.155B/E.155B1 visual-system records, also extract explicit `vendor → contract → subsystem → configuration/date → discrepancy/change → acceptance/result` relationships. Do not infer vendor succession from chronology alone.
 
-Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/research/224_lms_msc_corporate_index_search_boundary.md`, `resources/research/225_lms_acceptance_manual_current_access_status.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
+Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/research/224_lms_msc_corporate_index_search_boundary.md`, `resources/research/225_lms_acceptance_manual_current_access_status.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
