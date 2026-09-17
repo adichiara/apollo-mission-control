@@ -4,7 +4,7 @@ Date: 2026-09-17
 
 Historical Mission Control station maturity grades remain unchanged.
 
-Research notes 239–240 improve retrieval provenance for the unresolved LMS computer-allocation question. Exact MSC accession numbers are known for the 1967 Grumman simulator handbook family, and a public digitized Volume I title-match candidate has now been located. The candidate's identity with `LMA-790-2-LMS` / `67-14186` has not yet been verified from its title/revision pages.
+Research notes 239–241 improve retrieval provenance for the unresolved LMS computer-allocation question. Exact MSC accession numbers are known for the 1967 Grumman simulator handbook family. NASA/KSC GP-642 now independently ties the exact Volume I *Simulator Description* title to GAEC `LMA 790-2-LMS` and Apr. 1, 1967. A public digitized Volume I candidate is known, but the particular scan's accession/revision/site identity has not yet been verified from its own title/revision pages.
 
 ## Station/product consequence
 
@@ -20,4 +20,4 @@ No station maturity grade, station product contract, or causal-engine constant c
 
 ## Open boundary
 
-First close the digitized candidate's report/revision/accession identity. If it proves to be the Grumman Volume I target, extract machine allocation only where the handbook actually states it; then cross-check Section 7 (`67-16127`) for output/interface ownership. Promote machine allocation into station-facing implementation only if the recovered handbook/configuration record demonstrates a player-visible consequence at the station product's actual resolution.
+First close the digitized candidate's scan-level report/revision/site identity. The report-number/title crosswalk itself is now independently supported by NASA. If the scan proves to be the Grumman Volume I target, extract machine allocation only where the handbook actually states it; then cross-check Section 7 (`67-16127`) for output/interface ownership. Promote machine allocation into station-facing implementation only if the recovered handbook/configuration record demonstrates a player-visible consequence at the station product's actual resolution.
