@@ -4,7 +4,7 @@ Date: 2026-09-17
 
 ## Completed
 
-Research note 235 adds deployed-system evidence that was missing from the simulator-architecture workstream.
+Research note 241 adds deployed-system evidence that was missing from the simulator-architecture workstream.
 
 A contemporaneous July 1970 technical article by Malcolm O. Brown and John G. Waters describes **each of the two LMS installations** as containing a **three-machine digital computer complex**, digital-conversion electronics, an accurate LM cockpit crew station, an infinity-optics visual system, and an instructor-operator console.
 
@@ -27,6 +27,10 @@ Added:
 - `resources/source-catalog/LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`
 
 The catalog records the source hierarchy and the unresolved three-machine/four-DDP wording explicitly.
+
+## Numbering note
+
+This result was originally committed as research note 235 and was renumbered to 241 after a parallel research stream independently used 235 for the Grumman two-LMS pre-NAS9-8634 baseline.
 
 ## Next work
 
