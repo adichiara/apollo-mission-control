@@ -52,6 +52,36 @@ Does not provide:
 
 Research record: `resources/research/234_apollo14_lms_flight_validation_boundary.md`.
 
+## Apollo 15 Mission Report — visual-rate/manual-landing transfer
+
+- Document: *Apollo 15 Mission Report*
+- Date: 1971
+- Public mission-report copy: https://an.rsl.wustl.edu/apollo/data/A15/resources/A15_MissionReport.pdf
+- Searchable mission-report presentation: https://apollojournals.org/alsj/a15/a15mr-9.htm
+- Relevant location: pilot's report / powered descent and landing.
+
+### Direct validation evidence
+
+The report states that, based on **preflight experience with visual simulator displays**, descent rates appeared completely nominal and comfortable. It also states that the combination of **visual simulations** and LLTV flying provided excellent training for the manual portion of the lunar landing.
+
+### Evidence use
+
+Supports flight-derived qualitative validation of:
+
+1. visual-simulation transfer into descent-rate expectation;
+2. visual simulation as part of manual-landing preparation.
+
+### Boundary
+
+This does not establish:
+
+- numerical visual/display correlation tolerances;
+- LMS-only attribution, because the report also credits LLTV training;
+- exact visual-system configuration/effectivity;
+- Apollo 13 H-2 applicability.
+
+Research synthesis: `resources/research/234_apollo14_lms_flight_validation_boundary.md`.
+
 ## Apollo 17 Mission Report — landing technique transfer
 
 - Document: *Apollo 17 Mission Report*
