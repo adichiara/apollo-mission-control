@@ -4,37 +4,44 @@ Date: 2026-09-17
 
 ## Current state
 
-Research note 235 adds a deployed-LMS architecture boundary:
+Research notes 235–236 establish a stronger deployed-LMS architecture boundary:
 
+- NASA TN D-7112 (March 1973): each MSC/KSC LMS had a **three-machine digital computer complex**, with **one computer assigned exclusively to simulation of the onboard guidance computer**; NASA says the two LMSs were designed, built, and maintained to be identical;
 - Brown & Waters (July 1970): each Houston/Cape Kennedy LMS had a **three-machine digital computer complex**;
 - Jackson retrospective: Houston LMS complex/room had **four DDP-224 computers**.
 
-The discrepancy is intentionally unresolved.
+The LMS architecture count itself is therefore well supported as three machines. The narrower four-machine physical-room observation remains unexplained and must not be rationalized without configuration records.
 
 ## What is now closed
 
-The project may safely treat the deployed LMS as a multi-computer system with separately identifiable conversion electronics, cockpit/crew station, visual system, and instructor controls.
+The project may safely treat the mature deployed LMS as:
 
-This is enough to support the existing project decomposition into causal/model/interface layers.
+- a three-machine digital computer complex;
+- one machine explicitly dedicated to onboard-guidance-computer simulation;
+- separately identifiable conversion electronics, cockpit/crew station, visual system, and instructor controls;
+- two site installations intended by NASA to be maintained to the same design.
+
+This supports the existing project decomposition into causal/model/interface layers while adding one historically explicit compute-domain separation.
 
 ## What remains open
 
 Do not yet freeze:
 
-- exact Apollo 13 LMS processor count/configuration;
-- DDP-224 machine-to-program/model ownership;
-- site-specific configuration differences;
-- which machine, if any, was outside the 'three-machine' complex terminology;
+- exact Apollo 13 LMS serial/configuration state;
+- program/model ownership for the other two DDP-224 machines;
+- whether the dedicated guidance machine covered only the LGC/PGNCS or additional guidance functions;
+- the reason Jackson observed four DDP-224 machines in the Houston room;
+- date-specific site configuration differences despite the intended-identical design policy;
 - global LMS update rate or integration step;
 - subsystem-specific cadence not explicitly recovered from a model/program source.
 
 ## Retrieval priority
 
-1. Recover `LMA-790-2-LMS` Volume II / Section 7 and extract program/output identifiers.
+1. Recover/review `LMA-790-2-LMS` Volume I and Volume II / Section 7 for subsystem, program, and output ownership.
 2. Search RG 255 E.155B1 for machine configuration, program loading, checkout, and acceptance records.
 3. Search E.155B / adjacent visual-system holdings for computer/interface diagrams only where they identify machine ownership or update paths.
 4. Recover direct LMS mathematical-model reports that state integration/update schedules.
-5. If an Apollo 13-period LMS configuration list is recovered, crosswalk it against the mature 1970 Brown/Waters architecture description.
+5. If an Apollo 13-period LMS configuration list is recovered, crosswalk it against NASA TN D-7112 and Brown/Waters before admitting mission-specific implementation details.
 
 ## Admission rule
 
