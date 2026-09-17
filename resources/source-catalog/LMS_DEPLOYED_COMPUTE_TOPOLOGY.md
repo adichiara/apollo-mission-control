@@ -2,7 +2,7 @@
 
 Status: active source catalog for deployed Lunar Module Simulator computer-complex evidence.
 
-Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/236_lms_three_machine_guidance_allocation.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`, `resources/research/239_lms_handbook_archival_identity_retrieval_key.md`, `resources/research/240_lms_handbook_digitized_candidate_identity_gate.md`
+Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/236_lms_three_machine_guidance_allocation.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`, `resources/research/239_lms_handbook_archival_identity_retrieval_key.md`, `resources/research/240_lms_handbook_digitized_candidate_identity_gate.md`, `resources/research/241_lms_handbook_nasa_bibliography_crosswalk.md`
 
 ## NASA TN D-7112 — *Apollo Experience Report — Simulation of Manned Space Flight for Crew Training*
 
@@ -38,8 +38,18 @@ Related research: `resources/research/235_lms_deployed_compute_topology_boundary
   - `67-14188` — Volume II, Sections 5 and 6;
   - `67-16127` — Volume II, Section 7, Simulator Output Tables.
 - Supports precise archival retrieval and separation of the 1967 Grumman `NAS9-1100` handbook stream from later Kollsman `NAS9-8634` project files.
-- Date-control caution: the main index gives `01-04-67` for `67-14186`/`67-14187`, while the supplement gives `15-05-67`; NASA KSC bibliography GP-642 independently lists the handbook as Apr. 1, 1967. Treat the discrepancy as unresolved rather than silently choosing a revision history.
+- Date-control caution: the main index gives `01-04-67` for `67-14186`/`67-14187`, while the supplement gives `15-05-67`. Treat the discrepancy as unresolved rather than silently choosing a revision history.
 - Does not expose handbook contents or support machine/program assignment claims by itself.
+
+## NASA/KSC GP-642 bibliography — item 346
+
+- Organization: NASA Kennedy Space Center.
+- Source: https://www.ibiblio.org/apollo/Documents/19700025401.pdf
+- Source class: primary NASA bibliography/catalog record.
+- Item 346 explicitly identifies Grumman Aircraft Engineering Corporation's *Lunar Module Mission Simulator Instructors Handbook*, Volume I — Simulator Description, plus Volume II Sections 1 and 4, as **GAEC `LMA 790-2-LMS`**, dated **Apr. 1, 1967**.
+- Supports an independent primary-source crosswalk from the exact Volume I title to the `LMA-790-2-LMS` report family.
+- Independently supports the 1 April 1967 catalog date, agreeing with the MSC main index while leaving the MSC supplement's 15 May entry unresolved.
+- Does not prove that a particular web-hosted scan is MSC accession `67-14186` and does not expose machine/program allocation.
 
 ## Virtual AGC digitized LMS handbook candidate
 
@@ -49,7 +59,7 @@ Related research: `resources/research/235_lms_deployed_compute_topology_boundary
 - Discovery URL: https://www.ibiblio.org/apollo/changes.html
 - Source class: digitized-document discovery source; the underlying scan may be primary, but its archival identity has not yet been verified in this research pass.
 - Discovery metadata says the document pertains to the LEM Mission Simulator at the Cape and contains switch/display and subsystem-simulation detail.
-- Strongly matches the `67-14186` title, but the surfaced metadata does not itself expose `LMA-790-2-LMS`, `67-14186`, `NAS9-1100`, date/revision, or a title page.
+- NASA/KSC GP-642 independently establishes that this exact title belongs to GAEC `LMA-790-2-LMS`; however, surfaced discovery metadata still does not prove the particular scan's accession, revision, or site applicability.
 - **Gate:** inspect the scan's title/revision/provenance pages before treating it as the MSC accession copy or extracting configuration claims.
 
 ## Tomayko — *Computers in Spaceflight: The NASA Experience*
@@ -143,8 +153,8 @@ Do not derive causal-domain count, the original two machines' program ownership,
 
 ## Next targets
 
-- inspect the Virtual AGC digitized Volume I candidate's title/revision pages and prove or reject identity with `LMA-790-2-LMS` / `67-14186`;
-- if identity closes, search Volume I for DDP-224 roles, common memory, program allocation, digital conversion, and guidance-computer simulation;
+- inspect the Virtual AGC digitized Volume I candidate's title/revision pages; NASA GP-642 has closed the title→`LMA-790-2-LMS` crosswalk, but the scan's own revision/accession/site identity remains gated;
+- if scan identity closes, search Volume I for DDP-224 roles, common memory, program allocation, digital conversion, and guidance-computer simulation;
 - MSC accession `67-16127` — Volume II, Section 7, Simulator Output Tables;
 - MSC accessions `67-14187` and `67-14188` — Volume II operating sections;
 - LMS program-loading / machine-assignment records for the original two-machine workload;
