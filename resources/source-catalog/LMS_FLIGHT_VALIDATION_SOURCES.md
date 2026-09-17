@@ -28,6 +28,8 @@ Do **not** convert qualitative phrases such as “nearly identical,” “high f
 
 After manual rendezvous-radar range/range-rate updates brought AGS information into good agreement with radar data, the crew reported that **abort-guidance range and range-rate information degraded much more rapidly in flight than it did in the simulator**.
 
+The report also records flight-side AGS solution variation reaching approximately **±3 ft/s about the mean** during rendezvous. That value is an observed flight magnitude, not a simulator-vs-flight error band.
+
 In the same operational discussion, LM pulse-mode control response was reported as behaving **very similarly** to the mission simulator.
 
 ### Evidence use
@@ -36,14 +38,16 @@ Supports a domain-specific negative validation boundary:
 
 1. post-update agreement is not sufficient to validate between-update state propagation;
 2. AGS relative-state/range/range-rate error growth needs separate validation;
-3. one simulator domain may compare favorably while another differs materially in the same mission phase.
+3. the approximate ±3 ft/s flight-side variation is a candidate observable for later same-input comparison, not a tolerance;
+4. one simulator domain may compare favorably while another differs materially in the same mission phase.
 
 ### Boundary
 
 The passage does not establish:
 
 - the exact simulator site/configuration/revision;
-- a numerical flight or simulator degradation rate;
+- the corresponding simulator-side variation under the same inputs;
+- a numerical flight or simulator degradation rate over a common interval;
 - the cause of the mismatch;
 - direct applicability to Apollo 13 LMS H-2;
 - that the mismatch belongs to a specific LMS mathematical-model component rather than sensor/state initialization/filtering/interface behavior.
