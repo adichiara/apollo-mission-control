@@ -14,15 +14,23 @@ Use: establishes the existence and archival location class of formal LMS accepta
 
 The adjacent **E.155B** series separately says it contains some material relating to the **Mission Effects Projector (MEP) and External Visual Display Equipment (EVDE) of the Lunar Module mission simulator**, providing another direct retrieval route for visual-system acceptance/configuration context.
 
-## Kollsman / KSC LMS component provenance
+## Kollsman / KSC LMS component provenance and contract boundary
 
 Smithsonian National Air and Space Museum object **A19751446001**, *Alignment Optical Telescope, Lunar Module Simulator*, identifies **Kollsman Instrument Company** as manufacturer and MIT Instrumentation Laboratory as designer. The museum states that the functioning AOT was originally part of the **Lunar Module Simulator used for astronaut mission training at Kennedy Space Center** and that the LMS, including the telescope, was transferred to the Smithsonian in 1974.
 
 Source: https://www.si.edu/object/alignment-optical-telescope-lunar-module-simulator%3Anasm_A19751446001
 
-Use: independent object-level evidence that specific Kollsman-manufactured hardware existed in the KSC LMS. Add `AOT`, `alignment optical telescope`, and `optical subsystem` to E.155B1 retrieval terms.
+Primary NASA NTRS records for Kollsman's February 1970 *Apollo Optical Subsystem and LM Alignment Optical Telescope* final-report set identify the program's funding contract as **`NAS9-497`**:
 
-Boundary: the object record does **not** tie the AOT to `NAS9-8634`, MEP/EVDE, Farrand, Section 7, Apollo 13 effectivity, or Mission Control routing. Do not infer those relationships.
+- Volume I: NTRS `19700015843`, NASA-CR-108358, accession `70N25148` — https://ntrs.nasa.gov/citations/19700015843
+- Volume II, Part 1: NTRS `19700015844`, NASA-CR-108359, accession `70N25149` — https://ntrs.nasa.gov/citations/19700015844
+- Volume II, Part 2: NTRS `19700015845`, NASA-CR-108360, accession `70N25150` — https://ntrs.nasa.gov/citations/19700015845
+
+Volume I's original foreword likewise states that the final report was prepared under NASA ACED contract `NAS 9-497`.
+
+Use: the KSC LMS AOT is valid Kollsman hardware provenance, but its own program contract trail is explicitly **distinct from the E.155B1 `NAS9-8634` LMS contract trail**. Keep `NAS9-497`/AOT and `NAS9-8634`/LMS separate unless a primary record explicitly connects them.
+
+Boundary: this distinction does not prove that `NAS9-8634` excluded AOT support, modification, integration, or other optical work. It also does not tie `NAS9-8634` to MEP/EVDE, Farrand, Section 7, Apollo 13 effectivity, or Mission Control routing.
 
 ## Named contractor-document lead
 
@@ -71,4 +79,4 @@ For each directly supported test:
 
 For E.155B/E.155B1 visual/optical records, also extract explicit `vendor → contract → subsystem/component → site → configuration/date → discrepancy/change → acceptance/result` relationships. Do not infer vendor succession or contract scope from chronology or component provenance alone.
 
-Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/research/224_lms_msc_corporate_index_search_boundary.md`, `resources/research/225_lms_acceptance_manual_current_access_status.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/research/230_kollsman_ksc_lms_aot_provenance.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
+Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/research/224_lms_msc_corporate_index_search_boundary.md`, `resources/research/225_lms_acceptance_manual_current_access_status.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/research/230_kollsman_ksc_lms_aot_provenance.md`, `resources/research/231_kollsman_aot_contract_separation.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
