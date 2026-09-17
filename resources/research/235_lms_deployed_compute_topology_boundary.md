@@ -1,4 +1,4 @@
-# Research note 230 — LMS deployed compute-topology boundary
+# Research note 235 — LMS deployed compute-topology boundary
 
 Date: 2026-09-17  
 Status: **REVIEWED — deployed LMS computer-complex evidence recovered; exact Apollo 13 machine allocation remains unresolved**

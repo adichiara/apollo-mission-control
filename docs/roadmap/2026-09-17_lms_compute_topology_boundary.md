@@ -4,7 +4,7 @@ Date: 2026-09-17
 
 ## Current state
 
-Research note 230 adds a deployed-LMS architecture boundary:
+Research note 235 adds a deployed-LMS architecture boundary:
 
 - Brown & Waters (July 1970): each Houston/Cape Kennedy LMS had a **three-machine digital computer complex**;
 - Jackson retrospective: Houston LMS complex/room had **four DDP-224 computers**.
