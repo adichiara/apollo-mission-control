@@ -1,7 +1,7 @@
 # LMS Mission Effects Projector Program Review
 
 Status: **primary index record located; report contents not yet reviewed; adjacent primary context and archival retrieval route recovered**  
-Related research: `resources/research/226_lms_mission_effects_projector_program_review_lead.md`, `resources/research/227_lms_mission_effects_projector_primary_context.md`, `resources/research/228_farrand_mep_1964_design_baseline.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`
+Related research: `resources/research/226_lms_mission_effects_projector_program_review_lead.md`, `resources/research/227_lms_mission_effects_projector_primary_context.md`, `resources/research/228_farrand_mep_1964_design_baseline.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/research/234_rg255_e155b_visual_material_provenance_boundary.md`
 
 ## Primary catalog identity
 
@@ -19,7 +19,7 @@ NASA SP-4009, *The Apollo Spacecraft: A Chronology*, records that during the wee
 
 Primary NASA copy: https://www.nasa.gov/wp-content/uploads/2023/03/sp-4009vol4.pdf
 
-NASA/NTRS record `19680013122`, J. LaRussa, *The Infinity Image System in Visual Simulation*, presented at the AIAA/NASA Manned Space Flight Meeting in November 1964, identifies Farrand's MEP as an image-generation input in its infinity-image visual-simulation technology. The paper specifically describes a non-programmed continuous color film-strip projector for Earth-orbital imagery, moving cloud cover, and sunrise/sunset simulation, with two film cassettes permitting orbital views at different scales.
+NASA/NTRS record `19680013122`, J. LaRussa, *The Infinity Image System in Visual Simulation*, presented at the AIAA/NASA Manned Space Flight Meeting in November 1964, identifies Farrand's MEP as an image-generation input in its infinity-image visual-simulation technology. The paper describes a non-programmed continuous color film-strip projector for Earth-orbital imagery, moving cloud cover, and sunrise/sunset simulation, with two film cassettes permitting orbital views at different scales.
 
 Primary NTRS copy: https://ntrs.nasa.gov/api/citations/19680013122/downloads/19680013122.pdf
 
@@ -31,14 +31,14 @@ Primary NASA copy: https://www3.nasa.gov/centers/kennedy/pdf/744319main_1968.pdf
 
 ## Primary RG 255 archival route
 
-The NASA/NARA RG 255 preliminary inventory adds a direct file-series route for the unresolved visual-system history:
+The NASA/NARA RG 255 preliminary inventory adds two distinct archival routes:
 
-- **E.155B** explicitly includes material relating to the **Mission Effects Projector (MEP) and External Visual Display Equipment (EVDE) of the Lunar Module mission simulator**. Retrieval keys include old accessions `72A797` and `73ABC1675` and the inventory's listed shelf/location references.
-- **E.155B1**, *Project Files on the Lunar Module Simulator, 1968–1970*, includes statements of work, procurement/program material, acceptance plans/procedures, technical reports, operations manuals, surface-model photographs, and drawings. The inventory states that most correspondence is with **Kollsman Instrument Corporation** concerning **contract `NAS9-8634` for construction of LM simulators at MSC and KSC**.
+- **E.155B** is explicitly *Reference Files on the Lunar Landing Training Vehicle*, 1962–1973, 20 ft. Its description says there is **also some material relating to** the MEP and EVDE of the Lunar Module mission simulator. This makes E.155B a valid but narrow MEP/EVDE subset target, not an LMS project-file series. Retrieval keys include `Mission Effects Projector`, `MEP`, `External Visual Display Equipment`, `EVDE`, `Lunar Module mission simulator`, old accessions `72A797` and `73ABC1675`, and the inventory locations.
+- **E.155B1**, *Project Files on the Lunar Module Simulator, 1968–1970*, is the dedicated LMS series. It includes statements of work, program records, acceptance plans/procedures, technical reports, operations manuals, surface-model photographs, and drawings. The inventory states that most correspondence is with **Kollsman Instrument Corporation** concerning **contract `NAS9-8634` for construction of LM simulators at MSC and KSC**.
 
 Primary inventory: https://www.ibiblio.org/apollo/NARA-SW/Rg255-1.pdf
 
-These are retrieval/provenance facts only. The inventory does not establish that Kollsman replaced Farrand, that `NAS9-8634` specifically covered MEP/EVDE, that the 1967 specification problem led to that contract, or that either series represents the Apollo 13 configuration.
+Archival co-location in E.155B does not establish a technical or organizational relationship between LMS MEP/EVDE and LLTV/LLRV material. Neither series description establishes that Kollsman replaced Farrand, that `NAS9-8634` covered MEP/EVDE, that the 1967 specification problem led to that contract, or that either series represents the Apollo 13 configuration.
 
 ## Relationship to existing LMS retrieval target
 
@@ -48,8 +48,8 @@ This is an archival-neighborhood relationship only. It does not prove a technica
 
 ## Evidence boundary
 
-Until the underlying records are reviewed, do not infer projector signal mappings, the failed specification, units, cadence, precision, acceptance tolerances, corrective actions, vendor succession, station routing, or Apollo 13/1970 effectivity. Do not project the 1964 Farrand film/cassette design forward into the LMS configuration without explicit evidence.
+Until underlying records are reviewed, do not infer projector signal mappings, the failed specification, units, cadence, precision, acceptance tolerances, corrective actions, vendor succession, station routing, or Apollo 13/1970 effectivity. Do not project the 1964 Farrand film/cassette design forward into the LMS configuration without explicit evidence.
 
 ## Retrieval priority
 
-High adjunct to Section 7 and LMS acceptance retrieval. Search/request `LLR-400-329` / MSC `67-15490`, E.155B MEP/EVDE records, and E.155B1 records keyed to `NAS9-8634` / Kollsman. Extract explicit requirements, configuration/effectivity, discrepancies, corrective actions, and vendor relationships before making technical claims.
+High adjunct to Section 7 and LMS acceptance retrieval. First pursue E.155B1 / `72A794` for dedicated LMS contract/configuration evidence; separately request the narrowly identified MEP/EVDE subset of E.155B; search/request `LLR-400-329` / MSC `67-15490`. Extract explicit requirements, configuration/effectivity, discrepancies, corrective actions, and vendor relationships before making technical claims.
