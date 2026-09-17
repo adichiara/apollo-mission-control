@@ -1,19 +1,58 @@
 # LMS flight-derived validation sources
 
-Status: **active source catalog; qualitative postflight validation evidence only unless a source supplies numerical comparison data**
+Status: **active source catalog; retain favorable, mismatch, and training-transfer evidence separately; qualitative unless a source supplies numerical comparison data**
 
 ## Purpose
 
-Track primary flight/postflight sources that compare Lunar Module Simulator behavior or training transfer with the flown LM. This evidence class is separate from formal LMS acceptance/correlation documentation.
+Track primary flight/postflight sources that compare Lunar Module Simulator / LM mission-simulation behavior or training transfer with the flown LM. This evidence class is separate from formal LMS acceptance/correlation documentation.
 
 Use these sources to identify:
 
 - simulator behavior families that NASA considered representative of flight;
+- domains where flight behavior departed from simulator expectation;
 - operational techniques that transferred from simulator training into flight;
 - operator-facing observables worth preserving in reusable model boundaries;
 - postflight cross-check targets for recovered LMS equations/configuration.
 
-Do **not** convert qualitative phrases such as “nearly identical” or “high fidelity” into invented numerical tolerances.
+Do **not** convert qualitative phrases such as “nearly identical,” “high fidelity,” or “much more rapidly” into invented numerical tolerances.
+
+## Apollo 9 Mission Report — AGS between-update degradation mismatch
+
+- Document: *Apollo 9 Mission Report*
+- Report: MSC-PA-R-69-2
+- Date: May 1969
+- Preserved public scan: https://www.ibiblio.org/apollo/Documents/A09_MissionReport.pdf
+- Relevant location: Pilots' Report / LM rendezvous discussion, approximately p. 10-17.
+
+### Direct validation evidence
+
+After manual rendezvous-radar range/range-rate updates brought AGS information into good agreement with radar data, the crew reported that **abort-guidance range and range-rate information degraded much more rapidly in flight than it did in the simulator**.
+
+The report also records flight-side AGS solution variation reaching approximately **±3 ft/s about the mean** during rendezvous. That value is an observed flight magnitude, not a simulator-vs-flight error band.
+
+In the same operational discussion, LM pulse-mode control response was reported as behaving **very similarly** to the mission simulator.
+
+### Evidence use
+
+Supports a domain-specific negative validation boundary:
+
+1. post-update agreement is not sufficient to validate between-update state propagation;
+2. AGS relative-state/range/range-rate error growth needs separate validation;
+3. the approximate ±3 ft/s flight-side variation is a candidate observable for later same-input comparison, not a tolerance;
+4. one simulator domain may compare favorably while another differs materially in the same mission phase.
+
+### Boundary
+
+The passage does not establish:
+
+- the exact simulator site/configuration/revision;
+- the corresponding simulator-side variation under the same inputs;
+- a numerical flight or simulator degradation rate over a common interval;
+- the cause of the mismatch;
+- direct applicability to Apollo 13 LMS H-2;
+- that the mismatch belongs to a specific LMS mathematical-model component rather than sensor/state initialization/filtering/interface behavior.
+
+Research record: `resources/research/236_apollo9_simulator_flight_mismatch_boundary.md`.
 
 ## Apollo 14 Mission Report — powered descent and landing visuals
 
@@ -112,6 +151,24 @@ This does not establish:
 
 Research synthesis: `resources/research/234_apollo14_lms_flight_validation_boundary.md`.
 
+## Apollo Program Summary Report — program-level synthesis
+
+- Document: *Apollo Program Summary Report: Synopsis of the Apollo Program Activities and Technology for Lunar Exploration*
+- Report: JSC-09423 / NASA-TM-X-68725
+- Date: April 1975
+- NTRS: https://ntrs.nasa.gov/citations/19750013242
+- Relevant location: flight-crew training summary, section 6.1.2, approximately p. 6-8.
+
+### Direct validation evidence
+
+The report states at program level that **all lunar module crews** found the LMS and LLTV control-system responses representative of flight hardware, and that the high-fidelity visual landing/ascent presentation together with those trainers provided excellent training for the manually controlled final landing phase.
+
+It also records that training simulations demonstrated manual landing capability under degraded guidance/landing-radar conditions, including cases without landing radar, within Mission Control 3-sigma altitude/targeting dispersion criteria.
+
+### Boundary
+
+The cited summary passage does not provide the numerical 3-sigma values, simulator configuration/effectivity, or a numerical LMS-vs-flight residual. It therefore remains qualitative for this project unless the underlying criteria are separately recovered.
+
 ## Relationship to engineering acceptance evidence
 
 Formal acceptance/correlation evidence remains cataloged separately in:
@@ -125,4 +182,4 @@ Canonical distinction:
 
 versus
 
-`flight-derived validation = operational/qualitative unless source supplies comparison numbers`.
+`flight-derived validation = favorable comparison, mismatch, or operational/training transfer unless source-defined numerical comparison data are recovered`.
