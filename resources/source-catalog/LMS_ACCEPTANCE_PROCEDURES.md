@@ -14,6 +14,16 @@ Use: establishes the existence and archival location class of formal LMS accepta
 
 The adjacent **E.155B** series separately says it contains some material relating to the **Mission Effects Projector (MEP) and External Visual Display Equipment (EVDE) of the Lunar Module mission simulator**, providing another direct retrieval route for visual-system acceptance/configuration context.
 
+## Kollsman / KSC LMS component provenance
+
+Smithsonian National Air and Space Museum object **A19751446001**, *Alignment Optical Telescope, Lunar Module Simulator*, identifies **Kollsman Instrument Company** as manufacturer and MIT Instrumentation Laboratory as designer. The museum states that the functioning AOT was originally part of the **Lunar Module Simulator used for astronaut mission training at Kennedy Space Center** and that the LMS, including the telescope, was transferred to the Smithsonian in 1974.
+
+Source: https://www.si.edu/object/alignment-optical-telescope-lunar-module-simulator%3Anasm_A19751446001
+
+Use: independent object-level evidence that specific Kollsman-manufactured hardware existed in the KSC LMS. Add `AOT`, `alignment optical telescope`, and `optical subsystem` to E.155B1 retrieval terms.
+
+Boundary: the object record does **not** tie the AOT to `NAS9-8634`, MEP/EVDE, Farrand, Section 7, Apollo 13 effectivity, or Mission Control routing. Do not infer those relationships.
+
 ## Named contractor-document lead
 
 `1L5-102-(H)` — *Apollo Lunar Module Simulator (LMS) Acceptance Test Procedures for Modification Kit No. 1*, General Precision Incorporated, Link Group, Systems Division, 5 April 1967, prepared for Grumman Aircraft Engineering Corporation.
@@ -59,6 +69,6 @@ For each directly supported test:
 
 `test/report revision → simulator configuration/effectivity → source/model → observable/output → units/representation → test stimulus → acceptance criterion/tolerance → result/correlation evidence`
 
-For E.155B/E.155B1 visual-system records, also extract explicit `vendor → contract → subsystem → configuration/date → discrepancy/change → acceptance/result` relationships. Do not infer vendor succession from chronology alone.
+For E.155B/E.155B1 visual/optical records, also extract explicit `vendor → contract → subsystem/component → site → configuration/date → discrepancy/change → acceptance/result` relationships. Do not infer vendor succession or contract scope from chronology or component provenance alone.
 
-Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/research/224_lms_msc_corporate_index_search_boundary.md`, `resources/research/225_lms_acceptance_manual_current_access_status.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
+Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/research/224_lms_msc_corporate_index_search_boundary.md`, `resources/research/225_lms_acceptance_manual_current_access_status.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/research/230_kollsman_ksc_lms_aot_provenance.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
