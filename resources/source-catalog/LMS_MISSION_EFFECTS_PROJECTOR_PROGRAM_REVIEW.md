@@ -1,7 +1,7 @@
 # LMS Mission Effects Projector Program Review
 
-Status: **primary index record located; report contents not yet reviewed; adjacent primary context recovered**  
-Related research: `resources/research/226_lms_mission_effects_projector_program_review_lead.md`, `resources/research/227_lms_mission_effects_projector_primary_context.md`, `resources/research/228_farrand_mep_1964_design_baseline.md`
+Status: **primary index record located; report contents not yet reviewed; adjacent primary context and archival retrieval route recovered**  
+Related research: `resources/research/226_lms_mission_effects_projector_program_review_lead.md`, `resources/research/227_lms_mission_effects_projector_primary_context.md`, `resources/research/228_farrand_mep_1964_design_baseline.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`
 
 ## Primary catalog identity
 
@@ -29,6 +29,17 @@ NASA KSC-130-68 describes mission-simulator peripheral/visual equipment and a mi
 
 Primary NASA copy: https://www3.nasa.gov/centers/kennedy/pdf/744319main_1968.pdf
 
+## Primary RG 255 archival route
+
+The NASA/NARA RG 255 preliminary inventory adds a direct file-series route for the unresolved visual-system history:
+
+- **E.155B** explicitly includes material relating to the **Mission Effects Projector (MEP) and External Visual Display Equipment (EVDE) of the Lunar Module mission simulator**. Retrieval keys include old accessions `72A797` and `73ABC1675` and the inventory's listed shelf/location references.
+- **E.155B1**, *Project Files on the Lunar Module Simulator, 1968–1970*, includes statements of work, procurement/program material, acceptance plans/procedures, technical reports, operations manuals, surface-model photographs, and drawings. The inventory states that most correspondence is with **Kollsman Instrument Corporation** concerning **contract `NAS9-8634` for construction of LM simulators at MSC and KSC**.
+
+Primary inventory: https://www.ibiblio.org/apollo/NARA-SW/Rg255-1.pdf
+
+These are retrieval/provenance facts only. The inventory does not establish that Kollsman replaced Farrand, that `NAS9-8634` specifically covered MEP/EVDE, that the 1967 specification problem led to that contract, or that either series represents the Apollo 13 configuration.
+
 ## Relationship to existing LMS retrieval target
 
 The same primary index also records `LMA-790-2-LMS`, 01-07-67, accession `*67-16127`, contract `NAS9-1100`, *LM Mission Simulator Instructors Handbook, Vol. 2—Simulator Operation, Section 7—Simulator Output Tables*.
@@ -37,8 +48,8 @@ This is an archival-neighborhood relationship only. It does not prove a technica
 
 ## Evidence boundary
 
-Until `LLR-400-329` itself is reviewed, do not infer projector signal mappings, the failed specification, units, cadence, precision, acceptance tolerances, corrective actions, station routing, or Apollo 13/1970 effectivity. Do not project the 1964 Farrand film/cassette design forward into the LMS configuration without explicit evidence.
+Until the underlying records are reviewed, do not infer projector signal mappings, the failed specification, units, cadence, precision, acceptance tolerances, corrective actions, vendor succession, station routing, or Apollo 13/1970 effectivity. Do not project the 1964 Farrand film/cassette design forward into the LMS configuration without explicit evidence.
 
 ## Retrieval priority
 
-High adjunct to Section 7 and LMS acceptance retrieval. Request/search on both `LLR-400-329` and MSC accession `67-15490`; inspect explicit requirements, review findings, discrepancies, revision/configuration, and effectivity before making technical claims.
+High adjunct to Section 7 and LMS acceptance retrieval. Search/request `LLR-400-329` / MSC `67-15490`, E.155B MEP/EVDE records, and E.155B1 records keyed to `NAS9-8634` / Kollsman. Extract explicit requirements, configuration/effectivity, discrepancies, corrective actions, and vendor relationships before making technical claims.
