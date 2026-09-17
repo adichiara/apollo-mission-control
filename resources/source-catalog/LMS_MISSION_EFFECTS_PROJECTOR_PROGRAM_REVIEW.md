@@ -1,7 +1,7 @@
 # LMS Mission Effects Projector Program Review
 
 Status: **primary index record located; report contents not yet reviewed; adjacent primary context recovered**  
-Related research: `resources/research/226_lms_mission_effects_projector_program_review_lead.md`, `resources/research/227_lms_mission_effects_projector_primary_context.md`
+Related research: `resources/research/226_lms_mission_effects_projector_program_review_lead.md`, `resources/research/227_lms_mission_effects_projector_primary_context.md`, `resources/research/228_farrand_mep_1964_design_baseline.md`
 
 ## Primary catalog identity
 
@@ -19,9 +19,11 @@ NASA SP-4009, *The Apollo Spacecraft: A Chronology*, records that during the wee
 
 Primary NASA copy: https://www.nasa.gov/wp-content/uploads/2023/03/sp-4009vol4.pdf
 
-NASA/NTRS record 19680013122, J. LaRussa, *The Infinity Image System in Visual Simulation*, identifies Farrand's MEP as an image-generation component of its infinity-image visual-simulation technology. This is technology-family context only; it does not prove the delivered LMS configuration.
+NASA/NTRS record `19680013122`, J. LaRussa, *The Infinity Image System in Visual Simulation*, presented at the AIAA/NASA Manned Space Flight Meeting in November 1964, identifies Farrand's MEP as an image-generation input in its infinity-image visual-simulation technology. The paper specifically describes a non-programmed continuous color film-strip projector for Earth-orbital imagery, moving cloud cover, and sunrise/sunset simulation, with two film cassettes permitting orbital views at different scales.
 
 Primary NTRS copy: https://ntrs.nasa.gov/api/citations/19680013122/downloads/19680013122.pdf
+
+This 1964 description is a **technology-family baseline only**. It does not prove that the 1967 LMS MEP retained the same film mechanism, cassette arrangement, imagery, control implementation, or requirements.
 
 NASA KSC-130-68 describes mission-simulator peripheral/visual equipment and a mission effects projector supplying Earth and/or lunar scenes according to mission or spacecraft attitude. It is useful system context but is not evidence of a Mission Control station interface or Apollo 13 effectivity.
 
@@ -35,7 +37,7 @@ This is an archival-neighborhood relationship only. It does not prove a technica
 
 ## Evidence boundary
 
-Until `LLR-400-329` itself is reviewed, do not infer projector signal mappings, the failed specification, units, cadence, precision, acceptance tolerances, corrective actions, station routing, or Apollo 13/1970 effectivity.
+Until `LLR-400-329` itself is reviewed, do not infer projector signal mappings, the failed specification, units, cadence, precision, acceptance tolerances, corrective actions, station routing, or Apollo 13/1970 effectivity. Do not project the 1964 Farrand film/cassette design forward into the LMS configuration without explicit evidence.
 
 ## Retrieval priority
 
