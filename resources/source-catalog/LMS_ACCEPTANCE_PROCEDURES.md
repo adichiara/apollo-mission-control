@@ -14,6 +14,14 @@ Use: establishes the existence and archival location class of formal LMS accepta
 
 The adjacent **E.155B** series separately says it contains some material relating to the **Mission Effects Projector (MEP) and External Visual Display Equipment (EVDE) of the Lunar Module mission simulator**, providing another direct retrieval route for visual-system acceptance/configuration context.
 
+## NAS9-8634 public digital retrieval boundary
+
+Targeted public primary-source discovery on 17 September 2026 searched exact/variant `NAS9-8634` forms with Kollsman, Lunar Module Simulator/LMS, MSC, and KSC. No digitized contract, statement of work, acceptance procedure, or technical report was recovered that exposes subsystem-level scope.
+
+Use: this is a negative retrieval result only. It makes **E.155B1 / old accession `72A794` / location `A-23-16-6`** the priority file-level retrieval target, especially the statement of work, procurement plan, acceptance plans/procedures, drawings, surface-model photographs, and Kollsman correspondence.
+
+Boundary: absence from the public searches does not establish that `NAS9-8634` included or excluded MEP, EVDE, AOT, or any other subsystem, and does not establish Apollo 13 effectivity.
+
 ## Kollsman / KSC LMS component provenance and contract boundary
 
 Smithsonian National Air and Space Museum object **A19751446001**, *Alignment Optical Telescope, Lunar Module Simulator*, identifies **Kollsman Instrument Company** as manufacturer and MIT Instrumentation Laboratory as designer. The museum states that the functioning AOT was originally part of the **Lunar Module Simulator used for astronaut mission training at Kennedy Space Center** and that the LMS, including the telescope, was transferred to the Smithsonian in 1974.
@@ -79,4 +87,4 @@ For each directly supported test:
 
 For E.155B/E.155B1 visual/optical records, also extract explicit `vendor → contract → subsystem/component → site → configuration/date → discrepancy/change → acceptance/result` relationships. Do not infer vendor succession or contract scope from chronology or component provenance alone.
 
-Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/research/224_lms_msc_corporate_index_search_boundary.md`, `resources/research/225_lms_acceptance_manual_current_access_status.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/research/230_kollsman_ksc_lms_aot_provenance.md`, `resources/research/231_kollsman_aot_contract_separation.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
+Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/research/224_lms_msc_corporate_index_search_boundary.md`, `resources/research/225_lms_acceptance_manual_current_access_status.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/research/230_kollsman_ksc_lms_aot_provenance.md`, `resources/research/231_kollsman_aot_contract_separation.md`, `resources/research/232_nas9_8634_public_digital_retrieval_boundary.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
