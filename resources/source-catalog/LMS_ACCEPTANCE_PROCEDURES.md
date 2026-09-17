@@ -17,7 +17,9 @@ Use: establishes the existence and archival location class of formal LMS accepta
 Current discovery source: Heritage Auctions catalog description of the surviving original manual:
 https://historical.ha.com/itm/space-exploration/miscellaneous/apollo-lunar-module-simulator-lms-acceptance-test-procedures-for-modification-kit-no-1-general-precision-incorporated-lin/a/33174-71524.s
 
-Evidence class: **secondary catalog / retrieval lead only** until the manual itself is directly inspected.
+The catalog further transcribes the title page as stating that the report was **“prepared and issued in compliance with P. O. 2-24481C, Section E, Paragraph 5.”** Treat `Section E, Paragraph 5` as an additional archival retrieval key only; the governing purchase-order text has not been recovered and its requirements must not be inferred.
+
+Evidence class: **secondary catalog / retrieval lead only** until the manual/title page itself is directly inspected.
 
 ## Independent purchase-order / program crosswalk
 
@@ -39,4 +41,4 @@ For each directly supported test:
 
 Do not infer any of these fields from the title, catalog description, or contract crosswalk.
 
-Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
+Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
