@@ -2,7 +2,7 @@
 
 Status: active source catalog for deployed Lunar Module Simulator computer-complex evidence.
 
-Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/236_lms_three_machine_guidance_allocation.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`
+Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/236_lms_three_machine_guidance_allocation.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`, `resources/research/239_lms_handbook_archival_identity_retrieval_key.md`
 
 ## NASA TN D-7112 — *Apollo Experience Report — Simulation of Manned Space Flight for Crew Training*
 
@@ -26,6 +26,19 @@ Related research: `resources/research/235_lms_deployed_compute_topology_boundary
   - exact Apollo 13 serial/configuration effectivity;
   - a universal simulation timestep/update rate;
   - acceptance/correlation tolerances.
+
+## MSC-APOLLO-4 — *Apollo Engineering and Technology Index*, Vol. I
+
+- Organization: NASA Manned Spacecraft Center.
+- Date: July 1968.
+- Source class: primary NASA/MSC bibliographic control publication.
+- Grumman / `NAS9-1100` entries identify `LMA-790-2-LMS` archival targets:
+  - `67-14186` — Volume I, Simulator Description;
+  - `67-14187` — Volume II, Sections 1 and 4;
+  - `67-14188` — Volume II, Sections 5 and 6;
+  - `67-16127` — Volume II, Section 7, Simulator Output Tables.
+- Supports precise archival retrieval and separation of the 1967 Grumman `NAS9-1100` handbook stream from later Kollsman `NAS9-8634` project files.
+- Does not expose handbook contents or support machine/program assignment claims by itself.
 
 ## Tomayko — *Computers in Spaceflight: The NASA Experience*
 
@@ -118,7 +131,9 @@ Do not derive causal-domain count, the original two machines' program ownership,
 
 ## Next targets
 
-- `LMA-790-2-LMS` Volume I and Volume II / Section 7;
+- MSC accession `67-14186` — `LMA-790-2-LMS` Volume I, Simulator Description;
+- MSC accession `67-16127` — Volume II, Section 7, Simulator Output Tables;
+- MSC accessions `67-14187` and `67-14188` — Volume II operating sections;
 - LMS program-loading / machine-assignment records for the original two-machine workload;
 - RG 255 E.155B/E.155B1 configuration and acceptance files;
 - direct LMS mathematical-model documents containing integration/update schedules;
