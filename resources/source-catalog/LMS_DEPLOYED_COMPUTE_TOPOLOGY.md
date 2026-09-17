@@ -2,7 +2,7 @@
 
 Status: active source catalog for deployed Lunar Module Simulator computer-complex evidence.
 
-Related research: `resources/research/230_lms_deployed_compute_topology_boundary.md`
+Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`
 
 ## Brown & Waters — *The Lunar Module Simulator*
 
