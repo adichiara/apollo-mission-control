@@ -9,6 +9,7 @@ Formal LMS numerical acceptance/correlation criteria remain unrecovered. RG 255 
 Research note 234 adds a complementary primary-source validation layer from postflight mission reporting:
 
 - Apollo 14 reports LMS steering equations and torque-to-inertia behavior as nearly identical to the flown LM and credits simulator visual-display fidelity in landing-site recognition;
+- Apollo 15 records that preflight experience with visual simulator displays made actual descent rates appear nominal/comfortable and that visual simulations plus LLTV flying provided excellent manual-landing training;
 - Apollo 17 independently records transfer of a trained outside/in-cockpit attention technique from LMS/LLTV practice into the actual landing and credits LMS training as part of preparation for the manual approach.
 
 ## Roadmap consequence
@@ -29,12 +30,12 @@ For domains explicitly linked to flight, preserve:
 
 `simulator behavior/training technique → operator expectation/strategy → flown behavior/task → postflight comparison`
 
-Use this to confirm model-domain relevance, broad behavioral fidelity, and operator-technique transfer. Do not manufacture numerical limits from qualitative language.
+Use this to confirm model-domain relevance, broad behavioral fidelity, visual-rate expectation transfer, and operator-technique transfer. Do not manufacture numerical limits from qualitative language.
 
 ## Priority order
 
 1. Continue E.155B1 / acceptance-procedure recovery.
 2. Recover LMS steering / equations-of-motion / weight-and-balance interfaces at configuration/effectivity level.
 3. Cross-check recovered model structure against Apollo 14's flight-derived steering/torque-to-inertia comparison.
-4. Recover visual/display and operator-facing information-path material separately; cross-check against Apollo 14 visual-fidelity and Apollo 17 technique-transfer evidence.
+4. Recover visual/display and operator-facing information-path material separately; cross-check against Apollo 14 visual-fidelity, Apollo 15 visual-rate/manual-landing transfer, and Apollo 17 technique-transfer evidence.
 5. Only after source-defined numerical ranges appear, apply D-022 sensitivity testing.
