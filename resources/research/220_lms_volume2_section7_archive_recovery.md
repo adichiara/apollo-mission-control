@@ -1,7 +1,7 @@
 # Research note 220 — LMS Volume II Section 7 archival recovery
 
 Date: 2026-09-16  
-Status: **PRIMARY DOCUMENT IDENTITY/ARCHIVAL HOLDING RECOVERED; Section 7 contents not yet digitized/reviewed.**
+Status: **PRIMARY DOCUMENT IDENTITY/ARCHIVAL HOLDING RECOVERED; repository attribution corrected 2026-09-17; Section 7 contents not yet digitized/reviewed.**
 
 ## Question
 
@@ -24,7 +24,9 @@ This confirms the document family independently of the corporate index, but the 
 
 ### 2. Surviving James J. Avitabile papers contain the missing Section 7 holding
 
-The University of Houston-Clear Lake Archives catalog for the James J. Avitabile Papers lists the LMS handbook at folder level. Under Volume II it identifies:
+**Correction, 2026-09-17:** an earlier repository attribution for the Avitabile holding was incorrect. The current finding aid identifies the repository as **Special Collections and University Archives, Virginia Tech**, collection **James J. Avitabile Papers, Ms-2001-057**.
+
+The collection finding aid lists the LMS handbook at folder level. Under Volume II it identifies:
 
 - `Simulator Operation`, 1 Apr 1967;
 - changed `Simulator Operation`, 15 May 1967;
@@ -35,14 +37,33 @@ The University of Houston-Clear Lake Archives catalog for the James J. Avitabile
 - Section 6 — `Scripting Data Sheets` (2 folders);
 - **Section 7 — `Simulator Output Tables`, 1 Jul 1967 (3 folders).**
 
-Archive catalog:
+Virginia Tech finding aid:
+https://aspace.lib.vt.edu/repositories/2/resources/2187
+
+ARVAS mirror/navigation copy:
 https://arvasarchive.org/catalog/viblbv_repositories_2_resources_2187
+
+The Virginia Tech record identifies:
+
+- repository: Special Collections and University Archives, Virginia Tech;
+- collection identifier: `Ms-2001-057`;
+- collection status: open for research;
+- contact: `specref@vt.edu`, `540-231-6308`;
+- reproduction/digitization requests available for personal/research use through the repository.
 
 The catalog is a finding aid, not the primary technical content. It establishes that a surviving three-folder Section 7 holding exists and gives its date/title; it does not authorize reconstruction of any output field, model designator, routing, cadence, precision, or acceptance criterion.
 
 ### 3. Relationship to the corporate index
 
-The existing source catalog records the NASA/NARA corporate-index accession `*67-16127` for LMA-790-2-LMS Volume II, Section 7. The Avitabile finding aid independently identifies a surviving Section 7 under the same handbook family and gives a 1 July 1967 date and three-folder extent.
+The NASA/NARA corporate index identifies:
+
+- report family `LMA-790-2-LMS`;
+- issue date **1 July 1967**;
+- MSC accession `*67-16127`;
+- contract `NAS9-1100`;
+- title `LM MISSION SIMULATOR INSTRUCTORS HANDBOOK, VOL. 2-SIMULATOR OPERATION, SECTION 7-SIMULATOR OUTPUT TABLES`.
+
+The Avitabile finding aid independently identifies a surviving Section 7 under the same handbook family and gives the same 1 July 1967 date plus a three-folder extent.
 
 This is useful corroboration of identity and survival, but no claim is made that the Avitabile folders are physically the same accession copy represented by `*67-16127`.
 
@@ -50,6 +71,8 @@ This is useful corroboration of identity and survival, but no claim is made that
 
 - `Simulator Output Tables` is not merely a title in a corporate index; a surviving archival Section 7 holding is cataloged.
 - The holding is dated **1 July 1967** and spans **three folders** in the Avitabile Papers.
+- The correct repository is **Special Collections and University Archives, Virginia Tech**.
+- The collection is open for research and has an explicit reproduction/digitization request path.
 - Volume II was a multi-section operational/instructor handbook that separately included malfunction data, mission procedures, instructor material, scripting data, and output tables.
 - This makes Section 7 a concrete retrieval target for source-variable/output/model-designator extraction.
 
@@ -67,7 +90,7 @@ Until the three folders are opened, do **not** claim:
 
 ## Project consequence
 
-Research note 219's `Simulator Output Tables` target is now actionable at folder level. The next archival request should ask specifically for **LMA-790-2-LMS Volume II, Section 7, Simulator Output Tables, 1 July 1967, three folders** in the James J. Avitabile Papers.
+Research note 219's `Simulator Output Tables` target is now actionable at folder level. The next archival request should ask Virginia Tech Special Collections specifically for **LMA-790-2-LMS Volume II, Section 7, Simulator Output Tables, 1 July 1967, three folders**, within **James J. Avitabile Papers, Ms-2001-057**.
 
 If recovered, extraction should build a table of:
 
@@ -78,5 +101,7 @@ and only then compare those observables with acceptance/correlation documents fr
 ## Sources
 
 - NASA technical-report bibliography, item 346, primary scan: https://www.ibiblio.org/apollo/Documents/19700025401.pdf
-- University of Houston-Clear Lake Archives, James J. Avitabile Papers finding aid: https://arvasarchive.org/catalog/viblbv_repositories_2_resources_2187
-- Existing corporate-index evidence and acceptance boundary: `resources/source-catalog/APOLLO_SIMULATION_ENGINE_SOURCES.md`; `resources/research/219_lms_validation_acceptance_source_boundary.md`.
+- NASA/NARA corporate index: https://www.ibiblio.org/apollo/NARASWoverflow/CorporateIndex.pdf
+- Virginia Tech Special Collections and University Archives, James J. Avitabile Papers, Ms-2001-057: https://aspace.lib.vt.edu/repositories/2/resources/2187
+- ARVAS mirror/navigation copy of the same finding aid: https://arvasarchive.org/catalog/viblbv_repositories_2_resources_2187
+- Existing acceptance boundary: `resources/research/219_lms_validation_acceptance_source_boundary.md`.

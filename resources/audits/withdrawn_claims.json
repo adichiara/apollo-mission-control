@@ -60,6 +60,11 @@
       "claim": "exact cockpit switch/circuit-breaker chronology",
       "withdrawn_by": "resources/research/114_pc2_inverter_transfer_procedure.md",
       "replacement": "The Apollo 13 LM Malfunction Procedures source the three-control transfer sequence."
+    },
+    {
+      "claim": "University of Houston-Clear Lake Archives",
+      "withdrawn_by": "resources/research/220_lms_volume2_section7_archive_recovery.md",
+      "replacement": "The James J. Avitabile Papers, Ms-2001-057, are held by Special Collections and University Archives, Virginia Tech, Blacksburg, Virginia."
     }
   ]
 }
