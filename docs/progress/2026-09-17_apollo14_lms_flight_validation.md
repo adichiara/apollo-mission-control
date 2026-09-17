@@ -8,7 +8,10 @@ Added a new validation evidence class from primary postflight sources rather tha
 
 The Apollo 14 Mission Report directly compares flown LM behavior with LMS training and states that the simulator's **steering equations** and **torque-to-inertia ratio** were nearly identical to those of the actual vehicle. The same report separately attributes successful landing-site recognition in part to the **high fidelity of the simulator visual display**.
 
-A follow-on check of later mission reporting found corroborating Apollo 17 evidence: the landing narrative attributes the comfortable/safe manual approach partly to LMS training and states that the Commander's out-the-window / in-cockpit attention technique used in flight was a technique practiced in the LMS and LLTV.
+Follow-on checks found two compatible later-mission boundaries:
+
+- **Apollo 15:** preflight experience with visual simulator displays made actual descent rates appear nominal/comfortable, and visual simulations plus LLTV flying were judged excellent training for the manual landing phase.
+- **Apollo 17:** the landing narrative attributes the comfortable/safe manual approach partly to LMS training and states that the Commander's out-the-window / in-cockpit attention technique used in flight was practiced in the LMS and LLTV.
 
 Added/updated:
 
@@ -23,7 +26,7 @@ The project now distinguishes two validation evidence classes:
 1. **engineering acceptance/correlation evidence** — the preferred source for numerical tolerances, reference inputs/outputs, and pass/fail criteria;
 2. **flight-derived operational validation** — useful for identifying model domains and operator-facing effects that NASA postflight reporting linked to actual flight, but not a numerical tolerance source unless the report supplies comparison numbers.
 
-The combined Apollo 14 / Apollo 17 evidence reinforces explicit reusable boundaries for:
+The combined Apollo 14 / Apollo 15 / Apollo 17 evidence reinforces explicit reusable boundaries for:
 
 - guidance/steering computation;
 - rotational dynamics and mass/inertia coupling;
