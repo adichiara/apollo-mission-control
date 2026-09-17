@@ -24,7 +24,7 @@ This confirms the document family independently of the corporate index, but the 
 
 ### 2. Surviving James J. Avitabile papers contain the missing Section 7 holding
 
-**Correction, 2026-09-17:** an earlier version of this note incorrectly attributed the Avitabile holding to the University of Houston-Clear Lake Archives. The current finding aid identifies the repository as **Special Collections and University Archives, Virginia Tech**, collection **James J. Avitabile Papers, Ms-2001-057**.
+**Correction, 2026-09-17:** an earlier repository attribution for the Avitabile holding was incorrect. The current finding aid identifies the repository as **Special Collections and University Archives, Virginia Tech**, collection **James J. Avitabile Papers, Ms-2001-057**.
 
 The collection finding aid lists the LMS handbook at folder level. Under Volume II it identifies:
 
