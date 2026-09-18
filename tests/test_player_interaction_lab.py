@@ -51,6 +51,23 @@ class PlayerInteractionLabContractTests(unittest.TestCase):
         self.assertNotIn("f.validity", self.html)
         self.assertIn("deliberately omits model provenance", self.html)
 
+    def test_lab_hides_internal_gate_and_raw_phase_state(self):
+        self.assertNotIn("s.pending_gate", self.html)
+        self.assertNotIn("PENDING '+esc(s.pending_gate)", self.html)
+        self.assertIn("phaseLabel(s.phase)", self.html)
+        self.assertIn("phaseLabel(f.value)", self.html)
+
+    def test_lab_does_not_present_ambiguous_flight_go_boolean(self):
+        self.assertIn("f.key!=='flight.go_for_burn'", self.html)
+        self.assertIn("FLIGHT DISPOSITION", self.html)
+
+    def test_join_controls_collapse_after_position_is_established(self):
+        self.assertIn("$('joinPanel').classList.add('hidden')", self.html)
+        self.assertGreaterEqual(
+            self.html.count("$('joinPanel').classList.add('hidden')"),
+            2,
+        )
+
     def test_flight_and_capcom_preserve_distinct_workflows(self):
         self.assertIn("FLIGHT DISPOSITION", self.html)
         self.assertIn("CREW-FACING APPROVAL", self.html)

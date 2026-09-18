@@ -253,6 +253,38 @@ The prototype is intentionally limited to FLIGHT/CAPCOM. It is an interaction ex
 
 The next question it should answer is whether the coordination workflow is understandable under continuous GET without project-internal explanation. After that, CONTROL/GUIDO product-scanning prototypes can be added using the same session strip/product/action hierarchy.
 
+## Player-state semantic tightening
+
+The first FLIGHT/CAPCOM lab exposed several additional project-internal states that should not become player concepts simply because the server has them.
+
+### Decision gates are not player products
+
+The session API carries `pending_gate` so the runtime can enforce action eligibility. The player lab no longer renders that value.
+
+A controller should infer that a decision is due from the operational context, reports, timeline/procedure, and available action—not from a project label such as `flight_go`.
+
+### Raw phase identifiers are implementation vocabulary
+
+Internal values such as `pc2_final_readiness` are useful state-machine identifiers. The lab now converts them to a human-readable phase label before display.
+
+Longer term, player-facing phase/timeline wording should come from scenario/profile data rather than from arbitrary internal enum/string names.
+
+### A binary state is not necessarily a meaningful indication
+
+The current authoritative PC+2 state stores `flight_go` as a Boolean. Before FLIGHT has recorded a decision, the value is `False`; an explicit NO-GO also leaves it `False`.
+
+Therefore `flight.go_for_burn = false` cannot safely be shown as “NO” to the player: it would collapse **not yet decided** and **NO-GO recorded** into the same display.
+
+The player lab now omits that field and uses the explicit FLIGHT decision interaction instead.
+
+If a future player product needs decision status, the domain must expose unambiguous semantics such as `pending / go / no-go` or an event-derived recorded-decision state rather than asking the UI to infer meaning from a Boolean.
+
+### Join/setup controls are not ongoing controller work
+
+After a player establishes or restores a position, the join panel now collapses. Rejoin remains automatic through the stored identity.
+
+This reduces accidental role-switch/setup behavior during timed play without changing assignment authority.
+
 ## First interface prototypes
 
 Prototype in this order.
