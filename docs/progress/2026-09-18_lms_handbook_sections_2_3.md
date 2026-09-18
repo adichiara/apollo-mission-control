@@ -9,12 +9,15 @@ Repository reconciliation in research note 315 identified that research note 220
 - Section 2 — **Malfunction Data** — 3 folders;
 - Section 3 — **Lunar-landing Mission Procedures** — 4 folders.
 
-Research note 316 narrows the handbook date discrepancy. The original NASA/MSC Corporate Author Index dates `67-14186`, `67-14187`, and `67-14188` to **1 April 1967**, while the Corporate Author Index Supplement gives **15 May 1967** for `67-14186` and `67-14187`. The cause is not documented, so both dates remain valid retrieval keys rather than being interpreted as issue/revision/receipt dates.
+Research note 316 localized the handbook date discrepancy. The original NASA/MSC Corporate Author Index dates `67-14186`, `67-14187`, and `67-14188` to **1 April 1967**, while the Corporate Author Index Supplement gives **15 May 1967** for `67-14186` and `67-14187`.
+
+Research note 317 resolves one part of that ambiguity from the primary index schema: the AETI `TYPICAL CITATION` key explicitly labels this field **Issue date: day, month, year**. The April/May values are therefore conflicting NASA/MSC **issue-date metadata**, not dates whose issue/receipt/accession meaning is unknown. Why the issue date changed remains undocumented; no revision or technical-content change is inferred.
 
 The correction therefore changes the retrieval map, not the simulator:
 
 - the section titles/extent are no longer treated as unknown;
-- the 1 April/15 May discrepancy is localized to NASA/MSC bibliographic control itself;
+- the 1 April/15 May discrepancy is localized to conflicting NASA/MSC issue-date records;
+- both dates remain retrieval keys pending handbook title/revision-page recovery;
 - MSC accession identifier(s) for Sections 2/3, technical contents, program/machine ownership, and Apollo 13 effectivity remain unresolved;
 - Section 2 remains a particularly high-value retrieval target for the causal-engine malfunction-insertion workstream.
 
