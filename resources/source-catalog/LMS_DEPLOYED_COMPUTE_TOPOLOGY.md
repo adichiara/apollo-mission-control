@@ -2,7 +2,7 @@
 
 Status: active source catalog for deployed Lunar Module Simulator computer-complex and related visual-system evidence.
 
-Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/302_lms_three_machine_guidance_allocation.md`, `resources/research/304_ksc_lms2_ddp224_post_apollo_disposition.md`, `resources/research/305_lms2_ksc_site_identity.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`, `resources/research/239_lms_handbook_archival_identity_retrieval_key.md`, `resources/research/240_lms_handbook_digitized_candidate_identity_gate.md`, `resources/research/241_lms_handbook_nasa_bibliography_crosswalk.md`, `resources/research/242_lms_mep_program_review_archival_key.md`, `resources/research/243_lms_mep_film_graphics_primary_source.md`, `resources/research/244_farrand_mep_1964_primary_architecture.md`, `resources/research/245_lms_near_body_visual_primary_architecture.md`, `resources/research/246_lms_mep_august_1967_procurement_boundary.md`, `resources/research/312_lms_users_manual_operational_computing_lead.md`
+Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/302_lms_three_machine_guidance_allocation.md`, `resources/research/304_ksc_lms2_ddp224_post_apollo_disposition.md`, `resources/research/305_lms2_ksc_site_identity.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`, `resources/research/239_lms_handbook_archival_identity_retrieval_key.md`, `resources/research/240_lms_handbook_digitized_candidate_identity_gate.md`, `resources/research/241_lms_handbook_nasa_bibliography_crosswalk.md`, `resources/research/242_lms_mep_program_review_archival_key.md`, `resources/research/243_lms_mep_film_graphics_primary_source.md`, `resources/research/244_farrand_mep_1964_primary_architecture.md`, `resources/research/245_lms_near_body_visual_primary_architecture.md`, `resources/research/246_lms_mep_august_1967_procurement_boundary.md`, `resources/research/312_lms_users_manual_operational_computing_lead.md`, `resources/research/320_lms_users_manual_direct_retrieval_gate.md`
 
 ## NASA TN D-7112 — *Apollo Experience Report — Simulation of Manned Space Flight for Crew Training*
 
@@ -73,15 +73,15 @@ Related research: `resources/research/235_lms_deployed_compute_topology_boundary
 - Listed as *Lunar Module Mission Simulator Instructor's Handbook Volume I, Simulator Description*, pertaining to the Cape LMS.
 - Underlying scan may be primary, but title/revision/provenance pages remain the identity gate.
 
-
 ## LMS User's Manual — mature operational-computing lead
 
-- Public scan: https://www.ibiblio.org/apollo/Documents/LMS_Users_Manual.pdf
-- Search-index text identifies Volume 1, Update #34, dated 22 Oct. 1971.
-- Indexed material includes DDP peripheral-device codes for magnetic-tape, character, typewriter, and card-device categories.
+- Primary scan: https://www.ibiblio.org/apollo/Documents/LMS_Users_Manual.pdf
+- Directly indexed cover text confirms **Update #34**, **22 Oct. 1971**, **LMS User's Manual**, **Volume 1**.
+- The document index lists the scan at approximately 89 MB; the current fetch path reports the object at 92.8 MB and cannot page-extract it.
+- Prior indexed material includes DDP peripheral-device-code leads for magnetic-tape, character, typewriter, and card-device categories, but those snippets are retrieval aids only until the relevant pages are read.
 - Use as a retrieval lead for mature LMS program loading/initialization and computer/peripheral operation.
-- Do not infer processor workload ownership or Apollo 13 configuration from the indexed snippets or the late-1971 date.
-- Detailed boundary: `resources/research/312_lms_users_manual_operational_computing_lead.md`.
+- Do not infer processor workload ownership, common-memory mapping, loading workflow, or Apollo 13 configuration from snippets or the late-1971 date.
+- Detailed boundaries: `resources/research/312_lms_users_manual_operational_computing_lead.md` and `resources/research/320_lms_users_manual_direct_retrieval_gate.md`.
 
 ## Tomayko — *Computers in Spaceflight: The NASA Experience*
 
@@ -115,7 +115,7 @@ Use recovered evidence to constrain system decomposition and site identity, not 
 - retrieve MSC `67-15490` / Grumman `LLR-400-329`;
 - retrieve the cited 30 Aug. 1967 Bethpage weekly report and identify study scope/procurement/follow-on records;
 - inspect the Virtual AGC Volume I candidate title/revision pages;
-- extract the 1971 LMS User's Manual for explicit program-loading, initialization, common-memory, and machine-reference evidence, keeping all findings profile-dated;
+- extract the 1971 LMS User's Manual with a large-file-capable path for explicit program-loading, initialization, common-memory, and machine-reference evidence, keeping all findings profile-dated;
 - retrieve `67-14186`, `67-16127`, `67-14187`, and `67-14188` as needed for compute/output ownership;
 - search KSC configuration/property/disposition records for LMS-2 DDP-224 serial/function mapping;
 - pursue RG 255 E.155B/E.155B1 and later contracting/configuration files, keeping Kollsman `NAS9-8634` distinct until a link is documented;
