@@ -50,9 +50,9 @@ Confirm:
 
 Create one row per material blocking/confusing event or observable defect.
 
-| ID | GET | Wall time | Player/role | Active original station | Device/browser | Player intent | What was visible | Action/communication | Expected result | Observed result | Outside explanation required? | Audit/event reference | Provisional class | Historical research required? |
+| ID | GET | Wall time | Player/role | Active original station | Device/browser | Player intent | What was visible | Action/communication | Expected result | Observed result | Outside explanation required? | Audit/event reference | Provisional class | Friction: operational/interface | Historical research required? |
 |---|---:|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| I-001 | | | | | | | | | | | | | | | |
+| I-001 | | | | | | | | | | | | | | | | |
 
 Allowed provisional classes:
 
@@ -102,6 +102,29 @@ Complete for the five-player configuration.
 - Did readiness/action attribution remain tied to the intended original station?
 - Did any bundled role expose information from a station not currently represented in its own station-scoped view?
 - Did substation switching cause missed information or accidental action attribution?
+
+## Post-run player ratings — modern usability evidence only
+
+Use a 1–7 scale where 1 = strongly disagree and 7 = strongly agree. These ratings are **not** mission scores and are not historical Apollo evaluation criteria.
+
+| Player | Active station always clear | Could find needed info in time | Available actions were clear | Could distinguish evidence from conclusions | Paper/reference material was usable | Team communication was manageable | Workload came mainly from the operational problem, not UI |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| | | | | | | | |
+
+Free response for each player:
+
+- What part of the interface most interfered with doing your controller job?
+- What part of the interface helped you act like the controller rather than like a game player?
+
+## Playability observations
+
+- Branch-specific control/hint exposure observed? YES / NO
+- Developer/model terminology confused a player? YES / NO
+- Wrong-original-station action attempts:
+- Facilitator UI/navigation rescues:
+- Operational opportunities missed mainly because of interface search/navigation:
+- Compact-mode substation switches and missed-update notes:
+- Reload/rejoin orientation problems:
 
 ## Team debrief
 
