@@ -4,7 +4,7 @@ Date: 2026-09-17
 
 ## Completed
 
-Research notes 239–244 continued the unresolved LMS machine-allocation and visual-system thread with primary-source-first retrieval.
+Research notes 239–245 continued the unresolved LMS machine-allocation and visual-system thread with primary-source-first retrieval.
 
 The NASA Manned Spacecraft Center's July 1968 *Apollo Engineering and Technology Index* supplies exact MSC accession identifiers for the Grumman `LMA-790-2-LMS` handbook family under `NAS9-1100`: `67-14186` (Volume I, Simulator Description), `67-14187` and `67-14188` (Volume II operating sections), and `67-16127` (Volume II, Section 7, Simulator Output Tables).
 
@@ -18,7 +18,9 @@ Research note 243 recovered direct technical evidence in NASA NTRS `19690026999`
 
 Research note 244 recovered direct contemporaneous MEP architecture evidence in J. LaRussa's 1964 AIAA/NASA paper, NASA NTRS `19680013122`. It describes a Farrand MEP as a non-programmed continuous color film-strip projector for earth-orbital imagery, with moving cloud/sunrise/sunset effects and two film cassettes for different orbital scales. Because this source predates the 1967 LMS program review and specification problem, it constrains the Farrand design lineage but is not treated as proof of the exact deployed MSC/KSC LMS configuration.
 
-No workload, cadence, exact deployed projector configuration, EVDE relationship, Mission Control routing, acceptance tolerance, vendor succession, or Apollo 13 configuration claim was promoted.
+Research note 245 returned to primary NASA TN D-7112 and recovered the mature LMS near-body visual chain directly: a common filmstrip projected through zoom optics onto four screens, articulated probes scanning those screens, altitude-dependent spherical-distortion and horizon mechanisms, and a documented progression of lunar imagery through Lunar Orbiter and Apollo photography. TN D-7112 also records major fidelity limits, including insufficient vidicon illumination after four-way image splitting and optical-axis wander that reduced usable zoom ratio from a design 10 to 3. This closes the generic LMS near-body technique at NASA system level without equating every element to the exact 1964 Farrand MEP or July 1967 `LLR-400-329` configuration.
+
+No workload, cadence, exact 1967 projector configuration, EVDE relationship, Mission Control routing, acceptance tolerance, vendor succession, or Apollo 13 configuration claim was promoted.
 
 ## Documentation updated
 
@@ -28,10 +30,11 @@ No workload, cadence, exact deployed projector configuration, EVDE relationship,
 - `resources/research/242_lms_mep_program_review_archival_key.md`
 - `resources/research/243_lms_mep_film_graphics_primary_source.md`
 - `resources/research/244_farrand_mep_1964_primary_architecture.md`
+- `resources/research/245_lms_near_body_visual_primary_architecture.md`
 - `resources/source-catalog/LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`
 - `docs/roadmap/2026-09-17_lms_handbook_archival_identity.md`
 - `docs/station-status/2026-09-17_lms_handbook_archival_identity.md`
 
 ## Next
 
-Continue the Volume I scan identity check and direct retrieval of `67-15490` / `LLR-400-329`; the latter is now specifically needed to bridge or distinguish the documented 1964 Farrand MEP architecture from the 1967 LMS implementation. In parallel, target the primary `MSC, BMR Bethpage, Weekly Activities Report, Week Ending August 25, 1967` (30 Aug. 1967) cited by NASA SP-4009, because it is the cleanest path to resolving the Farrand specification problem / proposed Itek study without relying on retrospective inference. Preserve catalog and synthesis records at their actual evidence level until underlying technical/configuration documents are opened.
+Continue the Volume I scan identity check and direct retrieval of `67-15490` / `LLR-400-329`. TN D-7112 now supplies a mature LMS near-body architecture against which the July 1967 program state can be compared, so `LLR-400-329` should be used to determine configuration evolution rather than to establish the generic visual technique from scratch. In parallel, target the primary `MSC, BMR Bethpage, Weekly Activities Report, Week Ending August 25, 1967` (30 Aug. 1967) cited by NASA SP-4009 to resolve the Farrand specification problem / proposed Itek study without retrospective inference. Preserve catalog and synthesis records at their actual evidence level until underlying technical/configuration documents are opened.
