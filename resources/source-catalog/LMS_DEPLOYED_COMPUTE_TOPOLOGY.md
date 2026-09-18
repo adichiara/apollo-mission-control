@@ -2,14 +2,17 @@
 
 Status: active source catalog for deployed Lunar Module Simulator computer-complex and related visual-system evidence.
 
-Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/236_lms_three_machine_guidance_allocation.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`, `resources/research/239_lms_handbook_archival_identity_retrieval_key.md`, `resources/research/240_lms_handbook_digitized_candidate_identity_gate.md`, `resources/research/241_lms_handbook_nasa_bibliography_crosswalk.md`, `resources/research/242_lms_mep_program_review_archival_key.md`, `resources/research/243_lms_mep_film_graphics_primary_source.md`, `resources/research/244_farrand_mep_1964_primary_architecture.md`
+Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/236_lms_three_machine_guidance_allocation.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`, `resources/research/239_lms_handbook_archival_identity_retrieval_key.md`, `resources/research/240_lms_handbook_digitized_candidate_identity_gate.md`, `resources/research/241_lms_handbook_nasa_bibliography_crosswalk.md`, `resources/research/242_lms_mep_program_review_archival_key.md`, `resources/research/243_lms_mep_film_graphics_primary_source.md`, `resources/research/244_farrand_mep_1964_primary_architecture.md`, `resources/research/245_lms_near_body_visual_primary_architecture.md`
 
 ## NASA TN D-7112 — *Apollo Experience Report — Simulation of Manned Space Flight for Crew Training*
 
 - NASA MSC, March 1973, `NASA-TN-D-7112`, `MSC-S-346`, NTRS `19730011149`.
 - Primary NASA program experience report.
-- Supports two identical-design LMS installations; each had a three-machine digital computer complex; one machine was assigned exclusively to onboard-guidance-computer simulation; instructor/operator console, infinity-optics display, and crew station were distinct system elements.
-- Does not identify the other two machines' program/model allocation, explain retrospective four-DDP-224 evidence, or establish Apollo 13 configuration/cadence/tolerances.
+- Compute topology: supports two identical-design LMS installations; each had a three-machine digital computer complex; one machine was assigned exclusively to onboard-guidance-computer simulation; instructor/operator console, infinity-optics display, and crew station were distinct system elements.
+- LMS near-body visual architecture: a common filmstrip was projected through zoom optics onto four screens; articulated probes scanned the screens; additional optics supplied high-altitude spherical distortion; horizon generation changed with altitude; and film content evolved through artistic, Lunar Orbiter, and Apollo-photograph sources.
+- Final film configuration described: Lunar Orbiter strips for high-altitude full-orbit scenes and Lunar Orbiter strips mosaicked with Apollo photographs for low-altitude scenes near the landing site.
+- Documented limitations include four-way image splitting that left each vidicon at roughly one-third to one-half desired minimum illumination, and optical-axis wander that restricted usable zoom ratio to 3 versus a design ratio of 10.
+- The LMS passage directly closes the mature generic near-body visual technique. It does not by itself prove exact July 1967 MEP/EVDE nomenclature, vendor ownership, Apollo 13 effectivity, or the other two computers' program/model allocation.
 
 ## MSC-APOLLO-4 — *Apollo Engineering and Technology Index*, Vol. I
 
@@ -83,16 +86,16 @@ Related research: `resources/research/235_lms_deployed_compute_topology_boundary
 
 Mature LMS architecture is strongly supported as three machines, with one dedicated to onboard-guidance-computer simulation. NASA historical synthesis supplies a developmental two→three-machine chronology. Jackson's retrospective four-machine room observation remains unexplained. Do not invent original two-machine workloads, spare/test roles, configuration dates, or terminology.
 
-The `LLR-400-329` / `67-15490` MEP program review remains a retrieval key. LaRussa NTRS `19680013122` directly describes a 1964 Farrand MEP architecture, and Aero Service NTRS `19690026999` directly establishes later LMS MEP film-content production and Farrand/NASA/Grumman coordination. Neither source alone proves the exact 1967 LMS projector configuration or vendor succession. SP-4009's Farrand/Itek account is retained at synthesis level pending recovery of its cited 30 Aug. 1967 Bethpage weekly report.
+TN D-7112 now directly establishes the mature LMS near-body visual chain at NASA system level, while LaRussa NTRS `19680013122` independently describes the earlier 1964 Farrand MEP design and Aero Service NTRS `19690026999` establishes later LMS MEP film-content production. These sources should be compared rather than collapsed into one assumed configuration. `LLR-400-329` / `67-15490` remains the key July 1967 bridge, and SP-4009's Farrand/Itek account remains at synthesis level pending recovery of its cited 30 Aug. 1967 Bethpage weekly report.
 
 ## Architecture use
 
-Use recovered evidence to constrain system decomposition, not constants: computing complex, guidance-computer simulation role, conversion/interface electronics, crew station, visual system, instructor control, and a film-graphics content path supporting the MEP. The 1964 Farrand paper permits a historically grounded generic film-projector representation only where scenario fidelity does not depend on the later LMS configuration. Do not derive causal-domain count, program ownership, update cadence, integration step, product latency, vendor configuration, or Apollo 13 effectivity from it.
+Use recovered evidence to constrain system decomposition, not constants: computing complex, guidance-computer simulation role, conversion/interface electronics, crew station, visual system, instructor control, and a film-graphics content path supporting near-body visual simulation. TN D-7112 permits a historically grounded generic LMS film/zoom/screen/probe representation. Its numerical zoom and illumination limitations are historical evidence, not automatic causal-engine constants. Do not derive causal-domain count, program ownership, update cadence, integration step, product latency, vendor configuration, or Apollo 13 effectivity without applicable evidence.
 
 ## Next targets
 
 - inspect the Virtual AGC Volume I candidate's title/revision pages;
-- retrieve MSC `67-15490` / Grumman `LLR-400-329`, LMS Mission Effects Projector Program Review, specifically to bridge or distinguish the 1964 Farrand MEP design from the 1967 LMS implementation;
+- retrieve MSC `67-15490` / Grumman `LLR-400-329`, LMS Mission Effects Projector Program Review, specifically to compare the July 1967 program state against both the 1964 Farrand design and TN D-7112's mature LMS near-body architecture;
 - retrieve the `MSC, BMR Bethpage, Weekly Activities Report, Week Ending August 25, 1967`, dated 30 Aug. 1967;
 - if Volume I identity closes, search for DDP-224 roles, common memory, program allocation, digital conversion, and guidance-computer simulation;
 - retrieve `67-16127`, `67-14187`, and `67-14188`;
