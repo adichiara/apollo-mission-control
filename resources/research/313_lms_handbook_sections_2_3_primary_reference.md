@@ -1,7 +1,7 @@
 # Research note 313 — LMS handbook Sections 2 and 3 primary-reference recovery
 
 Date: 2026-09-18  
-Status: **PRIMARY NASA MISSION-ENGINEERING REFERENCE ESTABLISHES AN ADDITIONAL 1967 LMS HANDBOOK SECTION PAIR; ACCESSION/SCAN NOT YET RECOVERED.**
+Status: **PRIMARY NASA MISSION-ENGINEERING REFERENCE INDEPENDENTLY CONFIRMS THE 1967 SECTION PAIR; ARCHIVAL TITLES/EXTENT WERE ALREADY RECOVERED IN NOTE 220; TECHNICAL CONTENTS/ACCESSIONS REMAIN UNRECOVERED.**
 
 ## Question
 
@@ -29,11 +29,11 @@ The repository's archival map already tracks:
 - `67-14188` — Volume II, Sections 5 and 6;
 - `67-16127` — Volume II, Section 7, Simulator Output Tables.
 
-The 1969 NASA memorandum proves that **Volume II Sections 2 and 3 also existed and were used as a technical reference**. The current accession crosswalk is therefore incomplete as a map of the handbook's Volume II contents, even though it remains correct for the accession records already recovered.
+The 1969 NASA memorandum independently proves that **Volume II Sections 2 and 3 existed and were used as a technical reference**. Research note 220 had already recovered Virginia Tech archival description identifying Section 2 as **Malfunction Data** (3 folders) and Section 3 as **Lunar-landing Mission Procedures** (4 folders). The current MSC accession crosswalk remains incomplete because accession identifier(s) for Sections 2/3 have not been recovered.
 
 ## What is not established
 
-The reference does not provide:
+The NASA/MSC reference itself does not provide:
 
 - an MSC accession number for Sections 2 and 3;
 - section titles;
@@ -43,11 +43,11 @@ The reference does not provide:
 - site-specific configuration;
 - Apollo 13 effectivity.
 
-Do not infer any of those from section numbering or from the fact that a Mission F engineering memorandum cited the handbook.
+Do not infer those technical details from section numbering or from the fact that a Mission F engineering memorandum cited the handbook. Section titles/extent are separately supported by the Virginia Tech finding aid as documented in notes 220 and 315.
 
 ## Retrieval consequence
 
-Sections 2 and 3 become an explicit retrieval target. Search bibliographic controls and archival holdings for `LMA-790-2-LMS` together with `SECTION 2`, `SECTION 3`, `SECTIONS II AND III`, and the April 1, 1967 date. If recovered, inspect their actual titles/scope before assigning them a role in the compute-topology investigation.
+Sections 2 and 3 remain explicit retrieval targets, now with stronger keys from the Avitabile finding aid: **Malfunction Data** (3 folders) and **Lunar-landing Mission Procedures** (4 folders). Retrieve the actual folders before assigning model behavior, program ownership, or Apollo 13 effectivity.
 
 The existing priority remains to authenticate/page-extract Volume I because it is explicitly *Simulator Description*. Sections 2/3 should be pursued in parallel with `67-16127`, `67-14187`, and `67-14188` rather than guessed from the gaps in numbering.
 
@@ -62,9 +62,14 @@ None yet. This closes a documentation-map omission, not a simulator-behavior gat
 - NASA/MSC `MSC-IN-CF-P-69-5` cites `LMA790-2-LMS`, Volume II, Sections II and III, dated April 1, 1967.
 - Volume II therefore contained Sections 2 and 3 in addition to the currently accession-mapped Sections 1, 4, 5, 6, and 7.
 
+**DOCUMENTED BY ARCHIVAL DESCRIPTION**
+
+- Section 2 title: **Malfunction Data**; three-folder extent.
+- Section 3 title: **Lunar-landing Mission Procedures**; four-folder extent.
+
 **NOT YET ESTABLISHED**
 
-- Sections 2/3 titles and contents.
+- Section 2/3 technical contents.
 - Their MSC accession identifier(s).
 - Whether they contain computer/machine/program-allocation evidence.
 - Apollo 13 applicability.
@@ -73,3 +78,4 @@ None yet. This closes a documentation-map omission, not a simulator-behavior gat
 
 - NASA NTRS `19700026546`, Lewis & Neal, *Mission F, LM Descent/Phasing Summary Document*, `MSC-IN-CF-P-69-5` / `NASA-TM-X-64471`, 1969.
 - Existing NASA/MSC corporate-author index crosswalk for the other `LMA-790-2-LMS` volumes/sections.
+- Virginia Tech Special Collections and University Archives, James J. Avitabile Papers, Ms-2001-057, as documented in research notes 220 and 315.
