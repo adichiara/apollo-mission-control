@@ -43,6 +43,22 @@ Do not use time acceleration as the first remedy for idle time or long setup. Pr
 
 Any later time-scale feature remains a separate decision because simulation speed changes workload.
 
+## First implementation checkpoint
+
+A separate `/player-lab` now exercises the FLIGHT/CAPCOM interaction shape against the real session API while leaving the validated `/` client untouched.
+
+Current checkpoint:
+
+- FLIGHT readiness/report integration: prototyped;
+- FLIGHT GO/NO-GO interaction: prototyped;
+- FLIGHT approval → CAPCOM pending queue: prototyped;
+- CAPCOM explicit transmission: prototyped;
+- crew-report presentation: prototyped;
+- player-facing developer metadata suppression: prototyped;
+- scenario-specific CONTROL solution controls: intentionally absent;
+- CONTROL/GUIDO phone scanning: next;
+- physical human validation: still pending.
+
 ## No implementation claim
 
 This addendum does not accept a final UI, voice-loop system, acceleration policy, or display-density rule. It establishes the next design/test sequence.
