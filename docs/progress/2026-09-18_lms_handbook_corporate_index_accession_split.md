@@ -13,7 +13,7 @@ Date: 2026-09-18
 ## Documentation updated
 
 - `resources/research/310_lms_handbook_corporate_index_accession_split.md`
-- `resources/source-catalog/LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`
+- `resources/source-catalog/LMS_HANDBOOK_RETRIEVAL.md`
 - `docs/roadmap/2026-09-18_lms_handbook_corporate_index_accession_split.md`
 - `docs/station-status/2026-09-18_lms_handbook_corporate_index_accession_split.md`
 
