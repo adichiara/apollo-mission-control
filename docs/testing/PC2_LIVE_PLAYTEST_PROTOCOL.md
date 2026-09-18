@@ -88,6 +88,33 @@ Before classifying an incident as `PLAYER_INSTRUCTION`, check the participant's 
 
 Player confusion or a difficult decision is **not by itself evidence for a historical change**. Any change to historical procedure, authority, information, terminology, or modeled Apollo behavior requires separate source review.
 
+### Playability-specific observations
+
+Research note 313 adds a second classification axis: **operational friction** versus **interface friction**.
+
+During the run, record when any of the following occurs:
+
+- player cannot tell which original station is active;
+- player cannot find a product or rule that is actually present;
+- player uses or asks about a developer/test term such as model provenance rather than operational information;
+- a control or label reveals the likely malfunction/solution before the evidence warrants it;
+- player attempts an action under the wrong original station;
+- compact-role player misses information while working the paired station;
+- facilitator has to rescue the player from UI/navigation rather than from legitimate mission uncertainty;
+- player misses an operational opportunity primarily because of interface navigation/search time;
+- browser/network interruption causes loss of orientation after rejoin.
+
+For each such incident, record whether the best provisional interpretation is:
+
+- OPERATIONAL_FRICTION — the difficulty belongs to the simulated controller job; or
+- INTERFACE_FRICTION — the difficulty was introduced by the modern project interface.
+
+This label is supplemental to the existing defect class; it does not replace it.
+
+### Scenario-blind interaction check
+
+Before the synthetic ΔP run, confirm that the ordinary player surface does not reveal the branch merely by exposing a dedicated malfunction-named action or hint. Known mission rules may remain available as neutral reference material; the UI should not imply which rule will become relevant.
+
 ## Run 2 — synthetic ΔP branch
 
 Only after the nominal run is coherent.
@@ -113,6 +140,9 @@ After the seven-seat path is coherent, repeat the nominal run with:
 
 Record especially:
 
+- number of substation switches and whether each switch was intentional;
+- whether the player could identify the active original station immediately after switching;
+- whether any important update was missed while the other substation was active;
 - TELMU↔CONTROL switching under time pressure;
 - GUIDO↔FIDO/RETRO switching under time pressure;
 - whether the active original station is always clear;
