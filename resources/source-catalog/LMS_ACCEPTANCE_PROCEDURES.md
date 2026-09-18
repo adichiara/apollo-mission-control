@@ -1,6 +1,6 @@
 # LMS acceptance procedures — source catalog
 
-Status: **primary archival series identified; 1967 contractor report identity has an independently corroborated program/contract crosswalk; later LMS project-file contract purpose recovered; subsystem technical contents remain unreviewed**
+Status: **primary archival series identified; current NARA consultation route identified; 1967 contractor report identity has an independently corroborated program/contract crosswalk; later LMS project-file contract purpose recovered; subsystem technical contents remain unreviewed**
 
 ## Primary archival authority
 
@@ -13,6 +13,27 @@ Source: https://www.ibiblio.org/apollo/NARA-SW/Rg255-1.pdf
 Use: establishes the existence and archival location class of formal LMS acceptance/project documentation and establishes the top-level purpose of `NAS9-8634`: construction of LM simulators at both MSC and KSC. It does not expose numerical criteria, named deliverables, subsystem responsibility, or define whether “construction” meant complete new simulators, modifications/rebuilds, assemblies, or another implementation.
 
 The adjacent **E.155B** series separately says it contains some material relating to the **Mission Effects Projector (MEP) and External Visual Display Equipment (EVDE) of the Lunar Module mission simulator**, providing another direct retrieval route for visual-system acceptance/configuration context.
+
+
+## Current NARA access route
+
+Research note 303 resolves the modern request path for the E.155B1 target without treating the preliminary inventory's legacy location as a current shelf address.
+
+Current NARA College Park guidance identifies the Textual Reference / advance-consultation route:
+
+- `archives2reference@nara.gov`
+- civilian textual reference: `301-837-3510`
+- National Archives at College Park, 8601 Adelphi Road, College Park, MD 20740-6001
+
+NARA's guidance for accessioned textual records specifically asks researchers to provide accession numbers, FRC transfer numbers, log file numbers, and any other identifying information available. The recommended request therefore supplies **RG 255 / E.155B1 / 72A794 / A-23-16-6 / NAS9-8634 / Kollsman** together, and asks staff to confirm current container/folder and physical-location information before a records visit or reproduction request.
+
+Current NARA guidance:
+
+- https://www.archives.gov/college-park
+- https://www.archives.gov/college-park/researcher-info
+- https://www.archives.gov/records-mgmt/accessioning/research
+
+Use: converts the archival lead into an actionable reference request. It does not establish digitization, current box/folder numbers, or technical contents.
 
 ## NAS9-8634 public digital retrieval boundary
 
@@ -87,4 +108,4 @@ For each directly supported test:
 
 For E.155B/E.155B1 visual/optical records, also extract explicit `vendor → contract → deliverable/subsystem/component → site → configuration/date → discrepancy/change → acceptance/result` relationships. Do not infer vendor succession, subsystem scope, or implementation meaning from chronology, component provenance, or the inventory's top-level word “construction” alone.
 
-Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/research/224_lms_msc_corporate_index_search_boundary.md`, `resources/research/225_lms_acceptance_manual_current_access_status.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/research/230_kollsman_ksc_lms_aot_provenance.md`, `resources/research/231_kollsman_aot_contract_separation.md`, `resources/research/232_nas9_8634_public_digital_retrieval_boundary.md`, `resources/research/233_nas9_8634_top_level_contract_scope.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
+Related: `resources/research/219_lms_validation_acceptance_source_boundary.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/221_lms_modification_kit1_acceptance_procedure_lead.md`, `resources/research/222_lms_purchase_order_contract_crosswalk.md`, `resources/research/223_lms_acceptance_titlepage_contract_clause.md`, `resources/research/224_lms_msc_corporate_index_search_boundary.md`, `resources/research/225_lms_acceptance_manual_current_access_status.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/research/230_kollsman_ksc_lms_aot_provenance.md`, `resources/research/231_kollsman_aot_contract_separation.md`, `resources/research/232_nas9_8634_public_digital_retrieval_boundary.md`, `resources/research/233_nas9_8634_top_level_contract_scope.md`, `resources/research/303_rg255_e155b1_current_access_route.md`, `resources/source-catalog/LMS_VOLUME2_SECTION7_OUTPUT_TABLES.md`.
