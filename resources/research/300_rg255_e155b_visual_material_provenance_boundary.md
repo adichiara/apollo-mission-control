@@ -1,4 +1,4 @@
-# Research note 234 — RG 255 E.155B visual-material provenance boundary
+# Research note 300 — RG 255 E.155B visual-material provenance boundary
 
 Date: 2026-09-17
 Status: **primary archival provenance clarified; technical contents still unrecovered**

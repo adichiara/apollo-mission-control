@@ -1,4 +1,4 @@
-# Research note 235 — Grumman two-LMS baseline predates NAS9-8634 project files
+# Research note 301 — Grumman two-LMS baseline predates NAS9-8634 project files
 
 Date: 2026-09-17
 Status: **primary program chronology establishes earlier two-simulator obligation; NAS9-8634 implementation meaning still unresolved**

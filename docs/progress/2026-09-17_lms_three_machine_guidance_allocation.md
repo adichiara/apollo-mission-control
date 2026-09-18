@@ -4,7 +4,7 @@ Date: 2026-09-17
 
 ## Completed
 
-Research note 236 reviewed primary NASA simulator architecture evidence in *Apollo Experience Report — Simulation of Manned Space Flight for Crew Training* (`NASA-TN-D-7112`, `MSC-S-346`, NTRS `19730011149`).
+Research note 302 reviewed primary NASA simulator architecture evidence in *Apollo Experience Report — Simulation of Manned Space Flight for Crew Training* (`NASA-TN-D-7112`, `MSC-S-346`, NTRS `19730011149`).
 
 NASA defines each MSC/KSC Lunar Module Simulator as using a **three-machine digital computer complex** and states that **one computer was assigned exclusively to simulation of the onboard guidance computer**. The report also says the two LMS installations were designed, built, and maintained to be identical.
 
@@ -24,7 +24,7 @@ The repository does not infer:
 
 Updated:
 
-- `resources/research/236_lms_three_machine_guidance_allocation.md`
+- `resources/research/302_lms_three_machine_guidance_allocation.md`
 - `resources/source-catalog/LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`
 - `docs/roadmap/2026-09-17_lms_compute_topology_boundary.md`
 - `docs/station-status/2026-09-17_lms_three_machine_guidance_allocation.md`

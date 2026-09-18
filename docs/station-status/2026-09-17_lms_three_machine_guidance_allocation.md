@@ -5,7 +5,7 @@ Parent: `docs/STATION_RESEARCH_STATUS.md`
 
 Historical Mission Control station maturity grades remain unchanged.
 
-Research note 236 strengthens the simulator-side architecture used to generate training inputs/products: primary NASA TN D-7112 defines the mature LMS as a three-machine digital computer complex and explicitly assigns one machine to onboard-guidance-computer simulation.
+Research note 302 strengthens the simulator-side architecture used to generate training inputs/products: primary NASA TN D-7112 defines the mature LMS as a three-machine digital computer complex and explicitly assigns one machine to onboard-guidance-computer simulation.
 
 ## Station consequence
 

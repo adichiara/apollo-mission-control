@@ -1,4 +1,4 @@
-# Research note 236 — LMS three-machine complex and guidance-computer allocation
+# Research note 302 — LMS three-machine complex and guidance-computer allocation
 
 Date: 2026-09-17  
 Status: **primary NASA architecture evidence recovered; remaining machine allocation unresolved**
