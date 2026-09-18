@@ -4,7 +4,7 @@ Date: 2026-09-17
 
 ## Current state
 
-Research notes 235–236 establish a stronger deployed-LMS architecture boundary:
+Research notes 235 and 244 establish a stronger deployed-LMS architecture boundary:
 
 - NASA TN D-7112 (March 1973): each MSC/KSC LMS had a **three-machine digital computer complex**, with **one computer assigned exclusively to simulation of the onboard guidance computer**; NASA says the two LMSs were designed, built, and maintained to be identical;
 - Brown & Waters (July 1970): each Houston/Cape Kennedy LMS had a **three-machine digital computer complex**;
