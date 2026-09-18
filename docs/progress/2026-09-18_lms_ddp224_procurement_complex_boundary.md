@@ -13,7 +13,7 @@ Date: 2026-09-18
 ## Documentation updated
 
 - `resources/research/306_lms_ddp224_procurement_complex_boundary.md`
-- `resources/source-catalog/LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`
+- `resources/source-catalog/LMS_DDP224_PROCUREMENT.md`
 - `docs/roadmap/2026-09-18_lms_ddp224_procurement_complex_boundary.md`
 - `docs/station-status/2026-09-18_lms_ddp224_procurement_complex_boundary.md`
 
