@@ -227,6 +227,26 @@ The project still should not claim recovery of the complete Apollo simulator sof
 - Key boundary: this is late-1971 evidence. It does not by itself establish Apollo 13 processor assignment, program revisions, common-memory mapping, loading procedure, telemetry routing, numerical cadence, or acceptance tolerances.
 - Research record: `resources/research/312_lms_users_manual_operational_computing_lead.md`.
 
+## LMS Instructor's Handbook Volume II, Section 2 — Malfunction Data
+
+- Archival holding: Virginia Tech Special Collections and University Archives, James J. Avitabile Papers, `Ms-2001-057`.
+- Finding-aid title: **Malfunction Data**.
+- Extent: three folders.
+- Independent NASA/MSC engineering reference: `MSC-IN-CF-P-69-5` / `NASA-TM-X-64471` cites `LMA790-2-LMS`, Volume II, Sections II and III, dated 1 April 1967.
+- Evidence use: high-priority direct LMS malfunction-document retrieval target for model/insertion/effect relationships.
+- Status: title/extent and report-family/date are established; technical pages, malfunction inventory, program/model designators, MSC accession identifier, configuration effectivity, and Apollo 13 applicability remain unrecovered.
+- Key boundary: do not infer a malfunction schema or executable behavior from the title alone.
+- Research records: `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/313_lms_handbook_sections_2_3_primary_reference.md`, and `resources/research/315_lms_sections_2_3_archival_title_reconciliation.md`.
+
+## LMS Instructor's Handbook Volume II, Section 3 — Lunar-landing Mission Procedures
+
+- Archival holding: same Avitabile collection.
+- Finding-aid title: **Lunar-landing Mission Procedures**.
+- Extent: four folders.
+- Evidence use: high-priority integrated LMS procedure retrieval target for landing-scenario simulator/instructor/crew relationships.
+- Status: title/extent and report-family/date are established; technical contents, MSC accession identifier, configuration effectivity, and Apollo 13 applicability remain unrecovered.
+- Key boundary: the title does not make this a software-architecture or mission-specific Apollo 13 source without page-level evidence.
+
 ## LMS Console Directory — output/telemetry definition source
 
 - Date: 13 August 1971.
