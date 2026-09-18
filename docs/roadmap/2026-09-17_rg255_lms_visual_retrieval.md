@@ -12,9 +12,9 @@ Research note 232 tested public primary-source discovery for exact/variant `NAS9
 
 Research note 233 establishes from the primary RG 255 inventory that the E.155B1 Kollsman correspondence concerns administration of **`NAS9-8634` for construction of LM simulators at both MSC and KSC**. Deliverables, subsystem responsibility, configuration, and effectivity remain unresolved.
 
-Research note 234 clarifies provenance: **E.155B is the 20-foot Reference Files on the Lunar Landing Training Vehicle series**, whose description says it also contains some LMS MEP/EVDE material. E.155B1, by contrast, is explicitly the dedicated *Project Files on the Lunar Module Simulator*. Treat E.155B as a narrow MEP/EVDE subset-retrieval target, not as an LMS visual-system collection.
+Research note 242 clarifies provenance: **E.155B is the 20-foot Reference Files on the Lunar Landing Training Vehicle series**, whose description says it also contains some LMS MEP/EVDE material. E.155B1, by contrast, is explicitly the dedicated *Project Files on the Lunar Module Simulator*. Treat E.155B as a narrow MEP/EVDE subset-retrieval target, not as an LMS visual-system collection.
 
-Research note 235 adds a chronology constraint from two primary NASA program histories: on **15 February 1966**, the converted Grumman LEM development contract already required delivery of **two mission simulators**. That obligation predates the 1968–1970 E.155B1 Kollsman / `NAS9-8634` project-file span. Therefore do not describe `NAS9-8634` as the origin procurement of the two LMS requirement from the inventory's word “construction” alone.
+Research note 243 adds a chronology constraint from two primary NASA program histories: on **15 February 1966**, the converted Grumman LEM development contract already required delivery of **two mission simulators**. That obligation predates the 1968–1970 E.155B1 Kollsman / `NAS9-8634` project-file span. Therefore do not describe `NAS9-8634` as the origin procurement of the two LMS requirement from the inventory's word “construction” alone.
 
 ## Still unresolved
 
@@ -29,4 +29,4 @@ The relationship among the earlier Grumman two-LMS obligation, Kollsman's later 
 5. Crosswalk recovered records against `LLR-400-329` / `*67-15490` and Section 7 / `*67-16127`.
 6. Do not infer Mission Control routing or Apollo 13 effectivity until directly supported.
 
-Research boundaries: `resources/research/231_kollsman_aot_contract_separation.md`, `resources/research/232_nas9_8634_public_digital_retrieval_boundary.md`, `resources/research/233_nas9_8634_top_level_contract_scope.md`, `resources/research/234_rg255_e155b_visual_material_provenance_boundary.md`, `resources/research/235_grumman_two_lms_pre_nas9_8634_baseline.md`.
+Research boundaries: `resources/research/231_kollsman_aot_contract_separation.md`, `resources/research/232_nas9_8634_public_digital_retrieval_boundary.md`, `resources/research/233_nas9_8634_top_level_contract_scope.md`, `resources/research/242_rg255_e155b_visual_material_provenance_boundary.md`, `resources/research/243_grumman_two_lms_pre_nas9_8634_baseline.md`.
