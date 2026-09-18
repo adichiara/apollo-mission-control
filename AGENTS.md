@@ -12,9 +12,11 @@ Run `git fetch` and read `docs/DECISIONS.md` before writing anything that reason
 
 `main` has moved several hundred commits in a day. A design document written against a stale tree has twice had to be withdrawn and rewritten — once after recommending a first scenario the project had already selected, with better reasoning, in `D-013`.
 
-## Work on a branch; land through a pull request
+## Land code and decisions through a pull request
 
-Not directly on `main`. The review gate is where cross-agent disagreement gets resolved, and prose collisions do not announce themselves the way code conflicts do: two documents can quietly disagree while git reports nothing.
+Code, `docs/DECISIONS.md`, and anything another rule depends on go through a branch and a pull request — never directly on `main`. The review gate is where cross-agent disagreement gets resolved, and prose collisions do not announce themselves the way code conflicts do: two documents can quietly disagree while git reports nothing.
+
+Research notes, progress documents and source catalogs may go direct. At several hundred commits a day a pull request per note is overhead nobody would honour, and pretending otherwise is how this rule eroded to about one commit in seven. The protection for direct pushes is the pre-push check below — run it every time, not most times.
 
 While a pull request is open, its files belong to whoever opened it. Otherwise assume shared.
 
@@ -22,7 +24,9 @@ While a pull request is open, its files belong to whoever opened it. Otherwise a
 
 `DOCUMENTED`, `PARTIALLY DOCUMENTED` and `UNRESOLVED` mean what `docs/PROJECT_PRINCIPLES.md` says they mean. A claim repeated by the other agent is not evidence for it.
 
-This is the failure two agents produce faster than one: a plausible inference gets cited, cited again, and hardens into an established fact without anyone having read a page. The live specimen is in issue #3 — a retrospective recollection of one simulation and the documented record of a different one were merged into a single case, then promoted to "the strongest candidate for a specifically reconstructed historical SimSup case."
+This is the failure two agents produce faster than one: a plausible inference gets cited, cited again, and hardens into an established fact without anyone having read a page. The worked specimen is issue #3, resolved in #12 — a retrospective recollection of one simulation and the documented record of a different one were merged into a single case, then promoted to "the strongest candidate for a specifically reconstructed historical SimSup case."
+
+Correcting the note is half the job. Under `D-023` a withdrawn claim must be retired everywhere it appears, and its exact wording added to `resources/audits/withdrawn_claims.json` alongside the note that withdrew it. The audit then fails if it reappears anywhere in the tree — which is how a corrected source attribution was found still sitting in `resources/primary-sources/manifest.json`, a file nobody had thought to check.
 
 ## A decision that is not in `docs/DECISIONS.md` did not happen
 
@@ -30,7 +34,9 @@ That file is the handoff mechanism, and it works: it is how the continuous-clock
 
 ## Do not reuse a research-note number
 
-`scripts/audit_documentation.py` reports duplicates. Prefixes 012–015 are already doubled and are retained only to avoid breaking existing links.
+`scripts/audit_documentation.py` fails on duplicates under `D-023`, so a collision blocks CI rather than appearing in a report. No doubled prefixes remain; the last of them were renumbered into the 200s.
+
+**Claim a fresh hundred-block when you open a new research thread.** Two threads drawing from one counter collide — 141/143–147 (Apollo 11 against Apollo 13) and 234–236 (LMS against mission-specific) both happened that way, and the second took `main` red for 29 commits. Blocks in use: 000–199 general, 200–299 renumbered collisions, 300s LMS lineage. A new thread takes the next free hundred rather than the next free number.
 
 ## When you need the other agent
 
