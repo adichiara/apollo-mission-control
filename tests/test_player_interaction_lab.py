@@ -10,12 +10,17 @@ class PlayerInteractionLabContractTests(unittest.TestCase):
         self.web_app = (
             ROOT / "src" / "apollo_mission_control" / "web_app.py"
         ).read_text(encoding="utf-8")
+        self.admin = (ROOT / "web" / "admin.html").read_text(encoding="utf-8")
 
     def test_lab_is_exposed_as_non_final_static_route(self):
         self.assertIn('@app.get("/player-lab"', self.web_app)
         self.assertIn('WEB_ROOT / "player_lab.html"', self.web_app)
         self.assertIn("player interaction lab", self.html)
         self.assertIn("prototype surface", self.html)
+
+    def test_facilitator_console_links_to_lab(self):
+        self.assertIn("OPEN PLAYER INTERACTION LAB", self.admin)
+        self.assertIn('href="/player-lab"', self.admin)
 
     def test_lab_is_deliberately_limited_to_flight_and_capcom(self):
         self.assertIn('<option value="FLIGHT">FLIGHT</option>', self.html)
