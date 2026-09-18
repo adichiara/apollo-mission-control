@@ -133,6 +133,45 @@ Does not establish:
 - this project's incident schema or defect classes;
 - any Apollo-era browser/mobile metric.
 
+## Supporting modern human-factors / controller-training evidence
+
+These sources are **not Apollo reconstruction evidence**. They are used only to define modern playability/usability questions worth measuring.
+
+### NASA — Space Flight Resource Management training
+
+- NTRS document: `20090041872`.
+- https://ntrs.nasa.gov/citations/20090041872
+- Relevant evidence: high workload can degrade performance; effective controller teams use communication, decisionmaking, and adaptive task distribution to manage demanding situations.
+
+Implementation use:
+
+- treat five-player compact mode as a workload change, not merely a player-count convenience;
+- measure substation switching, missed information, and communication burden;
+- distinguish legitimate operational workload from avoidable UI/navigation workload.
+
+### NASA — Operational Evaluation of Artemis EVA Telemetry Display Concepts
+
+- NTRS document: `20260005145`.
+- https://ntrs.nasa.gov/citations/20260005145
+- Relevant evidence: controller-facing display format affected response time, workload, and usability in operationally representative telemetry-monitoring tasks.
+
+Implementation use:
+
+- compare phone rendering approaches empirically while holding information content constant;
+- do not assume exact visual density is automatically the most usable representation on the accepted device class;
+- keep this as modern design guidance only, not historical evidence for Apollo display layout.
+
+### NASA — Using Simulation Speeds to Differentiate Controller Interface Concepts
+
+- NTRS document: `20080042275`.
+- https://ntrs.nasa.gov/citations/20080042275
+- Relevant evidence: simulation speed changed workload and controllability in a human-in-the-loop study.
+
+Implementation use:
+
+- treat any future time acceleration as a workload/difficulty intervention rather than a neutral convenience;
+- prefer case-boundary and onboarding solutions before using acceleration to repair pacing.
+
 ## Derived project boundary
 
 The live human-play run should validate:

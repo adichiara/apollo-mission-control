@@ -4,6 +4,8 @@ Status: **design proposal — nothing here is accepted**
 
 Purpose: define what a *session* of this simulation actually is — what a player does minute to minute, what makes it difficult, how many players it needs, how a run ends, and how anyone can tell it went well.
 
+Current player-interaction/playability work is tracked separately in `docs/PLAYER_INTERACTION_PLAYABILITY.md` and research note 314. That work audits the existing browser client and defines how to remove interface friction without removing operational uncertainty.
+
 ## How to read this document
 
 Every research document in this repository describes what Apollo *was*. This one describes what the game *does*, which is a different kind of claim and must not be confused with the first. Four labels are used:
