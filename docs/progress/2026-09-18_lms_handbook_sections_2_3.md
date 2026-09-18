@@ -2,10 +2,17 @@
 
 Date: 2026-09-18
 
-Research note 313 found a contemporaneous NASA/MSC mission-engineering reference that fills a gap in the known `LMA-790-2-LMS` handbook structure.
+Research note 313 found a contemporaneous NASA/MSC mission-engineering reference that independently confirms `LMA-790-2-LMS`, Volume II, Sections II and III, dated 1 April 1967.
 
-`MSC-IN-CF-P-69-5` / `NASA-TM-X-64471`, *Mission F, LM Descent/Phasing Summary Document* (1969), cites **Volume II, Sections II and III, `LMA790-2-LMS`, April 1, 1967**.
+Repository reconciliation in research note 315 identified that research note 220 had already recovered stronger archival description from the Virginia Tech James J. Avitabile Papers:
 
-This establishes that the handbook had Sections 2 and 3 in addition to the accession-mapped Sections 1/4 (`67-14187`), 5/6 (`67-14188`), and 7 (`67-16127`). Their titles, accession identifiers, and contents remain unrecovered.
+- Section 2 — **Malfunction Data** — 3 folders;
+- Section 3 — **Lunar-landing Mission Procedures** — 4 folders.
 
-No simulator architecture, processor allocation, Apollo 13 effectivity, station maturity, or executable behavior changed. The retrieval plan now explicitly includes Sections 2/3 rather than treating the known accession list as a complete table of contents.
+The correction therefore changes the retrieval map, not the simulator:
+
+- the section titles/extent are no longer treated as unknown;
+- MSC accession identifier(s), technical contents, program/machine ownership, and Apollo 13 effectivity remain unresolved;
+- Section 2 becomes a particularly high-value retrieval target for the causal-engine malfunction-insertion workstream.
+
+No simulator architecture, processor allocation, station maturity, model constant, or executable behavior changed.
