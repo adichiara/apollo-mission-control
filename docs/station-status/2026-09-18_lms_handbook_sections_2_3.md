@@ -14,6 +14,8 @@ Research 316 establishes that the original NASA/MSC Corporate Author Index dates
 
 Research 317 checks the primary index schema itself. Its `TYPICAL CITATION` key explicitly defines the date field as **Issue date: day, month, year**. The remaining discrepancy is therefore between conflicting NASA/MSC issue-date records; it is not an unresolved choice among issue, receipt, accession, or generic catalog dates.
 
+Research 318 verifies that the earlier Link Group/General Precision LMS mathematical-model source is **Proposal No. 449**, dated 13 April 1964 and submitted to Grumman under RFP NOLVR-440-43100. Its own restrictive-data legend makes the proposal/evaluation status explicit. It therefore cannot independently raise station maturity or establish delivered/Apollo 13 simulator behavior.
+
 ## Documented
 
 - Section 2 is cataloged as **Malfunction Data** (3 folders).
@@ -21,6 +23,7 @@ Research 317 checks the primary index schema itself. Its `TYPICAL CITATION` key 
 - The NASA/MSC engineering memorandum independently establishes the section pair/report family/date and shows it was used as an engineering reference.
 - NASA/MSC AETI defines the disputed bibliographic field as **issue date**.
 - Both 1 April and 15 May 1967 remain source-backed retrieval keys because NASA/MSC records conflict on the issue date.
+- Proposal 449 is now provenance-controlled as a **1964 proposed-design source**, not accepted configuration evidence.
 
 ## Still unsupported
 
@@ -34,6 +37,7 @@ Until the section folders and document-control pages are recovered and reviewed,
 - site-specific configuration;
 - Apollo 13 station products or simulator effectivity;
 - numerical cadence, causal-engine constants, or validation tolerances;
-- whether 15 May represents a revision/reissue or whether any technical content changed after 1 April.
+- whether 15 May represents a revision/reissue or whether any technical content changed after 1 April;
+- that any Proposal 449 equation, interface, timing, or allocation survived unchanged into the delivered LMS.
 
-The archival titles and issue-date controls improve retrieval precision; they do not authorize player-facing or runtime behavior.
+The archival titles, issue-date controls, and proposal provenance improve retrieval precision; they do not authorize player-facing or runtime behavior.
