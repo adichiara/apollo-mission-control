@@ -18,6 +18,8 @@ Research 318 verifies that the earlier Link Group/General Precision LMS mathemat
 
 Research 319 directly checked the Volume I retrieval gate. NASA/KSC `GP-642` entry 346 identifies Grumman `LMA 790-2-LMS`, Volume I as **Simulator Description**, dated 1 April 1967. A public 150 MB `lms_instructors_handbook_vol1.pdf` candidate exists, but its internal document-control pages could not be inspected in the current retrieval path. It remains a high-confidence candidate, not page-verified `67-14186` evidence.
 
+Research 320 directly checks the separate 1971 `LMS_Users_Manual.pdf` operational source. Its indexed primary cover text confirms **Update #34 / 22 October 1971 / LMS User's Manual / Volume 1**, but the full 92.8 MB object remains unavailable to page extraction in the current path. It therefore does not yet support machine/program/loading/common-memory claims and, because of its date, cannot establish Apollo 13 effectivity without period cross-checks.
+
 ## Documented
 
 - Section 2 is cataloged as **Malfunction Data** (3 folders).
@@ -27,6 +29,7 @@ Research 319 directly checked the Volume I retrieval gate. NASA/KSC `GP-642` ent
 - Both 1 April and 15 May 1967 remain source-backed retrieval keys because NASA/MSC records conflict on the issue date.
 - Proposal 449 is provenance-controlled as a **1964 proposed-design source**, not accepted configuration evidence.
 - NASA/KSC `GP-642` directly identifies Volume I as **Simulator Description**; the public scan still requires internal-page identity verification.
+- The 1971 User's Manual cover identity is directly confirmed; substantive operational-computing evidence remains page-gated.
 
 ## Still unsupported
 
@@ -42,6 +45,7 @@ Until the section folders and document-control pages are recovered and reviewed,
 - numerical cadence, causal-engine constants, or validation tolerances;
 - whether 15 May represents a revision/reissue or whether any technical content changed after 1 April;
 - that any Proposal 449 equation, interface, timing, or allocation survived unchanged into the delivered LMS;
-- that filename/title compatibility alone proves the public Volume I scan is accession `67-14186`.
+- that filename/title compatibility alone proves the public Volume I scan is accession `67-14186`;
+- that 1971 User's Manual practice existed unchanged for Apollo 13.
 
-The archival titles, issue-date controls, proposal provenance, and Volume I candidate improve retrieval precision; they do not authorize player-facing or runtime behavior.
+The archival titles, issue-date controls, proposal provenance, and direct cover identities improve retrieval precision; they do not authorize player-facing or runtime behavior.
