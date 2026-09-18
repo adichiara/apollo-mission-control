@@ -28,6 +28,14 @@ Status: active companion catalog to `LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`.
 - Nearby Box 40 simulator records include FF 87 (*Lunar Module Mission Simulator Pamphlet*), FF 96 (*Subcontractors On Apollo and Lunar Mission Simulators*), FF 97 (*Mission Simulator Design in Support of Space Programs*), and FF 98 (*Information on Apollo Mission Simulator and Lunar Mission Simulator*).
 - Finding aid: https://specialcollections.wichita.edu/collections/ms/87-08/87-8-a.html
 
+## Box 40 FF 91 — separate MCC-H acquisition thread
+
+- Wichita State catalogs FF 91 as *Letter to General Frank A. Bogart from Assistant Director for Flight Operations. Recommended Change to the Mission Control Center-Houston (MCC-H) Apollo Simulation Computer Acquisition Plan.*
+- NASA/JSC HAER No. TX-109-C identifies the underlying record as Christopher C. Kraft, Jr., *Recommended Change to the Mission Control Center-Houston (MCC-H) Apollo Simulation Computer Acquisition Plan*, 13 Jan. 1966, Apollo Program Chronological Files, JSC History Collection, Box 066-44.
+- The HAER synthesis reports that Kraft recommended **five IBM 360 computers** to improve MCC-H Apollo simulation capability.
+- The primary Kraft memorandum was not directly inspected in research note 309; use the crosswalk as retrieval control, not as authority for unquoted details.
+- Keep this MCC-H IBM acquisition distinct from the Honeywell DDP-224 LMS/CMS procurement. No relationship between the five IBM systems and six Honeywell complexes is established.
+
 ## Date discrepancy
 
 - NASA SP-4009: award dated **21 Sep. 1966**, citing NASA News Release `66-254` of that date.
@@ -50,6 +58,6 @@ Do not reconcile these counts arithmetically because they describe different uni
 
 1. Original NASA Release `66-254`; compare its dateline and wording with both NASA chronology entries and Wichita State Box 40 FF 90.
 2. Honeywell award/contract and delivery/acceptance records defining the six complexes and distinguishing award/announcement/effective dates.
-3. Wichita State `MS 87-08`, Box 40 FF 90, then FF 87/96/98 for LMS allocation/configuration leads.
+3. Wichita State `MS 87-08`, Box 40 FF 90, then FF 87/96/98 for LMS allocation/configuration leads. FF 91 is now separated as an MCC-H IBM acquisition thread.
 4. `LMA-790-2-LMS` Volume I/Section 7 and program-loading/machine-assignment records.
 5. KSC/MSC configuration and property records identifying DDP-224 serial/function mappings.
