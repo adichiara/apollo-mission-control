@@ -4,41 +4,30 @@ Date: 2026-09-18
 
 ## Closed this pass
 
-A distinct mature-LMS computing/operator source is now under direct retrieval control: the public `LMS User's Manual`, Volume 1, Update #34, dated 22 October 1971.
+A distinct mature-LMS computing/operator source is under direct retrieval control: the public `LMS User's Manual`, Volume 1, Update #34, dated 22 October 1971. It complements, but does not substitute for, the 1967 `LMA-790-2-LMS` handbook.
 
-The source is complementary to, not a substitute for, the 1967 `LMA-790-2-LMS` Volume I simulator description and the 1971 LMS Console Directory.
+Research 313 confirms that NASA/MSC `MSC-IN-CF-P-69-5` cited Volume II Sections II and III dated 1 April 1967; research 315 identifies their archival titles as Section 2 **Malfunction Data** and Section 3 **Lunar-landing Mission Procedures**. Research 316-317 establish conflicting NASA/MSC **issue-date** records of 1 April/15 May 1967 for `67-14186` and `67-14187`, without evidence of why the dates differ.
 
-Research 313 independently confirms from NASA/MSC `MSC-IN-CF-P-69-5` (1969) that `LMA790-2-LMS`, Volume II, Sections II and III were cited as an engineering reference dated April 1, 1967. Research 315 reconciles that with the earlier Avitabile archival recovery in note 220: Section 2 is **Malfunction Data** (3 folders) and Section 3 is **Lunar-landing Mission Procedures** (4 folders). Their MSC accession identifiers and technical contents remain unrecovered.
+Research 318 controls 1964 Proposal 449 as proposed-design lineage only. Research 319 confirms Volume I's **Simulator Description** identity bibliographically but leaves the public scan page-verification gate open. Research 320-321 directly confirm the 1971 User's Manual as Update #34 and require its change record before back-projecting procedures to Apollo 13.
 
-Research 316 localizes the handbook date discrepancy: the original NASA/MSC Corporate Author Index dates `67-14186`, `67-14187`, and `67-14188` to **1 April 1967**, while the Corporate Author Index Supplement gives **15 May 1967** for `67-14186` and `67-14187`.
-
-Research 317 resolves the date-field semantics from the primary AETI schema: its `TYPICAL CITATION` key explicitly labels field 2 **Issue date: day, month, year**. The remaining problem is therefore conflicting NASA/MSC issue-date metadata, not uncertainty over whether these are issue/receipt/accession dates. Both dates remain retrieval keys; neither authorizes an inference of revision, reissue, or technical-content change.
-
-Research 318 places the earlier LMS mathematical-model proposal under exact provenance control: Link Group/General Precision **Proposal No. 449**, dated **13 April 1964**, was prepared for Grumman in response to **RFP NOLVR-440-43100**. Its own restrictive-data legend confirms proposal/evaluation status. Treat it as proposed-design lineage and a retrieval aid, not as accepted LMS or Apollo 13 configuration.
-
-Research 319 attempted the highest-priority Volume I identity gate. Primary NASA/KSC `GP-642` entry 346 directly identifies Grumman `LMA 790-2-LMS` Volume I as **Simulator Description**, dated 1 April 1967. Virtual AGC exposes a 150 MB `lms_instructors_handbook_vol1.pdf` candidate, but its internal title/control pages remain unread in the current retrieval path. Filename/title compatibility is therefore not yet page-verified identity with `67-14186`.
-
-Research 320 then attacked the mature-LMS User's Manual extraction gate. The primary scan's indexed cover text directly confirms **Update #34 / 22 October 1971 / LMS User's Manual / Volume 1**. The current fetch path rejects the full 92.8 MB object, however, so machine/program/loading/common-memory claims remain gated on page extraction rather than search snippets.
-
-Research 321 tightens the effectivity rule: **Update #34** proves that the surviving manual is a specific late-program controlled document state. Its technical procedures cannot be back-projected to Apollo 13 without the update/change record, an Apollo-13-period issue, or independent period corroboration.
-
-Research 322 isolates Volume II Section 7 in the primary NASA/MSC index: `LMA-790-2-LMS`, accession **67-16127**, **1 July 1967**, **Simulator Operation, Section 7 — Simulator Output Tables**. This is a separately issued section, not part of the April/May issue-date dispute. Its own document-control pages must govern effectivity when recovered.
+Research 322 isolates Section 7 as `67-16127`, **1 July 1967**, **Simulator Output Tables**. Research 323 now isolates Sections 5 and 6 as `67-14188`, **1 April 1967**, under `NAS9-1100`. The recovered supplement evidence changes the issue date of `67-14186`/`67-14187` but supplies no corresponding conflicting entry for `67-14188`; therefore do not infer either a 15 May date or proof that no later Sections 5/6 issue existed.
 
 ## Open gates, in order
 
-1. Obtain the first document-control pages of the 150 MB 1967 Volume I candidate using a retrieval path that can handle the object; verify exact report number/title/revision/effectivity against `LMA-790-2-LMS` / `67-14186` and the conflicting 1 April / 15 May **issue-date** records.
-2. Page-extract the 1971 User's Manual with a large-file-capable path. **Read the front matter/update-change record first**; only then search for explicit program loading, initialization, DDP-224/machine identifiers, common-memory use, and LMS-specific peripheral operation.
-3. For each Update #34 technical statement, determine whether it is 1971-only, independently corroborated generic architecture, or Apollo-13-applicable through period effectivity evidence.
-4. Retrieve `67-16127`, issued **1 July 1967**, Section 7 — **Simulator Output Tables** — for simulator-output ownership/interface mapping; inspect its own control pages before treating any table as effectivity evidence.
-5. Recover Volume II Section 2 — **Malfunction Data** — from the three Avitabile folders and extract only explicit malfunction/model/insertion relationships.
-6. Recover Volume II Section 3 — **Lunar-landing Mission Procedures** — from the four Avitabile folders.
-7. Retrieve `67-14187` / `67-14188` operating sections if machine/program allocation remains unresolved.
-8. Cross-check any machine/program claim against TN D-7112 and Apollo 13-period configuration/change records before historical-profile use.
-9. Keep NASA Release `66-254`/Honeywell procurement and RG 255 E.155B1 acceptance/configuration retrieval as parallel provenance threads.
-10. When Proposal 449 equations are extracted, compare them forward against the 1965 LMS math-model reports and 1967 handbook before adopting any causal-engine detail; proposal-only facts remain non-executable.
+1. Obtain the first document-control pages of the 150 MB Volume I candidate and verify exact report/title/revision/effectivity against `67-14186` and both source-backed issue dates.
+2. Page-extract the 1971 User's Manual, reading front matter/update-change record first; then search explicit program loading, initialization, DDP-224/machine identifiers, common-memory use, and peripherals.
+3. Determine whether each Update #34 statement is 1971-only, independently corroborated generic architecture, or Apollo-13-applicable through period evidence.
+4. Retrieve `67-16127`, **1 July 1967**, Section 7 — **Simulator Output Tables** — and inspect its control pages before technical use.
+5. Recover Section 2 — **Malfunction Data** — from the three Avitabile folders.
+6. Recover Section 3 — **Lunar-landing Mission Procedures** — from the four Avitabile folders.
+7. Retrieve `67-14187` Sections 1 and 4 if allocation remains unresolved.
+8. Retrieve `67-14188`, **1 April 1967**, Sections 5 and 6 if operating/instructor material is still needed; treat it as its own document-control/effectivity unit and read control/change pages first.
+9. Cross-check machine/program claims against TN D-7112 and Apollo 13-period configuration/change records.
+10. Keep NASA Release `66-254`/Honeywell procurement and RG 255 E.155B1 acceptance/configuration as parallel provenance threads.
+11. Compare Proposal 449 equations forward against 1965/1967 accepted documentation before adopting causal-engine detail.
 
 ## Guardrail
 
-Neither the 1971 User's Manual nor the 1967 handbook bibliographic records authorize Apollo 13 processor assignments, software revisions, loading procedures, telemetry routing, numerical cadence, acceptance tolerances, station-product changes, or executable constants. The April/May issue-date conflict authorizes no technical inference, and Section 7's separate 1 July issue date must not be used to infer the effectivity of other sections. Proposal 449 remains an earlier proposed-design source. Research 319 confirms that a public filename/title match is not a substitute for reading the scan's own document-control pages; research 320 applies the same page-evidence rule to the 1971 User's Manual; research 321 adds that even page-extracted Update #34 procedures remain late-1971 facts until effectivity is established.
+Neither bibliographic identity nor adjacency authorizes Apollo 13 processor assignments, software revisions, loading procedures, telemetry routing, numerical cadence, acceptance tolerances, station-product changes, or executable constants. `67-14188` proves a separately accessioned Sections 5/6 issue dated 1 April 1967; it does not establish the individual section subjects, later revision history, or Apollo 13 effectivity. Section 7's separate 1 July issue date likewise governs only its own recovered bibliographic record.
 
-The existing causal-engine measurement/output layer and Causal Model Lab already satisfy the architectural consequence of the recovered output-dictionary evidence. Do not add duplicate runtime abstractions merely because another historical source now supports the same separation.
+The existing causal-engine measurement/output layer and Causal Model Lab already satisfy the architectural consequence of recovered output-dictionary evidence. Do not add duplicate runtime abstractions merely because another historical source supports the same separation.
