@@ -20,6 +20,8 @@ Research 319 directly checked the Volume I retrieval gate. NASA/KSC `GP-642` ent
 
 Research 320 directly checks the separate 1971 `LMS_Users_Manual.pdf` operational source. Its indexed primary cover text confirms **Update #34 / 22 October 1971 / LMS User's Manual / Volume 1**, but the full 92.8 MB object remains unavailable to page extraction in the current path. It therefore does not yet support machine/program/loading/common-memory claims and, because of its date, cannot establish Apollo 13 effectivity without period cross-checks.
 
+Research 321 sharpens that boundary. `Update #34` is itself evidence that the surviving manual is a particular controlled late-program document state, not a timeless LMS description. Until its change/update record or an Apollo-13-period issue establishes continuity, interior procedures cannot be assigned Apollo 13 effectivity.
+
 ## Documented
 
 - Section 2 is cataloged as **Malfunction Data** (3 folders).
@@ -30,6 +32,7 @@ Research 320 directly checks the separate 1971 `LMS_Users_Manual.pdf` operationa
 - Proposal 449 is provenance-controlled as a **1964 proposed-design source**, not accepted configuration evidence.
 - NASA/KSC `GP-642` directly identifies Volume I as **Simulator Description**; the public scan still requires internal-page identity verification.
 - The 1971 User's Manual cover identity is directly confirmed; substantive operational-computing evidence remains page-gated.
+- The surviving 1971 manual is specifically **Update #34**; front-matter/change-history recovery is required before period effectivity can be assigned to its procedures.
 
 ## Still unsupported
 
@@ -46,6 +49,7 @@ Until the section folders and document-control pages are recovered and reviewed,
 - whether 15 May represents a revision/reissue or whether any technical content changed after 1 April;
 - that any Proposal 449 equation, interface, timing, or allocation survived unchanged into the delivered LMS;
 - that filename/title compatibility alone proves the public Volume I scan is accession `67-14186`;
-- that 1971 User's Manual practice existed unchanged for Apollo 13.
+- that 1971 User's Manual practice existed unchanged for Apollo 13;
+- what the 34 updates changed, when any individual 1971 procedure first became effective, or whether Update #34 was identical at Houston and KSC.
 
 The archival titles, issue-date controls, proposal provenance, and direct cover identities improve retrieval precision; they do not authorize player-facing or runtime behavior.
