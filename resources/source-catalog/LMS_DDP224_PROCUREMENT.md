@@ -7,8 +7,17 @@ Status: active companion catalog to `LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`.
 - Underlying contemporaneous NASA primary record identified by NASA SP-4009, *The Apollo Spacecraft: A Chronology*, Volume IV.
 - SP-4009 reports a $4.2 million fixed-price award to Honeywell, Inc., Computer Control Division, for Apollo command- and lunar-module simulator digital computer systems.
 - Procurement unit is explicitly **six separate computer complexes**, supporting simulators at MSC and Cape Kennedy; planned delivery, installation, and checkout were to be complete by end-March 1967.
-- Original release scan remains to be recovered; current wording is constrained to NASA SP-4009's transcription and citation.
+- NASA's independently compiled *Astronautics and Aeronautics, 1966* also places the award on **21 September 1966**, describes six computer complexes, and explicitly cites NASA Release `66-254`.
+- The two NASA chronology publications therefore independently corroborate the 21 September date and release number, but the original release scan remains to be recovered.
 - Do not convert six complexes into six DDP-224 processors or infer a per-simulator processor allocation.
+
+## NASA Astronautics and Aeronautics, 1966
+
+- Official NASA chronology; 21 September 1966 entry, p. 298.
+- Records the $4.2-million fixed-price Honeywell award for six computer complexes supporting Apollo command- and lunar-module simulators at MSC and KSC, with completion by March 1967.
+- Explicit citation: `NASA Release 66-254`.
+- NASA-hosted PDF: https://www.nasa.gov/wp-content/uploads/2023/04/1966.pdf
+- Evidence role: independent near-contemporaneous NASA corroboration of the SP-4009 date/citation, not a replacement for the uninspected primary release or contract.
 
 ## Wichita State MS 87-08 — Tomayko archival procurement lead
 
@@ -22,8 +31,9 @@ Status: active companion catalog to `LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`.
 ## Date discrepancy
 
 - NASA SP-4009: award dated **21 Sep. 1966**, citing NASA News Release `66-254` of that date.
+- NASA *Astronautics and Aeronautics, 1966*: award entered under **21 Sep. 1966**, independently citing NASA Release `66-254`.
 - Tomayko, *Computers in Spaceflight* (NASA-CR-182505, 1988): award dated **21 Jul. 1966**.
-- Preserve discrepancy pending recovery of the original news release and contracting record. The contemporaneous-release citation currently makes 21 Sep. the stronger retrieval lead, not a license to rewrite the later source.
+- The September date is now independently corroborated by two NASA chronology publications. Preserve the July value as a source discrepancy until Release `66-254` and/or the underlying contracting record is inspected; a contract may carry dates distinct from its public announcement.
 - Box 40 FF 90 supplies a concrete archival route for testing the discrepancy but does not itself resolve it.
 
 ## Relationship to deployed-topology evidence
@@ -38,8 +48,8 @@ Do not reconcile these counts arithmetically because they describe different uni
 
 ## Next retrieval
 
-1. Wichita State `MS 87-08`, Box 40 FF 90; compare the actual item with NASA News Release `66-254`.
-2. Honeywell award/contract and delivery/acceptance records defining the six complexes.
-3. Box 40 FF 87/96/98 for LMS allocation/configuration leads.
+1. Original NASA Release `66-254`; compare its dateline and wording with both NASA chronology entries and Wichita State Box 40 FF 90.
+2. Honeywell award/contract and delivery/acceptance records defining the six complexes and distinguishing award/announcement/effective dates.
+3. Wichita State `MS 87-08`, Box 40 FF 90, then FF 87/96/98 for LMS allocation/configuration leads.
 4. `LMA-790-2-LMS` Volume I/Section 7 and program-loading/machine-assignment records.
 5. KSC/MSC configuration and property records identifying DDP-224 serial/function mappings.
