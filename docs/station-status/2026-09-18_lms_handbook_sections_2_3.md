@@ -10,18 +10,21 @@ Research 313 independently confirms that a NASA/MSC Mission F engineering memora
 
 Research 315 reconciles that result with the earlier Virginia Tech archival recovery in note 220.
 
-Research 316 further establishes that the original NASA/MSC Corporate Author Index dates adjacent `LMA-790-2-LMS` accessions `67-14186` through `67-14188` to 1 April 1967, while the Corporate Author Index Supplement gives 15 May 1967 for `67-14186` and `67-14187`. The reason for the difference remains undocumented.
+Research 316 establishes that the original NASA/MSC Corporate Author Index dates adjacent `LMA-790-2-LMS` accessions `67-14186` through `67-14188` to 1 April 1967, while the Corporate Author Index Supplement gives 15 May 1967 for `67-14186` and `67-14187`.
+
+Research 317 checks the primary index schema itself. Its `TYPICAL CITATION` key explicitly defines the date field as **Issue date: day, month, year**. The remaining discrepancy is therefore between conflicting NASA/MSC issue-date records; it is not an unresolved choice among issue, receipt, accession, or generic catalog dates.
 
 ## Documented
 
 - Section 2 is cataloged as **Malfunction Data** (3 folders).
 - Section 3 is cataloged as **Lunar-landing Mission Procedures** (4 folders).
 - The NASA/MSC engineering memorandum independently establishes the section pair/report family/date and shows it was used as an engineering reference.
-- Both 1 April and 15 May 1967 are source-backed retrieval dates within NASA/MSC bibliographic control; neither is interpreted beyond what its catalog record states.
+- NASA/MSC AETI defines the disputed bibliographic field as **issue date**.
+- Both 1 April and 15 May 1967 remain source-backed retrieval keys because NASA/MSC records conflict on the issue date.
 
 ## Still unsupported
 
-Until the section folders themselves are recovered and reviewed, do not infer:
+Until the section folders and document-control pages are recovered and reviewed, do not infer:
 
 - individual malfunction definitions or insertion codes;
 - DDP-224 machine/workload ownership;
@@ -31,6 +34,6 @@ Until the section folders themselves are recovered and reviewed, do not infer:
 - site-specific configuration;
 - Apollo 13 station products or simulator effectivity;
 - numerical cadence, causal-engine constants, or validation tolerances;
-- whether the April/May date difference represents revision, receipt, accession, or another administrative event.
+- whether 15 May represents a revision/reissue or whether any technical content changed after 1 April.
 
-The archival titles and date controls improve retrieval precision; they do not authorize player-facing or runtime behavior.
+The archival titles and issue-date controls improve retrieval precision; they do not authorize player-facing or runtime behavior.
