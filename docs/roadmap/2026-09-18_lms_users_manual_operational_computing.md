@@ -14,6 +14,8 @@ Research 316 localizes the handbook date discrepancy: the original NASA/MSC Corp
 
 Research 317 resolves the date-field semantics from the primary AETI schema: its `TYPICAL CITATION` key explicitly labels field 2 **Issue date: day, month, year**. The remaining problem is therefore conflicting NASA/MSC issue-date metadata, not uncertainty over whether these are issue/receipt/accession dates. Both dates remain retrieval keys; neither authorizes an inference of revision, reissue, or technical-content change.
 
+Research 318 places the earlier LMS mathematical-model proposal under exact provenance control: Link Group/General Precision **Proposal No. 449**, dated **13 April 1964**, was prepared for Grumman in response to **RFP NOLVR-440-43100**. Its own restrictive-data legend confirms proposal/evaluation status. Treat it as proposed-design lineage and a retrieval aid, not as accepted LMS or Apollo 13 configuration.
+
 ## Open gates, in order
 
 1. Page-extract the 1967 Volume I candidate and verify its title/revision/effectivity against `LMA-790-2-LMS` / `67-14186`, explicitly reconciling its document-control markings with the conflicting 1 April and 15 May **issue-date** records.
@@ -24,9 +26,10 @@ Research 317 resolves the date-field semantics from the primary AETI schema: its
 6. Retrieve `67-14187` / `67-14188` operating sections if machine/program allocation remains unresolved.
 7. Cross-check any machine/program claim against TN D-7112 and Apollo 13-period configuration/change records before historical-profile use.
 8. Keep NASA Release `66-254`/Honeywell procurement and RG 255 E.155B1 acceptance/configuration retrieval as parallel provenance threads.
+9. When Proposal 449 equations are extracted, compare them forward against the 1965 LMS math-model reports and 1967 handbook before adopting any causal-engine detail; proposal-only facts remain non-executable.
 
 ## Guardrail
 
-Neither the 1971 User's Manual nor the newly identified 1967 Sections 2/3 reference authorizes Apollo 13 processor assignments, software revisions, loading procedures, telemetry routing, numerical cadence, acceptance tolerances, station-product changes, or executable constants. The April/May issue-date conflict likewise authorizes no technical inference.
+Neither the 1971 User's Manual nor the newly identified 1967 Sections 2/3 reference authorizes Apollo 13 processor assignments, software revisions, loading procedures, telemetry routing, numerical cadence, acceptance tolerances, station-product changes, or executable constants. The April/May issue-date conflict likewise authorizes no technical inference. Proposal 449 is an earlier proposed-design source and carries an additional acceptance/effectivity boundary.
 
 The existing causal-engine measurement/output layer and Causal Model Lab already satisfy the architectural consequence of the recovered output-dictionary evidence. Do not add duplicate runtime abstractions merely because another historical source now supports the same separation.
