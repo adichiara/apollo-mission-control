@@ -10,11 +10,21 @@ Status: active companion catalog to `LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`.
 - Original release scan remains to be recovered; current wording is constrained to NASA SP-4009's transcription and citation.
 - Do not convert six complexes into six DDP-224 processors or infer a per-simulator processor allocation.
 
+## Wichita State MS 87-08 — Tomayko archival procurement lead
+
+- Wichita State University Libraries Special Collections' finding aid for the Dr. James E. Tomayko Collection of NASA Documents (`MS 87-08`) states that Tomayko's NASA report *Computers in Spaceflight* was based on archival materials held in the collection.
+- **Box 40, FF 90** is cataloged as *News NASA. Contract Sets. Six Computers for Apollo Use.*
+- This is now the highest-value archival retrieval lead for testing the Honeywell award wording/date behind Tomayko's discussion.
+- The folder title is archival metadata only. Until the item is inspected, do not equate it with NASA News Release `66-254`, assign it a date, or interpret “Six Computers” as six DDP-224 processors.
+- Nearby Box 40 simulator records include FF 87 (*Lunar Module Mission Simulator Pamphlet*), FF 96 (*Subcontractors On Apollo and Lunar Mission Simulators*), FF 97 (*Mission Simulator Design in Support of Space Programs*), and FF 98 (*Information on Apollo Mission Simulator and Lunar Mission Simulator*).
+- Finding aid: https://specialcollections.wichita.edu/collections/ms/87-08/87-8-a.html
+
 ## Date discrepancy
 
 - NASA SP-4009: award dated **21 Sep. 1966**, citing NASA News Release `66-254` of that date.
 - Tomayko, *Computers in Spaceflight* (NASA-CR-182505, 1988): award dated **21 Jul. 1966**.
 - Preserve discrepancy pending recovery of the original news release and contracting record. The contemporaneous-release citation currently makes 21 Sep. the stronger retrieval lead, not a license to rewrite the later source.
+- Box 40 FF 90 supplies a concrete archival route for testing the discrepancy but does not itself resolve it.
 
 ## Relationship to deployed-topology evidence
 
@@ -28,7 +38,8 @@ Do not reconcile these counts arithmetically because they describe different uni
 
 ## Next retrieval
 
-1. NASA News Release `66-254`.
+1. Wichita State `MS 87-08`, Box 40 FF 90; compare the actual item with NASA News Release `66-254`.
 2. Honeywell award/contract and delivery/acceptance records defining the six complexes.
-3. `LMA-790-2-LMS` Volume I/Section 7 and program-loading/machine-assignment records.
-4. KSC/MSC configuration and property records identifying DDP-224 serial/function mappings.
+3. Box 40 FF 87/96/98 for LMS allocation/configuration leads.
+4. `LMA-790-2-LMS` Volume I/Section 7 and program-loading/machine-assignment records.
+5. KSC/MSC configuration and property records identifying DDP-224 serial/function mappings.
