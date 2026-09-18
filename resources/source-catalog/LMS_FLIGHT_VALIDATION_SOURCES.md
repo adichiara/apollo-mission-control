@@ -1,20 +1,29 @@
 # LMS flight-derived validation sources
 
-Status: **active source catalog; retain favorable, mismatch, and training-transfer evidence separately; qualitative unless a source supplies numerical comparison data**
+Status: **active source catalog; retain favorable, mismatch, training-transfer, and mission-specific operational evidence separately; qualitative unless a source supplies numerical comparison data**
 
 ## Purpose
 
-Track primary flight/postflight sources that compare Lunar Module Simulator / LM mission-simulation behavior or training transfer with the flown LM. This evidence class is separate from formal LMS acceptance/correlation documentation.
-
-Use these sources to identify:
-
-- simulator behavior families that NASA considered representative of flight;
-- domains where flight behavior departed from simulator expectation;
-- operational techniques that transferred from simulator training into flight;
-- operator-facing observables worth preserving in reusable model boundaries;
-- postflight cross-check targets for recovered LMS equations/configuration.
+Track primary flight/postflight sources that compare Lunar Module Simulator / LM mission-simulation behavior or training transfer with the flown LM. This evidence class is separate from formal LMS acceptance/correlation documentation. Mission-specific crew operational material may also be cataloged here as a cross-check on player-visible symptoms, but it does not establish simulator implementation.
 
 Do **not** convert qualitative phrases such as “nearly identical,” “high fidelity,” or “much more rapidly” into invented numerical tolerances.
+
+## Apollo 13 LM Malfunction Procedures — mission-specific operational cross-check
+
+- Document: **Apollo 13 LM Malfunction Procedures**
+- Flight Data File retrieval key: `SKB32100076-386`
+- Effectivity: Apollo 13; surviving-copy records expose March 16 / April 1, 1970 states, requiring page-level control/change verification.
+- Public preservation record: Virtual AGC records a digitization from James Lovell's original copy, added 6 March 2023: https://www.ibiblio.org/apollo/changes.html
+
+### Evidence use
+
+Once its own control pages are verified, use the checklist to test candidate **player-visible** Apollo 13 LM malfunction symptoms, caution/warning indications, crew troubleshooting branches, and phase restrictions. This provides a mission-specific operational boundary much closer to Apollo 13 than the 1967 LMS handbook.
+
+### Boundary
+
+The crew checklist does **not** establish LMS instructor controls, scripting syntax, internal failure representation, processor behavior, or whether a listed malfunction was LMS-injectable. Conversely, absence from a crew checklist does not prove absence from LMS instructor capability. Keep this evidence class separate from 1967 Volume II Section 2 **Malfunction Data** and Section 6 **Scripting Data Sheets**.
+
+Research record: `resources/research/325_apollo13_lm_malfunction_procedures_effectivity_anchor.md`.
 
 ## Apollo 9 Mission Report — AGS between-update degradation mismatch
 
@@ -43,14 +52,7 @@ Supports a domain-specific negative validation boundary:
 
 ### Boundary
 
-The passage does not establish:
-
-- the exact simulator site/configuration/revision;
-- the corresponding simulator-side variation under the same inputs;
-- a numerical flight or simulator degradation rate over a common interval;
-- the cause of the mismatch;
-- direct applicability to Apollo 13 LMS H-2;
-- that the mismatch belongs to a specific LMS mathematical-model component rather than sensor/state initialization/filtering/interface behavior.
+The passage does not establish the exact simulator site/configuration/revision, corresponding simulator-side variation under the same inputs, a numerical degradation rate over a common interval, the cause of the mismatch, direct Apollo 13 LMS H-2 applicability, or attribution to a specific LMS model component.
 
 Research record: `resources/research/236_apollo9_simulator_flight_mismatch_boundary.md`.
 
@@ -62,32 +64,7 @@ Research record: `resources/research/236_apollo9_simulator_flight_mismatch_bound
 - Primary NASA scan: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap14fj/pdf/a14_mission-report.pdf
 - Relevant sections: 9.8–9.9, lunar landing / powered descent.
 
-### Direct validation evidence
-
-The mission report states that:
-
-- the LMS **steering equations** and **torque-to-inertia ratio** were nearly identical to those of the actual vehicle;
-- the pilot's preflight training was therefore adequate for the vehicle response actually encountered during descent;
-- the **high fidelity of the simulator visual display**, together with training time, was a determining factor in recognizing the target landing point;
-- the LMS and LLTV more than adequately equipped the pilot for the manual landing task.
-
-### Evidence use
-
-Supports flight-derived qualitative validation of:
-
-1. guidance/steering behavior;
-2. rotational response coupling between torque and inertia;
-3. visual/terrain-recognition fidelity.
-
-### Boundary
-
-Does not provide:
-
-- equations or constants;
-- error bands, correlation residuals, or pass/fail tolerances;
-- configuration revision/effectivity mapping back to Apollo 13 H-2;
-- a global LMS integration timestep;
-- permission to import Apollo 14 values into Apollo 13 PC+2.
+The mission report states that the LMS steering equations and torque-to-inertia ratio were nearly identical to those of the actual vehicle; the pilot's preflight training was therefore adequate for the vehicle response encountered during descent; and the high fidelity of the simulator visual display, together with training time, was a determining factor in recognizing the target landing point. This is qualitative flight-derived validation, not a source of equations, constants, error bands, or Apollo 13 effectivity.
 
 Research record: `resources/research/234_apollo14_lms_flight_validation_boundary.md`.
 
@@ -96,60 +73,18 @@ Research record: `resources/research/234_apollo14_lms_flight_validation_boundary
 - Document: *Apollo 15 Mission Report*
 - Date: 1971
 - Public mission-report copy: https://an.rsl.wustl.edu/apollo/data/A15/resources/A15_MissionReport.pdf
-- Searchable mission-report presentation: https://apollojournals.org/alsj/a15/a15mr-9.htm
-- Relevant location: pilot's report / powered descent and landing.
+- Searchable presentation: https://apollojournals.org/alsj/a15/a15mr-9.htm
 
-### Direct validation evidence
-
-The report states that, based on **preflight experience with visual simulator displays**, descent rates appeared completely nominal and comfortable. It also states that the combination of **visual simulations** and LLTV flying provided excellent training for the manual portion of the lunar landing.
-
-### Evidence use
-
-Supports flight-derived qualitative validation of:
-
-1. visual-simulation transfer into descent-rate expectation;
-2. visual simulation as part of manual-landing preparation.
-
-### Boundary
-
-This does not establish:
-
-- numerical visual/display correlation tolerances;
-- LMS-only attribution, because the report also credits LLTV training;
-- exact visual-system configuration/effectivity;
-- Apollo 13 H-2 applicability.
-
-Research synthesis: `resources/research/234_apollo14_lms_flight_validation_boundary.md`.
+The report states that, based on preflight experience with visual simulator displays, descent rates appeared nominal and comfortable, and credits visual simulations plus LLTV flying with excellent manual-landing training. This does not establish numerical visual/display tolerances, LMS-only attribution, exact configuration, or Apollo 13 applicability.
 
 ## Apollo 17 Mission Report — landing technique transfer
 
 - Document: *Apollo 17 Mission Report*
 - NTRS ID: `19730015117`
 - Date: 1973
-- NTRS record: https://ntrs.nasa.gov/citations/19730015117
-- Relevant location: lunar landing narrative, p. 10-12.
+- NTRS: https://ntrs.nasa.gov/citations/19730015117
 
-### Direct validation evidence
-
-The mission report attributes the comfortable/safe manual landing approach partly to LMS training and partly to LLTV training. It also records that the Commander's technique of dividing attention between outside visual references and in-cockpit velocity/attitude displays was a technique practiced in the LMS and LLTV.
-
-### Evidence use
-
-Supports flight-derived qualitative validation of:
-
-1. operational transfer of instrument/out-the-window attention technique;
-2. LMS contribution to manual landing preparation.
-
-### Boundary
-
-This does not establish:
-
-- mathematical equivalence of Apollo 17 LMS and vehicle dynamics;
-- numerical display/visual tolerances;
-- LMS-only attribution, because the report explicitly also credits LLTV training;
-- Apollo 13 H-2 configuration applicability.
-
-Research synthesis: `resources/research/234_apollo14_lms_flight_validation_boundary.md`.
+The report attributes comfortable/safe manual-landing preparation partly to LMS and partly to LLTV training, including the practiced division of attention between outside references and cockpit velocity/attitude displays. It does not establish mathematical equivalence, numerical tolerances, LMS-only attribution, or Apollo 13 applicability.
 
 ## Apollo Program Summary Report — program-level synthesis
 
@@ -157,17 +92,8 @@ Research synthesis: `resources/research/234_apollo14_lms_flight_validation_bound
 - Report: JSC-09423 / NASA-TM-X-68725
 - Date: April 1975
 - NTRS: https://ntrs.nasa.gov/citations/19750013242
-- Relevant location: flight-crew training summary, section 6.1.2, approximately p. 6-8.
 
-### Direct validation evidence
-
-The report states at program level that **all lunar module crews** found the LMS and LLTV control-system responses representative of flight hardware, and that the high-fidelity visual landing/ascent presentation together with those trainers provided excellent training for the manually controlled final landing phase.
-
-It also records that training simulations demonstrated manual landing capability under degraded guidance/landing-radar conditions, including cases without landing radar, within Mission Control 3-sigma altitude/targeting dispersion criteria.
-
-### Boundary
-
-The cited summary passage does not provide the numerical 3-sigma values, simulator configuration/effectivity, or a numerical LMS-vs-flight residual. It therefore remains qualitative for this project unless the underlying criteria are separately recovered.
+The report states at program level that all lunar module crews found LMS and LLTV control-system responses representative of flight hardware, and credits high-fidelity visual landing/ascent presentation with excellent final-landing training. It also records training simulations demonstrating manual landing under degraded guidance/landing-radar conditions within Mission Control 3-sigma criteria, but does not provide those numerical values in the cited passage.
 
 ## Relationship to engineering acceptance evidence
 
@@ -182,4 +108,4 @@ Canonical distinction:
 
 versus
 
-`flight-derived validation = favorable comparison, mismatch, or operational/training transfer unless source-defined numerical comparison data are recovered`.
+`flight-derived/mission-operational validation = favorable comparison, mismatch, operational/training transfer, or period symptom/procedure constraint unless source-defined numerical comparison data are recovered`.
