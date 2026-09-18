@@ -16,6 +16,8 @@ Research 317 checks the primary index schema itself. Its `TYPICAL CITATION` key 
 
 Research 318 verifies that the earlier Link Group/General Precision LMS mathematical-model source is **Proposal No. 449**, dated 13 April 1964 and submitted to Grumman under RFP NOLVR-440-43100. Its own restrictive-data legend makes the proposal/evaluation status explicit. It therefore cannot independently raise station maturity or establish delivered/Apollo 13 simulator behavior.
 
+Research 319 directly checked the Volume I retrieval gate. NASA/KSC `GP-642` entry 346 identifies Grumman `LMA 790-2-LMS`, Volume I as **Simulator Description**, dated 1 April 1967. A public 150 MB `lms_instructors_handbook_vol1.pdf` candidate exists, but its internal document-control pages could not be inspected in the current retrieval path. It remains a high-confidence candidate, not page-verified `67-14186` evidence.
+
 ## Documented
 
 - Section 2 is cataloged as **Malfunction Data** (3 folders).
@@ -23,7 +25,8 @@ Research 318 verifies that the earlier Link Group/General Precision LMS mathemat
 - The NASA/MSC engineering memorandum independently establishes the section pair/report family/date and shows it was used as an engineering reference.
 - NASA/MSC AETI defines the disputed bibliographic field as **issue date**.
 - Both 1 April and 15 May 1967 remain source-backed retrieval keys because NASA/MSC records conflict on the issue date.
-- Proposal 449 is now provenance-controlled as a **1964 proposed-design source**, not accepted configuration evidence.
+- Proposal 449 is provenance-controlled as a **1964 proposed-design source**, not accepted configuration evidence.
+- NASA/KSC `GP-642` directly identifies Volume I as **Simulator Description**; the public scan still requires internal-page identity verification.
 
 ## Still unsupported
 
@@ -38,6 +41,7 @@ Until the section folders and document-control pages are recovered and reviewed,
 - Apollo 13 station products or simulator effectivity;
 - numerical cadence, causal-engine constants, or validation tolerances;
 - whether 15 May represents a revision/reissue or whether any technical content changed after 1 April;
-- that any Proposal 449 equation, interface, timing, or allocation survived unchanged into the delivered LMS.
+- that any Proposal 449 equation, interface, timing, or allocation survived unchanged into the delivered LMS;
+- that filename/title compatibility alone proves the public Volume I scan is accession `67-14186`.
 
-The archival titles, issue-date controls, and proposal provenance improve retrieval precision; they do not authorize player-facing or runtime behavior.
+The archival titles, issue-date controls, proposal provenance, and Volume I candidate improve retrieval precision; they do not authorize player-facing or runtime behavior.
