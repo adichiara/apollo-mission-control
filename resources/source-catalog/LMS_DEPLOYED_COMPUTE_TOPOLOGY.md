@@ -2,7 +2,7 @@
 
 Status: active source catalog for deployed Lunar Module Simulator computer-complex evidence.
 
-Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/244_lms_three_machine_guidance_allocation.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`, `resources/research/239_lms_handbook_archival_identity_retrieval_key.md`, `resources/research/240_lms_handbook_digitized_candidate_identity_gate.md`
+Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/302_lms_three_machine_guidance_allocation.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`, `resources/research/239_lms_handbook_archival_identity_retrieval_key.md`, `resources/research/240_lms_handbook_digitized_candidate_identity_gate.md`
 
 ## NASA TN D-7112 — *Apollo Experience Report — Simulation of Manned Space Flight for Crew Training*
 
