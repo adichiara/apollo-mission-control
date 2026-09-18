@@ -2,7 +2,7 @@
 
 Status: active source catalog for deployed Lunar Module Simulator computer-complex and related visual-system evidence.
 
-Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/302_lms_three_machine_guidance_allocation.md`, `resources/research/304_ksc_lms2_ddp224_post_apollo_disposition.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`, `resources/research/239_lms_handbook_archival_identity_retrieval_key.md`, `resources/research/240_lms_handbook_digitized_candidate_identity_gate.md`, `resources/research/241_lms_handbook_nasa_bibliography_crosswalk.md`, `resources/research/242_lms_mep_program_review_archival_key.md`, `resources/research/243_lms_mep_film_graphics_primary_source.md`, `resources/research/244_farrand_mep_1964_primary_architecture.md`, `resources/research/245_lms_near_body_visual_primary_architecture.md`, `resources/research/246_lms_mep_august_1967_procurement_boundary.md`
+Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/302_lms_three_machine_guidance_allocation.md`, `resources/research/304_ksc_lms2_ddp224_post_apollo_disposition.md`, `resources/research/305_lms2_ksc_site_identity.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`, `resources/research/239_lms_handbook_archival_identity_retrieval_key.md`, `resources/research/240_lms_handbook_digitized_candidate_identity_gate.md`, `resources/research/241_lms_handbook_nasa_bibliography_crosswalk.md`, `resources/research/242_lms_mep_program_review_archival_key.md`, `resources/research/243_lms_mep_film_graphics_primary_source.md`, `resources/research/244_farrand_mep_1964_primary_architecture.md`, `resources/research/245_lms_near_body_visual_primary_architecture.md`, `resources/research/246_lms_mep_august_1967_procurement_boundary.md`
 
 ## NASA TN D-7112 — *Apollo Experience Report — Simulation of Manned Space Flight for Crew Training*
 
@@ -19,6 +19,14 @@ Related research: `resources/research/235_lms_deployed_compute_topology_boundary
 - States that **two DDP-224 systems used as Flight Crew Training Simulators (LMS-2 system) during Apollo** would be reused as I/O processors and main-memory storage devices for the KSC SUMC breadboard.
 - Use as post-Apollo survivor/disposition evidence tying DDP-224 hardware directly to KSC LMS-2.
 - Do not treat the two retained systems as a complete Apollo-era LMS machine count or infer which workloads/machines survived. This source does not contradict TN D-7112's three-machine functional architecture because it does not claim to enumerate all former LMS-2 computers.
+
+## Apollo 11 Activity Planning Guide — LMS-2 site identity
+
+- NASA Flight Crew Operations training material, prepared by Training Coordinator Lloyd Reeder, 9 May 1969, `HSI-208973`; contemporaneous primary operational/training record.
+- NASA-hosted scan: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11CrewTraining.pdf
+- The 19 May schedule explicitly pairs `LOI Sim-KSC` with `LMS #2`; surrounding entries distinguish LMS #1 and LMS #2 as separate simulator resources.
+- Supports **LMS-2 = KSC** for the May 1969 operational context and independently strengthens the site interpretation of the 1973 KSC disposition record.
+- Does not establish LMS-2 computer count, DDP-224 serials/functions, program allocation, or Apollo 13 effectivity.
 
 ## MSC-APOLLO-4 — *Apollo Engineering and Technology Index*, Vol. I
 
@@ -82,7 +90,7 @@ Related research: `resources/research/235_lms_deployed_compute_topology_boundary
 
 ## Evidence boundary
 
-Mature LMS functional architecture is strongly supported as three machines, one dedicated to onboard-guidance-computer simulation. The 1973 KSC report separately proves that two LMS-2-provenance DDP-224 systems survived into a documented reuse plan. It does **not** enumerate the complete Apollo-era LMS-2 computer set. The original two workloads and Jackson's fourth-machine observation remain unresolved.
+Mature LMS functional architecture is strongly supported as three machines, one dedicated to onboard-guidance-computer simulation. A contemporaneous Apollo 11 training guide independently establishes LMS-2 as the KSC simulator in May 1969. The 1973 KSC report separately proves that two LMS-2-provenance DDP-224 systems survived into a documented reuse plan. It does **not** enumerate the complete Apollo-era LMS-2 computer set. The original two workloads and Jackson's fourth-machine observation remain unresolved.
 
 The visual evidence forms separated chronological anchors: 1964 Farrand design; July 1967 unrecovered Grumman program review; August 1967 synthesis-level Farrand specification problem/Itek study selection; late-1967/1969 MEP film-content work; and TN D-7112 mature LMS architecture. Do not collapse these into one unchanged hardware configuration.
 
@@ -90,7 +98,7 @@ The August 1967 record specifically distinguishes **study procurement** from har
 
 ## Architecture use
 
-Use recovered evidence to constrain system decomposition, not constants. Keep functional architecture, physical-room observations, and post-program disposition as distinct evidence layers. Do not derive causal-domain count, program ownership, update cadence, integration step, product latency, hardware vendor succession, or Apollo 13 effectivity without applicable evidence.
+Use recovered evidence to constrain system decomposition and site identity, not constants. Keep functional architecture, site/identifier crosswalks, physical-room observations, and post-program disposition as distinct evidence layers. Do not derive causal-domain count, program ownership, update cadence, integration step, product latency, hardware vendor succession, or Apollo 13 effectivity without applicable evidence.
 
 ## Next targets
 
