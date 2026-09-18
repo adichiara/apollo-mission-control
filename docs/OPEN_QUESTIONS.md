@@ -49,6 +49,11 @@ Historical gaps should now be prioritized by scenario impact. An unresolved arch
 21. Should the simulated display preserve original aspect/character geometry exactly and use pan/zoom when necessary?
 22. **RESOLVED for first playable:** modern join/rejoin, station-set persistence, compact substation switching, and facilitator authentication live outside the historical station-information model and are explicitly labeled project infrastructure. See notes 080, 087–093.
 23. **RESOLVED for the initial first-playable packet structure:** use separate common-context, original-station, rule/criterion, nominal phase/procedure, and modern client-operation sections; compact players retain separate original-station sheets. This is a project adaptation, not an Apollo handout reconstruction. Player-facing usability validation is deferred until the simulation architecture is further developed. See notes 096–097 and `docs/testing/PC2_PLAYER_REFERENCE_PACKET.md`.
+24A. What phone presentation strategy best preserves at-a-glance scanning for dense controller products: phone-adapted stable layouts, authentic format crops, one-format-at-a-time switching, or controlled pan/zoom? Test with fixed information content before accepting a final rule. See research note 313.
+24B. Which controls in the current player client are validation scaffolding rather than final controller actions? In particular, branch-specific malfunction buttons, automated evidence-assessment controls, and developer-facing provenance labels must not become final UI by inertia. See research note 313.
+24C. What general controller communication/recommendation interaction can preserve semantic audit events without exposing scenario-specific solution buttons?
+24D. At what product/update cadence does the current one-second browser polling become player-visible enough to require SSE/WebSockets or another push mechanism? Decide from station-product needs, not technology preference.
+24E. How should compact-role inactive substations expose neutral update awareness without creating unsolicited anomaly hints?
 
 ## Operations
 
