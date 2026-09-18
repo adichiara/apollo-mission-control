@@ -47,7 +47,7 @@ class PlayerInteractionLabContractTests(unittest.TestCase):
 
     def test_lab_does_not_render_developer_model_metadata(self):
         self.assertNotIn("source_layer", self.html)
-        self.assertNotIn("provenance", self.html)
+        self.assertNotIn("f.provenance", self.html)
         self.assertNotIn("f.validity", self.html)
         self.assertIn("deliberately omits model provenance", self.html)
 
