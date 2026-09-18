@@ -77,15 +77,16 @@ The output-definition layer should be inspectable and profile-driven. It should 
 
 This source strengthens existing truth/observation boundaries in tracking observation, landing-radar qualification, resource→power→observation composition, source-state injections, and malfunction-plan insertion layers.
 
-The next reusable abstraction should unify these ideas into an inspectable measurement/output-definition contract rather than creating another scenario-specific telemetry shortcut.
+That reusable abstraction is now implemented in `src/apollo_mission_control/measurement_output_model.py`, with mission/profile data separated in `measurement_profiles.py` and a site-facing historical-measurement proof in the Causal Model Lab. This source therefore now serves as historical support and a regression constraint on that existing boundary rather than as a request for another abstraction.
 
 ## 8. Next extraction targets
 
 1. Obtain a reliably renderable/text-extractable copy of the full LMS Console Directory.
 2. Extract representative analog, event, and redundant-channel rows.
 3. Determine whether measurement definitions reference model-variable names that can be matched to LMS math/instructor-handbook variables.
-4. Recover the 2025 LMS user's manual and determine how the console directory was used operationally.
-5. Cross-check any candidate Apollo 13 measurement against LM-7/H-2 telemetry/configuration sources before adopting historical IDs/channels.
+4. Extract the now-located 1971 `LMS User's Manual` for program-loading, computer-operation, and peripheral-use evidence; see research note 312.
+5. Determine whether the User's Manual explicitly references the Console Directory or its measurement/output identifiers.
+6. Cross-check any candidate Apollo 13 measurement against LM-7/H-2 telemetry/configuration sources before adopting historical IDs/channels.
 
 ## Evidence boundary
 

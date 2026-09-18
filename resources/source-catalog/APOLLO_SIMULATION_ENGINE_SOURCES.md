@@ -214,6 +214,19 @@ The project still should not claim recovery of the complete Apollo simulator sof
 - Critical boundary: the object record does not establish `NAS9-8634` procurement scope, MEP/EVDE responsibility, Farrand/Kollsman succession, Apollo 13 effectivity, Section 7 mapping, or Mission Control routing.
 - Research record: `resources/research/230_kollsman_ksc_lms_aot_provenance.md`.
 
+
+## LMS User's Manual — operational-computing source
+
+- Public scan: https://www.ibiblio.org/apollo/Documents/LMS_Users_Manual.pdf
+- Virtual AGC discovery/index: https://www.ibiblio.org/apollo/Documents/
+- Virtual AGC change log: https://www.ibiblio.org/apollo/changes.html
+- Search-index identification: Volume 1, Update #34, 22 October 1971.
+- Indexed content includes a DDP-oriented `TABLE 3-1 PERIPHERAL DEVICE CODES` covering magnetic-tape, character, typewriter, and card-device categories.
+- Evidence use: mature LMS user/operator computing practice; high-value retrieval target for program loading/initialization, computer/peripheral operation, and possible machine/program references.
+- Status: direct public scan located; page-level extraction remains incomplete because the 89 MB PDF exceeds the current viewer limit.
+- Key boundary: this is late-1971 evidence. It does not by itself establish Apollo 13 processor assignment, program revisions, common-memory mapping, loading procedure, telemetry routing, numerical cadence, or acceptance tolerances.
+- Research record: `resources/research/312_lms_users_manual_operational_computing_lead.md`.
+
 ## LMS Console Directory — output/telemetry definition source
 
 - Date: 13 August 1971.
