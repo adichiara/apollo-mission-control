@@ -1,6 +1,6 @@
 # LMS handbook retrieval source catalog
 
-Status: active companion catalog to `LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`. Updated through research 327.
+Status: active companion catalog to `LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`. Updated through research 328.
 
 ## `LMA-790-2-LMS` — NASA bibliographic control
 
@@ -64,13 +64,15 @@ Primary/public records:
 
 A separately surviving 1 April 1970 **FINAL CHANGE A** quarters/training copy is a later document state. Its technical delta from the 16 March FINAL state remains unrecovered and must not be merged into the Lovell scan without page-level comparison.
 
+Research 328 begins the requested page/tab inventory. Indexed OCR from the primary Lovell scan directly exposes **AGS, CES, DPS, and RCS** labels. A secondary artifact description of another 16 March copy of the same part number gives the fuller provisional inventory **G&C Displays, PGNS, AGS, CES, DPS, APS, RCS, EPS, COMM, ECS, ED, HTRS, Camera, EMU**. Only the labels directly exposed by the primary scan are presently promoted as direct scan observations; the fourteen-label list remains provisional until S/N 1001 tabs/pages can be inspected directly.
+
 Use the controlled 16 March source to corroborate **player-visible Apollo 13 LM symptoms, caution/warning indications, crew troubleshooting branches, and phase restrictions**, preserving any page-specific dates/change markings encountered. Do not use it to infer LMS instructor controls, scripting syntax, internal failure representation, or whether a malfunction was injectable in the LMS.
 
 The contemporaneous NASA H-2 mission-technique series (January-April 1970) remains an independent cross-check for mission phase and operational applicability.
 
 ## Apollo 13 simulation failure-planning evidence
 
-Research 327 adds a primary Apollo 13-period operational source for scenario-design constraints:
+Research 327 consolidates a primary Apollo 13-period operational constraint already represented in the station research:
 
 - NASA Flight Control Division, *Mission Operations Report — Apollo 13*, **28 April 1970**.
 - NASA: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf
@@ -88,7 +90,7 @@ This catalog controls retrieval identity and evidence scope. Bibliographic recor
 
 1. `67-14186` / public Volume I candidate — inspect title/revision/effectivity pages first.
 2. Section 2 — **Malfunction Data** — request the three Avitabile folders.
-3. Apollo 13 `SKB32100076-386` — page-extract the controlled **16 Mar. 1970 FINAL** state; inventory malfunction symptom/procedure headings and preserve page-specific markings.
+3. Apollo 13 `SKB32100076-386` — continue page extraction of the controlled **16 Mar. 1970 FINAL** state; first verify the provisional tab inventory against S/N 1001, then inventory symptom/procedure headings and page-specific markings tab-by-tab.
 4. Cross-check candidate scenario failures against Apollo 13-period operational procedures and research 327's failure-scope/negative-training constraints.
 5. Compare the 16 Mar. FINAL and 1 Apr. FINAL CHANGE A states if page-level access to both becomes available; recover the actual delta before using Change A material.
 6. `67-16127` — Section 7, **Simulator Output Tables**; inspect its own document-control pages before technical use.
@@ -99,4 +101,4 @@ This catalog controls retrieval identity and evidence scope. Bibliographic recor
 
 For `67-14186`/`67-14187`, include both 1 Apr. and 15 May 1967 in archive searches; for `67-14188`, use 1 Apr. 1967; for `67-16127`, use 1 Jul. 1967.
 
-Cross-references: research 310, 311, 317, 319, 322, 323, 324, 325, 326, **327**, 220, 313, and 315.
+Cross-references: research 310, 311, 317, 319, 322, 323, 324, 325, 326, 327, **328**, 220, 313, and 315.
