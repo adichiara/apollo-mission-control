@@ -17,14 +17,17 @@ The finding aid also explicitly describes a Volume II **Simulator Operation (Cha
 
 Research 325 added the digitized **Apollo 13 LM Malfunction Procedures** from James Lovell's original copy as a mission-specific operational corroboration target. Research 326 now controls that public scan's state directly: its indexed cover text identifies part number `SKB32100076-386`, status **FINAL**, dated **16 March 1970**. NASA's Apollo 13 final stowage list independently identifies the same part number as LM Malfunction Procedures in the LM Flight Data File. The separately documented 1 April 1970 **FINAL CHANGE A** quarters/training copy is therefore a later state, not the state of the public Lovell scan; its technical delta remains unrecovered.
 
+Research 327 adds a separate Apollo 13-period simulation-design constraint from NASA Flight Control Division's 28 April 1970 *Mission Operations Report*. Its simulation lessons explicitly warn against allowing mistakes to create **negative training**, explain that different failure scopes can require different malfunction procedures, and say failures should be planned carefully so the appropriate procedures are exercised. This supports scenario validation of **failure -> observable consequence -> applicable procedure/decision path**, but does not identify LMS injection controls or prove any particular LM failure was simulator-injectable.
+
 Retrieval consequences:
 
 - Section 2 remains the highest-value direct-content target for **LMS instructor-side** malfunction definitions/insertion.
 - Apollo 13 `SKB32100076-386` can now be page-extracted under a controlled **16 March 1970 FINAL** state for **player-visible** LM symptoms and crew troubleshooting behavior.
 - Preserve page-specific dates/change markings during extraction; do not merge 1 April Change A material into the 16 March state.
 - Section 6 remains the specific two-folder target for historical scripting/failure-insertion abstractions.
+- Scenario authoring should preserve failure scope and exercise the intended operational procedure; simulation artifacts should not be retained when they would teach the wrong response.
 - April/May Sections 1/4 should be compared page-for-page before assigning the archival **Changed** label to technical behavior.
-- Crew malfunction procedures must not be used to infer LMS scripting syntax, instructor controls, internal failure representation, or whether a malfunction was simulator-injectable.
+- Crew malfunction procedures and the mission-report simulation lesson must not be used to infer LMS scripting syntax, instructor controls, internal failure representation, or whether a malfunction was simulator-injectable.
 - MSC accession identifier(s) for Sections 2/3, technical contents, program/machine ownership, and Apollo 13 LMS effectivity remain unresolved.
 
 No simulator architecture, processor allocation, station maturity, model constant, or executable behavior changed.
