@@ -1827,6 +1827,12 @@ def index() -> FileResponse:
     return FileResponse(WEB_ROOT / "index.html")
 
 
+@app.get("/player-lab", include_in_schema=False)
+def player_interaction_lab() -> FileResponse:
+    """Non-final FLIGHT/CAPCOM player-interaction prototype."""
+    return FileResponse(WEB_ROOT / "player_lab.html")
+
+
 @app.get("/admin", include_in_schema=False)
 def admin_console() -> FileResponse:
     """Facilitator/SimSup validation console; API operations require authority."""
