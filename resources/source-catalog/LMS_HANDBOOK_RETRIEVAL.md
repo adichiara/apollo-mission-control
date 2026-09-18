@@ -1,6 +1,6 @@
 # LMS handbook retrieval source catalog
 
-Status: active companion catalog to `LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`. Updated through research 326.
+Status: active companion catalog to `LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`. Updated through research 327.
 
 ## `LMA-790-2-LMS` — NASA bibliographic control
 
@@ -68,22 +68,35 @@ Use the controlled 16 March source to corroborate **player-visible Apollo 13 LM 
 
 The contemporaneous NASA H-2 mission-technique series (January-April 1970) remains an independent cross-check for mission phase and operational applicability.
 
+## Apollo 13 simulation failure-planning evidence
+
+Research 327 adds a primary Apollo 13-period operational source for scenario-design constraints:
+
+- NASA Flight Control Division, *Mission Operations Report — Apollo 13*, **28 April 1970**.
+- NASA: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a13/A13_MissionOpReport.pdf
+- NTRS: https://ntrs.nasa.gov/api/citations/19710010485/downloads/19710010485.pdf
+
+Its simulation lessons state that simulation mistakes should be corrected promptly to avoid **negative training**; that malfunction procedures depend on the failure actually present, with different loss scopes potentially requiring different procedures; and that failures should therefore be planned carefully so the appropriate procedures can be exercised.
+
+Evidence use: this supports historical scenario-authoring and validation rules at the operational level — especially **failure -> observable consequence -> applicable procedure/decision path**. It does not document LMS instructor controls, scripting syntax, internal failure representation, or prove that a specific LM malfunction was simulator-injectable.
+
 ## Evidence use
 
-This catalog controls retrieval identity and evidence scope. Bibliographic records and archival arrangement do not establish DDP-224 count/allocation, program ownership, common-memory organization, visual interfaces, site effectivity, Apollo 13 LMS configuration, scripting syntax, malfunction definitions, or numerical constants. Sections 5/6 (`67-14188`) and Section 7 (`67-16127`) are distinct document-control units; neither accession's date establishes the other's effectivity. Apollo 13 crew malfunction procedures constrain operational behavior only and do not establish simulator implementation.
+This catalog controls retrieval identity and evidence scope. Bibliographic records and archival arrangement do not establish DDP-224 count/allocation, program ownership, common-memory organization, visual interfaces, site effectivity, Apollo 13 LMS configuration, scripting syntax, malfunction definitions, or numerical constants. Sections 5/6 (`67-14188`) and Section 7 (`67-16127`) are distinct document-control units; neither accession's date establishes the other's effectivity. Apollo 13 crew malfunction procedures constrain operational behavior only and do not establish simulator implementation. Apollo 13 simulation lessons constrain exercise design, not LMS capability.
 
 ## Retrieval order
 
 1. `67-14186` / public Volume I candidate — inspect title/revision/effectivity pages first.
 2. Section 2 — **Malfunction Data** — request the three Avitabile folders.
 3. Apollo 13 `SKB32100076-386` — page-extract the controlled **16 Mar. 1970 FINAL** state; inventory malfunction symptom/procedure headings and preserve page-specific markings.
-4. Compare the 16 Mar. FINAL and 1 Apr. FINAL CHANGE A states if page-level access to both becomes available; recover the actual delta before using Change A material.
-5. `67-16127` — Section 7, **Simulator Output Tables**; inspect its own document-control pages before technical use.
-6. Section 6 — **Scripting Data Sheets** — request the two Avitabile folders if historical instructor scripting/failure-insertion abstractions remain unresolved.
-7. Section 3 — **Lunar-landing Mission Procedures** — request the four Avitabile folders.
-8. `67-14187` / Sections 1 and 4 — compare April and May control/body pages; use the archival **Changed** label without inventing a revision number or delta.
-9. `67-14188` / Section 5 **Instructor Material** and Section 6 **Scripting Data Sheets**; use **1 Apr. 1967** as the recovered NASA issue-date key and inspect control/change pages before technical use.
+4. Cross-check candidate scenario failures against Apollo 13-period operational procedures and research 327's failure-scope/negative-training constraints.
+5. Compare the 16 Mar. FINAL and 1 Apr. FINAL CHANGE A states if page-level access to both becomes available; recover the actual delta before using Change A material.
+6. `67-16127` — Section 7, **Simulator Output Tables**; inspect its own document-control pages before technical use.
+7. Section 6 — **Scripting Data Sheets** — request the two Avitabile folders if historical instructor scripting/failure-insertion abstractions remain unresolved.
+8. Section 3 — **Lunar-landing Mission Procedures** — request the four Avitabile folders.
+9. `67-14187` / Sections 1 and 4 — compare April and May control/body pages; use the archival **Changed** label without inventing a revision number or delta.
+10. `67-14188` / Section 5 **Instructor Material** and Section 6 **Scripting Data Sheets**; use **1 Apr. 1967** as the recovered NASA issue-date key and inspect control/change pages before technical use.
 
 For `67-14186`/`67-14187`, include both 1 Apr. and 15 May 1967 in archive searches; for `67-14188`, use 1 Apr. 1967; for `67-16127`, use 1 Jul. 1967.
 
-Cross-references: research 310, 311, 317, 319, 322, 323, 324, 325, **326**, 220, 313, and 315.
+Cross-references: research 310, 311, 317, 319, 322, 323, 324, 325, 326, **327**, 220, 313, and 315.
