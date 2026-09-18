@@ -16,6 +16,8 @@ Date: 2026-09-18
 - Corrected the LMS retrieval catalog to carry forward research 317's result that 1 April and 15 May are conflicting NASA/MSC **issue-date** records, rather than dates of unspecified administrative meaning.
 - Research 320 directly rechecked the 1971 manual. Its primary scan's indexed cover text confirms **Update #34**, **22 October 1971**, **LMS User's Manual**, **Volume 1**. Full page extraction remains blocked by the 92.8 MB object in the current fetch path, so no machine/program/loading claim was promoted from snippets.
 - Research 321 tightened the effectivity rule around that source: because the surviving manual explicitly identifies itself as **Update #34** dated 22 October 1971, its interior procedures must be treated as a controlled late-program document state. Until change/update pages or Apollo-13-period issues establish continuity, no 1971 procedure may be silently back-projected to Apollo 13.
+- Research 322 verified from the primary NASA/MSC Corporate Author Index that Volume II Section 7 is separately accessioned as **67-16127**, issued **1 July 1967**, and titled **Simulator Output Tables**. The retrieval catalog and roadmap now treat it as a separate issue and use its own date/effectivity control rather than folding it into the April/May records.
+- Fixed the retrieval-order inconsistency between roadmap and source catalog: `67-16127` now precedes the Section 2/3 archival-folder requests in both.
 
 ## Result
 
@@ -23,7 +25,8 @@ The next direct-computing research target remains separated into complementary d
 
 1. **1964 Proposal 449** — proposed LMS mathematical-model/design lineage; useful for vocabulary, flow architecture, and forward comparison, but non-executable without later corroboration.
 2. **1967 Instructor Handbook Volume I** — subsystem-simulation description and deployed architecture; exact public-scan identity still requires its internal title/revision-page confirmation.
-3. **1971 LMS User's Manual** — operator/program/computer-peripheral practice; cover identity is directly confirmed, but substantive computing claims require page extraction and remain too late to establish Apollo 13 configuration by themselves. Its Update #34 status makes front-matter/change-history extraction the first page-level task.
+3. **1967 Volume II Section 7** — separately issued 1 July 1967 Simulator Output Tables; exact accession is controlled, but technical contents and later effectivity require direct recovery.
+4. **1971 LMS User's Manual** — operator/program/computer-peripheral practice; cover identity is directly confirmed, but substantive computing claims require page extraction and remain too late to establish Apollo 13 configuration by themselves. Its Update #34 status makes front-matter/change-history extraction the first page-level task.
 
 No causal-engine constants, processor assignments, station maturity, or historical runtime behavior changed in this pass.
 
@@ -32,7 +35,7 @@ No causal-engine constants, processor assignments, station maturity, or historic
 - obtain the first document-control pages of the 150 MB Volume I candidate through a large-file-capable retrieval path;
 - compare exact report number/title/revision/effectivity against `67-14186`, `NAS9-1100`, and both NASA/MSC issue dates;
 - page-extract the LMS User's Manual, **starting with its update/change record**, then search for explicit machine/program ownership, common-memory use, and loading/initialization procedures using the ordered terms in research 320;
-- classify every recovered Update #34 technical statement as 1971-only, earlier-source-corroborated generic architecture, or Apollo-13-applicable only with period effectivity evidence;
-- continue to `67-16127` Section 7 for simulator-output ownership/routing;
+- retrieve `67-16127` Section 7 using the exact **1 July 1967** issue-date key and inspect its own document-control pages before extracting output ownership/routing facts;
+- recover Sections 2 and 3 from the Avitabile folders after Section 7;
 - compare any Proposal 449 model detail forward against 1965/1967 accepted or operational documentation before implementation;
 - only then promote sourced facts into the causal-engine historical profiles or Causal Model Lab.
