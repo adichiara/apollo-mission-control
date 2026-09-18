@@ -18,10 +18,12 @@ Research 318 places the earlier LMS mathematical-model proposal under exact prov
 
 Research 319 attempted the highest-priority Volume I identity gate. Primary NASA/KSC `GP-642` entry 346 directly identifies Grumman `LMA 790-2-LMS` Volume I as **Simulator Description**, dated 1 April 1967. Virtual AGC exposes a 150 MB `lms_instructors_handbook_vol1.pdf` candidate, but its internal title/control pages remain unread in the current retrieval path. Filename/title compatibility is therefore not yet page-verified identity with `67-14186`.
 
+Research 320 then attacked the mature-LMS User's Manual extraction gate. The primary scan's indexed cover text directly confirms **Update #34 / 22 October 1971 / LMS User's Manual / Volume 1**. The current fetch path rejects the full 92.8 MB object, however, so machine/program/loading/common-memory claims remain gated on page extraction rather than search snippets.
+
 ## Open gates, in order
 
 1. Obtain the first document-control pages of the 150 MB 1967 Volume I candidate using a retrieval path that can handle the object; verify exact report number/title/revision/effectivity against `LMA-790-2-LMS` / `67-14186` and the conflicting 1 April / 15 May **issue-date** records.
-2. Page-extract the 1971 User's Manual and search for explicit program loading, initialization, DDP-224/machine identifiers, common-memory use, and LMS-specific peripheral operation.
+2. Page-extract the 1971 User's Manual with a large-file-capable path and search for explicit program loading, initialization, DDP-224/machine identifiers, common-memory use, and LMS-specific peripheral operation. Research 320 defines the search order and evidence boundary.
 3. Retrieve `67-16127` Section 7 for simulator-output ownership/interface mapping.
 4. Recover Volume II Section 2 — **Malfunction Data** — from the three Avitabile folders and extract only explicit malfunction/model/insertion relationships.
 5. Recover Volume II Section 3 — **Lunar-landing Mission Procedures** — from the four Avitabile folders.
@@ -32,6 +34,6 @@ Research 319 attempted the highest-priority Volume I identity gate. Primary NASA
 
 ## Guardrail
 
-Neither the 1971 User's Manual nor the newly identified 1967 Sections 2/3 reference authorizes Apollo 13 processor assignments, software revisions, loading procedures, telemetry routing, numerical cadence, acceptance tolerances, station-product changes, or executable constants. The April/May issue-date conflict likewise authorizes no technical inference. Proposal 449 is an earlier proposed-design source and carries an additional acceptance/effectivity boundary. Research 319 also confirms that a public filename/title match is not a substitute for reading the scan's own document-control pages.
+Neither the 1971 User's Manual nor the newly identified 1967 Sections 2/3 reference authorizes Apollo 13 processor assignments, software revisions, loading procedures, telemetry routing, numerical cadence, acceptance tolerances, station-product changes, or executable constants. The April/May issue-date conflict likewise authorizes no technical inference. Proposal 449 is an earlier proposed-design source and carries an additional acceptance/effectivity boundary. Research 319 also confirms that a public filename/title match is not a substitute for reading the scan's own document-control pages; research 320 applies the same page-evidence rule to the 1971 User's Manual.
 
 The existing causal-engine measurement/output layer and Causal Model Lab already satisfy the architectural consequence of the recovered output-dictionary evidence. Do not add duplicate runtime abstractions merely because another historical source now supports the same separation.
