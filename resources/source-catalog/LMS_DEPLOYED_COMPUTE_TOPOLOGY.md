@@ -2,7 +2,7 @@
 
 Status: active source catalog for deployed Lunar Module Simulator computer-complex and related visual-system evidence.
 
-Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/236_lms_three_machine_guidance_allocation.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`, `resources/research/239_lms_handbook_archival_identity_retrieval_key.md`, `resources/research/240_lms_handbook_digitized_candidate_identity_gate.md`, `resources/research/241_lms_handbook_nasa_bibliography_crosswalk.md`, `resources/research/242_lms_mep_program_review_archival_key.md`, `resources/research/243_lms_mep_film_graphics_primary_source.md`
+Related research: `resources/research/235_lms_deployed_compute_topology_boundary.md`, `resources/research/236_lms_three_machine_guidance_allocation.md`, `resources/research/238_lms_compute_growth_guidance_machine_chronology.md`, `resources/research/239_lms_handbook_archival_identity_retrieval_key.md`, `resources/research/240_lms_handbook_digitized_candidate_identity_gate.md`, `resources/research/241_lms_handbook_nasa_bibliography_crosswalk.md`, `resources/research/242_lms_mep_program_review_archival_key.md`, `resources/research/243_lms_mep_film_graphics_primary_source.md`, `resources/research/244_farrand_mep_1964_primary_architecture.md`
 
 ## NASA TN D-7112 — *Apollo Experience Report — Simulation of Manned Space Flight for Crew Training*
 
@@ -26,6 +26,14 @@ Related research: `resources/research/235_lms_deployed_compute_topology_boundary
 - Supports the existence, exact report number, date, accession, contract, and title of a contemporaneous Grumman LMS MEP program review.
 - Does **not** expose MEP architecture, EVDE relationship, computer ownership, acceptance criteria, site effectivity, Apollo 13 applicability, or relationship to later Kollsman `NAS9-8634` work.
 - Retrieval gate: open the technical report before promoting any implementation claim.
+
+## LaRussa — *The Infinity Image System in Visual Simulation*
+
+- J. LaRussa, AIAA/NASA Manned Space Flight Meeting, Houston, 4–6 Nov. 1964; AIAA Publication CP-10, pp. 263–270; NASA NTRS `19680013122`.
+- Direct NASA scan: https://ntrs.nasa.gov/api/citations/19680013122/downloads/19680013122.pdf
+- Source class: contemporaneous primary technical paper describing Farrand infinity-image visual-simulation technology.
+- Explicitly describes a Farrand Mission Effects Projector as a non-programmed continuous color film-strip projector for earth-orbital views, including moving cloud cover and sunrise/sunset simulation, with two film cassettes permitting orbital views at different scales.
+- This directly constrains a 1964 Farrand MEP architecture, **not** the exact 1967 deployed LMS MEP configuration. Do not transfer cassette count, content, controls, interfaces, or configuration to MSC/KSC LMS hardware without a linking technical/configuration source.
 
 ## Aero Service — *Final Report, LEM Mission Simulator Film Graphics*
 
@@ -75,16 +83,16 @@ Related research: `resources/research/235_lms_deployed_compute_topology_boundary
 
 Mature LMS architecture is strongly supported as three machines, with one dedicated to onboard-guidance-computer simulation. NASA historical synthesis supplies a developmental two→three-machine chronology. Jackson's retrospective four-machine room observation remains unexplained. Do not invent original two-machine workloads, spare/test roles, configuration dates, or terminology.
 
-The `LLR-400-329` / `67-15490` MEP program review remains a retrieval key. Aero Service NTRS `19690026999` directly establishes MEP film-content production and Farrand/NASA/Grumman coordination, but not the projector's architecture or vendor succession. SP-4009's Farrand/Itek account is retained at synthesis level pending recovery of its cited 30 Aug. 1967 Bethpage weekly report.
+The `LLR-400-329` / `67-15490` MEP program review remains a retrieval key. LaRussa NTRS `19680013122` directly describes a 1964 Farrand MEP architecture, and Aero Service NTRS `19690026999` directly establishes later LMS MEP film-content production and Farrand/NASA/Grumman coordination. Neither source alone proves the exact 1967 LMS projector configuration or vendor succession. SP-4009's Farrand/Itek account is retained at synthesis level pending recovery of its cited 30 Aug. 1967 Bethpage weekly report.
 
 ## Architecture use
 
-Use recovered evidence to constrain system decomposition, not constants: computing complex, guidance-computer simulation role, conversion/interface electronics, crew station, visual system, instructor control, and a film-graphics content path supporting the MEP. Do not derive causal-domain count, program ownership, update cadence, integration step, product latency, or vendor configuration from machine count or catalog/synthesis metadata.
+Use recovered evidence to constrain system decomposition, not constants: computing complex, guidance-computer simulation role, conversion/interface electronics, crew station, visual system, instructor control, and a film-graphics content path supporting the MEP. The 1964 Farrand paper permits a historically grounded generic film-projector representation only where scenario fidelity does not depend on the later LMS configuration. Do not derive causal-domain count, program ownership, update cadence, integration step, product latency, vendor configuration, or Apollo 13 effectivity from it.
 
 ## Next targets
 
 - inspect the Virtual AGC Volume I candidate's title/revision pages;
-- retrieve MSC `67-15490` / Grumman `LLR-400-329`, LMS Mission Effects Projector Program Review;
+- retrieve MSC `67-15490` / Grumman `LLR-400-329`, LMS Mission Effects Projector Program Review, specifically to bridge or distinguish the 1964 Farrand MEP design from the 1967 LMS implementation;
 - retrieve the `MSC, BMR Bethpage, Weekly Activities Report, Week Ending August 25, 1967`, dated 30 Aug. 1967;
 - if Volume I identity closes, search for DDP-224 roles, common memory, program allocation, digital conversion, and guidance-computer simulation;
 - retrieve `67-16127`, `67-14187`, and `67-14188`;
