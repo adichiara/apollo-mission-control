@@ -14,7 +14,6 @@ Date: 2026-09-18
 
 - `resources/research/307_tomayko_archival_lms_source_provenance.md`
 - `resources/source-catalog/LMS_DDP224_PROCUREMENT.md`
-- `resources/source-catalog/LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`
 - `docs/roadmap/2026-09-18_tomayko_archival_lms_source_provenance.md`
 - `docs/station-status/2026-09-18_tomayko_archival_lms_source_provenance.md`
 
