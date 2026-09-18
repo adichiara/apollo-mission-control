@@ -1,7 +1,7 @@
 # LMS Mission Effects Projector Program Review
 
 Status: **primary index record located; report contents not yet reviewed; adjacent primary context and archival retrieval route recovered**  
-Related research: `resources/research/226_lms_mission_effects_projector_program_review_lead.md`, `resources/research/227_lms_mission_effects_projector_primary_context.md`, `resources/research/228_farrand_mep_1964_design_baseline.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/research/242_rg255_e155b_visual_material_provenance_boundary.md`, `resources/research/243_grumman_two_lms_pre_nas9_8634_baseline.md`
+Related research: `resources/research/226_lms_mission_effects_projector_program_review_lead.md`, `resources/research/227_lms_mission_effects_projector_primary_context.md`, `resources/research/228_farrand_mep_1964_design_baseline.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/research/300_rg255_e155b_visual_material_provenance_boundary.md`, `resources/research/301_grumman_two_lms_pre_nas9_8634_baseline.md`
 
 ## Primary catalog identity
 
