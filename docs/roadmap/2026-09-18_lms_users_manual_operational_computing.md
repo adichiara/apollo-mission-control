@@ -20,20 +20,23 @@ Research 319 attempted the highest-priority Volume I identity gate. Primary NASA
 
 Research 320 then attacked the mature-LMS User's Manual extraction gate. The primary scan's indexed cover text directly confirms **Update #34 / 22 October 1971 / LMS User's Manual / Volume 1**. The current fetch path rejects the full 92.8 MB object, however, so machine/program/loading/common-memory claims remain gated on page extraction rather than search snippets.
 
+Research 321 tightens the effectivity rule: **Update #34** proves that the surviving manual is a specific late-program controlled document state. Its technical procedures cannot be back-projected to Apollo 13 without the update/change record, an Apollo-13-period issue, or independent period corroboration.
+
 ## Open gates, in order
 
 1. Obtain the first document-control pages of the 150 MB 1967 Volume I candidate using a retrieval path that can handle the object; verify exact report number/title/revision/effectivity against `LMA-790-2-LMS` / `67-14186` and the conflicting 1 April / 15 May **issue-date** records.
-2. Page-extract the 1971 User's Manual with a large-file-capable path and search for explicit program loading, initialization, DDP-224/machine identifiers, common-memory use, and LMS-specific peripheral operation. Research 320 defines the search order and evidence boundary.
-3. Retrieve `67-16127` Section 7 for simulator-output ownership/interface mapping.
-4. Recover Volume II Section 2 — **Malfunction Data** — from the three Avitabile folders and extract only explicit malfunction/model/insertion relationships.
-5. Recover Volume II Section 3 — **Lunar-landing Mission Procedures** — from the four Avitabile folders.
-6. Retrieve `67-14187` / `67-14188` operating sections if machine/program allocation remains unresolved.
-7. Cross-check any machine/program claim against TN D-7112 and Apollo 13-period configuration/change records before historical-profile use.
-8. Keep NASA Release `66-254`/Honeywell procurement and RG 255 E.155B1 acceptance/configuration retrieval as parallel provenance threads.
-9. When Proposal 449 equations are extracted, compare them forward against the 1965 LMS math-model reports and 1967 handbook before adopting any causal-engine detail; proposal-only facts remain non-executable.
+2. Page-extract the 1971 User's Manual with a large-file-capable path. **Read the front matter/update-change record first**; only then search for explicit program loading, initialization, DDP-224/machine identifiers, common-memory use, and LMS-specific peripheral operation.
+3. For each Update #34 technical statement, determine whether it is 1971-only, independently corroborated generic architecture, or Apollo-13-applicable through period effectivity evidence.
+4. Retrieve `67-16127` Section 7 for simulator-output ownership/interface mapping.
+5. Recover Volume II Section 2 — **Malfunction Data** — from the three Avitabile folders and extract only explicit malfunction/model/insertion relationships.
+6. Recover Volume II Section 3 — **Lunar-landing Mission Procedures** — from the four Avitabile folders.
+7. Retrieve `67-14187` / `67-14188` operating sections if machine/program allocation remains unresolved.
+8. Cross-check any machine/program claim against TN D-7112 and Apollo 13-period configuration/change records before historical-profile use.
+9. Keep NASA Release `66-254`/Honeywell procurement and RG 255 E.155B1 acceptance/configuration retrieval as parallel provenance threads.
+10. When Proposal 449 equations are extracted, compare them forward against the 1965 LMS math-model reports and 1967 handbook before adopting any causal-engine detail; proposal-only facts remain non-executable.
 
 ## Guardrail
 
-Neither the 1971 User's Manual nor the newly identified 1967 Sections 2/3 reference authorizes Apollo 13 processor assignments, software revisions, loading procedures, telemetry routing, numerical cadence, acceptance tolerances, station-product changes, or executable constants. The April/May issue-date conflict likewise authorizes no technical inference. Proposal 449 is an earlier proposed-design source and carries an additional acceptance/effectivity boundary. Research 319 also confirms that a public filename/title match is not a substitute for reading the scan's own document-control pages; research 320 applies the same page-evidence rule to the 1971 User's Manual.
+Neither the 1971 User's Manual nor the newly identified 1967 Sections 2/3 reference authorizes Apollo 13 processor assignments, software revisions, loading procedures, telemetry routing, numerical cadence, acceptance tolerances, station-product changes, or executable constants. The April/May issue-date conflict likewise authorizes no technical inference. Proposal 449 is an earlier proposed-design source and carries an additional acceptance/effectivity boundary. Research 319 confirms that a public filename/title match is not a substitute for reading the scan's own document-control pages; research 320 applies the same page-evidence rule to the 1971 User's Manual; research 321 adds that even page-extracted Update #34 procedures remain late-1971 facts until effectivity is established.
 
 The existing causal-engine measurement/output layer and Causal Model Lab already satisfy the architectural consequence of the recovered output-dictionary evidence. Do not add duplicate runtime abstractions merely because another historical source now supports the same separation.
