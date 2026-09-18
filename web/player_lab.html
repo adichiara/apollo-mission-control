@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Apollo Mission Control — Player Interaction Lab</title>
+  <style>
+    :root{
+      color-scheme:dark;
+      --bg:#070908;--panel:#111512;--panel2:#171c18;--line:#3c463f;
+      --text:#d9e1da;--muted:#95a098;--accent:#b7d6b9;--warn:#d7c18c;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font:15px/1.42 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    button,input,select,textarea{font:inherit}
+    button,input,select,textarea{width:100%;min-height:44px;border:1px solid var(--line);border-radius:4px;background:#0b0f0c;color:var(--text);padding:9px}
+    button{cursor:pointer}
+    button:disabled{opacity:.45;cursor:not-allowed}
+    button.primary{border-color:#6c8a70;color:var(--accent)}
+    button.decision{font-weight:700}
+    button.danger{border-color:#805f5b;color:#e0aaa3}
+    header{position:sticky;top:0;z-index:5;background:#070908f4;border-bottom:1px solid var(--line)}
+    .session{max-width:900px;margin:auto;padding:9px 12px;display:grid;grid-template-columns:auto 1fr;gap:8px 12px;align-items:center}
+    .callsign{font-size:20px;font-weight:800;letter-spacing:.08em;min-width:0}
+    .status{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap;min-width:0}
+    .chip{border:1px solid var(--line);background:var(--panel2);padding:3px 7px;border-radius:999px;font-size:11px;white-space:nowrap}
+    .chip.live{border-color:#5b735f}
+    .chip.warn{border-color:#7a6b48;color:var(--warn)}
+    main{max-width:900px;margin:auto;padding:12px;display:grid;gap:10px}
+    .panel{border:1px solid var(--line);background:var(--panel);border-radius:5px;padding:12px}
+    .join{display:grid;gap:9px}
+    .join-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    h1,h2,h3{margin:0}
+    h1{font-size:16px}
+    h2{font-size:14px;letter-spacing:.04em}
+    h3{font-size:12px;color:var(--muted);letter-spacing:.04em}
+    .sub,.meta{font-size:11px;color:var(--muted)}
+    .notice{font-size:11px;color:var(--warn);border-left:3px solid #766742;padding:6px 8px;margin-top:8px;background:#17140d}
+    .workspace{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.8fr);gap:10px;align-items:start}
+    .product-stack,.action-stack{display:grid;gap:10px;min-width:0}
+    .field{padding:10px 0;border-bottom:1px dotted #283029}
+    .field:last-child{border-bottom:0}
+    .field-label{font-size:11px;color:var(--muted);margin-bottom:4px}
+    .field-value{font-size:17px;overflow-wrap:anywhere}
+    .kv{display:grid;grid-template-columns:minmax(105px,.9fr) minmax(0,1.4fr);gap:8px;padding:5px 0;border-bottom:1px dotted #283029}
+    .kv:last-child{border-bottom:0}
+    .kv-key{color:var(--muted);font-size:11px}
+    .stream{display:grid;gap:7px}
+    .event{border-left:3px solid var(--line);background:#0d110e;padding:8px 9px}
+    .event .head{display:flex;gap:8px;justify-content:space-between;align-items:start}
+    .event .station{font-weight:800}
+    .event .time{font-size:11px;color:var(--muted);white-space:nowrap}
+    .event .body{margin-top:4px;overflow-wrap:anywhere}
+    .ready{border-left-color:#68806b}.notready{border-left-color:#855f59}
+    .queue-item{border:1px solid var(--line);padding:9px;background:#0d110e;display:grid;gap:6px}
+    .queue-state{font-size:11px;color:var(--muted)}
+    .decision-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+    label{display:block;color:var(--muted);font-size:11px;margin:7px 0 3px}
+    .hidden{display:none!important}
+    #error{display:none;border-color:#815d58;color:#e2aaa3}
+    .empty{color:var(--muted);font-size:12px;padding:8px 0}
+    .role-note{padding:8px;background:#0d110e;border:1px solid #2d362f;font-size:12px}
+    .section-title{display:flex;justify-content:space-between;gap:8px;align-items:baseline;margin-bottom:7px}
+    .transmitted{opacity:.65}
+    @media(max-width:700px){
+      .workspace{grid-template-columns:1fr}
+      .join-grid{grid-template-columns:1fr}
+      .session{grid-template-columns:1fr}
+      .status{justify-content:flex-start}
+      .callsign{font-size:18px}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="session">
+    <div>
+      <div id="callsign" class="callsign">NO POSITION</div>
+      <div class="sub">player interaction lab — FLIGHT / CAPCOM only</div>
+    </div>
+    <div id="status" class="status"><span class="chip">NO SESSION</span></div>
+  </div>
+</header>
+<main>
+  <section id="error" class="panel"></section>
+
+  <section id="joinPanel" class="panel join">
+    <div class="section-title"><h1>JOIN POSITION</h1><span class="meta">prototype surface</span></div>
+    <div class="join-grid">
+      <div>
+        <label for="player">PLAYER ID</label>
+        <input id="player" value="player1" autocomplete="off">
+      </div>
+      <div>
+        <label for="station">POSITION</label>
+        <select id="station">
+          <option value="FLIGHT">FLIGHT</option>
+          <option value="CAPCOM">CAPCOM</option>
+        </select>
+      </div>
+    </div>
+    <button id="joinButton" class="primary" type="button">JOIN / REJOIN</button>
+    <div class="meta">This page uses the live session API but deliberately omits model provenance, hidden integrity, and contingency-specific solution controls.</div>
+  </section>
+
+  <section id="workspace" class="workspace hidden">
+    <div class="product-stack">
+      <section class="panel">
+        <div class="section-title">
+          <h2 id="productTitle">POSITION PRODUCT</h2>
+          <span id="productUpdate" class="meta"></span>
+        </div>
+        <div id="productNotice" class="notice"></div>
+        <div id="fields"></div>
+      </section>
+
+      <section id="readinessPanel" class="panel hidden">
+        <div class="section-title"><h2>CONTROLLER REPORTS</h2><span class="meta">station communications</span></div>
+        <div id="readinessStream" class="stream"></div>
+      </section>
+
+      <section id="crewPanel" class="panel hidden">
+        <div class="section-title"><h2>CREW REPORTS</h2><span class="meta">air-ground evidence</span></div>
+        <div id="crewStream" class="stream"></div>
+      </section>
+
+      <section id="queuePanel" class="panel hidden">
+        <div class="section-title"><h2>APPROVED CREW-FACING ITEMS</h2><span class="meta">approval ≠ transmission</span></div>
+        <div id="queueStream" class="stream"></div>
+      </section>
+    </div>
+
+    <div class="action-stack">
+      <section class="panel">
+        <div class="section-title"><h2>POSITION ACTIONS</h2><span id="actionCallsign" class="meta"></span></div>
+        <div id="roleNote" class="role-note"></div>
+
+        <div id="readinessAction">
+          <label for="readinessNote">READINESS NOTE</label>
+          <input id="readinessNote" placeholder="optional controller note">
+          <div class="decision-grid">
+            <button id="readyButton" type="button" class="primary">REPORT READY</button>
+            <button id="notReadyButton" type="button">REPORT NOT READY</button>
+          </div>
+        </div>
+
+        <div id="flightActions" class="hidden">
+          <div style="margin-top:14px;border-top:1px solid var(--line);padding-top:10px">
+            <h3>FLIGHT DISPOSITION</h3>
+            <label for="flightBasis">DECISION BASIS</label>
+            <textarea id="flightBasis" placeholder="controller reports / operational basis"></textarea>
+            <div class="decision-grid">
+              <button id="goButton" type="button" class="primary decision">GO</button>
+              <button id="noGoButton" type="button" class="danger decision">NO-GO</button>
+            </div>
+          </div>
+          <div style="margin-top:14px;border-top:1px solid var(--line);padding-top:10px">
+            <h3>CREW-FACING APPROVAL</h3>
+            <label for="crewItem">ITEM</label>
+            <select id="crewItem">
+              <option value="continue_pc2_burn_sequence">Continue PC+2 burn sequence</option>
+            </select>
+            <label for="crewBasis">BASIS</label>
+            <input id="crewBasis" placeholder="FLIGHT approval basis">
+            <button id="queueButton" type="button" class="primary" style="margin-top:8px">QUEUE FOR CAPCOM</button>
+          </div>
+        </div>
+
+        <div id="capcomActions" class="hidden">
+          <div style="margin-top:14px;border-top:1px solid var(--line);padding-top:10px">
+            <h3>CAPCOM</h3>
+            <div class="meta">Transmit only items already approved and queued. Crew receipt/readback remains a separate event.</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</main>
+<script>
+const STORAGE_KEY='apollo_player_lab_identity_v1';
+let playerId=null, station=null, snapshot=null, timer=null, lastRefresh=null;
+
+const $=id=>document.getElementById(id);
+function esc(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function showError(message){$('error').style.display=message?'block':'none';$('error').textContent=message||''}
+function fmtGet(sec){if(sec==null||!Number.isFinite(Number(sec)))return'--:--:--';const n=Number(sec),h=Math.floor(n/3600),m=Math.floor(n%3600/60),s=Math.floor(n%60);return [h,m,s].map(v=>String(v).padStart(2,'0')).join(':')}
+function labelize(key){return String(key).replaceAll('_',' ').replace(/\b\w/g,m=>m.toUpperCase())}
+async function api(path,options={}){const r=await fetch(path,{headers:{'Content-Type':'application/json'},...options});const body=await r.json().catch(()=>({}));if(!r.ok)throw new Error(body.detail||r.status+' '+r.statusText);return body}
+async function post(path,body){showError('');try{const out=await api(path,{method:'POST',body:JSON.stringify(body)});await refresh();return out}catch(e){showError(e.message);throw e}}
+
+function renderScalar(value,units){
+  const unit=units?' <span class="meta">'+esc(units)+'</span>':'';
+  if(value===null||value===undefined)return'<span class="meta">—</span>';
+  if(typeof value==='boolean')return esc(value?'YES':'NO')+unit;
+  return esc(value)+unit;
+}
+function renderObject(value){
+  if(Array.isArray(value)){
+    if(!value.length)return'<div class="empty">No entries</div>';
+    return value.map(item=>{
+      if(item&&typeof item==='object'){
+        const time=item.get_s!=null?'<span class="time">GET '+fmtGet(item.get_s)+'</span>':'';
+        const body=item.report??item.message??Object.entries(item).filter(([k])=>k!=='get_s').map(([k,v])=>labelize(k)+': '+String(v)).join(' · ');
+        return '<div class="event"><div class="head">'+time+'</div><div class="body">'+esc(body)+'</div></div>';
+      }
+      return'<div class="event"><div class="body">'+esc(item)+'</div></div>';
+    }).join('');
+  }
+  if(value&&typeof value==='object'){
+    return Object.entries(value).map(([k,v])=>{
+      let shown;
+      if(Array.isArray(v))shown=v.map(x=>typeof x==='object'?Object.values(x).join(' / '):x).join(' · ');
+      else if(v&&typeof v==='object')shown=Object.entries(v).map(([a,b])=>labelize(a)+' '+String(b)).join(' · ');
+      else shown=v;
+      if(k.endsWith('_get_s'))shown=fmtGet(v);
+      return'<div class="kv"><div class="kv-key">'+esc(labelize(k))+'</div><div>'+esc(shown??'—')+'</div></div>';
+    }).join('');
+  }
+  return renderScalar(value,null);
+}
+function renderFields(p){
+  const fields=(p?.fields||[]).filter(f=>f.key!=='crew.report_stream');
+  $('fields').innerHTML=fields.length?fields.map(f=>'<div class="field"><div class="field-label">'+esc(f.label)+'</div><div class="field-value">'+(typeof f.value==='object'?renderObject(f.value):renderScalar(f.value,f.units))+'</div></div>').join(''):'<div class="empty">No position product is currently available.</div>';
+  const crew=(p?.fields||[]).find(f=>f.key==='crew.report_stream');
+  $('crewPanel').classList.toggle('hidden',station!=='CAPCOM');
+  if(station==='CAPCOM')$('crewStream').innerHTML=crew?renderObject(crew.value):'<div class="empty">No crew reports yet.</div>';
+}
+function renderReadiness(p){
+  const items=p?.readiness_reports||[];
+  $('readinessPanel').classList.toggle('hidden',station!=='FLIGHT');
+  if(station!=='FLIGHT')return;
+  $('readinessStream').innerHTML=items.length?items.slice().reverse().map(r=>'<div class="event '+(r.ready?'ready':'notready')+'"><div class="head"><span class="station">'+esc(r.station)+' — '+(r.ready?'READY':'NOT READY')+'</span><span class="time">GET '+fmtGet(r.get_s)+'</span></div><div class="body">'+esc(r.note||'')+'</div></div>').join(''):'<div class="empty">No controller reports received yet.</div>';
+}
+function displayAction(action){
+  const labels={continue_pc2_burn_sequence:'Continue PC+2 burn sequence'};
+  return labels[action]||labelize(action);
+}
+function renderQueue(p){
+  const items=p?.queue_items||[];
+  $('queuePanel').classList.toggle('hidden',station!=='CAPCOM');
+  if(station!=='CAPCOM')return;
+  $('queueStream').innerHTML=items.length?items.slice().reverse().map(q=>{
+    const state=q.transmitted?'TRANSMITTED':'APPROVED / PENDING';
+    const button=!q.transmitted?'<button class="primary" type="button" data-transmit="'+Number(q.item_id)+'">TRANSMIT TO CREW</button>':'';
+    return'<div class="queue-item '+(q.transmitted?'transmitted':'')+'"><div><b>'+esc(displayAction(q.action))+'</b></div><div class="queue-state">'+esc(state)+' · FROM '+esc(q.requested_by||'FLIGHT')+' · GET '+fmtGet(q.get_s)+'</div><div>'+esc(q.basis||'')+'</div>'+button+'</div>';
+  }).join(''):'<div class="empty">No approved items waiting.</div>';
+  document.querySelectorAll('[data-transmit]').forEach(btn=>btn.addEventListener('click',()=>transmit(Number(btn.dataset.transmit))));
+}
+function presentationFor(snap){return snap?.presentations?snap.presentations[station]:snap?.presentation}
+function renderSnapshot(snap){
+  snapshot=snap;
+  const p=presentationFor(snap);
+  if(!p)return;
+  $('productTitle').textContent=p.title||station+' PRODUCT';
+  $('productNotice').textContent=p.notice||'';
+  $('productNotice').classList.toggle('hidden',!p.notice);
+  $('productUpdate').textContent=lastRefresh?'refreshed '+lastRefresh.toLocaleTimeString():'';
+  renderFields(p);renderReadiness(p);renderQueue(p);
+}
+function renderRole(){
+  $('callsign').textContent=station||'NO POSITION';
+  $('actionCallsign').textContent=station||'';
+  $('flightActions').classList.toggle('hidden',station!=='FLIGHT');
+  $('capcomActions').classList.toggle('hidden',station!=='CAPCOM');
+  $('roleNote').textContent=station==='FLIGHT'
+    ?'Integrate controller reports and make the modeled disposition. No consolidated subsystem-health answer is provided.'
+    :'Transmit approved crew-facing material deliberately. Approval, transmission, receipt, and crew report remain separate.';
+}
+async function refreshStatus(){
+  try{
+    const s=await api('/api/session/status');
+    const chips=['<span class="chip live">'+esc(s.status)+'</span>','<span class="chip">GET '+fmtGet(s.get_s)+'</span>','<span class="chip">'+esc(s.phase||'')+'</span>'];
+    if(s.pending_gate)chips.push('<span class="chip warn">PENDING '+esc(s.pending_gate)+'</span>');
+    $('status').innerHTML=chips.join('');
+  }catch(e){$('status').innerHTML='<span class="chip warn">NO SESSION</span>'}
+}
+async function refreshSnapshot(){
+  if(!playerId)return;
+  try{
+    snapshot=await api('/api/session/player/'+encodeURIComponent(playerId));
+    lastRefresh=new Date();
+    renderSnapshot(snapshot);showError('');
+  }catch(e){showError(e.message)}
+}
+async function refresh(){await refreshStatus();await refreshSnapshot()}
+function persist(){if(playerId&&station)localStorage.setItem(STORAGE_KEY,JSON.stringify({player_id:playerId,station}))}
+async function join(){
+  const p=$('player').value.trim(),s=$('station').value;
+  if(!p){showError('Player ID is required.');return}
+  try{
+    const snap=await api('/api/session/join',{method:'POST',body:JSON.stringify({player_id:p,station:s})});
+    playerId=p;station=s;persist();$('workspace').classList.remove('hidden');renderRole();renderSnapshot(snap);await refreshStatus();
+    if(timer)clearInterval(timer);timer=setInterval(refresh,1000);
+  }catch(e){showError(e.message)}
+}
+async function attemptRejoin(){
+  let saved=null;try{saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')}catch{}
+  if(!saved?.player_id||!['FLIGHT','CAPCOM'].includes(saved.station))return;
+  $('player').value=saved.player_id;$('station').value=saved.station;
+  try{
+    const snap=await api('/api/session/join',{method:'POST',body:JSON.stringify({player_id:saved.player_id,station:saved.station})});
+    playerId=saved.player_id;station=saved.station;$('workspace').classList.remove('hidden');renderRole();renderSnapshot(snap);
+    if(timer)clearInterval(timer);timer=setInterval(refresh,1000);
+  }catch(e){if(!String(e.message).includes('No PC+2 session'))showError('Automatic rejoin failed: '+e.message)}
+}
+async function readiness(ready){if(!playerId)return;await post('/api/session/player/'+encodeURIComponent(playerId)+'/readiness',{ready,note:$('readinessNote').value,station})}
+async function flightDecision(go){if(station!=='FLIGHT')return;const basis=$('flightBasis').value.trim();if(!basis){showError('Decision basis is required.');return}await post('/api/session/flight/'+encodeURIComponent(playerId)+'/decision',{go,basis})}
+async function queueCrewItem(){if(station!=='FLIGHT')return;const basis=$('crewBasis').value.trim();if(!basis){showError('Approval basis is required.');return}await post('/api/session/flight/'+encodeURIComponent(playerId)+'/capcom',{action:$('crewItem').value,parameters:{},basis})}
+async function transmit(id){if(station!=='CAPCOM')return;await post('/api/session/capcom/'+encodeURIComponent(playerId)+'/transmit/'+id,{})}
+
+$('joinButton').addEventListener('click',join);
+$('readyButton').addEventListener('click',()=>readiness(true));
+$('notReadyButton').addEventListener('click',()=>readiness(false));
+$('goButton').addEventListener('click',()=>flightDecision(true));
+$('noGoButton').addEventListener('click',()=>flightDecision(false));
+$('queueButton').addEventListener('click',queueCrewItem);
+
+(async()=>{await refreshStatus();await attemptRejoin()})();
+</script>
+</body>
+</html>

@@ -230,6 +230,29 @@ Minimum debrief should show:
 - applicable rule/procedure;
 - no numeric game score.
 
+## First site-facing interaction lab
+
+A non-final FLIGHT/CAPCOM prototype now lives at `/player-lab`.
+
+It deliberately uses the existing authoritative session API rather than a mock data layer. That makes it useful for real interaction testing while preserving the current `/` validation client unchanged.
+
+The first prototype implements the design boundary above:
+
+- persistent original call sign + GET + phase + connection/session state;
+- FLIGHT controller-report stream and explicit GO/NO-GO action;
+- FLIGHT approval of a crew-facing item;
+- CAPCOM approved/pending versus transmitted queue state;
+- CAPCOM deliberate transmission;
+- separate crew-report stream;
+- no subsystem-health dashboard for FLIGHT;
+- no CONTROL/ΔP solution control;
+- no automated shutdown-evidence assessment;
+- no generic `source_layer`, provenance, or hidden-integrity metadata in the player rendering.
+
+The prototype is intentionally limited to FLIGHT/CAPCOM. It is an interaction experiment, not the replacement player client and not an exact Apollo console reconstruction.
+
+The next question it should answer is whether the coordination workflow is understandable under continuous GET without project-internal explanation. After that, CONTROL/GUIDO product-scanning prototypes can be added using the same session strip/product/action hierarchy.
+
 ## First interface prototypes
 
 Prototype in this order.
