@@ -1,6 +1,6 @@
 # LMS handbook Volume II Sections 2 and 3 — source catalog
 
-Status: active retrieval catalog; updated through research 316
+Status: active retrieval catalog; updated through research 317
 
 ## Primary source establishing existence
 
@@ -15,19 +15,21 @@ Status: active retrieval catalog; updated through research 316
 
 ## Crosswalk with recovered NASA/MSC bibliographic control
 
+The NASA/MSC AETI Corporate Author Index `TYPICAL CITATION` key explicitly labels field 2 **Issue date: day, month, year**. Dates below are therefore recorded as issue dates, while the conflict between the original index and supplement remains unexplained.
+
 Original NASA/MSC Corporate Author Index:
 
-- `67-14186` — Volume I, Simulator Description — **01-04-67**.
-- `67-14187` — Volume II, Sections 1 and 4 — **01-04-67**.
-- `67-14188` — Volume II, Sections 5 and 6 — **01-04-67**.
-- `67-16127` — Volume II, Section 7, Simulator Output Tables — **01-07-67**.
+- `67-14186` — Volume I, Simulator Description — **01-04-67** issue date.
+- `67-14187` — Volume II, Sections 1 and 4 — **01-04-67** issue date.
+- `67-14188` — Volume II, Sections 5 and 6 — **01-04-67** issue date.
+- `67-16127` — Volume II, Section 7, Simulator Output Tables — **01-07-67** issue date.
 
 NASA/MSC Corporate Author Index Supplement:
 
-- `67-14186` — Volume I, Simulator Description — **15-05-67**.
-- `67-14187` — Volume II, Sections 1 and 4 — **15-05-67**.
+- `67-14186` — Volume I, Simulator Description — **15-05-67** issue date.
+- `67-14187` — Volume II, Sections 1 and 4 — **15-05-67** issue date.
 
-The source-backed April/May discrepancy must remain unresolved until title/revision/accession pages explain it. Do not label either date as a revision, receipt, or accession date without evidence.
+The source-backed April/May **issue-date** discrepancy remains unresolved until title/revision/document-control pages explain it. Do not label 15 May as a revision or reissue date, or infer a technical-content change, without evidence.
 
 Archival section crosswalk:
 
@@ -36,7 +38,7 @@ Archival section crosswalk:
 
 ## Evidence boundary
 
-The NASA engineering citation proves existence and engineering use of Sections 2/3. The Virginia Tech archival finding aid separately supplies their titles and folder extent. NASA/MSC bibliographic control establishes neighboring accession/date records but does not expose an accession identifier for Sections 2/3. None of these sources exposes the technical contents, processor/workload allocation, site effectivity, or Apollo 13 applicability.
+The NASA engineering citation proves existence and engineering use of Sections 2/3. The Virginia Tech archival finding aid separately supplies their titles and folder extent. NASA/MSC bibliographic control establishes neighboring accession/issue-date records but does not expose an accession identifier for Sections 2/3. None of these sources exposes the technical contents, processor/workload allocation, site effectivity, or Apollo 13 applicability.
 
 ## Retrieval keys
 
@@ -52,9 +54,9 @@ Search archival/bibliographic holdings for combinations of:
 - `15-05-67`
 - `May 15, 1967`
 
-Do not reject a candidate solely because it carries April rather than May, or May rather than April.
+Do not reject a candidate solely because it carries April rather than May, or May rather than April. Compare recovered title/revision/document-control pages against both conflicting issue-date records.
 
-Related research: `resources/research/313_lms_handbook_sections_2_3_primary_reference.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/315_lms_sections_2_3_archival_title_reconciliation.md`, and `resources/research/316_lms_handbook_date_control_reconciliation.md`.
+Related research: `resources/research/313_lms_handbook_sections_2_3_primary_reference.md`, `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/315_lms_sections_2_3_archival_title_reconciliation.md`, `resources/research/316_lms_handbook_date_control_reconciliation.md`, and `resources/research/317_lms_index_issue_date_semantics.md`.
 
 ## Archival holding
 
