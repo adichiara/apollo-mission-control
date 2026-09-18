@@ -1,17 +1,21 @@
 # LMS handbook retrieval source catalog
 
-Status: active companion catalog to `LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`. Updated through research 319.
+Status: active companion catalog to `LMS_DEPLOYED_COMPUTE_TOPOLOGY.md`. Updated through research 322.
 
 ## `LMA-790-2-LMS` — NASA bibliographic control
 
 Primary NASA/MSC corporate-author control identifies adjacent Grumman handbook records under contract `NAS9-1100`:
 
-| MSC accession | Report | Identified content |
-| --- | --- | --- |
-| `67-14186` | `LMA-790-2-LMS` | *Lunar Module Mission Simulator Instructors Handbook. Volume I — Simulator Description* |
-| `67-14187` | `LMA-790-2-LMS` | *Lunar Module Mission Simulator Instructors Handbook. Vol. II — Simulator Operation Sections 1 and 4* |
+| MSC accession | Issue date | Report | Identified content |
+| --- | --- | --- | --- |
+| `67-14186` | 1 Apr. 1967 in original index; 15 May 1967 in supplement | `LMA-790-2-LMS` | *Lunar Module Mission Simulator Instructors Handbook. Volume I — Simulator Description* |
+| `67-14187` | 1 Apr. 1967 in original index; 15 May 1967 in supplement | `LMA-790-2-LMS` | *Lunar Module Mission Simulator Instructors Handbook. Vol. II — Simulator Operation Sections 1 and 4* |
+| `67-14188` | 1 Apr. 1967 | `LMA-790-2-LMS` | *Lunar Module Mission Simulator Instructors Handbook. Volume II — Simulator Operation Sections 5 and 6* |
+| `67-16127` | **1 Jul. 1967** | `LMA-790-2-LMS` | *LM Mission Simulator Instructors Handbook, Vol. II — Simulator Operation, Section 7 — Simulator Output Tables* |
 
-NASA/MSC indexing contains conflicting **issue-date** records: the original Corporate Author Index gives **1 April 1967** for the adjacent handbook accessions, while its supplement gives **15 May 1967** for `67-14186` and `67-14187`. Research 317 verified from the index's own `TYPICAL CITATION` schema that this field means **Issue date: day, month, year**. Neither record by itself establishes that a revision or technical-content change occurred.
+NASA/MSC indexing contains conflicting **issue-date** records for `67-14186` and `67-14187`: the original Corporate Author Index gives **1 April 1967**, while its supplement gives **15 May 1967**. Research 317 verified from the index's own `TYPICAL CITATION` schema that this field means **Issue date: day, month, year**. Neither record by itself establishes that a revision or technical-content change occurred.
+
+Research 322 separately confirms that `67-16127` is a distinct Section 7 accession with its own **1 July 1967 issue date**. Do not fold that date into the April/May conflict or assume Section 7 shared the earlier sections' effectivity.
 
 NASA/KSC `GP-642`, an independently compiled primary NASA bibliography, identifies entry 346 as Grumman `LMA 790-2-LMS`, Volume I — **Simulator Description** and Volume II Sections 1 and 4, dated **1 April 1967**. NTRS: https://ntrs.nasa.gov/api/citations/19700025401/downloads/19700025401.pdf
 
@@ -38,18 +42,18 @@ Their MSC accession identifier(s) and technical contents remain unrecovered. See
 
 This catalog controls retrieval identity only. Bibliographic records and filename compatibility do not establish DDP-224 count/allocation, program ownership, common-memory organization, visual interfaces, site effectivity, or Apollo 13 configuration.
 
-The 1 April versus 15 May 1967 discrepancy is specifically a conflict between NASA/MSC **issue-date records**. Preserve both dates until document-control pages or records-management evidence explains the conflict; do not relabel either date as publication, receipt, accession, revision, or reissue without evidence.
+The 1 April versus 15 May 1967 discrepancy is specifically a conflict between NASA/MSC **issue-date records** for the adjacent April/May accessions. Preserve both dates until document-control pages or records-management evidence explains the conflict; do not relabel either date as publication, receipt, accession, revision, or reissue without evidence. Section 7's 1 July 1967 issue date is independently controlled and does not resolve that conflict.
 
 ## Retrieval order
 
 1. `67-14186` / public Volume I candidate — inspect title/revision/effectivity pages first and close the identity gate.
-2. Volume II Section 2 — **Malfunction Data** — request the three Avitabile folders; high value for malfunction-insertion architecture.
-3. `67-16127` — Volume II Section 7, Simulator Output Tables.
+2. `67-16127` — Volume II Section 7, **Simulator Output Tables**; retrieve as a separately issued 1 July 1967 section and inspect its own document-control pages before technical use.
+3. Volume II Section 2 — **Malfunction Data** — request the three Avitabile folders; high value for malfunction-insertion architecture.
 4. Volume II Section 3 — **Lunar-landing Mission Procedures** — request the four Avitabile folders.
 5. `67-14187` — Volume II Sections 1 and 4.
 6. `67-14188` — Volume II Sections 5 and 6 if operating/instructor material is still needed.
 
-For archive requests include `LMA-790-2-LMS`, `NAS9-1100`, both accessions, and both 1 Apr. and 15 May 1967 dates to avoid false negatives caused by issue-date mismatch.
+For archive requests include `LMA-790-2-LMS`, `NAS9-1100`, the exact accession sought, and its source-backed issue-date keys. For `67-14186`/`67-14187`, include both 1 Apr. and 15 May 1967 to avoid false negatives caused by the issue-date mismatch; for `67-16127`, use 1 Jul. 1967.
 
 Cross-references:
 
@@ -57,6 +61,7 @@ Cross-references:
 - `resources/research/311_lms_handbook_gp642_bibliographic_crosscheck.md`
 - `resources/research/317_lms_index_issue_date_semantics.md`
 - `resources/research/319_lms_volume1_direct_retrieval_gate.md`
+- `resources/research/322_lms_section7_separate_issue_control.md`
 - `resources/research/220_lms_volume2_section7_archive_recovery.md`
 - `resources/research/313_lms_handbook_sections_2_3_primary_reference.md`
 - `resources/research/315_lms_sections_2_3_archival_title_reconciliation.md`
