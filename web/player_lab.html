@@ -185,6 +185,10 @@ function esc(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&l
 function showError(message){$('error').style.display=message?'block':'none';$('error').textContent=message||''}
 function fmtGet(sec){if(sec==null||!Number.isFinite(Number(sec)))return'--:--:--';const n=Number(sec),h=Math.floor(n/3600),m=Math.floor(n%3600/60),s=Math.floor(n%60);return [h,m,s].map(v=>String(v).padStart(2,'0')).join(':')}
 function labelize(key){return String(key).replaceAll('_',' ').replace(/\b\w/g,m=>m.toUpperCase())}
+function phaseLabel(value){
+  if(!value)return'';
+  return labelize(value).replace(/^Pc2\b/,'PC+2').toUpperCase();
+}
 async function api(path,options={}){const r=await fetch(path,{headers:{'Content-Type':'application/json'},...options});const body=await r.json().catch(()=>({}));if(!r.ok)throw new Error(body.detail||r.status+' '+r.statusText);return body}
 async function post(path,body){showError('');try{const out=await api(path,{method:'POST',body:JSON.stringify(body)});await refresh();return out}catch(e){showError(e.message);throw e}}
 
@@ -219,8 +223,11 @@ function renderObject(value){
   return renderScalar(value,null);
 }
 function renderFields(p){
-  const fields=(p?.fields||[]).filter(f=>f.key!=='crew.report_stream');
-  $('fields').innerHTML=fields.length?fields.map(f=>'<div class="field"><div class="field-label">'+esc(f.label)+'</div><div class="field-value">'+(typeof f.value==='object'?renderObject(f.value):renderScalar(f.value,f.units))+'</div></div>').join(''):'<div class="empty">No position product is currently available.</div>';
+  const fields=(p?.fields||[]).filter(f=>f.key!=='crew.report_stream'&&f.key!=='flight.go_for_burn');
+  $('fields').innerHTML=fields.length?fields.map(f=>{
+    const shown=f.key==='mission.phase'?phaseLabel(f.value):f.value;
+    return '<div class="field"><div class="field-label">'+esc(f.label)+'</div><div class="field-value">'+(typeof shown==='object'?renderObject(shown):renderScalar(shown,f.units))+'</div></div>';
+  }).join(''):'<div class="empty">No position product is currently available.</div>';
   const crew=(p?.fields||[]).find(f=>f.key==='crew.report_stream');
   $('crewPanel').classList.toggle('hidden',station!=='CAPCOM');
   if(station==='CAPCOM')$('crewStream').innerHTML=crew?renderObject(crew.value):'<div class="empty">No crew reports yet.</div>';
@@ -269,8 +276,7 @@ function renderRole(){
 async function refreshStatus(){
   try{
     const s=await api('/api/session/status');
-    const chips=['<span class="chip live">'+esc(s.status)+'</span>','<span class="chip">GET '+fmtGet(s.get_s)+'</span>','<span class="chip">'+esc(s.phase||'')+'</span>'];
-    if(s.pending_gate)chips.push('<span class="chip warn">PENDING '+esc(s.pending_gate)+'</span>');
+    const chips=['<span class="chip live">'+esc(s.status)+'</span>','<span class="chip">GET '+fmtGet(s.get_s)+'</span>','<span class="chip">'+esc(phaseLabel(s.phase))+'</span>'];
     $('status').innerHTML=chips.join('');
   }catch(e){$('status').innerHTML='<span class="chip warn">NO SESSION</span>'}
 }
@@ -289,7 +295,7 @@ async function join(){
   if(!p){showError('Player ID is required.');return}
   try{
     const snap=await api('/api/session/join',{method:'POST',body:JSON.stringify({player_id:p,station:s})});
-    playerId=p;station=s;persist();$('workspace').classList.remove('hidden');renderRole();renderSnapshot(snap);await refreshStatus();
+    playerId=p;station=s;persist();$('joinPanel').classList.add('hidden');$('workspace').classList.remove('hidden');renderRole();renderSnapshot(snap);await refreshStatus();
     if(timer)clearInterval(timer);timer=setInterval(refresh,1000);
   }catch(e){showError(e.message)}
 }
@@ -299,7 +305,7 @@ async function attemptRejoin(){
   $('player').value=saved.player_id;$('station').value=saved.station;
   try{
     const snap=await api('/api/session/join',{method:'POST',body:JSON.stringify({player_id:saved.player_id,station:saved.station})});
-    playerId=saved.player_id;station=saved.station;$('workspace').classList.remove('hidden');renderRole();renderSnapshot(snap);
+    playerId=saved.player_id;station=saved.station;$('joinPanel').classList.add('hidden');$('workspace').classList.remove('hidden');renderRole();renderSnapshot(snap);
     if(timer)clearInterval(timer);timer=setInterval(refresh,1000);
   }catch(e){if(!String(e.message).includes('No PC+2 session'))showError('Automatic rejoin failed: '+e.message)}
 }
