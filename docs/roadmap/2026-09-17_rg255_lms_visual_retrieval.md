@@ -16,17 +16,21 @@ Research note 300 clarifies provenance: **E.155B is the 20-foot Reference Files 
 
 Research note 301 adds a chronology constraint from two primary NASA program histories: on **15 February 1966**, the converted Grumman LEM development contract already required delivery of **two mission simulators**. That obligation predates the 1968–1970 E.155B1 Kollsman / `NAS9-8634` project-file span. Therefore do not describe `NAS9-8634` as the origin procurement of the two LMS requirement from the inventory's word “construction” alone.
 
+Research note 303 resolves the current NARA access route for E.155B1. A Textual Reference request to `archives2reference@nara.gov` should supply the complete identifier set **RG 255 / E.155B1 / old accession 72A794 / legacy location A-23-16-6 / NAS9-8634 / Kollsman** and ask staff to confirm present container/folder and physical-location information before assuming the legacy locator is a current shelf address.
+
 ## Still unresolved
 
 The relationship among the earlier Grumman two-LMS obligation, Kollsman's later `NAS9-8634` work, the 1967 Farrand MEP, the E.155B MEP/EVDE records, and the Apollo 13-era LMS configuration is not established. Whether `NAS9-8634` represented new construction, reconstruction, duplication, replacement, relocation, modernization, subsystem installation, site completion, or another implementation remains unresolved. Whether it included AOT support or other optical work also remains unresolved.
 
+Formal LMS acceptance criteria remain unrecovered. The current access-route work does not authorize numerical acceptance tolerances, output variables, update rates, or Apollo 13 effectivity.
+
 ## Next sequence
 
-1. Retrieve **E.155B1 / old accession `72A794` / location `A-23-16-6`**, prioritizing the statement of work and procurement/program records that define what `NAS9-8634` constructed or modified relative to the already-documented 1966 Grumman two-mission-simulator obligation; then acceptance plans/procedures, drawings, surface-model photographs, and Kollsman correspondence.
+1. Submit/prepare the E.155B1 reference request using **RG 255 / E.155B1 / 72A794 / A-23-16-6 / NAS9-8634 / Kollsman** and ask for the current container/folder list first. Prioritize the statement of work and procurement/program records that define what `NAS9-8634` constructed or modified relative to the already-documented 1966 Grumman two-mission-simulator obligation; then acceptance plans/procedures, drawings, surface-model photographs, and Kollsman correspondence.
 2. Retrieve the **MEP/EVDE subset within E.155B**, narrowly keyed to `Mission Effects Projector`, `MEP`, `External Visual Display Equipment`, `EVDE`, and `Lunar Module mission simulator`, using old accessions `72A797` / `73ABC1675` and the inventory locations. Do not treat surrounding LLTV/LLRV files as LMS evidence.
 3. Keep `NAS9-497` AOT/optical-subsystem, the earlier Grumman/NAS9-1100 LMS program, and `NAS9-8634` Kollsman LMS records as distinct contract trails unless explicit primary text connects their deliverables/configurations.
 4. Build a dated vendor/configuration matrix only from explicit document statements.
 5. Crosswalk recovered records against `LLR-400-329` / `*67-15490` and Section 7 / `*67-16127`.
 6. Do not infer Mission Control routing or Apollo 13 effectivity until directly supported.
 
-Research boundaries: `resources/research/231_kollsman_aot_contract_separation.md`, `resources/research/232_nas9_8634_public_digital_retrieval_boundary.md`, `resources/research/233_nas9_8634_top_level_contract_scope.md`, `resources/research/300_rg255_e155b_visual_material_provenance_boundary.md`, `resources/research/301_grumman_two_lms_pre_nas9_8634_baseline.md`.
+Research boundaries: `resources/research/231_kollsman_aot_contract_separation.md`, `resources/research/232_nas9_8634_public_digital_retrieval_boundary.md`, `resources/research/233_nas9_8634_top_level_contract_scope.md`, `resources/research/300_rg255_e155b_visual_material_provenance_boundary.md`, `resources/research/301_grumman_two_lms_pre_nas9_8634_baseline.md`, `resources/research/303_rg255_e155b1_current_access_route.md`.
