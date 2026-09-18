@@ -22,13 +22,16 @@ Research 320 directly checks the separate 1971 `LMS_Users_Manual.pdf` operationa
 
 Research 321 sharpens that boundary. `Update #34` is itself evidence that the surviving manual is a particular controlled late-program document state, not a timeless LMS description. Until its change/update record or an Apollo-13-period issue establishes continuity, interior procedures cannot be assigned Apollo 13 effectivity.
 
+Research 322 isolates another handbook effectivity boundary: the primary NASA/MSC index separately catalogs `LMA-790-2-LMS` Volume II Section 7 as accession **67-16127**, issued **1 July 1967**, **Simulator Output Tables**. Section 7 therefore requires its own document-control/effectivity review and is not part of the April/May issue-date conflict.
+
 ## Documented
 
 - Section 2 is cataloged as **Malfunction Data** (3 folders).
 - Section 3 is cataloged as **Lunar-landing Mission Procedures** (4 folders).
-- The NASA/MSC engineering memorandum independently establishes the section pair/report family/date and shows it was used as an engineering reference.
+- Section 7 is separately accessioned as `67-16127`, issued **1 July 1967**, titled **Simulator Output Tables**.
+- The NASA/MSC engineering memorandum independently establishes the Section 2/3 report family/date and shows it was used as an engineering reference.
 - NASA/MSC AETI defines the disputed bibliographic field as **issue date**.
-- Both 1 April and 15 May 1967 remain source-backed retrieval keys because NASA/MSC records conflict on the issue date.
+- Both 1 April and 15 May 1967 remain source-backed retrieval keys for the affected adjacent accessions because NASA/MSC records conflict on their issue date; Section 7's 1 July date is separately controlled.
 - Proposal 449 is provenance-controlled as a **1964 proposed-design source**, not accepted configuration evidence.
 - NASA/KSC `GP-642` directly identifies Volume I as **Simulator Description**; the public scan still requires internal-page identity verification.
 - The 1971 User's Manual cover identity is directly confirmed; substantive operational-computing evidence remains page-gated.
@@ -42,11 +45,12 @@ Until the section folders and document-control pages are recovered and reviewed,
 - DDP-224 machine/workload ownership;
 - LMS program allocation or loading workflow;
 - common-memory mapping;
-- telemetry/output routing;
+- telemetry/output routing or the contents/ownership semantics of the Section 7 tables;
 - site-specific configuration;
 - Apollo 13 station products or simulator effectivity;
 - numerical cadence, causal-engine constants, or validation tolerances;
 - whether 15 May represents a revision/reissue or whether any technical content changed after 1 April;
+- that Section 7's 1 July 1967 issue date changes the effectivity of Sections 1-6;
 - that any Proposal 449 equation, interface, timing, or allocation survived unchanged into the delivered LMS;
 - that filename/title compatibility alone proves the public Volume I scan is accession `67-14186`;
 - that 1971 User's Manual practice existed unchanged for Apollo 13;
