@@ -26,6 +26,80 @@ class WebCrewResponseTests(unittest.TestCase):
             self.assertEqual(response.status_code, 200)
         self.assertEqual(self.client.post("/api/session/start").status_code, 200)
 
+    def test_nominal_flight_capcom_handoff_exposes_receipt_as_separate_state(self):
+        advance = self.client.post(
+            "/api/session/advance",
+            json={"target_get_s": 79 * 3600 + 17 * 60},
+        )
+        self.assertEqual(advance.status_code, 200)
+
+        decision = self.client.post(
+            "/api/session/flight/flight/decision",
+            json={"go": True, "basis": "nominal interaction integration test"},
+        )
+        self.assertEqual(decision.status_code, 200)
+
+        queued = self.client.post(
+            "/api/session/flight/flight/capcom",
+            json={
+                "action": "continue_pc2_burn_sequence",
+                "parameters": {},
+                "basis": "FLIGHT approved nominal continuation",
+            },
+        )
+        self.assertEqual(queued.status_code, 200)
+        item_id = queued.json()["item_id"]
+
+        pending = self.client.get("/api/session/player/capcom").json()["presentation"][
+            "queue_items"
+        ][0]
+        self.assertFalse(pending["transmitted"])
+        self.assertFalse(pending["received"])
+        self.assertIsNone(pending["received_get_s"])
+        self.assertIsNone(pending["acknowledgement"])
+
+        transmitted = self.client.post(
+            f"/api/session/capcom/capcom/transmit/{item_id}"
+        )
+        self.assertEqual(transmitted.status_code, 200)
+
+        after_transmit = self.client.get(
+            "/api/session/player/capcom"
+        ).json()["presentation"]["queue_items"][0]
+        self.assertTrue(after_transmit["transmitted"])
+        self.assertFalse(after_transmit["received"])
+        self.assertIsNotNone(after_transmit["transmitted_get_s"])
+
+        audit_before_receipt = self.client.get("/api/session/audit").json()
+        self.assertNotIn(
+            "crew_capcom_item_received",
+            [event["kind"] for event in audit_before_receipt],
+        )
+
+        receipt = self.client.post(
+            f"/api/session/crew/receipt/{item_id}",
+            json={},
+        )
+        self.assertEqual(receipt.status_code, 200)
+        self.assertEqual(receipt.json()["kind"], "crew_capcom_item_received")
+
+        received = self.client.get(
+            "/api/session/player/capcom"
+        ).json()["presentation"]["queue_items"][0]
+        self.assertTrue(received["transmitted"])
+        self.assertTrue(received["received"])
+        self.assertIsNotNone(received["received_get_s"])
+        self.assertEqual(received["acknowledgement"], "received")
+
+        audit = self.client.get("/api/session/audit").json()
+        kinds = [event["kind"] for event in audit]
+        self.assertLess(
+            kinds.index("capcom_item_transmitted"),
+            kinds.index("crew_capcom_item_received"),
+        )
+        self.assertNotIn("crew_dps_shutdown_commanded", kinds)
+        self.assertNotIn("crew_inverter_transfer_performed", kinds)
+
     def _transmitted_delta_p_callout(self) -> int:
         advance = self.client.post(
             "/api/session/advance",
