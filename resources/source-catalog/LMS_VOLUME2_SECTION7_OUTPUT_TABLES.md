@@ -1,6 +1,6 @@
 # LMS Volume II Section 7 — Simulator Output Tables
 
-Status: **archival holding located; technical contents not yet reviewed**  
+Status: **archival holding located; technical contents not yet reviewed; retrieval DEFERRED under D-024 until an exact LMS output/model-ownership dependency is named**  
 Related research: `resources/research/220_lms_volume2_section7_archive_recovery.md`
 
 ## Document identity
@@ -52,6 +52,8 @@ The archival finding aid proves survival, repository, collection identity, title
 
 The Virginia Tech holding is a concrete retrieval route. It is not evidence that the contents are identical in every respect to the MSC accession copy `*67-16127`.
 
-## Retrieval priority
+## Retrieval condition
 
-High. Direct retrieval can potentially connect the simulator's model/source variables to observable outputs and provide candidate observables to cross-check against LMS acceptance/correlation records in NASA RG 255 E.155B1.
+This is no longer a standing high-priority extraction task. Existing evidence is sufficient for the current generic source/model → measurement/output → ground-product architecture. Reopen Section 7 when a selected historical scenario/model requires exact LMS output identifiers, source/model ownership, engineering representation, routing, effectivity, or acceptance observables.
+
+When reopened, use the existing Virginia Tech three-folder retrieval route and preserve title/control/change pages with the technical tables. See D-024 and `docs/RESEARCH_PORTFOLIO_STATUS.md`.
