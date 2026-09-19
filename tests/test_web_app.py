@@ -135,6 +135,66 @@ class WebAppTests(unittest.TestCase):
         self.assertEqual(rejected.status_code, 400)
         self.assertIn("unit length", rejected.json()["detail"])
 
+    def test_apollo11_landing_radar_historical_velocity_update_model_proof(self):
+        profile = self.client.get(
+            "/api/admin/model-proof/landing-radar-profile/"
+            "apollo11_lm5_landing_radar_partial"
+        )
+        self.assertEqual(profile.status_code, 200)
+        weighting = profile.json()["velocity_update_weighting"]
+        self.assertEqual(weighting["maximum_speed_fps"], 2000.0)
+        self.assertEqual(weighting["low_speed_threshold_fps"], 200.0)
+        self.assertEqual(weighting["override_programs"], ["P65", "P66", "P67"])
+
+        base = {
+            "profile_id": "apollo11_lm5_landing_radar_partial",
+            "prior_velocity_m_s": [100.0, 20.0, -5.0],
+            "estimated_speed_m_s": 300.0,
+            "measured_minus_reference_m_s": 10.0,
+            "beam_unit_vector": [1.0, 0.0, 0.0],
+            "component": "x",
+            "reasonableness_passed": True,
+            "updates_permitted": True,
+        }
+        linear = self.client.post(
+            "/api/admin/model-proof/landing-radar-historical-velocity-update",
+            json=base,
+        )
+        self.assertEqual(linear.status_code, 200)
+        self.assertEqual(
+            linear.json()["velocity_update"]["weight_regime"],
+            "linear_with_speed",
+        )
+        self.assertGreater(
+            linear.json()["velocity_update"]["selected_weight"],
+            0.0,
+        )
+
+        p66 = self.client.post(
+            "/api/admin/model-proof/landing-radar-historical-velocity-update",
+            json={**base, "program": "P66"},
+        )
+        self.assertEqual(p66.status_code, 200)
+        self.assertEqual(
+            p66.json()["velocity_update"]["weight_regime"],
+            "program_override",
+        )
+        self.assertEqual(
+            p66.json()["velocity_update"]["selected_weight"],
+            0.1,
+        )
+
+        inhibited = self.client.post(
+            "/api/admin/model-proof/landing-radar-historical-velocity-update",
+            json={**base, "updates_permitted": False},
+        )
+        self.assertEqual(inhibited.status_code, 200)
+        self.assertFalse(inhibited.json()["velocity_update"]["update_applied"])
+        self.assertIn(
+            "landing_radar_updates_inhibited",
+            inhibited.json()["velocity_update"]["reasons"],
+        )
+
     def test_health_and_phone_shell(self):
         self.assertEqual(self.client.get("/api/health").json(), {"status": "ok"})
         page = self.client.get("/")

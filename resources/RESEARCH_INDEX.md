@@ -307,3 +307,7 @@ Run `python3 scripts/update_research_indexes.py` after adding or renaming resear
 - **402** — [apollo11 r567 section5 rev4 change scope](research/402_apollo11_r567_section5_rev4_change_scope.md)
 - **403** — [apollo11 p66 later equation boundary](research/403_apollo11_p66_later_equation_boundary.md)
 - **404** — [apollo11 p66 flight listing cadence](research/404_apollo11_p66_flight_listing_cadence.md)
+
+## 500–599 — `apollo11-landing-radar`
+
+- **500** — [apollo11 landing radar velocity weighting update](research/500_apollo11_landing_radar_velocity_weighting_update.md)

@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1-landing-radar-quality-profile",
+  "schema_version": "0.2-landing-radar-profile",
   "profile_id": "apollo11_lm5_landing_radar_partial",
   "mission_profile_id": "apollo11_g",
   "status": "partial historical landing-radar profile",
@@ -19,19 +19,42 @@
       "fixed_tolerance_fps": 7.5,
       "proportional_tolerance": 0.125,
       "reference": "radar-axis estimated velocity term defined by Apollo guidance equations",
-      "execution_status": "surface-relative selected-beam projection implemented; exact LM-5 antenna/vehicle/platform transform that supplies the beam unit vector remains unresolved"
+      "execution_status": "surface-relative selected-beam reference projection and downstream piecewise velocity weighting/update are implemented; the exact LM-5 measurement-time antenna/attitude transform is source-controlled but not yet executable in the model"
     }
   },
   "sources": [
     "AC Electronics, Apollo 11 guidance/navigation manual, Lunar Descent State Vector Update Routine",
     "MIT Instrumentation Laboratory R-700 Volume II, landing-radar data reasonableness discussion",
     "NASA Apollo 11 Mission Report, November 1969",
-    "Luminary 099 flown source listing, SERVICER.agc velocity update / DELVS / selected-beam projection"
+    "Luminary 099 flown source listing, SERVICER.agc velocity update / DELVS / selected-beam projection",
+    "LM-5 Mission G prelaunch erasable load, SNA-8-D-027(II) Rev 1, Table LM5/4.5.1-1: LRVMAX/LRVF/LRWV*/LRWVFF",
+    "Luminary 099 flown source listing, SERVICER.agc VUPDAT weighting and GNUV correction"
   ],
   "unresolved": [
     "LM-5 radar beam/terrain measurement generation",
-    "exact LM-5 antenna-position and vehicle/platform attitude transform that supplies each selected radar-beam unit vector",
-    "guidance-cycle cadence and estimator weighting/filter implementation",
+    "executable implementation of the source-controlled LM-5 antenna-position and measurement-time vehicle/platform attitude transform",
+    "integration of PIPA/gravity propagation to the landing-radar measurement time into an end-to-end historical estimator cycle",
     "controller-visible radar/guidance product cadence and formatting"
-  ]
+  ],
+  "velocity_update_weighting": {
+    "maximum_speed_fps": 2000,
+    "low_speed_threshold_fps": 200,
+    "linear_component_weights": {
+      "z": 0.3,
+      "y": 0.3,
+      "x": 0.3
+    },
+    "low_speed_component_weights": {
+      "z": 0.2,
+      "y": 0.2,
+      "x": 0.2
+    },
+    "override_programs": [
+      "P65",
+      "P66",
+      "P67"
+    ],
+    "override_weight": 0.1,
+    "evidence_note": "LM-5 Mission G LUMINARY 99 prelaunch erasable load supplies the thresholds and weights; flown Luminary 099 SERVICER VUPDAT supplies the piecewise selection, update-inhibit behavior, P65/P66/P67 override, and weighted residual vector correction."
+  }
 }
