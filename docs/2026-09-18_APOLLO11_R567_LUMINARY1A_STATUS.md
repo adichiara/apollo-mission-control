@@ -6,15 +6,15 @@ This coordination note keeps the D-024 portfolio, roadmap, progress, station res
 
 ## Portfolio status
 
-The Apollo 11 powered-descent exception remains **OPEN**, but PCR-700 implementation itself is no longer the unresolved gate. MIT/IL LUMINARY Memo #73 records implementation of the P66 total-lag compensation in Revision 80, and the 11 June 1969 Mission G LUMINARY 99 erasable-load document carries the resulting `LAG/TAU = 0.413333` parameter.
+The Apollo 11 powered-descent exception remains **OPEN**, but PCR-700 implementation itself is no longer the unresolved gate. LUMINARY Memo #67 records PCR-700/PCR-670 implementation in Revision 72; Memo #73 records the later P66 total-lag compensation in Revision 80; and the 11 June 1969 Mission G LUMINARY 99 erasable-load document carries `LAG/TAU = 0.413333`.
 
-Research 330 recovered a historical R-567 Section 5 Revision 4 control state. Research 331 corrects the prior retrieval assumption: Section 5 Revision 8 front matter groups the recovered 254.2–755 inventory under **Incorporated in Rev. 4 of GSOP**, including PCR 636, but PCR-670/PCR-700 are absent. Section 2 Revision 4 separately names LUMINARY 1A Rev. 099 and lists both changes. R-567 section revision numbers therefore cannot be treated as synchronized program-wide effectivity states.
+Research 331 now reaches the next Section 5 documentation state. The recovered Revision-4 inventory lacks PCR-670/PCR-700, while the historical **Guidance Equations (Revision 5)** index preserved in the cumulative artifact lists PCR-670 and PCR-700A without later-revision dagger marks. Revision 5 is therefore the earliest directly recovered Section 5 state in the inspected chain containing both landing-change identifiers. This does not yet prove that Rev. 5 was the first historical incorporation state or that its P63-P66 pages are Apollo 11 flight-effective.
 
-The bounded unresolved item is now the **Section 5 revision/change state that actually documents the Apollo 11 landing changes**, with priority on PCR-670/PCR-700 ancestry, P63-P66 affected pages, exact equation text, final cadence statements, and any evidence connecting those internals to controller-visible products. `69-FS-3` remains the preferred parallel complete-equation target.
+The bounded unresolved item is now the **Section 5 Revision 5 landing-program page/effectivity state**, plus a primary PCR-700/PCR-700A crosswalk. `69-FS-3` remains the preferred parallel complete-equation target.
 
 ## Controlled boundary
 
-Section 5 Revision 4 remains a historical anchor, not a presumed final Apollo 11 equation set. The January proposal's once-per-second ROD computations/commands and HDOT display update are not automatically promoted. The Mission G `LAG/TAU` value remains a ratio and must not be converted into a physical lag time without a controlled `TAUROD` value and interpretation chain.
+The January proposal's once-per-second ROD computations/commands and HDOT display update are not automatically promoted. The secondary catalog's description of PCR-700A as a rewritten clarification of PCR-700 remains a retrieval aid, not technical proof. The Mission G `LAG/TAU` value remains a ratio and must not be converted into a physical lag time without a controlled `TAUROD` value and interpretation chain.
 
 No equation, cadence, DSKY behavior, MCC product, station maturity, or executable behavior changes from this research alone.
 
