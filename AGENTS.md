@@ -28,6 +28,16 @@ This is the failure two agents produce faster than one: a plausible inference ge
 
 Correcting the note is half the job. Under `D-023` a withdrawn claim must be retired everywhere it appears, and its exact wording added to `resources/audits/withdrawn_claims.json` alongside the note that withdrew it. The audit then fails if it reappears anywhere in the tree — which is how a corrected source attribution was found still sitting in `resources/primary-sources/manifest.json`, a file nobody had thought to check.
 
+## Keep research mechanically retrievable
+
+New research notes use `## Sources` and `## Evidence status`. Do not create another source-heading synonym. Evidence status is claim-scoped: a note may list several `DOCUMENTED`, `PARTIALLY DOCUMENTED`, and `UNRESOLVED` entries rather than pretending the whole note has one state.
+
+The pre-standard notes in `resources/audits/research_metadata_legacy.json` are exempt from the new heading requirement until substantively revisited. That exemption is not evidence. Do not add or upgrade a formal label in a legacy note unless you have opened the underlying source.
+
+When you do substantively revisit one with the source open, normalize the note and remove its filename from the legacy baseline in the same change. Never remove the exemption first and invent labels afterward.
+
+When a research note or source-catalog supplement is added, renamed, or deleted, run `python3 scripts/update_research_indexes.py`. The documentation audit fails if `resources/RESEARCH_INDEX.md` or the scoped-catalog block in `resources/PRIMARY_SOURCE_CATALOG.md` stops covering the tree.
+
 ## A decision that is not in `docs/DECISIONS.md` did not happen
 
 That file is the handoff mechanism, and it works: it is how the continuous-clock decision (`D-016`) reached an agent still operating on a two-day-old assumption about gated scenes.

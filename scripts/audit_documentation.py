@@ -22,6 +22,17 @@ TEXT_SUFFIXES = {
     ".html", ".js", ".css", ".ini", ".cfg",
 }
 WITHDRAWN_CLAIMS_PATH = Path("resources/audits/withdrawn_claims.json")
+RESEARCH_METADATA_LEGACY_PATH = Path("resources/audits/research_metadata_legacy.json")
+RESEARCH_INDEX_PATH = Path("resources/RESEARCH_INDEX.md")
+PRIMARY_SOURCE_CATALOG_PATH = Path("resources/PRIMARY_SOURCE_CATALOG.md")
+EVIDENCE_LABELS = ("DOCUMENTED", "PARTIALLY DOCUMENTED", "UNRESOLVED")
+LEGACY_SOURCE_HEADINGS = (
+    "Primary source",
+    "Primary sources",
+    "Primary evidence",
+    "Primary-source findings",
+    "Source",
+)
 
 
 def markdown_files(root: Path) -> list[Path]:
@@ -120,6 +131,73 @@ def check_withdrawn_claims(
     return failures
 
 
+def load_research_metadata_legacy(root: Path) -> set[str]:
+    path = root / RESEARCH_METADATA_LEGACY_PATH
+    data = json.loads(path.read_text(encoding="utf-8"))
+    notes = data.get("notes") if isinstance(data, dict) else None
+    if not isinstance(notes, list) or not all(isinstance(name, str) and name for name in notes):
+        raise ValueError("research metadata legacy file must contain a string 'notes' list")
+    if len(notes) != len(set(notes)):
+        raise ValueError("research metadata legacy file contains duplicate note names")
+    return set(notes)
+
+
+def _section(text: str, heading: str) -> str | None:
+    match = re.search(rf"^## {re.escape(heading)}\s*$", text, flags=re.MULTILINE)
+    if not match:
+        return None
+    remainder = text[match.end():]
+    next_heading = re.search(r"^##\s+", remainder, flags=re.MULTILINE)
+    return remainder[:next_heading.start()] if next_heading else remainder
+
+
+def check_research_metadata(root: Path, legacy: set[str]) -> list[str]:
+    failures: list[str] = []
+    research = root / "resources" / "research"
+    current = {path.name for path in research.glob("*.md")}
+
+    for stale in sorted(legacy - current):
+        failures.append(f"legacy metadata baseline references missing note: {stale}")
+
+    for path in sorted(research.glob("*.md")):
+        if path.name in legacy:
+            continue
+        text = path.read_text(encoding="utf-8")
+        if not re.search(r"^## Sources\s*$", text, flags=re.MULTILINE):
+            failures.append(f"{path.relative_to(root)} missing canonical '## Sources' heading")
+        for heading in LEGACY_SOURCE_HEADINGS:
+            if re.search(rf"^## {re.escape(heading)}\s*$", text, flags=re.MULTILINE):
+                failures.append(
+                    f"{path.relative_to(root)} uses legacy source heading '## {heading}'"
+                )
+        status = _section(text, "Evidence status")
+        if status is None:
+            failures.append(f"{path.relative_to(root)} missing '## Evidence status' section")
+        elif not any(label in status for label in EVIDENCE_LABELS):
+            failures.append(
+                f"{path.relative_to(root)} evidence-status section contains no canonical label"
+            )
+    return failures
+
+
+def check_catalog_index_coverage(root: Path) -> list[str]:
+    failures: list[str] = []
+    research_index = (root / RESEARCH_INDEX_PATH).read_text(encoding="utf-8")
+    primary_catalog = (root / PRIMARY_SOURCE_CATALOG_PATH).read_text(encoding="utf-8")
+
+    for path in sorted((root / "resources" / "research").glob("*.md")):
+        target = f"research/{path.name}"
+        if target not in research_index:
+            failures.append(f"research index missing {target}")
+
+    for path in sorted((root / "resources" / "source-catalog").glob("*.md")):
+        target = f"source-catalog/{path.name}"
+        if target not in primary_catalog:
+            failures.append(f"primary source catalog missing {target}")
+
+    return failures
+
+
 def external_urls(files: list[Path]) -> tuple[list[str], Counter[str]]:
     references: list[str] = []
     for path in files:
@@ -151,6 +229,7 @@ def main() -> int:
     urls, counts = external_urls(markdown)
     broken_internal = check_internal_links(root, markdown)
     duplicate_notes = check_note_ids(root)
+    index_failures = check_catalog_index_coverage(root)
 
     withdrawn_config_error: str | None = None
     withdrawn_hits: list[str] = []
@@ -159,6 +238,16 @@ def main() -> int:
         withdrawn_hits = check_withdrawn_claims(root, text_files, withdrawn_claims)
     except (OSError, json.JSONDecodeError, ValueError) as exc:
         withdrawn_config_error = str(exc)
+
+    metadata_config_error: str | None = None
+    metadata_failures: list[str] = []
+    legacy_count = 0
+    try:
+        legacy = load_research_metadata_legacy(root)
+        legacy_count = len(legacy)
+        metadata_failures = check_research_metadata(root, legacy)
+    except (OSError, json.JSONDecodeError, ValueError) as exc:
+        metadata_config_error = str(exc)
 
     print(f"Markdown files: {len(markdown)}")
     print(f"External URL references: {sum(counts.values())}")
@@ -169,10 +258,19 @@ def main() -> int:
     print(f"Duplicate research-note IDs: {len(duplicate_notes)}")
     for note_id, names in duplicate_notes.items():
         print(f"  {note_id}: {', '.join(names)}")
+    print(f"Catalog/index coverage failures: {len(index_failures)}")
+    for failure in index_failures:
+        print(f"  {failure}")
     if withdrawn_config_error:
         print(f"Withdrawn-claims configuration error: {withdrawn_config_error}")
     print(f"Withdrawn-claim occurrences: {len(withdrawn_hits)}")
     for failure in withdrawn_hits:
+        print(f"  {failure}")
+    if metadata_config_error:
+        print(f"Research-metadata configuration error: {metadata_config_error}")
+    print(f"Legacy research-metadata exemptions: {legacy_count}")
+    print(f"Research-metadata failures: {len(metadata_failures)}")
+    for failure in metadata_failures:
         print(f"  {failure}")
 
     http_failures = 0
@@ -187,8 +285,11 @@ def main() -> int:
     return 1 if (
         broken_internal
         or duplicate_notes
+        or index_failures
         or withdrawn_config_error
         or withdrawn_hits
+        or metadata_config_error
+        or metadata_failures
         or http_failures
     ) else 0
 
