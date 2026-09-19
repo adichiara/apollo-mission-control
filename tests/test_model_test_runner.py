@@ -29,11 +29,12 @@ class ModelTestRunnerTests(unittest.TestCase):
                          "/api/admin/model-proof/guidance-monitoring-profile/",
                          "/api/admin/model-proof/guidance-crosscheck",
                          "/api/admin/model-proof/guidance-consensus",
+                         "/api/admin/model-proof/landing-radar-velocity-reference",
                          "/api/admin/model-proof/landing-radar-quality-update",
                          "Guidance-computer alarm → restart recovery",
                          "Load Apollo 11 historical profile",
                          "Guidance comparison / multi-source consensus",
-                         "Landing-radar quality → update eligibility",
+                         "Landing-radar reference → quality → update eligibility",
                          "Authoritative trajectory", "Controller-visible observation",
                          "causal_runs"):
             self.assertIn(required, response.text)
