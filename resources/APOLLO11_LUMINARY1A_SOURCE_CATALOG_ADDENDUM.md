@@ -13,6 +13,7 @@ Date: 2026-09-19
 | LUMINARY 099 `CONTROLLED_CONSTANTS.agc` | Defines fixed `HBEAMANT` as the range beam in landing-radar antenna coordinates | Apollo-11-effective fixed program geometry; do not replace with an invented normalized vector. |
 | LUMINARY Memo #95, *Landing Radar Orientation*, 9 July 1969 | Clarifies that LGC `LRALPHA`/`LRBETA` are the negatives of the R-567 alpha/beta angles because the LGC performs antenna-to-navigation-base rotation; states beta/alpha usage order | Primary Apollo-11-period authority for transform polarity/order. |
 | `SNA-8-D-027(II) REV 1`, LM-5 Mission G prelaunch erasable load | Supplies mission values for `LRALPHA1`, `LRBETA1`, `LRALPHA2`, `LRBETA2`; identifies stow and hover positions; supplies `LRVMAX`, `LRVF`, `LRWV*`, `LRWVF*`, and `LRWVFF` values | Mission/configuration authority for LM-5 landing-radar orientation and velocity-update inputs. |
+| AC Electronics, *Apollo 11 Guidance and Navigation System Manual* | Descent-state-vector material states that Average-G/PIPA processing occurs at 2-second intervals and that the three LR velocity components are used one per 2-second interval; the accompanying timeline shows the repeating velocity-component sequence `Vz, Vx, Vy, Vz` | Primary Apollo-11 training/technical evidence for the **onboard LR velocity-component update cadence**. This does not establish MCC display refresh, downlink freshness, controller-visible formatting, or a generic sensor/noise sample rate. |
 
 ## Current result
 
@@ -22,7 +23,9 @@ The flown listing explicitly forms the measurement-time estimate as prior guidan
 
 The downstream velocity weighting/correction path is also controlled. LUMINARY 099 `VUPDAT` supplies the piecewise `LRVF/LRVMAX/LRW*` logic, update inhibit, P65/P66/P67 `LRWVFF` override, and weighted-residual vector correction; the LM-5 Mission G prelaunch erasable load supplies `LRVMAX=2000 ft/s`, `LRVF=200 ft/s`, `LRWVZ/Y/X=0.3`, `LRWVFZ/Y/X=0.2`, and `LRWVFF=0.1`. See research note 500.
 
-The next bounded implementation target is composition of the source-controlled propagation, beam transform, qualification, and weighting stages. Measurement/noise generation and controller-visible product cadence remain separate evidence problems.
+The Apollo 11 AC Electronics manual now constrains one previously loose timing boundary: onboard descent-state-vector processing consumes one LR velocity component during each 2-second Average-G/PIPA interval, cycling the three components. A given component therefore recurs in the illustrated sequence after three such intervals. This is an LGC estimator/input cadence, not evidence for an MCC/controller product cadence.
+
+The next bounded implementation target remains composition of the source-controlled propagation, beam transform, qualification, and weighting stages. Measurement/noise generation remains unresolved. For controller-visible timing, the new 2-second result may be used only as an upstream constraint; direct downlink/ground-display evidence is still required.
 
 `69-FS-3` remains a preferred complete LUMINARY 1A equation source if recovered, especially for equation ancestry, descriptive cross-checks, and any dependency not directly closed by the flown listing/pad-load chain.
 
@@ -39,6 +42,7 @@ Do not back-project `69-FS-4` (Luminary 1B), `70-FS-*`, R-567 Luminary 1C/1D/1E,
 - https://www.ibiblio.org/apollo/listings/Luminary099/CONTROLLED_CONSTANTS.agc.html
 - https://www.ibiblio.org/apollo/Documents/LUM95_text.pdf
 - https://ibiblio.org/apollo/Documents/Luminary99PadLoads.pdf
+- https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
 
 ## Evidence status
 
@@ -46,5 +50,7 @@ Do not back-project `69-FS-4` (Luminary 1B), `70-FS-*`, R-567 Luminary 1C/1D/1E,
 - **DOCUMENTED:** measurement-time CDU/PIPA/time capture and NB-to-SM velocity-beam transform used by `VELUPDAT`.
 - **DOCUMENTED:** Apollo-11-effective measurement-time velocity propagation through saved PIPA increment, previous gravity contribution, and lunar-rotation correction.
 - **DOCUMENTED:** Apollo-11-effective residual qualification and downstream velocity weighting/correction logic and LM-5 weighting constants.
+- **DOCUMENTED:** onboard LR velocity-component update cadence of one component per 2-second Average-G/PIPA interval; the source timeline cycles `Vz, Vx, Vy`.
 - **PARTIALLY DOCUMENTED:** executable end-to-end composition of the controlled estimator stages.
-- **UNRESOLVED:** landing-radar measurement error/noise generation and controller-visible product cadence and formatting.
+- **UNRESOLVED:** landing-radar measurement error/noise generation.
+- **UNRESOLVED:** controller-visible landing-radar/guidance product cadence and formatting; do not substitute the onboard 2-second component cadence for this separate ground-interface question.
