@@ -82,7 +82,7 @@ def render_research_index() -> str:
         "",
         "- `## Sources` for source references;",
         "- `## Evidence status` for explicit claim-scoped use of `DOCUMENTED`, `PARTIALLY DOCUMENTED`, and/or `UNRESOLVED`;",
-        "- `Research thread: \`<slug>\`` for notes in machine-allocated blocks 400 and above;",
+        "- `Research thread:` metadata with a stable `<slug>` value for notes in machine-allocated blocks 400 and above;",
         "- `## Findings` for source-derived findings when useful;",
         "- `## Unresolved` for open gaps when useful.",
         "",
