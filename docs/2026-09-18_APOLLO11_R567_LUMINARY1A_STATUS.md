@@ -2,21 +2,23 @@
 
 Date: 2026-09-19
 
-This coordination note keeps the D-024 portfolio, roadmap, progress, station research, and source catalog aligned through research note 333.
+This coordination note keeps the D-024 portfolio, roadmap, progress, station research, and source catalog aligned through research note 333 and its primary PCR-700A crosswalk update.
 
 ## Portfolio status
 
-The Apollo 11 powered-descent exception remains **OPEN**, but exact P66 ROD computation cadence is no longer an unresolved gate. LUMINARY Memo #67 records PCR-700/PCR-670 implementation in Revision 72; Memo #73 records P66 total-lag compensation in Revision 80; the Mission G LUMINARY 99 erasable-load document carries `LAG/TAU = 0.413333`; and the LUMINARY 099 assembly listing directly schedules the P66 `RODTASK` at `1SEC`.
+The Apollo 11 powered-descent exception remains **OPEN**, but exact P66 ROD computation cadence and the PCR-700/PCR-700A crosswalk are no longer unresolved gates. LUMINARY Memo #67 records PCR-700/PCR-670 implementation in Revision 72; Memo #73 records P66 total-lag compensation in Revision 80; the Mission G LUMINARY 99 erasable-load document carries `LAG/TAU = 0.413333`; and the LUMINARY 099 assembly listing directly schedules the P66 `RODTASK` at `1SEC`.
 
 The assembly path is explicit: `P66VERTA` loads `1SEC`, calls `TWIDDLE`, and schedules `RODTASK`; `RODTASK` dispatches `RODCOMP`; `RODCOMP` updates `VDGVERT` and `HDOTDISP` and consumes `LAG/TAU`. This confirms the January change-intent's one-second **ROD computation** behavior in the Apollo 11 program.
 
-The remaining bounded archival items are the Section 5 Revision 5 descriptive-equation/page ancestry, a primary PCR-700/PCR-700A crosswalk, and `69-FS-3`. These are not prerequisites for the computation interval. Crew-visible Noun 63 timing and station-visible timing are separate dependency-triggered questions.
+MIT/IL Apollo Project Memo 9-69 supplies the missing primary identifier crosswalk: PCR-700A, “Improve the Rate-of-Descent Mode (P66) Performance,” is explicitly described as a clarifying rewrite of PCR-700. The action was already assigned. This reconciles Section 2 Revision 4's PCR-700 with the recovered Section 5 Revision 5 index's PCR-700A without treating them as unrelated changes.
+
+The remaining bounded archival items are the Section 5 Revision 5 descriptive-equation/page ancestry/effectivity and `69-FS-3`. These are not prerequisites for the computation interval or the PCR-number crosswalk. Crew-visible Noun 63 timing and station-visible timing are separate dependency-triggered questions.
 
 ## Controlled boundary
 
-Do not infer a one-second DSKY refresh, telemetry cadence, MCC display refresh, or controller-facing product from the internal one-second `RODTASK` schedule. `HDOTDISP` is updated in `RODCOMP`, but display/downlink/ground-processing timing requires separate evidence.
+Do not infer a one-second DSKY refresh, telemetry cadence, MCC display refresh, or controller-facing product from the internal one-second `RODTASK` schedule. `HDOTDISP` is updated in `RODCOMP`, but display/downlink/ground-processing timing requires separate evidence. Likewise, the 700→700A crosswalk does not establish that every Section 5 Revision 5 equation page is Apollo 11-effective.
 
-No station maturity or controller-facing product changes from research 333.
+No station maturity or controller-facing product changes from this update.
 
 ## Synchronized records
 
