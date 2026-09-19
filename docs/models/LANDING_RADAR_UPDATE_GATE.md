@@ -1,6 +1,6 @@
 # Landing Radar Guidance-Update Gate Model Proof
 
-Status: **implemented reusable velocity-reference projection + measurement-quality + eligibility boundary; not a complete radar or state-estimator simulation**
+Status: **implemented reusable velocity-reference projection + measurement-quality + eligibility + weighted velocity-correction boundary; not a complete radar sensor/state-estimator simulation**
 
 ## Purpose
 
@@ -65,9 +65,31 @@ The model deliberately does **not** synthesize the LM-5 beam vector from antenna
 
 Apollo 11 historical values are recorded in `data/landing_radar_profiles/apollo11_lm5_landing_radar_partial.json`; no Apollo constants are embedded in either model.
 
+## Downstream velocity weighting / correction
+
+`src/apollo_mission_control/landing_radar_velocity_update.py` represents the estimator boundary after a velocity component has passed reasonableness and update-permit gates.
+
+Generic inputs are:
+
+- prior velocity estimate;
+- accepted measured-minus-reference scalar residual;
+- measurement-time selected-beam unit vector;
+- estimated speed;
+- selected velocity component;
+- program/mode;
+- caller-supplied weighting configuration.
+
+The Apollo 11 profile supplies the LM-5 values recovered in research note 500: `LRVMAX`, `LRVF`, per-axis linear and low-speed weights, and the P65/P66/P67 `LRWVFF` override. The generic model contains no Apollo constants.
+
+The vector correction is:
+
+`updated velocity = prior velocity + weight * scalar residual * selected beam`
+
+The Causal Model Lab exposes this stage separately. Its upstream quality fields remain caller-supplied test inputs unless explicitly loaded from a historical profile; the presence of a historical downstream weighting profile does not make synthetic upstream inputs historical.
+
 ## Deliberately deferred
 
-- LM-5 antenna-position + vehicle/platform attitude transform that produces the selected beam unit vector;
+- executable LM-5 antenna-position + measurement-time vehicle/platform attitude transform that produces the selected beam unit vector;
 - surface intersection/terrain model;
 - measurement noise/bias generation;
 - antenna state;
@@ -92,6 +114,6 @@ The reusable models contain none of those mission values. The Apollo 11 profile 
 
 ## Validation
 
-Synthetic tests verify surface-relative selected-beam projection, strict unit-vector validation, independent quality, enablement, channel-presence, and velocity-threshold gates. The Causal Model Lab exposes the projection as a separate stage before the residual test.
+Synthetic tests verify surface-relative selected-beam projection, strict unit-vector validation, independent quality, enablement, channel-presence, velocity-threshold gates, piecewise weighting, program override, inhibit behavior, and vector correction. The Causal Model Lab exposes the projection and historical LM-5 weighting/correction as separate stages.
 
 This model does not authorize an `apollo11_descent_v1` runtime by itself.
