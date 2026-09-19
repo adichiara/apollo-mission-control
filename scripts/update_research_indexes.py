@@ -61,6 +61,8 @@ def render_research_index() -> str:
         "",
         "Legacy notes predate this convention. They remain indexed without silent relabeling; `UNLABELED` in retrieval tooling means only that canonical evidence metadata has not yet been normalized, not that the historical question is unresolved.",
         "",
+        "For corpus retrieval, use `python3 scripts/query_research.py`. Examples: `--text DDP-224`, `--evidence UNRESOLVED`, `--evidence UNLABELED`, and `--source-heading legacy`. The query tool reports only labels that literally occur in a note; it does not infer evidence status from prose.",
+        "",
         "Run `python3 scripts/update_research_indexes.py` after adding or renaming research notes or source-catalog supplements.",
         "",
     ]
