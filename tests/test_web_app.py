@@ -99,6 +99,42 @@ class WebAppTests(unittest.TestCase):
         )
         self.assertEqual(bad_event.status_code, 400)
 
+    def test_landing_radar_velocity_reference_model_proof(self):
+        response = self.client.post(
+            "/api/admin/model-proof/landing-radar-velocity-reference",
+            json={
+                "estimated_velocity_m_s": [100.0, 20.0, -5.0],
+                "lunar_surface_velocity_m_s": [10.0, 2.0, -1.0],
+                "beam_unit_vector": [1.0, 0.0, 0.0],
+                "component": "vx",
+                "applicability": "synthetic web proof",
+                "provenance": ["synthetic"],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body["relative_surface_velocity_m_s"], [90.0, 18.0, -4.0])
+        self.assertEqual(body["reference_velocity_m_s"], 90.0)
+        self.assertEqual(body["component"], "vx")
+        self.assertEqual(body["applicability"], "synthetic web proof")
+        self.assertTrue(
+            any(
+                "historical antenna/vehicle/platform transformation" in item
+                for item in body["assumptions"]
+            )
+        )
+
+        rejected = self.client.post(
+            "/api/admin/model-proof/landing-radar-velocity-reference",
+            json={
+                "estimated_velocity_m_s": [100.0, 0.0, 0.0],
+                "lunar_surface_velocity_m_s": [0.0, 0.0, 0.0],
+                "beam_unit_vector": [2.0, 0.0, 0.0],
+            },
+        )
+        self.assertEqual(rejected.status_code, 400)
+        self.assertIn("unit length", rejected.json()["detail"])
+
     def test_health_and_phone_shell(self):
         self.assertEqual(self.client.get("/api/health").json(), {"status": "ok"})
         page = self.client.get("/")

@@ -5,6 +5,11 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from apollo_mission_control.landing_radar_reference import (  # noqa: E402
+    LandingRadarVelocityReferenceInput,
+    compute_landing_radar_velocity_reference,
+)
+
 from apollo_mission_control.landing_radar_quality import (  # noqa: E402
     AffineResidualRule,
     LandingRadarQualityConfig,
@@ -145,6 +150,73 @@ class LandingRadarQualityTests(unittest.TestCase):
             result.channel("velocity_axis").reasons,
         )
 
+
+    def test_reference_projection_feeds_velocity_reasonableness_rule(self):
+        reference = compute_landing_radar_velocity_reference(
+            LandingRadarVelocityReferenceInput(
+                estimated_velocity_m_s=(100.0, 20.0, -5.0),
+                lunar_surface_velocity_m_s=(10.0, 2.0, -1.0),
+                beam_unit_vector=(1.0, 0.0, 0.0),
+            )
+        )
+
+        accepted = qualify_landing_radar_measurements(
+            LandingRadarQualityInput(
+                time_s=10.0,
+                data_good=True,
+                data_good_since_s=5.0,
+                channels={
+                    "velocity_axis": RadarScalarChannel(
+                        measured_value=95.0,
+                        reference_value=reference.reference_velocity_m_s,
+                        unit="m/s",
+                    )
+                },
+            ),
+            LandingRadarQualityConfig(
+                min_data_good_duration_s=4.0,
+                residual_rules={
+                    "velocity_axis": AffineResidualRule(
+                        fixed_tolerance=7.5,
+                        proportional_tolerance=0.125,
+                    )
+                },
+            ),
+        )
+        self.assertTrue(accepted.channel("velocity_axis").accepted)
+        self.assertEqual(
+            accepted.channel("velocity_axis").residual,
+            5.0,
+        )
+
+        rejected = qualify_landing_radar_measurements(
+            LandingRadarQualityInput(
+                time_s=10.0,
+                data_good=True,
+                data_good_since_s=5.0,
+                channels={
+                    "velocity_axis": RadarScalarChannel(
+                        measured_value=120.0,
+                        reference_value=reference.reference_velocity_m_s,
+                        unit="m/s",
+                    )
+                },
+            ),
+            LandingRadarQualityConfig(
+                min_data_good_duration_s=4.0,
+                residual_rules={
+                    "velocity_axis": AffineResidualRule(
+                        fixed_tolerance=7.5,
+                        proportional_tolerance=0.125,
+                    )
+                },
+            ),
+        )
+        self.assertFalse(rejected.channel("velocity_axis").accepted)
+        self.assertIn(
+            "residual_outside_limit",
+            rejected.channel("velocity_axis").reasons,
+        )
 
 if __name__ == "__main__":
     unittest.main()

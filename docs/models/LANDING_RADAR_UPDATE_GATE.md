@@ -1,6 +1,6 @@
 # Landing Radar Guidance-Update Gate Model Proof
 
-Status: **implemented reusable eligibility model; paired with a separate generic measurement-quality model; not a radar or state-estimator simulation**
+Status: **implemented reusable velocity-reference projection + measurement-quality + eligibility boundary; not a complete radar or state-estimator simulation**
 
 ## Purpose
 
@@ -10,9 +10,11 @@ Represent the decision boundary:
 
 The implementation deliberately stops before state-vector correction.
 
-File:
+Files:
 
-`src/apollo_mission_control/landing_radar_model.py`
+- `src/apollo_mission_control/landing_radar_reference.py`
+- `src/apollo_mission_control/landing_radar_quality.py`
+- `src/apollo_mission_control/landing_radar_model.py`
 
 ## Why this boundary matters
 
@@ -45,15 +47,27 @@ A scenario script should not equate "radar good" with "state vector immediately 
 - explicit blocking reasons;
 - assumptions/provenance.
 
+## Velocity-reference layer
+
+`src/apollo_mission_control/landing_radar_reference.py` implements the source-backed velocity-reference boundary used before the velocity residual test:
+
+`estimated vehicle velocity - lunar-surface velocity -> surface-relative velocity -> dot(selected radar-beam unit vector)`
+
+The model requires the vehicle/surface vectors and selected beam unit vector to be supplied in one common frame at the measurement epoch. It rejects a non-unit beam instead of silently normalizing it.
+
+This matches the flown Luminary 099 architecture in `SERVICER.agc`: the state estimate is advanced to the radar measurement time, the lunar-rotation correction `DELVS` is subtracted, and the result is dotted with the selected velocity-beam vector before the measured-minus-estimated residual is tested. Later R-567 guidance documentation independently describes the selected velocity-component unit vector and vehicle-to-platform transformation.
+
+The model deliberately does **not** synthesize the LM-5 beam vector from antenna position, vehicle attitude, or platform attitude. That transform remains a separate historical geometry dependency.
+
 ## Upstream quality layer
 
-`src/apollo_mission_control/landing_radar_quality.py` now represents Data Good persistence, optional range-scale stability, channel validity, and caller-supplied affine residual reasonableness tests. These remain separate from the update gate so raw measurement qualification is not conflated with permission to enter the estimator.
+`src/apollo_mission_control/landing_radar_quality.py` represents Data Good persistence, optional range-scale stability, channel validity, and caller-supplied affine residual reasonableness tests. These remain separate from the update gate so raw measurement qualification is not conflated with permission to enter the estimator.
 
 Apollo 11 historical values are recorded in `data/landing_radar_profiles/apollo11_lm5_landing_radar_partial.json`; no Apollo constants are embedded in either model.
 
 ## Deliberately deferred
 
-- radar beam geometry;
+- LM-5 antenna-position + vehicle/platform attitude transform that produces the selected beam unit vector;
 - surface intersection/terrain model;
 - measurement noise/bias generation;
 - antenna state;
@@ -74,10 +88,10 @@ The Apollo 11 Mission Report documents:
 
 Apollo guidance documentation further describes altitude updating after radar incorporation is allowed and velocity use below a preselected speed threshold.
 
-The reusable models contain none of those mission values. The Apollo 11 profile now records the sourced 4-second Data Good persistence, 1-second range-scale stability, 50,000-ft range-update altitude boundary, 2,000-ft/s velocity-update boundary, astronaut approval requirement, and affine reasonableness-rule constants. Historical execution still requires the missing upstream/downstream pieces described below.
+The reusable models contain none of those mission values. The Apollo 11 profile now records the sourced 4-second Data Good persistence, 1-second range-scale stability, 50,000-ft range-update altitude boundary, 2,000-ft/s velocity-update boundary, astronaut approval requirement, and affine reasonableness-rule constants. Historical execution now has the reusable surface-relative selected-beam reference projection, but still requires the mission-specific LM-5 beam/attitude transform and downstream estimator pieces described below.
 
 ## Validation
 
-Synthetic tests verify independent quality, enablement, channel-presence, and velocity-threshold gates.
+Synthetic tests verify surface-relative selected-beam projection, strict unit-vector validation, independent quality, enablement, channel-presence, and velocity-threshold gates. The Causal Model Lab exposes the projection as a separate stage before the residual test.
 
 This model does not authorize an `apollo11_descent_v1` runtime by itself.

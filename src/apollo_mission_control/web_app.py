@@ -77,6 +77,10 @@ from .landing_radar_quality import (
     RadarScalarChannel,
     qualify_landing_radar_measurements,
 )
+from .landing_radar_reference import (
+    LandingRadarVelocityReferenceInput,
+    compute_landing_radar_velocity_reference,
+)
 from .malfunction_plan import (
     CausalInsertion,
     InsertionLayer,
@@ -458,6 +462,23 @@ class LandingRadarQualityUpdateChainRequest(BaseModel):
     velocity_channel: str = Field(default="velocity_axis", min_length=1, max_length=128)
     applicability: str = Field(
         default="generic landing-radar quality/update API proof; not mission validated",
+        min_length=1,
+        max_length=500,
+    )
+    provenance: list[str] = Field(default_factory=list, max_length=20)
+
+
+class LandingRadarVelocityReferenceRequest(BaseModel):
+    estimated_velocity_m_s: list[float] = Field(min_length=3, max_length=3)
+    lunar_surface_velocity_m_s: list[float] = Field(min_length=3, max_length=3)
+    beam_unit_vector: list[float] = Field(min_length=3, max_length=3)
+    component: str = Field(default="velocity_axis", min_length=1, max_length=128)
+    unit_vector_tolerance: float = Field(default=1.0e-6, ge=0.0)
+    applicability: str = Field(
+        default=(
+            "landing-radar velocity-reference projection; "
+            "historical beam/attitude transform supplied upstream"
+        ),
         min_length=1,
         max_length=500,
     )
@@ -1593,6 +1614,33 @@ def guidance_consensus_model_proof(
                 applicability=request.applicability,
                 provenance=tuple(request.provenance),
             ),
+        )
+    )
+    return result.to_dict()
+
+
+@app.post(
+    "/api/admin/model-proof/landing-radar-velocity-reference",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def landing_radar_velocity_reference_model_proof(
+    request: LandingRadarVelocityReferenceRequest,
+) -> dict[str, object]:
+    """Expose the source-backed velocity-reference projection without beam synthesis."""
+
+    result = _domain_call(
+        lambda: compute_landing_radar_velocity_reference(
+            LandingRadarVelocityReferenceInput(
+                estimated_velocity_m_s=tuple(request.estimated_velocity_m_s),
+                lunar_surface_velocity_m_s=tuple(
+                    request.lunar_surface_velocity_m_s
+                ),
+                beam_unit_vector=tuple(request.beam_unit_vector),
+                component=request.component,
+                unit_vector_tolerance=request.unit_vector_tolerance,
+                applicability=request.applicability,
+                provenance=tuple(request.provenance),
+            )
         )
     )
     return result.to_dict()
