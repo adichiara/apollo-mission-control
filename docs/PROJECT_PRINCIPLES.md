@@ -32,19 +32,15 @@ Any simplification that changes documented Apollo behavior should be recorded in
 
 ## 4. Research to sufficiency, not exhaustion
 
-Historical research is complete enough for a feature or phase when the evidence establishes the behavior that materially affects controller work and the remaining gaps can be isolated explicitly.
+Historical research is judged against a **bounded research question and a current implementation dependency**, not against an entire subject area.
 
-Do not keep drilling into one topic merely because some archival detail remains unresolved. Move on when one or more of these conditions applies:
+A question is **SUFFICIENT** when the evidence supports every decision-relevant behavior needed at the current implementation resolution, each remaining gap has an explicit non-blocking disposition, material source conflicts are settled or exposed, and a focused closure challenge finds no new evidence that changes the implementation conclusion.
 
-- the next evidence appears to require inaccessible or obscure archival material;
-- repeated searches are returning the same sources rather than new evidence;
-- the unresolved detail has little effect on player decisions or simulation behavior;
-- the uncertainty can be represented honestly as unresolved without forcing invented behavior;
-- another project area has substantially higher expected value.
+Research may also stop as **DEFERRED** when no current dependency justifies more work, or **BLOCKED** when a material dependency remains but the next discriminating evidence has a concrete access barrier. Neither state licenses invented historical behavior.
 
-A blocked detail should be logged with the best known evidence, its likely implementation impact, and the source that would resolve it if later found.
+Sufficiency does not mean historical completeness and does not upgrade an `UNRESOLVED` claim. Reopen research only when a defined trigger makes the gap materially relevant again.
 
-Research may return to a deferred gap when implementation reveals that it is actually consequential.
+The operational gate, thread states, closure record, and reopen triggers are defined in `docs/RESEARCH_SUFFICIENCY.md` and decision D-024.
 
 ## 5. The simulation should not feel game-like
 

@@ -230,15 +230,20 @@ See `resources/research/200_second_reference_apollo11_descent_assessment.md`.
 
 ## 12. Research sufficiency rule for scenario work
 
-Do not delay the vertical slice to resolve an archival detail unless it materially changes:
+Scenario research follows the repository-wide gate in `docs/RESEARCH_SUFFICIENCY.md` and D-024.
+
+For scenario work, an unresolved detail is decision-relevant when it can materially change:
 
 - a controller's available information;
-- a procedure or decision rule;
+- a procedure, authority boundary, or decision rule;
 - simulation state evolution;
 - a validation target;
-- player-role interaction.
+- player-role interaction; or
+- the scenario's effectivity/configuration.
 
-Missing exact console legends, noncritical CRT fields, complete backroom staffing, or other low-impact details remain cataloged but deferred until implementation proves them necessary.
+A bounded scenario question may be marked `SUFFICIENT` only after the global closure gate passes. Missing exact console legends, noncritical CRT fields, complete backroom staffing, or other low-impact details may remain `UNRESOLVED` while the research question is `SUFFICIENT` or `DEFERRED` if their non-blocking disposition is recorded.
+
+Do not keep a scenario thread active merely because additional archival detail may exist.
 
 ## Sources
 
