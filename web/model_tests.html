@@ -130,8 +130,8 @@
 </section>
 
 <section id="radar" class="panel">
-<h2>Landing-radar quality → update eligibility</h2>
-<p class="note">Exercises the separation between raw radar/Data Good state, measurement qualification, qualified channels, and eligibility for a downstream estimator. The estimator itself is not implemented here.</p>
+<h2>Landing-radar reference → quality → update eligibility</h2>
+<p class="note">Exercises the source-backed velocity-reference boundary before measurement qualification: estimated velocity minus lunar-surface velocity, projected on a caller-supplied selected radar-beam unit vector. Full LM-5 antenna/attitude geometry and the downstream estimator remain deliberately outside this proof.</p>
 <div class="grid">
 <label class="field">Current time (s)<input id="lrTime" type="number" value="10" step="0.1"></label>
 <label class="field">Data Good since (s)<input id="lrGoodSince" type="number" value="5" step="0.1"></label>
@@ -139,8 +139,16 @@
 <label class="field">Altitude measured (m)<input id="lrAltMeasured" type="number" value="1040" step="1"></label>
 <label class="field">Altitude reference (m)<input id="lrAltReference" type="number" value="1000" step="1"></label>
 <label class="field">Altitude fixed tolerance (m)<input id="lrAltFixed" type="number" value="200" step="1"></label>
-<label class="field">Velocity measured (m/s)<input id="lrVelMeasured" type="number" value="105" step="0.1"></label>
-<label class="field">Velocity reference (m/s)<input id="lrVelReference" type="number" value="100" step="0.1"></label>
+<label class="field">Velocity measured (m/s)<input id="lrVelMeasured" type="number" value="95" step="0.1"></label>
+<label class="field">Estimated velocity X (m/s)<input id="lrRefVx" type="number" value="100" step="0.1"></label>
+<label class="field">Estimated velocity Y (m/s)<input id="lrRefVy" type="number" value="20" step="0.1"></label>
+<label class="field">Estimated velocity Z (m/s)<input id="lrRefVz" type="number" value="-5" step="0.1"></label>
+<label class="field">Lunar-surface velocity X (m/s)<input id="lrSurfVx" type="number" value="10" step="0.1"></label>
+<label class="field">Lunar-surface velocity Y (m/s)<input id="lrSurfVy" type="number" value="2" step="0.1"></label>
+<label class="field">Lunar-surface velocity Z (m/s)<input id="lrSurfVz" type="number" value="-1" step="0.1"></label>
+<label class="field">Beam unit X<input id="lrBeamX" type="number" value="1" step="0.01"></label>
+<label class="field">Beam unit Y<input id="lrBeamY" type="number" value="0" step="0.01"></label>
+<label class="field">Beam unit Z<input id="lrBeamZ" type="number" value="0" step="0.01"></label>
 <label class="field">Velocity fixed tolerance (m/s)<input id="lrVelFixed" type="number" value="7.5" step="0.1"></label>
 <label class="field">Proportional tolerance<input id="lrProportional" type="number" value="0.125" step="0.001"></label>
 <label class="field">Estimated speed (m/s)<input id="lrEstimatedSpeed" type="number" value="500" step="1"></label>
@@ -148,7 +156,7 @@
 </div>
 <p><label><input id="lrDataGood" type="checkbox" checked> raw Data Good</label> &nbsp; <label><input id="lrUpdatesEnabled" type="checkbox" checked> radar updates enabled</label></p>
 <div class="actions"><button id="runRadar">Run radar chain</button><button id="radarBadData">Break Data Good persistence</button><button id="radarDisableUpdates">Disable updates</button></div>
-<div id="radarTrace" class="chain"><div class="stage"><b>Raw radar state</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Measurement qualification</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Qualified measurement</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Update eligibility</b>Not run</div></div>
+<div id="radarTrace" class="chain"><div class="stage"><b>Estimated / lunar-surface velocity</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Selected-beam reference</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Measurement qualification</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Update eligibility</b>Not run</div></div>
 <details class="raw"><summary>Raw radar-chain JSON</summary><pre id="radarRaw">No run yet.</pre></details>
 </section>
 
@@ -531,12 +539,19 @@ $('runCrosscheck').onclick=runGuidancePair;
 $('runConsensus').onclick=()=>runGuidanceConsensus(false);
 $('runStaleConsensus').onclick=()=>runGuidanceConsensus(true);
 
-function radarPayload(mode='normal'){
+function radarReferencePayload(){
+ return {estimated_velocity_m_s:[num('lrRefVx'),num('lrRefVy'),num('lrRefVz')],
+  lunar_surface_velocity_m_s:[num('lrSurfVx'),num('lrSurfVy'),num('lrSurfVz')],
+  beam_unit_vector:[num('lrBeamX'),num('lrBeamY'),num('lrBeamZ')],component:'velocity_axis',
+  applicability:'site causal-model lab landing-radar reference projection; historical LM-5 beam transform supplied upstream',
+  provenance:['Luminary 099 SERVICER velocity-reference architecture; synthetic browser vectors']};
+}
+function radarPayload(mode='normal',velocityReference=0){
  const now=num('lrTime'),goodSince=mode==='bad-data'?now-1:num('lrGoodSince'),updates=mode==='updates-off'?false:$('lrUpdatesEnabled').checked;
  return {time_s:now,guidance_time_s:now,data_good:mode==='bad-data'?true:$('lrDataGood').checked,data_good_since_s:goodSince,
   range_scale_last_changed_s:num('lrScaleChanged'),source:'site causal-model lab synthetic radar',
   channels:{altitude:{measured_value:num('lrAltMeasured'),reference_value:num('lrAltReference'),unit:'m',valid:true},
-   velocity_axis:{measured_value:num('lrVelMeasured'),reference_value:num('lrVelReference'),unit:'m/s',valid:true}},
+   velocity_axis:{measured_value:num('lrVelMeasured'),reference_value:velocityReference,unit:'m/s',valid:true}},
   min_data_good_duration_s:4,min_range_scale_stable_s:1,scale_stability_channels:['altitude'],
   residual_rules:{altitude:{fixed_tolerance:num('lrAltFixed'),proportional_tolerance:num('lrProportional')},
    velocity_axis:{fixed_tolerance:num('lrVelFixed'),proportional_tolerance:num('lrProportional')}},
@@ -546,16 +561,19 @@ function radarPayload(mode='normal'){
   provenance:['Synthetic browser inputs; not Apollo constants']};
 }
 async function runRadar(mode='normal'){
- const p=radarPayload(mode);$('radarRaw').textContent='Running…';
+ const rp=radarReferencePayload();$('radarRaw').textContent='Running…';
  try{
+  const ref=await request('/api/admin/model-proof/landing-radar-velocity-reference',rp);
+  recordCausal('landing-radar-reference-'+mode,rp,ref);
+  const p=radarPayload(mode,ref.reference_velocity_m_s);
   const r=await request('/api/admin/model-proof/landing-radar-quality-update',p);recordCausal('landing-radar-'+mode,p,r);
   const q=r.quality,by=Object.fromEntries(q.channels.map(x=>[x.channel,x])),m=r.qualified_measurement,u=r.update_assessment;
   $('radarTrace').innerHTML=
-   traceStage('Raw radar state','<div>Data Good '+statusBadge(p.data_good)+'</div><div>good since = '+scalar(p.data_good_since_s)+' s</div><div>scale changed = '+scalar(p.range_scale_last_changed_s)+' s</div>')+
-   arrow()+traceStage('Measurement qualification','<div>Data Good qualified '+statusBadge(q.data_good_qualified)+'</div><div>altitude '+statusBadge(by.altitude?.accepted,'ACCEPT','REJECT')+'</div><div>velocity '+statusBadge(by.velocity_axis?.accepted,'ACCEPT','REJECT')+'</div>')+
-   arrow()+traceStage('Qualified measurement','<div>altitude = '+scalar(m.altitude_m)+' m</div><div>velocity = '+vec(m.velocity_m_s)+' m/s</div>')+
+   traceStage('Estimated / surface velocity','<div>estimated = '+vec(ref.estimated_velocity_m_s)+' m/s</div><div>surface = '+vec(ref.lunar_surface_velocity_m_s)+' m/s</div><div>relative = '+vec(ref.relative_surface_velocity_m_s)+' m/s</div>')+
+   arrow()+traceStage('Selected-beam reference','<div>beam = '+vec(ref.beam_unit_vector)+'</div><div>reference = '+scalar(ref.reference_velocity_m_s)+' m/s</div><div class="note">Beam vector is supplied upstream; full LM-5 antenna/attitude transform is not inferred here.</div>')+
+   arrow()+traceStage('Measurement qualification','<div>Data Good qualified '+statusBadge(q.data_good_qualified)+'</div><div>altitude '+statusBadge(by.altitude?.accepted,'ACCEPT','REJECT')+'</div><div>velocity '+statusBadge(by.velocity_axis?.accepted,'ACCEPT','REJECT')+'</div><div class="note">measured velocity = '+scalar(p.channels.velocity_axis.measured_value)+' m/s</div>')+
    arrow()+traceStage('Update eligibility','<div>updates enabled '+statusBadge(u.updates_enabled)+'</div><div>altitude '+statusBadge(u.altitude_eligible,'ELIGIBLE','BLOCKED')+'</div><div>velocity '+statusBadge(u.velocity_eligible,'ELIGIBLE','BLOCKED')+'</div><div class="note">'+(u.reasons.join(', ')||'no blocking reasons')+'</div>');
-  $('radarRaw').textContent=JSON.stringify(r,null,2);
+  $('radarRaw').textContent=JSON.stringify({reference_projection:ref,quality_update:r},null,2);
  }catch(e){$('radarRaw').textContent=String(e.message||e)}
 }
 $('runRadar').onclick=()=>runRadar('normal');
