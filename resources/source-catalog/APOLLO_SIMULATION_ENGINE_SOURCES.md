@@ -235,7 +235,7 @@ Under D-024, **do not continue direct LMS/AMS extraction merely to complete the 
 - Finding-aid title: **Malfunction Data**.
 - Extent: three folders.
 - Independent NASA/MSC engineering reference: `MSC-IN-CF-P-69-5` / `NASA-TM-X-64471` cites `LMA790-2-LMS`, Volume II, Sections II and III, dated 1 April 1967.
-- Evidence use: high-priority direct LMS malfunction-document retrieval target for model/insertion/effect relationships.
+- Evidence use: controlled direct LMS malfunction-document target for model/insertion/effect relationships **if** a selected historical LMS exercise or injectability claim reopens that dependency under D-024.
 - Status: title/extent and report-family/date are established; technical pages, malfunction inventory, program/model designators, MSC accession identifier, configuration effectivity, and Apollo 13 applicability remain unrecovered.
 - Key boundary: do not infer a malfunction schema or executable behavior from the title alone.
 - Research records: `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/313_lms_handbook_sections_2_3_primary_reference.md`, and `resources/research/315_lms_sections_2_3_archival_title_reconciliation.md`.
@@ -245,7 +245,7 @@ Under D-024, **do not continue direct LMS/AMS extraction merely to complete the 
 - Archival holding: same Avitabile collection.
 - Finding-aid title: **Lunar-landing Mission Procedures**.
 - Extent: four folders.
-- Evidence use: high-priority integrated LMS procedure retrieval target for landing-scenario simulator/instructor/crew relationships.
+- Evidence use: controlled integrated LMS procedure target **if** a selected historical landing-simulation case reopens that dependency under D-024.
 - Status: title/extent and report-family/date are established; technical contents, MSC accession identifier, configuration effectivity, and Apollo 13 applicability remain unrecovered.
 - Key boundary: the title does not make this a software-architecture or mission-specific Apollo 13 source without page-level evidence.
 
