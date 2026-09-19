@@ -1,3 +1,4 @@
+from math import tau
 from pathlib import Path
 import sys
 import unittest
@@ -5,17 +6,13 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from apollo_mission_control.landing_radar_profiles import (  # noqa: E402
-    get_landing_radar_profile,
-)
+from apollo_mission_control.landing_radar_profiles import get_landing_radar_profile  # noqa: E402
 
 
 class LandingRadarProfileTests(unittest.TestCase):
     def test_apollo11_profile_builds_historical_velocity_weight_config(self):
         profile = get_landing_radar_profile("apollo11_lm5_landing_radar_partial")
         self.assertEqual(profile.mission_profile_id, "apollo11_g")
-        self.assertIsNotNone(profile.velocity_weighting)
-
         config = profile.velocity_update_config().validated()
         self.assertAlmostEqual(config.maximum_speed_m_s, 609.6)
         self.assertAlmostEqual(config.low_speed_threshold_m_s, 60.96)
@@ -24,16 +21,29 @@ class LandingRadarProfileTests(unittest.TestCase):
         self.assertEqual(config.override_programs, ("P65", "P66", "P67"))
         self.assertEqual(config.override_weight, 0.1)
 
-    def test_profile_public_metadata_preserves_source_units_and_unresolved_boundary(self):
+    def test_apollo11_profile_adapts_source_geometry_without_manual_transcription(self):
+        profile = get_landing_radar_profile("apollo11_lm5_landing_radar_partial")
+        p1 = profile.beam_geometry(1, cdu_y_rad=0.1, cdu_z_rad=0.2, cdu_x_rad=0.3)
+        p2 = profile.beam_geometry(2, cdu_y_rad=0.1, cdu_z_rad=0.2, cdu_x_rad=0.3)
+        self.assertAlmostEqual(p1.alpha_rad, 0.0163371759 * tau)
+        self.assertAlmostEqual(p1.beta_rad, 0.0665287037 * tau)
+        self.assertAlmostEqual(p2.alpha_rad, 0.0161680555 * tau)
+        self.assertAlmostEqual(p2.beta_rad, 0.0001361111 * tau)
+        self.assertEqual((p1.cdu_y_rad, p1.cdu_z_rad, p1.cdu_x_rad), (0.1, 0.2, 0.3))
+        with self.assertRaises(ValueError):
+            profile.beam_geometry(3, cdu_y_rad=0, cdu_z_rad=0, cdu_x_rad=0)
+
+    def test_profile_public_metadata_preserves_current_boundary(self):
         profile = get_landing_radar_profile("apollo11_lm5_landing_radar_partial")
         public = profile.to_public_dict()
         weighting = public["velocity_update_weighting"]
         self.assertEqual(weighting["maximum_speed_fps"], 2000.0)
-        self.assertEqual(weighting["low_speed_threshold_fps"], 200.0)
         self.assertIn("P66", weighting["override_programs"])
-        self.assertTrue(
-            any("PIPA/gravity propagation" in item for item in public["unresolved"])
-        )
+        geometry = public["landing_radar_geometry"]
+        self.assertEqual(geometry["positions"]["1"]["name"], "stow")
+        self.assertEqual(geometry["positions"]["2"]["name"], "hover")
+        self.assertFalse(any("PIPA/gravity propagation" in item for item in public["unresolved"]))
+        self.assertTrue(any("stochastic" in item for item in public["unresolved"]))
 
 
 if __name__ == "__main__":
