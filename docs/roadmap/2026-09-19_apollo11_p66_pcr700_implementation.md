@@ -2,13 +2,13 @@
 
 Date: 2026-09-19
 Parent: `docs/ROADMAP.md`
-Research: 329–333
+Research: 400–404
 
 The active D-024 Apollo 11 powered-descent item is narrowed again. PCR-700 implementation itself is no longer an unresolved gate. Program revision records establish PCR-700/PCR-670 implementation ancestry, and the Apollo 11 Mission G LUMINARY 99 erasable-load document carries the resulting `LAG/TAU` parameter.
 
-Research 331 recovered the historical **Guidance Equations (Revision 5)** index listing PCR-670 and PCR-700A. Research 332 established that later LUMINARY 1B/1C equation material is comparison evidence only unless unchanged ancestry is demonstrated.
+Research 402 recovered the historical **Guidance Equations (Revision 5)** index listing PCR-670 and PCR-700A. Research 403 established that later LUMINARY 1B/1C equation material is comparison evidence only unless unchanged ancestry is demonstrated.
 
-Research 333 closes two narrower questions. The LUMINARY 099 assembly listing shows `P66VERTA` scheduling `RODTASK` with `1SEC`; `RODTASK` dispatches `RODCOMP`, which updates `VDGVERT`, updates `HDOTDISP`, and consumes `LAG/TAU`. Separately, MIT/IL Apollo Project Memo 9-69 identifies **PCR-700A** as a **clarifying rewrite of PCR-700** under the same “Improve the Rate-of-Descent Mode (P66) Performance” title. The Apollo 11 P66 ROD computation cadence and the 700→700A change-control crosswalk are therefore documented. Neither fact establishes DSKY, telemetry, MCC, or other player-visible refresh cadence, and the crosswalk does not itself establish Section 5 page effectivity.
+Research 404 closes two narrower questions. The LUMINARY 099 assembly listing shows `P66VERTA` scheduling `RODTASK` with `1SEC`; `RODTASK` dispatches `RODCOMP`, which updates `VDGVERT`, updates `HDOTDISP`, and consumes `LAG/TAU`. Separately, MIT/IL Apollo Project Memo 9-69 identifies **PCR-700A** as a **clarifying rewrite of PCR-700** under the same “Improve the Rate-of-Descent Mode (P66) Performance” title. The Apollo 11 P66 ROD computation cadence and the 700→700A change-control crosswalk are therefore documented. Neither fact establishes DSKY, telemetry, MCC, or other player-visible refresh cadence, and the crosswalk does not itself establish Section 5 page effectivity.
 
 ## Revised next work
 
