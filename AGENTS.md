@@ -61,8 +61,9 @@ Treat the existing 000–399 ranges as closed legacy space:
 - 000–199: general/legacy research;
 - 200–299: renumbered collision repairs and later legacy research;
 - 300–399: mixed legacy. It is predominantly the LMS lineage through 324, but 314 is player-interaction/playability research and 325–328 are Apollo 13 LM malfunction/procedure research. Those exceptions are historical misallocations, not precedent.
+- 400–499: Apollo 11 powered-descent continuation — landing radar, guidance estimator, powered-descent dynamics, controller products, and decision rules.
 
-For a new independent research thread, claim the next unused hundred-block starting at 400. **Claim the block by updating this allocation map through a pull request before creating the thread's first note.** Once claimed, that hundred-block belongs to that thread until deliberately retired or reassigned.
+For a new independent research thread, claim the next unused hundred-block after the highest claimed block. **Claim the block by updating this allocation map through a pull request before creating the thread's first note.** Once claimed, that hundred-block belongs to that thread until deliberately retired or reassigned.
 
 ## When you need the other agent
 
