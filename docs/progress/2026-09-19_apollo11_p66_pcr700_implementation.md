@@ -1,21 +1,19 @@
 # Progress — Apollo 11 P66 / PCR-700 implementation
 
 Date: 2026-09-19
-Research: 329–330
+Research: 329–331
 
 ## Completed
 
 - Replaced the prior PCR-700 intent-only boundary with direct MIT implementation evidence from LUMINARY Memo #73: Revision 80 implemented P66 total-lag compensation and introduced `LAG/TAU` under PCR-700.
 - Recovered Apollo 11 mission/configuration evidence from `SNA-8-D-027(II) REV 1`: the LM-5 Mission G LUMINARY 99 prelaunch erasable load contains `LAG/TAU = 0.413333`.
-- Cross-checked the Rev. 99 change record in LUMINARY Memo #85 and the LUMINARY 99 listing.
-- Recovered a historical **R-567 Section 5 Guidance Equations (Revision 4)** revision-index sheet preserved in the surviving Revision 11 cumulative artifact.
-- Reinspected the primary sheet and recorded its cumulative-index legend: dagger-marked entries are additional material added in Revision 7. PCR 636 (*November, 1968 GSOP Section 5 Corrections in Landing Program*) is not dagger-marked; later-marked rows are no longer treated generically as Revision-4 content.
-- Cross-bounded that finding against the June 1969 Section 2 Revision 4 control sheet explicitly naming LUMINARY 1A Rev. 099.
-- Normalized research note 330 to the repository's required `## Sources` / claim-scoped `## Evidence status` convention.
+- Recovered a historical R-567 Section 5 Revision 4 control state and preserved its later cumulative annotations.
+- Inspected the surviving Section 5 Revision 8 front matter: its recovered **Incorporated in Rev. 4 of GSOP** inventory includes PCR 636 and runs through PCN 755, but does not list PCR-670 or PCR-700.
+- Cross-checked Section 2 Revision 4, which explicitly names LUMINARY 1A Rev. 099 and does list PCR-670/PCR-700. This establishes that same-numbered R-567 section revisions cannot be treated as synchronized program-wide states.
 
 ## Boundary retained
 
-Section 5 Revision 4 is the strongest specific retrieval target, not a proven Apollo 11 flight-effective page set. The January SCB description of once-per-second P66 ROD computations/commands and HDOT display updating is still not promoted as final behavior. Later Revision 7/8/11 equation text is not back-projected without an unchanged-page/effectivity chain.
+Section 5 Revision 4 is now a historical anchor rather than the presumed final Apollo 11 equation target. The January SCB description of once-per-second P66 ROD computations/commands and HDOT display updating is still not promoted as final behavior. Later Revision 7/8/11 equation text is not back-projected without an unchanged-page/effectivity chain.
 
 ## Model effect
 
@@ -23,4 +21,4 @@ No executable equation, cadence, DSKY behavior, controller product, or station m
 
 ## Next
 
-Recover the complete Section 5 Revision 4 revision-index pair and the affected P63-P66 pages; preserve later-addition markings and establish LUMINARY 1A Rev. 099 effectivity before promoting equation text. Retain `69-FS-3` as a parallel complete-equation retrieval target.
+Find the Section 5 revision/change state that first documents PCR-670/PCR-700, recover its P63-P66 affected pages, and establish LUMINARY 1A Rev. 099 effectivity. Retain `69-FS-3` as the parallel preferred complete-equation target.
