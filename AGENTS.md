@@ -46,7 +46,15 @@ That file is the handoff mechanism, and it works: it is how the continuous-clock
 
 `scripts/audit_documentation.py` fails on duplicates under `D-023`, so a collision blocks CI rather than appearing in a report. No doubled prefixes remain; the last of them were renumbered into the 200s.
 
-**Claim a fresh hundred-block when you open a new research thread.** Two threads drawing from one counter collide — 141/143–147 (Apollo 11 against Apollo 13) and 234–236 (LMS against mission-specific) both happened that way, and the second took `main` red for 29 commits. Blocks in use: 000–199 general, 200–299 renumbered collisions, 300s LMS lineage. A new thread takes the next free hundred rather than the next free number.
+**Claim a fresh hundred-block when you open a new research thread.** Two threads drawing from one counter collide — 141/143–147 (Apollo 11 against Apollo 13) and 234–236 (LMS against mission-specific) both happened that way, and the second took `main` red for 29 commits.
+
+Treat the existing 000–399 ranges as closed legacy space:
+
+- 000–199: general/legacy research;
+- 200–299: renumbered collision repairs and later legacy research;
+- 300–399: mixed legacy. It is predominantly the LMS lineage through 324, but 314 is player-interaction/playability research and 325–328 are Apollo 13 LM malfunction/procedure research. Those exceptions are historical misallocations, not precedent.
+
+For a new independent research thread, claim the next unused hundred-block starting at 400. **Claim the block by updating this allocation map through a pull request before creating the thread's first note.** Once claimed, that hundred-block belongs to that thread until deliberately retired or reassigned.
 
 ## When you need the other agent
 
