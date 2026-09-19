@@ -1,12 +1,14 @@
-# Progress — Apollo 11 landing-radar velocity weighting/update
+# Progress — Apollo 11 landing-radar velocity estimator/update
 
 Date: 2026-09-19
 
 ## Completed
 
-Closed and implemented the Apollo-11-effective landing-radar velocity weighting/correction stage after upstream residual qualification.
+Closed the source logic for both the Apollo-11-effective landing-radar measurement-time velocity estimate and its downstream weighting/correction stage.
 
-The flown LUMINARY 099 `VUPDAT` path and the LM-5 Mission G prelaunch erasable load together constrain:
+The flown LUMINARY 099 `RDGIMS` / `VELUPDAT` path now constrains the previously open propagation leg: during the five-sample LR velocity read, `RDGIMS` saves `LRVTIME`, IMU CDUs, and the PIPA snapshot; `VELUPDAT` then forms the measurement-time estimate as the prior guidance velocity plus the saved PIPA-derived increment plus the previous gravity contribution over `LRVTIME - PIPTIME`, and subtracts the lunar-rotation velocity correction before beam projection and residual testing.
+
+The same flown path plus the LM-5 Mission G prelaunch erasable load constrain:
 
 - `LRVMAX = 2000 ft/s`;
 - `LRVF = 200 ft/s`;
@@ -18,9 +20,9 @@ The flown LUMINARY 099 `VUPDAT` path and the LM-5 Mission G prelaunch erasable l
 - update-inhibit bypass;
 - vector correction along the selected measurement-time velocity beam.
 
-Research note 500 records the source chain and claims the new `apollo11-landing-radar` 500-series research block.
+Research note 500 records the controlled chain.
 
-## Implementation
+## Implementation already present in this PR
 
 Added:
 
@@ -33,13 +35,12 @@ Added:
 
 The Causal Model Lab keeps upstream quality inputs visibly separate from the historical downstream weighting profile; synthetic quality inputs are not promoted to historical evidence.
 
-## Remaining estimator boundary
+## Next implementation boundary
 
-Still not integrated end-to-end:
+The historical propagation equation is now source-controlled, but not yet composed in executable code. Next:
 
-1. PIPA increment + lunar-gravity propagation to the landing-radar measurement time;
-2. executable application of the already source-controlled LM-5 antenna / measurement-time CDU transform;
-3. measurement generation/error behavior;
-4. controller-visible product cadence/formatting.
+1. implement a mission-neutral measurement-time propagation stage with explicit inputs for prior guidance velocity, PIPA-derived increment, previous gravity contribution/time delta, and lunar-rotation correction;
+2. compose it with the already controlled LM-5 antenna / measurement-time CDU beam transform;
+3. feed that result into the existing residual qualification and weighting/correction stages.
 
-The next implementation step is the first two items as a composed measurement-time estimator path. Controller products remain a separate evidence problem.
+Do not invent a standalone lunar gravity field, PIPA error/noise model, or measurement noise merely to complete the chain. Landing-radar measurement generation/error behavior and controller-visible product cadence/formatting remain separate unresolved evidence problems.
