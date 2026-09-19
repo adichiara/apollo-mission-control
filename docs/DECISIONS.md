@@ -261,6 +261,31 @@ A research note that withdraws a claim does not by itself correct the repository
 
 The repository must not simultaneously assert a claim and its withdrawal. Where the two disagree, the audit fails rather than reporting and passing.
 
+## D-024 — Research closes on decision sufficiency, not source exhaustion
+
+**Status:** Accepted  
+**Date:** 2026-09-18
+
+Historical research is managed as bounded questions tied to current implementation dependencies. A topic does not remain active merely because additional archival detail may exist.
+
+A bounded question may be marked **SUFFICIENT** only when:
+
+- its scope/effectivity and implementation dependency are explicit;
+- every decision-relevant claim is sourced and evidence-classified;
+- the evidence covers the behavior required at the current player/validation resolution;
+- every remaining gap has a recorded disposition;
+- no unresolved source conflict can materially change the current implementation;
+- a focused closure challenge performed after the last material conclusion finds no new evidence that changes that conclusion; and
+- a closure record states the findings, remaining gaps, and reopen triggers.
+
+A question may instead stop as **DEFERRED** when no current implementation dependency justifies more research, or **BLOCKED** when a material dependency remains but the next discriminating evidence has a concrete access/retrieval barrier.
+
+Research state does not replace claim-level evidence status. A question may be sufficient for implementation while some historical details remain `UNRESOLVED`, provided those details are demonstrably non-blocking. Conversely, a documented fact does not make a broader research question sufficient when adjacent decision-relevant behavior is still unknown.
+
+Previously closed research reopens only when a defined trigger materially changes its decision relevance or evidence basis, such as a stronger/conflicting source, finer implementation resolution, new scenario/configuration, playtest evidence, a D-023 correction, or failure of a prior D-022 irrelevance result.
+
+The operational gate, state definitions, closure-record template, and reopen rules are maintained in `docs/RESEARCH_SUFFICIENCY.md`.
+
 ## Not yet decided
 
 The following are deliberately not decisions:
