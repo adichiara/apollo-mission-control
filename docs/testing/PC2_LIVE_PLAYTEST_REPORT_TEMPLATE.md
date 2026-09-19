@@ -46,6 +46,22 @@ Confirm:
 - [ ] reload does not permit silent station switching;
 - [ ] station-private operational collections remain isolated.
 
+## Playability instrumentation
+
+- [ ] session was CREATE/RESET immediately before the run so the playability stream begins empty;
+- [ ] both player surfaces under test are emitting playability events;
+- [ ] facilitator can copy the playability log after the run.
+
+Playability-log artifact/reference:
+
+Summarize objective interaction evidence here; do not convert elapsed time alone into a usability score.
+
+| Player | Surface | Page load → join success | Page load → workspace ready | Action attempts / errors | Auto-rejoin attempts / failures | Station switches |
+|---|---|---:|---:|---:|---:|---:|
+| | | | | | | |
+
+Use `docs/testing/PLAYABILITY_INSTRUMENTATION.md` for interpretation. The instrumentation stream is separate from the authoritative mission audit and does not capture free-text decision/readiness bases.
+
 ## Incident log
 
 Create one row per material blocking/confusing event or observable defect.
