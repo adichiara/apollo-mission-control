@@ -2,7 +2,7 @@
 
 Date: 2026-09-19
 Research thread: `apollo11-p66-pcr700`
-Status: **Apollo 11 P66 ROD computation cadence directly recovered; PCR-700/700A crosswalk recovered**
+Status: **SUFFICIENT for current implementation; remaining equation-document ancestry deferred**
 
 ## Question
 
@@ -14,29 +14,32 @@ The surviving LUMINARY 099 assembly listing provides direct program evidence in 
 
 In the P66 guidance path, `P66VERT` posts `P66VERTA`. `P66VERTA` terminates phase group 3 and then loads the constant `1SEC`, calls `TWIDDLE`, and supplies `RODTASK` as the scheduled task address. `RODTASK` in turn obtains a VAC area for `RODCOMP`. `RODCOMP` updates `VDGVERT` from `RODCOUNT * RODSCAL1`, then performs the P66 computation path. The same routine updates `HDOTDISP` for Noun 63 and later uses `LAG/TAU`, `MAXFORCE`, and `MINFORCE` in the acceleration-command calculation.
 
-This is final-program evidence for a **one-second scheduled P66 ROD computation task** in LUMINARY 099. It closes the earlier boundary that treated the January SCB one-second computation detail as proposal/change-intent only.
+This is final-program evidence for a **one-second scheduled P66 ROD computation task** in LUMINARY 099.
 
-A second primary MIT/IL configuration-control record now closes the PCR-number crosswalk. Apollo Project Memo 9-69, reporting the 29th Apollo Software Configuration Control Board meeting, lists **PCR700A — Improve the Rate-of-Descent Mode (P66) Performance** and states: **“This is just a clarifying re-write of PCR700. The action has already been assigned.”** The same memo discusses the lag-compensation idea being implemented by Craig Schulenberg. This is the primary crosswalk previously missing from the project: PCR-700A is the clarified rewrite of PCR-700, not an unrelated later P66 change.
+MIT/IL Apollo Project Memo 9-69 lists **PCR700A — Improve the Rate-of-Descent Mode (P66) Performance** and states that it is a clarifying rewrite of PCR700, with the action already assigned. This is the primary crosswalk previously missing from the project: PCR-700A is the clarified rewrite of PCR-700, not an unrelated later P66 change.
 
-That crosswalk also explains why Apollo 11-effective Section 2 Revision 4 names PCR-700 while the recovered Section 5 Revision 5 control index names PCR-700A under the same title. It does not, by itself, prove that every Section 5 Revision 5 equation page is Apollo 11-effective; section-specific revision/effectivity controls still apply.
+The crosswalk explains why Apollo 11-effective Section 2 Revision 4 names PCR-700 while the recovered Section 5 Revision 5 control index names PCR-700A under the same title. It does not prove that every Section 5 Revision 5 equation page is Apollo 11-effective.
+
+A focused closure challenge then searched specifically for the missing LUMINARY 1A programmed-equation/effectivity discriminator rather than repeating broad P66 searches. The strongest accessible primary result was MSC Internal Note `69-FS-4`, whose page-change record states that it is a **complete re-issue of MSC Internal Note 69-FS-3**, titled *Programmed Guidance Equations for LUMINARY 1A Manned LM Earth Orbital and Lunar Program*, dated May 1969, updated for LUMINARY 1B. This directly confirms the identity, date, and predecessor relationship of the missing `69-FS-3`, but does not expose enough 1A→1B change control to promote the later 1B descriptive equations backward into Apollo 11.
+
+The closure challenge therefore changes no implementation conclusion. It strengthens the provenance of the missing preferred source while preserving the effectivity boundary.
 
 ## Important boundary
 
-The code proves the scheduling interval of the P66 `RODTASK`/`RODCOMP` path. It does **not** by itself prove:
+The code proves the scheduling interval of the P66 `RODTASK`/`RODCOMP` path. It does **not** by itself prove a one-second DSKY refresh, telemetry/downlink cadence, MCC display refresh, or controller-facing product. `HDOTDISP` being updated within the one-second computation path establishes the variable-update path, not the separate display-service timing seen by the crew.
 
-- a one-second DSKY refresh or visible Noun 63 display cadence;
-- a one-second telemetry/downlink cadence;
-- a one-second MCC display refresh;
-- a new GUIDO, CONTROL, FLIGHT, or other controller-facing product;
-- that every descriptive equation in a later LUMINARY 1B/1C GSOP page is unchanged from Apollo 11.
+The PCR-700A memo establishes change-control identity/ancestry. It does not remove the separate need to establish Section 5 page effectivity before using descriptive equations as Apollo 11 equations. `69-FS-4` is explicitly a later LUMINARY 1B update of `69-FS-3`; without controlled unchanged ancestry its equations remain comparison evidence.
 
-`HDOTDISP` being updated within the one-second computation path establishes the variable-update path, not the separate display-service timing seen by the crew.
+## Research closure
 
-The PCR-700A memo establishes change-control identity/ancestry. It does not remove the separate need to establish Section 5 page effectivity before using descriptive equations as Apollo 11 equations.
-
-## Consequence
-
-The exact Apollo 11 P66 ROD **computation cadence** is no longer unresolved: it is one second. The primary PCR-700/PCR-700A crosswalk is also no longer unresolved. The remaining equation-document research is narrowed to Section 5 Revision 5 descriptive equation/page ancestry/effectivity and `69-FS-3` recovery. Crew-visible Noun 63 timing and station-visible timing remain separate dependency-triggered questions.
+- **Status:** SUFFICIENT for the current implementation dependency.
+- **Bounded question:** Apollo 11 LUMINARY 099 P66 ROD computation cadence and PCR-700/PCR-700A identity/ancestry.
+- **Implementation dependency:** historical support for any model use of P66 ROD computation timing and the PCR-700 lag-compensation lineage.
+- **Decision sensitivity:** a different final cadence or unrelated PCR-700A lineage would require revising the historical model boundary; neither occurred.
+- **Decision-relevant findings:** LUMINARY 099 schedules `RODTASK` at `1SEC`; Apollo Project Memo 9-69 makes PCR-700A a clarifying rewrite of PCR-700.
+- **Remaining gaps and disposition:** complete Section 5 Revision 5 P63–P66 page ancestry/effectivity and direct `69-FS-3` recovery are **DEFERRED** because no current player-visible, station-visible, causal-model, or validation dependency requires those descriptive pages. Crew-visible Noun 63 timing and station-visible timing are separate deferred questions until a feature names those dependencies.
+- **Closure challenge:** targeted primary-source searches recovered `69-FS-4`'s explicit statement that it completely re-issued May 1969 `69-FS-3` and updated it for LUMINARY 1B. This did not contradict the final-program cadence or PCR crosswalk and did not establish safe back-projection of later equations.
+- **Reopen triggers:** direct recovery of `69-FS-3` or Apollo-11-effective Section 5 pages; contradictory mission-specific primary evidence; implementation requiring exact descriptive P63–P66 equations; crew-visible Noun 63 service timing; or a station product requiring a sourced LGC→downlink→ground-display cadence.
 
 No station maturity changes. No controller-facing cadence is promoted.
 
@@ -46,6 +49,7 @@ No station maturity changes. No controller-facing cadence is promoted.
 - MIT/IL Apollo Project Memo 9-69, *Results of the 29th Apollo Software Configuration Control Board Meeting*: https://www.ibiblio.org/apollo/Documents/Memo-SCB29_text.pdf
 - MIT/IL LUMINARY Memo #73, *LUMINARY Revisions 80-92*, 26 Mar 1969: https://www.ibiblio.org/apollo/Documents/LUM73.pdf
 - `SNA-8-D-027(II) REV 1`, LM Data Book Volume II, Mission G LUMINARY 99 prelaunch erasable load: https://ibiblio.org/apollo/Documents/Luminary99PadLoads.pdf
+- MSC Internal Note `69-FS-4`, *Programmed Guidance Equations for LUMINARY 1B Manned LM Earth Orbital and Lunar Program*: https://www.ibiblio.org/apollo/Documents/j2-80-MSC-69-FS-4_text.pdf
 
 ## Evidence status
 
@@ -53,4 +57,6 @@ No station maturity changes. No controller-facing cadence is promoted.
 - **DOCUMENTED:** `RODTASK` dispatches `RODCOMP`, which updates `VDGVERT` and performs the P66 rate-of-descent computation path.
 - **DOCUMENTED:** `RODCOMP` updates `HDOTDISP` and consumes `LAG/TAU` in the P66 calculation.
 - **DOCUMENTED:** MIT/IL Apollo Project Memo 9-69 identifies PCR-700A as a clarifying rewrite of PCR-700 under the same P66-performance title.
-- **UNRESOLVED:** crew-visible Noun 63 refresh cadence, controller-facing cadence/product implications, complete Apollo 11 Section 5 descriptive-equation page ancestry/effectivity, and `69-FS-3` retrieval.
+- **DOCUMENTED:** `69-FS-4` identifies May 1969 `69-FS-3` as its LUMINARY 1A predecessor and states that `69-FS-4` is a complete re-issue updated for LUMINARY 1B.
+- **UNRESOLVED / DEFERRED:** complete Apollo 11 Section 5 descriptive-equation page ancestry/effectivity and direct `69-FS-3` contents.
+- **UNRESOLVED / DEFERRED pending a named dependency:** crew-visible Noun 63 refresh cadence and controller-facing cadence/product implications.
