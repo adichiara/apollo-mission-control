@@ -8,7 +8,7 @@ Status: **final implementation materially constrained; exact Section 5 equation 
 
 Did the P66 improvement described prospectively under PCR-700 survive into the Apollo 11 LUMINARY 1A / Rev. 099 configuration, and what can be admitted without inventing an exact controller-facing cadence or equation?
 
-## Primary evidence
+## Findings
 
 ### LUMINARY Memo #73 — 26 March 1969
 
