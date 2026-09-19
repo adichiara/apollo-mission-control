@@ -1,25 +1,26 @@
 # Progress — Apollo 11 P66 / PCR-700 implementation
 
 Date: 2026-09-19
-Research: 329–332
+Research: 329–333
 
 ## Completed
 
 - Direct MIT implementation evidence establishes PCR-700 ancestry in LUMINARY: Memo #67 records PCR-700 and PCR-670 implemented in Revision 72; Memo #73 records the later P66 total-lag compensation in Revision 80 and introduction of `LAG/TAU`.
 - Apollo 11 mission/configuration evidence from `SNA-8-D-027(II) REV 1` shows the LM-5 Mission G LUMINARY 99 prelaunch load containing `LAG/TAU = 0.413333`.
-- Section 5 Revision 4 remains a historical anchor; its recovered inventory does not list PCR-670/PCR-700.
-- The surviving cumulative R-567 Section 5 artifact preserves a **Guidance Equations (Revision 5)** index listing PCR-670 and PCR-700A without later-revision dagger marks.
-- Section 5 Revision 5 is therefore the earliest directly recovered Section 5 control state in the inspected chain containing both landing-change identifiers. This is a retrieval/effectivity lead, not proof that Rev. 5 was the first historical documentation state or the Apollo 11 flight-effective page set.
-- Research 332 inspected the next controlled equation endpoint. MSC `69-FS-4` explicitly documents LUMINARY 1B P66 rate-of-descent variables/states, while R-567 Revision 8 explicitly records later P66 changes PCR-988 and PCR-1013 and notes that some unchanged pages were republished for convenience.
+- The surviving cumulative R-567 artifact preserves a Section 5 Revision 5 index listing PCR-670 and PCR-700A; later 1B/1C equation documents remain comparison evidence because later P66-specific changes are documented.
+- Research 333 inspected the LUMINARY 099 assembly listing itself. In the P66 path, `P66VERTA` loads `1SEC`, calls `TWIDDLE`, and schedules `RODTASK`; `RODTASK` dispatches `RODCOMP`.
+- `RODCOMP` updates `VDGVERT`, updates `HDOTDISP`, and uses `LAG/TAU` in the P66 computation. The Apollo 11 P66 ROD computation cadence is therefore directly documented as **one second**.
 
 ## Boundary retained
 
-The January SCB once-per-second P66 ROD computations/commands and HDOT display behavior are still not promoted as final flight behavior. The secondary document-library description of PCR-700A as a rewritten clarification of PCR-700 remains a retrieval aid pending a primary 700/700A crosswalk. LUMINARY 1B/1C equation text is now explicitly classified as comparison evidence only until page-level unchanged ancestry to the Apollo 11 state is demonstrated.
+The earlier January SCB once-per-second **computation** detail is now confirmed in the final LUMINARY 099 program path. Do not extend that conclusion to a one-second DSKY/Noun 63 refresh, telemetry cadence, MCC display cadence, or controller-facing product. `HDOTDISP` is updated in the one-second computation path, but display-service timing is a separate question.
+
+The secondary document-library description of PCR-700A as a rewritten clarification of PCR-700 remains a retrieval aid pending a primary 700/700A crosswalk. LUMINARY 1B/1C descriptive equations remain comparison evidence unless unchanged ancestry is demonstrated.
 
 ## Model effect
 
-No executable equation, cadence, DSKY behavior, controller product, or station maturity changed.
+The cadence fact is now eligible as historical implementation evidence if a future model dependency requires it. No current station projection or player-visible product depends on this internal cadence, so no executable behavior, DSKY behavior, controller product, or station maturity changes in this step.
 
 ## Next
 
-Recover the Section 5 Revision 5 P63-P66 affected pages and establish their LUMINARY 1A Rev. 099/Apollo 11 effectivity or unchanged-page ancestry. Use later controlled equation documents to test ancestry rather than back-project behavior. Retain `69-FS-3` as the parallel preferred complete-equation target.
+Stop treating exact P66 ROD computation cadence as unresolved. Continue only the remaining bounded questions: Section 5 Revision 5 descriptive-equation ancestry/effectivity, primary PCR-700/PCR-700A crosswalk, `69-FS-3` retrieval, and any separately named crew- or station-visible timing dependency.
