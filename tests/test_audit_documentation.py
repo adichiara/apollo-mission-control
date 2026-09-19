@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT))
 from scripts.audit_documentation import (  # noqa: E402
     check_catalog_index_coverage,
     check_note_ids,
+    check_research_block_allocation,
     check_research_metadata,
     check_withdrawn_claims,
     load_research_metadata_legacy,
@@ -127,6 +128,71 @@ class DocumentationAuditTests(unittest.TestCase):
                 ),
                 [],
             )
+
+    def test_closed_329_to_399_research_ids_are_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            research = root / "resources" / "research"
+            research.mkdir(parents=True)
+            (research / "329_new_thread.md").write_text(
+                "# Bad allocation\n",
+                encoding="utf-8",
+            )
+            failures = check_research_block_allocation(root)
+            self.assertEqual(len(failures), 1)
+            self.assertIn("closed legacy research ID 329", failures[0])
+
+    def test_new_block_requires_x00_claim_note(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            research = root / "resources" / "research"
+            research.mkdir(parents=True)
+            (research / "401_unclaimed.md").write_text(
+                "# Unclaimed\n\nResearch thread: `example-thread`\n",
+                encoding="utf-8",
+            )
+            failures = check_research_block_allocation(root)
+            self.assertTrue(any("is unclaimed" in item for item in failures))
+
+    def test_new_block_requires_research_thread_metadata(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            research = root / "resources" / "research"
+            research.mkdir(parents=True)
+            (research / "400_claim.md").write_text(
+                "# Missing thread metadata\n",
+                encoding="utf-8",
+            )
+            failures = check_research_block_allocation(root)
+            self.assertTrue(any("missing canonical" in item for item in failures))
+
+    def test_new_block_rejects_mixed_research_threads(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            research = root / "resources" / "research"
+            research.mkdir(parents=True)
+            (research / "400_claim.md").write_text(
+                "# Claim\n\nResearch thread: `thread-a`\n",
+                encoding="utf-8",
+            )
+            (research / "401_other.md").write_text(
+                "# Other\n\nResearch thread: `thread-b`\n",
+                encoding="utf-8",
+            )
+            failures = check_research_block_allocation(root)
+            self.assertTrue(any("multiple Research thread values" in item for item in failures))
+
+    def test_valid_new_block_is_derived_from_note_tree(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            research = root / "resources" / "research"
+            research.mkdir(parents=True)
+            for number in (400, 401, 402):
+                (research / f"{number}_note.md").write_text(
+                    "# Note\n\nResearch thread: `thread-a`\n",
+                    encoding="utf-8",
+                )
+            self.assertEqual(check_research_block_allocation(root), [])
 
     def test_new_research_note_requires_canonical_metadata(self):
         with tempfile.TemporaryDirectory() as tmp:
