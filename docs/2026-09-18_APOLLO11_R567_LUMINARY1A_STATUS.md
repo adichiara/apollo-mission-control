@@ -2,7 +2,7 @@
 
 Date: 2026-09-19
 
-This coordination note keeps the D-024 portfolio, roadmap, progress, station research, and source catalog aligned through research note 333 and its primary PCR-700A crosswalk update.
+This coordination note keeps the D-024 portfolio, roadmap, progress, station research, and source catalog aligned through research note 404 and its primary PCR-700A crosswalk update.
 
 ## Portfolio status
 
@@ -22,11 +22,11 @@ No station maturity or controller-facing product changes from this update.
 
 ## Synchronized records
 
-- research: `resources/research/329_apollo11_p66_pcr700_final_implementation.md`
-- research: `resources/research/330_apollo11_r567_section5_rev4_control_index.md`
-- research: `resources/research/331_apollo11_r567_section5_rev4_change_scope.md`
-- research: `resources/research/332_apollo11_p66_later_equation_boundary.md`
-- research: `resources/research/333_apollo11_p66_flight_listing_cadence.md`
+- research: `resources/research/400_apollo11_p66_pcr700_final_implementation.md`
+- research: `resources/research/401_apollo11_r567_section5_rev4_control_index.md`
+- research: `resources/research/402_apollo11_r567_section5_rev4_change_scope.md`
+- research: `resources/research/403_apollo11_p66_later_equation_boundary.md`
+- research: `resources/research/404_apollo11_p66_flight_listing_cadence.md`
 - roadmap: `docs/roadmap/2026-09-19_apollo11_p66_pcr700_implementation.md`
 - progress: `docs/progress/2026-09-19_apollo11_p66_pcr700_implementation.md`
 - station status: `docs/station-status/2026-09-19_apollo11_p66_pcr700_implementation.md`
