@@ -76,6 +76,13 @@ class PlayerInteractionLabContractTests(unittest.TestCase):
         self.assertIn("TRANSMIT TO CREW", self.html)
         self.assertIn("Crew receipt/readback remains a separate event", self.html)
 
+    def test_capcom_queue_keeps_transmission_and_receipt_visibly_distinct(self):
+        self.assertIn("APPROVED / PENDING", self.html)
+        self.assertIn("TRANSMITTED / AWAITING RECEIPT", self.html)
+        self.assertIn("CREW RECEIVED", self.html)
+        self.assertIn("RECEIPT GET", self.html)
+        self.assertIn("ACKNOWLEDGEMENT:", self.html)
+
     def test_lab_keeps_station_identity_and_get_persistent(self):
         self.assertIn('id="callsign"', self.html)
         self.assertIn("GET ", self.html)
