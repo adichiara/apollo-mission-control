@@ -4,19 +4,20 @@ Date: 2026-09-19
 
 ## Completed
 
-The Apollo-11-effective landing-radar velocity proof is now executable from explicit source-controlled geometry inputs through measurement-time propagation, beam projection, residual qualification, and weighted correction.
+The Apollo-11-effective landing-radar velocity proof is executable from source-controlled geometry inputs through measurement-time propagation, beam projection, residual qualification, and weighted correction.
 
-A fresh primary-source check of flown LUMINARY 099 confirms the position transition semantics: `SETPOS1` selects the first `LRALPHA/LRBETA` pair; `SETPOS2` selects the second; after the antenna physically reaches position 2, `HIGATJOB` calls `SETPOS2` and only then clears the no-read flag. `SETPOS` transforms antenna UNITY/UNITX into NB and forms the third velocity beam by cross product. `RDGIMS` separately saves measurement-time CDUs used by the downstream NB→SM transformation. This supports composition without inventing a continuous antenna slew model.
+A fresh primary-source check of the LM-5 Mission G prelaunch erasable load confirms the exact geometry constants and source units: `LRALPHA1=0.0163371759 rev`, `LRBETA1=0.0665287037 rev` (stow), `LRALPHA2=0.0161680555 rev`, and `LRBETA2=0.0001361111 rev` (hover), addresses 2522–2525. The same table identifies itself as the G PRELAUNCH ERASABLE LOAD (LUMINARY 99) and NASA data source.
 
 ## Implementation
 
 - `landing_radar_transform.py` supplies the verified equation-level SETPOS and SM/NB transforms.
-- `landing_radar_velocity_chain.py` now accepts either an explicit beam or `LandingRadarBeamGeometryInput` containing alpha, beta, and measurement-time CDU angles.
-- Historical-geometry mode constructs the selected X/Y/Z velocity beam in NB, transforms it NB→SM at the measurement attitude, and passes that beam through the existing propagation/projection/qualification/update chain.
-- Tests preserve the explicit-beam path, exercise geometry composition, and enforce exactly one beam source.
+- `landing_radar_velocity_chain.py` accepts explicit geometry or an explicit synthetic/unit-test beam.
+- `apollo11_lm5_landing_radar_partial.json` now stores both LM-5 angle pairs in source units with mission/configuration provenance.
+- `landing_radar_profiles.py` exposes a position-selecting adapter that converts revolutions to radians and combines the selected historical angles with caller-supplied measurement-time CDUs.
+- Tests verify all four pad-load values, conversion, CDU preservation, invalid-position rejection, and updated unresolved boundaries.
 
-The implementation deliberately keeps the LM-5 pad-load values external rather than copying numbers by hand into code. The next small implementation step is a provenance-bearing profile adapter for the already recovered position-1/position-2 load values.
+The profile's stale unresolved entries for the already implemented antenna/CDU transform and PIPA/gravity propagation were removed.
 
 ## Boundaries
 
-No continuous antenna motion is inferred: the flown code supports discrete position-1/position-2 beam recomputation. Radar measurements and historical noise remain caller supplied; historical stochastic generation remains **BLOCKED** on flight-effective numerical error evidence. Controller-visible product cadence/formatting remains separately unresolved. Bit-for-bit AGC fixed-point equivalence is not claimed.
+No continuous antenna motion is inferred. Measurement-time CDUs remain dynamic inputs; no attitude history is invented. Radar measurements and historical noise remain caller supplied, with historical stochastic generation **BLOCKED** on flight-effective numerical error evidence. Controller-visible product cadence/formatting remains separately unresolved. Bit-for-bit AGC fixed-point equivalence is not claimed.
