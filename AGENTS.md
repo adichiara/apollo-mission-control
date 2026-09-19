@@ -34,6 +34,8 @@ New research notes use `## Sources` and `## Evidence status`. Do not create anot
 
 The pre-standard notes in `resources/audits/research_metadata_legacy.json` are exempt from the new heading requirement until substantively revisited. That exemption is not evidence. Do not add or upgrade a formal label in a legacy note unless you have opened the underlying source.
 
+When you do substantively revisit one with the source open, normalize the note and remove its filename from the legacy baseline in the same change. Never remove the exemption first and invent labels afterward.
+
 When a research note or source-catalog supplement is added, renamed, or deleted, run `python3 scripts/update_research_indexes.py`. The documentation audit fails if `resources/RESEARCH_INDEX.md` or the scoped-catalog block in `resources/PRIMARY_SOURCE_CATALOG.md` stops covering the tree.
 
 ## A decision that is not in `docs/DECISIONS.md` did not happen
