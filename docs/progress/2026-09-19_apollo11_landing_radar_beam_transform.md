@@ -4,31 +4,29 @@ Date: 2026-09-19
 
 ## Completed
 
-Recovered a primary-source chain sufficient to close both the **static antenna-position** and the **dynamic attitude/reference-frame** portions of the Apollo 11 landing-radar velocity-beam geometry.
+Recovered a primary-source chain sufficient to control both the static antenna-position and dynamic attitude/reference-frame portions of the Apollo 11 landing-radar velocity-beam geometry.
 
-LUMINARY 099 directly shows `SETPOS` transforming antenna-frame basis vectors into navigation-base beam vectors. LUMINARY Memo #95 controls the sign/order convention, and the LM-5 Mission G LUMINARY 99 prelaunch load supplies the actual position-1 and position-2 alpha/beta values. The final-program controlled constants also supply `HBEAMANT` rather than requiring a guessed range-beam vector.
+LUMINARY 099 `SETPOS` transforms antenna-frame basis vectors into navigation-base beam vectors. LUMINARY Memo #95 controls the sign/order convention, and the LM-5 Mission G LUMINARY 99 prelaunch load supplies the actual position-1 and position-2 alpha/beta values. The final-program constants also supply `HBEAMANT`.
 
-The dynamic leg is now explicit in the flown listing. `LRVJOB` schedules `RDGIMS` 170 ms after initiation of the five-sample velocity read; `RDGIMS` stores `TIME2,TIME1` in `LRVTIME`, stores `CDUX/CDUY/CDUZ` in `LRXCDU/LRYCDU/LRZCDU`, and snapshots the PIPAs. `VELUPDAT` later copies those saved CDU values into `CDUSPOT` in Y-Z-X order, calls `QUICTRIG`, and calls `*NBSM*` on the selected `V?BEAMNB`. The LUMINARY 099 powered-flight subroutine listing explicitly defines `*NBSM*` as the navigation-base-to-stable-member transformation using the already computed CDU sines/cosines.
+The dynamic leg is explicit in the flown listing. `RDGIMS` stores measurement time, IMU CDU angles, and PIPAs; `VELUPDAT` restores the saved CDU values in Y-Z-X order, calls `QUICTRIG`, and applies `*NBSM*` to the selected `V?BEAMNB`.
 
-This preserves the intended measurement-time attitude rather than silently using whatever attitude exists when the later update executes.
+Research 501 now independently constrains the transform convention. LUMINARY 099 says `AX*SR*T` consumes Y-Z-X sine/cosine state and selects SM→NB versus NB→SM by its signed entry value. The earlier primary MIT `Sunburst37` implementation independently expresses SM→NB as successive Y, Z, X axis rotations and NB→SM as the reverse X, Z, Y sequence; LUMINARY 099 `FLESHPOT` separately constructs the CDU transformation matrix from the same trigonometric state. This removes the need to infer rotation order from a modern Euler convention.
 
-## Repository consistency repair
+## Current implementation boundary
 
-The prior landing-radar note was incorrectly created as research 405 inside the already allocated `apollo11-p66-pcr700` 400–499 block. That violated the repository's research-block allocation rule and made CI fail both the unit/index check and documentation audit. The invalid note was removed; its sourced conclusions are retained in this progress record, roadmap, station-status record, and Apollo 11 source-catalog addendum without claiming a research number from another thread.
+The repository already composes measurement-time propagation → explicit selected-beam projection → residual qualification → historical weighting/correction. The remaining beam-synthesis gate is now only a **numerical-equivalence fixture**: verify a floating-point port against original AGC transform behavior before replacing the explicit beam input. No Python/graphics-library Euler convention should be adopted merely because it appears equivalent by name.
 
-## Boundary retained
-
-The geometric reference chain is now controlled well enough to implement without an arbitrary beam vector. The next unresolved dependency is the **velocity reasonableness/update estimator** beginning after `*NBSM*`: reconstruction of measured velocity, comparison against the propagated estimate, inhibit/failure logic, and the altitude/velocity-dependent update weights.
-
-No station-visible display cadence, controller-product timing, or executable scenario behavior changes in this documentation step.
+Historical stochastic landing-radar measurement generation remains BLOCKED on flight-effective numerical error evidence. Controller-facing products remain a separate evidence problem.
 
 ## Next
 
-Trace the Apollo-11-effective `VELUPDAT` estimator/update path through `VFAIL`, `VUPDAT`, `LRVF/LRVMAX`, `LRWV*`, `LRWVFF`, `GNUV`, and `GNURVST`, including mode-dependent behavior in P65/P66/P67. Keep controller-facing products as a separate evidence problem.
+Build a small source-derived transform oracle/fixture from the original `AXISROT`/`AX*SR*T` behavior (or yaAGC/Virtual AGC execution), test basis vectors and inverse round trips, then implement `SETPOS` + measurement-time `NBSM` only if those cases agree. Preserve AGC-vs-floating-point approximation provenance.
 
 ## Evidence status
 
-- **DOCUMENTED:** static LM-5 antenna-position beam transform inputs and algorithm.
-- **DOCUMENTED:** measurement-midpoint CDU/time capture and navigation-base-to-stable-member velocity-beam transformation.
-- **PARTIALLY DOCUMENTED:** downstream landing-radar velocity reasonableness/update estimator.
+- **DOCUMENTED:** static LM-5 antenna-position inputs and algorithm.
+- **DOCUMENTED:** measurement-midpoint CDU/time capture and NB→SM velocity-beam transform contract.
+- **CORROBORATED:** Y-Z-X / inverse X-Z-Y axis sequence from independent primary Apollo software lineage and LUMINARY 099 matrix construction.
+- **UNRESOLVED:** numerical-equivalence fixture for the modern executable transform port.
+- **BLOCKED:** historical stochastic LR measurement generation.
 - **UNRESOLVED:** controller-visible product timing and formatting.
