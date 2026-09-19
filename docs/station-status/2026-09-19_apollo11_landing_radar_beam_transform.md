@@ -4,13 +4,9 @@ Date: 2026-09-19
 
 ## GUIDO / guidance-monitoring consequence
 
-Apollo 11's onboard landing-radar velocity path is source-controlled from antenna geometry through measurement-time propagation, residual qualification, and weighted correction. The executable proof composes those arithmetic stages while requiring the selected measurement-time beam explicitly.
+Apollo 11's onboard landing-radar velocity path is source-controlled from antenna geometry through measurement-time propagation, residual qualification, and weighted correction. The source-derived SM/NB and antenna/NB transforms are now executable at equation level and verified against a separately coded literal `Sunburst37 AXISROT` oracle plus inverse/basis invariants.
 
-The current primary-source verification removes the remaining rotation-order ambiguity without inventing a modern convention. LUMINARY 099 controls Y-Z-X input order and SM→NB/NB→SM direction; the earlier primary MIT `Sunburst37` implementation independently gives Y→Z→X and inverse X→Z→Y axis sequences; LUMINARY 099 `FLESHPOT` provides a same-program matrix cross-check.
-
-The remaining historical beam-synthesis gate is numerical verification of a floating-point port against original AGC behavior. Until that fixture passes, the explicit beam dependency remains correct.
-
-This does not change GUIDO station maturity or authorize an exact station display. No source here establishes which onboard intermediate values were presented to Mission Control, their ground cadence, or formatting.
+This improves spacecraft-model completeness only. It does not change GUIDO station maturity or authorize an exact station display. No source here establishes that beam vectors, saved CDUs, or estimator intermediates were controller-visible, nor does it establish their ground cadence or formatting.
 
 ## CONTROL / FLIGHT consequence
 
@@ -22,10 +18,10 @@ Do not expose beam vectors, CDU/PIPA snapshots, `LRVTIME`, gravity terms, lunar-
 
 ## Evidence status
 
-- **DOCUMENTED:** Apollo-11-effective static geometry and transform-direction/order semantics.
-- **CORROBORATED:** transform sequence by independent primary Apollo software and LUMINARY 099 matrix construction.
+- **DOCUMENTED / IMPLEMENTED:** Apollo-11-effective transform direction/order and equation-level floating-point SM/NB + antenna/NB transform.
+- **VERIFIED:** production transform against literal source-equation oracle, identity, inverse, norm, and orthogonality checks.
+- **NOT CLAIMED:** bit-for-bit AGC fixed-point arithmetic equivalence.
 - **DOCUMENTED / IMPLEMENTED:** explicit-input propagation, qualification, weighting/correction, and composed estimator proof with supplied beam.
-- **PARTIALLY IMPLEMENTED:** historical beam synthesis; numerical-equivalence fixture remains required.
 - **UNRESOLVED / BLOCKED:** Apollo-11-effective numerical landing-radar measurement-error/noise model.
 - **UNRESOLVED:** controller-visible radar/guidance product cadence, synchronization, and formatting.
 
