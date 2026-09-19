@@ -130,8 +130,8 @@
 </section>
 
 <section id="radar" class="panel">
-<h2>Landing-radar reference → quality → update eligibility</h2>
-<p class="note">Exercises the source-backed velocity-reference boundary before measurement qualification: estimated velocity minus lunar-surface velocity, projected on a caller-supplied selected radar-beam unit vector. Full LM-5 antenna/attitude geometry and the downstream estimator remain deliberately outside this proof.</p>
+<h2>LM-5 beam geometry → reference → quality → update eligibility</h2>
+<p class="note">Exercises the source-backed fixed antenna→Navigation Base geometry before the velocity-reference and qualification stages. LM-5 Luminary 99 LRALPHA/LRBETA padloads may be loaded below. Estimated and lunar-surface velocities in this proof are expressed in Navigation Base coordinates; the measurement-time Navigation-Base→platform/common-frame attitude transform and downstream estimator remain deliberately outside this proof.</p>
 <div class="grid">
 <label class="field">Current time (s)<input id="lrTime" type="number" value="10" step="0.1"></label>
 <label class="field">Data Good since (s)<input id="lrGoodSince" type="number" value="5" step="0.1"></label>
@@ -146,17 +146,18 @@
 <label class="field">Lunar-surface velocity X (m/s)<input id="lrSurfVx" type="number" value="10" step="0.1"></label>
 <label class="field">Lunar-surface velocity Y (m/s)<input id="lrSurfVy" type="number" value="2" step="0.1"></label>
 <label class="field">Lunar-surface velocity Z (m/s)<input id="lrSurfVz" type="number" value="-1" step="0.1"></label>
-<label class="field">Beam unit X<input id="lrBeamX" type="number" value="1" step="0.01"></label>
-<label class="field">Beam unit Y<input id="lrBeamY" type="number" value="0" step="0.01"></label>
-<label class="field">Beam unit Z<input id="lrBeamZ" type="number" value="0" step="0.01"></label>
+<label class="field">LR antenna position<select id="lrPosition"><option value="position_1_stow">LM-5 Position 1 — stow</option><option value="position_2_hover">LM-5 Position 2 — hover</option><option value="custom">Custom LGC angles</option></select></label>
+<label class="field">Velocity beam axis<select id="lrAxis"><option value="x">X velocity beam</option><option value="y">Y velocity beam</option><option value="z">Z velocity beam</option></select></label>
+<label class="field">LRALPHA (rev)<input id="lrAlpha" type="number" value="0.0163371759" step="0.0000000001"></label>
+<label class="field">LRBETA (rev)<input id="lrBeta" type="number" value="0.0665287037" step="0.0000000001"></label>
 <label class="field">Velocity fixed tolerance (m/s)<input id="lrVelFixed" type="number" value="7.5" step="0.1"></label>
 <label class="field">Proportional tolerance<input id="lrProportional" type="number" value="0.125" step="0.001"></label>
 <label class="field">Estimated speed (m/s)<input id="lrEstimatedSpeed" type="number" value="500" step="1"></label>
 <label class="field">Velocity-update threshold (m/s)<input id="lrSpeedThreshold" type="number" value="600" step="1"></label>
 </div>
 <p><label><input id="lrDataGood" type="checkbox" checked> raw Data Good</label> &nbsp; <label><input id="lrUpdatesEnabled" type="checkbox" checked> radar updates enabled</label></p>
-<div class="actions"><button id="runRadar">Run radar chain</button><button id="radarBadData">Break Data Good persistence</button><button id="radarDisableUpdates">Disable updates</button></div>
-<div id="radarTrace" class="chain"><div class="stage"><b>Estimated / lunar-surface velocity</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Selected-beam reference</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Measurement qualification</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Update eligibility</b>Not run</div></div>
+<div class="actions"><button id="loadRadarStow">Load LM-5 stow</button><button id="loadRadarHover">Load LM-5 hover</button><button id="runRadar">Run radar chain</button><button id="radarBadData">Break Data Good persistence</button><button id="radarDisableUpdates">Disable updates</button></div>
+<div id="radarTrace" class="chain"><div class="stage"><b>Antenna → Navigation Base</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Surface-relative velocity</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Selected-beam reference</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Measurement qualification</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Update eligibility</b>Not run</div></div>
 <details class="raw"><summary>Raw radar-chain JSON</summary><pre id="radarRaw">No run yet.</pre></details>
 </section>
 
@@ -539,12 +540,28 @@ $('runCrosscheck').onclick=runGuidancePair;
 $('runConsensus').onclick=()=>runGuidanceConsensus(false);
 $('runStaleConsensus').onclick=()=>runGuidanceConsensus(true);
 
-function radarReferencePayload(){
+const LM5_RADAR_ORIENTATIONS={
+ position_1_stow:{alpha:0.0163371759,beta:0.0665287037,label:'LM-5 Position 1 — stow'},
+ position_2_hover:{alpha:0.0161680555,beta:0.0001361111,label:'LM-5 Position 2 — hover'}
+};
+function loadRadarOrientation(name){
+ const item=LM5_RADAR_ORIENTATIONS[name];if(!item)return;
+ $('lrPosition').value=name;$('lrAlpha').value=item.alpha;$('lrBeta').value=item.beta;
+}
+$('lrPosition').onchange=()=>{if($('lrPosition').value!=='custom')loadRadarOrientation($('lrPosition').value)};
+$('loadRadarStow').onclick=()=>loadRadarOrientation('position_1_stow');
+$('loadRadarHover').onclick=()=>loadRadarOrientation('position_2_hover');
+function radarGeometryPayload(){
+ return {lralpha_revolutions:num('lrAlpha'),lrbeta_revolutions:num('lrBeta'),position:$('lrPosition').value,
+  applicability:'site causal-model lab antenna-to-Navigation-Base geometry; dynamic Navigation-Base attitude transform remains unresolved',
+  provenance:['LUMINARY Memo #95 orientation convention; Luminary 099 SETPOS; LM-5 G prelaunch erasable-load values when historical preset selected']};
+}
+function radarReferencePayload(beam){
  return {estimated_velocity_m_s:[num('lrRefVx'),num('lrRefVy'),num('lrRefVz')],
   lunar_surface_velocity_m_s:[num('lrSurfVx'),num('lrSurfVy'),num('lrSurfVz')],
-  beam_unit_vector:[num('lrBeamX'),num('lrBeamY'),num('lrBeamZ')],component:'velocity_axis',
-  applicability:'site causal-model lab landing-radar reference projection; historical LM-5 beam transform supplied upstream',
-  provenance:['Luminary 099 SERVICER velocity-reference architecture; synthetic browser vectors']};
+  beam_unit_vector:beam,component:'velocity_'+$('lrAxis').value,
+  applicability:'site causal-model lab landing-radar reference projection in Navigation Base coordinates',
+  provenance:['Luminary 099 SERVICER velocity-reference architecture; synthetic browser velocity vectors']};
 }
 function radarPayload(mode='normal',velocityReference=0){
  const now=num('lrTime'),goodSince=mode==='bad-data'?now-1:num('lrGoodSince'),updates=mode==='updates-off'?false:$('lrUpdatesEnabled').checked;
@@ -561,19 +578,24 @@ function radarPayload(mode='normal',velocityReference=0){
   provenance:['Synthetic browser inputs; not Apollo constants']};
 }
 async function runRadar(mode='normal'){
- const rp=radarReferencePayload();$('radarRaw').textContent='Running…';
+ const gp=radarGeometryPayload();$('radarRaw').textContent='Running…';
  try{
+  const geometry=await request('/api/admin/model-proof/landing-radar-beam-geometry',gp);
+  recordCausal('landing-radar-geometry-'+mode,gp,geometry);
+  const axis=$('lrAxis').value,beam=geometry.axes_navigation_base[axis];
+  const rp=radarReferencePayload(beam);
   const ref=await request('/api/admin/model-proof/landing-radar-velocity-reference',rp);
   recordCausal('landing-radar-reference-'+mode,rp,ref);
   const p=radarPayload(mode,ref.reference_velocity_m_s);
   const r=await request('/api/admin/model-proof/landing-radar-quality-update',p);recordCausal('landing-radar-'+mode,p,r);
   const q=r.quality,by=Object.fromEntries(q.channels.map(x=>[x.channel,x])),m=r.qualified_measurement,u=r.update_assessment;
   $('radarTrace').innerHTML=
-   traceStage('Estimated / surface velocity','<div>estimated = '+vec(ref.estimated_velocity_m_s)+' m/s</div><div>surface = '+vec(ref.lunar_surface_velocity_m_s)+' m/s</div><div>relative = '+vec(ref.relative_surface_velocity_m_s)+' m/s</div>')+
-   arrow()+traceStage('Selected-beam reference','<div>beam = '+vec(ref.beam_unit_vector)+'</div><div>reference = '+scalar(ref.reference_velocity_m_s)+' m/s</div><div class="note">Beam vector is supplied upstream; full LM-5 antenna/attitude transform is not inferred here.</div>')+
+   traceStage('Antenna → Navigation Base','<div>position = '+geometry.position+'</div><div>LRALPHA = '+scalar(geometry.lralpha_revolutions,10)+' rev</div><div>LRBETA = '+scalar(geometry.lrbeta_revolutions,10)+' rev</div><div>'+axis.toUpperCase()+' beam in NB = '+vec(beam)+'</div><div class="note">Fixed orientation only; measurement-time NB→platform/common-frame attitude remains unresolved.</div>')+
+   arrow()+traceStage('Surface-relative velocity','<div>estimated NB = '+vec(ref.estimated_velocity_m_s)+' m/s</div><div>surface NB = '+vec(ref.lunar_surface_velocity_m_s)+' m/s</div><div>relative NB = '+vec(ref.relative_surface_velocity_m_s)+' m/s</div>')+
+   arrow()+traceStage('Selected-beam reference','<div>beam = '+vec(ref.beam_unit_vector)+'</div><div>reference = '+scalar(ref.reference_velocity_m_s)+' m/s</div>')+
    arrow()+traceStage('Measurement qualification','<div>Data Good qualified '+statusBadge(q.data_good_qualified)+'</div><div>altitude '+statusBadge(by.altitude?.accepted,'ACCEPT','REJECT')+'</div><div>velocity '+statusBadge(by.velocity_axis?.accepted,'ACCEPT','REJECT')+'</div><div class="note">measured velocity = '+scalar(p.channels.velocity_axis.measured_value)+' m/s</div>')+
    arrow()+traceStage('Update eligibility','<div>updates enabled '+statusBadge(u.updates_enabled)+'</div><div>altitude '+statusBadge(u.altitude_eligible,'ELIGIBLE','BLOCKED')+'</div><div>velocity '+statusBadge(u.velocity_eligible,'ELIGIBLE','BLOCKED')+'</div><div class="note">'+(u.reasons.join(', ')||'no blocking reasons')+'</div>');
-  $('radarRaw').textContent=JSON.stringify({reference_projection:ref,quality_update:r},null,2);
+  $('radarRaw').textContent=JSON.stringify({beam_geometry:geometry,reference_projection:ref,quality_update:r},null,2);
  }catch(e){$('radarRaw').textContent=String(e.message||e)}
 }
 $('runRadar').onclick=()=>runRadar('normal');
