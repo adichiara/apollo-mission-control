@@ -6,13 +6,12 @@ Date: 2026-09-19
 
 Primary Apollo 11 technical documentation constrains powered-flight Average-G/state-vector processing to 2-second PIPA intervals and the LR velocity components to one per interval, cycling `Vz → Vx → Vy → Vz`. This remains an onboard estimator cadence, not an MCC display cadence.
 
-Research note 501 then tested whether the remaining measurement/noise gap could support a historical stochastic generator. NASA TN D-6849 provides LM-5-specific primary evidence: a preflight one-count velocity bias caused by a logic race was corrected, and the Gaussian assumption used for Doppler-spectrum-simulator test limits had to be corrected because the test approximation produced more energy in the tails. Its Apollo 11 section reports flight data within specification limits except near zero Doppler, but does not provide a numerical flight-effective stochastic distribution.
+The next unresolved measurement/noise gap was then tested against primary evidence. NASA TN D-6849 provides LM-5-specific history: a preflight one-count velocity bias caused by a logic race was corrected, and the Gaussian assumption used for Doppler-spectrum-simulator test limits had to be corrected because the test approximation produced more energy in the tails. Its Apollo 11 section reports flight data within specification limits except near zero Doppler, but does not provide a numerical flight-effective stochastic distribution.
 
-The result is a useful negative constraint: an arbitrary Gaussian noise generator would be unsupported, and the corrected preflight one-count bias must not be reproduced as an Apollo 11 flight defect.
+The result is a useful negative constraint: an arbitrary Gaussian noise generator would be unsupported, and the corrected preflight one-count bias must not be reproduced as an Apollo 11 flight defect. The flight-authentic stochastic generator is **BLOCKED** pending numerical LM-5/Apollo-11-effective evidence.
 
 ## Repository consequence
 
-- Added research note 501 with a D-024-style **BLOCKED** closure for flight-authentic stochastic LR measurement generation.
 - Roadmap now permits explicitly synthetic perturbations for testing while keeping them out of the historical profile.
 - Source catalog and station status distinguish this sensor-model boundary from controller-visible timing.
 - No executable behavior or station maturity changes in this research-only slice.
