@@ -62,7 +62,7 @@ The old 000–399 space is closed legacy space:
 For every new independent research thread, use the next unused hundred-block at 400 or above. The allocation is **derived from the research tree**, not maintained as a prose list:
 
 - the first note in a new block must be the block's `x00` note;
-- every note in that block must contain the same canonical line `Research thread: \`<slug>\``;
+- every note in that block must contain the same canonical `Research thread:` metadata line with one stable slug written in backticks;
 - `scripts/update_research_indexes.py` generates `resources/RESEARCH_BLOCK_ALLOCATION.md` from those notes;
 - the audit rejects notes in closed legacy space, an unclaimed block without its `x00` note, missing thread metadata, or multiple thread slugs in one block.
 
