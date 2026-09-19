@@ -52,17 +52,21 @@ That file is the handoff mechanism, and it works: it is how the continuous-clock
 
 ## Do not reuse a research-note number
 
-`scripts/audit_documentation.py` fails on duplicates under `D-023`, so a collision blocks CI rather than appearing in a report. No doubled prefixes remain; the last of them were renumbered into the 200s.
+`scripts/audit_documentation.py` fails on duplicate IDs and now also enforces research-number block allocation.
 
-**Claim a fresh hundred-block when you open a new research thread.** Two threads drawing from one counter collide — 141/143–147 (Apollo 11 against Apollo 13) and 234–236 (LMS against mission-specific) both happened that way, and the second took `main` red for 29 commits.
+The old 000–399 space is closed legacy space:
 
-Treat the existing 000–399 ranges as closed legacy space:
+- IDs 000–328 are grandfathered existing notes;
+- IDs 329–399 are permanently closed to new research.
 
-- 000–199: general/legacy research;
-- 200–299: renumbered collision repairs and later legacy research;
-- 300–399: mixed legacy. It is predominantly the LMS lineage through 324, but 314 is player-interaction/playability research and 325–328 are Apollo 13 LM malfunction/procedure research. Those exceptions are historical misallocations, not precedent.
+For every new independent research thread, use the next unused hundred-block at 400 or above. The allocation is **derived from the research tree**, not maintained as a prose list:
 
-For a new independent research thread, claim the next unused hundred-block starting at 400. **Claim the block by updating this allocation map through a pull request before creating the thread's first note.** Once claimed, that hundred-block belongs to that thread until deliberately retired or reassigned.
+- the first note in a new block must be the block's `x00` note;
+- every note in that block must contain the same canonical line `Research thread: \`<slug>\``;
+- `scripts/update_research_indexes.py` generates `resources/RESEARCH_BLOCK_ALLOCATION.md` from those notes;
+- the audit rejects notes in closed legacy space, an unclaimed block without its `x00` note, missing thread metadata, or multiple thread slugs in one block.
+
+Do not edit `resources/RESEARCH_BLOCK_ALLOCATION.md` by hand. Run `python3 scripts/update_research_indexes.py` after adding, renaming, or deleting research notes. A new independent thread that does not fit the currently allocated block must claim the next unused hundred-block by landing its `x00` note through a pull request.
 
 ## When you need the other agent
 
