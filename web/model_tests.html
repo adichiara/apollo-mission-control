@@ -130,8 +130,8 @@
 </section>
 
 <section id="radar" class="panel">
-<h2>Landing-radar reference → quality → update eligibility</h2>
-<p class="note">Exercises the source-backed velocity-reference boundary before measurement qualification: estimated velocity minus lunar-surface velocity, projected on a caller-supplied selected radar-beam unit vector. Full LM-5 antenna/attitude geometry and the downstream estimator remain deliberately outside this proof.</p>
+<h2>Landing-radar reference → quality → historical velocity update</h2>
+<p class="note">Exercises the source-backed velocity-reference boundary, measurement qualification, update gating, and Apollo 11 LM-5 velocity weighting/correction. The historical LM-5 beam transform is source-controlled but still supplied to this executable proof as an explicit unit vector.</p>
 <div class="grid">
 <label class="field">Current time (s)<input id="lrTime" type="number" value="10" step="0.1"></label>
 <label class="field">Data Good since (s)<input id="lrGoodSince" type="number" value="5" step="0.1"></label>
@@ -153,10 +153,12 @@
 <label class="field">Proportional tolerance<input id="lrProportional" type="number" value="0.125" step="0.001"></label>
 <label class="field">Estimated speed (m/s)<input id="lrEstimatedSpeed" type="number" value="500" step="1"></label>
 <label class="field">Velocity-update threshold (m/s)<input id="lrSpeedThreshold" type="number" value="600" step="1"></label>
+<label class="field">Historical component<select id="lrComponent"><option value="x">X</option><option value="y">Y</option><option value="z">Z</option></select></label>
+<label class="field">Program<select id="lrProgram"><option value="">pre-P65 / other</option><option value="P65">P65</option><option value="P66">P66</option><option value="P67">P67</option></select></label>
 </div>
 <p><label><input id="lrDataGood" type="checkbox" checked> raw Data Good</label> &nbsp; <label><input id="lrUpdatesEnabled" type="checkbox" checked> radar updates enabled</label></p>
 <div class="actions"><button id="runRadar">Run radar chain</button><button id="radarBadData">Break Data Good persistence</button><button id="radarDisableUpdates">Disable updates</button></div>
-<div id="radarTrace" class="chain"><div class="stage"><b>Estimated / lunar-surface velocity</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Selected-beam reference</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Measurement qualification</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Update eligibility</b>Not run</div></div>
+<div id="radarTrace" class="chain"><div class="stage"><b>Estimated / lunar-surface velocity</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Selected-beam reference</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Measurement qualification</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Update eligibility</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Historical weighting / correction</b>Not run</div></div>
 <details class="raw"><summary>Raw radar-chain JSON</summary><pre id="radarRaw">No run yet.</pre></details>
 </section>
 
@@ -568,12 +570,28 @@ async function runRadar(mode='normal'){
   const p=radarPayload(mode,ref.reference_velocity_m_s);
   const r=await request('/api/admin/model-proof/landing-radar-quality-update',p);recordCausal('landing-radar-'+mode,p,r);
   const q=r.quality,by=Object.fromEntries(q.channels.map(x=>[x.channel,x])),m=r.qualified_measurement,u=r.update_assessment;
+  const speed=Math.abs(num('lrEstimatedSpeed')),speedThreshold=num('lrSpeedThreshold');
+  const updatePayload={
+   profile_id:'apollo11_lm5_landing_radar_partial',
+   prior_velocity_m_s:rp.estimated_velocity_m_s,
+   estimated_speed_m_s:speed,
+   measured_minus_reference_m_s:by.velocity_axis?.residual||0,
+   beam_unit_vector:rp.beam_unit_vector,
+   component:$('lrComponent').value,
+   program:$('lrProgram').value||null,
+   reasonableness_passed:!!by.velocity_axis?.accepted,
+   updates_permitted:!!p.updates_enabled&&speed<speedThreshold
+  };
+  const hu=await request('/api/admin/model-proof/landing-radar-historical-velocity-update',updatePayload);
+  recordCausal('landing-radar-historical-update-'+mode,updatePayload,hu);
+  const vu=hu.velocity_update,w=hu.profile.velocity_update_weighting;
   $('radarTrace').innerHTML=
    traceStage('Estimated / surface velocity','<div>estimated = '+vec(ref.estimated_velocity_m_s)+' m/s</div><div>surface = '+vec(ref.lunar_surface_velocity_m_s)+' m/s</div><div>relative = '+vec(ref.relative_surface_velocity_m_s)+' m/s</div>')+
-   arrow()+traceStage('Selected-beam reference','<div>beam = '+vec(ref.beam_unit_vector)+'</div><div>reference = '+scalar(ref.reference_velocity_m_s)+' m/s</div><div class="note">Beam vector is supplied upstream; full LM-5 antenna/attitude transform is not inferred here.</div>')+
-   arrow()+traceStage('Measurement qualification','<div>Data Good qualified '+statusBadge(q.data_good_qualified)+'</div><div>altitude '+statusBadge(by.altitude?.accepted,'ACCEPT','REJECT')+'</div><div>velocity '+statusBadge(by.velocity_axis?.accepted,'ACCEPT','REJECT')+'</div><div class="note">measured velocity = '+scalar(p.channels.velocity_axis.measured_value)+' m/s</div>')+
-   arrow()+traceStage('Update eligibility','<div>updates enabled '+statusBadge(u.updates_enabled)+'</div><div>altitude '+statusBadge(u.altitude_eligible,'ELIGIBLE','BLOCKED')+'</div><div>velocity '+statusBadge(u.velocity_eligible,'ELIGIBLE','BLOCKED')+'</div><div class="note">'+(u.reasons.join(', ')||'no blocking reasons')+'</div>');
-  $('radarRaw').textContent=JSON.stringify({reference_projection:ref,quality_update:r},null,2);
+   arrow()+traceStage('Selected-beam reference','<div>beam = '+vec(ref.beam_unit_vector)+'</div><div>reference = '+scalar(ref.reference_velocity_m_s)+' m/s</div><div class="note">Beam vector is supplied explicitly to this proof; its LM-5 transform is source-controlled separately.</div>')+
+   arrow()+traceStage('Measurement qualification','<div>Data Good qualified '+statusBadge(q.data_good_qualified)+'</div><div>altitude '+statusBadge(by.altitude?.accepted,'ACCEPT','REJECT')+'</div><div>velocity '+statusBadge(by.velocity_axis?.accepted,'ACCEPT','REJECT')+'</div><div class="note">residual = '+scalar(by.velocity_axis?.residual)+' m/s</div>')+
+   arrow()+traceStage('Update eligibility','<div>updates enabled '+statusBadge(u.updates_enabled)+'</div><div>altitude '+statusBadge(u.altitude_eligible,'ELIGIBLE','BLOCKED')+'</div><div>velocity '+statusBadge(u.velocity_eligible,'ELIGIBLE','BLOCKED')+'</div><div class="note">'+(u.reasons.join(', ')||'no blocking reasons')+'</div>')+
+   arrow()+traceStage('Historical weighting / correction','<div>program = '+(vu.program||'other')+'</div><div>regime = '+vu.weight_regime+'</div><div>weight = '+scalar(vu.selected_weight)+'</div><div>applied '+statusBadge(vu.update_applied)+'</div><div>Δv = '+vec(vu.delta_velocity_m_s)+' m/s</div><div>updated = '+vec(vu.updated_velocity_m_s)+' m/s</div><div class="note">LM-5: LRVF '+w.low_speed_threshold_fps+' ft/s, LRVMAX '+w.maximum_speed_fps+' ft/s; P65/P66/P67 override '+w.override_weight+'.</div>');
+  $('radarRaw').textContent=JSON.stringify({reference_projection:ref,quality_update:r,historical_velocity_update:hu},null,2);
  }catch(e){$('radarRaw').textContent=String(e.message||e)}
 }
 $('runRadar').onclick=()=>runRadar('normal');
