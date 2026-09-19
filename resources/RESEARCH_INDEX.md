@@ -296,4 +296,3 @@ Run `python3 scripts/update_research_indexes.py` after adding or renaming resear
 - **326** — [Apollo 13 flown lm malfunction procedures state](research/326_apollo13_flown_lm_malfunction_procedures_state.md)
 - **327** — [Apollo 13 simulation failure planning](research/327_apollo13_simulation_failure_planning.md)
 - **328** — [Apollo 13 lm malfunction tab inventory](research/328_apollo13_lm_malfunction_tab_inventory.md)
-
