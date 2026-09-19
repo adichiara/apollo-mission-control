@@ -247,9 +247,11 @@ function renderQueue(p){
   $('queuePanel').classList.toggle('hidden',station!=='CAPCOM');
   if(station!=='CAPCOM')return;
   $('queueStream').innerHTML=items.length?items.slice().reverse().map(q=>{
-    const state=q.transmitted?'TRANSMITTED':'APPROVED / PENDING';
+    const state=q.received?'CREW RECEIVED':q.transmitted?'TRANSMITTED / AWAITING RECEIPT':'APPROVED / PENDING';
+    const stateGet=q.received_get_s!=null?' · RECEIPT GET '+fmtGet(q.received_get_s):q.transmitted_get_s!=null?' · TX GET '+fmtGet(q.transmitted_get_s):'';
+    const ack=q.received&&q.acknowledgement?'<div class="queue-state">ACKNOWLEDGEMENT: '+esc(q.acknowledgement)+'</div>':'';
     const button=!q.transmitted?'<button class="primary" type="button" data-transmit="'+Number(q.item_id)+'">TRANSMIT TO CREW</button>':'';
-    return'<div class="queue-item '+(q.transmitted?'transmitted':'')+'"><div><b>'+esc(displayAction(q.action))+'</b></div><div class="queue-state">'+esc(state)+' · FROM '+esc(q.requested_by||'FLIGHT')+' · GET '+fmtGet(q.get_s)+'</div><div>'+esc(q.basis||'')+'</div>'+button+'</div>';
+    return'<div class="queue-item '+(q.transmitted?'transmitted':'')+'"><div><b>'+esc(displayAction(q.action))+'</b></div><div class="queue-state">'+esc(state)+' · FROM '+esc(q.requested_by||'FLIGHT')+' · QUEUED GET '+fmtGet(q.get_s)+stateGet+'</div><div>'+esc(q.basis||'')+'</div>'+ack+button+'</div>';
   }).join(''):'<div class="empty">No approved items waiting.</div>';
   document.querySelectorAll('[data-transmit]').forEach(btn=>btn.addEventListener('click',()=>transmit(Number(btn.dataset.transmit))));
 }

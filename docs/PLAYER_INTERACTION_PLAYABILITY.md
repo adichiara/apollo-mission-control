@@ -251,7 +251,15 @@ The first prototype implements the design boundary above:
 
 The prototype is intentionally limited to FLIGHT/CAPCOM. It is an interaction experiment, not the replacement player client and not an exact Apollo console reconstruction.
 
-The next question it should answer is whether the coordination workflow is understandable under continuous GET without project-internal explanation. After that, CONTROL/GUIDO product-scanning prototypes can be added using the same session strip/product/action hierarchy.
+The next question it should answer is whether the coordination workflow is understandable under continuous GET without project-internal explanation.
+
+The nominal FLIGHT→CAPCOM handoff now carries an explicit three-stage player-visible state:
+
+`approved/pending → transmitted/awaiting receipt → crew received`
+
+The simulated crew recognizes the nominal `continue_pc2_burn_sequence` item for receipt/acknowledgement, but CAPCOM transmission still does not itself perform a crew action or spacecraft response. No response latency is invented; receipt timing remains an explicit simulation event.
+
+Run that sequence as a neutral human part-task checkout before broadening the lab. After it is usable without facilitator explanation of interface semantics, add CONTROL/GUIDO product-scanning prototypes using the same session strip/product/action hierarchy.
 
 ## Player-state semantic tightening
 

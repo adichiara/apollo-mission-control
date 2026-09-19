@@ -136,6 +136,15 @@ def _build_pc2_simulated_crew() -> SimulatedCrew:
             ),
         },
         rules={
+            "continue_pc2_burn_sequence": CrewInstructionRule(
+                capcom_action="continue_pc2_burn_sequence",
+                acknowledgement="received",
+                crew_action="continue_pc2_burn_sequence",
+                provenance=(
+                    "project nominal PC+2 FLIGHT-to-CAPCOM integration handoff; "
+                    "not exact historical call wording or response latency"
+                ),
+            ),
             "callout_dps_shutdown_criterion": CrewInstructionRule(
                 capcom_action="callout_dps_shutdown_criterion",
                 acknowledgement="received",
@@ -448,19 +457,25 @@ class PC2Session:
         ]
 
     def _capcom_queue_payload(self) -> list[dict[str, Any]]:
-        return [
-            {
-                "item_id": item.item_id,
-                "get_s": item.get_s,
-                "requested_by": item.requested_by,
-                "action": item.action,
-                "parameters": dict(item.parameters),
-                "basis": item.basis,
-                "transmitted": item.transmitted,
-                "transmitted_get_s": item.transmitted_get_s,
-            }
-            for item in self.capcom_queue
-        ]
+        payload: list[dict[str, Any]] = []
+        for item in self.capcom_queue:
+            receipt = self.simulated_crew.receipts.get(item.item_id)
+            payload.append(
+                {
+                    "item_id": item.item_id,
+                    "get_s": item.get_s,
+                    "requested_by": item.requested_by,
+                    "action": item.action,
+                    "parameters": dict(item.parameters),
+                    "basis": item.basis,
+                    "transmitted": item.transmitted,
+                    "transmitted_get_s": item.transmitted_get_s,
+                    "received": receipt is not None,
+                    "received_get_s": None if receipt is None else receipt.received_get_s,
+                    "acknowledgement": None if receipt is None else receipt.acknowledgement,
+                }
+            )
+        return payload
 
     def get_station_view(self, player_id: str, station: str | None = None) -> Any:
         if station is None:

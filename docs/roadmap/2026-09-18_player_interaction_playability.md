@@ -53,11 +53,15 @@ Current checkpoint:
 - FLIGHT GO/NO-GO interaction: prototyped;
 - FLIGHT approval → CAPCOM pending queue: prototyped;
 - CAPCOM explicit transmission: prototyped;
+- CAPCOM queue now distinguishes **approved/pending → transmitted/awaiting receipt → crew received**;
+- the nominal `continue_pc2_burn_sequence` handoff is now a supported deterministic simulated-crew instruction for receipt/acknowledgement;
+- CAPCOM transmission still does not itself perform a crew action or spacecraft response;
 - crew-report presentation: prototyped;
 - player-facing developer metadata suppression: prototyped;
 - scenario-specific CONTROL solution controls: intentionally absent;
-- CONTROL/GUIDO phone scanning: next;
-- physical human validation: still pending.
+- next: exercise this FLIGHT/CAPCOM sequence in a neutral human part-task checkout under continuous GET;
+- after that: CONTROL/GUIDO phone scanning;
+- physical integrated human validation: still pending.
 
 ## No implementation claim
 

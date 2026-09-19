@@ -42,6 +42,9 @@ class CapcomQueueDisplayItem:
     basis: str
     transmitted: bool
     transmitted_get_s: float | None
+    received: bool
+    received_get_s: float | None
+    acknowledgement: str | None
 
 
 @dataclass(frozen=True)
@@ -124,6 +127,9 @@ def build_pc2_capcom_presentation(
             basis=str(item.get("basis", "")),
             transmitted=bool(item.get("transmitted", False)),
             transmitted_get_s=None if item.get("transmitted_get_s") is None else float(item["transmitted_get_s"]),
+            received=bool(item.get("received", False)),
+            received_get_s=None if item.get("received_get_s") is None else float(item["received_get_s"]),
+            acknowledgement=None if item.get("acknowledgement") is None else str(item["acknowledgement"]),
         )
         for item in queue_items
     )
