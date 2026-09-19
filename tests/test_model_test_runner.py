@@ -29,12 +29,15 @@ class ModelTestRunnerTests(unittest.TestCase):
                          "/api/admin/model-proof/guidance-monitoring-profile/",
                          "/api/admin/model-proof/guidance-crosscheck",
                          "/api/admin/model-proof/guidance-consensus",
+                         "/api/admin/model-proof/landing-radar-beam-geometry",
                          "/api/admin/model-proof/landing-radar-velocity-reference",
                          "/api/admin/model-proof/landing-radar-quality-update",
                          "Guidance-computer alarm → restart recovery",
                          "Load Apollo 11 historical profile",
                          "Guidance comparison / multi-source consensus",
-                         "Landing-radar reference → quality → update eligibility",
+                         "LM-5 beam geometry → reference → quality → update eligibility",
+                         "LM-5 Position 1 — stow",
+                         "LM-5 Position 2 — hover",
                          "Authoritative trajectory", "Controller-visible observation",
                          "causal_runs"):
             self.assertIn(required, response.text)
