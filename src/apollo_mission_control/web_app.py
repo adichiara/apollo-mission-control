@@ -154,6 +154,23 @@ _active_scenario: ScenarioRecord | None = None
 _active_mission_profile: MissionProfileRecord | None = None
 _active_model_profile: ModelProfileRecord | None = None
 _active_runtime_adapter_id: str | None = None
+_playability_events: list[dict[str, Any]] = []
+_playability_sequence = 0
+
+PLAYABILITY_SURFACES = {"validation_client", "player_lab"}
+PLAYABILITY_EVENT_KINDS = {
+    "page_load",
+    "join_attempt",
+    "join_success",
+    "auto_rejoin_attempt",
+    "auto_rejoin_success",
+    "auto_rejoin_failure",
+    "workspace_ready",
+    "station_switch",
+    "action_attempt",
+    "action_success",
+    "action_error",
+}
 
 
 class JoinRequest(BaseModel):
@@ -164,6 +181,15 @@ class JoinRequest(BaseModel):
 class JoinSetRequest(BaseModel):
     player_id: str = Field(min_length=1, max_length=64)
     stations: list[str] = Field(min_length=1, max_length=7)
+
+
+class PlayabilityEventRequest(BaseModel):
+    surface: str = Field(min_length=1, max_length=32)
+    event: str = Field(min_length=1, max_length=64)
+    player_id: str | None = Field(default=None, min_length=1, max_length=64)
+    station: str | None = Field(default=None, min_length=1, max_length=32)
+    target: str | None = Field(default=None, min_length=1, max_length=128)
+    client_elapsed_ms: float | None = Field(default=None, ge=0.0, le=86_400_000.0)
 
 
 class AdvanceRequest(BaseModel):
@@ -727,6 +753,7 @@ def create_session(
 ) -> dict[str, Any]:
     global _session, _clock, _active_scenario, _active_mission_profile
     global _active_model_profile, _active_runtime_adapter_id
+    global _playability_events, _playability_sequence
     with _lock:
         record = _domain_call(lambda: get_scenario_record(scenario_id))
         profile = _domain_call(
@@ -761,7 +788,45 @@ def create_session(
         _active_mission_profile = profile
         _active_model_profile = model_profile
         _active_runtime_adapter_id = record.runtime_adapter
+        _playability_events = []
+        _playability_sequence = 0
         return _status_payload(session)
+
+
+@app.post("/api/session/instrumentation")
+def record_playability_event(request: PlayabilityEventRequest) -> dict[str, Any]:
+    """Record non-authoritative usability/playability telemetry for prototype clients."""
+    global _playability_sequence
+    with _lock:
+        session = _sync_session()
+        if request.surface not in PLAYABILITY_SURFACES:
+            raise HTTPException(status_code=400, detail="Unsupported playability surface")
+        if request.event not in PLAYABILITY_EVENT_KINDS:
+            raise HTTPException(status_code=400, detail="Unsupported playability event")
+        _playability_sequence += 1
+        event = {
+            "sequence": _playability_sequence,
+            "get_s": float(session.state.get_s),
+            "surface": request.surface,
+            "event": request.event,
+            "player_id": request.player_id,
+            "station": request.station,
+            "target": request.target,
+            "client_elapsed_ms": request.client_elapsed_ms,
+        }
+        _playability_events.append(event)
+        return dict(event)
+
+
+@app.get(
+    "/api/session/admin/playability-events",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def playability_events() -> list[dict[str, Any]]:
+    """Return prototype usability telemetry separately from the mission audit log."""
+    with _lock:
+        _sync_session()
+        return [dict(event) for event in _playability_events]
 
 
 @app.get("/api/session/status")
