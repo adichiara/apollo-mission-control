@@ -13,6 +13,8 @@ This directory is the provenance layer for the simulation.
 
 Run `python3 scripts/update_research_indexes.py` after adding, renaming, or deleting a research note or source-catalog supplement. `scripts/audit_documentation.py` fails when either master index no longer covers the tree.
 
+Use `python3 scripts/query_research.py` to retrieve across the current corpus without pretending the legacy prose has already been normalized. Useful filters include `--text`, `--evidence DOCUMENTED|PARTIALLY DOCUMENTED|UNRESOLVED|UNLABELED`, and `--source-heading canonical|legacy|mixed|none`; add `--json` for machine-readable output. `UNLABELED` is metadata state, not an evidence conclusion.
+
 ## Research-note conventions
 
 The repository accumulated several headings for the same retrieval function. New research notes use one vocabulary:
