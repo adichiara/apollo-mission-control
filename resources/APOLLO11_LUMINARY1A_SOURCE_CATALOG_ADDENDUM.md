@@ -18,7 +18,7 @@ Date: 2026-09-19
 
 The landing-radar velocity-beam geometry is now documented through the measurement-time stable-member transform. `LRVJOB` schedules `RDGIMS` 170 ms after starting the five-sample velocity read; `RDGIMS` saves `TIME2,TIME1`, the three CDU angles, and PIPA values. `VELUPDAT` uses those saved CDUs—not a later current-attitude read—to transform the selected navigation-base velocity beam with `*NBSM*`.
 
-The next bounded target is the **downstream velocity estimator/update path** in `VELUPDAT`: measured-velocity reconstruction, propagated estimate, reasonableness threshold, failure/inhibit behavior, and the `LRVF/LRVMAX/LRW*` weighting logic including the P65/P66/P67 override.
+The downstream **velocity weighting/correction path** is now also controlled. LUMINARY 099 `VUPDAT` supplies the piecewise `LRVF/LRVMAX/LRW*` logic, update inhibit, P65/P66/P67 `LRWVFF` override, and weighted-residual vector correction; the LM-5 Mission G prelaunch erasable load supplies `LRVMAX=2000 ft/s`, `LRVF=200 ft/s`, `LRWVZ/Y/X=0.3`, `LRWVFZ/Y/X=0.2`, and `LRWVFF=0.1`. See research note 500. The next bounded estimator target is the upstream PIPA/gravity propagation into the estimate at landing-radar measurement time and executable composition with the source-controlled beam transform.
 
 `69-FS-3` remains a preferred complete LUMINARY 1A equation source if recovered, especially for equation ancestry, descriptive cross-checks, and any dependency not directly closed by the flown listing/pad-load chain.
 
@@ -40,5 +40,6 @@ Do not back-project `69-FS-4` (Luminary 1B), `70-FS-*`, R-567 Luminary 1C/1D/1E,
 
 - **DOCUMENTED:** Apollo-11-effective static landing-radar antenna geometry and position transform.
 - **DOCUMENTED:** measurement-time CDU/time capture and NB-to-SM velocity-beam transform used by `VELUPDAT`.
-- **PARTIALLY DOCUMENTED:** downstream velocity estimator/update and weighting logic.
+- **DOCUMENTED:** Apollo-11-effective downstream velocity weighting/correction logic and LM-5 weighting constants.
+- **PARTIALLY DOCUMENTED:** complete end-to-end measurement-time estimator composition, including PIPA/gravity propagation.
 - **UNRESOLVED:** controller-visible product cadence and formatting.
