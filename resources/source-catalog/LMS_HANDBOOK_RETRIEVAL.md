@@ -1,6 +1,6 @@
 # LMS handbook retrieval source catalog
 
-Status: active source catalog; **standing retrieval is DEFERRED under D-024**. Use the named retrieval routes below only when a reopen trigger in `docs/RESEARCH_PORTFOLIO_STATUS.md` creates a current implementation dependency. Updated through research 328.
+Status: active source catalog. Under D-024, **generic LMS handbook retrieval remains DEFERRED**, but the narrower capability to claim/reconstruct a **specific historical LMS-injectable malfunction or instructor script is BLOCKED** on Volume II Sections 2/6. Virginia Tech Section 2/6 retrieval is therefore a critical path for that capability only, not for current PC+2/playability or generic causal-engine work. See `docs/RESEARCH_PORTFOLIO_STATUS.md`. Updated through research 328.
 
 ## `LMA-790-2-LMS` — NASA bibliographic control
 
@@ -86,9 +86,9 @@ Evidence use: this supports historical scenario-authoring and validation rules a
 
 This catalog controls retrieval identity and evidence scope. Bibliographic records and archival arrangement do not establish DDP-224 count/allocation, program ownership, common-memory organization, visual interfaces, site effectivity, Apollo 13 LMS configuration, scripting syntax, malfunction definitions, or numerical constants. Sections 5/6 (`67-14188`) and Section 7 (`67-16127`) are distinct document-control units; neither accession's date establishes the other's effectivity. Apollo 13 crew malfunction procedures constrain operational behavior only and do not establish simulator implementation. Apollo 13 simulation lessons constrain exercise design, not LMS capability.
 
-## Retrieval order if reactivated
+## Retrieval order by gated capability
 
-This is a **controlled retrieval sequence, not a standing research queue**. The relevant LMS questions are DEFERRED under D-024 until a selected scenario/model requires the unresolved content. When reactivated, use the existing route instead of restarting broad discovery.
+This is a **controlled retrieval sequence, not a standing broad-search queue**. Section 2/6 retrieval is already justified when work targets a specifically historical LMS malfunction/instructor case because that capability is BLOCKED on those pages. Other handbook questions remain DEFERRED until a selected scenario/model requires them. Use the existing route instead of restarting broad discovery.
 
 1. `67-14186` / public Volume I candidate — inspect title/revision/effectivity pages first.
 2. Section 2 — **Malfunction Data** — request the three Avitabile folders.
