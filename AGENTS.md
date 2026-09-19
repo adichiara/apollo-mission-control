@@ -38,6 +38,14 @@ When you do substantively revisit one with the source open, normalize the note a
 
 When a research note or source-catalog supplement is added, renamed, or deleted, run `python3 scripts/update_research_indexes.py`. The documentation audit fails if `resources/RESEARCH_INDEX.md` or the scoped-catalog block in `resources/PRIMARY_SOURCE_CATALOG.md` stops covering the tree.
 
+## Close research deliberately
+
+Research does not stay active merely because more historical detail might exist. Before extending a thread, identify its bounded question, current implementation dependency, and what different answer would materially change. If no current dependency can be named, the question is normally `DEFERRED`.
+
+Use the states and sufficiency gate in `docs/RESEARCH_SUFFICIENCY.md` / D-024. After the last material change to a tentative conclusion, perform the focused closure challenge defined there. Once a question is `SUFFICIENT`, `DEFERRED`, or `BLOCKED`, stop active searching until a documented reopen trigger occurs.
+
+A closure state does not upgrade evidence. An `UNRESOLVED` claim remains unresolved even when its bounded question is sufficient for implementation.
+
 ## A decision that is not in `docs/DECISIONS.md` did not happen
 
 That file is the handoff mechanism, and it works: it is how the continuous-clock decision (`D-016`) reached an agent still operating on a two-day-old assumption about gated scenes.
