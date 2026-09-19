@@ -251,6 +251,14 @@ The first prototype implements the design boundary above:
 
 The prototype is intentionally limited to FLIGHT/CAPCOM. It is an interaction experiment, not the replacement player client and not an exact Apollo console reconstruction.
 
+### Instrumentation checkpoint
+
+Research-note-314 implementation step 1 now has a concrete instrumentation layer. Both the original validation client and `/player-lab` emit session-scoped playability events for page load, join/rejoin, workspace readiness, station switching, and action attempt/success/error. Each event carries authoritative GET plus client elapsed time. The facilitator can retrieve/copy the stream independently of the mission audit.
+
+The stream deliberately excludes free-text readiness notes and decision/approval bases. It measures interaction timing/recovery, not mission correctness or player competence. Findability still requires observer classification.
+
+See `docs/testing/PLAYABILITY_INSTRUMENTATION.md`.
+
 The next question it should answer is whether the coordination workflow is understandable under continuous GET without project-internal explanation.
 
 The nominal FLIGHT→CAPCOM handoff now carries an explicit three-stage player-visible state:
