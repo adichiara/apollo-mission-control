@@ -16,7 +16,8 @@ A research state here answers a narrower question: **should active research cont
 | Are the reusable causal-engine layer boundaries sufficiently constrained for current implementation? | **SUFFICIENT** | Continue implementation using separated physical/subsystem, observation/measurement, ground/interface, and exercise-control layers. |
 | Must the current engine reproduce an exact historical LMS-wide timestep or numerical method? | **DEFERRED** | Keep project numerical methods explicit and validated; do not assert a historical global LMS timestep. |
 | Must current work recover LMS acceptance/correlation tolerances before implementation continues? | **DEFERRED** | Historical tolerances remain unavailable; current software/numerical/source validation layers remain separate. |
-| Must current work recover exact LMS instructor malfunction/scripting mechanics from Volume II Sections 2/6? | **DEFERRED** | Generic causal malfunction architecture may proceed; exact LMS injection mechanics are not required until a historical LMS exercise or specific injectability claim depends on them. |
+| Must the generic current engine recover exact LMS instructor malfunction/scripting mechanics from Volume II Sections 2/6? | **DEFERRED** | Generic causal malfunction architecture may proceed without exact LMS injection mechanics. |
+| Can the project claim or reconstruct a **specific historical LMS-injectable malfunction / instructor script**? | **BLOCKED** | That capability is blocked on the inaccessible Section 2 **Malfunction Data** and/or Section 6 **Scripting Data Sheets** pages. This does not block current PC+2/playability work. |
 | Must current work recover Section 7 output tables before the measurement/output abstraction proceeds? | **DEFERRED** | Existing measurement/output separation is sufficient for current architecture; exact historical output ownership/routing remains unavailable. |
 | Can the public Volume I scan be treated as page-verified `67-14186` and mined for technical claims now? | **DEFERRED** | Do not promote scan identity or contents. Reopen only when a selected implementation dependency requires Volume I content and title/control pages can be inspected. |
 | Can the 1971 LMS User's Manual establish Apollo 13 machine/program/loading configuration? | **DEFERRED** | It remains late-program operational evidence only unless Apollo 13 effectivity is independently established. |
@@ -63,25 +64,38 @@ Prefer the relevant LMS acceptance plan/procedure or model-specific validation/c
 
 ---
 
-## Closure record C — LMS Volume II Sections 2, 6, and 7
+## Closure record C — historical LMS malfunction injectability / instructor scripting
 
-- **Status:** **DEFERRED**
-- **Bounded question:** Must current implementation recover the exact LMS malfunction definitions/insertion mechanics, scripting data, and output tables?
-- **Implementation dependency:** historical LMS exercise reconstruction, exact instructor scripting/injectability, and historical output/model ownership.
-- **Decision sensitivity:** these documents could alter how a specifically reconstructed historical LMS exercise injects a malfunction or maps simulator outputs.
-- **Decision-relevant findings:** the Virginia Tech Avitabile finding aid identifies Section 2 **Malfunction Data** (3 folders), Section 6 **Scripting Data Sheets** (2 folders), and Section 7 **Simulator Output Tables** (3 folders, 1 July 1967). NASA/MSC bibliographic control independently identifies the handbook family and Section 7 accession/date. Existing AMS and LMS evidence is already sufficient for the generic causal and measurement/output abstractions.
-- **Remaining gaps and disposition:** actual section pages, failure identifiers, scripting syntax, model/program designators, output semantics, revision/effectivity, and Apollo 13 applicability remain unresolved. No currently selected scenario depends on those exact LMS mechanics, so active retrieval is deferred.
-- **Closure challenge:** the current Virginia Tech finding aid was rechecked on 2026-09-18. It confirms the collection is open for research and that reproduction/digitization can be requested, but exposes no online Section 2/6/7 technical pages. Targeted web searches surfaced no alternate primary page-level copy.
-- **Reopen triggers:** selection of a historical LMS SimSup case; a requirement to claim that a particular malfunction was LMS-injectable; a requirement for exact LMS scripting behavior; or a current station/model product requires an output mapping unavailable from mission-specific sources.
+- **Status:** **BLOCKED**
+- **Bounded question:** Can the project make an affirmative historical claim that a specific malfunction was LMS-injectable, or reconstruct the corresponding instructor-side script/mechanism?
+- **Implementation dependency:** promotion of a future nonnominal case from a project/synthetic causal failure to a specifically reconstructed historical LMS SimSup/instructor case.
+- **Decision sensitivity:** Section 2/6 content could determine whether the malfunction existed in the simulator, how it was inserted, which subsystem/model it affected, and what instructor scripting or sequencing controlled it.
+- **Decision-relevant findings:** the Virginia Tech Avitabile finding aid identifies Section 2 **Malfunction Data** (3 folders) and Section 6 **Scripting Data Sheets** (2 folders). Existing AMS/LMS evidence is sufficient for the generic causal malfunction architecture, but it does not establish the exact historical LMS failure inventory or scripting mechanics.
+- **Remaining gaps and disposition:** actual Section 2/6 pages, failure identifiers, insertion codes/methods, scripting syntax, revision/effectivity, and Apollo 13 applicability remain unresolved. Those gaps are material to a **historical LMS injectability/scripting claim**, so that capability is blocked rather than deferred.
+- **Closure challenge:** targeted web retrieval has repeatedly found the same bibliographic controls and Virginia Tech archival holdings but no accessible primary Section 2/6 technical pages. The next discriminating evidence is therefore a concrete archive/digitization retrieval, not another broad search.
+- **Reopen triggers:** receipt/digitization of the relevant Virginia Tech folders, recovery of an equivalent controlled primary copy, or another primary source that directly establishes the needed malfunction/instructor mechanism.
 
-### Retrieval condition if reopened
+### Critical-path consequence
+
+Virginia Tech Section 2/6 retrieval is on the critical path **only for a specifically reconstructed historical LMS nonnominal/SimSup case or explicit LMS-injectability claim**. It is not on the critical path for the current PC+2 validation harness, player-lab work, or generic causal-engine architecture.
 
 Use the already identified folders rather than restarting broad discovery:
 - Section 2 — 3 folders;
-- Section 6 — 2 folders;
-- Section 7 — 3 folders.
+- Section 6 — 2 folders.
 
 Request title/control/change pages together with body pages so effectivity is not reconstructed from catalog metadata alone.
+
+---
+
+## Closure record C2 — LMS Section 7 exact output mapping
+
+- **Status:** **DEFERRED**
+- **Bounded question:** Must current implementation recover exact LMS output tables before the measurement/output abstraction proceeds?
+- **Implementation dependency:** exact historical output/model ownership, routing, engineering representation, or a selected station product unavailable from mission-specific evidence.
+- **Decision sensitivity:** Section 7 could alter exact output identifiers or model/output ownership, but current generic source/model → measurement/output → station-product separation is already supported.
+- **Decision-relevant findings:** the Virginia Tech finding aid identifies Section 7 **Simulator Output Tables** (3 folders, 1 July 1967), and NASA/MSC bibliographic control independently identifies its accession/date.
+- **Remaining gaps and disposition:** technical tables, model/program designators, routing, effectivity, and Apollo 13 applicability remain unresolved but are not required by a current station/model product. They remain deferred.
+- **Reopen triggers:** a selected historical station/model product requires an exact LMS output mapping unavailable from mission-specific sources.
 
 ---
 
