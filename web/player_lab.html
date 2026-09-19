@@ -178,6 +178,7 @@
 </main>
 <script>
 const STORAGE_KEY='apollo_player_lab_identity_v1';
+const PAGE_STARTED=performance.now();
 let playerId=null, station=null, snapshot=null, timer=null, lastRefresh=null;
 
 const $=id=>document.getElementById(id);
@@ -190,7 +191,13 @@ function phaseLabel(value){
   return labelize(value).replace(/^Pc2\b/,'PC+2').toUpperCase();
 }
 async function api(path,options={}){const r=await fetch(path,{headers:{'Content-Type':'application/json'},...options});const body=await r.json().catch(()=>({}));if(!r.ok)throw new Error(body.detail||r.status+' '+r.statusText);return body}
-async function post(path,body){showError('');try{const out=await api(path,{method:'POST',body:JSON.stringify(body)});await refresh();return out}catch(e){showError(e.message);throw e}}
+function instrument(event,target='',identity={}){
+  const p=identity.player_id!==undefined?identity.player_id:(playerId||$('player')?.value.trim()||null);
+  const s=identity.station!==undefined?identity.station:(station||$('station')?.value||null);
+  const payload={surface:'player_lab',event,player_id:p,station:s,target:target||null,client_elapsed_ms:Math.round(performance.now()-PAGE_STARTED)};
+  fetch('/api/session/instrumentation',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true}).catch(()=>{});
+}
+async function post(path,body,target){showError('');instrument('action_attempt',target);try{const out=await api(path,{method:'POST',body:JSON.stringify(body)});instrument('action_success',target);await refresh();return out}catch(e){instrument('action_error',target);showError(e.message);throw e}}
 
 function renderScalar(value,units){
   const unit=units?' <span class="meta">'+esc(units)+'</span>':'';
@@ -294,27 +301,28 @@ async function refresh(){await refreshStatus();await refreshSnapshot()}
 function persist(){if(playerId&&station)localStorage.setItem(STORAGE_KEY,JSON.stringify({player_id:playerId,station}))}
 async function join(){
   const p=$('player').value.trim(),s=$('station').value;
-  if(!p){showError('Player ID is required.');return}
+  instrument('join_attempt','join',{player_id:p||null,station:s});
+  if(!p){instrument('action_error','join',{player_id:null,station:s});showError('Player ID is required.');return}
   try{
     const snap=await api('/api/session/join',{method:'POST',body:JSON.stringify({player_id:p,station:s})});
-    playerId=p;station=s;persist();$('joinPanel').classList.add('hidden');$('workspace').classList.remove('hidden');renderRole();renderSnapshot(snap);await refreshStatus();
+    playerId=p;station=s;instrument('join_success','join');persist();$('joinPanel').classList.add('hidden');$('workspace').classList.remove('hidden');renderRole();renderSnapshot(snap);instrument('workspace_ready','workspace');await refreshStatus();
     if(timer)clearInterval(timer);timer=setInterval(refresh,1000);
-  }catch(e){showError(e.message)}
+  }catch(e){instrument('action_error','join',{player_id:p,station:s});showError(e.message)}
 }
 async function attemptRejoin(){
   let saved=null;try{saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')}catch{}
   if(!saved?.player_id||!['FLIGHT','CAPCOM'].includes(saved.station))return;
-  $('player').value=saved.player_id;$('station').value=saved.station;
+  $('player').value=saved.player_id;$('station').value=saved.station;instrument('auto_rejoin_attempt','rejoin',{player_id:saved.player_id,station:saved.station});
   try{
     const snap=await api('/api/session/join',{method:'POST',body:JSON.stringify({player_id:saved.player_id,station:saved.station})});
-    playerId=saved.player_id;station=saved.station;$('joinPanel').classList.add('hidden');$('workspace').classList.remove('hidden');renderRole();renderSnapshot(snap);
+    playerId=saved.player_id;station=saved.station;instrument('auto_rejoin_success','rejoin');$('joinPanel').classList.add('hidden');$('workspace').classList.remove('hidden');renderRole();renderSnapshot(snap);instrument('workspace_ready','workspace');
     if(timer)clearInterval(timer);timer=setInterval(refresh,1000);
-  }catch(e){if(!String(e.message).includes('No PC+2 session'))showError('Automatic rejoin failed: '+e.message)}
+  }catch(e){instrument('auto_rejoin_failure','rejoin',{player_id:saved.player_id,station:saved.station});if(!String(e.message).includes('No PC+2 session'))showError('Automatic rejoin failed: '+e.message)}
 }
-async function readiness(ready){if(!playerId)return;await post('/api/session/player/'+encodeURIComponent(playerId)+'/readiness',{ready,note:$('readinessNote').value,station})}
-async function flightDecision(go){if(station!=='FLIGHT')return;const basis=$('flightBasis').value.trim();if(!basis){showError('Decision basis is required.');return}await post('/api/session/flight/'+encodeURIComponent(playerId)+'/decision',{go,basis})}
-async function queueCrewItem(){if(station!=='FLIGHT')return;const basis=$('crewBasis').value.trim();if(!basis){showError('Approval basis is required.');return}await post('/api/session/flight/'+encodeURIComponent(playerId)+'/capcom',{action:$('crewItem').value,parameters:{},basis})}
-async function transmit(id){if(station!=='CAPCOM')return;await post('/api/session/capcom/'+encodeURIComponent(playerId)+'/transmit/'+id,{})}
+async function readiness(ready){if(!playerId)return;await post('/api/session/player/'+encodeURIComponent(playerId)+'/readiness',{ready,note:$('readinessNote').value,station},ready?'readiness_ready':'readiness_not_ready')}
+async function flightDecision(go){if(station!=='FLIGHT')return;const target=go?'flight_go':'flight_no_go',basis=$('flightBasis').value.trim();if(!basis){instrument('action_attempt',target);instrument('action_error',target);showError('Decision basis is required.');return}await post('/api/session/flight/'+encodeURIComponent(playerId)+'/decision',{go,basis},target)}
+async function queueCrewItem(){if(station!=='FLIGHT')return;const basis=$('crewBasis').value.trim();if(!basis){instrument('action_attempt','queue_capcom');instrument('action_error','queue_capcom');showError('Approval basis is required.');return}await post('/api/session/flight/'+encodeURIComponent(playerId)+'/capcom',{action:$('crewItem').value,parameters:{},basis},'queue_capcom')}
+async function transmit(id){if(station!=='CAPCOM')return;await post('/api/session/capcom/'+encodeURIComponent(playerId)+'/transmit/'+id,{},'transmit_capcom')}
 
 $('joinButton').addEventListener('click',join);
 $('readyButton').addEventListener('click',()=>readiness(true));
@@ -323,7 +331,7 @@ $('goButton').addEventListener('click',()=>flightDecision(true));
 $('noGoButton').addEventListener('click',()=>flightDecision(false));
 $('queueButton').addEventListener('click',queueCrewItem);
 
-(async()=>{await refreshStatus();await attemptRejoin()})();
+(async()=>{instrument('page_load','player_lab');await refreshStatus();await attemptRejoin()})();
 </script>
 </body>
 </html>
