@@ -194,7 +194,7 @@ If a sourced plausible range has been tested against the actual controller-visib
 
 ### Exact malfunction mechanism is needed
 
-If a scenario requires a particular malfunction insertion/effect mechanism and the surviving accessible sources establish only the malfunction name, not the causal effect needed by the model, the question is not sufficient. If the next discriminating evidence is an inaccessible archival handbook section, mark it **BLOCKED** and stop broad searching until the access condition changes.
+If a scenario or explicitly targeted capability requires a particular malfunction insertion/effect mechanism and the surviving accessible sources establish only the malfunction name, not the causal effect needed by the model, the bounded question is not sufficient. If the next discriminating evidence is an inaccessible archival handbook section, mark that capability/question **BLOCKED** and stop broad searching until the access condition changes. This does not imply that unrelated simulator work is blocked; scope the BLOCKED state to the implementation dependency it actually gates.
 
 ### Historically interesting detail has no current effect
 
