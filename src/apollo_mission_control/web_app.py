@@ -64,6 +64,10 @@ from .guidance_voting import (
     GuidanceVotingConfig,
     assess_guidance_consensus,
 )
+from .landing_radar_geometry import (
+    LandingRadarAntennaOrientation,
+    compute_landing_radar_antenna_geometry,
+)
 from .landing_radar_model import (
     LandingRadarGuidanceContext,
     LandingRadarMeasurement,
@@ -462,6 +466,21 @@ class LandingRadarQualityUpdateChainRequest(BaseModel):
     velocity_channel: str = Field(default="velocity_axis", min_length=1, max_length=128)
     applicability: str = Field(
         default="generic landing-radar quality/update API proof; not mission validated",
+        min_length=1,
+        max_length=500,
+    )
+    provenance: list[str] = Field(default_factory=list, max_length=20)
+
+
+class LandingRadarAntennaGeometryRequest(BaseModel):
+    lralpha_revolutions: float
+    lrbeta_revolutions: float
+    position: str = Field(default="caller_supplied", min_length=1, max_length=128)
+    applicability: str = Field(
+        default=(
+            "landing-radar antenna to Navigation Base geometry; "
+            "dynamic Navigation-Base attitude transform remains unresolved"
+        ),
         min_length=1,
         max_length=500,
     )
@@ -1614,6 +1633,29 @@ def guidance_consensus_model_proof(
                 applicability=request.applicability,
                 provenance=tuple(request.provenance),
             ),
+        )
+    )
+    return result.to_dict()
+
+
+@app.post(
+    "/api/admin/model-proof/landing-radar-beam-geometry",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def landing_radar_beam_geometry_model_proof(
+    request: LandingRadarAntennaGeometryRequest,
+) -> dict[str, object]:
+    """Expose fixed antenna -> Navigation Base landing-radar beam geometry."""
+
+    result = _domain_call(
+        lambda: compute_landing_radar_antenna_geometry(
+            LandingRadarAntennaOrientation(
+                lralpha_revolutions=request.lralpha_revolutions,
+                lrbeta_revolutions=request.lrbeta_revolutions,
+                position=request.position,
+                applicability=request.applicability,
+                provenance=tuple(request.provenance),
+            )
         )
     )
     return result.to_dict()
