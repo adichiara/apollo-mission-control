@@ -1,35 +1,38 @@
-# Progress — Apollo 11 landing-radar velocity-component cadence
+# Progress — Apollo 11 landing-radar cadence and measurement boundary
 
 Date: 2026-09-19
 
 ## Completed
 
-Closed one timing boundary that had remained conflated with controller-product cadence.
+Primary Apollo 11 technical documentation constrains powered-flight Average-G/state-vector processing to 2-second PIPA intervals and the LR velocity components to one per interval, cycling `Vz → Vx → Vy → Vz`. This remains an onboard estimator cadence, not an MCC display cadence.
 
-Primary Apollo 11 technical documentation states that powered-flight Average-G/state-vector processing occurs on 2-second PIPA intervals and that the landing radar's three velocity components are used **one during each 2-second interval**. The accompanying timeline shows the component sequence repeating `Vz → Vx → Vy → Vz`.
+Research note 501 then tested whether the remaining measurement/noise gap could support a historical stochastic generator. NASA TN D-6849 provides LM-5-specific primary evidence: a preflight one-count velocity bias caused by a logic race was corrected, and the Gaussian assumption used for Doppler-spectrum-simulator test limits had to be corrected because the test approximation produced more energy in the tails. Its Apollo 11 section reports flight data within specification limits except near zero Doppler, but does not provide a numerical flight-effective stochastic distribution.
 
-This gives the historical onboard estimator/input schedule needed when the end-to-end landing-radar chain is composed: one LR velocity component is consumed per 2-second navigation interval. It does **not** establish a two-second MCC display cadence, telemetry freshness guarantee, controller-product refresh rate, or radar noise-generation frequency.
+The result is a useful negative constraint: an arbitrary Gaussian noise generator would be unsupported, and the corrected preflight one-count bias must not be reproduced as an Apollo 11 flight defect.
 
 ## Repository consequence
 
-- Apollo 11 source catalog now records the AC Electronics manual as primary timing evidence.
-- A dated roadmap addendum narrows the timing problem to the still-unresolved ground/controller interface.
-- Station status explicitly keeps onboard estimator cadence separate from GUIDO/controller-visible cadence.
+- Added research note 501 with a D-024-style **BLOCKED** closure for flight-authentic stochastic LR measurement generation.
+- Roadmap now permits explicitly synthetic perturbations for testing while keeping them out of the historical profile.
+- Source catalog and station status distinguish this sensor-model boundary from controller-visible timing.
 - No executable behavior or station maturity changes in this research-only slice.
 
 ## Next bounded work
 
 1. Implement the already source-controlled measurement-time propagation + beam transform + qualification + weighting composition.
-2. Keep landing-radar measurement/noise generation unresolved until a source constrains it.
-3. For controller-facing timing, search direct Mission G downlink/telemetry/display documentation; do not project the LGC 2-second component schedule into MCC products.
+2. Reopen historical stochastic LR generation only on recovery of LM-5/Apollo-11-effective numerical error evidence.
+3. Pursue controller-facing timing separately through direct Mission G downlink/telemetry/display documentation.
 
-## Source
+## Sources
 
-AC Electronics, *Apollo 11 Guidance and Navigation System Manual*, descent-state-vector update material:
-https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
+- AC Electronics, *Apollo 11 Guidance and Navigation System Manual*: https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
+- NASA / MSC, *Apollo Experience Report — Lunar Module Landing Radar and Rendezvous Radar*, NASA TN D-6849: https://ntrs.nasa.gov/api/citations/19720016521/downloads/19720016521.pdf
+- MIT/IL E-1982, *LEM PGNCS and Landing Radar Operations During the Powered Lunar Landing Maneuver*: https://www.ibiblio.org/apollo/Documents/E-1982_LEM_PGNCS_and_Landing_Radar_Operations.pdf
 
 ## Evidence status
 
-- **DOCUMENTED:** one LR velocity component is used per 2-second Average-G/PIPA navigation interval, with the illustrated sequence cycling `Vz`, `Vx`, `Vy`.
+- **DOCUMENTED:** one LR velocity component is used per 2-second Average-G/PIPA navigation interval, cycling `Vz`, `Vx`, `Vy`.
+- **DOCUMENTED:** LM-5's preflight one-count velocity bias was corrected and the Doppler-simulator Gaussian test-limit assumption required correction for heavier tails.
+- **PARTIALLY DOCUMENTED:** qualitative Apollo 11 LR error boundary near zero Doppler.
+- **UNRESOLVED / BLOCKED:** Apollo-11-effective numerical stochastic LR velocity-error distribution.
 - **UNRESOLVED:** controller-visible landing-radar/guidance product cadence and formatting.
-- **UNRESOLVED:** landing-radar measurement/noise generation.
