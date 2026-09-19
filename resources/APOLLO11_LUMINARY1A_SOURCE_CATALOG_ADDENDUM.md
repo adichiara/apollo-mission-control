@@ -13,19 +13,21 @@ Date: 2026-09-19
 | LUMINARY 099 `CONTROLLED_CONSTANTS.agc` | Defines fixed `HBEAMANT` as the range beam in landing-radar antenna coordinates | Apollo-11-effective fixed program geometry; do not replace with an invented normalized vector. |
 | LUMINARY Memo #95, *Landing Radar Orientation*, 9 July 1969 | Clarifies that LGC `LRALPHA`/`LRBETA` are the negatives of the R-567 alpha/beta angles because the LGC performs antenna-to-navigation-base rotation; states beta/alpha usage order | Primary Apollo-11-period authority for transform polarity/order. |
 | `SNA-8-D-027(II) REV 1`, LM-5 Mission G prelaunch erasable load | Supplies mission values for `LRALPHA1`, `LRBETA1`, `LRALPHA2`, `LRBETA2`; identifies stow and hover positions; supplies `LRVMAX`, `LRVF`, `LRWV*`, `LRWVF*`, and `LRWVFF` values | Mission/configuration authority for LM-5 landing-radar orientation and velocity-update inputs. |
-| AC Electronics, *Apollo 11 Guidance and Navigation System Manual* | Descent-state-vector material states that Average-G/PIPA processing occurs at 2-second intervals and that the three LR velocity components are used one per 2-second interval; the accompanying timeline shows the repeating velocity-component sequence `Vz, Vx, Vy, Vz` | Primary Apollo-11 training/technical evidence for the **onboard LR velocity-component update cadence**. This does not establish MCC display refresh, downlink freshness, controller-visible formatting, or a generic sensor/noise sample rate. |
+| AC Electronics, *Apollo 11 Guidance and Navigation System Manual* | Descent-state-vector material states that Average-G/PIPA processing occurs at 2-second intervals and that the three LR velocity components are used one per 2-second interval; timeline cycles `Vz, Vx, Vy, Vz` | Primary Apollo-11 technical evidence for onboard LR velocity-component cadence; not MCC display or generic sensor/noise cadence. |
+| NASA TN D-6849, *Apollo Experience Report — Lunar Module Landing Radar and Rendezvous Radar* | LM-5 functional verification found a one-count velocity bias from a logic race and records the corrective logic alteration; says a Gaussian Doppler-spectrum-simulator test-limit assumption was corrected because the approximation produced heavier tails; Apollo 11 flight data were within specification limits except low/near-zero-Doppler points where tracking was not expected | Primary LM-5/Apollo-11 hardware-history boundary. It does **not** provide a numerical flight-effective stochastic distribution; do not turn the preflight bias into a flown defect or use an arbitrary Gaussian noise model. |
+| MIT/IL E-1982, *LEM PGNCS and Landing Radar Operations During the Powered Lunar Landing Maneuver* | 1966 design study explicitly analyzes random and bias sensor errors and statistical LR weighting | Primary design-history evidence only. Do not promote its assumed simulation error model to Apollo-11-effective without later effectivity evidence. |
 
 ## Current result
 
-The landing-radar velocity estimator is now documented through the measurement-time propagation and downstream correction logic. `LRVJOB` schedules `RDGIMS` 170 ms after starting the five-sample velocity read; `RDGIMS` saves `TIME2,TIME1`, the three CDU angles, and PIPA values. `VELUPDAT` uses those saved values—not later current-time values—to reconstruct the LR measurement epoch.
+The landing-radar velocity estimator is documented through measurement-time propagation and downstream correction logic. `LRVJOB` schedules `RDGIMS` 170 ms after starting the five-sample velocity read; `RDGIMS` saves time, CDU angles, and PIPA values. `VELUPDAT` uses those saved values to reconstruct the LR measurement epoch.
 
-The flown listing explicitly forms the measurement-time estimate as prior guidance velocity plus the PIPA-derived increment plus the previous gravity contribution over `LRVTIME - PIPTIME`, then subtracts the lunar-rotation velocity correction before projecting onto the measurement-time beam and testing the residual. This closes the earlier PIPA/gravity propagation research gap without inventing an independent gravity model.
+The flown listing forms the measurement-time estimate as prior guidance velocity plus the PIPA-derived increment plus the previous gravity contribution, then subtracts lunar-rotation velocity before beam projection and residual testing. `VUPDAT` supplies the piecewise weighting/correction logic; the LM-5 Mission G prelaunch load supplies the Apollo-11-effective thresholds and weights. See research note 500.
 
-The downstream velocity weighting/correction path is also controlled. LUMINARY 099 `VUPDAT` supplies the piecewise `LRVF/LRVMAX/LRW*` logic, update inhibit, P65/P66/P67 `LRWVFF` override, and weighted-residual vector correction; the LM-5 Mission G prelaunch erasable load supplies `LRVMAX=2000 ft/s`, `LRVF=200 ft/s`, `LRWVZ/Y/X=0.3`, `LRWVFZ/Y/X=0.2`, and `LRWVFF=0.1`. See research note 500.
+The AC Electronics manual constrains onboard descent-state-vector processing to one LR velocity component per 2-second Average-G/PIPA interval. This is an LGC estimator/input cadence, not evidence for an MCC/controller cadence.
 
-The Apollo 11 AC Electronics manual now constrains one previously loose timing boundary: onboard descent-state-vector processing consumes one LR velocity component during each 2-second Average-G/PIPA interval, cycling the three components. A given component therefore recurs in the illustrated sequence after three such intervals. This is an LGC estimator/input cadence, not evidence for an MCC/controller product cadence.
+Research note 501 now closes the active stochastic-error search as **BLOCKED**: LM-5/Apollo-11 primary evidence constrains known preflight and near-zero-Doppler behavior, and specifically warns against an unqualified Gaussian assumption, but the recovered sources do not provide a numerical flight-effective error distribution. Synthetic perturbations may be used only when labeled synthetic.
 
-The next bounded implementation target remains composition of the source-controlled propagation, beam transform, qualification, and weighting stages. Measurement/noise generation remains unresolved. For controller-visible timing, the new 2-second result may be used only as an upstream constraint; direct downlink/ground-display evidence is still required.
+The next bounded implementation target is composition of the source-controlled propagation, beam transform, qualification, and weighting stages. Controller-visible timing remains a separate evidence problem.
 
 `69-FS-3` remains a preferred complete LUMINARY 1A equation source if recovered, especially for equation ancestry, descriptive cross-checks, and any dependency not directly closed by the flown listing/pad-load chain.
 
@@ -43,14 +45,17 @@ Do not back-project `69-FS-4` (Luminary 1B), `70-FS-*`, R-567 Luminary 1C/1D/1E,
 - https://www.ibiblio.org/apollo/Documents/LUM95_text.pdf
 - https://ibiblio.org/apollo/Documents/Luminary99PadLoads.pdf
 - https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
+- https://ntrs.nasa.gov/api/citations/19720016521/downloads/19720016521.pdf
+- https://www.ibiblio.org/apollo/Documents/E-1982_LEM_PGNCS_and_Landing_Radar_Operations.pdf
 
 ## Evidence status
 
 - **DOCUMENTED:** Apollo-11-effective static landing-radar antenna geometry and position transform.
 - **DOCUMENTED:** measurement-time CDU/PIPA/time capture and NB-to-SM velocity-beam transform used by `VELUPDAT`.
-- **DOCUMENTED:** Apollo-11-effective measurement-time velocity propagation through saved PIPA increment, previous gravity contribution, and lunar-rotation correction.
-- **DOCUMENTED:** Apollo-11-effective residual qualification and downstream velocity weighting/correction logic and LM-5 weighting constants.
-- **DOCUMENTED:** onboard LR velocity-component update cadence of one component per 2-second Average-G/PIPA interval; the source timeline cycles `Vz, Vx, Vy`.
+- **DOCUMENTED:** Apollo-11-effective measurement-time velocity propagation and downstream residual qualification/weighting/correction.
+- **DOCUMENTED:** onboard LR velocity-component update cadence of one component per 2-second Average-G/PIPA interval.
+- **DOCUMENTED:** LM-5 preflight one-count velocity bias was corrected; the cited Gaussian simulator test-limit assumption required correction for heavier tails.
+- **PARTIALLY DOCUMENTED:** qualitative Apollo 11 LR error boundary near zero Doppler.
 - **PARTIALLY DOCUMENTED:** executable end-to-end composition of the controlled estimator stages.
-- **UNRESOLVED:** landing-radar measurement error/noise generation.
-- **UNRESOLVED:** controller-visible landing-radar/guidance product cadence and formatting; do not substitute the onboard 2-second component cadence for this separate ground-interface question.
+- **UNRESOLVED / BLOCKED:** Apollo-11-effective numerical stochastic landing-radar velocity-error distribution.
+- **UNRESOLVED:** controller-visible landing-radar/guidance product cadence and formatting.
