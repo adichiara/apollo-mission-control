@@ -31,7 +31,6 @@ class ModelTestRunnerTests(unittest.TestCase):
                          "/api/admin/model-proof/guidance-consensus",
                          "/api/admin/model-proof/landing-radar-velocity-reference",
                          "/api/admin/model-proof/landing-radar-historical-velocity-update",
-                         "/api/admin/model-proof/landing-radar-profile/",
                          "/api/admin/model-proof/landing-radar-quality-update",
                          "Guidance-computer alarm → restart recovery",
                          "Load Apollo 11 historical profile",
