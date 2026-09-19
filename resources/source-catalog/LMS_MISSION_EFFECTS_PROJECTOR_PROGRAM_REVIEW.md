@@ -1,6 +1,6 @@
 # LMS Mission Effects Projector Program Review
 
-Status: **primary index record located; report contents not yet reviewed; adjacent primary context and archival retrieval route recovered**  
+Status: **primary index record located; adjacent primary context and archival route recovered; detailed retrieval is DEFERRED under D-024 until a selected visual-system/model dependency requires it**  
 Related research: `resources/research/226_lms_mission_effects_projector_program_review_lead.md`, `resources/research/227_lms_mission_effects_projector_primary_context.md`, `resources/research/228_farrand_mep_1964_design_baseline.md`, `resources/research/229_rg255_lms_visual_contract_retrieval_keys.md`, `resources/research/300_rg255_e155b_visual_material_provenance_boundary.md`, `resources/research/301_grumman_two_lms_pre_nas9_8634_baseline.md`
 
 ## Primary catalog identity
@@ -60,6 +60,10 @@ This is an archival-neighborhood relationship only. It does not prove a technica
 
 Until underlying records are reviewed, do not infer projector signal mappings, the failed specification, units, cadence, precision, acceptance tolerances, corrective actions, vendor succession, station routing, or Apollo 13/1970 effectivity. Do not project the 1964 Farrand film/cassette design forward into the LMS configuration without explicit evidence. Do not infer `NAS9-8634` implementation meaning from chronology alone.
 
-## Retrieval priority
+## Retrieval path if reactivated
 
-High adjunct to Section 7 and LMS acceptance retrieval. First pursue E.155B1 / `72A794` for dedicated LMS contract/configuration evidence, specifically the statement of work and procurement records defining `NAS9-8634` relative to the earlier Grumman two-LMS obligation; separately request the narrowly identified MEP/EVDE subset of E.155B; search/request `LLR-400-329` / MSC `67-15490`. Extract explicit requirements, configuration/effectivity, discrepancies, corrective actions, and vendor relationships before making technical claims.
+This is not a standing retrieval priority. Reopen it when a selected scenario, display/visual reconstruction, or simulator-model question depends on MEP/EVDE configuration, acceptance, or vendor responsibility.
+
+When reactivated, first pursue E.155B1 / `72A794` for dedicated LMS contract/configuration evidence, specifically the statement of work and procurement records defining `NAS9-8634` relative to the earlier Grumman two-LMS obligation; separately request the narrowly identified MEP/EVDE subset of E.155B; search/request `LLR-400-329` / MSC `67-15490`. Extract explicit requirements, configuration/effectivity, discrepancies, corrective actions, and vendor relationships before making technical claims.
+
+See `docs/RESEARCH_PORTFOLIO_STATUS.md` and D-024.

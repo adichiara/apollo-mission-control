@@ -1,8 +1,8 @@
 # Apollo Simulation-Engine Sources
 
-Status: active source catalog for the project's causal simulation-engine architecture.
+Status: active source catalog for the project's causal simulation-engine architecture. Under D-024, the **reusable architecture question is SUFFICIENT for current implementation**; unresolved exact LMS internals are dependency-triggered research, not a standing extraction queue.
 
-This catalog separates evidence about how Apollo simulation/training worked from project architecture decisions. It does not imply that the original simulator software or complete mathematical models have been recovered.
+This catalog separates evidence about how Apollo simulation/training worked from project architecture decisions. It does not imply that the original simulator software or complete mathematical models have been recovered. See `docs/RESEARCH_PORTFOLIO_STATUS.md` for current research-state and reopen triggers.
 
 ## NASA TN D-7290 — *Apollo Experience Report: Simulation of Manned Space Flight for Crew Training*
 
@@ -65,7 +65,7 @@ This catalog separates evidence about how Apollo simulation/training worked from
 - Public scan: https://www.ibiblio.org/apollo/Documents/proposal_for_lem_mission_simulator_vol2.pdf
 - Discovery/catalog context: Virtual AGC document library, which notes that the document contains many flowcharts showing the mathematical equations underlying the LMS.
 - Evidence use: direct LMS mathematical-model architecture, equation/flowchart families, variables, subsystem coupling, and abstraction choices.
-- Status: **public digital copy located; high-priority extraction target**.
+- Status: **public digital copy located; detailed extraction DEFERRED until a selected model/scenario requires its unresolved equation/interface content**.
 - Key boundary: a simulator-design source, not automatically Apollo-13-specific vehicle configuration. Every equation/constant/configuration adopted by the project still requires applicability review.
 
 ## *Lunar Module Mission Simulator Instructor's Handbook, Volume I — Simulator Description*
@@ -185,7 +185,9 @@ The mission-simulator documents establish the need for causal/closed-loop behavi
 
 The surviving Apollo documentation now does more than merely support a generic closed-loop architecture. A direct **LEM Mission Simulator mathematical-model source has been located**, alongside simulator-description and instructor-handbook lineages that can expose subsystem abstraction and malfunction behavior.
 
-The project still should not claim recovery of the complete Apollo simulator software/model. The LED-440-3 reconstruction now constrains a separable propulsion/control/mass-properties/true-motion interface, but the original report and Apollo 13 profile inputs remain unextracted. The next research step is direct LMS/AMS model-document extraction and cross-checking against Apollo 13 LM-7/CSM spacecraft documentation before freezing equations, constants, coordinate frames, or historical acceptance tolerances.
+The project still should not claim recovery of the complete Apollo simulator software/model. The LED-440-3 reconstruction now constrains a separable propulsion/control/mass-properties/true-motion interface, while the original report and Apollo 13 profile inputs remain unextracted.
+
+Under D-024, **do not continue direct LMS/AMS extraction merely to complete the historical simulator record**. Reopen a bounded source question when a selected model/scenario needs an unresolved equation, coupling, output mapping, instructor mechanism, or historical acceptance criterion. Cross-check any recovered candidate against the applicable mission/vehicle sources before freezing equations, constants, coordinate frames, or historical tolerances.
 
 ## NASA RG 255 E.155B1 — Lunar Module Simulator project files / acceptance-test source lead
 
@@ -233,7 +235,7 @@ The project still should not claim recovery of the complete Apollo simulator sof
 - Finding-aid title: **Malfunction Data**.
 - Extent: three folders.
 - Independent NASA/MSC engineering reference: `MSC-IN-CF-P-69-5` / `NASA-TM-X-64471` cites `LMA790-2-LMS`, Volume II, Sections II and III, dated 1 April 1967.
-- Evidence use: high-priority direct LMS malfunction-document retrieval target for model/insertion/effect relationships.
+- Evidence use: controlled direct LMS malfunction-document target for model/insertion/effect relationships **if** a selected historical LMS exercise or injectability claim reopens that dependency under D-024.
 - Status: title/extent and report-family/date are established; technical pages, malfunction inventory, program/model designators, MSC accession identifier, configuration effectivity, and Apollo 13 applicability remain unrecovered.
 - Key boundary: do not infer a malfunction schema or executable behavior from the title alone.
 - Research records: `resources/research/220_lms_volume2_section7_archive_recovery.md`, `resources/research/313_lms_handbook_sections_2_3_primary_reference.md`, and `resources/research/315_lms_sections_2_3_archival_title_reconciliation.md`.
@@ -243,7 +245,7 @@ The project still should not claim recovery of the complete Apollo simulator sof
 - Archival holding: same Avitabile collection.
 - Finding-aid title: **Lunar-landing Mission Procedures**.
 - Extent: four folders.
-- Evidence use: high-priority integrated LMS procedure retrieval target for landing-scenario simulator/instructor/crew relationships.
+- Evidence use: controlled integrated LMS procedure target **if** a selected historical landing-simulation case reopens that dependency under D-024.
 - Status: title/extent and report-family/date are established; technical contents, MSC accession identifier, configuration effectivity, and Apollo 13 applicability remain unrecovered.
 - Key boundary: the title does not make this a software-architecture or mission-specific Apollo 13 source without page-level evidence.
 

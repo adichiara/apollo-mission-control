@@ -1,21 +1,23 @@
 # Open Questions
 
-Questions remain open until research or an explicit project decision resolves them.
+Questions remain open only while they have a current implementation dependency or until research/project decisions resolve them. Under D-024, broad historical domains are not permanent active research threads; see `RESEARCH_SUFFICIENCY.md` and `RESEARCH_PORTFOLIO_STATUS.md`.
 
-## Historical research
+## Historical research — deferred trigger categories
 
-1. What exact controller complement and console responsibilities apply to each candidate Apollo mission/phase?
-2. How did responsibilities change between early and late Apollo missions?
-3. Which controller display formats survive in sufficient detail to reconstruct?
-4. Which display formats were used by each controller during specific mission phases?
-5. What parameters were available at each station, at what update rate, and through which ground processing?
-6. Which console controls actually affected display selection/request?
-7. What hard-copy products were routinely used?
-8. What voice loops were available to each position and how were they used?
-9. What Staff Support Room specialists backed each MOCR position?
-10. Which documented integrated-simulation malfunction cases survive in usable detail?
+The following are **DEFERRED by default**, not standing instructions to keep searching. Reopen a bounded question from one of these categories only when a selected mission, scenario, station product, model, or player interaction names the dependency and decision sensitivity.
 
-Historical gaps should now be prioritized by scenario impact. An unresolved archival detail is not automatically a blocker; see the research-sufficiency rule in `PROJECT_PRINCIPLES.md`.
+1. What exact controller complement and console responsibilities apply to a selected Apollo mission/phase?
+2. How did responsibilities relevant to a selected implementation change between early and late Apollo missions?
+3. Which controller display formats survive in sufficient detail for a selected reconstruction?
+4. Which display formats were used by a selected controller during a selected mission phase?
+5. What parameters were available at a selected station, at what update rate, and through which ground processing?
+6. Which console controls affected a display selection/request that the implementation now needs?
+7. What hard-copy products were used where a selected player workflow depends on them?
+8. What voice loops were available where a selected communication dependency requires them?
+9. What Staff Support Room specialists/products are needed by a selected front-room workflow?
+10. Which documented integrated-simulation malfunction case is needed for a selected historical SimSup scenario?
+
+An unresolved archival detail is not automatically a blocker. Record a bounded question as OPEN, SUFFICIENT, DEFERRED, or BLOCKED under D-024 rather than leaving the entire category active.
 
 ## Simulation scope
 
@@ -24,7 +26,7 @@ Historical gaps should now be prioritized by scenario impact. An unresolved arch
 13. **RESOLVED for the current PC+2 first playable:** represent MSFN/CCATS/RTCC as source-backed functional services that produce, qualify, route, or withhold controller-relevant tracking, telemetry, trajectory, display, and command/load products. Preserve data availability/quality and staged load-transfer consequences where they affect a sourced player decision, but do not emulate IBM/UNIVAC internals, exact support-console keying, message formats, full network routing/geometry, or unsupported delays/failure rates. See research note 103.
 14. Which sensor/telemetry failure modes are necessary for the first PC+2 scenario and later nonnominal variants? This should now be answered from the causal-model/action/failure requirements rather than by inventing a generic random-failure set.
 15. **RESOLVED for the project direction:** flight crew is simulation-controlled rather than a human player role. Initial CAPCOM↔crew interaction may use deterministic canned receipt/acknowledgement/report responses and supported crew actions. CAPCOM transmission, crew receipt, crew action, physical spacecraft response, and crew report remain separate stages. Exact sophistication of later crew behavior remains an implementation question. See Decision D-020 and research note 127.
-47. Which Apollo CSM/LM mission-simulator functional descriptions, mathematical-model specifications, malfunction-insertion inventories, instructor-station manuals, integration specifications, and simulator validation/correlation reports survive in sufficient detail to constrain the causal simulation engine? The immediate goal is to recover original abstraction boundaries and cause/effect behavior, not to assume the complete original simulator can be reconstructed. See research note 127 and `resources/source-catalog/APOLLO_SIMULATION_ENGINE_SOURCES.md`.
+47. **RESOLVED for the current reusable causal-engine architecture:** surviving AMS/LMS evidence is sufficient to constrain the layer boundaries needed now: physical/dynamic state, subsystem state, measurement/observation state, ground/interface products, and separate simulator/exercise control with distinct failure-insertion layers. Exact LMS equations, program names, instructor malfunction/scripting mechanics, Section 7 output ownership, timestep, and acceptance/correlation criteria remain **DEFERRED** until a selected scenario/model makes one of them decision-relevant. See research notes 215–219, D-024, `docs/RESEARCH_PORTFOLIO_STATUS.md`, and `resources/source-catalog/APOLLO_SIMULATION_ENGINE_SOURCES.md`.
 48. For each supported subsystem/action, what is the minimum causal state/model needed so that correct, omitted, late, and wrong actions produce logically different spacecraft and controller-observable consequences without requiring a pre-authored branch for every combination?
 
 ## PC+2 vertical-slice definition

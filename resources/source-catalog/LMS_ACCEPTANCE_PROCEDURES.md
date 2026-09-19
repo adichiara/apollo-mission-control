@@ -1,6 +1,12 @@
 # LMS acceptance procedures — source catalog
 
-Status: **primary archival series identified; current NARA consultation route identified; 1967 contractor report identity has an independently corroborated program/contract crosswalk; later LMS project-file contract purpose recovered; subsystem technical contents remain unreviewed**
+Status: **primary archival series identified; current NARA consultation route identified; technical contents remain unreviewed; active retrieval is DEFERRED under D-024 until a selected model/scenario requires a historical LMS acceptance criterion or contract/configuration detail**
+
+## D-024 portfolio state
+
+The existence and access route of formal LMS acceptance material are sufficiently controlled for source planning. The unanswered question—exact numerical acceptance/correlation criteria—is **DEFERRED** at current scope because no current player-visible/scenario decision requires a historical LMS tolerance. If a selected model/profile requires such a criterion, reopen this source family and use the named NARA/manual routes below rather than restarting broad discovery.
+
+See `docs/RESEARCH_PORTFOLIO_STATUS.md`.
 
 ## Primary archival authority
 
@@ -39,7 +45,7 @@ Use: converts the archival lead into an actionable reference request. It does no
 
 Targeted public primary-source discovery on 17 September 2026 searched exact/variant `NAS9-8634` forms with Kollsman, Lunar Module Simulator/LMS, MSC, and KSC. No digitized contract, statement of work, acceptance procedure, or technical report was recovered that exposes subsystem-level scope.
 
-Use: this is a negative retrieval result only. It makes **E.155B1 / old accession `72A794` / location `A-23-16-6`** the priority file-level retrieval target, especially the statement of work, procurement plan, acceptance plans/procedures, drawings, surface-model photographs, and Kollsman correspondence.
+Use: this is a negative retrieval result only. If D-024 reopens a historical acceptance/configuration dependency, **E.155B1 / old accession `72A794` / location `A-23-16-6`** is the controlled file-level retrieval target, especially the statement of work, procurement plan, acceptance plans/procedures, drawings, surface-model photographs, and Kollsman correspondence.
 
 Boundary: absence from the public searches does not establish that `NAS9-8634` included or excluded MEP, EVDE, AOT, or any other subsystem, and does not establish Apollo 13 effectivity.
 

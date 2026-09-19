@@ -1,12 +1,18 @@
 # LMS flight-derived validation sources
 
-Status: **active source catalog; retain favorable, mismatch, training-transfer, and mission-specific operational evidence separately; qualitative unless a source supplies numerical comparison data**
+Status: **active source catalog; research use is dependency-triggered under D-024; retain favorable, mismatch, training-transfer, and mission-specific operational evidence separately; qualitative unless a source supplies numerical comparison data**
 
 ## Purpose
 
 Track primary flight/postflight sources that compare Lunar Module Simulator / LM mission-simulation behavior or training transfer with the flown LM. This evidence class is separate from formal LMS acceptance/correlation documentation. Mission-specific crew operational material may also be cataloged here as a cross-check on player-visible symptoms, but it does not establish simulator implementation.
 
 Do **not** convert qualitative phrases such as “nearly identical,” “high fidelity,” or “much more rapidly” into invented numerical tolerances.
+
+## D-024 portfolio state
+
+The general question "what additional flight-derived LMS validation evidence exists?" is **DEFERRED** unless a selected model, scenario, or validation claim names the dependency. The Apollo 13 malfunction-procedure source remains available as a mission-specific operational cross-check, but complete checklist inventory/page extraction is likewise deferred until a selected failure or player-visible symptom requires it. Exact historical LMS acceptance/correlation criteria remain a separate dependency and are not supplied by qualitative flight-transfer evidence.
+
+See `docs/RESEARCH_PORTFOLIO_STATUS.md`.
 
 ## Apollo 13 LM Malfunction Procedures — mission-specific operational cross-check
 
