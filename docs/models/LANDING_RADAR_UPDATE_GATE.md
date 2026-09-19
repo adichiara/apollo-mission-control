@@ -1,119 +1,74 @@
 # Landing Radar Guidance-Update Gate Model Proof
 
-Status: **implemented reusable velocity-reference projection + measurement-quality + eligibility + weighted velocity-correction boundary; not a complete radar sensor/state-estimator simulation**
+Status: **implemented reusable propagation + velocity-reference + measurement-quality + eligibility + weighted velocity-correction proof; historical beam synthesis and sensor generation remain incomplete**
 
 ## Purpose
 
-Represent the decision boundary:
+Represent the bounded chain:
 
-`radar measurement + data quality + update enablement + guidance-state condition -> channels eligible for estimator processing`
-
-The implementation deliberately stops before state-vector correction.
+`prior guidance state + explicit measurement-time inputs -> radar-axis reference -> measurement qualification -> update eligibility -> weighted velocity correction`
 
 Files:
 
+- `src/apollo_mission_control/landing_radar_propagation.py`
 - `src/apollo_mission_control/landing_radar_reference.py`
 - `src/apollo_mission_control/landing_radar_quality.py`
 - `src/apollo_mission_control/landing_radar_model.py`
+- `src/apollo_mission_control/landing_radar_velocity_update.py`
+- `src/apollo_mission_control/landing_radar_velocity_chain.py`
 
 ## Why this boundary matters
 
-Apollo 11 descent distinguishes several events that must not be collapsed:
+Apollo 11 descent distinguishes radar Data Good, update enablement, measurement qualification, estimator admission, and state-vector correction. A scenario must not equate "radar good" with "state vector immediately becomes radar truth."
 
-- landing-radar data become good;
-- the crew/guidance path enables radar updates;
-- altitude updates can be admitted;
-- velocity updates are gated by guidance-state conditions;
-- downstream guidance processing uses accepted measurements.
+## Measurement-time propagation
 
-A scenario script should not equate "radar good" with "state vector immediately becomes radar truth."
-
-## Inputs
-
-- measurement time;
-- upstream radar data-good state;
-- optional altitude measurement;
-- optional velocity measurement;
-- whether radar updates are enabled;
-- current estimated guidance velocity;
-- optional caller-supplied speed threshold for velocity-update eligibility;
-- provenance/applicability.
-
-## Outputs
-
-- altitude measurement present/eligible;
-- velocity measurement present/eligible;
-- estimated speed;
-- explicit blocking reasons;
-- assumptions/provenance.
+`landing_radar_propagation.py` mirrors the source-controlled `VELUPDAT` arithmetic boundary using explicit caller inputs for prior guidance velocity, PIPA-derived delta-V, previous gravity, elapsed time, and lunar-surface velocity. It does not synthesize a gravity field, PIPA behavior, measurement, or noise.
 
 ## Velocity-reference layer
 
-`src/apollo_mission_control/landing_radar_reference.py` implements the source-backed velocity-reference boundary used before the velocity residual test:
+`landing_radar_reference.py` implements:
 
-`estimated vehicle velocity - lunar-surface velocity -> surface-relative velocity -> dot(selected radar-beam unit vector)`
+`measurement-time estimated velocity - lunar-surface velocity -> dot(selected measurement-time radar-beam unit vector)`
 
-The model requires the vehicle/surface vectors and selected beam unit vector to be supplied in one common frame at the measurement epoch. It rejects a non-unit beam instead of silently normalizing it.
+The selected beam is explicit and must be unit length. This matches the flown LUMINARY 099 stage ordering without pretending that the repository has already ported the complete LM-5 antenna/CDU transform.
 
-This matches the flown Luminary 099 architecture in `SERVICER.agc`: the state estimate is advanced to the radar measurement time, the lunar-rotation correction `DELVS` is subtracted, and the result is dotted with the selected velocity-beam vector before the measured-minus-estimated residual is tested. Later R-567 guidance documentation independently describes the selected velocity-component unit vector and vehicle-to-platform transformation.
+Primary-source reinspection constrains that remaining transform: `SETPOS` constructs NB velocity beams from antenna axes; LUMINARY Memo #95 fixes antenna-to-NB polarity/order; `VELUPDAT` restores measurement-time CDUs and applies `*NBSM*`; `POWERED_FLIGHT_SUBROUTINES.agc` implements that transform through `AX*SR*T` with Y-Z-X CDU ordering. The source logic is controlled, but the executable port is not yet independently verified.
 
-The model deliberately does **not** synthesize the LM-5 beam vector from antenna position, vehicle attitude, or platform attitude. That transform remains a separate historical geometry dependency.
+## Measurement-quality layer
 
-## Upstream quality layer
-
-`src/apollo_mission_control/landing_radar_quality.py` represents Data Good persistence, optional range-scale stability, channel validity, and caller-supplied affine residual reasonableness tests. These remain separate from the update gate so raw measurement qualification is not conflated with permission to enter the estimator.
-
-Apollo 11 historical values are recorded in `data/landing_radar_profiles/apollo11_lm5_landing_radar_partial.json`; no Apollo constants are embedded in either model.
+`landing_radar_quality.py` represents Data Good persistence, optional range-scale stability, channel validity, and caller-supplied affine residual reasonableness tests. Raw qualification remains separate from permission to update guidance state.
 
 ## Downstream velocity weighting / correction
 
-`src/apollo_mission_control/landing_radar_velocity_update.py` represents the estimator boundary after a velocity component has passed reasonableness and update-permit gates.
-
-Generic inputs are:
-
-- prior velocity estimate;
-- accepted measured-minus-reference scalar residual;
-- measurement-time selected-beam unit vector;
-- estimated speed;
-- selected velocity component;
-- program/mode;
-- caller-supplied weighting configuration.
-
-The Apollo 11 profile supplies the LM-5 values recovered in research note 500: `LRVMAX`, `LRVF`, per-axis linear and low-speed weights, and the P65/P66/P67 `LRWVFF` override. The generic model contains no Apollo constants.
-
-The vector correction is:
+`landing_radar_velocity_update.py` applies a qualified scalar residual along the selected measurement-time beam using caller/profile-supplied weighting. The Apollo 11 profile supplies the LM-5 `LRVMAX`, `LRVF`, component weights, and P65/P66/P67 `LRWVFF` override recovered in research note 500.
 
 `updated velocity = prior velocity + weight * scalar residual * selected beam`
 
-The Causal Model Lab exposes this stage separately. Its upstream quality fields remain caller-supplied test inputs unless explicitly loaded from a historical profile; the presence of a historical downstream weighting profile does not make synthetic upstream inputs historical.
+## Composed proof
+
+`landing_radar_velocity_chain.py` now composes:
+
+`propagation -> surface-relative selected-beam projection -> residual qualification -> weighted correction`
+
+The result preserves each intermediate stage and explicitly reports that the measurement-time beam is caller supplied. Tests cover accepted correction, reasonableness rejection, and Data Good persistence rejection.
+
+This composition is historical in stage semantics only where the supplied inputs/profile are source-controlled. Synthetic test vectors remain synthetic.
 
 ## Deliberately deferred
 
-- executable LM-5 antenna-position + measurement-time vehicle/platform attitude transform that produces the selected beam unit vector;
-- surface intersection/terrain model;
-- measurement noise/bias generation;
-- antenna state;
-- weighting/filter equations;
-- state-vector correction;
-- program-specific guidance-cycle cadence;
-- controller display/downlink generation.
+- executable and independently verified LM-5 `SETPOS` antenna-to-NB + measurement-time `*NBSM*` beam synthesis;
+- surface intersection/terrain measurement generation;
+- flight-effective measurement noise/bias generation;
+- complete antenna hardware state;
+- controller display/downlink generation and cadence.
 
-Those are separate layers.
+Historical stochastic LR measurement generation is **BLOCKED** pending numerical LM-5/Apollo-11-effective evidence.
 
 ## Apollo 11 applicability boundary
 
-The Apollo 11 Mission Report documents:
-
-- landing-radar data good at 102:37:51;
-- radar updates enabled at 102:38:45;
-- landing-radar velocity updating begins when estimated velocity falls below 2000 ft/s at 102:38:50.
-
-Apollo guidance documentation further describes altitude updating after radar incorporation is allowed and velocity use below a preselected speed threshold.
-
-The reusable models contain none of those mission values. The Apollo 11 profile now records the sourced 4-second Data Good persistence, 1-second range-scale stability, 50,000-ft range-update altitude boundary, 2,000-ft/s velocity-update boundary, astronaut approval requirement, and affine reasonableness-rule constants. Historical execution now has the reusable surface-relative selected-beam reference projection, but still requires the mission-specific LM-5 beam/attitude transform and downstream estimator pieces described below.
+The Apollo 11 Mission Report documents landing-radar Data Good, update enablement, and the velocity-update start below the 2000 ft/s threshold. Apollo guidance documentation constrains the onboard update logic. None of that establishes an MCC display cadence or exposes onboard intermediate variables as controller telemetry.
 
 ## Validation
 
-Synthetic tests verify surface-relative selected-beam projection, strict unit-vector validation, independent quality, enablement, channel-presence, velocity-threshold gates, piecewise weighting, program override, inhibit behavior, and vector correction. The Causal Model Lab exposes the projection and historical LM-5 weighting/correction as separate stages.
-
-This model does not authorize an `apollo11_descent_v1` runtime by itself.
+Synthetic tests verify propagation composition, surface-relative projection, strict unit-vector validation, quality rejection, piecewise weighting, program override, inhibit behavior, and vector correction. The composed proof does not authorize an `apollo11_descent_v1` runtime by itself.
