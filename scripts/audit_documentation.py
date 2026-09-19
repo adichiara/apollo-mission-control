@@ -26,6 +26,9 @@ RESEARCH_METADATA_LEGACY_PATH = Path("resources/audits/research_metadata_legacy.
 RESEARCH_INDEX_PATH = Path("resources/RESEARCH_INDEX.md")
 PRIMARY_SOURCE_CATALOG_PATH = Path("resources/PRIMARY_SOURCE_CATALOG.md")
 EVIDENCE_LABELS = ("DOCUMENTED", "PARTIALLY DOCUMENTED", "UNRESOLVED")
+RESEARCH_THREAD_RE = re.compile(r"^Research thread:\s*`([^`]+)`\s*$", re.MULTILINE)
+CLOSED_LEGACY_LAST_ID = 328
+FIRST_ALLOCATED_BLOCK_START = 400
 LEGACY_SOURCE_HEADINGS = (
     "Primary source",
     "Primary sources",
@@ -78,6 +81,75 @@ def check_note_ids(root: Path) -> dict[str, list[str]]:
         if match:
             by_id.setdefault(match.group(1), []).append(path.name)
     return {key: value for key, value in by_id.items() if len(value) > 1}
+
+
+def check_research_block_allocation(root: Path) -> list[str]:
+    """Enforce machine-allocated post-legacy research-number blocks.
+
+    IDs through 328 are grandfathered. 329-399 are permanently closed. New
+    research starts at a hundred-block boundary (400, 500, ...) and every note
+    in that block declares the same stable Research thread slug.
+    """
+    failures: list[str] = []
+    research = root / "resources" / "research"
+    blocks: dict[int, list[tuple[int, Path]]] = {}
+
+    for path in sorted(research.glob("*.md")):
+        match = NOTE_RE.match(path.name)
+        if not match:
+            continue
+        identifier = int(match.group(1))
+
+        if CLOSED_LEGACY_LAST_ID < identifier < FIRST_ALLOCATED_BLOCK_START:
+            failures.append(
+                f"{path.relative_to(root)} uses closed legacy research ID "
+                f"{identifier:03d}; new threads must start at 400 or above"
+            )
+            continue
+
+        if identifier < FIRST_ALLOCATED_BLOCK_START:
+            continue
+
+        block_start = (identifier // 100) * 100
+        blocks.setdefault(block_start, []).append((identifier, path))
+
+    for block_start, entries in sorted(blocks.items()):
+        ids = {identifier for identifier, _ in entries}
+        if block_start not in ids:
+            failures.append(
+                f"research block {block_start:03d}-{block_start + 99:03d} "
+                f"is unclaimed: first note must be {block_start:03d}_*.md"
+            )
+
+        threads: dict[str, list[str]] = {}
+        for _identifier, path in entries:
+            text = path.read_text(encoding="utf-8")
+            match = RESEARCH_THREAD_RE.search(text)
+            if match is None:
+                failures.append(
+                    f"{path.relative_to(root)} missing canonical "
+                    f"'Research thread: `<slug>`' metadata"
+                )
+                continue
+            thread = match.group(1).strip()
+            if not thread:
+                failures.append(
+                    f"{path.relative_to(root)} has empty Research thread metadata"
+                )
+                continue
+            threads.setdefault(thread, []).append(path.name)
+
+        if len(threads) > 1:
+            detail = "; ".join(
+                f"{thread}: {', '.join(names)}"
+                for thread, names in sorted(threads.items())
+            )
+            failures.append(
+                f"research block {block_start:03d}-{block_start + 99:03d} "
+                f"contains multiple Research thread values: {detail}"
+            )
+
+    return failures
 
 
 def load_withdrawn_claims(root: Path) -> list[dict[str, str]]:
@@ -229,6 +301,7 @@ def main() -> int:
     urls, counts = external_urls(markdown)
     broken_internal = check_internal_links(root, markdown)
     duplicate_notes = check_note_ids(root)
+    block_failures = check_research_block_allocation(root)
     index_failures = check_catalog_index_coverage(root)
 
     withdrawn_config_error: str | None = None
@@ -258,6 +331,9 @@ def main() -> int:
     print(f"Duplicate research-note IDs: {len(duplicate_notes)}")
     for note_id, names in duplicate_notes.items():
         print(f"  {note_id}: {', '.join(names)}")
+    print(f"Research block-allocation failures: {len(block_failures)}")
+    for failure in block_failures:
+        print(f"  {failure}")
     print(f"Catalog/index coverage failures: {len(index_failures)}")
     for failure in index_failures:
         print(f"  {failure}")
@@ -285,6 +361,7 @@ def main() -> int:
     return 1 if (
         broken_internal
         or duplicate_notes
+        or block_failures
         or index_failures
         or withdrawn_config_error
         or withdrawn_hits
