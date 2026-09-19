@@ -99,6 +99,35 @@ class WebAppTests(unittest.TestCase):
         )
         self.assertEqual(bad_event.status_code, 400)
 
+    def test_landing_radar_beam_geometry_model_proof(self):
+        response = self.client.post(
+            "/api/admin/model-proof/landing-radar-beam-geometry",
+            json={
+                "lralpha_revolutions": 0.0163371759,
+                "lrbeta_revolutions": 0.0665287037,
+                "position": "position_1_stow",
+                "applicability": "Apollo 11 LM-5 fixed-orientation proof",
+                "provenance": ["LM-5 LUMINARY 99 padloads"],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body["position"], "position_1_stow")
+        self.assertAlmostEqual(
+            body["axes_navigation_base"]["x"][0],
+            0.913897692761,
+            places=11,
+        )
+        self.assertAlmostEqual(
+            body["axes_navigation_base"]["y"][1],
+            0.994736164196,
+            places=11,
+        )
+        self.assertIn(
+            "dynamic Navigation-Base attitude transform",
+            body["applicability"],
+        )
+
     def test_landing_radar_velocity_reference_model_proof(self):
         response = self.client.post(
             "/api/admin/model-proof/landing-radar-velocity-reference",
