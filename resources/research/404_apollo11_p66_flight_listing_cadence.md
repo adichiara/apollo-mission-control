@@ -8,7 +8,7 @@ Status: **Apollo 11 P66 ROD computation cadence directly recovered; PCR-700/700A
 
 Did the January 1969 PCR-700 proposal's once-per-second P66 rate-of-descent computation survive into the Apollo 11 LUMINARY 99 implementation, and what is the relationship between PCR-700 and the Section 5 PCR-700A identifier?
 
-## Primary evidence
+## Findings
 
 The surviving LUMINARY 099 assembly listing provides direct program evidence in `LUNAR_LANDING_GUIDANCE_EQUATIONS.agc`.
 
