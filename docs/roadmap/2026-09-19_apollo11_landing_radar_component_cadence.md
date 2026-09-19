@@ -6,21 +6,24 @@ Date: 2026-09-19
 
 The Apollo 11 AC Electronics guidance/navigation manual directly constrains the onboard landing-radar velocity-update schedule: the three LR velocity components are consumed one per 2-second Average-G/PIPA interval, in the illustrated repeating `Vz → Vx → Vy` sequence.
 
-The next measurement-error search further constrains the model. NASA TN D-6849 records that an LM-5 preflight one-count velocity bias was corrected before flight and that a Gaussian assumption used for Doppler-spectrum-simulator test limits required correction because the test approximation produced heavier tails. The Apollo 11 flight data were reported within specification limits apart from low/near-zero-Doppler behavior, but the recovered source does not supply a numerical flight-effective stochastic distribution.
+NASA TN D-6849 constrains the error boundary: an LM-5 preflight one-count velocity bias was corrected before flight and a Gaussian assumption used for Doppler-spectrum-simulator test limits required correction because the test approximation produced heavier tails. Apollo 11 flight data were reported within specification limits apart from low/near-zero-Doppler behavior, but the recovered source does not supply a numerical flight-effective stochastic distribution.
+
+The flown LUMINARY 099 `VELUPDAT` propagation equation is now represented by a mission-neutral executable stage: prior guidance velocity + caller-supplied PIPA delta-V + caller-supplied previous-gravity contribution to the LR epoch, followed by lunar-surface velocity subtraction. No independent gravity, PIPA, or noise model is inferred.
 
 ## Current boundary
 
-Do not use onboard cadence as a proxy for Mission Control presentation. Keep distinct:
+Keep distinct:
 
-- LR sensor measurement/error generation — a historical stochastic generator is now **BLOCKED**, not free to assume Gaussian noise;
+- LR sensor measurement/error generation — historical stochastic generation is **BLOCKED**, not free to assume Gaussian noise;
 - LGC component-read/update schedule — source-controlled at one component per 2-second navigation interval;
+- onboard measurement-time propagation — source-controlled and now executable as an explicit-input stage;
 - spacecraft downlink sampling/word-list behavior;
 - ground processing/product generation;
 - controller display refresh/formatting and operational response.
 
 ## Next
 
-The immediate implementation target remains the end-to-end composition already bounded by the flown LUMINARY 099 listing and LM-5 load: measurement-time PIPA/gravity propagation → measurement-time beam transform → residual qualification → historical weighting/correction.
+Compose the executable propagation stage with the source-controlled LM-5 measurement-time beam transform, residual qualification, and historical weighting/correction into one model-proof path. Preserve source boundaries at every stage.
 
 Synthetic perturbations may be injected for tests/scenarios only when labeled synthetic rather than historical. Reopen historical stochastic LR generation only if an LM-5 end-item specification, qualification/acceptance report, applicable performance specification, or sufficiently resolved Apollo 11 flight-data source supplies the missing error model.
 
@@ -29,6 +32,7 @@ After composition, pursue controller-facing timing only through direct Mission G
 ## Evidence status
 
 - **DOCUMENTED:** LGC descent-state-vector LR velocity-component cadence.
+- **DOCUMENTED:** measurement-time velocity propagation semantics and executable explicit-input propagation stage.
 - **DOCUMENTED:** LM-5 preflight one-count velocity bias was corrected; the Doppler-simulator Gaussian test-limit assumption required correction for heavier tails.
 - **PARTIALLY DOCUMENTED:** executable end-to-end landing-radar estimator composition.
 - **UNRESOLVED:** ground/controller-visible cadence and formatting.
