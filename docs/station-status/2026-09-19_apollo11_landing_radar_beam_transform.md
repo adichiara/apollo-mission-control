@@ -1,32 +1,30 @@
-# Station research status — Apollo 11 landing-radar beam transform
+# Station research status — Apollo 11 landing-radar estimator chain
 
 Date: 2026-09-19
 
 ## GUIDO / guidance-monitoring consequence
 
-Historical readiness improves upstream of any controller product: Apollo 11's landing-radar velocity-beam geometry is now controlled from antenna-frame geometry through the measurement-time navigation-base-to-stable-member transformation.
+Historical readiness improves upstream of any controller product. Apollo 11's landing-radar velocity path is now source-controlled from antenna-frame geometry through the measurement-time navigation-base-to-stable-member transformation, measurement-time guidance-velocity propagation, residual qualification, and downstream weighted velocity correction.
 
-The LUMINARY 099 path time-tags the five-sample velocity measurement by saving `TIME2,TIME1` and the IMU CDU angles in `RDGIMS`; `VELUPDAT` later restores those saved angles, computes their trig values, and applies `*NBSM*` to the selected navigation-base beam. This closes the previously open dynamic attitude leg without assuming current-time attitude.
+The LUMINARY 099 path time-tags the five-sample velocity measurement by saving `TIME2,TIME1`, the IMU CDU angles, and PIPA values in `RDGIMS`. `VELUPDAT` later restores those saved angles and PIPA values, advances the prior guidance velocity to `LRVTIME` with the PIPA-derived increment and previous gravity contribution, subtracts the lunar-rotation velocity correction, transforms/projects onto the measurement-time beam, tests the residual, and passes accepted data to the source-controlled weighting/update logic.
 
-This does **not** change GUIDO station maturity or authorize a new exact station display. The downstream estimator/update behavior and ground/controller product cadence remain separate dependencies.
+This does **not** change GUIDO station maturity or authorize a new exact station display. No source inspected here establishes which of these onboard intermediate values were presented to Mission Control, their ground update cadence, or their formatting.
 
 ## CONTROL / FLIGHT consequence
 
-None. No new CONTROL or FLIGHT display, callout, threshold, or timing rule is established. The recovered geometry is an onboard guidance/measurement computation dependency, not evidence of a Mission Control presentation.
+None. No new CONTROL or FLIGHT display, callout, threshold, or timing rule is established. The recovered estimator chain is an onboard guidance/measurement computation dependency, not evidence of a Mission Control presentation.
 
 ## Player-facing boundary
 
-Do not expose internal beam vectors, CDU snapshots, `LRVTIME`, or estimator internals as controller-visible telemetry unless a separate source establishes such a product. They may support the causal/historical landing-radar model only.
-
-## Repository consistency
-
-The earlier landing-radar note was assigned 405 inside the already allocated P66/PCR-700 block. That invalid cross-thread allocation was removed; no station claim depends on that note number.
+Do not expose internal beam vectors, CDU/PIPA snapshots, `LRVTIME`, gravity terms, lunar-rotation correction, or estimator internals as controller-visible telemetry unless a separate source establishes such a product. They may support the causal/historical landing-radar model only.
 
 ## Evidence status
 
 - **DOCUMENTED:** Apollo-11-effective static landing-radar antenna-position transform.
-- **DOCUMENTED:** measurement-time IMU-CDU capture and navigation-base-to-stable-member beam transform used by `VELUPDAT`.
-- **PARTIALLY DOCUMENTED:** downstream velocity reasonableness/update estimator.
-- **UNRESOLVED:** controller-visible radar/guidance product cadence, synchronization, and formatting.
+- **DOCUMENTED:** measurement-time IMU-CDU/PIPA capture and navigation-base-to-stable-member beam transform used by `VELUPDAT`.
+- **DOCUMENTED:** measurement-time velocity propagation logic using prior guidance velocity, saved PIPA increment, previous gravity contribution, and lunar-rotation correction.
+- **DOCUMENTED:** downstream residual qualification and Apollo-11-effective velocity weighting/correction logic.
+- **PARTIALLY DOCUMENTED:** executable end-to-end composition of those controlled stages.
+- **UNRESOLVED:** landing-radar measurement error/noise generation and controller-visible radar/guidance product cadence, synchronization, and formatting.
 
 No station maturity grade changes.
