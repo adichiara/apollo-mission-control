@@ -36,6 +36,8 @@ A note may legitimately contain more than one label because different claims can
 
 The pre-standard corpus is listed in `audits/research_metadata_legacy.json`. That file is a formatting exemption only. It does not assign an evidence status. Do not bulk-backfill evidence labels from prose, filenames, another agent's summary, or the existence of a citation. Reopen the underlying source before adding or upgrading a formal label.
 
+When a legacy note is substantively revisited with its underlying sources open, normalize its source heading and claim-scoped evidence-status section, then remove that filename from the legacy baseline. Do not remove the exemption merely to satisfy the audit.
+
 ## Source-catalog status labels
 
 Source-review status is separate from historical claim status. Use these labels where helpful:
