@@ -81,6 +81,11 @@ from .landing_radar_reference import (
     LandingRadarVelocityReferenceInput,
     compute_landing_radar_velocity_reference,
 )
+from .landing_radar_profiles import get_landing_radar_profile
+from .landing_radar_velocity_update import (
+    LandingRadarVelocityUpdateInput,
+    apply_landing_radar_velocity_update,
+)
 from .malfunction_plan import (
     CausalInsertion,
     InsertionLayer,
@@ -483,6 +488,22 @@ class LandingRadarVelocityReferenceRequest(BaseModel):
         max_length=500,
     )
     provenance: list[str] = Field(default_factory=list, max_length=20)
+
+
+class LandingRadarHistoricalVelocityUpdateRequest(BaseModel):
+    profile_id: str = Field(
+        default="apollo11_lm5_landing_radar_partial",
+        min_length=1,
+        max_length=128,
+    )
+    prior_velocity_m_s: list[float] = Field(min_length=3, max_length=3)
+    estimated_speed_m_s: float = Field(ge=0.0)
+    measured_minus_reference_m_s: float
+    beam_unit_vector: list[float] = Field(min_length=3, max_length=3)
+    component: str = Field(min_length=1, max_length=32)
+    program: str | None = Field(default=None, min_length=1, max_length=32)
+    reasonableness_passed: bool = True
+    updates_permitted: bool = True
 
 
 class CausalInsertionRequest(BaseModel):
@@ -1644,6 +1665,45 @@ def landing_radar_velocity_reference_model_proof(
         )
     )
     return result.to_dict()
+
+
+@app.get(
+    "/api/admin/model-proof/landing-radar-profile/{profile_id}",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def landing_radar_profile_model_proof(profile_id: str) -> dict[str, object]:
+    profile = _domain_call(lambda: get_landing_radar_profile(profile_id))
+    return profile.to_public_dict()
+
+
+@app.post(
+    "/api/admin/model-proof/landing-radar-historical-velocity-update",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def landing_radar_historical_velocity_update_model_proof(
+    request: LandingRadarHistoricalVelocityUpdateRequest,
+) -> dict[str, object]:
+    profile = _domain_call(lambda: get_landing_radar_profile(request.profile_id))
+    config = _domain_call(profile.velocity_update_config)
+    result = _domain_call(
+        lambda: apply_landing_radar_velocity_update(
+            LandingRadarVelocityUpdateInput(
+                prior_velocity_m_s=tuple(request.prior_velocity_m_s),
+                estimated_speed_m_s=request.estimated_speed_m_s,
+                measured_minus_reference_m_s=request.measured_minus_reference_m_s,
+                beam_unit_vector=tuple(request.beam_unit_vector),
+                component=request.component,
+                program=request.program,
+                reasonableness_passed=request.reasonableness_passed,
+                updates_permitted=request.updates_permitted,
+            ),
+            config,
+        )
+    )
+    return {
+        "profile": profile.to_public_dict(),
+        "velocity_update": result.to_dict(),
+    }
 
 
 @app.post(
