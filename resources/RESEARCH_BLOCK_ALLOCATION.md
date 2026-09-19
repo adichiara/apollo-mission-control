@@ -11,3 +11,4 @@ The allocation is descriptive; enforcement lives in `scripts/audit_documentation
 ## Allocated blocks
 
 - **400–499** — `apollo11-p66-pcr700` — 5 note(s), IDs 400–404; claim: [400_apollo11_p66_pcr700_final_implementation.md](research/400_apollo11_p66_pcr700_final_implementation.md)
+- **500–599** — `apollo11-landing-radar` — 1 note(s), IDs 500–500; claim: [500_apollo11_landing_radar_velocity_weighting_update.md](research/500_apollo11_landing_radar_velocity_weighting_update.md)
