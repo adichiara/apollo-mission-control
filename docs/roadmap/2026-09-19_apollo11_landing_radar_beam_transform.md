@@ -5,22 +5,26 @@ Parent: `docs/ROADMAP.md`
 
 ## Controlled chain
 
-Apollo-11-effective evidence controls `SETPOS`, LM-5 alpha/beta loads, measurement-time CDU capture, Y-Z-X trigonometric preparation, and `*NBSM*`/`AX*SR*T` direction semantics. The current verification adds an independent primary-software cross-check: MIT `Sunburst37` `SMNB`/`NBSM` performs SM→NB as Y→Z→X axis rotations and NB→SM in reverse X→Z→Y order. LUMINARY 099 `FLESHPOT` separately constructs the CDU transformation matrix from the same sine/cosine state.
+Apollo-11-effective LUMINARY 099 controls `SETPOS`, Y-Z-X trigonometric preparation, and `*NBSM*`/`AX*SR*T` direction semantics. MIT `Sunburst37` preserves the predecessor `SMNB`/`NBSM`/`AXISROT` implementation: SM→NB rotates Y→Z→X; NB→SM applies the inverse X→Z→Y sequence. Its literal `AXISROT` arithmetic fixes the signs for each two-component rotation. Memo #95 fixes antenna→NB beta-then-alpha semantics.
 
-This closes the former **convention** ambiguity. It does not yet justify substituting an arbitrary modern Euler implementation for AGC arithmetic.
+## Completed in this step
+
+Added a floating-point port plus a source-derived numerical-equivalence fixture. The fixture independently encodes the literal `AXISROT` branch equations and verifies the production transform for nontrivial angles, zero-angle identity, basis-vector norm preservation, inverse round trips, and orthonormal `SETPOS` velocity beams.
+
+This closes the former modern-Euler-convention gate without claiming bit-for-bit AGC fixed-point equivalence. The implementation is an equation-level port of the historical transform, not an AGC arithmetic emulator.
 
 ## Revised next work
 
-1. Build a reproducible numerical-equivalence fixture using original AGC behavior (source-derived `AXISROT` cases or yaAGC/Virtual AGC execution).
-2. Verify basis vectors, both transform directions, inverse round trips, and zero-angle identity.
-3. Only after equivalence is demonstrated, implement `SETPOS` antenna→NB plus measurement-time NB→SM beam synthesis and replace the composed proof's explicit beam input.
-4. Keep historical stochastic LR measurement generation BLOCKED until flight-effective numerical error evidence is recovered.
-5. Keep spacecraft downlink, ground processing, and controller-visible cadence/formatting separate from onboard estimator behavior.
+1. Compose LM-5 position-specific `SETPOS` beam construction and measurement-time NB→SM transformation into the historical landing-radar velocity chain, using the already recovered LM-5 alpha/beta loads and saved CDUs.
+2. Preserve a separate optional yaAGC/AGC-fixed-point comparison as validation hardening if a later dependency requires machine-level rounding equivalence; it no longer blocks equation-level model composition.
+3. Keep historical stochastic LR measurement generation BLOCKED until flight-effective numerical error evidence is recovered.
+4. Keep spacecraft downlink, ground processing, and controller-visible cadence/formatting separate from onboard estimator behavior.
 
 ## Evidence status
 
-- **DOCUMENTED:** Apollo-11-effective static geometry, angle placement, Y-Z-X order, and transform-direction contract.
-- **CORROBORATED:** transform axis sequence from independent primary Apollo software lineage and LUMINARY 099 matrix construction.
-- **UNRESOLVED:** numerical equivalence of a modern floating-point port to original AGC behavior.
+- **DOCUMENTED / IMPLEMENTED:** source-derived SM→NB and NB→SM floating-point transform equations and sequence.
+- **DOCUMENTED / IMPLEMENTED:** antenna→NB beta-then-alpha transform and orthonormal velocity-beam construction.
+- **VERIFIED:** production transform agrees with a separately coded literal `AXISROT` oracle for nontrivial cases and inverse/basis invariants.
+- **NOT CLAIMED:** bit-for-bit AGC fixed-point rounding equivalence.
 - **BLOCKED:** historical stochastic LR measurement generation.
 - **UNRESOLVED:** controller-visible product timing/formatting.
