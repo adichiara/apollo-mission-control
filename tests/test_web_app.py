@@ -116,7 +116,13 @@ class WebAppTests(unittest.TestCase):
         self.assertEqual(body["relative_surface_velocity_m_s"], [90.0, 18.0, -4.0])
         self.assertEqual(body["reference_velocity_m_s"], 90.0)
         self.assertEqual(body["component"], "vx")
-        self.assertIn("historical beam/attitude transform", body["applicability"])
+        self.assertEqual(body["applicability"], "synthetic web proof")
+        self.assertTrue(
+            any(
+                "historical antenna/vehicle/platform transformation" in item
+                for item in body["assumptions"]
+            )
+        )
 
         rejected = self.client.post(
             "/api/admin/model-proof/landing-radar-velocity-reference",
