@@ -8,7 +8,7 @@ Status: **historical Section 5 Revision 4 control state recovered indirectly; Ap
 
 Can the missing LUMINARY 1A-effective R-567 Section 5 target be narrowed using a surviving primary R-567 artifact without projecting later LUMINARY equations backward?
 
-## Primary evidence
+## Findings
 
 The surviving MIT/IL `R-567` Section 5, Revision 11, *Guidance Equations* scan preserves earlier revision-index sheets in its front matter. One embedded sheet is explicitly headed **Section No. 5 — Guidance Equations (Revision 4)**. Its visible first sheet lists PCR 636 (*November, 1968 GSOP Section 5 Corrections in Landing Program*) and other change identifiers.
 
