@@ -6,7 +6,7 @@ Date: 2026-09-19
 
 The Apollo 11 AC Electronics guidance/navigation manual directly constrains the onboard landing-radar velocity-update schedule: the three LR velocity components are consumed one per 2-second Average-G/PIPA interval, in the illustrated repeating `Vz → Vx → Vy` sequence.
 
-Research note 501 further constrains measurement-error generation. NASA TN D-6849 records that an LM-5 preflight one-count velocity bias was corrected before flight and that a Gaussian assumption used for Doppler-spectrum-simulator test limits required correction because the test approximation produced heavier tails. The Apollo 11 flight data were reported within specification limits apart from low/near-zero-Doppler behavior, but the recovered source does not supply a numerical flight-effective stochastic distribution.
+The next measurement-error search further constrains the model. NASA TN D-6849 records that an LM-5 preflight one-count velocity bias was corrected before flight and that a Gaussian assumption used for Doppler-spectrum-simulator test limits required correction because the test approximation produced heavier tails. The Apollo 11 flight data were reported within specification limits apart from low/near-zero-Doppler behavior, but the recovered source does not supply a numerical flight-effective stochastic distribution.
 
 ## Current boundary
 
