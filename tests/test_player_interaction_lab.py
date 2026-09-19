@@ -10,6 +10,7 @@ class PlayerInteractionLabContractTests(unittest.TestCase):
         self.web_app = (
             ROOT / "src" / "apollo_mission_control" / "web_app.py"
         ).read_text(encoding="utf-8")
+        self.validation = (ROOT / "web" / "index.html").read_text(encoding="utf-8")
         self.admin = (ROOT / "web" / "admin.html").read_text(encoding="utf-8")
 
     def test_lab_is_exposed_as_non_final_static_route(self):
@@ -82,6 +83,36 @@ class PlayerInteractionLabContractTests(unittest.TestCase):
         self.assertIn("CREW RECEIVED", self.html)
         self.assertIn("RECEIPT GET", self.html)
         self.assertIn("ACKNOWLEDGEMENT:", self.html)
+
+    def test_playability_instrumentation_is_present_on_both_client_surfaces(self):
+        for html, surface in (
+            (self.html, "player_lab"),
+            (self.validation, "validation_client"),
+        ):
+            self.assertIn("/api/session/instrumentation", html)
+            self.assertIn(f"surface:'{surface}'", html)
+            self.assertIn("client_elapsed_ms", html)
+            self.assertIn("join_attempt", html)
+            self.assertIn("join_success", html)
+            self.assertIn("auto_rejoin_attempt", html)
+            self.assertIn("auto_rejoin_success", html)
+            self.assertIn("action_attempt", html)
+            self.assertIn("action_success", html)
+            self.assertIn("action_error", html)
+
+    def test_validation_client_instruments_compact_station_switching(self):
+        self.assertIn("station_switch", self.validation)
+        self.assertIn("instrument('station_switch'", self.validation)
+
+    def test_facilitator_can_export_playability_stream(self):
+        self.assertIn("COPY PLAYABILITY LOG", self.admin)
+        self.assertIn("/api/session/admin/playability-events", self.admin)
+        self.assertIn("copyPlayabilityLog", self.admin)
+
+    def test_playability_stream_is_separate_from_mission_audit_route(self):
+        self.assertIn('@app.post("/api/session/instrumentation")', self.web_app)
+        self.assertIn('"/api/session/admin/playability-events"', self.web_app)
+        self.assertIn('@app.get("/api/session/audit"', self.web_app)
 
     def test_lab_keeps_station_identity_and_get_persistent(self):
         self.assertIn('id="callsign"', self.html)
