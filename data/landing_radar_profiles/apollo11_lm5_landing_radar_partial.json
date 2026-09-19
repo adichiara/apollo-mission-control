@@ -19,19 +19,52 @@
       "fixed_tolerance_fps": 7.5,
       "proportional_tolerance": 0.125,
       "reference": "radar-axis estimated velocity term defined by Apollo guidance equations",
-      "execution_status": "surface-relative selected-beam projection implemented; exact LM-5 antenna/vehicle/platform transform that supplies the beam unit vector remains unresolved"
+      "execution_status": "surface-relative selected-beam projection and fixed LM-5 antenna-to-Navigation-Base beam geometry implemented; measurement-time Navigation-Base-to-platform/common-frame transform remains unresolved"
     }
   },
   "sources": [
     "AC Electronics, Apollo 11 guidance/navigation manual, Lunar Descent State Vector Update Routine",
     "MIT Instrumentation Laboratory R-700 Volume II, landing-radar data reasonableness discussion",
     "NASA Apollo 11 Mission Report, November 1969",
-    "Luminary 099 flown source listing, SERVICER.agc velocity update / DELVS / selected-beam projection"
+    "Luminary 099 flown source listing, SERVICER.agc velocity update / DELVS / selected-beam projection and SETPOS antenna-axis construction",
+    "MIT Instrumentation Laboratory, LUMINARY Memo #95, Landing Radar Orientation, 9 July 1969",
+    "Grumman LED-540-54, LM5/Table 4.5.1-1 G PRELAUNCH ERASABLE LOAD (LUMINARY 99), 11 June 1969"
   ],
   "unresolved": [
     "LM-5 radar beam/terrain measurement generation",
-    "exact LM-5 antenna-position and vehicle/platform attitude transform that supplies each selected radar-beam unit vector",
+    "measurement-time Navigation-Base-to-platform/common-frame attitude transform for the selected velocity beam",
     "guidance-cycle cadence and estimator weighting/filter implementation",
     "controller-visible radar/guidance product cadence and formatting"
-  ]
+  ],
+  "antenna_orientation": {
+    "convention": {
+      "transform": "antenna_to_navigation_base",
+      "rotation_order": [
+        "LRBETA",
+        "LRALPHA"
+      ],
+      "rotation_axes": {
+        "LRBETA": "Y",
+        "LRALPHA": "X",
+        "Z": "0"
+      },
+      "matrix_convention": "R_x(LRALPHA) @ R_y(LRBETA)",
+      "source_boundary": "LUMINARY Memo #95 establishes LGC polarity/direction/order; flown Luminary 099 SETPOS supplies X/Y/Z rotation placement and antenna-axis construction"
+    },
+    "positions": {
+      "position_1_stow": {
+        "lralpha_rev": 0.0163371759,
+        "lrbeta_rev": 0.0665287037,
+        "remarks": "stow position",
+        "source": "LM5/Table 4.5.1-1 G PRELAUNCH ERASABLE LOAD (LUMINARY 99), NASA DATA SOURCE, 6/11/69"
+      },
+      "position_2_hover": {
+        "lralpha_rev": 0.0161680555,
+        "lrbeta_rev": 0.0001361111,
+        "remarks": "hover position",
+        "source": "LM5/Table 4.5.1-1 G PRELAUNCH ERASABLE LOAD (LUMINARY 99), NASA DATA SOURCE, 6/11/69"
+      }
+    },
+    "execution_status": "fixed antenna-to-Navigation-Base X/Y/Z velocity-beam axes executable; measurement-time Navigation-Base-to-platform/common-frame attitude transform remains unresolved"
+  }
 }
