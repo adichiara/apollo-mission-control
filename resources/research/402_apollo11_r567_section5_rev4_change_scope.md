@@ -8,7 +8,7 @@ Status: **Revision-5 landing-change inventory recovered; Apollo 11 equation effe
 
 Which surviving R-567 Section 5 control state documents the Apollo 11 landing changes PCR-670 and PCR-700?
 
-## Primary evidence
+## Findings
 
 The MIT/IL R-567 Section 5 Revision 8 artifact preserves an earlier-change inventory under the explicit heading **Incorporated in Rev. 4 of GSOP**. The recovered list runs from PCR 254.2 through PCN 755 and includes PCR 636, *November, 1968 GSOP Section 5 Corrections in Landing Program*. It does **not** list PCR-670 or PCR-700 in that recovered Revision-4 inventory.
 
