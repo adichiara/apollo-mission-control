@@ -1,13 +1,14 @@
-# Research note 332 — Apollo 11 P66 later-equation boundary
+# Research note 403 — Apollo 11 P66 later-equation boundary
 
 Date: 2026-09-19
+Research thread: `apollo11-p66-pcr700`
 Status: **Later controlled equation state recovered; Apollo 11 page ancestry still open**
 
 ## Question
 
 Can surviving primary equation documentation close, or further constrain, the missing Apollo 11 Section 5 Revision-5 P66 page state?
 
-## Primary evidence
+## Findings
 
 MSC `69-FS-4`, *Programmed Guidance Equations for Luminary 1B*, is a controlled later program-equation source. Its P66-related variable definitions explicitly include `VBIAS` as a velocity-bias factor for P66 rate-of-descent computations, `VDGVERT` as the desired vertical velocity altered by astronaut commands during manual descent control, and `WCHVERT = 0` as the P66 final-descent guidance state. This confirms that a detailed programmed-equation description of the P66 implementation survives in the immediate post-Apollo-11 LUMINARY 1B documentation.
 

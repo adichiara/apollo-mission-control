@@ -1,7 +1,7 @@
 # Station-status addendum — Apollo 11 P66 / PCR-700
 
 Date: 2026-09-19
-Research: 329–333
+Research: 400–404
 
 The Apollo 13 station maturity table remains unchanged. This addendum applies only to the D-024 Apollo 11 powered-descent reference.
 
@@ -9,7 +9,7 @@ The Apollo 13 station maturity table remains unchanged. This addendum applies on
 
 Apollo 11 LUMINARY 99 carried the PCR-700 P66 lag-compensation lineage: MIT implementation records identify the program changes, and the Mission G prelaunch erasable load supplies `LAG/TAU = 0.413333`.
 
-Research 333 adds direct final-program timing evidence. In the LUMINARY 099 assembly listing, `P66VERTA` schedules `RODTASK` using `1SEC`; `RODTASK` dispatches `RODCOMP`. `RODCOMP` updates `VDGVERT` and `HDOTDISP` and consumes `LAG/TAU`. The P66 rate-of-descent computation task is therefore documented on a one-second schedule.
+Research 404 adds direct final-program timing evidence. In the LUMINARY 099 assembly listing, `P66VERTA` schedules `RODTASK` using `1SEC`; `RODTASK` dispatches `RODCOMP`. `RODCOMP` updates `VDGVERT` and `HDOTDISP` and consumes `LAG/TAU`. The P66 rate-of-descent computation task is therefore documented on a one-second schedule.
 
 MIT/IL Apollo Project Memo 9-69 also supplies the primary change-control crosswalk: PCR-700A, under the same P66-performance title, is explicitly a clarifying rewrite of PCR-700. This resolves the identifier mismatch between Apollo 11-effective Section 2 Revision 4 (`PCR-700`) and the recovered Section 5 Revision 5 index (`PCR-700A`) without inventing a separate change.
 

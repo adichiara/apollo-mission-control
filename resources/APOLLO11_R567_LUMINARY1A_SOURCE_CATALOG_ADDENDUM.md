@@ -19,7 +19,7 @@ Date: 2026-09-19
 | MSC `69-FS-4`, *Programmed Guidance Equations for Luminary 1B* | Identifies `69-FS-3` (May 1969) as its LUMINARY 1A predecessor; contains explicit later P66 definitions including `VBIAS`, `VDGVERT`, and `WCHVERT` | Primary later programmed-equation comparison endpoint. Do not back-project later descriptive equations into Apollo 11 without unchanged ancestry. |
 | Virtual AGC document-library PCR catalog | Lists PCR-700A and its title | Retrieval/index aid only; its former role as the sole 700→700A crosswalk is superseded by primary Apollo Project Memo 9-69. |
 
-## Effectivity lesson from research 331–333
+## Effectivity lesson from research 400–404
 
 R-567 revision numbers are section-specific. Section 5 Revision 5 remains the concrete descriptive-equation retrieval target, while later LUMINARY 1B/1C sources are comparison endpoints. The LUMINARY 099 assembly listing independently closes the exact P66 ROD computation interval: the final program schedules `RODTASK` at `1SEC`. Apollo Project Memo 9-69 independently closes the PCR-number mismatch by identifying PCR-700A as a clarifying rewrite of PCR-700. Neither result makes later descriptive equation pages Apollo 11-effective without a controlled page/effectivity chain.
 

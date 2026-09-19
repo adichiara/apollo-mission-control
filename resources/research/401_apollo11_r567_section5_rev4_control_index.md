@@ -1,13 +1,14 @@
-# Research note 330 — Apollo 11 R-567 Section 5 Revision 4 control-index recovery
+# Research note 401 — Apollo 11 R-567 Section 5 Revision 4 control-index recovery
 
 Date: 2026-09-19
+Research thread: `apollo11-p66-pcr700`
 Status: **historical Section 5 Revision 4 control state recovered indirectly; Apollo 11 technical pages still unrecovered**
 
 ## Question
 
 Can the missing LUMINARY 1A-effective R-567 Section 5 target be narrowed using a surviving primary R-567 artifact without projecting later LUMINARY equations backward?
 
-## Primary evidence
+## Findings
 
 The surviving MIT/IL `R-567` Section 5, Revision 11, *Guidance Equations* scan preserves earlier revision-index sheets in its front matter. One embedded sheet is explicitly headed **Section No. 5 — Guidance Equations (Revision 4)**. Its visible first sheet lists PCR 636 (*November, 1968 GSOP Section 5 Corrections in Landing Program*) and other change identifiers.
 

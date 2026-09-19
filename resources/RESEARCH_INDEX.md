@@ -10,12 +10,15 @@ New research notes use:
 
 - `## Sources` for source references;
 - `## Evidence status` for explicit claim-scoped use of `DOCUMENTED`, `PARTIALLY DOCUMENTED`, and/or `UNRESOLVED`;
+- `Research thread:` metadata with a stable `<slug>` value for notes in machine-allocated blocks 400 and above;
 - `## Findings` for source-derived findings when useful;
 - `## Unresolved` for open gaps when useful.
 
 Legacy notes predate this convention. They remain indexed without silent relabeling; `UNLABELED` in retrieval tooling means only that canonical evidence metadata has not yet been normalized, not that the historical question is unresolved.
 
 For corpus retrieval, use `python3 scripts/query_research.py`. Examples: `--text DDP-224`, `--evidence UNRESOLVED`, `--evidence UNLABELED`, and `--source-heading legacy`. The query tool reports only labels that literally occur in a note; it does not infer evidence status from prose.
+
+Numbering-block occupancy is generated from the research tree in `resources/RESEARCH_BLOCK_ALLOCATION.md`. Do not hand-maintain a prose allocation map.
 
 Run `python3 scripts/update_research_indexes.py` after adding or renaming research notes or source-catalog supplements.
 
@@ -296,3 +299,11 @@ Run `python3 scripts/update_research_indexes.py` after adding or renaming resear
 - **326** — [Apollo 13 flown lm malfunction procedures state](research/326_apollo13_flown_lm_malfunction_procedures_state.md)
 - **327** — [Apollo 13 simulation failure planning](research/327_apollo13_simulation_failure_planning.md)
 - **328** — [Apollo 13 lm malfunction tab inventory](research/328_apollo13_lm_malfunction_tab_inventory.md)
+
+## 400–499 — `apollo11-p66-pcr700`
+
+- **400** — [apollo11 p66 pcr700 final implementation](research/400_apollo11_p66_pcr700_final_implementation.md)
+- **401** — [apollo11 r567 section5 rev4 control index](research/401_apollo11_r567_section5_rev4_control_index.md)
+- **402** — [apollo11 r567 section5 rev4 change scope](research/402_apollo11_r567_section5_rev4_change_scope.md)
+- **403** — [apollo11 p66 later equation boundary](research/403_apollo11_p66_later_equation_boundary.md)
+- **404** — [apollo11 p66 flight listing cadence](research/404_apollo11_p66_flight_listing_cadence.md)
