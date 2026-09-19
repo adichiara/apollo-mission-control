@@ -7,21 +7,18 @@ The Apollo 13 station maturity table remains unchanged. This addendum applies on
 
 ## Supported vehicle/guidance facts
 
-Apollo 11 LUMINARY 99 carried the PCR-700 P66 lag-compensation lineage: MIT implementation records identify the program changes, and the Mission G prelaunch erasable load supplies `LAG/TAU = 0.413333`.
+Apollo 11 LUMINARY 99 carried the PCR-700 P66 lag-compensation lineage. The Mission G prelaunch load supplies `LAG/TAU = 0.413333`; the LUMINARY 099 listing shows `P66VERTA` scheduling `RODTASK` with `1SEC`, with `RODTASK` dispatching `RODCOMP`; and Apollo Project Memo 9-69 identifies PCR-700A as a clarifying rewrite of PCR-700.
 
-Research 404 adds direct final-program timing evidence. In the LUMINARY 099 assembly listing, `P66VERTA` schedules `RODTASK` using `1SEC`; `RODTASK` dispatches `RODCOMP`. `RODCOMP` updates `VDGVERT` and `HDOTDISP` and consumes `LAG/TAU`. The P66 rate-of-descent computation task is therefore documented on a one-second schedule.
-
-MIT/IL Apollo Project Memo 9-69 also supplies the primary change-control crosswalk: PCR-700A, under the same P66-performance title, is explicitly a clarifying rewrite of PCR-700. This resolves the identifier mismatch between Apollo 11-effective Section 2 Revision 4 (`PCR-700`) and the recovered Section 5 Revision 5 index (`PCR-700A`) without inventing a separate change.
+The closure challenge adds source provenance, not a station behavior: MSC `69-FS-4` explicitly says it completely re-issued May 1969 LUMINARY 1A `69-FS-3` and updated it for LUMINARY 1B.
 
 ## Station-facing boundary
 
-Neither finding establishes a one-second station or crew display cadence. The listing demonstrates an internal guidance-task schedule and variable update. It does not by itself establish the timing of Noun 63 DSKY servicing, LM downlink sampling/transmission, MCC display processing, or any controller-facing product. The 700/700A crosswalk establishes change-control ancestry, not Section 5 page effectivity.
+None of these findings establishes a one-second station or crew display cadence. The listing demonstrates an internal guidance-task schedule and variable update, not Noun 63 DSKY servicing, LM downlink sampling/transmission, MCC display processing, or a controller-facing product. The 700/700A crosswalk establishes change-control ancestry, not Section 5 page effectivity. `69-FS-4` remains later comparison evidence unless unchanged ancestry is demonstrated.
 
-Accordingly:
+Accordingly, no station maturity grade, controller display field, player-visible cadence, or executable station projection changes.
 
-- no station maturity grade changes;
-- no controller display field is added;
-- no player-visible cadence is frozen;
-- no executable station projection changes.
+## Research state
 
-The previous unresolved items “exact Apollo 11 P66 computation cadence” and “primary PCR-700/PCR-700A crosswalk” are closed. Any future station-relevant question must name a separate dependency in the chain from LGC state through downlink/ground processing to a sourced controller-visible product. Later LUMINARY 1B/1C material remains comparison evidence unless unchanged ancestry is demonstrated.
+The Apollo 11 P66/PCR-700 bounded question is **SUFFICIENT for current implementation**. Exact Section 5 descriptive-equation ancestry, direct `69-FS-3` contents, crew-visible Noun 63 timing, and station-visible timing are **DEFERRED** until a named implementation dependency requires them.
+
+A future station-relevant question must establish the chain from LGC state through downlink/ground processing to a sourced controller-visible product before changing GUIDO/CONTROL/FLIGHT behavior.
