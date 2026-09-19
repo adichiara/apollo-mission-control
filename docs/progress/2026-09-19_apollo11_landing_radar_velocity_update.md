@@ -4,27 +4,19 @@ Date: 2026-09-19
 
 ## Completed
 
-Closed the source logic for the Apollo-11-effective landing-radar measurement-time velocity estimate and downstream weighting/correction stage, and now composed those executable stages through residual qualification.
+The Apollo-11-effective landing-radar velocity proof is now executable from explicit source-controlled geometry inputs through measurement-time propagation, beam projection, residual qualification, and weighted correction.
 
-The flown LUMINARY 099 `RDGIMS` / `VELUPDAT` path constrains the propagation leg: during the five-sample LR velocity read, `RDGIMS` saves `LRVTIME`, IMU CDUs, and the PIPA snapshot; `VELUPDAT` forms the measurement-time estimate from prior guidance velocity, the saved PIPA-derived increment, and previous gravity contribution, then subtracts lunar-surface rotation before beam projection and residual testing. The same flown path plus the LM-5 Mission G prelaunch load constrain the downstream weighting/correction. Research note 500 records that controlled estimator chain.
-
-A fresh primary-source check before composition confirmed the geometry interface rather than filling it by assumption. LUMINARY 099 `SETPOS` constructs the navigation-base velocity beams from antenna axes; Memo #95 fixes antenna-to-NB polarity/order; `VELUPDAT` restores measurement-time CDUs and applies `*NBSM*`; and `POWERED_FLIGHT_SUBROUTINES.agc` identifies `*NBSM*` as the NB-to-SM transform implemented through `AX*SR*T` with Y-Z-X CDU ordering.
+A fresh primary-source check of flown LUMINARY 099 confirms the position transition semantics: `SETPOS1` selects the first `LRALPHA/LRBETA` pair; `SETPOS2` selects the second; after the antenna physically reaches position 2, `HIGATJOB` calls `SETPOS2` and only then clears the no-read flag. `SETPOS` transforms antenna UNITY/UNITX into NB and forms the third velocity beam by cross product. `RDGIMS` separately saves measurement-time CDUs used by the downstream NB→SM transformation. This supports composition without inventing a continuous antenna slew model.
 
 ## Implementation
 
-The repository now contains:
+- `landing_radar_transform.py` supplies the verified equation-level SETPOS and SM/NB transforms.
+- `landing_radar_velocity_chain.py` now accepts either an explicit beam or `LandingRadarBeamGeometryInput` containing alpha, beta, and measurement-time CDU angles.
+- Historical-geometry mode constructs the selected X/Y/Z velocity beam in NB, transforms it NB→SM at the measurement attitude, and passes that beam through the existing propagation/projection/qualification/update chain.
+- Tests preserve the explicit-beam path, exercise geometry composition, and enforce exactly one beam source.
 
-- `landing_radar_propagation.py` — explicit-input measurement-time propagation;
-- `landing_radar_reference.py` — surface-relative selected-beam projection;
-- `landing_radar_velocity_update.py` — weighting/correction;
-- `landing_radar_velocity_chain.py` — composed propagation → projection → residual qualification → weighting/correction proof;
-- `landing_radar_profiles.py` — historical profile loader and Apollo 11 LM-5 weighting metadata;
-- tests covering successful composition, reasonableness rejection, and Data Good persistence rejection.
+The implementation deliberately keeps the LM-5 pad-load values external rather than copying numbers by hand into code. The next small implementation step is a provenance-bearing profile adapter for the already recovered position-1/position-2 load values.
 
-The composed proof deliberately requires the measurement-time selected beam as an explicit input. It does not synthesize the LM-5 antenna/CDU transform, gravity field, PIPA behavior, radar measurement, or noise. This makes the current executable boundary narrower than the full source-controlled historical chain, but avoids substituting an unverified modern Euler convention for the AGC transform.
+## Boundaries
 
-## Next implementation boundary
-
-Implement and independently verify the Apollo-11-effective `SETPOS` antenna-to-navigation-base transform and the measurement-time `*NBSM*` transform, then replace the explicit-beam input in the historical proof with source-derived beam production. The LM-5 load values are already recovered; the remaining requirement is a verified executable port of the transform semantics.
-
-Landing-radar measurement generation/error behavior remains **BLOCKED** on a flight-effective numerical error model. Controller-visible product cadence/formatting remains a separate unresolved evidence problem.
+No continuous antenna motion is inferred: the flown code supports discrete position-1/position-2 beam recomputation. Radar measurements and historical noise remain caller supplied; historical stochastic generation remains **BLOCKED** on flight-effective numerical error evidence. Controller-visible product cadence/formatting remains separately unresolved. Bit-for-bit AGC fixed-point equivalence is not claimed.
