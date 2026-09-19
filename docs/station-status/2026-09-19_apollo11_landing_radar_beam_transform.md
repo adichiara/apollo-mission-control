@@ -4,9 +4,9 @@ Date: 2026-09-19
 
 ## GUIDO / guidance-monitoring consequence
 
-Apollo 11's onboard landing-radar velocity path is source-controlled from antenna geometry through measurement-time propagation, residual qualification, and weighted correction. The executable proof currently composes those arithmetic stages while requiring the selected measurement-time beam explicitly.
+Apollo 11's onboard landing-radar velocity path is source-controlled from antenna geometry through measurement-time propagation, residual qualification, and weighted correction. The executable proof composes those arithmetic stages while requiring the selected measurement-time beam explicitly.
 
-Research 501 removes the remaining rotation-order ambiguity without inventing a modern convention. LUMINARY 099 controls Y-Z-X input order and SM→NB/NB→SM direction; the earlier primary MIT `Sunburst37` implementation independently gives the corresponding Y→Z→X and inverse X→Z→Y axis sequences; LUMINARY 099 `FLESHPOT` provides a same-program matrix cross-check.
+The current primary-source verification removes the remaining rotation-order ambiguity without inventing a modern convention. LUMINARY 099 controls Y-Z-X input order and SM→NB/NB→SM direction; the earlier primary MIT `Sunburst37` implementation independently gives Y→Z→X and inverse X→Z→Y axis sequences; LUMINARY 099 `FLESHPOT` provides a same-program matrix cross-check.
 
 The remaining historical beam-synthesis gate is numerical verification of a floating-point port against original AGC behavior. Until that fixture passes, the explicit beam dependency remains correct.
 
