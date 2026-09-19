@@ -35,6 +35,70 @@ class WebAppTests(unittest.TestCase):
         self.assertIn("mission_control_core", response.json()["runtime_capabilities"])
         self.assertIn("pc2_delta_p", response.json()["runtime_capabilities"])
 
+    def test_playability_instrumentation_is_separate_and_session_scoped(self):
+        first = self.client.post(
+            "/api/session/instrumentation",
+            json={
+                "surface": "player_lab",
+                "event": "join_attempt",
+                "player_id": "player1",
+                "station": "FLIGHT",
+                "target": "join",
+                "client_elapsed_ms": 1250,
+            },
+        )
+        self.assertEqual(first.status_code, 200)
+        self.assertEqual(first.json()["sequence"], 1)
+        self.assertEqual(first.json()["surface"], "player_lab")
+        self.assertEqual(first.json()["event"], "join_attempt")
+
+        second = self.client.post(
+            "/api/session/instrumentation",
+            json={
+                "surface": "player_lab",
+                "event": "action_attempt",
+                "player_id": "player1",
+                "station": "FLIGHT",
+                "target": "flight_go",
+                "client_elapsed_ms": 2500,
+            },
+        )
+        self.assertEqual(second.status_code, 200)
+        self.assertEqual(second.json()["sequence"], 2)
+
+        events = self.client.get("/api/session/admin/playability-events")
+        self.assertEqual(events.status_code, 200)
+        self.assertEqual(
+            [(item["sequence"], item["event"]) for item in events.json()],
+            [(1, "join_attempt"), (2, "action_attempt")],
+        )
+
+        audit = self.client.get("/api/session/audit")
+        self.assertEqual(audit.status_code, 200)
+        self.assertFalse(
+            any(item["kind"] == "playability_event" for item in audit.json())
+        )
+
+        recreated = self.client.post("/api/session/create")
+        self.assertEqual(recreated.status_code, 200)
+        self.assertEqual(
+            self.client.get("/api/session/admin/playability-events").json(),
+            [],
+        )
+
+    def test_playability_instrumentation_rejects_unknown_surface_or_event(self):
+        bad_surface = self.client.post(
+            "/api/session/instrumentation",
+            json={"surface": "unknown", "event": "page_load"},
+        )
+        self.assertEqual(bad_surface.status_code, 400)
+
+        bad_event = self.client.post(
+            "/api/session/instrumentation",
+            json={"surface": "player_lab", "event": "freeform_note"},
+        )
+        self.assertEqual(bad_event.status_code, 400)
+
     def test_health_and_phone_shell(self):
         self.assertEqual(self.client.get("/api/health").json(), {"status": "ok"})
         page = self.client.get("/")
