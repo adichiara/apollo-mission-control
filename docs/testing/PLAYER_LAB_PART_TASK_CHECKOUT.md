@@ -24,6 +24,7 @@ It does not test historical console reconstruction, CONTROL/GUIDO product scanni
 - Do not expose the facilitator/admin client to either player.
 - Do not explain internal terms such as `pending_gate`, runtime state names, model provenance, or hidden audit state.
 - Do not tell the players which UI element to press after the initial task briefing.
+- Confirm the session's playability stream is empty after CREATE/RESET; instrumentation is session-scoped.
 
 ## Player brief
 
@@ -103,6 +104,22 @@ The checkpoint fails if the interface itself causes any of these:
 - CAPCOM cannot distinguish transmitted from crew received;
 - a player believes CAPCOM transmission itself performs the crew action or spacecraft response;
 - facilitator explanation of project-internal state is required.
+
+## Instrumentation capture
+
+At the end of the checkout, use the facilitator LOG drawer's **COPY PLAYABILITY LOG** action, or retrieve `/api/session/admin/playability-events`.
+
+Use the event stream to recover:
+
+- page-load → join-success elapsed time;
+- automatic-rejoin attempts/outcomes;
+- workspace-ready elapsed time;
+- action attempts, successes, and errors;
+- authoritative GET at each recorded interaction.
+
+Do not infer findability or player competence from elapsed time alone. Pair the event stream with the observer categories below. The playability stream is separate from the authoritative mission audit and contains no free-text decision/readiness basis.
+
+See `docs/testing/PLAYABILITY_INSTRUMENTATION.md`.
 
 ## After the checkout
 
