@@ -8,9 +8,9 @@ The onboard PGNCS landing-radar estimator timing is constrained to one LR veloci
 
 Apollo 11 ground-system evidence constrains the intervening CCATS/RTCC and Display/Control layers. NASA TN D-8316 establishes buffered dynamic display updates independent of CRT refresh. PHO-FAM001 constrains the generic request transaction, and NASA TN D-7685 constrains Apollo-program display-request/channel-allocation behavior.
 
-PHO-TR515 now supplies a later primary system baseline for field provenance. A DTE format's dynamic groups were specified with source, coordinate, and configuration metadata. The source external name could identify a telemetry measurement or a Data Processing Branch computation, manual-entry datum, or special-logic result. Format metadata could also identify a downlist, with a defined blank case when multiple downlists fed the display. This means a historically reconstructed GUIDO field needs an explicit provenance route; a matching semantic name alone is insufficient.
+A renewed inspection of the Apollo-11-effective AC Electronics MSK-1137 format shows explicit `D/L` and `RTCC` source-category labeling on the display itself. Together with the field note identifying `ACT ΔV` as ground computed, this establishes that the controller product mixed spacecraft-downlink and ground/RTCC provenance. It does not establish the per-field routing table.
 
-Because PHO-TR515 is dated 1973, it does not establish Apollo 11 MSK-1137 external names or downlists. Its explicit update-rate field is associated with plot formats and is not used here as a tabular-display cadence.
+PHO-TR515 remains useful only as a later primary-system baseline for how such provenance was formally represented: dynamic groups had source/external-name and downlist metadata. Its 1973 identifiers and plot update-rate fields are not back-projected into Apollo 11.
 
 ## Station boundary
 
@@ -20,13 +20,14 @@ Keep field provenance, dynamic-data update, CRT refresh, operator format request
 
 ## Maturity
 
-No station maturity change. The generic provenance schema is better constrained, but Apollo-11-effective field-source mapping is still required before claiming exact MSK-1137 routing or timing.
+No station maturity change. Mission-specific mixed provenance is now established, but Apollo-11-effective per-field source mapping is still required before claiming exact MSK-1137 routing or timing.
 
 ## Evidence status
 
 - **DOCUMENTED:** onboard LGC LR velocity-component update schedule and Apollo 11 MSK-1137 field semantics.
+- **DOCUMENTED:** Apollo 11 MSK-1137 distinguishes `D/L` and `RTCC` provenance categories; `ACT ΔV` is ground computed.
 - **DOCUMENTED:** Apollo MCC processing/display separation and buffered D/TV update behavior.
 - **DOCUMENTED, APOLLO-PROGRAM EXPERIENCE:** TN D-7685 shared display-resource behavior.
 - **DOCUMENTED, LATER SYSTEM BASELINE:** PHO-TR515 dynamic-field source/external-name and downlist metadata model; not Apollo 11 field mapping or tabular cadence.
 - **BLOCKED:** direct PHO-TN401 inspection; flight-authentic numerical LR stochastic error generation.
-- **UNRESOLVED:** Apollo 11 MSK-1137 external-name/downlist/computation mapping, GUIDO exact request controls and descent selection, and numeric dynamic-data cadence/latency/freshness.
+- **UNRESOLVED:** per-field Apollo 11 MSK-1137 `D/L`/`RTCC` mapping, external-name/downlist/computation identifiers, GUIDO exact request controls and descent selection, and numeric dynamic-data cadence/latency/freshness.
