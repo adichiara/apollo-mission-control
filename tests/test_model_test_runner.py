@@ -29,6 +29,7 @@ class ModelTestRunnerTests(unittest.TestCase):
                          "/api/admin/model-proof/guidance-monitoring-profile/",
                          "/api/admin/model-proof/guidance-crosscheck",
                          "/api/admin/model-proof/guidance-consensus",
+                         "/api/admin/model-proof/landing-radar-data-good-replay",
                          "/api/admin/model-proof/landing-radar-velocity-reference",
                          "/api/admin/model-proof/landing-radar-historical-velocity-update",
                          "/api/admin/model-proof/landing-radar-quality-update",
@@ -36,6 +37,8 @@ class ModelTestRunnerTests(unittest.TestCase):
                          "Load Apollo 11 historical profile",
                          "Guidance comparison / multi-source consensus",
                          "Landing-radar reference → quality → historical velocity update",
+                         "Apollo 11 first reacquisition",
+                         "Apollo 11 +4 s qualified",
                          "Historical weighting / correction",
                          "Authoritative trajectory", "Controller-visible observation",
                          "causal_runs"):

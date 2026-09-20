@@ -158,6 +158,8 @@
 </div>
 <p><label><input id="lrDataGood" type="checkbox" checked> raw Data Good</label> &nbsp; <label><input id="lrUpdatesEnabled" type="checkbox" checked> radar updates enabled</label></p>
 <div class="actions"><button id="runRadar">Run radar chain</button><button id="radarBadData">Break Data Good persistence</button><button id="radarDisableUpdates">Disable updates</button></div>
+<div class="actions"><button id="radarReplayReacquire">Apollo 11 first reacquisition</button><button id="radarReplayQualified">Apollo 11 +4 s qualified</button></div>
+<div id="radarReplayTrace" class="chain"><div class="stage"><b>Historical DATA GOOD replay</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Onboard requalification</b>Not run</div></div>
 <div id="radarTrace" class="chain"><div class="stage"><b>Estimated / lunar-surface velocity</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Selected-beam reference</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Measurement qualification</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Update eligibility</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Historical weighting / correction</b>Not run</div></div>
 <details class="raw"><summary>Raw radar-chain JSON</summary><pre id="radarRaw">No run yet.</pre></details>
 </section>
@@ -597,5 +599,19 @@ async function runRadar(mode='normal'){
 $('runRadar').onclick=()=>runRadar('normal');
 $('radarBadData').onclick=()=>runRadar('bad-data');
 $('radarDisableUpdates').onclick=()=>runRadar('updates-off');
+async function runRadarReplay(queryTime){
+ const payload={profile_id:'apollo11_lm5_landing_radar_partial',initial_time_s:369850,initial_data_good:true,initial_data_good_since_s:369840,query_time_s:queryTime};
+ try{
+  const r=await request('/api/admin/model-proof/landing-radar-data-good-replay',payload);
+  recordCausal('landing-radar-data-good-replay',payload,r);
+  const x=r.replay,next=x.next_transition;
+  $('radarReplayTrace').innerHTML=
+   traceStage('Historical DATA GOOD replay','<div>GET = '+scalar(x.query_time_s)+' s</div><div>raw DATA GOOD '+statusBadge(x.data_good)+'</div><div>applied transitions = '+x.applied_transitions.length+'</div><div class="note">Mission Report event anchors; 1 s source resolution.</div>')+
+   arrow()+traceStage('Onboard requalification','<div>qualified '+statusBadge(x.data_good_qualified)+'</div><div>good duration = '+scalar(x.data_good_duration_s)+' s</div><div>required = '+scalar(x.min_data_good_duration_s)+' s</div><div class="note">'+(next?'next documented transition GET '+scalar(next.time_s)+' s':'no later documented transition in profile')+'</div>');
+  $('radarRaw').textContent=JSON.stringify({historical_data_good_replay:r},null,2);
+ }catch(e){$('radarRaw').textContent=String(e.message||e)}
+}
+$('radarReplayReacquire').onclick=()=>runRadarReplay(369861);
+$('radarReplayQualified').onclick=()=>runRadarReplay(369865);
 
 </script></html>

@@ -64,6 +64,10 @@ from .guidance_voting import (
     GuidanceVotingConfig,
     assess_guidance_consensus,
 )
+from .landing_radar_data_good import (
+    LandingRadarDataGoodReplayInput,
+    replay_landing_radar_data_good,
+)
 from .landing_radar_model import (
     LandingRadarGuidanceContext,
     LandingRadarMeasurement,
@@ -488,6 +492,18 @@ class LandingRadarVelocityReferenceRequest(BaseModel):
         max_length=500,
     )
     provenance: list[str] = Field(default_factory=list, max_length=20)
+
+
+class LandingRadarDataGoodReplayRequest(BaseModel):
+    profile_id: str = Field(
+        default="apollo11_lm5_landing_radar_partial",
+        min_length=1,
+        max_length=128,
+    )
+    initial_time_s: float
+    initial_data_good: bool
+    initial_data_good_since_s: float | None = None
+    query_time_s: float
 
 
 class LandingRadarHistoricalVelocityUpdateRequest(BaseModel):
@@ -1674,6 +1690,40 @@ def landing_radar_velocity_reference_model_proof(
 def landing_radar_profile_model_proof(profile_id: str) -> dict[str, object]:
     profile = _domain_call(lambda: get_landing_radar_profile(profile_id))
     return profile.to_public_dict()
+
+
+@app.post(
+    "/api/admin/model-proof/landing-radar-data-good-replay",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def landing_radar_data_good_replay_model_proof(
+    request: LandingRadarDataGoodReplayRequest,
+) -> dict[str, object]:
+    profile = _domain_call(lambda: get_landing_radar_profile(request.profile_id))
+    result = _domain_call(
+        lambda: replay_landing_radar_data_good(
+            LandingRadarDataGoodReplayInput(
+                initial_time_s=request.initial_time_s,
+                initial_data_good=request.initial_data_good,
+                initial_data_good_since_s=request.initial_data_good_since_s,
+                query_time_s=request.query_time_s,
+                min_data_good_duration_s=profile.data_good_min_duration_s,
+                transitions=profile.historical_data_good_transitions,
+                applicability=(
+                    "Apollo 11 Mission Report Table 5-I LR DATA GOOD transition replay "
+                    "plus Apollo 11 four-second onboard requalification gate"
+                ),
+            )
+        )
+    )
+    return {
+        "profile_id": profile.profile_id,
+        "replay": result.to_dict(),
+        "boundary_note": (
+            "Only documented transitions are replayed. Initial state is caller supplied; "
+            "no stochastic dropout process or controller-visible symptom is inferred."
+        ),
+    }
 
 
 @app.post(
