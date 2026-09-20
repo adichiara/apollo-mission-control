@@ -1,8 +1,9 @@
 # Research 501 — Apollo 11 landing-radar altitude scale selection
 
 Date: 2026-09-20
+Research thread: `apollo11-landing-radar`
 
-## Primary evidence
+## Findings
 
 The Apollo 11 LUMINARY 099 listing provides a mission-effective software boundary for landing-radar altitude scale handling:
 
@@ -17,7 +18,7 @@ This evidence establishes high/low scale awareness and conditional rescaling in 
 
 Later R-567/LM10 raw-interface descriptions remain adjacent-effectivity cross-checks only.
 
-## Source locations
+## Sources
 
 - https://www.ibiblio.org/apollo/listings/Luminary099/FLAGWORD_ASSIGNMENTS.agc.html
 - https://www.ibiblio.org/apollo/listings/Luminary099/SERVICER.agc.html
