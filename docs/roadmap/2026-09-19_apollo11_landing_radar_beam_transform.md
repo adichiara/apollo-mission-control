@@ -1,6 +1,6 @@
 # Apollo 11 landing-radar beam-transform roadmap
 
-Date: 2026-09-19
+Date: 2026-09-20
 Parent: `docs/ROADMAP.md`
 
 ## Controlled chain
@@ -9,28 +9,26 @@ Apollo-11-effective LUMINARY 099 controls `SETPOS`, measurement-time CDU capture
 
 ## Completed
 
-The equation-level SETPOS and SM/NB transforms are composed into the landing-radar velocity estimator chain, with a provenance-bearing LM-5 profile adapter. Mission-specific MSK-1137 evidence controls the LR field identities, body-axis velocity frame, units/display masks, validity fields, and ground-computed identity of `ACT ΔV`.
+The equation-level SETPOS and SM/NB transforms are composed into the landing-radar velocity estimator chain, with a provenance-bearing LM-5 profile adapter. Mission-specific MSK-1137 evidence controls LR field identities, body-axis velocity frame, units/display masks, validity fields, and the ground-computed identity of `ACT ΔV`.
 
-The next architecture boundary is source-controlled. The Apollo 11 Mission Operation Report describes MCC as distinct CCATS, RTCC, Voice Communications, Display/Control, and MOCR/SSR elements, with telemetry and operational data processed through CCATS/RTCC for flight-control use. NASA TN D-8316 independently describes Apollo real-time display as distinct input and display subsystems. Therefore an Apollo 11 controller product must preserve the boundary between spacecraft/downlink data, ground processing, and display projection rather than reading authoritative simulation state directly.
+Apollo 11 MCC architecture is source-controlled as distinct spacecraft/downlink, CCATS/RTCC processing, Display/Control, and controller-presentation layers. PHO-TN401 is identified as the mission-specific Apollo 11 display-usage source but remains **BLOCKED** behind archival access.
 
-A mission-specific primary source for display usage/request behavior has now been identified precisely: Costis, Ortolani, and Moreland, *NASA MCC Display/Control System Usage and Effectiveness, Apollo 11*, PHO-TN401 (24 Dec 1969). HAER TX-109-C cites it to Box 078-65/66 of the Johnson Space Center History Collection at University of Houston-Clear Lake. No public digital copy was located. Direct use of PHO-TN401 is therefore BLOCKED pending archival retrieval or an authenticated scan; HAER's aggregate usage statistics are not promoted into exact request/timing semantics.
-
-Neither the accessible architecture sources nor the indirect PHO-TN401 citation gives an Apollo-11 MSK-1137 per-field CCATS/RTCC route or numeric CRT refresh period. The onboard 2-second LR component cadence remains insufficient for that purpose.
+NASA TN D-8316 now narrows the remaining timing boundary: D/TV generators buffered display instructions/data, so computer dynamic-data updates were independent of CRT refresh requirements and could replace either a complete instruction list or a single data word. The report's four-second access requirement applies to reference slides, not dynamic telemetry cadence. Therefore CRT refresh, dynamic-word update, operator request latency, and reference-slide access must not be collapsed into one timing constant.
 
 ## Next work
 
-1. Continue accessible mission-era MCC Display/Control, RTCC program, CCATS, console/display handbook, or controller-procedure research for direct MSK-1137 routing, update behavior, or request semantics.
-2. Treat direct PHO-TN401 inspection as a BLOCKED archival retrieval thread; retrieve it from the identified JSC History Collection holding if/when physical/archive access is pursued.
-3. Until timing is sourced, keep sample/receive/process/display timestamps distinct; any zero-delay or caller-selected display cadence is a labeled simulation simplification, not historical timing.
-4. Keep historical stochastic LR measurement generation BLOCKED until flight-effective numerical error evidence is recovered.
+1. Continue accessible mission-era RTCC/CCATS/Display-Control/controller-procedure research only where it can establish Apollo 11 GUIDO/MSK-1137 routing, request semantics, or numeric dynamic-data latency/freshness.
+2. Keep PHO-TN401 direct inspection **BLOCKED** pending archival retrieval/authenticated scan.
+3. Keep sample/receive/process/display timestamps distinct; do not use the two-second onboard LR cadence or four-second reference-slide access as controller-display cadence.
+4. Keep historical stochastic LR measurement generation **BLOCKED** until flight-effective numerical error evidence is recovered.
 5. Preserve optional yaAGC/fixed-point comparison as validation hardening if later required.
 
 ## Evidence status
 
 - **DOCUMENTED / IMPLEMENTED / COMPOSED:** LM-5 geometry + SETPOS + measurement-time NB→SM transform through the estimator.
-- **DOCUMENTED:** Apollo 11 MSK-1137 LR field semantics/formatting at the field-definition level.
-- **DOCUMENTED:** Apollo 11 MCC architectural separation of telemetry/CCATS/RTCC processing, Display/Control, and controller operations.
+- **DOCUMENTED:** Apollo 11 MSK-1137 LR field semantics/formatting at field-definition level.
+- **DOCUMENTED:** Apollo MCC architectural separation and D/TV buffered-update behavior; reference-slide access is distinct from dynamic-data update.
 - **DOCUMENTED:** PHO-TN401 identity and archival location; HAER aggregate Apollo 11 display-usage reporting is secondary/indirect evidence only.
 - **NOT CLAIMED:** bit-for-bit AGC fixed-point equivalence.
 - **BLOCKED:** direct PHO-TN401 inspection; historical stochastic LR measurement generation.
-- **UNRESOLVED:** exact per-field Apollo 11 CCATS/RTCC transformation/routing, controller-display cadence, latency, freshness policy, and GUIDO request/key workflow.
+- **UNRESOLVED:** exact per-field Apollo 11 CCATS/RTCC transformation/routing, numeric dynamic-data cadence/latency/freshness, powered-descent display selection, and GUIDO request/key workflow.
