@@ -10,6 +10,7 @@ Date: 2026-09-20
 | LUMINARY 099 `SERVICER.agc` / `POWERED_FLIGHT_SUBROUTINES.agc` | SETPOS, measurement-epoch capture, beam transform, propagation, qualification, update; SM/NB transform semantics | Apollo-11-effective estimator chain authority. |
 | LUMINARY Memo #95 and LM-5 Mission G prelaunch load | Antenna→NB rotation semantics and position-specific `LRALPHA/LRBETA` | Apollo-11 mission/configuration authority. |
 | AC Electronics, *Apollo 11 Guidance and Navigation System Manual* | 2-second LR component schedule; LR `DATA GOOD` must persist at least 4 seconds before range/velocity measurement tests permit updating; ASPO 45 MSK-1137 field definitions and mixed `D/L`/`RTCC` source categories | Apollo-11-effective onboard qualification/cadence and field-semantics authority. The four-second rule is onboard measurement qualification, not MCC display cadence. |
+| MIT Instrumentation Laboratory, *MIT's Role in Project Apollo, Volume II: Optical, Radar, and Candidate Subsystems*, R-700 Vol. II / NASA-CR-141898, Mar 1972 | Section 5.5.2 gives Apollo 11 LR reasonableness criteria: velocity `|delta q| <= 7.5 + 0.125 V_T` ft/s; range-derived altitude `|delta q| <= 200 + 0.125 h` ft; altitude test omitted above high gate; cross-lobe-lock motivation | Primary NASA contractor retrospective with explicit Apollo-11-specific equations. Use for onboard measurement admission, not sensor-error probability, cross-lobe occurrence rate, or MCC display behavior. |
 | NASA, *Apollo 11 Mission Report*, MSC-00171, Nov 1969 | Crew LR incorporation/convergence workflow; LR acquisition at ~44,000/~28,000-ft slant range; expected zero-Doppler tracking losses; Table 5-I records not-good/good transitions at 102:44:11/:21 and 102:44:59/102:45:03 | Apollo-11-effective operational and flight-performance authority. At one-second table resolution the not-good intervals are 10 s and 4 s. These are discrete event anchors, not a dropout probability or stochastic law. |
 | NASA, *Apollo 11 AS-506 Mission Operation Report*, M-932-69-11 | Distinct CCATS, RTCC, Display/Control, MOCR/SSR elements | Apollo-11-effective architecture authority; not exact per-field routing/timing. |
 | NASA NTRS 19700004489, GAEC LSP-470-2D | Landing-radar 3-sigma range and altitude-banded velocity accuracy limits | Quantitative performance/acceptance envelope; not proof of Gaussian historical noise. |
@@ -26,7 +27,9 @@ Date: 2026-09-20
 
 The Apollo 11 profile carries source-controlled LM-5 geometry, estimator behavior, and MSK-1137 field semantics. Ground/display architecture prohibits direct authoritative-state aliasing.
 
-The Mission Report now supplies event-table timing for the two previously duration-unbounded LR tracking interruptions: 102:44:11–102:44:21 and 102:44:59–102:45:03. The table is recorded to one-second resolution, so these support 10-second and 4-second historical replay intervals at that resolution, not sub-second physical transition timing. The report's narrative identifies the losses as expected zero-Doppler effects associated with manual maneuvering.
+R-700 Vol. II now closes the previously generic reasonableness-test parameter boundary for Apollo 11: velocity and range-derived-altitude admission equations are explicit, and the altitude test is omitted above high gate. The source says the test was designed to guard against cross-lobe lockup but rejects any measurement outside the criterion regardless of cause. This is an onboard estimator-admission rule, not evidence for a cross-lobe probability or random sensor-error generator.
+
+The Mission Report supplies event-table timing for the two previously duration-unbounded LR tracking interruptions: 102:44:11–102:44:21 and 102:44:59–102:45:03. The table is recorded to one-second resolution, so these support 10-second and 4-second historical replay intervals at that resolution, not sub-second physical transition timing. The report's narrative identifies the losses as expected zero-Doppler effects associated with manual maneuvering.
 
 The AC Electronics Apollo 11 manual provides the complementary onboard rule: `DATA GOOD` must remain present for at least four seconds before LR range/velocity measurement tests permit state-vector updating. Historical replay must therefore model the radar-good discrete separately from filter-update eligibility after reacquisition.
 
@@ -36,7 +39,7 @@ PHO-TN401 remains **BLOCKED** separately.
 
 ## Effectivity rule
 
-Do not back-project later console assignments, 1973 display identifiers, plot timing, or F-mission LR values into Apollo 11. Do not infer per-field routing from `D/L`/`RTCC` labels alone. Do not assign the crew's LR incorporation decision to GUIDO without mission-effective evidence. Do not convert 3-sigma requirements or the two timed flight interruptions into a random-error/dropout distribution. Do not equate a recorded `DATA GOOD` transition with immediate LGC state updating; apply the documented four-second qualification rule separately.
+Do not back-project later console assignments, 1973 display identifiers, plot timing, or F-mission LR values into Apollo 11. Do not infer per-field routing from `D/L`/`RTCC` labels alone. Do not assign the crew's LR incorporation decision to GUIDO without mission-effective evidence. Do not convert 3-sigma requirements, reasonableness gates, or the two timed flight interruptions into a random-error/dropout distribution. Do not equate a recorded `DATA GOOD` transition with immediate LGC state updating; apply the documented four-second qualification rule separately. Do not expose the onboard reasonableness criterion as a GUIDO control or display unless MCC-effective evidence establishes that behavior.
 
 ## Sources
 
@@ -45,6 +48,7 @@ Do not back-project later console assignments, 1973 display identifiers, plot ti
 - https://www.ibiblio.org/apollo/Documents/LUM95_text.pdf
 - https://ibiblio.org/apollo/Documents/Luminary99PadLoads.pdf
 - https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
+- https://ntrs.nasa.gov/citations/19750020038
 - https://www.nasa.gov/wp-content/uploads/static/apollo50th/pdf/A11_MissionReport.pdf
 - https://www.nasa.gov/wp-content/uploads/static/history/afj/a11/A11_MissionOpReport.pdf
 - https://ntrs.nasa.gov/api/citations/19700004489/downloads/19700004489.pdf
@@ -60,9 +64,10 @@ Do not back-project later console assignments, 1973 display identifiers, plot ti
 ## Evidence status
 
 - **DOCUMENTED / IMPLEMENTED / COMPOSED:** LM-5 geometry and landing-radar estimator chain.
+- **DOCUMENTED:** Apollo-11-specific onboard LR velocity/altitude reasonableness equations and high-gate altitude-test omission.
 - **DOCUMENTED:** Apollo 11 MSK-1137 semantics/formatting and mixed `D/L`/`RTCC` provenance boundary.
 - **DOCUMENTED, APOLLO 11 FLIGHT:** LR acquisition plus one-second-resolution not-good intervals 102:44:11–:21 and 102:44:59–102:45:03, with expected zero-Doppler/manual-maneuver cause.
 - **DOCUMENTED, APOLLO-11-EFFECTIVE ONBOARD LOGIC:** four-second continuous `DATA GOOD` qualification before LR measurement tests permit updating.
 - **DOCUMENTED:** GAEC LSP-470-2D 3-sigma performance envelope; not a stochastic distribution.
 - **BLOCKED:** direct PHO-TN401 inspection; stochastic Apollo-11-effective LR error distribution/process beyond documented envelope/events.
-- **UNRESOLVED:** per-field MSK-1137 routing, GUIDO exact request workflow, MCC dynamic-data cadence/latency/freshness, and sub-second LR transition timing.
+- **UNRESOLVED:** per-field MSK-1137 routing, GUIDO exact request workflow, controller-visible consequence of onboard reasonableness rejection, MCC dynamic-data cadence/latency/freshness, and sub-second LR transition timing.
