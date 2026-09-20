@@ -6,158 +6,77 @@ This document records what is currently supported by source material about the M
 
 ## 1. Controller CRTs were selectable information displays
 
-Apollo-era Mission Control did not present each controller with a fixed modern-style dashboard.
+Apollo-era Mission Control did not present each controller with a fixed modern-style dashboard. NASA historical documentation describes flight controllers requesting information in pre-established display formats and receiving the resulting display on CRT television monitors embedded in their consoles.
 
-NASA historical documentation describes flight controllers requesting information in pre-established display formats and receiving the resulting display on cathode-ray-tube (CRT) television monitors embedded in their consoles.
-
-The data path described for Apollo-era MCC was broadly:
-
-```text
-mission / telemetry data
-        ↓
-Real-Time Computer Complex (RTCC)
-        ↓
-Display and Control System
-        ↓
-Digital-to-Television / display-generation equipment
-        ↓
-video distribution
-        ↓
-controller CRT
-```
-
-Static/background information and changing real-time information were combined to make a complete display.
+The data path was broadly mission/telemetry data → RTCC → Display and Control System → D/TV/display generation → video distribution → controller CRT. Static/background information and changing real-time information were combined to make a complete display.
 
 ## 2. Static and dynamic display components
 
-The Philco-Ford *Display Formats Manual* distinguishes:
+The Philco-Ford *Display Formats Manual* distinguishes static/background information from dynamic computer-controlled values and status information. The historical MCC therefore did not simply render character strings as a contemporary terminal would.
 
-- **static/background information** — labels, titles, lines, diagrams, and other information that does not change during use of the format
-- **dynamic information** — real-time computer-controlled values and status information such as pressures, temperatures, velocities, and discrete-state indications
-
-The historical MCC therefore did not simply render character strings as a contemporary terminal would. The displayed image could be assembled from separately produced static and dynamic components.
-
-This is an important constraint for visual reconstruction.
+NASA TN D-8316 adds an important timing boundary: D/TV display generators had full random-access buffer memories, so the real-time computers could update displays without regard to CRT refresh requirements, and could update either complete instruction lists or individual data words. The report's four-second access requirement applies to electromechanical **reference-slide** selection, not to dynamic telemetry update cadence. CRT refresh, dynamic-word update, operator display selection, and reference-slide access must therefore remain separate mechanisms in the simulation.
 
 ## 3. Displays were requested, not continuously exposed
 
-The HAER history of Apollo Mission Control, citing an Apollo 11 Philco-Ford usage study, reports that controllers requested preset charts/graphs for their console CRTs.
+HAER TX-109-C, citing an Apollo 11 Philco-Ford usage study, reports that controllers requested preset charts/graphs for their console CRTs. For a 12-hour, 45-minute Apollo 11 period, the cited study recorded an average of **1044.9 display requests per hour** across the system, with each resulting display/transmission viewed for an average of approximately **5.3 minutes**. These are aggregate system-level figures, not per-station refresh rates.
 
-For a 12-hour, 45-minute Apollo 11 period, the cited study recorded an average of **1044.9 display requests per hour** across the system, with each resulting display/transmission viewed for an average of approximately **5.3 minutes**.
-
-This indicates an extremely active display-selection workflow rather than a small set of permanently visible subsystem pages.
-
-The underlying Apollo 11 source is:
-
-> B. Costis, W. Ortolani, and W. Moreland, *NASA MCC Display/Control System Usage and Effectiveness, Apollo 11*, PHO-TN401, Philco-Ford Corporation, 24 December 1969.
-
-A public digital copy has not yet been located. The source is identified in the Johnson Space Center History Collection at University of Houston-Clear Lake.
+The underlying Apollo 11 primary source is B. Costis, W. Ortolani, and W. Moreland, *NASA MCC Display/Control System Usage and Effectiveness, Apollo 11*, PHO-TN401, 24 December 1969. A targeted retrieval found no public digital copy. HAER identifies the physical holding as Box 078-65/66, Mission Documents: Apollo 11, Apollo Program, Johnson Space Center History Collection, University of Houston-Clear Lake. Direct inspection is **BLOCKED** pending archival retrieval or an authenticated scan.
 
 ## 4. Console controls were controller-specific
 
-The historical account states that consoles contained switches and indicator lights selected and tailored to the functions and responsibilities of each controller.
-
-Therefore the project must not assume:
-
-- every station had the same controls
-- every station had the same number of displays
-- every station used the same display-request workflow
-- a single generic "Apollo terminal" can represent every role faithfully
-
-Controller-specific console research remains required.
+Historical accounts state that consoles contained switches and indicator lights selected and tailored to each controller's responsibilities. Therefore the project must not assume every station had identical controls, displays, or request workflow.
 
 ## 5. Manual Select Keyboard and Display Request Keyboard
 
-Apollo documentation contains the **Manual Select Keyboard (MSK)** abbreviation, and later Apollo documentation clearly describes display selection through console keyboards.
-
-A detailed secondary reconstruction, citing the 1967 Philco *Mission Control Center Houston Familiarization Manual*, NASA TN D-7685, the Philco-Ford display manual, and Apollo 13 console documentation, describes:
-
-- an MSK available for display/channel selection
-- a Display Request Keyboard (DRK) at selected technical consoles for rapid access to preset displays
-- separate functions for selecting a display versus attaching a console monitor to an already active TV channel
-
-This is plausible and well supported for the Apollo MCC generally, but **exact Apollo 11 station configurations must still be confirmed from primary mission-era material before implementation**.
-
-Do not yet implement a standardized MSK/DRK layout from this note.
+Apollo documentation contains the **Manual Select Keyboard (MSK)** abbreviation, and later Apollo documentation describes display selection through console keyboards. Exact Apollo 11 station configurations must still be confirmed from primary mission-era material before implementation. Do not implement a standardized MSK/DRK layout from secondary reconstruction.
 
 ## 6. Group displays were separate from console displays
 
-The large front-of-room displays were a different display system from the controller CRTs.
-
-Historical documentation describes:
-
-- large rear-projection plotting displays
-- background map imagery
-- spotting projectors for vehicle position
-- scribing/plotting projectors for trajectories and alphanumeric/XY information
-- separate group television displays
-
-The group displays are potentially important to a full room simulation, but they should not be confused with what each player sees on a phone representing a controller console.
+The large front-of-room displays were technically distinct from controller CRTs. Historical documentation describes rear-projection plotting displays, background maps, spotting and scribing/plotting projectors, and group television displays. These should not be conflated with each player's console display.
 
 ## 7. Hard copy was operationally significant
 
-Flight controllers also used hard-copy products distributed by pneumatic tube between the RTCC, MOCR, and Staff Support Rooms.
-
-The HAER history describes charts, graphs, messages, and other documents being physically transmitted through tube stations integrated into the consoles.
-
-This establishes that some operational information may be more authentic as a document/hard-copy product than as another phone screen.
-
-The project should eventually identify:
-
-- which products were requested as hard copy
-- which controller positions used them
-- which mission phases relied on them
-- whether any should become physical or printable artifacts in the simulation
+Flight controllers also used hard-copy products distributed by pneumatic tube between the RTCC, MOCR, and Staff Support Rooms. Future work should identify which products, positions, and mission phases materially affect target scenarios before turning them into physical or printable artifacts.
 
 ## 8. What is established versus unresolved
 
 ### Documented
 
-- controller CRTs were selectable displays
-- the RTCC prepared/generated controller display information
-- static and dynamic material were combined in display production
-- many preset display formats existed
-- Apollo 11 controllers made display requests at very high frequency
-- console controls were tailored to controller responsibilities
-- group displays were technically distinct from controller CRTs
-- hard-copy/pneumatic-tube products were part of controller work
+- controller CRTs were selectable displays;
+- RTCC/Display-Control architecture separated processing from presentation;
+- static and dynamic material were combined in display production;
+- D/TV dynamic data could be updated independently of CRT refresh;
+- complete display instruction lists or individual data words could be updated;
+- the four-second TN D-8316 timing figure concerns reference-slide access, not dynamic telemetry cadence;
+- many preset display formats existed;
+- Apollo 11 controllers made display requests at high aggregate frequency;
+- console controls were tailored to controller responsibilities;
+- group displays were distinct from controller CRTs;
+- PHO-TN401's identity and physical archival location are known.
 
-### Partially documented
+### Blocked
 
-- exact MSK/DRK configuration for each Apollo 11 console
-- exact Apollo 11 TV-channel/display-request mechanics
-- exact Apollo 11 format inventory by controller and mission phase
+- direct inspection of PHO-TN401, pending archival retrieval or authenticated scan.
 
-### Unresolved
+### Partially documented / unresolved
 
-- exact pixel/scan/character appearance of the Apollo 11 formats to be reproduced
-- exact Apollo 11 display IDs for each controller
-- which formats were normally selected during the proposed first simulation interval
-- update rates for each displayed parameter
-- station-specific PBI/switch/indicator layouts
-- which hard-copy products materially affect the target scenario
+- exact MSK/DRK configuration for each Apollo 11 console;
+- exact Apollo 11 TV-channel/display-request mechanics;
+- exact Apollo 11 format inventory and display IDs by controller and mission phase;
+- powered-descent format selections;
+- numeric dynamic-data update rates, latency, and freshness behavior;
+- station-specific PBI/switch/indicator layouts;
+- which hard-copy products materially affect the target scenario.
 
 ## 9. Implementation consequence
 
-Do **not** create a generic VT220/IBM-VGA-style interface as the historical display.
-
-The eventual renderer should be based on reconstructed MCC display formats. Until those formats are documented, interface work should remain a technical prototype rather than a claim of historical fidelity.
+Do **not** create a generic VT220/IBM-VGA-style interface as the historical display. Preserve source observation, ground processing/product generation, display selection, dynamic-word update, and visual presentation as distinct layers. Do not substitute the onboard two-second landing-radar cadence or the four-second reference-slide access requirement for an unsupported Apollo 11 controller-product update rate.
 
 ## Sources
 
-1. Philco-Ford Corporation, R. L. Runnels, *Display Formats Manual*, PHO-TR515 / NASA-CR-128843, 12 January 1973.  
-   https://ntrs.nasa.gov/citations/19730010501
-
-2. *Johnson Space Center, Apollo Mission Control*, Historic American Engineering Record HAER TX-109-C, especially pp. 16–20.  
-   https://www.nasa.gov/wp-content/uploads/2025/09/apollomc-habshaer.pdf
-
-3. Richard A. Hoover, *Apollo Experience Report: Flight-Control Data Needs, Terminal Display Devices, and Ground System Configuration Requirements*, NASA-TN-D-7685, May 1974.  
-   https://ntrs.nasa.gov/citations/19740015284
-
-4. Apollo 11 Flight Mission Rules, abbreviation listing includes MSK — Manual Select Keyboard.  
-   https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11missionrules.pdf
-
-5. Secondary technical reconstruction used only as a discovery/interpretation aid for MSK/DRK details:  
-   https://www.earlyspaceflight.nl/Mission_Management/JSC/MCC/MOCR/MOCR-page2.html
-
-6. Identified but not yet digitally obtained: B. Costis, W. Ortolani, W. Moreland, *NASA MCC Display/Control System Usage and Effectiveness, Apollo 11*, PHO-TN401, 24 December 1969.
+1. Philco-Ford Corporation, R. L. Runnels, *Display Formats Manual*, PHO-TR515 / NASA-CR-128843, 12 January 1973. https://ntrs.nasa.gov/citations/19730010501
+2. *Johnson Space Center, Apollo Mission Control*, HAER TX-109-C. https://tile.loc.gov/storage-services/master/pnp/habshaer/tx/tx1100/tx1134/data/tx1134data.pdf
+3. Richard A. Hoover, *Apollo Experience Report: Flight-Control Data Needs, Terminal Display Devices, and Ground System Configuration Requirements*, NASA-TN-D-7685, May 1974. https://ntrs.nasa.gov/citations/19740015284
+4. Cornelius J. Sullivan and LaRue W. Burbank, *Apollo Experience Report — Real-Time Display System*, NASA TN D-8316, September 1976. https://ntrs.nasa.gov/citations/19760024152
+5. Apollo 11 Flight Mission Rules, abbreviation listing includes MSK — Manual Select Keyboard. https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11missionrules.pdf
+6. **BLOCKED primary source:** B. Costis, W. Ortolani, W. Moreland, *NASA MCC Display/Control System Usage and Effectiveness, Apollo 11*, PHO-TN401, 24 December 1969; Box 078-65/66, Mission Documents: Apollo 11, Johnson Space Center History Collection, University of Houston-Clear Lake.
