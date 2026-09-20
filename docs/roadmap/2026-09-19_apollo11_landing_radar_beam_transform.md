@@ -19,10 +19,12 @@ Philco-Ford PHO-TR515, *Display Formats Manual* (12 Jan 1973), supplies a later-
 
 A renewed inspection of the primary AC Electronics Apollo 11 MSK-1137 sheet adds one mission-effective constraint: the format itself visibly distinguishes `D/L` and `RTCC` source categories, while its field notes separately identify `ACT ΔV` as ground computed. The Apollo 11 controller display therefore cannot be modeled as a simple mirror of one spacecraft downlist. This is evidence for **mixed provenance on the mission-specific format**, not enough evidence to assign an external name/downlist/computation route to each field.
 
+The Apollo 11 Mission Report adds a separate operational constraint on landing-radar use during powered descent: when LR data became available, **the crew** decided whether to incorporate it into PGNS based on reasonability and precalculated limits; after incorporation, convergence was verified. The same passage says AGS, which was not updated by LR, would then diverge and cease to be monitored closely. This supports an explicit measurement-acceptance/convergence state in the simulation, but it does **not** establish GUIDO ownership of that decision, a particular MCC display, or the missing MSK-1137 per-field routing.
+
 ## Next work
 
 1. Pursue Apollo-11-effective FDS/RTCC/CCATS material that maps individual MSK-1137 fields to the format's `D/L`/`RTCC` provenance categories and identifies external names/downlists or computation/logic identifiers.
-2. Keep Apollo 11 GUIDO exact DRK/MSK button mapping and powered-descent selection unresolved pending mission-effective station evidence.
+2. Keep Apollo 11 GUIDO exact DRK/MSK button mapping and powered-descent selection unresolved pending mission-effective station evidence; do not convert the Mission Report's crew LR-acceptance decision into an unsupported GUIDO control action.
 3. Keep PHO-TN401 direct inspection **BLOCKED** pending archival retrieval/authenticated scan.
 4. Keep sample/receive/process/display timestamps distinct; do not infer tabular cadence from onboard LR timing, reference-slide timing, TV-channel allocation, or PHO-TR515 plot update-rate fields.
 5. Keep historical stochastic LR measurement generation **BLOCKED** until flight-effective numerical error evidence is recovered.
@@ -31,6 +33,7 @@ A renewed inspection of the primary AC Electronics Apollo 11 MSK-1137 sheet adds
 
 - **DOCUMENTED / IMPLEMENTED / COMPOSED:** LM-5 geometry + SETPOS + measurement-time NB→SM transform through the estimator.
 - **DOCUMENTED:** Apollo 11 MSK-1137 LR field semantics/formatting and mission-specific mixed `D/L`/`RTCC` provenance categories; `ACT ΔV` is ground computed.
+- **DOCUMENTED:** Apollo 11 powered-descent LR acceptance was a crew decision based on reasonability/precalculated limits, followed by convergence verification after incorporation; this does not document a GUIDO command path.
 - **DOCUMENTED:** Apollo MCC architectural separation and D/TV buffered-update behavior.
 - **DOCUMENTED, APOLLO-PROGRAM EXPERIENCE:** TN D-7685 display-request/channel-allocation behavior.
 - **DOCUMENTED, LATER SYSTEM BASELINE:** PHO-TR515 defines dynamic-field provenance metadata; it does not supply Apollo-11-effective MSK-1137 field routing or tabular cadence.
