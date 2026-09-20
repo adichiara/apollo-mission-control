@@ -12,12 +12,14 @@ Costis, Ortolani, and Moreland, *NASA MCC Display/Control System Usage and Effec
 
 NASA TN D-8316 establishes that D/TV generators could update displays independently of CRT refresh and could update complete instruction lists or single data words. Its four-second requirement concerns reference-slide access, not dynamic telemetry cadence.
 
-The next request-workflow question was checked against a primary NASA Apollo 12 Saturn V Flight Manual. It states that the DRK requested specific RTCC display formats through labeled PBIs and provided the same capability as the MSK in display-request mode, with faster callup because no thumbwheel selection was required. This is useful adjacent-effectivity evidence for the MCC request architecture, but it is deliberately **not** treated as proof of Apollo 11 GUIDO console equipment or the MSK-1137 descent request sequence.
+A newly inspected mission-period primary baseline, Philco `PHO-FAM001` (30 Jun 1967), documents the Computer Display/Control Interface request transaction: display-request keyboards/encoders could select among up to 384 stored displays, with the operator pressing the desired-display switch and then the desired-display-device switch. This narrows the generic interaction sequence before Apollo 11. It does not establish GUIDO's Apollo 11 keyboard installation, labels, MSK-1137 mapping, or descent-time selection.
+
+The Apollo 12 Saturn V Flight Manual independently states that the DRK requested specific RTCC display formats through labeled PBIs and provided the same capability as the MSK in display-request mode, with faster callup because no thumbwheel selection was required. That remains adjacent-effectivity evidence only.
 
 ## Implementation
 
-No executable renderer changed. Existing controller-product timestamp/provenance separation remains correct. A future interface may distinguish MSK-style coded selection from DRK-style direct format PBIs only after Apollo-11-effective station evidence establishes which mechanism belongs at GUIDO.
+No executable renderer changed. Existing controller-product timestamp/provenance separation remains correct. The generic display-request transaction can now be represented in design documentation, but a GUIDO-specific control surface remains gated on Apollo-11-effective station evidence.
 
 ## Boundaries
 
-No continuous antenna motion, attitude history, radar noise distribution, per-field ground transform, numeric display timing, Apollo 11 GUIDO DRK assignment, or request-key sequence is invented. Historical stochastic LR generation remains **BLOCKED**. Exact Apollo 11 per-field routing, dynamic-data cadence/latency/freshness, powered-descent format selection, and GUIDO request workflow remain unresolved; PHO-TN401 inspection is **BLOCKED** pending archival retrieval or an authenticated scan.
+No continuous antenna motion, attitude history, radar noise distribution, per-field ground transform, numeric display timing, Apollo 11 GUIDO DRK assignment, button/format mapping, or powered-descent selection is invented. Historical stochastic LR generation remains **BLOCKED**. Exact Apollo 11 per-field routing and dynamic-data cadence/latency/freshness remain unresolved; PHO-TN401 inspection is **BLOCKED** pending archival retrieval or an authenticated scan.
