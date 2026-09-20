@@ -19,31 +19,29 @@ Philco-Ford PHO-TR515, *Display Formats Manual* (12 Jan 1973), supplies a later-
 
 A renewed inspection of the primary AC Electronics Apollo 11 MSK-1137 sheet adds one mission-effective constraint: the format itself visibly distinguishes `D/L` and `RTCC` source categories, while its field notes separately identify `ACT ΔV` as ground computed. The Apollo 11 controller display therefore cannot be modeled as a simple mirror of one spacecraft downlist. This is evidence for **mixed provenance on the mission-specific format**, not enough evidence to assign an external name/downlist/computation route to each field.
 
-The Apollo 11 Mission Report adds a separate operational constraint on landing-radar use during powered descent: when LR data became available, **the crew** decided whether to incorporate it into PGNS based on reasonability and precalculated limits; after incorporation, convergence was verified. The same report's radar section further states that range and velocity were acquired at slant ranges of approximately 44,000 and 28,000 ft, and that LR tracking was lost briefly at altitudes of 240 and 75 ft. Those two losses were expected and attributed to zero-Doppler effects associated with manual maneuvering. This closes two mission-effective tracking-loss event points and their stated cause without establishing a general dropout probability, duration, or stochastic process.
+The Apollo 11 Mission Report constrains landing-radar use during powered descent: range and velocity were acquired at about 44,000 and 28,000 ft slant range; the crew decided whether to incorporate LR data based on reasonability and precalculated limits; and the report attributes two later brief tracking losses to expected zero-Doppler effects during manual maneuvering. Table 5-I now closes the event-time intervals around those losses: `DATA NOT GOOD` at 102:44:11 returned `DATA GOOD` at 102:44:21, and `DATA NOT GOOD` at 102:44:59 returned `DATA GOOD` at 102:45:03. At the report's one-second event resolution these are 10-second and 4-second not-good intervals. They are mission-event timing anchors, not evidence for a generalized dropout law or sub-second transition times.
 
-A primary NASA precursor has now been identified for the remaining LR numerical-error question: D. A. Dyer, *LM landing radar test for the F mission — Project Apollo*, MSC-69-EG-14 / NASA-TM-X-64374, 11 Mar 1969 (NTRS 19700025433). NTRS identifies it specifically as an F-mission landing-radar test-requirements memorandum. The public record exposes metadata but the PDF is not presently retrievable through the available NTRS path, so its numerical contents have **not** been claimed. Even after retrieval it is adjacent-effectivity evidence and cannot by itself establish an Apollo-11/LM-5 stochastic distribution without a Mission-G applicability bridge.
+The AC Electronics Apollo 11 manual independently requires the LR `DATA GOOD` discrete to have been present for at least four seconds before range/velocity measurement tests permit state-vector updating. Therefore historical replay should distinguish **radar data-good state** from **eligibility to resume LR-aided state updates** after reacquisition; it must not equate the recorded `DATA GOOD` transition with immediate filter use.
+
+A primary NASA precursor remains identified for the LR numerical-error question: D. A. Dyer, *LM landing radar test for the F mission — Project Apollo*, MSC-69-EG-14 / NASA-TM-X-64374, 11 Mar 1969 (NTRS 19700025433). Its numerical contents remain uninspected and cannot be imported without a Mission-G/LM-5 applicability bridge.
 
 ## Next work
 
 1. Pursue Apollo-11-effective FDS/RTCC/CCATS material that maps individual MSK-1137 fields to the format's `D/L`/`RTCC` provenance categories and identifies external names/downlists or computation/logic identifiers.
-2. Continue seeking LM-5 qualification/acceptance or Apollo 11 flight-data reduction evidence that numerically characterizes LR residuals, quantization, correlation, dropout duration, or bias. Treat the documented 240-ft and 75-ft losses as discrete mission events, not a probability law.
-3. Retrieve and inspect MSC-69-EG-14 / NASA-TM-X-64374 for any quantitative LR test/error requirements, then require an explicit Mission-G/LM-5 applicability bridge before using any F-mission numbers in Apollo 11 behavior.
-4. Keep Apollo 11 GUIDO exact DRK/MSK button mapping and powered-descent selection unresolved pending mission-effective station evidence; do not convert the Mission Report's crew LR-acceptance decision into an unsupported GUIDO control action.
-5. Keep PHO-TN401 direct inspection **BLOCKED** pending archival retrieval/authenticated scan.
-6. Keep sample/receive/process/display timestamps distinct; do not infer tabular cadence from onboard LR timing, reference-slide timing, TV-channel allocation, or PHO-TR515 plot update-rate fields.
-7. Keep historical stochastic LR measurement generation **BLOCKED** until flight-effective numerical error evidence is recovered and tied to Mission G/LM-5.
+2. Continue seeking LM-5 qualification/acceptance or Apollo 11 flight-data reduction evidence that characterizes LR residuals, quantization, correlation, bias, or transition timing below the Mission Report's one-second event resolution.
+3. Preserve the two Table 5-I not-good intervals as deterministic historical replay anchors and enforce the documented four-second `DATA GOOD` qualification separately; do not infer a random dropout process from them.
+4. Retrieve and inspect MSC-69-EG-14 / NASA-TM-X-64374, requiring an explicit Mission-G/LM-5 applicability bridge before using any F-mission numbers.
+5. Keep Apollo 11 GUIDO exact DRK/MSK button mapping and powered-descent selection unresolved pending mission-effective station evidence.
+6. Keep PHO-TN401 direct inspection **BLOCKED** pending archival retrieval/authenticated scan.
+7. Keep sample/receive/process/display timestamps distinct; do not infer MCC tabular cadence from onboard LR timing.
+8. Keep historical stochastic LR measurement generation **BLOCKED** until flight-effective numerical error evidence is recovered.
 
 ## Evidence status
 
 - **DOCUMENTED / IMPLEMENTED / COMPOSED:** LM-5 geometry + SETPOS + measurement-time NB→SM transform through the estimator.
-- **DOCUMENTED:** Apollo 11 MSK-1137 LR field semantics/formatting and mission-specific mixed `D/L`/`RTCC` provenance categories; `ACT ΔV` is ground computed.
-- **DOCUMENTED:** Apollo 11 powered-descent LR acceptance was a crew decision based on reasonability/precalculated limits, followed by convergence verification after incorporation; this does not document a GUIDO command path.
-- **DOCUMENTED, APOLLO 11 FLIGHT:** LR range/velocity acquisition at approximately 44,000/28,000-ft slant range and brief expected tracking losses at 240/75-ft altitude attributed to zero-Doppler effects during manual maneuvering.
+- **DOCUMENTED:** Apollo 11 MSK-1137 semantics and mixed `D/L`/`RTCC` provenance boundary.
+- **DOCUMENTED, APOLLO 11 FLIGHT:** LR acquisition at ~44,000/~28,000-ft slant range; `DATA NOT GOOD`→`DATA GOOD` intervals 102:44:11–:21 and 102:44:59–102:45:03; expected zero-Doppler/manual-maneuver cause.
+- **DOCUMENTED, APOLLO-11-EFFECTIVE ONBOARD LOGIC:** at least four continuous seconds of `DATA GOOD` are required before LR range/velocity measurement tests permit state-vector updating.
 - **DOCUMENTED:** Apollo MCC architectural separation and D/TV buffered-update behavior.
-- **DOCUMENTED, APOLLO-PROGRAM EXPERIENCE:** TN D-7685 display-request/channel-allocation behavior.
-- **DOCUMENTED, LATER SYSTEM BASELINE:** PHO-TR515 defines dynamic-field provenance metadata; it does not supply Apollo-11-effective MSK-1137 field routing or tabular cadence.
-- **DOCUMENTED, PRE-APOLLO-11 BASELINE:** PHO-FAM001 generic display/device request transaction.
-- **DOCUMENTED, ADJACENT EFFECTIVITY / CONTENT NOT YET INSPECTED:** MSC-69-EG-14 / NASA-TM-X-64374 is an F-mission LR test-requirements memorandum; no numerical result is imported into Apollo 11.
-- **DOCUMENTED, ADJACENT EFFECTIVITY:** Apollo 12 DRK/MSK request semantics.
-- **BLOCKED:** direct PHO-TN401 inspection; historical stochastic LR measurement generation pending quantitative evidence and Mission-G applicability.
-- **UNRESOLVED:** per-field Apollo 11 MSK-1137 `D/L`/`RTCC` mapping and exact external-name/downlist/computation provenance, numeric dynamic-data cadence/latency/freshness, and GUIDO exact request workflow.
+- **BLOCKED:** direct PHO-TN401 inspection; historical stochastic LR measurement generation.
+- **UNRESOLVED:** per-field Apollo 11 MSK-1137 routing, exact GUIDO request workflow, MCC dynamic-data cadence/latency/freshness, and sub-second LR transition timing.
