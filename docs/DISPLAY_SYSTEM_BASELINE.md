@@ -80,4 +80,3 @@ Do **not** create a generic VT220/IBM-VGA-style interface as the historical disp
 4. Cornelius J. Sullivan and LaRue W. Burbank, *Apollo Experience Report — Real-Time Display System*, NASA TN D-8316, September 1976. https://ntrs.nasa.gov/citations/19760024152
 5. Apollo 11 Flight Mission Rules, abbreviation listing includes MSK — Manual Select Keyboard. https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11missionrules.pdf
 6. **BLOCKED primary source:** B. Costis, W. Ortolani, W. Moreland, *NASA MCC Display/Control System Usage and Effectiveness, Apollo 11*, PHO-TN401, 24 December 1969; Box 078-65/66, Mission Documents: Apollo 11, Johnson Space Center History Collection, University of Houston-Clear Lake.
-7. Research record: `resources/research/600_apollo11_display_usage_and_update_boundary.md`.
