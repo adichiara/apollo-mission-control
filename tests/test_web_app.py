@@ -195,6 +195,42 @@ class WebAppTests(unittest.TestCase):
             inhibited.json()["velocity_update"]["reasons"],
         )
 
+    def test_apollo11_landing_radar_data_good_replay_model_proof(self):
+        base = {
+            "profile_id": "apollo11_lm5_landing_radar_partial",
+            "initial_time_s": 369850.0,
+            "initial_data_good": True,
+            "initial_data_good_since_s": 369840.0,
+        }
+
+        reacquired = self.client.post(
+            "/api/admin/model-proof/landing-radar-data-good-replay",
+            json={**base, "query_time_s": 369861.0},
+        )
+        self.assertEqual(reacquired.status_code, 200)
+        replay = reacquired.json()["replay"]
+        self.assertTrue(replay["data_good"])
+        self.assertFalse(replay["data_good_qualified"])
+        self.assertEqual(replay["data_good_duration_s"], 0.0)
+
+        qualified = self.client.post(
+            "/api/admin/model-proof/landing-radar-data-good-replay",
+            json={**base, "query_time_s": 369865.0},
+        )
+        self.assertEqual(qualified.status_code, 200)
+        replay = qualified.json()["replay"]
+        self.assertTrue(replay["data_good"])
+        self.assertTrue(replay["data_good_qualified"])
+        self.assertEqual(replay["data_good_duration_s"], 4.0)
+
+        second_loss = self.client.post(
+            "/api/admin/model-proof/landing-radar-data-good-replay",
+            json={**base, "query_time_s": 369899.0},
+        )
+        self.assertEqual(second_loss.status_code, 200)
+        self.assertFalse(second_loss.json()["replay"]["data_good"])
+        self.assertIn("no stochastic dropout process", second_loss.json()["boundary_note"])
+
     def test_health_and_phone_shell(self):
         self.assertEqual(self.client.get("/api/health").json(), {"status": "ok"})
         page = self.client.get("/")
