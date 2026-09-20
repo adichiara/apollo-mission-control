@@ -311,3 +311,4 @@ Run `python3 scripts/update_research_indexes.py` after adding or renaming resear
 ## 500–599 — `apollo11-landing-radar`
 
 - **500** — [apollo11 landing radar velocity weighting update](research/500_apollo11_landing_radar_velocity_weighting_update.md)
+- **501** — [apollo11 lr scale selection evidence](research/501_apollo11_lr_scale_selection_evidence.md)
