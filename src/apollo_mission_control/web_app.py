@@ -30,6 +30,7 @@ from .causal_translational_model import (
     simulate_translational_maneuver,
 )
 from .controller_products import project_controller_products
+from .controller_product_provenance import get_controller_product_profile
 from .crew_response import (
     apply_session_engine_off_response,
     apply_session_restart_response,
@@ -1489,6 +1490,37 @@ def _electrical_bus_from_request(
             bus_enabled=request.bus_enabled,
         ),
     )
+
+
+@app.get(
+    "/api/admin/model-proof/controller-product-profile/{profile_id}",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def controller_product_profile_model_proof(profile_id: str) -> dict[str, Any]:
+    """Expose field-level historical provenance while preserving routing gates."""
+
+    profile = _domain_call(lambda: get_controller_product_profile(profile_id))
+    values = _domain_call(lambda: profile.evaluate({}))
+
+    gate = "open"
+    gate_reason = None
+    try:
+        profile.require_historical_rendering()
+    except ValueError as exc:
+        gate = "blocked"
+        gate_reason = str(exc)
+
+    return {
+        "model_status": "historical_controller_product_provenance_boundary",
+        "profile": profile.to_public_dict(),
+        "field_projection": [value.to_dict() for value in values],
+        "historical_rendering_gate": gate,
+        "historical_rendering_gate_reason": gate_reason,
+        "note": (
+            "Documented field semantics and origin class do not imply an exact "
+            "downlist/RTCC route, transform, cadence, or station workflow."
+        ),
+    }
 
 
 @app.post(
