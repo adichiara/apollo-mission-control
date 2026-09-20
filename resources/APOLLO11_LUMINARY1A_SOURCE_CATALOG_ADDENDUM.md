@@ -15,22 +15,24 @@ Date: 2026-09-19
 | LUMINARY Memo #95, *Landing Radar Orientation*, 9 July 1969 | `LRALPHA/LRBETA` are antenna→NB rotations, beta then alpha, negatives of R-567 angles | Primary Apollo-11-period polarity/order authority. |
 | `SNA-8-D-027(II) REV 1`, LM-5 Mission G prelaunch erasable load, Table LM5/4.5.1-1 | Addresses 2522–2525: `LRALPHA1=0.0163371759 rev` and `LRBETA1=0.0665287037 rev` (stow); `LRALPHA2=0.0161680555 rev` and `LRBETA2=0.0001361111 rev` (hover). Also supplies `LRVMAX`, `LRVF`, `LRWV*`, `LRWVF*`, `LRWVFF`. | Mission/configuration authority. Store geometry in source units; convert only at executable adapter boundary. |
 | AC Electronics, *Apollo 11 Guidance and Navigation System Manual* — lunar-descent state-vector section | Average-G/PIPA 2-second intervals; one LR velocity component per interval, cycling `Vz, Vx, Vy, Vz` | Onboard cadence only; not MCC display cadence. |
-| AC Electronics, *Apollo 11 Guidance and Navigation System Manual* — ASPO 45 CRT MSK-1137 definitions (PDF 205–207 in the repository's inspected scan) | `LR RNG` and `VEL` GOOD/BAD; `VXB/VYB/VZB` LR velocity in body-axis coordinates at `±XXXX FT/SEC`; LR slant range `XXXXX FT`; PGNS altitude `XXXXX FT`; `ACT ΔV` explicitly ground computed | Apollo-11-specific controller-visible field semantics/formatting. Does not establish CRT refresh cadence or complete downlink/ground routing. Do not substitute Apollo 13 MSK-1137 stable-member/residual semantics. |
-| Direct Apollo 11 / Apollo 13 MSK-1137 comparison, research note 030 | Same display identifier but mission-specific changes in LR coordinate frame, altitude/comparison semantics, and other fields | Requires mission-specific display profiles; shared display number is not evidence of shared field contract. |
+| AC Electronics, *Apollo 11 Guidance and Navigation System Manual* — ASPO 45 CRT MSK-1137 definitions | `LR RNG` and `VEL` GOOD/BAD; `VXB/VYB/VZB` LR velocity in body-axis coordinates at `±XXXX FT/SEC`; LR slant range `XXXXX FT`; PGNS altitude `XXXXX FT`; `ACT ΔV` explicitly ground computed | Apollo-11-specific controller-visible field semantics/formatting. Does not establish CRT refresh cadence or complete downlink/ground routing. |
+| NASA, *Apollo 11 AS-506 Mission Operation Report*, M-932-69-11 — Mission Support | MCC functions through distinct CCATS, RTCC, Voice Communications, Display/Control, and MOCR/SSR elements; telemetry/operational data can be processed by CCATS and RTCC for flight-control evaluation | Apollo-11-effective architecture authority. Supports a layered spacecraft/downlink → ground processing → display model, not exact per-field routing or timing. |
+| Sullivan & Burbank, *Apollo Experience Report: Real-Time Display System*, NASA-TN-D-8316 / JSC-S-461 | Apollo real-time display system organized into distinct computer-input multiplexer, plotting, digital-display, and digital-television subsystems | Retrospective architecture cross-check only; not Apollo-11 MSK-1137 cadence or field-routing authority. |
+| Direct Apollo 11 / Apollo 13 MSK-1137 comparison, research note 030 | Same display identifier but mission-specific changes in LR coordinate frame, altitude/comparison semantics, and other fields | Requires mission-specific display profiles. |
 | NASA TN D-6849 | LM-5 bias correction and qualitative non-Gaussian/near-zero-Doppler error boundary | No numerical flight-effective stochastic distribution. |
 | MIT/IL E-1982 | 1966 design-study statistical LR error/weighting assumptions | Design-history only. |
 
 ## Current result
 
-The Apollo 11 profile carries the exact LM-5 position-1/position-2 angle loads in revolutions and exposes a provenance-bearing adapter that converts the selected pair to radians and combines it with explicit measurement-time CDUs. This feeds the verified SETPOS/NBSM estimator chain without manual historical-constant transcription.
+The Apollo 11 profile carries the exact LM-5 position-specific geometry and verified estimator chain. Controller-visible formatting is partially controlled by mission-specific MSK-1137 definitions.
 
-Controller-visible **formatting is now partially controlled** at the mission-specific MSK-1137 field-definition level: the LR validity fields, body-axis velocity frame, engineering units/display masks, slant range, PGNS altitude, and ground-computed identity of `ACT ΔV` are directly documented. Exact Apollo 11 downlink/ground routing and CRT timing remain unresolved.
+The ground/display architecture is now also controlled at the system-boundary level: Apollo 11 documentation separates telemetry/communications, CCATS/RTCC processing, Display/Control, and controller operations. This is sufficient to prohibit direct authoritative-state aliasing in an eventual Apollo 11 controller product. It is not sufficient to invent the exact CCATS/RTCC transformation for each LR field or a numeric CRT refresh period.
 
 Historical stochastic LR generation remains **BLOCKED**.
 
 ## Effectivity rule
 
-Do not back-project Luminary 1B/1C or later behavior into Apollo 11 without controlled comparison. `Sunburst37` is used only as an algorithmic lineage/sign cross-check; Apollo-11-effective interfaces and constants remain controlled by LUMINARY 099, Memo #95, and LM-5 sources. Likewise, do not back-project Apollo 13 MSK-1137 stable-member landing-radar velocity or residual semantics into Apollo 11 merely because the display number is unchanged.
+Do not back-project later Luminary or Apollo 13 display semantics into Apollo 11. Do not convert the documented onboard 2-second LR component schedule into an MCC refresh/freshness rule. Ground-processing and display stages remain explicit even where their exact Apollo-11 timing is unresolved.
 
 ## Sources
 
@@ -43,6 +45,8 @@ Do not back-project Luminary 1B/1C or later behavior into Apollo 11 without cont
 - https://www.ibiblio.org/apollo/Documents/LUM95_text.pdf
 - https://ibiblio.org/apollo/Documents/Luminary99PadLoads.pdf
 - https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
+- https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11_MissionOpReport.pdf
+- https://ntrs.nasa.gov/citations/19760024152
 - `resources/research/030_apollo11_apollo13_msk1137_comparison.md`
 - https://ntrs.nasa.gov/api/citations/19720016521/downloads/19720016521.pdf
 - https://www.ibiblio.org/apollo/Documents/E-1982_LEM_PGNCS_and_Landing_Radar_Operations.pdf
@@ -50,9 +54,8 @@ Do not back-project Luminary 1B/1C or later behavior into Apollo 11 without cont
 ## Evidence status
 
 - **DOCUMENTED / IMPLEMENTED / COMPOSED:** equation-level LM-5 profile geometry + SETPOS + measurement-time NBSM velocity-beam path through the estimator.
-- **DOCUMENTED:** discrete position-1/position-2 selection and recomputation behavior.
-- **NOT CLAIMED:** bit-for-bit AGC fixed-point equivalence.
-- **DOCUMENTED:** one LR velocity component per 2-second Average-G/PIPA interval.
-- **DOCUMENTED:** Apollo 11 MSK-1137 LR status/velocity/range/PGNS-altitude field semantics, body-axis velocity frame, units, and display masks; `ACT ΔV` is explicitly ground computed.
+- **DOCUMENTED:** Apollo 11 MSK-1137 LR semantics/formatting at the recorded field-definition level.
+- **DOCUMENTED:** Apollo 11 MCC architectural separation of CCATS/RTCC processing, Display/Control, and controller operations.
+- **DOCUMENTED:** Apollo-wide real-time display subsystem separation, used only as an architecture cross-check.
 - **UNRESOLVED / BLOCKED:** numerical stochastic Apollo-11-effective LR error distribution.
-- **UNRESOLVED:** exact Apollo 11 downlink/ground routing and controller-display cadence, latency, freshness, and request workflow.
+- **UNRESOLVED:** exact per-field Apollo 11 CCATS/RTCC transformation/routing, CRT cadence, end-to-end latency, freshness policy, and request/key workflow.
