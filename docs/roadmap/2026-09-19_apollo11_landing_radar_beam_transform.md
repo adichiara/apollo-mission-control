@@ -13,28 +13,26 @@ The equation-level SETPOS and SM/NB transforms are composed into the landing-rad
 
 Apollo 11 MCC architecture is source-controlled as distinct spacecraft/downlink, CCATS/RTCC processing, Display/Control, and controller-presentation layers. PHO-TN401 is identified as the mission-specific Apollo 11 display-usage source but remains **BLOCKED** behind archival access.
 
-NASA TN D-8316 narrows the timing boundary: D/TV generators buffered display instructions/data, so computer dynamic-data updates were independent of CRT refresh requirements and could replace either a complete instruction list or a single data word. Its four-second access requirement applies to reference slides, not dynamic telemetry cadence.
+NASA TN D-8316 separates buffered dynamic-data updates from CRT refresh and reference-slide access. PHO-FAM001 constrains the pre-Apollo-11 request transaction. NASA TN D-7685 constrains Apollo-program display-request/channel-allocation behavior, including the 36-channel computer-driven TV pool for lunar-landing missions.
 
-The 30 June 1967 Philco `PHO-FAM001`, *Mission Control Center Houston Familiarization Manual*, constrains the pre-Apollo-11 Display/Control interface baseline. Its Computer Display/Control Interface description says display-request keyboards and encoders let an operator select up to 384 stored displays by pressing the desired-display switch and then the desired-display-device switch. This is direct pre-mission architecture evidence for the request transaction, but it does **not** identify Apollo 11 GUIDO's installed keyboard, button legends, or powered-descent selection. The Apollo 12 Saturn V Flight Manual remains adjacent-effectivity evidence that DRK labeled PBIs and MSK thumbwheel display-request mode were alternate mechanisms.
-
-NASA TN D-7685 now closes another system-level part of the request path from Apollo flight-control experience. For lunar-landing missions the computer-driven TV pool expanded from 28 to 36 channels. In display-request mode, a console requested a format; the computer generated/formatted it, assigned the next available computer-driven TV channel, and automatically connected that channel to the requesting console monitor on a first-come/first-served basis. A separate channel-attach mode let a console receive an already occupied channel. The system also exposed a display identifying which format occupied each channel and which console had requested it so controllers could release channels when capacity was constrained. This is Apollo-program architecture evidence, not Apollo-11 GUIDO button mapping or a display refresh rate.
+A fresh primary-source inspection of Philco-Ford PHO-TR515, *Display Formats Manual* (12 Jan 1973), narrows the remaining per-field routing question without back-projecting a 1973 format into Apollo 11. Its DTE format-description system records, for each dynamic group, an external source name, display coordinates/configuration, and source class. External names may be direct telemetry measurement numbers or Data Processing Branch identifiers for computations, manual-entry data, or special logic. The manual also distinguishes telemetry display types and documents a downlist indicator, including the case where a display is updated from more than one downlist. This establishes the **kind of provenance metadata** needed to reconstruct a controller field, but does not identify the Apollo-11-effective external names/downlists for MSK-1137. Its explicit update-rate field is documented for plot formats and therefore is not authority for MSK-1137 tabular cadence.
 
 ## Next work
 
-1. Pursue Apollo-11-effective console configuration/controller procedure evidence for GUIDO's actual DRK/MSK installation, button/format mapping, and powered-descent selection. Generic request and channel-allocation behavior is now substantially constrained.
-2. Continue RTCC/CCATS research for per-field MSK-1137 routing and numeric dynamic-data latency/freshness.
+1. Pursue Apollo-11-effective FDS/display-format material or RTCC/CCATS program documentation that identifies MSK-1137 external names, downlist provenance, and any computed/logic fields.
+2. Keep Apollo 11 GUIDO exact DRK/MSK button mapping and powered-descent selection unresolved pending mission-effective station evidence.
 3. Keep PHO-TN401 direct inspection **BLOCKED** pending archival retrieval/authenticated scan.
-4. Keep sample/receive/process/display timestamps distinct; do not use the two-second onboard LR cadence, four-second reference-slide access, or TV channel allocation behavior as controller-display cadence.
+4. Keep sample/receive/process/display timestamps distinct; do not infer tabular cadence from onboard LR timing, reference-slide timing, TV-channel allocation, or PHO-TR515 plot update-rate fields.
 5. Keep historical stochastic LR measurement generation **BLOCKED** until flight-effective numerical error evidence is recovered.
 
 ## Evidence status
 
 - **DOCUMENTED / IMPLEMENTED / COMPOSED:** LM-5 geometry + SETPOS + measurement-time NB→SM transform through the estimator.
 - **DOCUMENTED:** Apollo 11 MSK-1137 LR field semantics/formatting at field-definition level.
-- **DOCUMENTED:** Apollo MCC architectural separation and D/TV buffered-update behavior; reference-slide access is distinct from dynamic-data update.
-- **DOCUMENTED, APOLLO-PROGRAM EXPERIENCE:** TN D-7685 defines 36 computer-driven TV channels for lunar-landing missions plus display-request, automatic next-channel assignment, channel-attach, and channel-usage/release behavior. It does not identify Apollo 11 GUIDO's controls or numeric refresh timing.
-- **DOCUMENTED, PRE-APOLLO-11 BASELINE:** PHO-FAM001 defines the Display/Control request transaction and 384-display DRK/encoder capability; not station-assignment authority.
-- **DOCUMENTED, ADJACENT EFFECTIVITY:** Apollo 12 flight manual defines DRK request behavior and its equivalence to MSK display-request mode; not authority for Apollo 11 GUIDO console configuration.
-- **DOCUMENTED:** PHO-TN401 identity and archival location; HAER aggregate Apollo 11 display-usage reporting is secondary/indirect evidence only.
+- **DOCUMENTED:** Apollo MCC architectural separation and D/TV buffered-update behavior.
+- **DOCUMENTED, APOLLO-PROGRAM EXPERIENCE:** TN D-7685 display-request/channel-allocation behavior.
+- **DOCUMENTED, LATER SYSTEM BASELINE:** PHO-TR515 defines dynamic-field provenance metadata (telemetry measurement or DPB computation/MED/logic external name), display coordinates/configuration, and downlist indicators; it does not supply Apollo-11-effective MSK-1137 field routing or tabular cadence.
+- **DOCUMENTED, PRE-APOLLO-11 BASELINE:** PHO-FAM001 generic display/device request transaction.
+- **DOCUMENTED, ADJACENT EFFECTIVITY:** Apollo 12 DRK/MSK request semantics.
 - **BLOCKED:** direct PHO-TN401 inspection; historical stochastic LR measurement generation.
-- **UNRESOLVED:** Apollo 11 GUIDO DRK/MSK configuration, exact button/format mapping and powered-descent selection, per-field CCATS/RTCC routing, and numeric dynamic-data cadence/latency/freshness.
+- **UNRESOLVED:** Apollo 11 MSK-1137 external-name/downlist mapping, computed/logic provenance, numeric dynamic-data cadence/latency/freshness, and GUIDO exact request workflow.
