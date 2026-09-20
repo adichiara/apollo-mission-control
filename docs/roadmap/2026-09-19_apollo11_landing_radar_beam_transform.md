@@ -27,21 +27,23 @@ MIT R-700 Vol. II closes the Apollo-11-specific onboard reasonableness gates: ve
 
 GAEC LSP-470-2D supplies 3-sigma LR range/velocity acceptance limits. NASA TN D-6849 supplies LM-5 flight experience and cautions against converting simulator behavior into a simple Gaussian law. NASA-CR-92466 remains a mission-period beam/Doppler mathematical-model source, not LM-5 flight-error statistics.
 
-**New interface boundary:** NASA TN D-6849 explicitly states that processed LR velocity and slant-range information was made available to the LGC in **serial binary form**, while LR information was separately supplied to LM displays as **pulse trains and dc analog voltages**. This is stronger Apollo-program/LM-5-experience evidence for the interface architecture than back-projecting the later LM10 handbook. It establishes separate LGC-digital and crew-display electrical output paths, but does **not** establish LM-5 word length, bit weighting, LSB/quantization, transfer cadence, rounding, or MCC routing.
+NASA TN D-6849 explicitly states that processed LR velocity and slant-range information was made available to the LGC in **serial binary form**, while LR information was separately supplied to LM displays as **pulse trains and dc analog voltages**. This establishes separate LGC-digital and crew-display electrical output paths, but does not by itself establish LM-5 serial word length, bit weighting, rounding, or framing.
 
-The later LM10-and-subsequent Apollo Operations Handbook remains only an adjacent architecture cross-check: it describes selectable LR quantities and 15-bit LR/LGC words. No Apollo 11 quantization step or bit weighting is inferred from it.
+**New Apollo-11-effective scaling boundary:** the flown LUMINARY 099 listing itself now supplies onboard converted/stored LR measurement bit weights. `ASSEMBLY_AND_OPERATION_INFORMATION.agc` gives low-scale altitude `1.079 ft` per low-order bit and X/Y/Z velocity low-order bit weights of `-0.6440`, `+1.212`, and `+0.8668 ft/s`; `PINBALL_NOUN_TABLES.agc` carries the corresponding constants; and `SERVICER.agc` independently labels stored `HMEAS` as `1.079 FT/BIT`. These values may control the LUMINARY-side converted measurement representation. They do **not** yet prove the complete LM-5 radar-to-LGC serial encoding, raw integer bias, high-range hardware bit weight, rounding/truncation, or stochastic quantization error.
+
+The later LM10-and-subsequent Apollo Operations Handbook and later R-567 revisions remain adjacent architecture cross-checks for 15-bit raw LR/LGC words and high/low raw conversion. No 15-bit Apollo 11 serial encoding is back-projected solely from those later sources.
 
 ## Next work
 
 1. Pursue Apollo-11-effective FDS/RTCC/CCATS material that maps individual MSK-1137 fields to the format's `D/L`/`RTCC` provenance categories and identifies external names/downlists or computation/logic identifiers.
-2. Continue seeking LM-5 qualification/acceptance or Apollo 11 flight-data reduction evidence that characterizes LR residuals, **serial word bit weighting/quantization**, correlation, bias, or transition timing below the Mission Report's one-second event resolution.
+2. Continue seeking LM-5/Apollo-11-effective hardware-interface evidence for **raw serial word length, integer bias, high-range altitude conversion, rounding/framing**, plus qualification/flight-data evidence for residual correlation or bias.
 3. Preserve the two Table 5-I not-good intervals as deterministic historical replay anchors and enforce the documented four-second `DATA GOOD` qualification separately; do not infer a random dropout process from them.
 4. Retrieve and inspect MSC-69-EG-14 / NASA-TM-X-64374, requiring an explicit Mission-G/LM-5 applicability bridge before using any F-mission numbers.
 5. Inspect NASA-CR-92466 only for model equations/beam physics; do not promote it to LM-5 stochastic-error authority without separate applicability evidence.
 6. Keep Apollo 11 GUIDO exact DRK/MSK button mapping and powered-descent selection unresolved pending mission-effective station evidence.
 7. Keep PHO-TN401 direct inspection **BLOCKED** pending archival retrieval/authenticated scan.
 8. Keep sample/receive/process/display timestamps distinct; do not infer MCC tabular cadence from onboard LR timing.
-9. Keep historical stochastic LR measurement generation **BLOCKED** until flight-effective numerical error evidence is recovered.
+9. Keep historical stochastic LR measurement generation **BLOCKED** until flight-effective numerical residual evidence is recovered.
 
 ## Evidence status
 
@@ -49,9 +51,10 @@ The later LM10-and-subsequent Apollo Operations Handbook remains only an adjacen
 - **DOCUMENTED:** Apollo 11 MSK-1137 semantics and mixed `D/L`/`RTCC` provenance boundary.
 - **DOCUMENTED, APOLLO 11 FLIGHT:** LR acquisition; two one-second-resolution not-good intervals; expected zero-Doppler/manual-maneuver cause.
 - **DOCUMENTED, APOLLO-11-EFFECTIVE ONBOARD LOGIC:** four continuous seconds of `DATA GOOD` before LR measurement tests permit state-vector updating; Apollo-11-specific reasonableness gates.
+- **DOCUMENTED, APOLLO-11-EFFECTIVE ONBOARD SCALING:** low-scale altitude `1.079 ft/bit`; X/Y/Z velocity bit weights `-0.6440/+1.212/+0.8668 ft/s` at the converted/stored LUMINARY representation.
 - **DOCUMENTED, APOLLO-PROGRAM HARDWARE / LM-5 EXPERIENCE SOURCE:** LR velocity/range delivered to LGC as serial binary data, with separate pulse-train/dc-analog outputs to LM displays.
 - **DOCUMENTED, MISSION-PERIOD MODEL SOURCE:** NASA-CR-92466 for LR beam-bandwidth/Doppler model verification; not LM-5 flight-error statistics.
-- **ADJACENT EFFECTIVITY ONLY:** LM10-and-subsequent handbook confirms 15-bit LR/LGC architecture; no Apollo 11 bit weighting or quantization is claimed.
+- **ADJACENT EFFECTIVITY ONLY:** later LM10/R-567 material confirms 15-bit raw LR/LGC architecture and later raw-data conversions; no complete Apollo 11 serial encoding is claimed.
 - **DOCUMENTED:** Apollo MCC architectural separation and D/TV buffered-update behavior.
 - **BLOCKED:** direct PHO-TN401 inspection; historical stochastic LR measurement generation.
-- **UNRESOLVED:** per-field Apollo 11 MSK-1137 routing, exact GUIDO request workflow, MCC dynamic-data cadence/latency/freshness, LM-5 serial word length/bit weighting/quantization/transfer behavior, and sub-second LR transition timing.
+- **UNRESOLVED:** per-field Apollo 11 MSK-1137 routing, exact GUIDO request workflow, MCC dynamic-data cadence/latency/freshness, complete LM-5 raw serial encoding/high-range conversion/rounding/framing, and sub-second LR transition timing.
