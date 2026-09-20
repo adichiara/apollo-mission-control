@@ -8,17 +8,19 @@ The onboard PGNCS landing-radar estimator timing is constrained to one LR veloci
 
 Apollo 11 ground-system evidence constrains the intervening CCATS/RTCC and Display/Control layers. NASA TN D-8316 establishes buffered dynamic display updates independent of CRT refresh and separates reference-slide access from dynamic-word update.
 
-A primary Apollo 12 flight manual provides adjacent-effectivity evidence for the request mechanism: a DRK could request a specific RTCC display format directly by labeled PBI and was described as having the same capability as the MSK in display-request mode, except that DRK callup avoided thumbwheel selection. This clarifies the architectural distinction between direct-format PBIs and MSK coded selection. It does not establish Apollo 11 GUIDO hardware assignment or the descent workflow.
+Philco `PHO-FAM001` (30 Jun 1967) provides a direct pre-Apollo-11 MCC baseline for the request interaction: Display/Control request keyboards/encoders could select up to 384 stored displays, and a request consisted of selecting the desired display and then the desired display device. This supports a generic request transaction, not a GUIDO-specific control layout.
+
+A primary Apollo 12 flight manual provides adjacent-effectivity evidence that a DRK could request a specific RTCC display format directly by labeled PBI and had the same capability as MSK display-request mode except that DRK callup avoided thumbwheel selection. Neither source establishes which Apollo 11 GUIDO buttons mapped to MSK-1137 or when the descent display was selected.
 
 ## Station boundary
 
 `LR physical measurement/error → LGC estimator/update → downlink/telemetry → CCATS/RTCC ground processing → Display/Control dynamic-word update/presentation → controller-visible field`
 
-Keep display content, display-data update, CRT refresh, and operator format request as separate concepts. Do not expose a DRK on Apollo 11 GUIDO merely because a later mission manual documents the device.
+Keep display content, display-data update, CRT refresh, operator format request, and station-specific button mapping as separate concepts. Do not expose a specific DRK/MSK control map on Apollo 11 GUIDO until mission-effective evidence supports it.
 
 ## Maturity
 
-No station maturity change. Apollo-11-effective evidence is still required before implementing GUIDO's exact request controls or powered-descent display-selection workflow.
+No station maturity change. The generic display-request interaction is better constrained, but Apollo-11-effective evidence is still required before implementing GUIDO's exact controls or powered-descent display-selection workflow.
 
 ## Evidence status
 
@@ -26,7 +28,8 @@ No station maturity change. Apollo-11-effective evidence is still required befor
 - **DOCUMENTED:** Apollo 11 MSK-1137 LR field semantics/formatting at the recorded level.
 - **DOCUMENTED:** Apollo MCC separates CCATS/RTCC processing from Display/Control/controller operations.
 - **DOCUMENTED:** D/TV dynamic updates were buffered and independent of CRT refresh requirements; the four-second TN D-8316 figure concerns reference-slide access.
+- **DOCUMENTED, PRE-APOLLO-11 BASELINE:** PHO-FAM001 defines the generic display/device request transaction and up-to-384-display keyboard/encoder capability.
 - **DOCUMENTED, ADJACENT EFFECTIVITY:** Apollo 12 flight manual defines DRK direct-PBI request behavior and equivalence to MSK display-request mode.
 - **DOCUMENTED:** PHO-TN401 identity and physical archival location.
 - **BLOCKED:** direct PHO-TN401 inspection; flight-authentic numerical LR stochastic error generation.
-- **UNRESOLVED:** Apollo 11 GUIDO DRK/MSK equipment and request sequence, exact per-field CCATS/RTCC routing/transformation, numeric dynamic-data cadence/latency/freshness, and powered-descent format selection.
+- **UNRESOLVED:** Apollo 11 GUIDO DRK/MSK equipment, exact button/format mapping and powered-descent selection, exact per-field CCATS/RTCC routing/transformation, and numeric dynamic-data cadence/latency/freshness.
