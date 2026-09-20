@@ -15,20 +15,23 @@ Apollo 11 MCC architecture is source-controlled as distinct spacecraft/downlink,
 
 NASA TN D-8316 narrows the timing boundary: D/TV generators buffered display instructions/data, so computer dynamic-data updates were independent of CRT refresh requirements and could replace either a complete instruction list or a single data word. Its four-second access requirement applies to reference slides, not dynamic telemetry cadence.
 
-A primary NASA Apollo 12 Saturn V Flight Manual now constrains the adjacent display-request mechanism without being back-projected as an Apollo 11 station configuration. It states that the Display Request Keyboard (DRK) requested a specific RTCC display format by labeled PBI and provided the same capability as the MSK in display-request mode, but faster because thumbwheel selection was unnecessary. This establishes that MSK and DRK were alternate request mechanisms in the Apollo-era MCC architecture; it does **not** establish that Apollo 11 GUIDO had a DRK, which PBIs were assigned, or how MSK-1137 was selected during descent.
+A primary NASA Apollo 12 Saturn V Flight Manual constrains the adjacent display-request mechanism without being back-projected as an Apollo 11 station configuration. It states that the Display Request Keyboard (DRK) requested a specific RTCC display format by labeled PBI and provided the same capability as the MSK in display-request mode, but faster because thumbwheel selection was unnecessary.
+
+Research 400 now tightens the effectivity boundary further. The Apollo 11 AC Electronics manual explicitly places MSK-1137 in the `ASPO 45 CRT DISPLAYS` family; Apollo 12 and NASA-hosted Apollo 15 Delco manuals preserve the same four-format family. This establishes format-family continuity, not GUIDO ownership. A targeted Apollo-11-effective search did not recover primary evidence assigning DRK/MSK hardware or MSK-1137 request workflow to GUIDO.
 
 ## Next work
 
-1. Pursue Apollo-11-effective console configuration or controller procedure evidence for GUIDO: whether DRK and/or MSK was used, exact request/key sequence, and powered-descent format selection.
+1. Keep Apollo 11 GUIDO request hardware/workflow **UNRESOLVED** until mission-effective console configuration, controller procedure, or shift material is recovered.
 2. Continue RTCC/CCATS research for per-field MSK-1137 routing and numeric dynamic-data latency/freshness.
-3. Keep PHO-TN401 direct inspection **BLOCKED** pending archival retrieval/authenticated scan.
+3. Keep PHO-TN401 direct inspection **BLOCKED** pending archival retrieval/authenticated scan; it remains the next discriminating mission-specific display-usage source.
 4. Keep sample/receive/process/display timestamps distinct; do not use the two-second onboard LR cadence or four-second reference-slide access as controller-display cadence.
 5. Keep historical stochastic LR measurement generation **BLOCKED** until flight-effective numerical error evidence is recovered.
 
 ## Evidence status
 
 - **DOCUMENTED / IMPLEMENTED / COMPOSED:** LM-5 geometry + SETPOS + measurement-time NB→SM transform through the estimator.
-- **DOCUMENTED:** Apollo 11 MSK-1137 LR field semantics/formatting at field-definition level.
+- **DOCUMENTED:** Apollo 11 MSK-1137 LR field semantics/formatting and ASPO 45 format identity.
+- **DOCUMENTED:** ASPO 45 MSK-1137 display-family continuity across recovered Apollo 11/12/15 manuals; not station-assignment authority.
 - **DOCUMENTED:** Apollo MCC architectural separation and D/TV buffered-update behavior; reference-slide access is distinct from dynamic-data update.
 - **DOCUMENTED, ADJACENT EFFECTIVITY:** Apollo 12 flight manual defines DRK request behavior and its equivalence to MSK display-request mode; not authority for Apollo 11 GUIDO console configuration.
 - **DOCUMENTED:** PHO-TN401 identity and archival location; HAER aggregate Apollo 11 display-usage reporting is secondary/indirect evidence only.
