@@ -10,7 +10,9 @@ Flown LUMINARY 099 constrains antenna-position behavior: beam geometry is recomp
 
 This improves spacecraft-model completeness only. It does not change GUIDO station maturity or authorize an exact station display. No source here establishes that beam vectors, saved CDUs, or estimator intermediates were controller-visible, nor their ground cadence or formatting.
 
-A newly cataloged primary NASA memorandum, D. A. Dyer's *LM landing radar test for the F mission — Project Apollo* (MSC-69-EG-14 / NASA-TM-X-64374, 11 Mar 1969; NTRS 19700025433), is a plausible precursor source for the unresolved LR numerical-error thread. The accessible NTRS record establishes that it concerns F-mission LR test requirements, but its PDF contents were not retrievable in this pass. No numerical requirement is therefore imported. Because it is F-mission evidence, any recovered value will still require an explicit Mission-G/LM-5 applicability bridge before controlling Apollo 11 simulation behavior.
+A NASA primary-source table reproducing GAEC master end-item specification **LSP-470-2D** now supplies a quantitative landing-radar performance envelope. Range accuracy is specified at 3 sigma as `1.4% + 15 ft` from 2,000–25,000 ft and `1.4% + 5 ft` from 10–2,000 ft; the same table supplies altitude-banded 3-sigma velocity-component accuracy limits. This is useful for validation and scenario-bound checks, but it is **not** evidence that historical measurement error was Gaussian. NASA TN D-6849 specifically records that a Gaussian assumption used in Doppler-spectrum-simulator test limits had to be corrected because the simulator approximation put more energy in the distribution tails. Accordingly, no stochastic generator is authorized from the 3-sigma table alone.
+
+D. A. Dyer's *LM landing radar test for the F mission — Project Apollo* (MSC-69-EG-14 / NASA-TM-X-64374, 11 Mar 1969; NTRS 19700025433) remains a plausible adjacent-effectivity source for additional test/error detail. Its numerical contents remain uninspected and cannot silently override or specialize the Mission-G boundary.
 
 ## CONTROL / FLIGHT consequence
 
@@ -18,15 +20,17 @@ None. No new CONTROL or FLIGHT display, callout, threshold, timing rule, or stoc
 
 ## Player-facing boundary
 
-Do not expose beam vectors, CDU/PIPA snapshots, `LRVTIME`, gravity terms, lunar-rotation correction, estimator internals, or precursor F-mission test requirements as Apollo-11 controller-visible telemetry/behavior without separate mission-effective evidence.
+Do not expose beam vectors, CDU/PIPA snapshots, `LRVTIME`, gravity terms, lunar-rotation correction, estimator internals, or precursor F-mission test requirements as Apollo-11 controller-visible telemetry/behavior without separate mission-effective evidence. Do not present the LSP-470-2D 3-sigma limits as a controller alarm/redline unless controller-facing evidence is found.
 
 ## Evidence status
 
 - **DOCUMENTED / IMPLEMENTED / COMPOSED:** source-controlled LM-5 position geometry + SETPOS + measurement-time NBSM beam path through the velocity estimator proof.
 - **DOCUMENTED:** discrete position-1/position-2 recomputation behavior.
-- **DOCUMENTED, ADJACENT EFFECTIVITY / CONTENT NOT YET INSPECTED:** MSC-69-EG-14 / NASA-TM-X-64374 is an F-mission LR test-requirements memorandum and a retrieval target for quantitative error evidence.
+- **DOCUMENTED:** landing-radar 3-sigma range/velocity performance envelope from GAEC LSP-470-2D as reproduced in NASA primary material.
+- **DOCUMENTED:** TN D-6849 warns against treating its Doppler-spectrum-simulator test distribution as simply Gaussian.
+- **DOCUMENTED, ADJACENT EFFECTIVITY / CONTENT NOT YET INSPECTED:** MSC-69-EG-14 / NASA-TM-X-64374 is an F-mission LR test-requirements memorandum.
 - **NOT CLAIMED:** bit-for-bit AGC fixed-point arithmetic equivalence.
-- **UNRESOLVED / BLOCKED:** Apollo-11-effective numerical landing-radar measurement-error/noise model; F-mission evidence alone cannot close it.
+- **UNRESOLVED / BLOCKED:** Apollo-11-effective stochastic landing-radar measurement-error distribution/process beyond the documented performance envelope.
 - **UNRESOLVED:** controller-visible radar/guidance product cadence, synchronization, and formatting.
 
 No station maturity grade changes.
