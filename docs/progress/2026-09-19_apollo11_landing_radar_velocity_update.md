@@ -12,13 +12,15 @@ Costis, Ortolani, and Moreland, *NASA MCC Display/Control System Usage and Effec
 
 NASA TN D-8316 establishes that D/TV generators could update displays independently of CRT refresh and could update complete instruction lists or single data words. Its four-second requirement concerns reference-slide access, not dynamic telemetry cadence.
 
-A newly inspected mission-period primary baseline, Philco `PHO-FAM001` (30 Jun 1967), documents the Computer Display/Control Interface request transaction: display-request keyboards/encoders could select among up to 384 stored displays, with the operator pressing the desired-display switch and then the desired-display-device switch. This narrows the generic interaction sequence before Apollo 11. It does not establish GUIDO's Apollo 11 keyboard installation, labels, MSK-1137 mapping, or descent-time selection.
+Philco `PHO-FAM001` (30 Jun 1967) documents the Computer Display/Control Interface request transaction: display-request keyboards/encoders could select among up to 384 stored displays, with the operator pressing the desired-display switch and then the desired-display-device switch. This narrows the generic interaction sequence before Apollo 11. It does not establish GUIDO's Apollo 11 keyboard installation, labels, MSK-1137 mapping, or descent-time selection.
+
+NASA TN D-7685, an Apollo Experience Report written from the flight-control user-organization perspective, adds the operational channel-allocation layer. It states that lunar-landing missions required 36 computer-driven TV channels rather than the 28 sufficient for Earth-orbital Apollo flights. In display-request mode, a console request caused the computer to generate and format the display, place it on the next available computer-driven TV channel, and automatically connect that channel to the requesting console. Allocation was first-come/first-served. Channel-attach mode instead connected a console to an already active channel. When capacity became constrained, a display showing the format and requesting console for each channel allowed the flight-control team to determine which formats to release. These are Apollo-program operational semantics; they do not prove a GUIDO-specific Apollo 11 control map or refresh cadence.
 
 The Apollo 12 Saturn V Flight Manual independently states that the DRK requested specific RTCC display formats through labeled PBIs and provided the same capability as the MSK in display-request mode, with faster callup because no thumbwheel selection was required. That remains adjacent-effectivity evidence only.
 
 ## Implementation
 
-No executable renderer changed. Existing controller-product timestamp/provenance separation remains correct. The generic display-request transaction can now be represented in design documentation, but a GUIDO-specific control surface remains gated on Apollo-11-effective station evidence.
+No executable renderer changed. Existing controller-product timestamp/provenance separation remains correct. The display service may eventually model requested-format allocation, channel sharing/attach, and release as separate state from the format's dynamic data, but GUIDO-specific controls remain gated on Apollo-11-effective station evidence.
 
 ## Boundaries
 

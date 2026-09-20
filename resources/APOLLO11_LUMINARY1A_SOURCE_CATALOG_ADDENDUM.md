@@ -15,6 +15,7 @@ Date: 2026-09-20
 | AC Electronics, *Apollo 11 Guidance and Navigation System Manual* | Average-G/PIPA 2-second LR component schedule; ASPO 45 MSK-1137 LR field definitions | Onboard cadence plus Apollo-11 controller field semantics. Onboard cadence is not MCC display cadence. |
 | NASA, *Apollo 11 AS-506 Mission Operation Report*, M-932-69-11 | Distinct CCATS, RTCC, Voice Communications, Display/Control, MOCR/SSR elements | Apollo-11-effective architecture authority; not exact per-field routing/timing. |
 | Philco, *Mission Control Center Houston Familiarization Manual*, `PHO-FAM001`, 30 Jun 1967 | Computer Display/Control Interface request keyboards/encoders; up to 384 stored displays; operator selects desired display then desired display device | **Pre-Apollo-11 primary baseline.** Controls generic request-transaction architecture, not Apollo 11 GUIDO equipment, labels, format mapping, or descent workflow. |
+| Hoover, *Apollo Experience Report: Flight-Control Data Needs, Terminal Display Devices, and Ground System Configuration Requirements*, NASA TN D-7685 | 28 computer-driven TV channels for Earth-orbital Apollo, 36 for lunar-landing missions; display-request mode automatically assigns next available channel and connects requesting console; channel-attach mode shares an active channel; channel-usage display supports release | **Apollo-program experience authority.** Controls shared TV-resource/request architecture, not Apollo 11 GUIDO keys, exact format selection, or numeric display cadence. |
 | Sullivan & Burbank, *Apollo Experience Report: Real-Time Display System*, NASA TN D-8316 | D/TV generators have random-access buffers; complete instruction lists or single data words may update independently of CRT refresh; reference-slide system had a four-second access/display requirement | Apollo-wide display-system evidence. Four seconds is not dynamic telemetry cadence. |
 | NASA, *Apollo 12 Saturn V Flight Manual*, SA-507 | DRK requests a specific RTCC display by labeled PBI; DRK has the same capability as MSK in display-request mode but avoids MSK thumbwheel selection | **Adjacent-effectivity only.** Establishes Apollo-era request-mechanism semantics; does not prove Apollo 11 GUIDO DRK assignment, PBI mapping, or MSK-1137 request sequence. |
 | Costis, Ortolani & Moreland, *NASA MCC Display/Control System Usage and Effectiveness, Apollo 11*, PHO-TN401, 24 Dec 1969 | Mission-specific display/control usage study; archival citation locates Box 078-65/66, JSC History Collection, University of Houston-Clear Lake | **BLOCKED:** no public digital copy located; do not claim exact request/timing semantics without direct inspection. |
@@ -27,13 +28,13 @@ Date: 2026-09-20
 
 The Apollo 11 profile carries exact LM-5 position-specific geometry and a verified estimator chain. Controller-visible formatting is partially controlled by mission-specific MSK-1137 definitions. Ground/display architecture is controlled at the system-boundary level and prohibits direct authoritative-state aliasing.
 
-PHO-FAM001 now narrows the generic request interaction: the Display/Control subsystem accepted a desired-display selection followed by a desired-display-device selection, with request keyboards/encoders supporting up to 384 stored displays. The Apollo 12 manual further distinguishes DRK direct-PBI requests from MSK thumbwheel display-request mode. Neither source is sufficient to assign Apollo 11 GUIDO's exact hardware or button mapping.
+PHO-FAM001 narrows the generic request interaction: the Display/Control subsystem accepted a desired-display selection followed by a desired-display-device selection, with request keyboards/encoders supporting up to 384 stored displays. TN D-7685 adds the Apollo operational allocation behavior: lunar-landing missions used 36 computer-driven TV channels; display requests were assigned the next available channel and connected automatically to the requesting console, while channel attach permitted sharing an active channel and a usage display supported channel release. The Apollo 12 manual further distinguishes DRK direct-PBI requests from MSK thumbwheel display-request mode. None of these sources is sufficient to assign Apollo 11 GUIDO's exact hardware or button mapping.
 
 TN D-8316 separates dynamic-data update from CRT refresh and reference-slide access. PHO-TN401 remains a documented **BLOCKED** archival retrieval. Historical stochastic LR generation remains **BLOCKED** separately.
 
 ## Effectivity rule
 
-Do not back-project later mission console assignments or display semantics into Apollo 11. Pre-mission familiarization evidence may control generic system architecture but not mission-specific station configuration unless independently corroborated. Adjacent-mission evidence may define architecture or device semantics only when labeled as such. Do not convert the onboard two-second LR schedule, the TN D-8316 four-second reference-slide requirement, or HAER aggregate PHO-TN401 statistics into an MCC dynamic-data refresh/freshness rule.
+Do not back-project later mission console assignments or display semantics into Apollo 11. Pre-mission familiarization evidence may control generic system architecture but not mission-specific station configuration unless independently corroborated. Apollo Experience Reports may control program-level architecture/operational behavior where they explicitly describe Apollo experience, but do not establish a mission-specific console mapping unless they say so. Adjacent-mission evidence may define architecture or device semantics only when labeled as such. Do not convert the onboard two-second LR schedule, the TN D-8316 four-second reference-slide requirement, channel allocation, or HAER aggregate PHO-TN401 statistics into an MCC dynamic-data refresh/freshness rule.
 
 ## Sources
 
@@ -46,6 +47,7 @@ Do not back-project later mission console assignments or display semantics into 
 - https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
 - https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11_MissionOpReport.pdf
 - `PHO-FAM001`, *Mission Control Center Houston Familiarization Manual*, Philco, 30 Jun 1967 (primary document; inspected via public scan/transcription)
+- https://ntrs.nasa.gov/citations/19740015284
 - https://ntrs.nasa.gov/citations/19760024152
 - https://www.nasa.gov/wp-content/uploads/static/history/afj/ap12fj/pdf/a12_sa507-flightmanual.pdf
 - https://tile.loc.gov/storage-services/master/pnp/habshaer/tx/tx1100/tx1134/data/tx1134data.pdf
@@ -58,6 +60,7 @@ Do not back-project later mission console assignments or display semantics into 
 - **DOCUMENTED / IMPLEMENTED / COMPOSED:** equation-level LM-5 profile geometry + SETPOS + measurement-time NBSM velocity-beam path through the estimator.
 - **DOCUMENTED:** Apollo 11 MSK-1137 LR semantics/formatting at recorded field-definition level.
 - **DOCUMENTED:** Apollo 11 MCC architectural separation of CCATS/RTCC processing, Display/Control, and controller operations.
+- **DOCUMENTED, APOLLO-PROGRAM EXPERIENCE:** TN D-7685 shared computer-driven TV resource behavior, including 36 channels for lunar-landing missions, automatic request allocation, channel attach, and release support.
 - **DOCUMENTED, PRE-APOLLO-11 BASELINE:** PHO-FAM001 generic display/device request transaction and request-keyboard capacity.
 - **DOCUMENTED:** Apollo D/TV buffered-update behavior and separation of dynamic update from CRT refresh/reference-slide access.
 - **DOCUMENTED, ADJACENT EFFECTIVITY:** DRK direct-PBI request behavior and equivalence to MSK display-request mode in the Apollo 12 flight manual.
