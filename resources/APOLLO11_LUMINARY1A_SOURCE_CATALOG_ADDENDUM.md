@@ -18,6 +18,8 @@ Date: 2026-09-19
 | AC Electronics, *Apollo 11 Guidance and Navigation System Manual* — ASPO 45 CRT MSK-1137 definitions | `LR RNG` and `VEL` GOOD/BAD; `VXB/VYB/VZB` LR velocity in body-axis coordinates at `±XXXX FT/SEC`; LR slant range `XXXXX FT`; PGNS altitude `XXXXX FT`; `ACT ΔV` explicitly ground computed | Apollo-11-specific controller-visible field semantics/formatting. Does not establish CRT refresh cadence or complete downlink/ground routing. |
 | NASA, *Apollo 11 AS-506 Mission Operation Report*, M-932-69-11 — Mission Support | MCC functions through distinct CCATS, RTCC, Voice Communications, Display/Control, and MOCR/SSR elements; telemetry/operational data can be processed by CCATS and RTCC for flight-control evaluation | Apollo-11-effective architecture authority. Supports a layered spacecraft/downlink → ground processing → display model, not exact per-field routing or timing. |
 | Sullivan & Burbank, *Apollo Experience Report: Real-Time Display System*, NASA-TN-D-8316 / JSC-S-461 | Apollo real-time display system organized into distinct computer-input multiplexer, plotting, digital-display, and digital-television subsystems | Retrospective architecture cross-check only; not Apollo-11 MSK-1137 cadence or field-routing authority. |
+| Costis, Ortolani & Moreland, *NASA MCC Display/Control System Usage and Effectiveness, Apollo 11*, PHO-TN401, 24 Dec 1969 | Mission-specific display/control usage study; archival citation locates it in Box 078-65/66, Mission Documents: Apollo 11, JSC History Collection, University of Houston-Clear Lake | **BLOCKED:** no public digital copy located; do not claim exact request/timing semantics without direct inspection. |
+| HAER TX-109-C, *Johnson Space Center, Apollo Mission Control* | Government historical report cites PHO-TN401 and reports aggregate Apollo 11 display-request/use statistics | Secondary/indirect evidence only; useful for system-level usage, not exact GUIDO keys, per-field cadence, latency, or format selection. |
 | Direct Apollo 11 / Apollo 13 MSK-1137 comparison, research note 030 | Same display identifier but mission-specific changes in LR coordinate frame, altitude/comparison semantics, and other fields | Requires mission-specific display profiles. |
 | NASA TN D-6849 | LM-5 bias correction and qualitative non-Gaussian/near-zero-Doppler error boundary | No numerical flight-effective stochastic distribution. |
 | MIT/IL E-1982 | 1966 design-study statistical LR error/weighting assumptions | Design-history only. |
@@ -26,13 +28,13 @@ Date: 2026-09-19
 
 The Apollo 11 profile carries the exact LM-5 position-specific geometry and verified estimator chain. Controller-visible formatting is partially controlled by mission-specific MSK-1137 definitions.
 
-The ground/display architecture is now also controlled at the system-boundary level: Apollo 11 documentation separates telemetry/communications, CCATS/RTCC processing, Display/Control, and controller operations. This is sufficient to prohibit direct authoritative-state aliasing in an eventual Apollo 11 controller product. It is not sufficient to invent the exact CCATS/RTCC transformation for each LR field or a numeric CRT refresh period.
+The ground/display architecture is controlled at the system-boundary level: Apollo 11 documentation separates telemetry/communications, CCATS/RTCC processing, Display/Control, and controller operations. This prohibits direct authoritative-state aliasing in an eventual Apollo 11 controller product. It is not sufficient to invent the exact CCATS/RTCC transformation for each LR field or a numeric CRT refresh period.
 
-Historical stochastic LR generation remains **BLOCKED**.
+The strongest identified Apollo-11-specific display-usage source, PHO-TN401, is now a documented **BLOCKED** archival retrieval rather than an unclassified gap. Historical stochastic LR generation remains **BLOCKED** separately.
 
 ## Effectivity rule
 
-Do not back-project later Luminary or Apollo 13 display semantics into Apollo 11. Do not convert the documented onboard 2-second LR component schedule into an MCC refresh/freshness rule. Ground-processing and display stages remain explicit even where their exact Apollo-11 timing is unresolved.
+Do not back-project later Luminary or Apollo 13 display semantics into Apollo 11. Do not convert the documented onboard 2-second LR component schedule into an MCC refresh/freshness rule. Do not convert HAER aggregate PHO-TN401 statistics into exact station workflow. Ground-processing and display stages remain explicit even where their exact Apollo-11 timing is unresolved.
 
 ## Sources
 
@@ -47,6 +49,8 @@ Do not back-project later Luminary or Apollo 13 display semantics into Apollo 11
 - https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
 - https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11_MissionOpReport.pdf
 - https://ntrs.nasa.gov/citations/19760024152
+- https://tile.loc.gov/storage-services/master/pnp/habshaer/tx/tx1100/tx1134/data/tx1134data.pdf
+- `resources/research/334_apollo11_display_usage_source_retrieval_status.md`
 - `resources/research/030_apollo11_apollo13_msk1137_comparison.md`
 - https://ntrs.nasa.gov/api/citations/19720016521/downloads/19720016521.pdf
 - https://www.ibiblio.org/apollo/Documents/E-1982_LEM_PGNCS_and_Landing_Radar_Operations.pdf
@@ -57,5 +61,6 @@ Do not back-project later Luminary or Apollo 13 display semantics into Apollo 11
 - **DOCUMENTED:** Apollo 11 MSK-1137 LR semantics/formatting at the recorded field-definition level.
 - **DOCUMENTED:** Apollo 11 MCC architectural separation of CCATS/RTCC processing, Display/Control, and controller operations.
 - **DOCUMENTED:** Apollo-wide real-time display subsystem separation, used only as an architecture cross-check.
-- **UNRESOLVED / BLOCKED:** numerical stochastic Apollo-11-effective LR error distribution.
-- **UNRESOLVED:** exact per-field Apollo 11 CCATS/RTCC transformation/routing, CRT cadence, end-to-end latency, freshness policy, and request/key workflow.
+- **DOCUMENTED:** PHO-TN401 identity and archival location; HAER-derived aggregate usage is indirect evidence.
+- **BLOCKED:** direct PHO-TN401 inspection; numerical stochastic Apollo-11-effective LR error distribution.
+- **UNRESOLVED:** exact per-field Apollo 11 CCATS/RTCC transformation/routing, CRT cadence, end-to-end latency, freshness policy, GUIDO request/key workflow, and powered-descent display selection.
