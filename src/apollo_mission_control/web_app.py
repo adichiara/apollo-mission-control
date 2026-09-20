@@ -29,6 +29,7 @@ from .causal_translational_model import (
     TranslationalState,
     simulate_translational_maneuver,
 )
+from .controller_display_profiles import get_controller_display_profile
 from .controller_products import project_controller_products
 from .crew_response import (
     apply_session_engine_off_response,
@@ -1505,6 +1506,44 @@ def _electrical_bus_from_request(
             bus_enabled=request.bus_enabled,
         ),
     )
+
+
+@app.get(
+    "/api/admin/model-proof/controller-display-profile/{profile_id}",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def controller_display_profile_model_proof(profile_id: str) -> dict[str, Any]:
+    profile = _domain_call(lambda: get_controller_display_profile(profile_id))
+    payload = profile.to_public_dict()
+
+    binding_gate = "open"
+    binding_reason = None
+    try:
+        profile.require_historical_value_binding()
+    except ValueError as exc:
+        binding_gate = "blocked"
+        binding_reason = str(exc)
+
+    timing_gate = "open"
+    timing_reason = None
+    try:
+        profile.require_historical_display_timing()
+    except ValueError as exc:
+        timing_gate = "blocked"
+        timing_reason = str(exc)
+
+    return {
+        "model_status": "historical_controller_display_profile_boundary",
+        "profile": payload,
+        "historical_value_binding_gate": binding_gate,
+        "historical_value_binding_gate_reason": binding_reason,
+        "historical_display_timing_gate": timing_gate,
+        "historical_display_timing_gate_reason": timing_reason,
+        "note": (
+            "Field semantics do not authorize direct simulation-state binding. "
+            "Per-field routing and display timing remain separate historical gates."
+        ),
+    }
 
 
 @app.post(
