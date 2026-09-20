@@ -1,0 +1,158 @@
+{
+  "schema_version": "0.1-controller-display-profile",
+  "profile_id": "apollo11_msk1137_landing_radar_partial",
+  "mission_profile_id": "apollo11_g",
+  "display_id": "MSK-1137",
+  "station_context": [
+    "Apollo 11 Mission Control guidance/spacecraft-system display context; exact station access/request assignment unresolved"
+  ],
+  "status": "partial historical field-semantics profile; non-executable field routing",
+  "mixed_source_format_documented": true,
+  "historical_value_binding_executable": false,
+  "historical_display_timing_executable": false,
+  "downstream_gates": [
+    "Apollo-11-effective per-field D/L versus RTCC routing is unresolved",
+    "external-name/downlist or ground-computation identifiers are unresolved",
+    "numeric dynamic-data cadence, latency, freshness, and CRT refresh relationship are unresolved",
+    "exact Apollo 11 GUIDO/CONTROL request/control assignment is unresolved"
+  ],
+  "fields": [
+    {
+      "field_id": "lr_range_validity",
+      "label": "LR RNG",
+      "meaning": "landing-radar range validity",
+      "unit_or_states": "GOOD/BAD",
+      "reference_frame": null,
+      "data_origin": "spacecraft_downlink_or_ground_processing_unresolved",
+      "routing_status": "unresolved",
+      "source_category": null,
+      "source_identifier": null,
+      "display_mask": "GOOD/BAD",
+      "provenance": [
+        "AC Electronics Apollo 11 Guidance & Navigation Summary, MSK-1137 layout/definitions, PDF 205-207"
+      ],
+      "evidence_note": "Field semantics and display states are mission-specific; exact D/L or RTCC routing is not assigned."
+    },
+    {
+      "field_id": "lr_velocity_validity",
+      "label": "VEL",
+      "meaning": "landing-radar velocity validity",
+      "unit_or_states": "GOOD/BAD",
+      "reference_frame": null,
+      "data_origin": "spacecraft_downlink_or_ground_processing_unresolved",
+      "routing_status": "unresolved",
+      "source_category": null,
+      "source_identifier": null,
+      "display_mask": "GOOD/BAD",
+      "provenance": [
+        "AC Electronics Apollo 11 Guidance & Navigation Summary, MSK-1137 layout/definitions, PDF 205-207"
+      ],
+      "evidence_note": "Field semantics and display states are mission-specific; exact D/L or RTCC routing is not assigned."
+    },
+    {
+      "field_id": "lr_velocity_x_body",
+      "label": "VXB",
+      "meaning": "landing-radar X velocity in body-axis coordinates",
+      "unit_or_states": "ft/s",
+      "reference_frame": "LM body axes",
+      "data_origin": "spacecraft_downlink_or_ground_processing_unresolved",
+      "routing_status": "unresolved",
+      "source_category": null,
+      "source_identifier": null,
+      "display_mask": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Guidance & Navigation Summary, MSK-1137 layout/definitions, PDF 205-207",
+        "Research note 030 Apollo 11/Apollo 13 MSK-1137 comparison"
+      ],
+      "evidence_note": "Apollo 11 defines body-axis velocity semantics; do not substitute Apollo 13 stable-member VXS/VYS/VZS processing."
+    },
+    {
+      "field_id": "lr_velocity_y_body",
+      "label": "VYB",
+      "meaning": "landing-radar Y velocity in body-axis coordinates",
+      "unit_or_states": "ft/s",
+      "reference_frame": "LM body axes",
+      "data_origin": "spacecraft_downlink_or_ground_processing_unresolved",
+      "routing_status": "unresolved",
+      "source_category": null,
+      "source_identifier": null,
+      "display_mask": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Guidance & Navigation Summary, MSK-1137 layout/definitions, PDF 205-207",
+        "Research note 030 Apollo 11/Apollo 13 MSK-1137 comparison"
+      ],
+      "evidence_note": "Apollo 11 defines body-axis velocity semantics; exact field source/routing is unresolved."
+    },
+    {
+      "field_id": "lr_velocity_z_body",
+      "label": "VZB",
+      "meaning": "landing-radar Z velocity in body-axis coordinates",
+      "unit_or_states": "ft/s",
+      "reference_frame": "LM body axes",
+      "data_origin": "spacecraft_downlink_or_ground_processing_unresolved",
+      "routing_status": "unresolved",
+      "source_category": null,
+      "source_identifier": null,
+      "display_mask": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Guidance & Navigation Summary, MSK-1137 layout/definitions, PDF 205-207",
+        "Research note 030 Apollo 11/Apollo 13 MSK-1137 comparison"
+      ],
+      "evidence_note": "Apollo 11 defines body-axis velocity semantics; exact field source/routing is unresolved."
+    },
+    {
+      "field_id": "lr_slant_range",
+      "label": "RANGE",
+      "meaning": "landing-radar slant range",
+      "unit_or_states": "ft",
+      "reference_frame": null,
+      "data_origin": "spacecraft_downlink_or_ground_processing_unresolved",
+      "routing_status": "unresolved",
+      "source_category": null,
+      "source_identifier": null,
+      "display_mask": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Guidance & Navigation Summary, MSK-1137 layout/definitions, PDF 205-207"
+      ],
+      "evidence_note": "Displayed slant-range semantics are established; exact MCC field routing and cadence are unresolved."
+    },
+    {
+      "field_id": "pgns_altitude",
+      "label": "PGNS",
+      "meaning": "PGNS-computed altitude",
+      "unit_or_states": "ft",
+      "reference_frame": "landing-site altitude reference as defined by Apollo 11 guidance summary",
+      "data_origin": "spacecraft_downlink_or_ground_processing_unresolved",
+      "routing_status": "unresolved",
+      "source_category": null,
+      "source_identifier": null,
+      "display_mask": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Guidance & Navigation Summary, MSK-1137 layout/definitions, PDF 205-207",
+        "Research note 030 Apollo 11/Apollo 13 MSK-1137 comparison"
+      ],
+      "evidence_note": "Apollo 11 displays an absolute PGNS altitude; do not replace it with Apollo 13 radar-minus-LGC delta-H semantics."
+    },
+    {
+      "field_id": "actual_delta_v",
+      "label": "ACT ΔV",
+      "meaning": "ground-computed gained delta velocity",
+      "unit_or_states": "ft/s",
+      "reference_frame": null,
+      "data_origin": "ground_computed",
+      "routing_status": "unresolved",
+      "source_category": null,
+      "source_identifier": null,
+      "display_mask": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Guidance & Navigation Summary, MSK-1137 field notes, PDF 205-207"
+      ],
+      "evidence_note": "Ground-computed identity is documented; exact RTCC/ground algorithm, source inputs, and field identifier remain unresolved."
+    }
+  ],
+  "sources": [
+    "AC Electronics, Apollo 11 Guidance & Navigation Summary, MSK-1137 layout and definitions, PDF 205-207",
+    "resources/research/030_apollo11_apollo13_msk1137_comparison.md",
+    "docs/station-status/2026-09-19_apollo11_landing_radar_component_cadence.md"
+  ]
+}
