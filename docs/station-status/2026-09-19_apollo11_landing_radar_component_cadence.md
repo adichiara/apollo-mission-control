@@ -10,7 +10,9 @@ Apollo 11 ground-system evidence constrains the intervening CCATS/RTCC and Displ
 
 A renewed inspection of the Apollo-11-effective AC Electronics MSK-1137 format shows explicit `D/L` and `RTCC` source-category labeling on the display itself. Together with the field note identifying `ACT ΔV` as ground computed, this establishes that the controller product mixed spacecraft-downlink and ground/RTCC provenance. It does not establish the per-field routing table.
 
-The Apollo 11 Mission Report now constrains the powered-descent **acceptance workflow** separately from the MCC display path. It states that, once LR data were available, the crew decided whether to incorporate them into PGNS using reasonability and precalculated limits, and verified convergence after incorporation. Because the AGS was not updated by LR, its data would then be in error and were no longer monitored closely. This is a useful player-visible state transition, but the source assigns the incorporation decision to the crew; it does not justify giving GUIDO a historical LR-accept/reject control.
+The Apollo 11 Mission Report constrains the powered-descent **acceptance workflow** separately from the MCC display path. It states that, once LR data were available, the crew decided whether to incorporate them into PGNS using reasonability and precalculated limits, and verified convergence after incorporation. Because the AGS was not updated by LR, its data would then be in error and were no longer monitored closely. This is a useful player-visible state transition, but the source assigns the incorporation decision to the crew; it does not justify giving GUIDO a historical LR-accept/reject control.
+
+NASA TN D-6849 adds an Apollo-11-specific sensor/processing boundary relevant to any future controller product. It reports that LM-5 LR data appeared well within specification except for a few low-velocity points near zero Doppler shift, where LR tracking was not expected; two questionable points were probably due to poor data processing during the LGC overload alarm. This can constrain scenario validation, but it does not establish what GUIDO saw, a display dropout cadence, or a numerical random-error process.
 
 PHO-TR515 remains useful only as a later primary-system baseline for how such provenance was formally represented: dynamic groups had source/external-name and downlist metadata. Its 1973 identifiers and plot update-rate fields are not back-projected into Apollo 11.
 
@@ -22,13 +24,14 @@ Keep spacecraft acceptance, field provenance, dynamic-data update, CRT refresh, 
 
 ## Maturity
 
-No station maturity change. Mission-specific mixed provenance and the crew LR-acceptance/convergence workflow are now established, but Apollo-11-effective per-field source mapping is still required before claiming exact MSK-1137 routing or timing. GUIDO's historical interaction with the crew acceptance decision remains unresolved.
+No station maturity change. Mission-specific mixed provenance, crew LR-acceptance/convergence workflow, and Apollo 11 sensor-flight exception are established, but Apollo-11-effective per-field source mapping is still required before claiming exact MSK-1137 routing or timing. GUIDO's historical interaction with the crew acceptance decision remains unresolved.
 
 ## Evidence status
 
 - **DOCUMENTED:** onboard LGC LR velocity-component update schedule and Apollo 11 MSK-1137 field semantics.
 - **DOCUMENTED:** Apollo 11 MSK-1137 distinguishes `D/L` and `RTCC` provenance categories; `ACT ΔV` is ground computed.
 - **DOCUMENTED:** Apollo 11 Mission Report assigns LR incorporation to the crew based on reasonability/precalculated limits and requires convergence verification after incorporation; AGS was not LR-updated.
+- **DOCUMENTED, APOLLO 11 FLIGHT EXPERIENCE:** LR data generally within specification, with a localized near-zero-Doppler exception and two questionable samples probably associated with LGC-overload processing.
 - **DOCUMENTED:** Apollo MCC processing/display separation and buffered D/TV update behavior.
 - **DOCUMENTED, APOLLO-PROGRAM EXPERIENCE:** TN D-7685 shared display-resource behavior.
 - **DOCUMENTED, LATER SYSTEM BASELINE:** PHO-TR515 dynamic-field source/external-name and downlist metadata model; not Apollo 11 field mapping or tabular cadence.
