@@ -5,6 +5,7 @@ import json
 from math import tau
 from pathlib import Path
 from typing import Any
+from .landing_radar_data_good import LandingRadarDataGoodTransition
 from .landing_radar_velocity_chain import LandingRadarBeamGeometryInput
 from .landing_radar_velocity_update import LandingRadarVelocityWeightConfig
 
@@ -49,7 +50,7 @@ class LandingRadarGeometryPositionProfile:
 
 @dataclass(frozen=True)
 class LandingRadarProfileRecord:
-    profile_id:str; mission_profile_id:str; status:str; velocity_weighting:LandingRadarVelocityWeightingProfile|None; geometry_positions:dict[int,LandingRadarGeometryPositionProfile]; geometry_evidence_note:str|None; unresolved:tuple[str,...]; sources:tuple[str,...]; profile_path:Path
+    profile_id:str; mission_profile_id:str; status:str; velocity_weighting:LandingRadarVelocityWeightingProfile|None; geometry_positions:dict[int,LandingRadarGeometryPositionProfile]; geometry_evidence_note:str|None; data_good_min_duration_s:float; historical_data_good_transitions:tuple[LandingRadarDataGoodTransition,...]; unresolved:tuple[str,...]; sources:tuple[str,...]; profile_path:Path
     def velocity_update_config(self)->LandingRadarVelocityWeightConfig:
         if self.velocity_weighting is None: raise ValueError(f"landing-radar profile {self.profile_id!r} has no velocity weighting")
         return self.velocity_weighting.to_config(self.sources)
@@ -58,7 +59,7 @@ class LandingRadarProfileRecord:
         except (KeyError,ValueError) as exc: raise ValueError(f"landing-radar profile {self.profile_id!r} has no geometry for position {position!r}") from exc
         return item.beam_geometry(cdu_y_rad=cdu_y_rad,cdu_z_rad=cdu_z_rad,cdu_x_rad=cdu_x_rad)
     def to_public_dict(self)->dict[str,object]:
-        return {"profile_id":self.profile_id,"mission_profile_id":self.mission_profile_id,"status":self.status,"velocity_update_weighting":None if self.velocity_weighting is None else self.velocity_weighting.to_public_dict(),"landing_radar_geometry":{"positions":{str(k):v.to_public_dict() for k,v in sorted(self.geometry_positions.items())},"evidence_note":self.geometry_evidence_note} if self.geometry_positions else None,"unresolved":list(self.unresolved),"sources":list(self.sources)}
+        return {"profile_id":self.profile_id,"mission_profile_id":self.mission_profile_id,"status":self.status,"velocity_update_weighting":None if self.velocity_weighting is None else self.velocity_weighting.to_public_dict(),"landing_radar_geometry":{"positions":{str(k):v.to_public_dict() for k,v in sorted(self.geometry_positions.items())},"evidence_note":self.geometry_evidence_note} if self.geometry_positions else None,"data_good_min_duration_s":self.data_good_min_duration_s,"historical_data_good_transitions":[item.to_dict() for item in self.historical_data_good_transitions],"unresolved":list(self.unresolved),"sources":list(self.sources)}
 
 def _velocity_weighting(payload:Any)->LandingRadarVelocityWeightingProfile|None:
     if payload is None:return None
@@ -78,6 +79,23 @@ def _geometry(payload:Any)->tuple[dict[int,LandingRadarGeometryPositionProfile],
         pos=int(key); result[pos]=LandingRadarGeometryPositionProfile(pos,_text(item,"name"),_number(item,"alpha_rev"),_number(item,"beta_rev"))
     return result,_text(payload,"evidence_note")
 
+def _data_good_transitions(payload:Any)->tuple[LandingRadarDataGoodTransition,...]:
+    if payload is None:return ()
+    if not isinstance(payload,list):raise ValueError("historical_data_good_transitions must be a list")
+    result=[]
+    for item in payload:
+        if not isinstance(item,dict):raise ValueError("historical DATA GOOD transition must be an object")
+        data_good=item.get("data_good")
+        if not isinstance(data_good,bool):raise ValueError("historical DATA GOOD transition data_good must be boolean")
+        resolution=item.get("source_resolution_s")
+        if resolution is not None and (isinstance(resolution,bool) or not isinstance(resolution,(int,float))):raise ValueError("source_resolution_s must be numeric or null")
+        provenance=item.get("provenance",[])
+        if not isinstance(provenance,list) or not all(isinstance(x,str) and x.strip() for x in provenance):raise ValueError("historical DATA GOOD transition provenance must be strings")
+        result.append(LandingRadarDataGoodTransition(time_s=_number(item,"time_s"),data_good=data_good,label=_text(item,"label"),source_resolution_s=None if resolution is None else float(resolution),provenance=tuple(x.strip() for x in provenance)).validated())
+    times=[item.time_s for item in result]
+    if times!=sorted(times) or len(times)!=len(set(times)):raise ValueError("historical DATA GOOD transitions must have unique ascending times")
+    return tuple(result)
+
 def load_landing_radar_profile(path:str|Path)->LandingRadarProfileRecord:
     profile_path=Path(path)
     try:data=json.loads(profile_path.read_text(encoding="utf-8"))
@@ -87,7 +105,7 @@ def load_landing_radar_profile(path:str|Path)->LandingRadarProfileRecord:
     if not isinstance(unresolved,list) or not all(isinstance(x,str) and x.strip() for x in unresolved):raise ValueError("landing-radar profile unresolved must be strings")
     if not isinstance(sources,list) or not all(isinstance(x,str) and x.strip() for x in sources):raise ValueError("landing-radar profile sources must be strings")
     geometry,note=_geometry(data.get("landing_radar_geometry"))
-    record=LandingRadarProfileRecord(_text(data,"profile_id"),_text(data,"mission_profile_id"),_text(data,"status"),_velocity_weighting(data.get("velocity_update_weighting")),geometry,note,tuple(x.strip() for x in unresolved),tuple(x.strip() for x in sources),profile_path)
+    record=LandingRadarProfileRecord(_text(data,"profile_id"),_text(data,"mission_profile_id"),_text(data,"status"),_velocity_weighting(data.get("velocity_update_weighting")),geometry,note,_number(data,"data_good_min_duration_s"),_data_good_transitions(data.get("historical_data_good_transitions")),tuple(x.strip() for x in unresolved),tuple(x.strip() for x in sources),profile_path)
     if record.velocity_weighting is not None:record.velocity_update_config().validated()
     return record
 
