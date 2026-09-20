@@ -25,16 +25,21 @@ The AC Electronics Apollo 11 manual independently requires the LR `DATA GOOD` di
 
 A primary NASA precursor remains identified for the LR numerical-error question: D. A. Dyer, *LM landing radar test for the F mission — Project Apollo*, MSC-69-EG-14 / NASA-TM-X-64374, 11 Mar 1969 (NTRS 19700025433). Its numerical contents remain uninspected and cannot be imported without a Mission-G/LM-5 applicability bridge.
 
+A 1968 TRW/NASA contractor report, NASA-CR-92466 / TRW-11176-H059-R0-00, is now cataloged as a mission-period mathematical-model source specifically for LR altimeter beam bandwidth and Doppler equations. NTRS metadata says the equations were verified for mathematical-model use. It is useful for future signal/geometry model verification, but it is **not** evidence for the LM-5 flight-error distribution.
+
+The later LM10-and-subsequent Apollo Operations Handbook documents the LR-to-LGC interface as selectable radar quantities delivered through the radar fixed-extension selection and describes LR velocity/range as 15-bit binary words. Because its effectivity begins after LM-5, this is retained only as an adjacent architecture cross-check. No Apollo 11 quantization step, bit weighting, or stochastic error parameter is inferred from it.
+
 ## Next work
 
 1. Pursue Apollo-11-effective FDS/RTCC/CCATS material that maps individual MSK-1137 fields to the format's `D/L`/`RTCC` provenance categories and identifies external names/downlists or computation/logic identifiers.
 2. Continue seeking LM-5 qualification/acceptance or Apollo 11 flight-data reduction evidence that characterizes LR residuals, quantization, correlation, bias, or transition timing below the Mission Report's one-second event resolution.
 3. Preserve the two Table 5-I not-good intervals as deterministic historical replay anchors and enforce the documented four-second `DATA GOOD` qualification separately; do not infer a random dropout process from them.
 4. Retrieve and inspect MSC-69-EG-14 / NASA-TM-X-64374, requiring an explicit Mission-G/LM-5 applicability bridge before using any F-mission numbers.
-5. Keep Apollo 11 GUIDO exact DRK/MSK button mapping and powered-descent selection unresolved pending mission-effective station evidence.
-6. Keep PHO-TN401 direct inspection **BLOCKED** pending archival retrieval/authenticated scan.
-7. Keep sample/receive/process/display timestamps distinct; do not infer MCC tabular cadence from onboard LR timing.
-8. Keep historical stochastic LR measurement generation **BLOCKED** until flight-effective numerical error evidence is recovered.
+5. Inspect NASA-CR-92466 only for model equations/beam physics; do not promote it to LM-5 stochastic-error authority without separate applicability evidence.
+6. Keep Apollo 11 GUIDO exact DRK/MSK button mapping and powered-descent selection unresolved pending mission-effective station evidence.
+7. Keep PHO-TN401 direct inspection **BLOCKED** pending archival retrieval/authenticated scan.
+8. Keep sample/receive/process/display timestamps distinct; do not infer MCC tabular cadence from onboard LR timing.
+9. Keep historical stochastic LR measurement generation **BLOCKED** until flight-effective numerical error evidence is recovered.
 
 ## Evidence status
 
@@ -42,6 +47,8 @@ A primary NASA precursor remains identified for the LR numerical-error question:
 - **DOCUMENTED:** Apollo 11 MSK-1137 semantics and mixed `D/L`/`RTCC` provenance boundary.
 - **DOCUMENTED, APOLLO 11 FLIGHT:** LR acquisition at ~44,000/~28,000-ft slant range; `DATA NOT GOOD`→`DATA GOOD` intervals 102:44:11–:21 and 102:44:59–102:45:03; expected zero-Doppler/manual-maneuver cause.
 - **DOCUMENTED, APOLLO-11-EFFECTIVE ONBOARD LOGIC:** at least four continuous seconds of `DATA GOOD` are required before LR range/velocity measurement tests permit state-vector updating.
+- **DOCUMENTED, MISSION-PERIOD MODEL SOURCE:** NASA-CR-92466 for LR beam-bandwidth/Doppler mathematical-model verification; not LM-5 flight-error statistics.
+- **ADJACENT EFFECTIVITY ONLY:** LM10-and-subsequent handbook confirms a 15-bit LR/LGC digital interface architecture; no Apollo 11 bit weighting or quantization is claimed.
 - **DOCUMENTED:** Apollo MCC architectural separation and D/TV buffered-update behavior.
 - **BLOCKED:** direct PHO-TN401 inspection; historical stochastic LR measurement generation.
-- **UNRESOLVED:** per-field Apollo 11 MSK-1137 routing, exact GUIDO request workflow, MCC dynamic-data cadence/latency/freshness, and sub-second LR transition timing.
+- **UNRESOLVED:** per-field Apollo 11 MSK-1137 routing, exact GUIDO request workflow, MCC dynamic-data cadence/latency/freshness, Apollo-11-effective LR quantization/error process, and sub-second LR transition timing.
