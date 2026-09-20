@@ -1,0 +1,187 @@
+{
+  "schema_version": "0.1-controller-product-provenance",
+  "profile_id": "apollo11_msk1137_partial",
+  "mission_profile_id": "apollo11_g",
+  "display_id": "MSK-1137",
+  "status": "partial historical controller-product provenance profile",
+  "historical_rendering_executable": false,
+  "fields": [
+    {
+      "field_id": "GET",
+      "label": "GET",
+      "description": "Ground elapsed time",
+      "origin": "contextual",
+      "routing_state": "partial",
+      "unit": "h:m:s",
+      "display_format": "XXX:XX:XX",
+      "source_key": null,
+      "transform_id": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 definition: ground elapsed time"
+      ],
+      "evidence_note": "Field identity and semantics are documented; exact Mission Control backend route is not assigned."
+    },
+    {
+      "field_id": "SITE",
+      "label": "SITE",
+      "description": "Site from which data is being received",
+      "origin": "contextual",
+      "routing_state": "partial",
+      "unit": null,
+      "display_format": null,
+      "source_key": null,
+      "transform_id": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 definition: receiving site"
+      ],
+      "evidence_note": "Field semantics are documented; exact station/site-source implementation remains unresolved."
+    },
+    {
+      "field_id": "DOWNLIST_ID",
+      "label": "D/L",
+      "description": "Downlist identification",
+      "origin": "contextual",
+      "routing_state": "partial",
+      "unit": null,
+      "display_format": null,
+      "source_key": null,
+      "transform_id": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 definition: downlist identification"
+      ],
+      "evidence_note": "This identifies the active downlist context; it is not evidence that every displayed field is a direct downlist value."
+    },
+    {
+      "field_id": "RTCC_MASS",
+      "label": "RTCC",
+      "description": "RTCC-computed mass of the LM or LM plus CSM",
+      "origin": "ground_derived",
+      "routing_state": "partial",
+      "unit": "lb",
+      "display_format": "XXXXX",
+      "source_key": null,
+      "transform_id": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 definition: RTCC-computed mass"
+      ],
+      "evidence_note": "Ground computation is documented; exact RTCC processor/formula/input route is not assigned."
+    },
+    {
+      "field_id": "ACT_DELTA_V",
+      "label": "ACT ΔV",
+      "description": "Actual delta velocity gained",
+      "origin": "ground_derived",
+      "routing_state": "partial",
+      "unit": "ft/s",
+      "display_format": "XX.X",
+      "source_key": null,
+      "transform_id": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 continued definition: actual delta V gained (ground computed)"
+      ],
+      "evidence_note": "Ground computation is explicit; the source inputs and exact computation/routing are unresolved."
+    },
+    {
+      "field_id": "LR_RANGE_STATUS",
+      "label": "LR RNG",
+      "description": "Status of landing-radar range data",
+      "origin": "unresolved",
+      "routing_state": "unresolved",
+      "unit": null,
+      "display_format": "GOOD/BAD",
+      "source_key": null,
+      "transform_id": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 continued definition: landing-radar range-data status"
+      ],
+      "evidence_note": "Field semantics and display states are documented; the exact Apollo 11 MCC source route is unresolved."
+    },
+    {
+      "field_id": "LR_VELOCITY_STATUS",
+      "label": "LR VEL",
+      "description": "Status of landing-radar velocity data",
+      "origin": "unresolved",
+      "routing_state": "unresolved",
+      "unit": null,
+      "display_format": "GOOD/BAD",
+      "source_key": null,
+      "transform_id": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 continued definition: landing-radar velocity-data status"
+      ],
+      "evidence_note": "Field semantics and display states are documented; the exact Apollo 11 MCC source route is unresolved."
+    },
+    {
+      "field_id": "LR_BODY_VELOCITY_XYZ",
+      "label": "VXB/VYB/VZB",
+      "description": "Landing-radar velocity data in body-axis coordinates",
+      "origin": "unresolved",
+      "routing_state": "unresolved",
+      "unit": "ft/s",
+      "display_format": "+XXXX",
+      "source_key": null,
+      "transform_id": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 continued definition: landing-radar velocity data in body-axis coordinates"
+      ],
+      "evidence_note": "The controller-visible frame/semantics are documented; the per-field downlink/RTCC transform route is unresolved."
+    },
+    {
+      "field_id": "LR_SLANT_RANGE",
+      "label": "RNG",
+      "description": "Landing-radar slant range",
+      "origin": "unresolved",
+      "routing_state": "unresolved",
+      "unit": "ft",
+      "display_format": "XXXXX",
+      "source_key": null,
+      "transform_id": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 continued definition: landing-radar slant range"
+      ],
+      "evidence_note": "Field semantics are documented; exact Apollo 11 ground routing remains unresolved."
+    },
+    {
+      "field_id": "PGNS_ALTITUDE",
+      "label": "PGNS",
+      "description": "PGNS-computed altitude",
+      "origin": "unresolved",
+      "routing_state": "unresolved",
+      "unit": "ft",
+      "display_format": "XXX",
+      "source_key": null,
+      "transform_id": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 continued definition: PGNS-computed altitude"
+      ],
+      "evidence_note": "Field semantics are documented; exact source word/ground-processing route remains unresolved."
+    },
+    {
+      "field_id": "AGS_ALTITUDE",
+      "label": "AGS",
+      "description": "AGS-computed altitude",
+      "origin": "unresolved",
+      "routing_state": "unresolved",
+      "unit": "ft",
+      "display_format": "XXX",
+      "source_key": null,
+      "transform_id": null,
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 continued definition: AGS-computed altitude"
+      ],
+      "evidence_note": "Field semantics are documented; exact source word/ground-processing route remains unresolved."
+    }
+  ],
+  "unresolved": [
+    "per-field Apollo 11 D/L versus RTCC source mapping for landing-radar/guidance fields",
+    "external names, downlist words/registers, and RTCC computation/logic identifiers",
+    "controller display sample/receive/process/display cadence and stale-data behavior",
+    "exact GUIDO request/control workflow and powered-descent display-selection procedure"
+  ],
+  "sources": [
+    "AC Electronics Apollo 11 Manual (primary document scan): https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf",
+    "Text-rendered reproduction inspected for MSK-1137 definitions: https://device.report/m/239401d3979da31a6510615014829a52570c21a84c1371ea4debeea765b1c9d2",
+    "NASA Apollo 11 AS-506 Mission Operation Report, M-932-69-11, for ground-system architectural separation",
+    "NASA TN D-8316 for buffered dynamic-data update versus CRT refresh separation"
+  ]
+}
