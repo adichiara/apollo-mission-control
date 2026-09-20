@@ -33,6 +33,22 @@ class LandingRadarProfileTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             profile.beam_geometry(3, cdu_y_rad=0, cdu_z_rad=0, cdu_x_rad=0)
 
+    def test_apollo11_profile_exposes_historical_data_good_transitions(self):
+        profile = get_landing_radar_profile("apollo11_lm5_landing_radar_partial")
+        self.assertEqual(profile.data_good_min_duration_s, 4.0)
+        self.assertEqual(
+            [(item.time_s, item.data_good) for item in profile.historical_data_good_transitions],
+            [
+                (369851.0, False),
+                (369861.0, True),
+                (369899.0, False),
+                (369903.0, True),
+            ],
+        )
+        self.assertTrue(
+            all(item.source_resolution_s == 1.0 for item in profile.historical_data_good_transitions)
+        )
+
     def test_profile_public_metadata_preserves_current_boundary(self):
         profile = get_landing_radar_profile("apollo11_lm5_landing_radar_partial")
         public = profile.to_public_dict()
