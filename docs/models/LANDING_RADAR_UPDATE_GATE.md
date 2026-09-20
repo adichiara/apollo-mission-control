@@ -39,6 +39,10 @@ Primary-source reinspection constrains that remaining transform: `SETPOS` constr
 
 `landing_radar_quality.py` represents Data Good persistence, optional range-scale stability, channel validity, and caller-supplied affine residual reasonableness tests. Raw qualification remains separate from permission to update guidance state.
 
+MIT Instrumentation Laboratory's NASA contractor report *MIT's Role in Project Apollo, Volume II: Optical, Radar, and Candidate Subsystems* (R-700 Vol. II / NASA-CR-141898), section 5.5.2, now supplies Apollo-11-specific reasonableness criteria. For Apollo 11, a velocity radar measurement was acceptable when `|delta q| <= 7.5 + 0.125 V_T` ft/s, where `V_T` is estimated LM speed. The range-derived altitude criterion was `|delta q| <= 200 + 0.125 h` ft, where `h` is estimated altitude relative to the landing site. The report also states that the altitude test was omitted above high gate because a valid initial radar altitude could differ from the estimated altitude by several thousand feet. These are measurement-admission gates, not sensor-error distributions.
+
+The report explains that the reasonableness test was introduced to reject possible cross-lobe lockup and notes that it rejects any measurement outside the criterion regardless of the error's cause. This gives the existing affine quality layer a mission-specific Apollo 11 parameterization, but does not justify inventing a cross-lobe occurrence probability.
+
 ## Downstream velocity weighting / correction
 
 `landing_radar_velocity_update.py` applies a qualified scalar residual along the selected measurement-time beam using caller/profile-supplied weighting. The Apollo 11 profile supplies the LM-5 `LRVMAX`, `LRVF`, component weights, and P65/P66/P67 `LRWVFF` override recovered in research note 500.
@@ -67,7 +71,7 @@ Historical stochastic LR measurement generation is **BLOCKED** pending numerical
 
 ## Apollo 11 applicability boundary
 
-The Apollo 11 Mission Report documents landing-radar Data Good, update enablement, and the velocity-update start below the 2000 ft/s threshold. Apollo guidance documentation constrains the onboard update logic. None of that establishes an MCC display cadence or exposes onboard intermediate variables as controller telemetry.
+The Apollo 11 Mission Report documents landing-radar Data Good, update enablement, and the velocity-update start below the 2000 ft/s threshold. Apollo guidance documentation and R-700 Vol. II now constrain the onboard update/measurement-admission logic. None of that establishes an MCC display cadence or exposes onboard intermediate variables as controller telemetry.
 
 ## Validation
 
