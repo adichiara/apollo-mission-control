@@ -1,11 +1,12 @@
 # Station research status — Apollo 11 LR scale selection
 
 Date: 2026-09-20
+Updated: 2026-09-21
 Parent: `docs/station-status/2026-09-19_apollo11_landing_radar_beam_transform.md`
 
 ## GUIDO / guidance-monitoring consequence
 
-Flown LUMINARY 099 establishes that the onboard landing-radar altitude path explicitly tracked high/low scale state and conditionally rescaled the low-scale path before the altitude residual/update logic. The Apollo 11 LUMINARY 99 prelaunch pad-load table records `SKALSKAL` as octal `00000`, while the source listing labels it `.2 NOM`.
+Flown LUMINARY 099 establishes that the onboard landing-radar altitude path explicitly tracked high/low scale state and conditionally rescaled the low-scale path before the altitude residual/update logic. The Apollo 11 LUMINARY 99 prelaunch pad-load table records `SKALSKAL` at erasable address 1356 as octal `00000`; the flown assembly symbol table independently confirms address 1356, while the source listing labels the quantity `.2 NOM`. `RADSKAL` occupies 1354–1355 in the mission load. Earlier repository references to 3461/3462 and `RADSCALE` were transcription errors and have been corrected.
 
 MSC-69-FS-4, the primary MIT/MSC programmed-guidance-equations document for Luminary 1B, explicitly gives LR altitude count values of 1.0790 ft low scale and 5.3950 ft high scale. The exact 0.2 low/high ratio explains the meaning of the `.2 NOM` scale-factor comment. It does not, by itself, establish that 5.3950 ft/count was unchanged in LM-5/Luminary 1A, so that value remains adjacent-version corroboration pending Apollo-11-effective confirmation.
 
@@ -22,6 +23,7 @@ A spacecraft model may preserve LR altitude scale state internally and may repre
 - **DOCUMENTED, APOLLO-11-EFFECTIVE ONBOARD LOGIC:** `ALTSCBIT` selects high/low LR altitude treatment; low scale invokes `SKALSKAL` rescaling.
 - **DOCUMENTED, APOLLO-11-EFFECTIVE LOW SCALE:** 1.079 ft/count stored representation.
 - **DOCUMENTED SOFTWARE DEFINITION:** `SKALSKAL` is an erasable scale-factor ratio documented as `.2 NOM`.
+- **DOCUMENTED, APOLLO-11 PRELAUNCH LOAD / SYMBOL CROSS-CHECK:** `SKALSKAL` 1356 = `00000`; `RADSKAL` 1354–1355 = `00000,00000`; flown symbol table independently places `SKALSKAL` at 1356.
 - **DOCUMENTED INTERFACE / STRONG CONTINUITY:** LR-originated automatic low-scale indication near 2,500 ft plus digital pulse/strobe transfer; 15-bit serial transfer explicitly documented in the immediately post-Apollo-11 LM handbook.
 - **DOCUMENTED, NEAR-MISSION LUMINARY 1B:** 1.0790 ft/count low scale; 5.3950 ft/count high scale; ratio 0.2.
 - **NO STATION MATURITY CHANGE:** controller visibility/routing remains unestablished.
