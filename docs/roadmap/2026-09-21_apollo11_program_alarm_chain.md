@@ -21,7 +21,9 @@ The surviving NASA-hosted Apollo 11 *Flight Mission Rules* scan is dated **16 Ap
 
 Contemporary postflight engineering sources do establish the technical behavior without supplying the missing preflight decision sheet. MIT/IL memo AG#370-69 (4 August 1969) records five Mission-G executive-overflow alarms, their P63/P64 timing, and the overload mechanism. Grumman memo LAV-500-940 (31 July 1969) is specifically a powered-descent program-alarm investigation. These are valid primary engineering evidence for what the alarms meant and how the LGC behaved, but they are postflight analyses and must not be mislabeled as the rule used at the console on 20 July.
 
-The exact late-preflight written criterion is therefore **not recovered**. The discriminating recovery targets are now a dated post-simulation mission-rule change page/change notice, the Bales/Garman alarm cue sheet or an authenticated contemporary copy, or Apollo-11-effective Guidance procedures/training material revised after the final descent simulation and before landing.
+A targeted recovery pass for the named late-preflight artifact classes did **not** recover a contemporary post-simulation rule-change page/change notice, authenticated Bales/Garman alarm cue sheet, or dated Guidance/training procedure from the final-simulation-to-landing interval. NASA's later Garman institutional history confirms that Garman prepared an alarm list before the landing, but it does not reproduce the sheet or establish its exact decision wording. Secondary recollections describe an `if it doesn't recur/come up too much` concept, but those are not promoted to the missing contemporary rule.
+
+Under D-024, the **exact late-preflight written criterion is now BLOCKED on named source recovery**, rather than remaining an open-ended search item. Reopen only if one of the named artifact classes becomes accessible.
 
 ## Implementation consequence
 
@@ -29,7 +31,7 @@ The reference descent may model program alarms as:
 
 `crew reports alarm → GUIDANCE evaluates with computer-specialist support → GUIDANCE recommends GO/abort to FLIGHT → FLIGHT owns disposition → CAPCOM relays operational disposition to crew`
 
-For repeated alarms of the established executive-overflow family, the recorded 1201 exchange supports a shortened `same type / GO` response. Do not model `1201` and `1202` as automatically harmless. Do not encode a numeric recurrence threshold unless a contemporary source is recovered. The source-backed behavior is an evaluated GO during the flown sequence, not a universal alarm-number rule.
+For repeated alarms of the established executive-overflow family, the recorded 1201 exchange supports a shortened `same type / GO` response. Do not model `1201` and `1202` as automatically harmless. Do not encode a numeric recurrence threshold. The source-backed behavior is an evaluated GO during the flown sequence, not a universal alarm-number rule.
 
 ## Evidence boundary
 
@@ -37,12 +39,14 @@ For repeated alarms of the established executive-overflow family, the recorded 1
 - Controller-loop audio is primary for GUIDANCE→FLIGHT disposition where audible.
 - MIT/IL AG#370-69 and Grumman LAV-500-940 are primary contemporary postflight engineering evidence for alarm mechanism and occurrence.
 - The available April/May Flight Mission Rules copies predate the late simulation-driven review and cannot prove the resulting criterion.
-- NASA's Garman historical biography is authoritative institutional corroboration for Garman's support role but is retrospective, not a verbatim controller-loop transcript.
-- Exact Garman→Bales words, the precise support-room loop topology used at each alarm, a Mission-G CRT field that drove the alarm judgment, and the exact late-preflight written GO/abort rule are not claimed here.
+- NASA's Garman historical biography is authoritative institutional corroboration for Garman's support role and preflight alarm-list preparation but is retrospective, not the cue sheet itself or a verbatim controller-loop transcript.
+- Exact Garman→Bales words, precise support-room loop topology, a Mission-G CRT field that drove the alarm judgment, and the exact late-preflight written GO/abort rule are not claimed here.
 
-## Next bounded target
+## Closure and next bounded target
 
-Recover the **late-preflight program-alarm decision artifact** rather than searching generic Apollo 11 mission rules: a post-simulation change notice/page, Bales/Garman alarm cue sheet, or dated Guidance/training procedure from the interval between the final descent simulation and 20 July 1969. If none is accessible, mark this exact wording/threshold question BLOCKED on named source recovery and continue with other powered-descent controller products.
+This exact written-criterion subquestion is **BLOCKED** under D-024 on recovery of a post-simulation mission-rule change page/change notice, the Bales/Garman alarm cue sheet or authenticated contemporary copy, or a revised Apollo-11-effective Guidance/training procedure dated after the final descent simulation and before landing.
+
+The broader Apollo 11 powered-descent reference remains **OPEN**. Continue with the next controller-product/interface or sourced decision-rule dependency; do not continue generic alarm-rule searching unless the named source condition changes.
 
 ## Sources
 
@@ -59,6 +63,6 @@ Recover the **late-preflight program-alarm decision artifact** rather than searc
 - **DOCUMENTED / PRIMARY TRANSCRIPT:** CAPCOM gives the crew GO on the first 1202 and later 1201.
 - **DOCUMENTED / PRIMARY AUDIO:** GUIDANCE supplies the front-room GO assessment to FLIGHT; the later 1201 is treated as the same alarm type and GO.
 - **DOCUMENTED / PRIMARY POSTFLIGHT ENGINEERING:** alarm occurrence, executive-overflow mechanism, and restart behavior.
-- **DOCUMENTED / RETROSPECTIVE NASA:** Garman supported Bales from the back room and recognized the 1202 overload condition.
-- **SOURCE-GAP BOUNDED:** available April/May mission-rule copies predate the late simulation-driven alarm review.
-- **UNRESOLVED:** exact late-preflight written GO/abort criterion and verbatim support-room exchange.
+- **DOCUMENTED / RETROSPECTIVE NASA:** Garman supported Bales from the back room and prepared a preflight alarm list.
+- **BLOCKED / NAMED SOURCE RECOVERY:** exact late-preflight written GO/abort criterion and cue-sheet wording.
+- **UNRESOLVED BUT NOT INFERRED:** verbatim support-room exchange and exact alarm-specific CRT basis.
