@@ -1,0 +1,141 @@
+{
+  "schema_version": "0.1-controller-decision-gate-profile",
+  "profile_id": "apollo11_g_descent_landing_partial",
+  "mission_profile_id": "apollo11_g",
+  "gate_id": "apollo11_landing_go_no_go",
+  "status": "partial historical controller-decision contract; station topology and cue visibility sourced, exact rule-input computation incomplete",
+  "phase_context": "Apollo 11 LM-5 powered descent approaching P64 and the landing go/no-go poll",
+  "decision_mode": "controller_judgment",
+  "decision_authority": "FLIGHT",
+  "relay_station": "CAPCOM",
+  "cues": [
+    {
+      "cue_id": "msk1137.lr_range_status",
+      "station_id": "GUIDO",
+      "historical_call_label": "GUIDANCE",
+      "evidence_kind": "display_field",
+      "source_reference": "MSK-1137 LR RNG",
+      "semantics": "Landing-radar range-data status displayed as GOOD/BAD.",
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 definition"
+      ]
+    },
+    {
+      "cue_id": "msk1137.lr_velocity_status",
+      "station_id": "GUIDO",
+      "historical_call_label": "GUIDANCE",
+      "evidence_kind": "display_field",
+      "source_reference": "MSK-1137 VEL",
+      "semantics": "Landing-radar velocity-data status displayed as GOOD/BAD.",
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 definition"
+      ]
+    },
+    {
+      "cue_id": "msk1137.lr_vxb_fps",
+      "station_id": "GUIDO",
+      "historical_call_label": "GUIDANCE",
+      "evidence_kind": "display_field",
+      "source_reference": "MSK-1137 VXB",
+      "semantics": "Landing-radar velocity in the LM body X axis, in ft/s.",
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 definition"
+      ]
+    },
+    {
+      "cue_id": "msk1137.lr_vyb_fps",
+      "station_id": "GUIDO",
+      "historical_call_label": "GUIDANCE",
+      "evidence_kind": "display_field",
+      "source_reference": "MSK-1137 VYB",
+      "semantics": "Landing-radar velocity in the LM body Y axis, in ft/s.",
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 definition"
+      ]
+    },
+    {
+      "cue_id": "msk1137.lr_vzb_fps",
+      "station_id": "GUIDO",
+      "historical_call_label": "GUIDANCE",
+      "evidence_kind": "display_field",
+      "source_reference": "MSK-1137 VZB",
+      "semantics": "Landing-radar velocity in the LM body Z axis, in ft/s.",
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 definition"
+      ]
+    },
+    {
+      "cue_id": "msk1137.lr_slant_range_ft",
+      "station_id": "GUIDO",
+      "historical_call_label": "GUIDANCE",
+      "evidence_kind": "display_field",
+      "source_reference": "MSK-1137 RNG",
+      "semantics": "Landing-radar slant-range altitude, in feet.",
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 definition"
+      ]
+    },
+    {
+      "cue_id": "msk1137.pgns_altitude_ft",
+      "station_id": "GUIDO",
+      "historical_call_label": "GUIDANCE",
+      "evidence_kind": "display_field",
+      "source_reference": "MSK-1137 ALT",
+      "semantics": "PGNS-computed altitude, in feet.",
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 definition"
+      ]
+    },
+    {
+      "cue_id": "msk1137.tgo_s",
+      "station_id": "GUIDO",
+      "historical_call_label": "GUIDANCE",
+      "evidence_kind": "display_field",
+      "source_reference": "MSK-1137 TGO",
+      "semantics": "Time to engine cutoff.",
+      "provenance": [
+        "AC Electronics Apollo 11 Manual, MSK-1137 definition"
+      ]
+    },
+    {
+      "cue_id": "control.lr_antenna_position",
+      "station_id": "CONTROL",
+      "historical_call_label": "CONTROL",
+      "evidence_kind": "controller_call",
+      "source_reference": "20 July 1969 Carlton console recording transcript",
+      "semantics": "CONTROL reports landing-radar antenna position; the preserved landing-poll excerpt records position 2.",
+      "provenance": [
+        "JSC Oral History Project, Robert L. Carlton interview, embedded 20 July 1969 Mission Control intercom transcript"
+      ]
+    }
+  ],
+  "poll_order": [
+    {"station_id": "RETRO", "historical_call_label": "RETRO"},
+    {"station_id": "FIDO", "historical_call_label": "FIDO"},
+    {"station_id": "GUIDO", "historical_call_label": "GUIDANCE"},
+    {"station_id": "CONTROL", "historical_call_label": "CONTROL"},
+    {"station_id": "TELCOM", "historical_call_label": "TELCOM"},
+    {"station_id": "GNC", "historical_call_label": "GNC"},
+    {"station_id": "EECOM", "historical_call_label": "EECOM"},
+    {"station_id": "SURGEON", "historical_call_label": "SURGEON"}
+  ],
+  "rule_references": [
+    "Apollo 11 Flight Mission Rule 5-89",
+    "Apollo 11 Flight Mission Rules 5-90 through 5-91",
+    "Apollo 11 Flight Mission Rule 2-25"
+  ],
+  "unresolved": [
+    "exact mapping between rule 5-89 LR convergence / PGNS-versus-LR comparison semantics and individual MSK-1137 fields",
+    "Mission-G per-field LR source identifiers, engineering conversion, and CCATS-versus-RTCC provenance",
+    "exact GUIDO/back-room phraseology and timing for the LR acceptance/convergence recommendation",
+    "exact ground algorithm, if any, used to form a PGNS-versus-LR Delta-H comparison"
+  ],
+  "sources": [
+    "Apollo 11 Flight Mission Rules, 16 April 1969",
+    "AC Electronics Apollo 11 Manual, MSK-1137 definition",
+    "JSC Oral History Project, Robert L. Carlton interview, 10 April 2001, embedded 20 July 1969 Mission Control intercom transcript",
+    "JSC Oral History Project, Eugene F. Kranz interview, 8 January 1999",
+    "NASA Apollo Lunar Surface Journal, The First Lunar Landing",
+    "Repository research note 502_apollo11_descent_lr_controller_call_workflow.md"
+  ]
+}
