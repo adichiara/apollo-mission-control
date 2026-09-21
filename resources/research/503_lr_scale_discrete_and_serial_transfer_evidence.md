@@ -1,6 +1,7 @@
 # 503 — Landing-radar scale discrete and serial-transfer evidence
 
 Date: 2026-09-20
+Research thread: `apollo11-landing-radar`
 
 ## Question
 
@@ -43,4 +44,5 @@ Do not infer from these sources alone:
 
 ## Evidence status
 
-**DOCUMENTED INTERFACE ARCHITECTURE / STRONG CONTINUITY; PARTIAL FOR LM-5 NUMERIC ENCODING.** Automatic LR-originated low-scale indication near 2,500 ft and digital pulse/serial transfer architecture are independently documented before and immediately after Apollo 11. Exact LM-5 high-scale bit weight and complete raw encoding remain unresolved.
+- **DOCUMENTED:** automatic LR-originated low-scale indication near 2,500 ft and digital pulse/strobe transfer architecture have independent primary-source support before and immediately after Apollo 11.
+- **UNRESOLVED:** exact LM-5 high-scale bit weight and complete raw serial sign/bias/framing and rounding/truncation.
