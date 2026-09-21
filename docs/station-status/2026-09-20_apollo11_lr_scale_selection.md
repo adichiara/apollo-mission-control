@@ -26,7 +26,9 @@ Flown LUMINARY 099 also closes software-side quantity selection. `P20-P25.agc` i
 
 The Apollo 11 AC Electronics mission-control manual directly defines landing-radar fields on MSK-1137: `LR RNG` and `VEL` report landing-radar range/velocity data status as `GOOD/BAD`; `VXB, VYB, VZB` report velocity in body-axis coordinates in ft/sec; and `RNG` reports landing-radar slant-range altitude in feet. These are documented Apollo-11 controller-visible products.
 
-The provenance chain is now narrower. Flown LUMINARY 099 `ERASABLE_ASSIGNMENTS.agc` explicitly reserves `DNLRVELX`, `DNLRVELY`, `DNLRVELZ`, and `DNLRALT` as **landing-radar downlink storage**, and `DOWNLINK_LISTS.agc` explicitly includes those words in LM downlink lists. Thus Apollo 11 supplied named LR velocity/altitude quantities through the LGC downlink path. This does not yet establish that MSK-1137 copied those four words one-for-one: exact CCATS/RTCC engineering conversion, coordinate/scale handling, and display-database routing remain unresolved.
+The provenance chain is now narrower. Flown LUMINARY 099 `ERASABLE_ASSIGNMENTS.agc` explicitly reserves `DNLRVELX`, `DNLRVELY`, `DNLRVELZ`, and `DNLRALT` as **landing-radar downlink storage**, and `DOWNLINK_LISTS.agc` explicitly includes those words in LM downlink lists. Thus Apollo 11 supplied named LR velocity/altitude quantities through the LGC downlink path.
+
+TRW's Apollo-11-specific *Trajectory Reconstruction and Postflight Analysis, Volume 1*, §7.4, independently establishes that landing-radar observations were obtained by processing **downlink telemetry** with a special-purpose computer program for postflight HOPE analysis. The same section describes an RTCC descent trajectory obtained in real time as a separate trajectory source. This constrains the architecture: LR telemetry-derived observations and an RTCC trajectory product must not be silently conflated. Because the documented special-purpose program is part of the postflight analysis path, it does not establish the real-time telemetry/display conversion or prove that RTCC transformed the MSK-1137 LR fields.
 
 The recovered MSK-1137 definition contains no field for `ALTSCBIT`, high/low range scale, `RADSKAL`, `SKALSKAL`, PCR-775 compensation selection, raw LR serial words, or the LUMINARY rescaling operation. Therefore the simulation should expose the documented LR status/measurement products at the appropriate guidance-monitoring display, but should **not** invent a controller-visible PCR-775 or scale-state indicator.
 
@@ -34,7 +36,7 @@ The recovered MSK-1137 definition contains no field for `ALTSCBIT`, high/low ran
 
 A spacecraft model may preserve LR altitude scale state internally; use 1.079 ft/count low scale and derived 5.395 ft/count high scale; encode the mission load as radar-performed slant-range Doppler compensation; preserve the flown quantity-selection mapping (`Vx/Vy/Vz/range` = octal `14/15/16/17`); model LR velocity serialization as a biased 15-bit count with zero-velocity offset 12,288 removed by LUMINARY software; and model the Apollo 11 LR/LGC transfer as a 15-bit serial readout, **MSB first**, over complementary ones/zeros data lines. Measurement formation should be modeled as gated integer pulse accumulation.
 
-For GUIDO/guidance-monitoring presentation, MSK-1137 may expose LR range/velocity validity, body-axis LR velocity, and slant range. The ground layer may treat explicit LGC LR downlink words as the upstream source family, but must not claim an exact one-to-one MSK routing until mission-effective ground-processing evidence is recovered. Do not invent an arithmetic rounding mode, gate-edge convention, controller-visible PCR-775/scale-state control or annunciator, or an exact invariant 2,500-ft switching altitude.
+For GUIDO/guidance-monitoring presentation, MSK-1137 may expose LR range/velocity validity, body-axis LR velocity, and slant range. The ground layer may treat explicit LGC LR downlink words as the upstream source family and may model a generic telemetry/engineering-processing boundary before display. Do **not** assert that RTCC performs that conversion, or claim exact one-to-one MSK routing, until mission-effective real-time ground-processing evidence is recovered. Do not invent an arithmetic rounding mode, gate-edge convention, controller-visible PCR-775/scale-state control or annunciator, or an exact invariant 2,500-ft switching altitude.
 
 ## Evidence status
 
@@ -50,5 +52,7 @@ For GUIDO/guidance-monitoring presentation, MSK-1137 may expose LR range/velocit
 - **DOCUMENTED, APOLLO-11-EFFECTIVE QUANTITY SELECTION:** `LRVELX=14`, `LRVELY=15`, `LRVELZ=16`, `LRALT=17` (octal).
 - **DOCUMENTED, APOLLO-11-EFFECTIVE DOWNLINK AVAILABILITY:** `DNLRVELX/Y/Z` and `DNLRALT` are explicit LGC landing-radar downlink storage and appear in LM downlink lists.
 - **DOCUMENTED, APOLLO-11 CONTROLLER VISIBILITY:** MSK-1137 contains LR range/velocity status, body-axis velocity, and slant-range fields.
+- **DOCUMENTED, APOLLO-11-SPECIFIC POSTFLIGHT GROUND PROCESSING:** LR observations were recovered from downlink telemetry; RTCC real-time descent trajectory is described separately.
 - **NO DIRECT SCALE/COMPENSATION DISPLAY EVIDENCE:** MSK-1137 does not expose PCR-775 selection or onboard scale/rescaling state.
-- **UNRESOLVED:** exact gate-edge pulse inclusion/phase behavior and exact CCATS/RTCC/display routing from LGC LR downlink words to MSK-1137 fields.
+- **UNRESOLVED:** exact gate-edge pulse inclusion/phase behavior and exact real-time CCATS/FDS/display routing from LGC LR downlink words to MSK-1137 fields.
+- **NOT ESTABLISHED:** RTCC ownership/transformation of the MSK-1137 LR measurement fields.
