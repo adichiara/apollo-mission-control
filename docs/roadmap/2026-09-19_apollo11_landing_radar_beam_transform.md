@@ -1,6 +1,7 @@
 # Apollo 11 landing-radar beam-transform roadmap
 
 Date: 2026-09-20
+Updated: 2026-09-21
 Parent: `docs/ROADMAP.md`
 
 ## Controlled chain
@@ -27,16 +28,18 @@ MIT R-700 Vol. II closes the Apollo-11-specific onboard reasonableness gates: ve
 
 GAEC LSP-470-2D supplies 3-sigma LR range/velocity acceptance limits. NASA TN D-6849 supplies LM-5 flight experience and cautions against converting simulator behavior into a simple Gaussian law. NASA-CR-92466 remains a mission-period beam/Doppler mathematical-model source, not LM-5 flight-error statistics.
 
-NASA TN D-6849 explicitly states that processed LR velocity and slant-range information was made available to the LGC in **serial binary form**, while LR information was separately supplied to LM displays as **pulse trains and dc analog voltages**. This establishes separate LGC-digital and crew-display electrical output paths, but does not by itself establish LM-5 serial word length, bit weighting, rounding, or framing.
+NASA TN D-6849 explicitly states that processed LR velocity and slant-range information was made available to the LGC in **serial binary form**, while LR information was separately supplied to LM displays as **pulse trains and dc analog voltages**. This establishes separate LGC-digital and crew-display electrical output paths.
 
-**New Apollo-11-effective scaling boundary:** the flown LUMINARY 099 listing itself now supplies onboard converted/stored LR measurement bit weights. `ASSEMBLY_AND_OPERATION_INFORMATION.agc` gives low-scale altitude `1.079 ft` per low-order bit and X/Y/Z velocity low-order bit weights of `-0.6440`, `+1.212`, and `+0.8668 ft/s`; `PINBALL_NOUN_TABLES.agc` carries the corresponding constants; and `SERVICER.agc` independently labels stored `HMEAS` as `1.079 FT/BIT`. These values may control the LUMINARY-side converted measurement representation. They do **not** yet prove the complete LM-5 radar-to-LGC serial encoding, raw integer bias, high-range hardware bit weight, rounding/truncation, or stochastic quantization error.
+The Apollo-era MIT/IL *LEM PGNCS Guidance System Operations Plan*, Section 3, independently exposes the LR/LGC electrical interface as two binary data-flow inputs, `LR in "1"` and `LR in "0"`, plus separate LR range/velocity-good, antenna-position, and range-low-scale discretes. AC Electronics ND-1021042 further identifies LGC `Readout command`, continuous 3,200-cps `Gate reset`, and separate range/Vx/Vy/Vz strobe pulses that enable the LR transfer gates. This now constrains **framing architecture**: binary value is carried on the two LR data inputs while quantity selection/transfer timing is externally strobed by the LGC. It still does not establish LM-5 bit order, sign convention, integer bias, word length, or rounding/truncation.
+
+**Apollo-11-effective scaling boundary:** the flown LUMINARY 099 listing supplies onboard converted/stored LR measurement bit weights. `ASSEMBLY_AND_OPERATION_INFORMATION.agc` gives low-scale altitude `1.079 ft` per low-order bit and X/Y/Z velocity low-order bit weights of `-0.6440`, `+1.212`, and `+0.8668 ft/s`; `PINBALL_NOUN_TABLES.agc` carries the corresponding constants; and `SERVICER.agc` independently labels stored `HMEAS` as `1.079 FT/BIT`. Revision-99 Memo #85 supplies a high/low altitude scale ratio of 5, so 5.395 ft/count high scale is a direct Apollo-11-effective derivation. These values control the LUMINARY-side converted measurement representation, not otherwise-unknown raw serial coding.
 
 The later LM10-and-subsequent Apollo Operations Handbook and later R-567 revisions remain adjacent architecture cross-checks for 15-bit raw LR/LGC words and high/low raw conversion. No 15-bit Apollo 11 serial encoding is back-projected solely from those later sources.
 
 ## Next work
 
 1. Pursue Apollo-11-effective FDS/RTCC/CCATS material that maps individual MSK-1137 fields to the format's `D/L`/`RTCC` provenance categories and identifies external names/downlists or computation/logic identifiers.
-2. Continue seeking LM-5/Apollo-11-effective hardware-interface evidence for **raw serial word length, integer bias, high-range altitude conversion, rounding/framing**, plus qualification/flight-data evidence for residual correlation or bias.
+2. Continue seeking LM-5/Apollo-11-effective hardware-interface evidence for **raw word length, bit order, sign convention/integer bias, and rounding/truncation**. The two-wire binary-data + LGC-strobe framing architecture is now documented and should not be re-opened absent contradictory evidence.
 3. Preserve the two Table 5-I not-good intervals as deterministic historical replay anchors and enforce the documented four-second `DATA GOOD` qualification separately; do not infer a random dropout process from them.
 4. Retrieve and inspect MSC-69-EG-14 / NASA-TM-X-64374, requiring an explicit Mission-G/LM-5 applicability bridge before using any F-mission numbers.
 5. Inspect NASA-CR-92466 only for model equations/beam physics; do not promote it to LM-5 stochastic-error authority without separate applicability evidence.
@@ -51,10 +54,10 @@ The later LM10-and-subsequent Apollo Operations Handbook and later R-567 revisio
 - **DOCUMENTED:** Apollo 11 MSK-1137 semantics and mixed `D/L`/`RTCC` provenance boundary.
 - **DOCUMENTED, APOLLO 11 FLIGHT:** LR acquisition; two one-second-resolution not-good intervals; expected zero-Doppler/manual-maneuver cause.
 - **DOCUMENTED, APOLLO-11-EFFECTIVE ONBOARD LOGIC:** four continuous seconds of `DATA GOOD` before LR measurement tests permit state-vector updating; Apollo-11-specific reasonableness gates.
-- **DOCUMENTED, APOLLO-11-EFFECTIVE ONBOARD SCALING:** low-scale altitude `1.079 ft/bit`; X/Y/Z velocity bit weights `-0.6440/+1.212/+0.8668 ft/s` at the converted/stored LUMINARY representation.
-- **DOCUMENTED, APOLLO-PROGRAM HARDWARE / LM-5 EXPERIENCE SOURCE:** LR velocity/range delivered to LGC as serial binary data, with separate pulse-train/dc-analog outputs to LM displays.
+- **DOCUMENTED, APOLLO-11-EFFECTIVE ONBOARD SCALING:** low-scale altitude `1.079 ft/bit`; derived high-scale altitude `5.395 ft/bit`; X/Y/Z velocity bit weights `-0.6440/+1.212/+0.8668 ft/s` at the converted/stored LUMINARY representation.
+- **DOCUMENTED, APOLLO-PROGRAM INTERFACE:** LR velocity/range delivered to LGC as serial binary data; two binary data-flow inputs plus LGC readout/reset/range-and-velocity strobes constrain transfer framing; separate pulse-train/dc-analog outputs feed LM displays.
 - **DOCUMENTED, MISSION-PERIOD MODEL SOURCE:** NASA-CR-92466 for LR beam-bandwidth/Doppler model verification; not LM-5 flight-error statistics.
 - **ADJACENT EFFECTIVITY ONLY:** later LM10/R-567 material confirms 15-bit raw LR/LGC architecture and later raw-data conversions; no complete Apollo 11 serial encoding is claimed.
 - **DOCUMENTED:** Apollo MCC architectural separation and D/TV buffered-update behavior.
 - **BLOCKED:** direct PHO-TN401 inspection; historical stochastic LR measurement generation.
-- **UNRESOLVED:** per-field Apollo 11 MSK-1137 routing, exact GUIDO request workflow, MCC dynamic-data cadence/latency/freshness, complete LM-5 raw serial encoding/high-range conversion/rounding/framing, and sub-second LR transition timing.
+- **UNRESOLVED:** per-field Apollo 11 MSK-1137 routing, exact GUIDO request workflow, MCC dynamic-data cadence/latency/freshness, LM-5 raw word length/bit order/sign/bias/rounding, and sub-second LR transition timing.
