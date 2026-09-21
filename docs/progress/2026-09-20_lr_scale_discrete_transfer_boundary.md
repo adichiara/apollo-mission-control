@@ -10,12 +10,15 @@ AC Electronics ND-1021042 documents an LR-originated `Range low scale factor` di
 
 This establishes strong continuity for the physical scale-state interface represented by LUMINARY 099 `ALTSCBIT`. It does not justify promoting the Luminary 1B 5.3950-ft/count value to a direct LM-5 hardware fact.
 
+The findings are folded into the maintained roadmap, station-status, and source-catalog ledgers rather than opening another numbered research note; the generated research index therefore remains synchronized with the 500–501 landing-radar block.
+
 ## Documentation synchronized
 
-- `resources/research/503_lr_scale_discrete_and_serial_transfer_evidence.md`
 - `docs/roadmap/2026-09-20_apollo11_lr_scale_selection.md`
 - `docs/station-status/2026-09-20_apollo11_lr_scale_selection.md`
 - `resources/APOLLO11_LR_SCALE_SELECTION_SOURCE_CATALOG_ADDENDUM.md`
+- `resources/RESEARCH_INDEX.md`
+- `resources/RESEARCH_BLOCK_ALLOCATION.md`
 
 ## Remaining discriminating targets
 
