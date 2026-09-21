@@ -678,6 +678,45 @@ class WebModelProofTests(unittest.TestCase):
             response.json()["detail"],
         )
 
+    def test_apollo11_descent_decision_gate_preserves_human_decision_boundary(self):
+        response = self.client.post(
+            "/api/admin/model-proof/apollo11-descent-decision-gate",
+            json={
+                "get_s": 369000.0,
+                "range_data_good": True,
+                "velocity_data_good": True,
+                "antenna_position": 2,
+                "body_axis_velocity_fps": [10.0, -2.0, 1.0],
+                "slant_range_ft": 32000.0,
+                "pgns_altitude_ft": 31500.0,
+                "time_to_go_s": 240.0,
+                "guidance_readiness": "go",
+                "control_readiness": "go",
+                "flight_decision": "unknown",
+                "capcom_relay": "not_relayed",
+                "provenance": ["research 502 test fixture"],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body["model_status"], "apollo11_descent_decision_gate_contract")
+        self.assertTrue(body["front_room_inputs_complete"])
+        self.assertEqual(body["flight_decision"], "unknown")
+        self.assertEqual(body["capcom_relay"], "not_relayed")
+        self.assertEqual(body["landing_radar"]["antenna_position"], 2)
+
+    def test_apollo11_descent_decision_gate_exposes_conflicting_relay(self):
+        response = self.client.post(
+            "/api/admin/model-proof/apollo11-descent-decision-gate",
+            json={
+                "get_s": 369000.0,
+                "flight_decision": "no_go",
+                "capcom_relay": "go_relayed",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.json()["relay_consistent_with_flight"])
+
     def test_pc2_action_consequence_matrix_endpoint(self):
         response = self.client.post(
             "/api/admin/model-proof/pc2-action-consequences",
