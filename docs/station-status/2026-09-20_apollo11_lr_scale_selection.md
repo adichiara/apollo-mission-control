@@ -14,7 +14,7 @@ Flown LUMINARY 099 supplies 1.079 ft/count low scale and Memo #85 supplies the f
 
 The MIT/IL *LEM PGNCS Guidance System Operations Plan*, Section 3, identifies `LR in "1"` and `LR in "0"` binary data-flow inputs separately from LR validity, antenna-position, and range-low-scale discretes. AC Electronics ND-1021042 identifies complementary LGC readout/reset and quantity-selection behavior. NASA's *Apollo Experience Report — Lunar Module Landing Radar and Rendezvous Radar* states that velocity sign is determined in the measurement pulse-train path before the Signal Data Converter assembles serial binary output.
 
-A mission-specific Apollo 11 engineering note on the LGC 520 alarm now closes the raw transfer-length question. It describes the radar-read hardware sequence as an 80-ms gate, a 5-ms delay, **15 readout pulses at 3200 pps**, then a radar interrupt. ND-1021042 independently states that after 15 radar pulses have been received, radar control terminates sync generation and requests `RUPT9`. The 15-bit/readout length is therefore Apollo-11-supported rather than merely back-projected from LM-6. This does not establish bit order, serial sign convention/bias, or Signal Data Converter rounding/truncation.
+A mission-specific Apollo 11 engineering note on the LGC 520 alarm closes raw transfer length: an 80-ms gate, a 5-ms delay, **15 readout pulses at 3200 pps**, then radar interrupt. ND-1021042 independently terminates sync and requests `RUPT9` after 15 received radar pulses. MIT/MSC R-700 Volume II now closes serial bit order: the radar shift-register contents are read out **most-significant-bit first**, with `1` bits on the ones bus and `0` bits on the zeros bus. An MIT/IL functional description independently describes the resulting 15-bit range/velocity word as MSB-first on two lines. This does not establish signed-velocity numerical representation/integer bias or Signal Data Converter rounding/truncation.
 
 Flown LUMINARY 099 also closes software-side quantity selection. `P20-P25.agc` invokes `INITREAD` with octal `14` for `LRVELX`, `15` for `LRVELY`, `16` for `LRVELZ`, and `17` for `LRALT`. These are read-selection commands, not returned-data encoding.
 
@@ -22,7 +22,7 @@ No recovered source establishes that `ALTSCBIT`, raw scale state, PCR-775 compen
 
 ## Player-facing boundary
 
-A spacecraft model may preserve LR altitude scale state internally; use 1.079 ft/count low scale and derived 5.395 ft/count high scale; encode the mission load as radar-performed slant-range Doppler compensation; preserve the flown quantity-selection mapping (`Vx/Vy/Vz/range` = octal `14/15/16/17`); preserve that velocity sign is determined before Signal Data Converter serialization; and model the Apollo 11 LR/LGC transfer as 15 serial readout pulses. Do not invent bit order, serial sign/bias, rounding/truncation, controller-visible controls, or an exact invariant 2,500-ft switching altitude.
+A spacecraft model may preserve LR altitude scale state internally; use 1.079 ft/count low scale and derived 5.395 ft/count high scale; encode the mission load as radar-performed slant-range Doppler compensation; preserve the flown quantity-selection mapping (`Vx/Vy/Vz/range` = octal `14/15/16/17`); preserve that velocity sign is determined before Signal Data Converter serialization; and model the Apollo 11 LR/LGC transfer as a 15-bit serial readout, **MSB first**, over complementary ones/zeros data lines. Do not invent signed-velocity representation/integer bias, rounding/truncation, controller-visible controls, or an exact invariant 2,500-ft switching altitude.
 
 ## Evidence status
 
@@ -32,7 +32,7 @@ A spacecraft model may preserve LR altitude scale state internally; use 1.079 ft
 - **DERIVED, APOLLO-11-EFFECTIVE HIGH SCALE:** 5.395 ft/count = 1.079 × 5; independently corroborated by Luminary 1B.
 - **RESOLVED, APOLLO-11 PRELAUNCH LOAD:** zero `RADSKAL`/`SKALSKAL` selects radar-performed Doppler compensation.
 - **DOCUMENTED, APOLLO-11-SPECIFIC RAW TRANSFER LENGTH:** 15 readout pulses at 3200 pps followed by radar interrupt; corroborated by ND-1021042's 15-pulse radar-control description.
-- **DOCUMENTED INTERFACE:** separate binary data flow, readout/reset/quantity selection, and upstream velocity-sign determination.
+- **DOCUMENTED, PRIMARY APOLLO INTERFACE:** MSB-first serial binary transfer on complementary ones/zeros lines; separate readout/reset/quantity selection; upstream velocity-sign determination.
 - **DOCUMENTED, APOLLO-11-EFFECTIVE QUANTITY SELECTION:** `LRVELX=14`, `LRVELY=15`, `LRVELZ=16`, `LRALT=17` (octal).
 - **NO STATION MATURITY CHANGE:** controller visibility/routing remains unestablished.
-- **UNRESOLVED:** serial bit order, sign representation/bias, rounding/truncation, and controller-visible compensation/scale-state consequences.
+- **UNRESOLVED:** signed-velocity representation/integer bias, rounding/truncation, and controller-visible compensation/scale-state consequences.
