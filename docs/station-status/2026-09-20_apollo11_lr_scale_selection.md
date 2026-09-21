@@ -22,11 +22,17 @@ Primary SDC descriptions also remove the need to invent a numeric rounding mode.
 
 Flown LUMINARY 099 also closes software-side quantity selection. `P20-P25.agc` invokes `INITREAD` with octal `14` for `LRVELX`, `15` for `LRVELY`, `16` for `LRVELZ`, and `17` for `LRALT`. These are read-selection commands, not returned-data encoding.
 
-No recovered source establishes that `ALTSCBIT`, raw scale state, PCR-775 compensation selection, transfer encoding, or rescaling was exposed directly to GUIDO, CONTROL, or FLIGHT. No station display, alarm, callout, or procedure is added from this evidence.
+### Controller-visible boundary
+
+The Apollo 11 AC Electronics mission-control manual directly defines landing-radar fields on MSK-1137: `LR RNG` and `VEL` report landing-radar range/velocity data status as `GOOD/BAD`; `VXB, VYB, VZB` report velocity in body-axis coordinates in ft/sec; and `RNG` reports landing-radar slant-range altitude in feet. These are now documented Apollo-11 controller-visible products.
+
+The recovered MSK-1137 definition contains no field for `ALTSCBIT`, high/low range scale, `RADSKAL`, `SKALSKAL`, PCR-775 compensation selection, raw LR serial words, or the LUMINARY rescaling operation. Therefore the simulation should expose the documented LR status/measurement products at the appropriate guidance-monitoring display, but should **not** invent a controller-visible PCR-775 or scale-state indicator. The ground-processing provenance of the displayed body-axis velocities and range remains a separate open question; MSK-1137 must not be treated as proof that these fields were raw downlink words.
 
 ## Player-facing boundary
 
-A spacecraft model may preserve LR altitude scale state internally; use 1.079 ft/count low scale and derived 5.395 ft/count high scale; encode the mission load as radar-performed slant-range Doppler compensation; preserve the flown quantity-selection mapping (`Vx/Vy/Vz/range` = octal `14/15/16/17`); model LR velocity serialization as a biased 15-bit count with zero-velocity offset 12,288 removed by LUMINARY software; and model the Apollo 11 LR/LGC transfer as a 15-bit serial readout, **MSB first**, over complementary ones/zeros data lines. Measurement formation should be modeled as gated integer pulse accumulation. Do not invent an arithmetic rounding mode, gate-edge convention, controller-visible controls, or an exact invariant 2,500-ft switching altitude.
+A spacecraft model may preserve LR altitude scale state internally; use 1.079 ft/count low scale and derived 5.395 ft/count high scale; encode the mission load as radar-performed slant-range Doppler compensation; preserve the flown quantity-selection mapping (`Vx/Vy/Vz/range` = octal `14/15/16/17`); model LR velocity serialization as a biased 15-bit count with zero-velocity offset 12,288 removed by LUMINARY software; and model the Apollo 11 LR/LGC transfer as a 15-bit serial readout, **MSB first**, over complementary ones/zeros data lines. Measurement formation should be modeled as gated integer pulse accumulation.
+
+For GUIDO/guidance-monitoring presentation, MSK-1137 may expose LR range/velocity validity, body-axis LR velocity, and slant range. Do not invent an arithmetic rounding mode, gate-edge convention, controller-visible PCR-775/scale-state control or annunciator, or an exact invariant 2,500-ft switching altitude.
 
 ## Evidence status
 
@@ -40,5 +46,6 @@ A spacecraft model may preserve LR altitude scale state internally; use 1.079 ft
 - **RESOLVED, APOLLO-11-EFFECTIVE VELOCITY ENCODING:** raw LR velocity uses a 12,288-count offset; LUMINARY 099 masks the raw word and adds `LVELBIAS=-12288` before using the sample.
 - **RESOLVED MODEL BOUNDARY, PRIMARY SDC DESCRIPTION:** measurement is an integer pulse count accumulated through the selected gate; no separate arithmetic rounding/truncation rule is evidenced.
 - **DOCUMENTED, APOLLO-11-EFFECTIVE QUANTITY SELECTION:** `LRVELX=14`, `LRVELY=15`, `LRVELZ=16`, `LRALT=17` (octal).
-- **NO STATION MATURITY CHANGE:** controller visibility/routing remains unestablished.
-- **UNRESOLVED:** exact gate-edge pulse inclusion/phase behavior and controller-visible compensation/scale-state consequences.
+- **DOCUMENTED, APOLLO-11 CONTROLLER VISIBILITY:** MSK-1137 contains LR range/velocity status, body-axis velocity, and slant-range fields.
+- **NO DIRECT SCALE/COMPENSATION DISPLAY EVIDENCE:** MSK-1137 does not expose PCR-775 selection or onboard scale/rescaling state.
+- **UNRESOLVED:** exact gate-edge pulse inclusion/phase behavior and ground-processing provenance of MSK-1137 LR values.
