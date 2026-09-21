@@ -65,16 +65,16 @@ Do **not** encode an invented automatic rule such as `GUIDO compares MSK-1137 RN
 
 Do **not** make the `LR position 2` call stand in for LR data-good, LR acceptance, or LR convergence. They are distinct documented conditions.
 
-## Sufficiency decision
+## Research closure
 
-This bounded question is **SUFFICIENT for the current controller-workflow architecture**. The exact Mission-G ground-processing mapping and exact GUIDO/back-room words remain unresolved, but neither is required to preserve the documented information separation and front-room decision topology.
-
-Reopen this question only if implementation requires:
-
-- exact Mission-G per-field source/engineering conversion;
-- exact GUIDO/back-room phraseology or timing;
-- an exact historical algorithm for PGNS-versus-LR `Delta-H` on the ground; or
-- evidence contradicting the CONTROL ownership of the LR-position call in the preserved landing-poll excerpt.
+- **Status:** **SUFFICIENT**
+- **Bounded question:** What Apollo-11-specific primary evidence establishes the controller-visible landing-radar comparison and call workflow approaching P64 and the landing go/no-go?
+- **Implementation dependency:** station-scoped player products, front-room readiness calls, FLIGHT integration, and CAPCOM relay behavior for the Apollo 11 powered-descent reference.
+- **Decision sensitivity:** a materially different answer could move a cue to another station, collapse distinct LR antenna/data-validity states, or incorrectly let CAPCOM or software make a decision that historically belonged to the front-room control chain.
+- **Decision-relevant findings:** MSK-1137 exposes LR validity/measurement products together with PGNS altitude and TGO; a preserved 20 July 1969 console recording assigns the LR-position-2 call to CONTROL and records Guidance as a separate FLIGHT poll response; FLIGHT integrates the poll and directs CAPCOM; Kranz independently describes the ground LR-comparison/acceptance decision and Bales's use of back-room guidance support.
+- **Remaining gaps and disposition:** exact Mission-G LR parameter provenance/engineering conversion remains **BLOCKED** on the already named PHO-TR155/Data Formats recovery; exact GUIDO/back-room phraseology and timing are **DEFERRED** because current architecture does not require them; an exact ground `Delta-H` computation is **UNRESOLVED** and must not be invented.
+- **Closure challenge:** after the last material finding, a focused pass checked the mission rules, the Apollo-11-specific display definition, the preserved landing-poll console record, Kranz's independent operational account, the air-ground descent record, and the surviving Apollo 11 Mission Control audio-channel collection for contrary station ownership or a stronger exact-workflow source. No recovered primary evidence contradicted the CONTROL LR-position call, the separate Guidance go, or the FLIGHT→CAPCOM decision chain. The channel archive confirms richer source material survives, but no searchable verbatim GUIDO/back-room transcript was recovered that changes the current implementation conclusion.
+- **Reopen triggers:** exact Mission-G per-field source/engineering conversion becomes required; exact GUIDO/back-room phraseology or timing becomes player-relevant; implementation needs a historical ground PGNS-versus-LR comparison algorithm; a stronger contemporaneous controller-loop source contradicts the station split; or the blocked Mission-G PHO-TR155/Data Formats material is recovered.
 
 ## Sources
 
