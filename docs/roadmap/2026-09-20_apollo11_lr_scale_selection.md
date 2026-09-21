@@ -20,10 +20,16 @@ The signed-velocity representation is now also closed at the Apollo-11-effective
 
 The former generic `rounding/truncation` question is now bounded more accurately by primary hardware descriptions. MIT/MSC R-700 Volume II describes the SDC as a gated high-speed binary counter that **accumulates the selected measurement pulses** and serially transfers the resulting count. MIT/IL E-1982 independently states that the selected LR velocity signal accumulates in the radar high-speed counter during the LGC-controlled 80-ms interval. HSI-208625 likewise defines LR self-test values as counts accumulated over an 80-ms sample. These sources establish pulse-event counting, not an arithmetic conversion of an ideal real-valued `frequency × 0.080` followed by a documented rounding operator. Therefore the simulation boundary should be an integer gated pulse count; no separate nearest-rounding or truncation rule should be invented. Exact edge inclusion/phase behavior for a pulse coincident with gate opening/closure is not recovered and remains below the established historical boundary.
 
+### Controller-facing closure
+
+The Apollo 11 AC Electronics mission-control manual now closes the useful station-facing part of this thread. Its MSK-1137 definition explicitly includes `LR RNG` and `VEL` landing-radar data status (`GOOD/BAD`), body-axis LR velocity values `VXB, VYB, VZB` in ft/sec, and LR slant-range `RNG` in feet. This is direct Apollo-11 controller-display evidence that processed LR status and measurements were available on MSK-1137.
+
+The same MSK-1137 field definition does **not** list `ALTSCBIT`, high/low scale state, `RADSKAL`, `SKALSKAL`, PCR-775 compensation selection, raw serial words, or the onboard rescaling operation. Therefore the player-visible boundary is now positive for LR measurement/status visibility but remains negative-by-recovered-display-definition for direct exposure of the PCR-775/scale implementation state. Do not add a separate GUIDO control, annunciator, or field for that state without new primary evidence.
+
 ## Next work
 
-1. Determine whether PCR 775 / the zero mission load has any player-visible MCC/GUIDO consequence; do not infer one from onboard implementation alone.
-2. Continue the parallel Apollo-11 MSK-1137 per-field provenance and GUIDO workflow thread.
+1. Continue the Apollo-11 MSK-1137 per-field provenance and GUIDO workflow thread, now treating LR range/velocity status and processed values as directly documented display products.
+2. Determine the source/ground-processing chain that produces the MSK-1137 `VXB/VYB/VZB` and `RNG` fields; do not assume they are raw downlist words.
 3. Keep historical stochastic LR measurement generation **BLOCKED** pending flight-effective residual/distribution evidence.
 4. If implementation requires sub-count timing, seek circuit-level SDC gate-edge evidence; do not substitute an arithmetic rounding convention.
 
@@ -37,6 +43,8 @@ The former generic `rounding/truncation` question is now bounded more accurately
 - **DOCUMENTED, APOLLO-11-SPECIFIC RAW TRANSFER:** 15 bits/pulses; MSB-first transfer is established by primary Apollo interface documentation.
 - **RESOLVED, APOLLO-11-EFFECTIVE VELOCITY BIAS:** raw LR velocity is offset by 12,288 counts; LUMINARY 099 applies `LVELBIAS=-12288` before using the sample.
 - **RESOLVED MODEL BOUNDARY, PRIMARY HARDWARE DESCRIPTION:** SDC measurement formation is gated integer pulse accumulation; no separate arithmetic rounding/truncation operator is documented or warranted.
+- **DOCUMENTED, APOLLO-11 CONTROLLER DISPLAY:** MSK-1137 exposes LR range/velocity `GOOD/BAD`, body-axis LR velocities, and LR slant range.
+- **NO EVIDENCE OF DIRECT CONTROLLER EXPOSURE:** recovered MSK-1137 definition contains no PCR-775 selection, `RADSKAL`/`SKALSKAL`, `ALTSCBIT`, scale-state, raw-word, or rescaling field.
 - **UNRESOLVED BELOW MODEL BOUNDARY:** exact gate-edge pulse inclusion/phase behavior.
-- **UNRESOLVED:** controller-visible consequences.
+- **UNRESOLVED:** ground-processing/provenance chain for the controller-visible LR values.
 - **BLOCKED:** stochastic historical LR error generator.
