@@ -1,6 +1,7 @@
 # 502 — Apollo 11 landing-radar high-scale semantics evidence
 
 Date: 2026-09-20
+Research thread: `apollo11-landing-radar`
 
 ## Evidence
 
@@ -35,4 +36,5 @@ Do not infer from this note alone:
 
 ## Evidence status
 
-**PARTIAL / STRONGLY BOUNDED.** Nominal scale-ratio semantics are resolved; direct Apollo-11-effective high-scale hardware confirmation and zero-padload semantics remain open.
+- **DOCUMENTED:** nominal low/high scale-ratio semantics are strongly bounded by primary near-mission guidance documentation.
+- **UNRESOLVED:** direct Apollo-11-effective high-scale hardware confirmation and zero-padload/run-time semantics.
