@@ -5,9 +5,11 @@ Parent: `docs/STATION_RESEARCH_STATUS.md`
 
 ## GUIDANCE / GUIDO
 
-**DOCUMENTED for front-room alarm recommendation; PARTIAL for decision criterion.** During the descent alarm sequence, GUIDANCE supplies the GO assessment to FLIGHT. NASA's Garman history corroborates that computer-specialist back-room support informed Bales's assessment. Primary postflight MIT/IL and Grumman engineering memos establish the executive-overflow mechanism and restart behavior. The exact late-preflight written GO/abort rule has not been recovered.
+**DOCUMENTED for front-room alarm recommendation; BLOCKED for exact late-preflight written criterion.** During the descent alarm sequence, GUIDANCE supplies the GO assessment to FLIGHT. NASA's Garman history corroborates that computer-specialist back-room support informed Bales's assessment. Primary postflight MIT/IL and Grumman engineering memos establish the executive-overflow mechanism and restart behavior.
 
-The available Apollo 11 mission-rule copies dated 16 April and 16 May 1969 predate the late descent simulation that triggered the alarm review, so they cannot be used to manufacture the resulting criterion. Do not invent exact support-room wording, CRT fields, a recurrence count/time threshold, or a blanket rule that the alarm number itself means GO.
+The available Apollo 11 mission-rule copies dated 16 April and 16 May 1969 predate the late descent simulation that triggered the alarm review. A targeted recovery pass did not recover the post-simulation change page/change notice, authenticated Bales/Garman cue sheet, or revised Guidance/training procedure. NASA's later institutional history confirms that Garman prepared an alarm list before landing but does not reproduce it. Under D-024, exact rule wording/threshold is now BLOCKED on recovery of one of those named artifacts.
+
+Do not invent exact support-room wording, CRT fields, a recurrence count/time threshold, or a blanket rule that the alarm number itself means GO.
 
 ## FLIGHT
 
@@ -19,7 +21,7 @@ The available Apollo 11 mission-rule copies dated 16 April and 16 May 1969 preda
 
 ## Computer-specialist support
 
-**DOCUMENTED role; PARTIAL interface.** Jack Garman is institutionally documented by NASA as supporting Bales from the back room and recognizing the 1202 overload condition. Exact loop topology, wording, player-visible representation, and the contemporary cue-sheet text remain unresolved.
+**DOCUMENTED role; BLOCKED cue-sheet text.** Jack Garman is institutionally documented by NASA as supporting Bales from the back room, recognizing the 1202 overload condition, and preparing an alarm list before landing. Exact loop topology, wording, player-visible representation, and the contemporary cue-sheet text remain unrecovered.
 
 ## Implementation guardrail
 
@@ -29,6 +31,6 @@ Preserve `alarm → specialist/GUIDANCE evaluation → FLIGHT disposition → CA
 
 - **DOCUMENTED:** GUIDANCE recommendation, FLIGHT disposition, CAPCOM relay.
 - **DOCUMENTED / PRIMARY POSTFLIGHT ENGINEERING:** executive-overflow mechanism and restart behavior.
-- **DOCUMENTED / RETROSPECTIVE NASA:** Garman support role.
-- **SOURCE-GAP BOUNDED:** April/May mission-rule copies predate the late simulation-driven review.
-- **UNRESOLVED:** exact late-preflight written criterion, support-loop mechanics, alarm-specific CRT basis, and cue-sheet wording.
+- **DOCUMENTED / RETROSPECTIVE NASA:** Garman support role and preparation of a preflight alarm list.
+- **BLOCKED / NAMED SOURCE RECOVERY:** exact late-preflight written criterion and cue-sheet wording.
+- **UNRESOLVED BUT NOT INFERRED:** support-loop mechanics and alarm-specific CRT basis.
