@@ -27,7 +27,7 @@
     },
     "controller_observation": {
       "status": "partial",
-      "note": "Alarm chronology and selected controller/crew communications are documented; exact GUIDO display fields, update cadence, and independent PGNS/AGS/radar observation products remain incomplete."
+      "note": "Apollo 11 MSK-1137 landing-radar/guidance cue fields and the landing-poll station topology are now source-bounded in the partial controller decision-gate profile. Generic cue/poll assembly is implemented without automatic mission decisions. Exact per-field Mission-G ground-processing provenance, display cadence, complete rule-5-89 cue mapping, and exact GUIDO/back-room timing remain incomplete."
     },
     "guidance_monitoring": {
       "status": "partial",
@@ -43,13 +43,14 @@
     "Repository research note 204_apollo11_guidance_monitoring_fields_limits.md",
     "Repository research note 205_apollo11_landing_radar_measurement_quality.md",
     "Repository research note 210_apollo11_three_source_guidance_monitoring.md",
+    "Repository research note 502_apollo11_descent_lr_controller_call_workflow.md",
     "MSC Internal Note 70-FM-80 / MSC-02419, Project Apollo: Lunar Descent and Ascent Trajectories, 21 April 1970"
   ],
   "deferred": [
     "complete Apollo 11 powered-descent state vector/trajectory initialization",
     "LM-5 delivered thrust and mass-flow profile",
     "LM-5 landing-radar beam/terrain measurement generation, radar-axis reference computation, and estimator/filter implementation",
-    "historical guidance observation freshness/cadence and exact GUIDO/FLIGHT alarm/cross-check presentation",
+    "historical guidance observation freshness/cadence, exact Mission-G LR product routing, complete rule-to-cue mapping, and exact GUIDO/FLIGHT alarm/cross-check presentation",
     "historically validated alarm decision rule implementation",
     "Apollo 11 descent runtime adapter"
   ]
