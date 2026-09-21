@@ -13,16 +13,19 @@ This closes the former broad question of whether an Apollo-11-effective LR downl
 
 TRW's Apollo-11-specific *Trajectory Reconstruction and Postflight Analysis, Volume 1* constrains the next layer. Section 7.4 says LR data were obtained by processing **downlink telemetry** with a special-purpose computer program to produce onboard observations for HOPE-compatible analysis. The same section separately identifies an RTCC descent trajectory obtained in real time. This proves a telemetry-derived LR-observation path and cautions against collapsing that path into RTCC trajectory processing. Because the described program is a postflight analysis path, it does not itself establish the real-time MSK-1137 routing.
 
-Apollo 11 M-932-69-11 establishes the mission-control framework as distinct CCATS, RTCC, and Display/Control systems. PHO-FAM001 further establishes two real-time display-source classes: Display/Control could receive **selected telemetry data from CCATS**, or display/control data from RTCC. Therefore CRT presentation alone does not prove RTCC ownership of a parameter. This narrows the unresolved LR display question to choosing between documented source classes and recovering the parameter-level conversion/routing.
+Apollo 11 M-932-69-11 establishes the mission-control framework as distinct CCATS, RTCC, and Display/Control systems. PHO-FAM001 further establishes two real-time display-source classes: Display/Control could receive **selected telemetry data from CCATS**, or display/control data from RTCC. Therefore CRT presentation alone does not prove RTCC ownership of a parameter.
+
+The archival target can now be made more specific. Mission-G RTCC Operations Support Plan 69-FS-2 explicitly lists `PHO-TR155` and `Data Formats` among the reference documents maintained in the RTCC computer-control area. Contemporaneous Philco-Ford quarterly report PHO-TR460 states that the third-floor display system had a final **Mission G configuration**, that Mission-G configuration testing was 100 percent at launch, and that the display system was released from Mission G configuration on 28 July 1969. The same report identifies PHO-TR155 as the operational-configuration documentation family. Later PHO-TR515 explains the configuration-control mechanism: display requirements were gathered through data packs and computer listings were used to prepare PHO-TR155. These sources do not supply the LR parameter mapping themselves, but they identify the mission-specific configuration/data-format records most likely to contain the discriminating evidence.
 
 ## Next work
 
-1. Seek Apollo-11-effective telemetry measurement/format definitions, CCATS parameter tables, display-format source listings, or equivalent records mapping `DNLRVELX/Y/Z/DNLRALT` or their downlink word positions to engineering-unit/display parameter identifiers.
-2. Search specifically for the measurement definitions underlying MSK-1137 `VXB/VYB/VZB/RNG`; determine whether they used the documented CCATS-selected-telemetry path or RTCC display/control data.
-3. Determine whether MSK-1137 fields are direct engineering conversions of the LGC words or undergo another ground transformation; do not infer the answer from matching semantics or CRT presentation alone.
-4. Keep sample time, downlink transmission, ground processing, and CRT refresh distinct; do not invent latency/cadence.
-5. Keep historical stochastic LR measurement generation **BLOCKED** pending flight-effective residual/distribution evidence.
-6. Treat exact SDC gate-edge pulse inclusion as below the current model boundary unless implementation requires it.
+1. Recover a **Mission-G/Apollo-11-effective PHO-TR155 package, associated display data pack, or Data Formats record** for MSK-1137. Search by display number and by `VXB`, `VYB`, `VZB`, `RNG`, landing-radar, and corresponding telemetry identifiers.
+2. If recovered, trace each dynamic MSK-1137 LR field to its source identifier and source class (CCATS-selected telemetry versus RTCC display/control data), preserving any engineering-unit conversion specified there.
+3. Do not use the available Apollo-15 PHO-TR155 as Apollo-11 parameter evidence. It may be used only to understand document structure until a Mission-G record is recovered.
+4. If Mission-G configuration/data-format material remains unavailable after archive-focused search, classify the parameter-level route as **BLOCKED on source recovery**, rather than filling the gap from semantic similarity.
+5. Keep sample time, downlink transmission, ground processing, and CRT refresh distinct; do not invent latency/cadence.
+6. Keep historical stochastic LR measurement generation **BLOCKED** pending flight-effective residual/distribution evidence.
+7. Treat exact SDC gate-edge pulse inclusion as below the current model boundary unless implementation requires it.
 
 ## Evidence status
 
@@ -32,6 +35,8 @@ Apollo 11 M-932-69-11 establishes the mission-control framework as distinct CCAT
 - **DOCUMENTED, APOLLO-11-SPECIFIC:** the report treats the RTCC real-time descent trajectory separately from the telemetry-derived LR observations.
 - **DOCUMENTED, APOLLO-11 MISSION CONFIGURATION:** MCC used CCATS, RTCC, and Display/Control as distinct cooperating systems.
 - **DOCUMENTED, PRIMARY MCC ARCHITECTURE:** Display/Control accepted both selected telemetry from CCATS and display/control data from RTCC.
+- **DOCUMENTED, MISSION-G CONFIGURATION CONTROL:** 69-FS-2 names PHO-TR155 and Data Formats as RTCC-area reference documents; PHO-TR460 records final Mission-G display configuration and 100-percent configuration test status at launch.
+- **DOCUMENTED, CONFIGURATION PROCESS:** PHO-TR515 describes data packs/computer listings feeding PHO-TR155 display configuration documentation.
 - **UNRESOLVED:** exact LR engineering conversion, parameter identifiers, and which documented real-time display-source class supplied MSK-1137.
 - **NOT ESTABLISHED:** an RTCC transform in the MSK-1137 LR measurement path.
 - **BLOCKED:** stochastic historical LR error generator.
