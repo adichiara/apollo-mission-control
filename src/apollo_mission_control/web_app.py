@@ -40,6 +40,12 @@ from .crew_response import (
     record_inverter_transfer_completion_report,
     record_premature_dps_stop,
 )
+from .descent_decision_gate import (
+    DescentDecisionGate,
+    LandingRadarControllerState,
+    Readiness,
+    RelayState,
+)
 from .electrical_power_model import (
     ElectricalBusConfig,
     ElectricalBusState,
@@ -520,6 +526,24 @@ class LandingRadarHistoricalVelocityUpdateRequest(BaseModel):
     program: str | None = Field(default=None, min_length=1, max_length=32)
     reasonableness_passed: bool = True
     updates_permitted: bool = True
+
+
+class LandingRadarDecisionGateRequest(BaseModel):
+    get_s: float = Field(ge=0.0)
+    range_data_good: bool | None = None
+    velocity_data_good: bool | None = None
+    antenna_position: int | None = Field(default=None, ge=1, le=2)
+    body_axis_velocity_fps: list[float] | None = Field(
+        default=None, min_length=3, max_length=3
+    )
+    slant_range_ft: float | None = None
+    pgns_altitude_ft: float | None = None
+    time_to_go_s: float | None = None
+    guidance_readiness: str = Field(default="unknown", min_length=1, max_length=32)
+    control_readiness: str = Field(default="unknown", min_length=1, max_length=32)
+    flight_decision: str = Field(default="unknown", min_length=1, max_length=32)
+    capcom_relay: str = Field(default="not_relayed", min_length=1, max_length=32)
+    provenance: list[str] = Field(default_factory=list, max_length=20)
 
 
 class CausalInsertionRequest(BaseModel):
@@ -1754,6 +1778,39 @@ def landing_radar_historical_velocity_update_model_proof(
         "profile": profile.to_public_dict(),
         "velocity_update": result.to_dict(),
     }
+
+
+@app.post(
+    "/api/admin/model-proof/apollo11-descent-decision-gate",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def apollo11_descent_decision_gate_model_proof(
+    request: LandingRadarDecisionGateRequest,
+) -> dict[str, object]:
+    gate = _domain_call(
+        lambda: DescentDecisionGate(
+            get_s=request.get_s,
+            landing_radar=LandingRadarControllerState(
+                range_data_good=request.range_data_good,
+                velocity_data_good=request.velocity_data_good,
+                antenna_position=request.antenna_position,
+                body_axis_velocity_fps=(
+                    None
+                    if request.body_axis_velocity_fps is None
+                    else tuple(request.body_axis_velocity_fps)
+                ),
+                slant_range_ft=request.slant_range_ft,
+                pgns_altitude_ft=request.pgns_altitude_ft,
+                time_to_go_s=request.time_to_go_s,
+            ),
+            guidance_readiness=Readiness(request.guidance_readiness),
+            control_readiness=Readiness(request.control_readiness),
+            flight_decision=Readiness(request.flight_decision),
+            capcom_relay=RelayState(request.capcom_relay),
+            provenance=tuple(request.provenance),
+        ).validated()
+    )
+    return gate.to_dict()
 
 
 @app.post(
