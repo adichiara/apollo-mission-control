@@ -17,12 +17,26 @@ Apollo 11 M-932-69-11 establishes the mission-control framework as distinct CCAT
 
 The archival target can now be made more specific. Mission-G RTCC Operations Support Plan 69-FS-2 explicitly lists `PHO-TR155` and `Data Formats` among the reference documents maintained in the RTCC computer-control area. Contemporaneous Philco-Ford quarterly report PHO-TR460 states that the third-floor display system had a final **Mission G configuration**, that Mission-G configuration testing was 100 percent at launch, and that the display system was released from Mission G configuration on 28 July 1969. The same report identifies PHO-TR155 as the operational-configuration documentation family. Later PHO-TR515 explains the configuration-control mechanism: display requirements were gathered through data packs and computer listings were used to prepare PHO-TR155. These sources do not supply the LR parameter mapping themselves, but they identify the mission-specific configuration/data-format records most likely to contain the discriminating evidence.
 
+## Source-recovery gate — 2026-09-21
+
+Archive-focused searches using the display number, Mission-G configuration family, LR field labels, landing-radar terminology, and Data Formats terminology did not recover the parameter-level Mission-G record. The search re-recovered 69-FS-2 and the Apollo 11 AC Electronics manual but no Mission-G PHO-TR155 MSK-1137 parameter package, associated display data pack/computer listing, or Mission-G Data Formats LR table.
+
+Under D-024, the **parameter-level MSK-1137 LR ground route is therefore BLOCKED on named source recovery**. This is not evidence that the records did not exist; the primary configuration-control evidence says they did. It means further broad searching is not the next discriminating step.
+
+Reopen this subquestion when one of the following becomes accessible:
+
+1. Mission-G/Apollo-11-effective PHO-TR155 material covering MSK-1137;
+2. the associated MSK-1137 display data pack/computer listing; or
+3. Mission-G Data Formats material identifying LR dynamic-data source identifiers/conversions.
+
+The broader Apollo 11 powered-descent/program-alarm reference remains active because it has other current model/runtime dependencies.
+
 ## Next work
 
-1. Recover a **Mission-G/Apollo-11-effective PHO-TR155 package, associated display data pack, or Data Formats record** for MSK-1137. Search by display number and by `VXB`, `VYB`, `VZB`, `RNG`, landing-radar, and corresponding telemetry identifiers.
-2. If recovered, trace each dynamic MSK-1137 LR field to its source identifier and source class (CCATS-selected telemetry versus RTCC display/control data), preserving any engineering-unit conversion specified there.
+1. Do **not** continue broad searches for the blocked MSK-1137 mapping absent a source-availability change. Preserve the named recovery targets above.
+2. If a target is recovered, trace each dynamic MSK-1137 LR field to its source identifier and source class (CCATS-selected telemetry versus RTCC display/control data), preserving any engineering-unit conversion specified there.
 3. Do not use the available Apollo-15 PHO-TR155 as Apollo-11 parameter evidence. It may be used only to understand document structure until a Mission-G record is recovered.
-4. If Mission-G configuration/data-format material remains unavailable after archive-focused search, classify the parameter-level route as **BLOCKED on source recovery**, rather than filling the gap from semantic similarity.
+4. Continue the next decision-relevant Apollo 11 powered-descent/program-alarm item that is not dependent on this blocked ground-route mapping.
 5. Keep sample time, downlink transmission, ground processing, and CRT refresh distinct; do not invent latency/cadence.
 6. Keep historical stochastic LR measurement generation **BLOCKED** pending flight-effective residual/distribution evidence.
 7. Treat exact SDC gate-edge pulse inclusion as below the current model boundary unless implementation requires it.
@@ -37,6 +51,6 @@ The archival target can now be made more specific. Mission-G RTCC Operations Sup
 - **DOCUMENTED, PRIMARY MCC ARCHITECTURE:** Display/Control accepted both selected telemetry from CCATS and display/control data from RTCC.
 - **DOCUMENTED, MISSION-G CONFIGURATION CONTROL:** 69-FS-2 names PHO-TR155 and Data Formats as RTCC-area reference documents; PHO-TR460 records final Mission-G display configuration and 100-percent configuration test status at launch.
 - **DOCUMENTED, CONFIGURATION PROCESS:** PHO-TR515 describes data packs/computer listings feeding PHO-TR155 display configuration documentation.
-- **UNRESOLVED:** exact LR engineering conversion, parameter identifiers, and which documented real-time display-source class supplied MSK-1137.
+- **BLOCKED ON SOURCE RECOVERY:** exact LR engineering conversion, parameter identifiers, and which documented real-time display-source class supplied MSK-1137.
 - **NOT ESTABLISHED:** an RTCC transform in the MSK-1137 LR measurement path.
 - **BLOCKED:** stochastic historical LR error generator.
