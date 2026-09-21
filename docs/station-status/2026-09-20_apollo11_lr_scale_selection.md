@@ -16,7 +16,9 @@ The MIT/IL *LEM PGNCS Guidance System Operations Plan*, Section 3, identifies `L
 
 A mission-specific Apollo 11 engineering note closes raw transfer length: an 80-ms gate, a 5-ms delay, **15 readout pulses at 3200 pps**, then radar interrupt. ND-1021042 independently terminates sync and requests `RUPT9` after 15 received radar pulses. MIT/MSC R-700 Volume II closes serial bit order: the radar shift-register contents are read out **most-significant-bit first**, with `1` bits on the ones bus and `0` bits on the zeros bus. An MIT/IL functional description independently describes the resulting 15-bit range/velocity word as MSB-first on two lines.
 
-Flown LUMINARY 099 now also closes signed-velocity representation at the LGC boundary. `CONTROLLED_CONSTANTS.agc` defines `LVELBIAS = -12288` with the original comment `LANDING RADAR BIAS FOR 153.6 KC.` In `P20-P25.agc`, the LR velocity path masks `RNRAD` with `POSMAX` and adds `LVELBIAS` before accumulating the sample. The serial velocity quantity is therefore handled as a biased nonnegative count, not as an AGC signed word with a serial sign bit; software removes a 12,288-count offset to recover signed velocity. Component conversion scales then provide the documented axis-specific sign and units. Exact SDC rounding/truncation at the 80-ms count boundary remains unresolved.
+Flown LUMINARY 099 closes signed-velocity representation at the LGC boundary. `CONTROLLED_CONSTANTS.agc` defines `LVELBIAS = -12288` with the original comment `LANDING RADAR BIAS FOR 153.6 KC.` In `P20-P25.agc`, the LR velocity path masks `RNRAD` with `POSMAX` and adds `LVELBIAS` before accumulating the sample. The serial velocity quantity is therefore handled as a biased nonnegative count, not as an AGC signed word with a serial sign bit; software removes a 12,288-count offset to recover signed velocity. Component conversion scales then provide the documented axis-specific sign and units.
+
+Primary SDC descriptions also remove the need to invent a numeric rounding mode. R-700 Volume II describes a measurement gate feeding a high-speed binary counter; E-1982 states that the selected LR velocity signal accumulates in that counter for the LGC-controlled 80-ms interval. HSI-208625 describes the LR self-test quantities the same way: counts accumulated over an 80-ms sample. The historically supported model boundary is therefore **integer pulse accumulation during the gate**, not `round()` or `floor()` applied to an ideal continuous count. Exact inclusion of a pulse coincident with a gate edge is not established.
 
 Flown LUMINARY 099 also closes software-side quantity selection. `P20-P25.agc` invokes `INITREAD` with octal `14` for `LRVELX`, `15` for `LRVELY`, `16` for `LRVELZ`, and `17` for `LRALT`. These are read-selection commands, not returned-data encoding.
 
@@ -24,7 +26,7 @@ No recovered source establishes that `ALTSCBIT`, raw scale state, PCR-775 compen
 
 ## Player-facing boundary
 
-A spacecraft model may preserve LR altitude scale state internally; use 1.079 ft/count low scale and derived 5.395 ft/count high scale; encode the mission load as radar-performed slant-range Doppler compensation; preserve the flown quantity-selection mapping (`Vx/Vy/Vz/range` = octal `14/15/16/17`); model LR velocity serialization as a biased 15-bit count with zero-velocity offset 12,288 removed by LUMINARY software; and model the Apollo 11 LR/LGC transfer as a 15-bit serial readout, **MSB first**, over complementary ones/zeros data lines. Do not invent SDC rounding/truncation, controller-visible controls, or an exact invariant 2,500-ft switching altitude.
+A spacecraft model may preserve LR altitude scale state internally; use 1.079 ft/count low scale and derived 5.395 ft/count high scale; encode the mission load as radar-performed slant-range Doppler compensation; preserve the flown quantity-selection mapping (`Vx/Vy/Vz/range` = octal `14/15/16/17`); model LR velocity serialization as a biased 15-bit count with zero-velocity offset 12,288 removed by LUMINARY software; and model the Apollo 11 LR/LGC transfer as a 15-bit serial readout, **MSB first**, over complementary ones/zeros data lines. Measurement formation should be modeled as gated integer pulse accumulation. Do not invent an arithmetic rounding mode, gate-edge convention, controller-visible controls, or an exact invariant 2,500-ft switching altitude.
 
 ## Evidence status
 
@@ -36,6 +38,7 @@ A spacecraft model may preserve LR altitude scale state internally; use 1.079 ft
 - **DOCUMENTED, APOLLO-11-SPECIFIC RAW TRANSFER LENGTH:** 15 readout pulses at 3200 pps followed by radar interrupt; corroborated by ND-1021042's 15-pulse radar-control description.
 - **DOCUMENTED, PRIMARY APOLLO INTERFACE:** MSB-first serial binary transfer on complementary ones/zeros lines; separate readout/reset/quantity selection; upstream velocity-sign determination.
 - **RESOLVED, APOLLO-11-EFFECTIVE VELOCITY ENCODING:** raw LR velocity uses a 12,288-count offset; LUMINARY 099 masks the raw word and adds `LVELBIAS=-12288` before using the sample.
+- **RESOLVED MODEL BOUNDARY, PRIMARY SDC DESCRIPTION:** measurement is an integer pulse count accumulated through the selected gate; no separate arithmetic rounding/truncation rule is evidenced.
 - **DOCUMENTED, APOLLO-11-EFFECTIVE QUANTITY SELECTION:** `LRVELX=14`, `LRVELY=15`, `LRVELZ=16`, `LRALT=17` (octal).
 - **NO STATION MATURITY CHANGE:** controller visibility/routing remains unestablished.
-- **UNRESOLVED:** SDC rounding/truncation and controller-visible compensation/scale-state consequences.
+- **UNRESOLVED:** exact gate-edge pulse inclusion/phase behavior and controller-visible compensation/scale-state consequences.
