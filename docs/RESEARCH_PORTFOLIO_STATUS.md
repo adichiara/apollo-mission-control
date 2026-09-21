@@ -172,6 +172,8 @@ Stop broad numerical-gate searching and do not schedule D-022 sensitivity work u
 
 - **Status:** **OPEN**
 - **Reason:** the second architecture reference still has explicit current dependencies: landing-radar geometry/reference computation, downstream estimator/filter behavior, powered-descent trajectory/propulsion, controller-product interfaces, and sourced decision rules. Those questions can materially change the reusable engine and eventual Apollo 11 runtime.
+- **Closed bounded subquestion:** research 502 marks the descent landing-radar/controller-call workflow **SUFFICIENT** for current station and decision-topology architecture. It documents MSK-1137 decision ingredients, the separate CONTROL LR-position and Guidance poll calls, FLIGHT integration, and CAPCOM relay. Exact Mission-G per-field LR ground-processing provenance remains separately **BLOCKED** on named source recovery.
+- **Current next dependency:** define an implementation-neutral descent decision-gate contract that joins the existing LR/guidance causal state to the documented mission-rule and station workflow without inventing historical constants or automatic controller decisions.
 - **Stop condition:** apply D-024 separately to each bounded question as those dependencies are resolved. Do not keep the entire Apollo 11 domain permanently OPEN.
 
 ## Portfolio operating rule
