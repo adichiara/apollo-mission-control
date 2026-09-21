@@ -20,7 +20,7 @@ GAEC LSP-470-2D supplies 3-sigma LR range/velocity acceptance limits. NASA TN D-
 
 NASA TN D-6849 establishes separate LGC-digital and crew-display electrical output paths and states that velocity sign is determined in the measurement pulse-train path before Signal Data Converter serialization. The MIT/IL GSOP exposes `LR in "1"` / `LR in "0"` binary inputs separately from status discretes. AC Electronics ND-1021042 supplies LGC readout/reset/quantity-selection behavior and states that radar control terminates sync and requests `RUPT9` after **15 received radar pulses**.
 
-A mission-specific Apollo 11 engineering note explaining the LGC 520 alarm on DSKY circuit-breaker closure now supplies the missing effectivity bridge for raw transfer length. It describes the radar-read sequence as an 80-ms gate, a 5-ms delay, **15 readout pulses at 3200 pps**, then a radar interrupt. Apollo 11 raw LR/LGC serial transfer length is therefore closed at 15 pulses/bits; this is no longer inferred only from later LM-6 material. The evidence does not specify serial bit order, sign representation/bias, or Signal Data Converter rounding/truncation.
+A mission-specific Apollo 11 engineering note explaining the LGC 520 alarm on DSKY circuit-breaker closure supplies the effectivity bridge for raw transfer length: an 80-ms gate, a 5-ms delay, **15 readout pulses at 3200 pps**, then radar interrupt. MIT/MSC R-700 Volume II now closes the remaining serial-order question: radar shift-register contents cross the interface **most-significant-bit first**, with `1` and `0` bits transferred on separate ones/zeros buses. An MIT/IL functional description independently states that the 15-bit LR range/velocity word is shifted out MSB first on two lines. Serial sign representation/integer bias and Signal Data Converter rounding/truncation remain unresolved.
 
 Flown LUMINARY 099 `P20-P25.agc` closes software-side LR quantity selection: `LRVELX/LRVELY/LRVELZ/LRALT` invoke `INITREAD` with octal `14/15/16/17`. These command values are not returned-data encoding.
 
@@ -30,7 +30,7 @@ Later LM10/R-567 material remains adjacent architecture corroboration. Its 15-bi
 
 ## Next work
 
-1. Seek LM-5/Apollo-11-effective hardware-interface evidence for **serial bit order and serial sign representation/integer bias**. Raw word length is now closed at 15 bits/pulses. Keep rounding/truncation as a separate Signal Data Converter conversion question.
+1. Seek LM-5/Apollo-11-effective hardware-interface evidence for **serial sign representation/integer bias**. Raw word length (15 bits/pulses) and serial order (MSB first) are closed. Keep rounding/truncation as a separate Signal Data Converter conversion question.
 2. Pursue Apollo-11-effective FDS/RTCC/CCATS material mapping individual MSK-1137 fields to `D/L`/`RTCC` provenance and external names/downlists or computation identifiers.
 3. Preserve the two historical not-good intervals as deterministic replay anchors and enforce the four-second `DATA GOOD` qualification separately; do not infer a random dropout process.
 4. Retrieve MSC-69-EG-14 / NASA-TM-X-64374, requiring an explicit Mission-G/LM-5 applicability bridge before using F-mission numbers.
@@ -49,8 +49,8 @@ Later LM10/R-567 material remains adjacent architecture corroboration. Its 15-bi
 - **DOCUMENTED, APOLLO-11-EFFECTIVE ONBOARD SCALING:** low/high altitude 1.079/derived 5.395 ft/count; X/Y/Z converted/stored velocity weights -0.6440/+1.212/+0.8668 ft/s.
 - **DOCUMENTED, APOLLO-11-EFFECTIVE QUANTITY SELECTION:** `LRVELX/LRVELY/LRVELZ/LRALT` = octal `14/15/16/17`.
 - **DOCUMENTED, APOLLO-11-SPECIFIC RAW TRANSFER LENGTH:** 15 readout pulses at 3200 pps followed by radar interrupt; independently consistent with ND-1021042's 15-pulse radar-control sequence.
-- **DOCUMENTED, APOLLO-PROGRAM INTERFACE:** serial binary LR data, separate data/status/selection/timing paths, and velocity-sign determination before serialization.
+- **DOCUMENTED, PRIMARY APOLLO INTERFACE:** serial binary LR data is transferred MSB first over complementary ones/zeros lines; status/selection/timing are separate paths; velocity sign is determined before serialization.
 - **DOCUMENTED, MISSION-PERIOD MODEL SOURCE:** NASA-CR-92466 for beam-bandwidth/Doppler model verification, not LM-5 flight-error statistics.
 - **DOCUMENTED:** Apollo MCC architectural separation and D/TV buffered-update behavior.
 - **BLOCKED:** direct PHO-TN401 inspection; historical stochastic LR measurement generation.
-- **UNRESOLVED:** per-field MSK-1137 routing, exact GUIDO request workflow, MCC cadence/latency/freshness, LR serial bit order/sign representation/bias/rounding, and sub-second LR transition timing.
+- **UNRESOLVED:** per-field MSK-1137 routing, exact GUIDO request workflow, MCC cadence/latency/freshness, LR serial sign representation/integer bias/rounding, and sub-second LR transition timing.
