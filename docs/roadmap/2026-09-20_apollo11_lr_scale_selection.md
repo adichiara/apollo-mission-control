@@ -16,14 +16,16 @@ The previously open absolute high-scale conversion is closed as an Apollo-11-eff
 
 Primary interface documentation independently bounds the physical scale transition. AC Electronics ND-1021042 identifies an LR-originated `Range low scale factor` discrete issued automatically at approximately 2,500 ft, plus digital LR data pulses under LGC readout/strobe/reset control. Apollo-11-specific evidence establishes a 15-pulse raw transfer, and MIT/MSC R-700 Volume II establishes MSB-first serialization on complementary ones/zeros lines.
 
-The signed-velocity representation is now also closed at the Apollo-11-effective LGC boundary. Flown `CONTROLLED_CONSTANTS.agc` defines `LVELBIAS=-12288` as the `LANDING RADAR BIAS FOR 153.6 KC.` Flown `P20-P25.agc` masks the LR `RNRAD` value with `POSMAX` and adds `LVELBIAS` before accumulating the velocity sample. Therefore the serial LR velocity word is treated as a biased nonnegative count with a 12,288-count zero-velocity offset, rather than as a signed serial number. The component conversion constants separately establish the axis conversion signs and scales. Exact SDC end-of-gate rounding/truncation is not established by this result.
+The signed-velocity representation is now also closed at the Apollo-11-effective LGC boundary. Flown `CONTROLLED_CONSTANTS.agc` defines `LVELBIAS=-12288` as the `LANDING RADAR BIAS FOR 153.6 KC.` Flown `P20-P25.agc` masks the LR `RNRAD` value with `POSMAX` and adds `LVELBIAS` before accumulating the velocity sample. Therefore the serial LR velocity word is treated as a biased nonnegative count with a 12,288-count zero-velocity offset, rather than as a signed serial number. The component conversion constants separately establish the axis conversion signs and scales.
+
+The former generic `rounding/truncation` question is now bounded more accurately by primary hardware descriptions. MIT/MSC R-700 Volume II describes the SDC as a gated high-speed binary counter that **accumulates the selected measurement pulses** and serially transfers the resulting count. MIT/IL E-1982 independently states that the selected LR velocity signal accumulates in the radar high-speed counter during the LGC-controlled 80-ms interval. HSI-208625 likewise defines LR self-test values as counts accumulated over an 80-ms sample. These sources establish pulse-event counting, not an arithmetic conversion of an ideal real-valued `frequency × 0.080` followed by a documented rounding operator. Therefore the simulation boundary should be an integer gated pulse count; no separate nearest-rounding or truncation rule should be invented. Exact edge inclusion/phase behavior for a pulse coincident with gate opening/closure is not recovered and remains below the established historical boundary.
 
 ## Next work
 
-1. Seek primary Signal Data Converter detail for the exact 80-ms gate/counter boundary behavior: specifically whether fractional-cycle timing produces truncation, rounding, or another deterministic convention.
-2. Determine whether PCR 775 / the zero mission load has any player-visible MCC/GUIDO consequence; do not infer one from onboard implementation alone.
-3. Continue the parallel Apollo-11 MSK-1137 per-field provenance and GUIDO workflow thread.
-4. Keep historical stochastic LR measurement generation **BLOCKED** pending flight-effective residual/distribution evidence.
+1. Determine whether PCR 775 / the zero mission load has any player-visible MCC/GUIDO consequence; do not infer one from onboard implementation alone.
+2. Continue the parallel Apollo-11 MSK-1137 per-field provenance and GUIDO workflow thread.
+3. Keep historical stochastic LR measurement generation **BLOCKED** pending flight-effective residual/distribution evidence.
+4. If implementation requires sub-count timing, seek circuit-level SDC gate-edge evidence; do not substitute an arithmetic rounding convention.
 
 ## Evidence status
 
@@ -32,9 +34,9 @@ The signed-velocity representation is now also closed at the Apollo-11-effective
 - **DERIVED, APOLLO-11-EFFECTIVE:** 5.395 ft/count high scale follows directly from the mission-effective 1.079-ft/count low scale and Revision-99 5:1 high/low ratio; Luminary 1B independently corroborates it as 5.3950 ft/count.
 - **RESOLVED, APOLLO-11 PRELAUNCH LOAD:** `SKALSKAL` 1356 = `00000` and `RADSKAL` 1354–1355 = `00000,00000` select radar-performed Doppler compensation under the Revision-99 PCR-775 scheme.
 - **DOCUMENTED, APOLLO-11-EFFECTIVE SYMBOL TABLE:** `SKALSKAL` = erasable address 1356.
-- **CORRECTED:** prior 3461/3462 address references and `RADSCALE` spelling were repository transcription errors.
 - **DOCUMENTED, APOLLO-11-SPECIFIC RAW TRANSFER:** 15 bits/pulses; MSB-first transfer is established by primary Apollo interface documentation.
 - **RESOLVED, APOLLO-11-EFFECTIVE VELOCITY BIAS:** raw LR velocity is offset by 12,288 counts; LUMINARY 099 applies `LVELBIAS=-12288` before using the sample.
-- **DOCUMENTED, NEAR-MISSION LUMINARY 1B:** LR altitude = 1.0790 ft/count low scale and 5.3950 ft/count high scale; ratio = 0.2; independently corroborates the velocity-bias interpretation.
-- **UNRESOLVED:** SDC rounding/truncation and controller-visible consequences.
+- **RESOLVED MODEL BOUNDARY, PRIMARY HARDWARE DESCRIPTION:** SDC measurement formation is gated integer pulse accumulation; no separate arithmetic rounding/truncation operator is documented or warranted.
+- **UNRESOLVED BELOW MODEL BOUNDARY:** exact gate-edge pulse inclusion/phase behavior.
+- **UNRESOLVED:** controller-visible consequences.
 - **BLOCKED:** stochastic historical LR error generator.
