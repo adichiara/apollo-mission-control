@@ -10,15 +10,17 @@ Flown LUMINARY 099 establishes that the onboard landing-radar altitude path expl
 
 MIT Instrumentation Laboratory LUMINARY Memo #85 (21 May 1969) resolves the zero-load semantics directly for Revision 99 / PCR 775. It defines the landing-radar scale-factor ratio `SFR = High Scale Factor / Low Scale Factor = 5` and `SKALSKAL = 1/SFR = 0.2`. To have R12 perform slant-range Doppler compensation, the memo prescribes `RADSKAL = 00023,37462` and `SKALSKAL = 06315`; if the landing radar performs the compensation, all three registers are set to zero. Thus Apollo 11's zero prelaunch values select radar-performed Doppler compensation in this scheme; they are not a zero physical scale ratio.
 
-The absolute high-scale conversion can now be bounded without importing a later mission configuration. Flown LUMINARY 099 documents 1.079 ft/count for the low-scale representation, and Revision-99 Memo #85 documents a high/low scale-factor ratio of 5. Their direct arithmetic consequence is 5.395 ft/count high scale. MSC-69-FS-4, the primary MIT/MSC programmed-guidance-equations document for Luminary 1B, independently prints 5.3950 ft/count and therefore corroborates rather than supplies the Apollo-11-effective derivation.
+The absolute high-scale conversion is bounded without importing a later mission configuration. Flown LUMINARY 099 documents 1.079 ft/count for the low-scale representation, and Revision-99 Memo #85 documents a high/low scale-factor ratio of 5. Their direct arithmetic consequence is 5.395 ft/count high scale. MSC-69-FS-4 independently prints 5.3950 ft/count and therefore corroborates rather than supplies the Apollo-11-effective derivation.
 
-AC Electronics ND-1021042 independently documents a radar-originated `Range low scale factor` discrete, automatically issued near 2,500 ft, and digital LR data pulses controlled by LGC readout/strobe/reset signals. The LM-6 Apollo Operations Handbook preserves that architecture immediately after Apollo 11 and specifies a 15-bit serial transfer path.
+The MIT/IL *LEM PGNCS Guidance System Operations Plan*, Section 3, identifies two LR-to-LGC binary data-flow inputs, `LR in "1"` and `LR in "0"`, separately from LR validity, antenna-position, and range-low-scale discretes. AC Electronics ND-1021042 identifies the complementary LGC outputs: `Readout command`, a continuous 3,200-cps `Gate reset`, and distinct range/Vx/Vy/Vz strobe pulses enabling LR transfer gates. Together these primary sources establish a useful framing boundary: binary value transfer is separate from LGC-controlled quantity selection/timing. They do not establish Apollo-11/LM-5 bit order, sign convention, integer bias, raw word length, or rounding/truncation.
 
-No recovered source establishes that `ALTSCBIT`, the raw scale discrete, PCR-775 compensation selection, `SKALSKAL`, or the rescaling operation was exposed directly to GUIDO, CONTROL, or FLIGHT. No station display, alarm, callout, or procedure is added from this evidence.
+The LM-6 Apollo Operations Handbook preserves that architecture immediately after Apollo 11 and specifies a 15-bit serial transfer path. Its 15-bit detail remains adjacent-effectivity corroboration, not a silently back-projected LM-5 fact.
+
+No recovered source establishes that `ALTSCBIT`, the raw scale discrete, PCR-775 compensation selection, `SKALSKAL`, transfer strobes, or the rescaling operation was exposed directly to GUIDO, CONTROL, or FLIGHT. No station display, alarm, callout, or procedure is added from this evidence.
 
 ## Player-facing boundary
 
-A spacecraft model may preserve LR altitude scale state internally, use 1.079 ft/count low scale and the directly derived 5.395 ft/count high scale, and encode the Apollo 11 mission load as selecting radar-performed slant-range Doppler compensation rather than R12 compensation. These are onboard implementation facts; they do not establish a controller-visible control. Do not present 2,500 ft as an exact invariant Apollo-11 switching altitude.
+A spacecraft model may preserve LR altitude scale state internally, use 1.079 ft/count low scale and the directly derived 5.395 ft/count high scale, encode the Apollo 11 mission load as selecting radar-performed slant-range Doppler compensation, and represent LR transfer as binary data under separate LGC quantity strobes. These are onboard/interface facts; they do not establish a controller-visible control or the unresolved raw numerical coding. Do not present 2,500 ft as an exact invariant Apollo-11 switching altitude.
 
 ## Evidence status
 
@@ -27,6 +29,7 @@ A spacecraft model may preserve LR altitude scale state internally, use 1.079 ft
 - **DOCUMENTED, REVISION-99 PRIMARY:** Memo #85 gives high/low scale-factor ratio 5, `SKALSKAL = 0.2`, and the PCR-775 compensation-selection pad values.
 - **DERIVED, APOLLO-11-EFFECTIVE HIGH SCALE:** 5.395 ft/count = 1.079 ft/count × 5; independently corroborated by the 5.3950-ft/count Luminary 1B value.
 - **RESOLVED, APOLLO-11 PRELAUNCH LOAD:** zero `RADSKAL`/`SKALSKAL` means radar-performed Doppler compensation under the documented Revision-99 scheme.
-- **DOCUMENTED INTERFACE / STRONG CONTINUITY:** LR-originated automatic low-scale indication near 2,500 ft plus digital pulse/strobe transfer; 15-bit serial transfer explicitly documented immediately after Apollo 11.
+- **DOCUMENTED INTERFACE:** LR uses separate `LR in "1"`/`LR in "0"` binary data flow and LGC-controlled readout/reset/range/Vx/Vy/Vz strobes; this constrains framing architecture without defining the raw numeric code.
+- **ADJACENT EFFECTIVITY:** LM-6 explicitly documents 15-bit serial transfer; do not promote that word length to LM-5 without an applicability bridge.
 - **NO STATION MATURITY CHANGE:** controller visibility/routing remains unestablished.
-- **UNRESOLVED:** raw serial sign/bias/framing, rounding/truncation, and controller-visible compensation/scale-state consequences.
+- **UNRESOLVED:** LM-5 raw word length, bit order, sign/bias, rounding/truncation, and controller-visible compensation/scale-state consequences.
