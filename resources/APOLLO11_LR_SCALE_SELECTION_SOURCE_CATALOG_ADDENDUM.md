@@ -21,6 +21,7 @@ Parent: `resources/APOLLO11_LUMINARY1A_SOURCE_CATALOG_ADDENDUM.md`
 | MIT/IL HSI-208625, digital simulator description | LR self-test Vx/Vy/Vz/range values are specified as counts accumulated over an **80-ms sample period** | Primary functional corroboration of count-domain interface semantics; simulator document is not used to invent analog error statistics. |
 | MIT/IL guidance-and-navigation functional description, §2.5.2.1.5 | SDC uses 15-bit counter and 15-bit shift register; range/velocity word shifts **MSB first** on two lines | Independent primary corroboration of MSB-first/two-line transfer. |
 | NASA TN D-6849, *Apollo Experience Report — Lunar Module Landing Radar and Rendezvous Radar* | Velocity pulse train superimposed on 153.6-kHz reference to facilitate sign determination; SDC serializes velocity/range | Hardware explanation consistent with the flown `LVELBIAS` offset. |
+| AC Electronics, *Apollo 11 Manual*, MSK-1137 definition | `LR RNG` and `VEL` status = `GOOD/BAD`; `VXB/VYB/VZB` = LR velocity in body axes; `RNG` = LR slant-range altitude | **Mission-specific controller-display evidence.** Establishes processed LR status/value visibility; does not establish raw downlink provenance and contains no PCR-775/scale-state field. |
 | MSC-69-FS-4, *Programmed Guidance Equations for Luminary 1B* | LR altitude low/high scale 1.0790/5.3950 ft/count; DNLRVEL bias added with `K:LVELBIAS=-12288` | Near-mission primary corroboration of both derived altitude high scale and flown-code velocity-bias interpretation. |
 | Grumman LMA790-3-LM, LM-6 *Apollo Operations Handbook* | Signal-data circuits count selected velocity PRF for 80 ms and serialize 15-bit words | Adjacent-effectivity corroboration only. |
 
@@ -30,7 +31,9 @@ Revision-99 Memo #85 plus the Apollo 11 mission load resolve the `SKALSKAL` zero
 
 The raw interface is constrained to a 15-bit, MSB-first serial transfer on complementary ones/zeros lines. Flown LUMINARY 099 further establishes the velocity numerical convention at the LGC boundary: the raw velocity count is masked as nonnegative and corrected by `LVELBIAS=-12288`. Signed velocity is therefore recovered from a 12,288-count offset representation rather than a serial sign bit/complement number. NASA's 153.6-kHz sign-reference description and MSC-69-FS-4 independently support this interpretation.
 
-The former `SDC rounding/truncation` question should not be represented as a choice between software-style arithmetic operators. Primary hardware descriptions consistently define an integer pulse count accumulated during the selected 80-ms gate. A faithful implementation should therefore count admitted pulses. The sources recovered here do **not** establish the circuit-level convention for a pulse coincident with a gate edge, so that narrower timing detail remains unresolved. No controller-visible consequence is inferred.
+The former `SDC rounding/truncation` question should not be represented as a choice between software-style arithmetic operators. Primary hardware descriptions consistently define an integer pulse count accumulated during the selected 80-ms gate. A faithful implementation should therefore count admitted pulses. The sources recovered here do **not** establish the circuit-level convention for a pulse coincident with a gate edge, so that narrower timing detail remains unresolved.
+
+The Apollo 11 MSK-1137 definition closes the controller-visibility question at the useful product boundary: LR range/velocity validity, body-axis velocity, and slant range were display products. It does not expose the onboard PCR-775 compensation choice, `RADSKAL`/`SKALSKAL`, `ALTSCBIT`, or scale/rescaling state. Those implementation details should remain internal unless a new primary source documents a controller-facing representation. The source/ground-processing chain for the displayed LR values remains unresolved.
 
 ## Sources
 
@@ -49,6 +52,7 @@ The former `SDC rounding/truncation` question should not be represented as a cho
 - https://www.ibiblio.org/apollo/Documents/HSI-208625.pdf
 - https://www.ibiblio.org/apollo/Documents/sundance_functional_description_vol1.pdf
 - https://ntrs.nasa.gov/api/citations/19720016521/downloads/19720016521.pdf
+- https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
 - https://www.ibiblio.org/apollo/Documents/j2-80-MSC-69-FS-4_text.pdf
 - LMA790-3-LM, LM-6 Apollo Operations Handbook, Subsystems Data (basic 15 Dec 1968; change 15 Sep 1969)
 
@@ -62,4 +66,6 @@ The former `SDC rounding/truncation` question should not be represented as a cho
 - **DOCUMENTED, PRIMARY APOLLO INTERFACE:** MSB-first serial transfer on complementary ones/zeros data lines.
 - **RESOLVED, APOLLO-11-EFFECTIVE VELOCITY NUMERICAL REPRESENTATION:** raw LR velocity is a 12,288-count biased value; LUMINARY 099 removes the bias with `LVELBIAS=-12288`.
 - **RESOLVED MODEL BOUNDARY, PRIMARY HARDWARE DESCRIPTION:** measurement formation is gated integer pulse accumulation; no separate arithmetic rounding/truncation operation is supported.
-- **UNRESOLVED:** exact gate-edge pulse inclusion/phase behavior and controller-visible consequences.
+- **DOCUMENTED, APOLLO-11 CONTROLLER DISPLAY:** MSK-1137 exposes LR status, body-axis velocities, and slant range.
+- **NOT DOCUMENTED AS CONTROLLER-VISIBLE:** PCR-775 compensation selection and onboard LR scale/rescaling state.
+- **UNRESOLVED:** exact gate-edge pulse inclusion/phase behavior and ground-processing provenance of MSK-1137 LR values.
