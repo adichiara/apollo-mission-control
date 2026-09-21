@@ -14,7 +14,9 @@ The obvious mission-rule scans do not close the remaining criterion question. NA
 
 Primary contemporary postflight engineering evidence was recovered instead: MIT/IL AG#370-69 (4 August 1969) and Grumman LAV-500-940 (31 July 1969). They support alarm occurrence/mechanism and LGC behavior, but not the exact console decision rule used on landing day.
 
-The next discriminating artifacts are now named: a post-simulation mission-rule change page/change notice, the Bales/Garman alarm cue sheet or authenticated contemporary copy, or Apollo-11-effective Guidance/training procedures revised after the final descent simulation. Until one is recovered, no numeric recurrence threshold or blanket `1201/1202 = GO` rule should enter the simulation.
+A targeted follow-up recovery pass searched specifically for the named discriminating artifacts: a post-simulation mission-rule change page/change notice, the Bales/Garman alarm cue sheet or authenticated contemporary copy, and revised Apollo-11-effective Guidance/training procedures. No contemporary copy was recovered. NASA's institutional Garman history does independently confirm that Garman prepared an alarm list before landing, but it does not reproduce the sheet or its exact rule text. Later recollections about recurrence remain secondary and are not converted into executable thresholds.
+
+Per D-024, the exact late-preflight written criterion is therefore **BLOCKED on named source recovery**. This prevents an open-ended search from becoming a substitute for evidence while preserving the already documented flown decision chain.
 
 ## Files synchronized
 
@@ -25,8 +27,8 @@ The next discriminating artifacts are now named: a post-simulation mission-rule 
 
 ## Next
 
-Target the late-preflight decision artifact specifically. If the named artifact classes remain inaccessible, classify the exact written criterion as BLOCKED on source recovery and move to the next powered-descent controller product rather than infer the rule from later recollection.
+Move to the next open Apollo 11 powered-descent controller-product/interface or sourced decision-rule dependency. Reopen this exact alarm-rule question only when a named late-preflight artifact becomes accessible. Do not encode a numeric recurrence threshold or blanket `1201/1202 = GO` rule from later recollection.
 
 ## Evidence status
 
-**DOCUMENTED/PARTIAL:** operational voice chain and technical alarm behavior are bounded. **SOURCE GAP BOUNDED:** available April/May mission-rule copies are too early. **UNRESOLVED:** exact late-preflight written criterion and verbatim back-room exchange.
+**DOCUMENTED/PARTIAL:** operational voice chain and technical alarm behavior are bounded. **BLOCKED / NAMED SOURCE RECOVERY:** exact late-preflight written criterion and cue-sheet text. **UNRESOLVED BUT NOT INFERRED:** verbatim back-room exchange and alarm-specific CRT basis.
