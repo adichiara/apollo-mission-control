@@ -26,21 +26,21 @@ A cross-check of NASA SP-4029, *Apollo by the Numbers*, found a provenance hazar
 
 ### PDI source-conflict propagation audit
 
-A further search found NASA technical paper **20080013635**, *Lunar Surface Virtual Simulation* (2008). Its Apollo vehicle model says that the **simulated** Apollo 11 LM weight at PDI was **33,683.5 lb**, with 18,000 lb descent propellant. The number is exactly the primary Apollo 11 Mission Report's **LM-separation** mass, not a documented PDI mass. Because the paper explicitly describes a simulation approximation and provides no Mission-G mass-ledger provenance for that PDI assignment, it is **not accepted as historical closure**.
+NASA technical paper **20080013635**, *Lunar Surface Virtual Simulation* (2008), says its simulated Apollo 11 LM weight at PDI was **33,683.5 lb**, with 18,000 lb descent propellant. The number is exactly the primary Mission Report's **LM-separation** mass. Because the paper describes a simulation approximation and provides no Mission-G mass-ledger provenance for that PDI assignment, it is **not accepted as historical closure**.
 
-This creates a second independent warning against value-only recovery: later NASA material can attach an authentic Apollo 11 mass number to the wrong event for simulation/summary purposes. Exact numeric agreement with a NASA publication is therefore insufficient; event identity and provenance must agree with the primary mission record.
+### Mission-specific preflight DPS thrust envelope recovered
 
-### As-flown DPS evidence retained
+The contemporary NASA **Apollo 11 Press Kit** gives a mission-facing DPS specification that is more specific than the later generic design-history number: **9,870 lbf maximum rated thrust**, with the engine throttleable between **1,050 and 6,300 lbf**, and ±6° gimbal capability. This does not conflict automatically with NASA TN D-7143's later **10,500-lbf maximum-rated design requirement** because the two documents are not demonstrated to use the same configuration/qualification basis.
 
-Apollo 11 Mission Report §9.8 documents the 756.3-second powered descent, approximately 6775 ft/s velocity change, 13% minimum-throttle start, throttle-up to full after about 26 seconds, the early data dropout, and flight throttle/pressure histories. These constrain validation but do not establish an exact delivered thrust/Isp history.
+The implementation consequence is strict: retain D-7143 as a program/design envelope, but use the Apollo 11 Press Kit values as **contemporary mission-specific preflight specification evidence**. Neither source is an as-flown delivered-thrust history, and neither may be used to turn Mission Report throttle percentages into exact thrust without a documented throttle/thrust relationship for LM-5.
 
-### Named propulsion source remains blocked
+### Apollo 11 DPS Supplement 7 recovery audit tightened
 
-Apollo 11 Mission Report Supplement 7, *Descent Propulsion System Final Flight Evaluation* (September 1970), remains **BLOCKED ON NAMED SOURCE RECOVERY**. No neighboring-mission values were substituted.
+Later NASA mission-report supplement tables repeatedly identify Apollo 11 Supplement 7, *Descent Propulsion System Final Flight Evaluation*, as published in **September 1970**. A NASA retrospective technical-report catalog also contains the neighboring Apollo 11 ascent-propulsion final-flight evaluation, while the currently searchable NTRS Apollo holdings expose Apollo 11 Supplement 5 but not Supplement 7. This strengthens the classification **BLOCKED ON NAMED SOURCE RECOVERY**: the report's existence/publication is documented; its contents are not recovered. No report number, author, accession number, or performance values are inferred from neighboring supplements.
 
 ## Boundary preserved
 
-No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No Apollo 13 LM-7 or later LM-10 pre-PDI value was transferred to LM-5. No amendment-overwritten table was treated as Mission-G evidence solely from its section number. The secondary SP-4029 event labels were not allowed to override the primary Mission Report. NASA 20080013635's simulated PDI assignment of the Mission Report separation mass was likewise quarantined. No design Isp was promoted to flight-effective Isp. No throttle percentage was converted into unsupported exact thrust. No reconstructed state was relabeled raw telemetry.
+No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No Apollo 13 LM-7 or later LM-10 pre-PDI value was transferred to LM-5. No amendment-overwritten table was treated as Mission-G evidence solely from its section number. Later event-label drift was quarantined. No design or preflight thrust specification was promoted to delivered flight thrust, no design Isp was promoted to flight-effective Isp, and no reconstructed state was relabeled raw telemetry.
 
 ## Repository updates
 
@@ -51,8 +51,8 @@ No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No Ap
 
 ## Next
 
-Continue PDI-mass recovery only from a source explicitly labeling Mission G/LM-5 at PDI or pre-PDI with trustworthy event provenance. Prioritize superseded ODB pages, contractor/postflight mass ledgers, and Apollo 11 Mission Report Supplement 7. Do not use SP-4029 or NASA 20080013635's simulation mass assignment as closure. The repeated event-label drift strengthens the requirement to recover a contemporaneous mass ledger rather than triangulate a value from later summaries.
+Continue PDI-mass recovery only from a source explicitly labeling Mission G/LM-5 at PDI or pre-PDI with trustworthy event provenance. In parallel, resolve the **Apollo 11 9,870-lbf mission specification versus 10,500-lbf generic design requirement** only through configuration-controlled primary documentation; do not normalize one to the other. Apollo 11 DPS Supplement 7 remains the highest-value named propulsion recovery target.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** Mission-specific postflight LM masses at separation, DOI ignition, DOI cutoff, and landing are primary-source documented. Exact Mission-G PDI mass remains unresolved. Two later NASA publications/products now demonstrate event-assignment hazards and are quarantined from historical model inputs. Exact delivered thrust/Isp remain unresolved; Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** Mission-specific postflight LM masses at separation, DOI ignition, DOI cutoff, and landing are primary-source documented. Exact Mission-G PDI mass remains unresolved. Apollo 11 preflight DPS thrust limits are now mission-specifically documented, but exact delivered thrust/Isp remain unresolved. Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
