@@ -24,15 +24,17 @@ A NASA Apollo Lunar Surface Journal-hosted PDF excerpt from **LMA790-3-LM, Apoll
 
 ### FTP control provenance tightened
 
-NASA's Apollo News Reference GN&C material describes the descent-engine control assembly hard stop as **92.5-percent thrust** and states that each automatic-throttle counter pulse corresponds to a **2.7-lb thrust increment**. Searchable LMA790-3-LM material carrying the **15 December 1968 basic date** includes a control-electronics page with **Change Date 15 March 1969** stating that automatic throttle increases can drive the counter to the level which, combined with the fixed 10-percent TTCA output, corresponds to **92.5-percent thrust**.
+NASA's Apollo News Reference GN&C material describes the descent-engine control assembly hard stop as **92.5-percent thrust** and states that each automatic-throttle counter pulse corresponds to a **2.7-lb thrust increment**. Searchable LMA790-3-LM material carrying the **15 December 1968 basic date** includes page 2.2-222, changed **15 March 1969**, stating that automatic throttle increases can drive the counter to the level which, combined with the fixed 10-percent TTCA output, corresponds to **92.5-percent thrust**.
 
-This moves the 92.5-percent FTP/control-law semantics into the pre-Apollo-11 handbook lineage. It still does **not** establish an LM-5 engine-specific force calibration at that control point. The separate Apollo 11 Press Kit value of 9,870 lbf remains a mission-specific preflight specification; no arithmetic equivalence between 92.5 percent and 9,870 lbf is asserted.
+A further page-level recovery now passes the LM-5 provenance test directly. In the 15 September 1969 LM-6-and-subsequent scan, **page 2.2-215 carries Change Date 15 June 1969**—the date of the superseded LM-5-and-subsequent issue—and figure 2.2-62, *Thrust/Translation Controller Assembly — Angular Displacements*, labels the throttle hard-stop position **“92.5% THRUST.”** The surrounding retained control pages also include 15 June 1969 effective dates. This establishes that the **92.5-percent manual/control hard-stop semantics were actually present in the LM-5 handbook state**, not merely in a later mature-LM issue.
+
+This still does **not** establish an LM-5 engine-specific force calibration at that control point. The separate Apollo 11 Press Kit value of 9,870 lbf remains a mission-specific preflight specification; no arithmetic equivalence between 92.5 percent and 9,870 lbf is asserted.
 
 ### Volume-I publication lineage narrowed
 
-The next source pass established a useful issue boundary from the handbook lineage: **LMA790-3-LM 6 and Subsequent, Volume I, dated 15 September 1969, states that it supersedes LMA790-3-LM 5 and Subsequent dated 15 June 1969**. Its effective-page record includes pages retained from the 15 March and 15 June 1969 change states.
+**LMA790-3-LM 6 and Subsequent, Volume I, dated 15 September 1969, states that it supersedes LMA790-3-LM 5 and Subsequent dated 15 June 1969**. Its effective-page record and retained page dates now provide concrete LM-5-effective evidence, including the 92.5-percent throttle hard-stop page above.
 
-This establishes that the mission-applicable **LM-5-and-subsequent Volume-I issue existed by 15 June 1969**. It also gives a rigorous recovery test for pages found in later scans: a page can support the LM-5 handbook state only when its own effective/change date is 15 June 1969 or earlier and its content is not explicitly limited to later vehicles. The DPS performance/design table has not yet been recovered under that test, so exact FTP force and Isp remain unresolved.
+The DPS performance/design table itself has not yet been recovered with a 15 June-or-earlier effective date, so exact FTP force and Isp remain unresolved.
 
 ### Supplement 7
 
@@ -51,8 +53,8 @@ No later-LM force calibration was back-projected onto Eagle. No excerpt-level LM
 
 ## Next
 
-Recover the **15 June 1969 LMA790-3-LM 5 and Subsequent Volume-I DPS section/performance table**, or a later scan whose individual DPS pages demonstrably retain a 15 June-or-earlier effective date. Test whether those pages tie 9,870 lbf to fixed-full-throttle and provide an LM-5-applicable Isp/performance basis. In parallel, retain LM-5 engine acceptance/performance records and Apollo 11 DPS Supplement 7 as preferred delivered-performance targets. Continue PDI-mass recovery only from explicitly Mission-G/LM-5 event-provenance records.
+Recover the **DPS §2.3 performance/design pages whose individual effective dates are 15 June 1969 or earlier** from the September LM-6 scan or another copy. Test whether those pages tie a force value to fixed-full-throttle and provide an LM-5-applicable Isp/performance basis. In parallel, retain LM-5 engine acceptance/performance records and Apollo 11 DPS Supplement 7 as preferred delivered-performance targets. Continue PDI-mass recovery only from explicitly Mission-G/LM-5 event-provenance records.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** The LM-5 Volume-I publication state is now bounded to the **15 June 1969 LM-5-and-subsequent issue**, while pre-Apollo-11 handbook/control documentation supports the 92.5-percent automatic-throttle ceiling. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** The 92.5-percent throttle hard stop is now directly documented on a **15 June 1969 effective handbook page retained from the LM-5-and-subsequent issue**. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
