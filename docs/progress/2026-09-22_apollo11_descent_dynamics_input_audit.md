@@ -14,9 +14,15 @@ A targeted follow-on recovered TRW Note 70-FMT-819 / NASA CR-108349, *Apollo Mis
 
 This materially improves the validation path: a mission-specific continuous reference trajectory exists. It remains **RECONSTRUCTED**, because the source explicitly describes fitting, data combination, and constraint rather than a raw continuous truth record.
 
+### Follow-on extraction result
+
+Audited Volume I for extractable state/checkpoint and frame products. The report explicitly places the actual 45-day BET listing in **Volume II** in NASA Apollo Trajectory (NAT) format and says that Volume II was not generally distributed. Volume I therefore does not supply a machine-usable continuous state listing.
+
+The audit did recover useful method detail: six descent trajectory solutions were compared; the Lear solution used 10-sample/s high-speed MSFN data over 232 seconds immediately before PDI; the combined onboard/MSFN high-speed HOPE solution used compacted high-speed Doppler plus CSM sextant/VHF relative tracking and telemetered acceleration in the IGS burn model. The report also defines the CSM-centered UVW-type axes used for relative-trajectory comparison figures. Those axes are not assumed to be the unrecovered NAT listing's frame.
+
 ## Boundary preserved
 
-No launch mass was substituted for PDI mass. No design thrust or Isp was promoted to an Apollo 11 as-flown value. No postflight reconstructed state was relabeled as raw telemetry or exact physical truth. No D-022 irrelevance closure was claimed without sourced endpoints and a player-product comparison.
+No launch mass was substituted for PDI mass. No design thrust or Isp was promoted to an Apollo 11 as-flown value. No postflight reconstructed state was relabeled as raw telemetry or exact physical truth. No state series was digitized from plots and presented as the Volume-II BET. No NAT frame/epoch convention was inferred from a different comparison coordinate system.
 
 ## Repository updates
 
@@ -27,8 +33,8 @@ No launch mass was substituted for PDI mass. No design thrust or Isp was promote
 
 ## Next
 
-Extract the 70-FMT-819 DOI→touchdown reconstruction products and their coordinate/frame/epoch definitions for model validation. Continue the narrower LM-5 PDI mass and DPS delivered-performance search. If those remain unrecovered, formalize scenario inputs as DOCUMENTED checkpoints + RECONSTRUCTED trajectory reference + MODELLED propulsion/mass inputs.
+Recover TRW 70-FMT-819 Volume II / the Apollo 11 45-day BET NAT listing or a traceable archival derivative preserving its epochs, frames, units, and provenance. Continue the narrower LM-5 PDI mass and DPS delivered-performance search.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** Generic model parameterization is compatible with primary-source DPS physics and a mission-specific continuous postflight trajectory reconstruction is now identified. PDI mass and delivered DPS thrust/Isp history remain unresolved.
+**PARTIALLY DOCUMENTED.** Reconstruction methodology and comparison semantics are now bounded. The tabulated 45-day BET state history is **BLOCKED ON NAMED SOURCE RECOVERY** (Volume II). PDI mass and delivered DPS thrust/Isp history remain unresolved.
