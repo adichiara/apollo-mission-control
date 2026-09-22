@@ -22,7 +22,13 @@ The Apollo 11 Mission Report Appendix A.6/table A-I provides mission-specific po
 
 The table does not contain a PDI row, so PDI mass remains unresolved. These values are now the preferred primary event-mass checkpoints around the missing state.
 
-A cross-check of NASA SP-4029, *Apollo by the Numbers*, found a provenance hazard: its cross-mission table places **33,669.6 lb** under Apollo 11 PDI and **33,401.6 lb** under DOI ignition, whereas the primary Mission Report explicitly identifies those values as DOI ignition and DOI cutoff respectively. The secondary compilation is therefore not used to close PDI mass.
+A cross-check of NASA SP-4029, *Apollo by the Numbers*, found a provenance hazard: its cross-mission table places **33,669.6 lb** under PDI and **33,401.6 lb** under DOI ignition, whereas the primary Mission Report explicitly identifies those values as DOI ignition and DOI cutoff respectively. The secondary compilation is therefore not used to close PDI mass.
+
+### PDI source-conflict propagation audit
+
+A further search found NASA technical paper **20080013635**, *Lunar Surface Virtual Simulation* (2008). Its Apollo vehicle model says that the **simulated** Apollo 11 LM weight at PDI was **33,683.5 lb**, with 18,000 lb descent propellant. The number is exactly the primary Apollo 11 Mission Report's **LM-separation** mass, not a documented PDI mass. Because the paper explicitly describes a simulation approximation and provides no Mission-G mass-ledger provenance for that PDI assignment, it is **not accepted as historical closure**.
+
+This creates a second independent warning against value-only recovery: later NASA material can attach an authentic Apollo 11 mass number to the wrong event for simulation/summary purposes. Exact numeric agreement with a NASA publication is therefore insufficient; event identity and provenance must agree with the primary mission record.
 
 ### As-flown DPS evidence retained
 
@@ -34,7 +40,7 @@ Apollo 11 Mission Report Supplement 7, *Descent Propulsion System Final Flight E
 
 ## Boundary preserved
 
-No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No Apollo 13 LM-7 or later LM-10 pre-PDI value was transferred to LM-5. No amendment-overwritten table was treated as Mission-G evidence solely from its section number. The secondary SP-4029 event labels were not allowed to override the primary Mission Report. No design Isp was promoted to flight-effective Isp. No throttle percentage was converted into unsupported exact thrust. No reconstructed state was relabeled raw telemetry.
+No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No Apollo 13 LM-7 or later LM-10 pre-PDI value was transferred to LM-5. No amendment-overwritten table was treated as Mission-G evidence solely from its section number. The secondary SP-4029 event labels were not allowed to override the primary Mission Report. NASA 20080013635's simulated PDI assignment of the Mission Report separation mass was likewise quarantined. No design Isp was promoted to flight-effective Isp. No throttle percentage was converted into unsupported exact thrust. No reconstructed state was relabeled raw telemetry.
 
 ## Repository updates
 
@@ -45,8 +51,8 @@ No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No Ap
 
 ## Next
 
-Continue PDI-mass recovery only from a source explicitly labeling Mission G/LM-5 at PDI or pre-PDI with trustworthy provenance. Prioritize superseded ODB pages, contractor/postflight mass ledgers, and Apollo 11 Mission Report Supplement 7. Do not use SP-4029's apparent PDI value as closure.
+Continue PDI-mass recovery only from a source explicitly labeling Mission G/LM-5 at PDI or pre-PDI with trustworthy event provenance. Prioritize superseded ODB pages, contractor/postflight mass ledgers, and Apollo 11 Mission Report Supplement 7. Do not use SP-4029 or NASA 20080013635's simulation mass assignment as closure. The repeated event-label drift strengthens the requirement to recover a contemporaneous mass ledger rather than triangulate a value from later summaries.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** Mission-specific postflight LM masses at separation, DOI ignition, DOI cutoff, and landing are now primary-source documented. Exact Mission-G PDI mass remains unresolved. A conflicting secondary NASA event table has been identified and quarantined from historical model inputs. Exact delivered thrust/Isp remain unresolved; Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** Mission-specific postflight LM masses at separation, DOI ignition, DOI cutoff, and landing are primary-source documented. Exact Mission-G PDI mass remains unresolved. Two later NASA publications/products now demonstrate event-assignment hazards and are quarantined from historical model inputs. Exact delivered thrust/Isp remain unresolved; Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
