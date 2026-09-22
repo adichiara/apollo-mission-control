@@ -3,7 +3,10 @@
 The contract preserves documented station-scoped observations and human decisions
 without deriving a landing GO/NO-GO automatically from hidden simulator state.
 
-Research basis: resources/research/502_apollo11_descent_lr_controller_call_workflow.md
+Research basis:
+- resources/research/502_apollo11_descent_lr_controller_call_workflow.md
+- NASA Apollo 11 Flight Mission Rules, rule 5-11 (7/16/69)
+- NASA TM X-58038, Apollo 11 lunar-descent guidance monitoring
 """
 
 from __future__ import annotations
@@ -22,6 +25,13 @@ class RelayState(str, Enum):
     NOT_RELAYED = "not_relayed"
     GO_RELAYED = "go_relayed"
     NO_GO_RELAYED = "no_go_relayed"
+
+
+class DescentControlMode(str, Enum):
+    """Crew-control boundary relevant to Apollo 11 Flight Mission Rule 5-11."""
+
+    AUTOMATIC = "automatic"
+    MANUAL = "manual"
 
 
 @dataclass(frozen=True)
@@ -51,6 +61,14 @@ class DescentDecisionGate:
     No readiness or final decision is inferred from LR measurements. CONTROL,
     Guidance, FLIGHT, and CAPCOM states must be supplied explicitly by their
     respective controller/communication layers.
+
+    ``control_mode`` changes rule applicability, not observation availability.
+    Apollo 11 Flight Mission Rule 5-11 states that after crew takeover there are
+    no trajectory or guidance constraints that are cause for abort.  The
+    controller-visible observations therefore remain present in this object when
+    manual control begins; only the trajectory/guidance abort-rule applicability
+    changes.  Independently sourced systems/propellant criteria are outside this
+    bounded flag and remain unaffected.
     """
 
     get_s: float
@@ -59,6 +77,7 @@ class DescentDecisionGate:
     control_readiness: Readiness = Readiness.UNKNOWN
     flight_decision: Readiness = Readiness.UNKNOWN
     capcom_relay: RelayState = RelayState.NOT_RELAYED
+    control_mode: DescentControlMode = DescentControlMode.AUTOMATIC
     provenance: tuple[str, ...] = ()
 
     def validated(self) -> "DescentDecisionGate":
@@ -66,6 +85,16 @@ class DescentDecisionGate:
             raise ValueError("get_s must be non-negative")
         self.landing_radar.validated()
         return self
+
+    @property
+    def trajectory_guidance_abort_constraints_applicable(self) -> bool:
+        """Whether trajectory/guidance constraints may themselves cause abort.
+
+        This is a rule-applicability statement, not an abort decision and not a
+        statement about systems/propellant criteria.
+        """
+
+        return self.control_mode is not DescentControlMode.MANUAL
 
     @property
     def front_room_inputs_complete(self) -> bool:
@@ -98,6 +127,10 @@ class DescentDecisionGate:
         return {
             "model_status": "apollo11_descent_decision_gate_contract",
             "get_s": checked.get_s,
+            "control_mode": checked.control_mode.value,
+            "trajectory_guidance_abort_constraints_applicable": (
+                checked.trajectory_guidance_abort_constraints_applicable
+            ),
             "landing_radar": {
                 "range_data_good": lr.range_data_good,
                 "velocity_data_good": lr.velocity_data_good,
