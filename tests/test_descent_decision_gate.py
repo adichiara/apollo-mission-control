@@ -6,6 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from apollo_mission_control.descent_decision_gate import (  # noqa: E402
+    DescentControlMode,
     DescentDecisionGate,
     LandingRadarControllerState,
     Readiness,
@@ -64,6 +65,26 @@ class DescentDecisionGateTests(unittest.TestCase):
             capcom_relay=RelayState.GO_RELAYED,
         )
         self.assertTrue(consistent.relay_consistent_with_flight)
+
+    def test_manual_takeover_changes_rule_authority_not_observations(self):
+        radar = LandingRadarControllerState(
+            range_data_good=False,
+            velocity_data_good=True,
+            antenna_position=2,
+            slant_range_ft=430.0,
+            pgns_altitude_ft=410.0,
+        )
+        automatic = DescentDecisionGate(get_s=369000.0, landing_radar=radar)
+        manual = DescentDecisionGate(
+            get_s=369001.0,
+            landing_radar=radar,
+            control_mode=DescentControlMode.MANUAL,
+        )
+
+        self.assertTrue(automatic.trajectory_guidance_abort_constraints_applicable)
+        self.assertFalse(manual.trajectory_guidance_abort_constraints_applicable)
+        self.assertEqual(automatic.to_dict()["landing_radar"], manual.to_dict()["landing_radar"])
+        self.assertEqual(manual.to_dict()["control_mode"], "manual")
 
     def test_invalid_antenna_position_is_rejected(self):
         with self.assertRaises(ValueError):
