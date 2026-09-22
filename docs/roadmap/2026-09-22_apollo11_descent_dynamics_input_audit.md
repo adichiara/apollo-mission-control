@@ -23,6 +23,14 @@ The publicly digitized Rev. 2 binder is not a pristine 20 August 1969 snapshot. 
 
 This changes the recovery requirement: an LM-5 `PRE P.D.I.` number is acceptable only from a page whose mission identity and amendment/effective date establish Mission-G applicability. A later overwritten table, a neighboring LM, or an unlabeled extracted value is insufficient. Existing Apollo 13 work still demonstrates that this document family used sequential mass-properties and consumables-change tables with explicit pre-PDI states, but those LM-7 values remain non-transferable.
 
+### Mission-specific postflight mass-properties cross-check
+
+The **Apollo 11 Mission Report, Appendix A.6 / table A-I** is itself a primary mission-specific postflight mass-properties source. NASA states that the table reflects postflight analysis of expendable loadings and usage, with measured module/stage weights updated for changes after weighing. Its LM rows give **33,683.5 lb at LM separation**, **33,669.6 lb at DOI ignition**, **33,401.6 lb at DOI cutoff**, and **16,153.2 lb at lunar landing**.
+
+This is stronger provenance than the amended operational-data-book scan for those named events, but table A-I does **not** include a PDI row. It therefore narrows and validates the event accounting without closing PDI mass.
+
+A secondary NASA compilation, *Apollo by the Numbers* (SP-4029), was checked because its cross-mission table labels an Apollo 11 value under `LM at Powered Descent Initiation`. That row shows **33,669.6 lb**, while the same compilation's `LM at Descent Orbit Insertion Ignition` row shows **33,401.6 lb**. Those numbers conflict with the primary Apollo 11 Mission Report, which explicitly assigns 33,669.6 lb to DOI ignition and 33,401.6 lb to DOI cutoff. The secondary compilation is therefore **not accepted as evidence for Apollo 11 PDI mass**; its apparent event-label shift must not be propagated into the simulator.
+
 The Apollo 11 Mission Report closes more of the as-flown propulsion envelope. Section 9.8 reports the 756.3-second powered descent, approximately 6775 ft/s velocity change, 13% minimum-throttle start, throttle-up to full after about 26 seconds, and a roughly 45-second data dropout. Figure 9.8-1 records flight throttle position, chamber pressure, regulator outlet pressure, and fuel/oxidizer interface pressures against mission time. These are legitimate as-flown validation products, but they do not by themselves establish exact delivered thrust or effective Isp versus time.
 
 A later primary NASA mission-report supplement table identifies **Apollo 11 Mission Report Supplement 7, _Descent Propulsion System Final Flight Evaluation_, published September 1970**. A targeted public recovery pass did not recover a copy. This remains a named-source recovery target.
@@ -37,7 +45,7 @@ NASA TN D-6846 / MSC-S-295, Floyd V. Bennett's *Apollo Experience Report: Missio
 | --- | --- | --- |
 | `thrust_n` / `end_thrust_n` | D-7143 design envelope; D-6846 command relationships; Mission Report flight throttle/chamber-pressure history; exact delivered thrust unresolved | Keep caller supplied; validate timing/shape against documented flight evidence; do not infer exact thrust from throttle percentage alone |
 | `specific_impulse_s` | D-7143 design requirement; no LM-5 flight-effective history recovered | Keep caller supplied; do not freeze 305 s as Apollo 11 truth |
-| `mass_kg` | Launch/unmanned and lunar-orbit transfer bookkeeping documented; public mass-properties scan is amendment-overwritten; exact Mission-G pre-PDI row not recovered | Keep PDI mass unresolved until a page with explicit LM-5/Mission-G identity and amendment provenance is recovered |
+| `mass_kg` | Mission Report table A-I documents postflight LM event masses through DOI cutoff and landing, but no PDI row; amended ODB scan cannot safely supply the missing row | Keep PDI mass unresolved; use table A-I named-event masses as primary validation checkpoints |
 | `dry_mass_kg` | Published stage/resource bookkeeping does not equal the model depletion floor convention | Do not equate without a scenario mass convention |
 | thrust `direction` | DPS gimbal capability and attitude validation products documented | Exact command history unresolved |
 | burn duration | 756.3 s documented | Historical checkpoint |
@@ -45,16 +53,16 @@ NASA TN D-6846 / MSC-S-295, Floyd V. Bennett's *Apollo Experience Report: Missio
 
 ## D-022 result
 
-No D-022 closure is claimed. The mass search has narrowed to a specific primary source family **and now a specific provenance requirement**: the Mission-G value must survive with mission identity and effective amendment state intact.
+No D-022 closure is claimed for PDI mass. The primary Mission Report now supplies high-confidence adjacent event checkpoints, but the exact PDI state is still absent. A secondary NASA compilation that appears to provide the missing value is contradicted by the primary event assignments and is rejected for this purpose.
 
 ## Architecture consequence
 
-Historical validation can use **DOCUMENTED as-flown throttle/pressure telemetry + DOCUMENTED event/checkpoint and command relationships + RECONSTRUCTED trajectory methodology + MODELLED mass/thrust/Isp inputs**. The simulator must not derive PDI mass by arithmetic from launch mass, nor silently take a value from an amendment-overwritten operational-data-book scan.
+Historical validation can use **DOCUMENTED postflight LM event masses + DOCUMENTED as-flown throttle/pressure telemetry + DOCUMENTED event/checkpoint and command relationships + RECONSTRUCTED trajectory methodology + MODELLED unresolved PDI mass/thrust/Isp inputs**. The simulator must not derive PDI mass by arithmetic from launch mass or silently relabel the Mission Report's DOI ignition/cutoff masses as PDI.
 
 ## Next
 
-Recover a **Mission-G / LM-5 sequential mass-properties or consumables-change page with explicit amendment/effective-date provenance**, preferably from an earlier scan, superseded-page archive, contractor copy, or postflight mass-properties report. Do not treat the currently indexed Rev. 2 binder's section 3.1 numbering as Mission-G proof because later amendments demonstrably repurposed/replaced pages. In parallel, pursue Apollo 11 Mission Report Supplement 7 through archival/catalog routes. Reopen Volume-II BET only on a concrete archive/digitization lead.
+Continue the PDI-mass search only against a source that explicitly labels a Mission-G/LM-5 PDI or pre-PDI state with trustworthy provenance. Prioritize superseded Mission-G operational-data-book pages, mission-specific contractor/postflight mass ledgers, or a recovered Apollo 11 DPS Supplement 7. Treat *Apollo by the Numbers* as a warning source for this field, not as closure. Reopen Volume-II BET only on a concrete archive/digitization lead.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** The primary mass-properties source family and table class are identified, and the surviving public scan's amendment-overwrite problem is now documented. Exact LM-5 PDI mass remains unresolved pending a Mission-G page with valid provenance. Exact delivered thrust/Isp also remain unresolved; Apollo 11 DPS Supplement 7 and TRW Volume II are **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** Primary postflight LM mass checkpoints are now documented at separation, DOI ignition, DOI cutoff, and landing. Exact LM-5 PDI mass remains unresolved, and a tempting secondary NASA PDI value has been rejected because its event assignments conflict with the primary Mission Report. Exact delivered thrust/Isp also remain unresolved; Apollo 11 DPS Supplement 7 and TRW Volume II are **BLOCKED ON NAMED SOURCE RECOVERY**.
