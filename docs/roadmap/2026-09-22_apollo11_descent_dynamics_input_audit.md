@@ -21,6 +21,14 @@ TRW Note 70-FMT-819 / NASA CR-108349, *Apollo Mission 11, Trajectory Reconstruct
 
 This is strong mission-specific postflight evidence for a **reconstructed continuous trajectory**, but it is not a raw as-flown truth stream and it does not establish an LM-5 PDI mass or delivered DPS thrust/Isp time history. The report itself documents estimation/fitting and landing-site constraints, so simulator provenance must preserve that distinction.
 
+### Extraction audit
+
+The follow-on extraction pass establishes an important source boundary. Volume I describes the reconstruction and comparison products, but its foreword says the actual 45-day BET listing is in **Volume II**, in NASA Apollo Trajectory (NAT) format. Volume II was not generally distributed; the report directs requests to the MSC Computations and Analysis Division Central Metric Data File. The publicly recovered Volume I therefore cannot honestly be treated as a tabulated DOI→touchdown state history.
+
+Volume I does provide useful reconstruction semantics. The descent was divided into undocking→DOI, DOI→PDI, and PDI→touchdown segments. Section 7.4.1 compares six descent solutions: real-time RTCC, low-speed MSFN, onboard relative tracking, landing-site-constrained BET #3, a Lear high-speed MSFN solution, and an onboard/MSFN high-speed HOPE solution. The Lear solution used 10-sample/s high-speed MSFN data over a 232-second arc just before PDI. The combined onboard/MSFN solution used high-speed Doppler compacted to 30 observations/minute plus CSM sextant and VHF ranging data, and modeled the descent burn in HOPE with telemetered acceleration through its IGS burn option.
+
+Volume I also defines a UVW-type **CSM-centered relative coordinate system** for its relative-trajectory comparison figures: RZ is negative U/radial, RX is V/downrange, and RY is negative W/crossrange, with corresponding velocity components. That definition is valid for those comparison products; it must not be generalized to the unrecovered NAT Volume-II state listing without the NAT format/frame definition.
+
 ## Existing model audit
 
 | Model input | Existing semantic fit | Apollo source status | Promotion decision |
@@ -32,7 +40,7 @@ This is strong mission-specific postflight evidence for a **reconstructed contin
 | thrust `direction` | Yes | DPS gimbal capability documented; guidance-mode semantics documented elsewhere | Exact inertial/body-frame command history remains unresolved |
 | central gravity `mu` / center | Yes | Model accepts source-supplied lunar gravity parameter | Source and frame convention still must be frozen before historical validation |
 | burn duration | Yes | 756.3 s total powered descent documented | Useful validation checkpoint; insufficient to derive segment throttle history |
-| continuous position/velocity history | Yes | 70-FMT-819 documents a postflight BET/reconstruction from MSFN, onboard, and relative-tracking data | Admit only as RECONSTRUCTED mission evidence, not raw documented truth |
+| continuous position/velocity history | Yes | 70-FMT-819 documents the reconstruction method, but the actual 45-day BET state listing is assigned to unrecovered Volume II | Keep RECONSTRUCTED; do not fabricate state samples from Volume-I plots |
 
 ## D-022 result
 
@@ -40,14 +48,14 @@ No D-022 closure is claimed in this pass. The recovered design values are not tw
 
 ## Architecture consequence
 
-The generic models already have the correct parameter seams. The project may now use the 70-FMT-819 postflight trajectory as a historical **validation/reference trajectory** if its tabulated/graphical states are extracted with provenance. It must not silently become authoritative physical truth or be reverse-engineered into an unsupported delivered thrust profile.
+The generic models already have the correct parameter seams. Volume I is now sufficient to define the **provenance and reconstruction-method contract**, but not to populate an authoritative state-series fixture. Graph digitization may be used only as an explicitly approximate derived dataset if a future product needs it; it must not masquerade as the Volume-II NAT listing.
 
-The next work should separate three classes explicitly: DOCUMENTED event/checkpoint facts, RECONSTRUCTED continuous trajectory states from the postflight BET, and MODELLED propulsion/mass inputs needed to reproduce or approximate those states.
+The historical validation contract is therefore: DOCUMENTED event/checkpoint facts + RECONSTRUCTED trajectory methodology/reference + MODELLED propulsion/mass inputs. A tabulated RECONSTRUCTED state history remains blocked on recovery of Volume II (or an independently archived derivative that preserves NAT epochs, frames, units, and provenance).
 
 ## Next
 
-Extract the usable DOI→touchdown state/checkpoint products from 70-FMT-819 and map their frame/epoch definitions before feeding them to the model lab. Continue a bounded search for LM-5 PDI mass/state bookkeeping and DPS final-flight/performance material; if those remain unavailable, implement the documented/reconstructed/modelled provenance contract rather than inventing them.
+Search specifically for TRW 70-FMT-819 Volume II / the 45-day Apollo 11 BET NAT listing or a traceable archival derivative. In parallel, continue the narrower LM-5 PDI mass and DPS delivered-performance search. Do not infer NAT frame/epoch semantics from the CSM-centered UVW comparison plots.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** Model semantics align with documented DPS physics, and a mission-specific postflight continuous trajectory reconstruction is now identified. Apollo-11-specific PDI mass and delivered thrust/Isp history remain unresolved; the continuous trajectory is explicitly RECONSTRUCTED.
+**PARTIALLY DOCUMENTED.** Reconstruction methods, data sources, comparison-frame semantics, DPS physics, and mission checkpoints are documented. The machine-usable 45-day BET state listing is **BLOCKED ON NAMED SOURCE RECOVERY** (Volume II); Apollo-11-specific PDI mass and delivered thrust/Isp history remain unresolved.
