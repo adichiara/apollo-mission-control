@@ -4,49 +4,35 @@ Date: 2026-09-22
 
 ## Completed
 
-Audited the next unresolved LM-5 descent inputs against primary Apollo documentation, preserving the distinction among design values, planned/commanded behavior, as-flown telemetry, reconstructed trajectory, and model inputs.
+Audited unresolved LM-5 descent inputs against primary Apollo documentation while preserving design/planned/as-flown/reconstructed/model distinctions.
 
-### PDI mass search narrowed to the correct primary table class
+### PDI mass boundary
 
-The Apollo 11 final Flight Plan documents an **unmanned LM weight of 33,278.3 lb** in its SPS budget assumptions and separately records **436.7 lb CSM→LM lunar-orbit weight transfer**. These are useful configuration-accounting anchors, but neither is promoted to PDI mass.
+The Apollo 11 Mission Report Appendix A.6/table A-I documents **33,683.5 lb at separation**, **33,669.6 lb at DOI ignition**, **33,401.6 lb at DOI cutoff**, and **16,153.2 lb at landing**. It contains no PDI row. The surviving SNA-8-D-027(III) Rev. 2 mass-properties binder contains later replacement pages, so exact PDI mass remains unresolved pending an explicitly Mission-G/LM-5 page with trustworthy event provenance.
 
-The targeted search identified **SNA-8-D-027(III) Rev. 2 / NASA-TM-X-68968, CSM/LM Spacecraft Operational Data Book, Volume III — Mass Properties** as the primary mission-specific mass-properties source family. The base revision is dated 20 August 1969 and covers G/H/J mission data.
+### Propulsion boundary
 
-### Public-scan amendment provenance audited
+The Apollo 11 Press Kit gives **9,870 lbf maximum rated thrust**; the Mission Report documents LM-5 advancing to FTP about 26 seconds after PDI. Later LMA790-3-LM Volume-I material gives 92.5-percent FTP / 9,870-lbf fixed-full-throttle semantics, but catalog provenance places that surviving full handbook at LM-7-and-subsequent or later, so it is not promoted to LM-5 calibration.
 
-A recovery pass checked the surviving digitized Rev. 2 binder rather than assuming that its title-page date applies to every page. Indexed primary-document text shows the section 3 introduction at **Amendment 86 (9/10/70)** and a table 3.1-8 page at **Amendment 110 (7/19/71)** describing **LM-10**. The public binder therefore contains later replacement pages and is not a clean Mission-G-era snapshot.
+### LM-5 Volume II recovered
 
-### Primary postflight event masses recovered
+A public scan of **LMA790-3-LM 5 and Subsequent, Volume II — Operational Procedures** establishes LM-5-specific operational-handbook provenance, but does not supply the missing force calibration.
 
-The Apollo 11 Mission Report Appendix A.6/table A-I provides mission-specific postflight mass properties based on expendable loading/usage analysis and measured spacecraft/stage weights. For the LM it documents **33,683.5 lb at separation**, **33,669.6 lb at DOI ignition**, **33,401.6 lb at DOI cutoff**, and **16,153.2 lb at lunar landing**. The table does not contain a PDI row.
+### LM-5-era Volume I excerpt now recovered
 
-NASA SP-4029 and NASA 20080013635 were audited and rejected for PDI closure because their event/value assignments do not establish the missing Mission-G PDI state.
+A new targeted primary-source pass found a NASA Apollo Lunar Surface Journal-hosted PDF excerpt from **LMA790-3-LM, Apollo Operations Handbook, Subsystems Data**. The surviving pages carry **Basic Date 15 December 1968**. More importantly, §2.11.4.3.1 explicitly says **“On LM 5”** for the primary waste-fluid collector and the next page explicitly contrasts **“On LM 6 and subsequent vehicles”**.
 
-### Mission-specific preflight DPS thrust envelope recovered
+This is strong page-level evidence that LM-5-era **Volume-I Subsystems Data** existed in a configuration-aware form and that at least some authentic LM-5 pages are publicly recoverable. It also corrects the search strategy: the project should no longer describe LM-5 Volume I generically as wholly unrecovered.
 
-The contemporary NASA **Apollo 11 Press Kit** gives a mission-facing DPS specification: **9,870 lbf maximum rated thrust**, throttleable between **1,050 and 6,300 lbf**, and ±6° gimbal capability. NASA TN D-7143 later records a **10,500-lbf maximum-rated design requirement**.
+The recovered NASA excerpt is only a small spacecraft/crew-equipment section. It contains no descent-propulsion section and no FTP percentage, force calibration, delivered thrust, or Isp. Therefore it **does not close** the propulsion input. The next target is specifically the **DPS pages from this 15 December 1968 / LM-5-era Volume-I change state**, not merely any copy titled LMA790-3-LM.
 
-### Fixed-throttle-point source provenance corrected
+### Supplement 7
 
-The searchable later **LMA790-3-LM** Subsystems Data text gives 92.5-percent FTP and 9,870-lbf nominal fixed-full-throttle semantics, but surviving catalog provenance identifies that material as LM-7-and-subsequent or later. It remains design-family evidence, not LM-5 calibration.
-
-The Apollo 11 Mission Report independently documents LM-5 advancing to FTP about 26 seconds after PDI.
-
-### LM-5-specific operations handbook recovered
-
-The next targeted search recovered a public scan of **LMA790-3-LM 5 and Subsequent, Volume II — Operational Procedures** in the Virtual AGC/ibiblio primary-document collection. Its title page explicitly identifies **LM 5 and Subsequent** and states that the issue supersedes the **15 February 1969** edition. This materially improves provenance: an LM-5-specific AOH is not merely known from later references or collector records; a mission-applicable operational volume is publicly inspectable.
-
-The result is deliberately bounded. Volume II is the operational-procedures volume, not the subsystem-description/calibration volume. Targeted checks did not recover an LM-5-specific FTP percentage-to-force calibration, a 9,870-lbf FTP calibration statement, or delivered thrust/Isp performance from this volume. Therefore the later Volume-I 92.5-percent/9,870-lbf language is **not** back-projected onto Eagle.
-
-The propulsion search is now narrower: recover **LM-5 Volume-I Subsystems Data** at a mission-applicable revision/change state, an LM-5 engine acceptance/performance record, or Apollo 11 Mission Report Supplement 7.
-
-### Apollo 11 DPS Supplement 7 recovery audit tightened
-
-Later NASA mission-report supplement tables identify Apollo 11 Supplement 7, *Descent Propulsion System Final Flight Evaluation*, as published in **September 1970**. Its contents remain **BLOCKED ON NAMED SOURCE RECOVERY**; no report number, author, accession number, or performance values are inferred from neighboring supplements.
+Apollo 11 Mission Report Supplement 7, *Descent Propulsion System Final Flight Evaluation*, remains **BLOCKED ON NAMED SOURCE RECOVERY**; no performance values are inferred from neighboring mission supplements.
 
 ## Boundary preserved
 
-No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No later-LM mass was transferred to LM-5. No amendment-overwritten table was treated as Mission-G evidence solely from its section number. No later-LM subsystem handbook was treated as LM-5 calibration evidence. Recovery of LM-5 Volume II was not misrepresented as recovery of LM-5 Volume I or of an engine calibration. No design or preflight thrust specification was promoted to delivered flight thrust, no design Isp was promoted to flight-effective Isp, and no reconstructed state was relabeled raw telemetry.
+No later-LM calibration was back-projected onto Eagle. No excerpt-level LM-5 provenance was misrepresented as recovery of the complete LM-5 Volume I. No preflight/design thrust was promoted to delivered thrust. PDI mass remains unresolved.
 
 ## Repository updates
 
@@ -57,8 +43,8 @@ No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No la
 
 ## Next
 
-Continue PDI-mass recovery only from a source explicitly labeling Mission G/LM-5 at PDI or pre-PDI with trustworthy event provenance. For propulsion, the generic LM-5 AOH target is narrowed: **LM-5 Volume II is recovered but does not close calibration**. Prioritize LM-5 **Volume-I Subsystems Data**, acceptance/performance records, or Apollo 11 DPS Supplement 7.
+Search specifically for **LM-5-era Volume-I DPS section pages** tied to the 15 December 1968 basic date/change state now demonstrated by the NASA ALSJ excerpt. In parallel, retain LM-5 engine acceptance/performance records and Apollo 11 DPS Supplement 7 as preferred delivered-performance targets. Continue PDI-mass recovery only from explicitly Mission-G/LM-5 event-provenance records.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** Mission-specific postflight LM masses, Apollo 11 9,870-lbf preflight specification, LM-5 FTP use, and LM-5 Volume-II operational-handbook provenance are documented. Exact Mission-G PDI mass, LM-5 FTP force calibration, delivered thrust, and flight-effective Isp remain unresolved. Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** LM-5-era Volume-I provenance is now directly demonstrated by NASA-hosted primary pages, but the recovered excerpt is not the DPS section. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
