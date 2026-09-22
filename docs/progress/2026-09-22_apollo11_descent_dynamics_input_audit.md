@@ -4,25 +4,27 @@ Date: 2026-09-22
 
 ## Completed
 
-Audited the generic DPS and translational model inputs against primary Apollo documentation. NASA TN D-7143 maps cleanly onto existing thrust, effective-Isp, direction/gimbal, and depletion semantics, but its design values remain design-envelope evidence rather than an LM-5 delivered-flight profile. The Apollo 11 press kit provides launch mass/resource bookkeeping but not PDI mass, and the Mission Report supplies the 756.3-second powered-descent checkpoint without a continuous throttle history.
+Audited the next unresolved LM-5 descent inputs against primary Apollo documentation, preserving the distinction among design values, planned/commanded behavior, as-flown telemetry, reconstructed trajectory, and model inputs.
 
-TRW Note 70-FMT-819 / NASA CR-108349 Volume I documents a postflight continuous LM trajectory reconstruction from DOI through touchdown, based on combined MSFN/onboard/relative-tracking evidence. It remains **RECONSTRUCTED**, not raw truth. Volume I explicitly assigns the actual 45-day NAT-format BET listing to Volume II.
+### As-flown DPS evidence tightened
 
-### Volume-II recovery challenge
+Apollo 11 Mission Report §9.8 documents the 756.3-second powered descent, approximately 6775 ft/s velocity change, a 13% minimum-throttle start, throttle-up to full after about 26 seconds, and an approximately 45-second early data dropout. Figure 9.8-1 records flight throttle position, chamber pressure, regulator outlet pressure, and fuel/oxidizer interface pressures versus mission time.
 
-Ran a targeted recovery pass using `70-FMT-819`, the full title, Volume II, 45-day BET, NASA Apollo Trajectory/NAT, contractor identifiers, NASA accession terms, NTRS, and archive-oriented searches. No public primary Volume-II copy or traceable derivative preserving NAT metadata surfaced. Volume I itself says the listing was not generally distributed and directed requests to the MSC Central Metric Data File.
+This is stronger as-flown validation evidence than the previous documentation reflected. It does **not** justify converting throttle percentage or chamber pressure into an exact delivered thrust time series without a sourced LM-5 calibration/performance relationship, nor does it close flight-effective Isp.
 
-Result: the state listing remains **BLOCKED ON NAMED SOURCE RECOVERY**, but broad online discovery is now exhausted. Reopen this thread on a concrete archive/digitization lead rather than repeatedly searching the same web corpus.
+### Named propulsion source identified
 
-### Primary validation envelope
+Primary NASA mission-report supplement tables identify **Apollo 11 Mission Report Supplement 7, _Descent Propulsion System Final Flight Evaluation_, published September 1970**. Targeted searches using the exact title, mission/supplement number, publication date, NTRS terminology, and neighboring supplement patterns did not recover a public copy. Public Apollo document indexes located in this pass list the Apollo 11 Mission Report and Supplement 5 but not Supplement 7.
 
-Recovered and audited NASA TN D-6846 / MSC-S-295, Floyd V. Bennett, *Apollo Experience Report: Mission Planning for Lunar Module Descent and Ascent* (June 1972; NTRS 19720018205). It is a primary NASA synthesis of Apollo 11 premission planning, real-time events, and postflight analysis and includes source-backed descent validation products: planned event/thrust/attitude behavior, guidance thrust command versus horizontal velocity, landing-radar updates, approach/landing trajectory and attitude products, altitude-rate behavior, and landing-phase events.
+Result: Supplement 7 is now **BLOCKED ON NAMED SOURCE RECOVERY** and becomes the preferred archival propulsion target. No values were borrowed from Apollo 10, 12, 14, or 15 DPS supplements.
 
-This does not provide an exact delivered LM-5 thrust/Isp history or the missing NAT states. It does provide a legitimate validation envelope for model behavior, allowing historical checks to proceed without fabricating exact inputs.
+### Existing boundaries retained
+
+TRW 70-FMT-819 Volume II remains archive-triggered and blocked on named-source recovery. NASA TN D-6846 remains the primary descent validation/checkpoint envelope. LM-5 launch bookkeeping remains documented but is not PDI mass.
 
 ## Boundary preserved
 
-No launch mass was substituted for PDI mass. No design thrust or Isp was promoted to an Apollo 11 as-flown value. No reconstructed state was relabeled raw telemetry. No state series was digitized from plots and presented as Volume-II BET. No planned or commanded thrust curve was relabeled as exact delivered engine performance.
+No launch mass was substituted for PDI mass. No design Isp was promoted to flight-effective Isp. No throttle percentage was converted into unsupported exact thrust. No neighboring-mission DPS supplement was treated as Apollo 11 performance. No reconstructed state was relabeled raw telemetry.
 
 ## Repository updates
 
@@ -33,8 +35,8 @@ No launch mass was substituted for PDI mass. No design thrust or Isp was promote
 
 ## Next
 
-Move the active search to LM-5 PDI mass/state bookkeeping, prioritizing mission-specific mass-property/operational-data and postflight propulsion/performance records. Keep delivered DPS thrust/Isp as a parallel unresolved input. Volume-II BET recovery is archive-triggered rather than a standing broad-search task.
+Continue the active LM-5 PDI mass/state bookkeeping search through mission-specific mass-property and operational-data records. Pursue Apollo 11 Mission Report Supplement 7 through archival/catalog routes as the parallel highest-value propulsion source. Do not spend another broad-web pass on TRW Volume II absent a new archival lead.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** Reconstruction methodology and a primary descent validation envelope are bounded. The tabulated 45-day BET state history remains **BLOCKED ON NAMED SOURCE RECOVERY**. PDI mass and delivered DPS thrust/Isp history remain unresolved.
+**PARTIALLY DOCUMENTED.** Apollo 11 as-flown DPS throttle/pressure telemetry is now explicitly bounded. Exact PDI mass and delivered thrust/Isp remain unresolved. Apollo 11 DPS Supplement 7 and TRW BET Volume II are **BLOCKED ON NAMED SOURCE RECOVERY**.
