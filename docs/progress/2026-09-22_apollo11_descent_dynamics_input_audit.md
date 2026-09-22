@@ -18,9 +18,11 @@ The Apollo 11 Press Kit gives **9,870 lbf maximum rated thrust**; the Mission Re
 
 The September 1969 LM-6-and-subsequent Volume-I contents/illustration material identifies the exact missing performance section as **§2.3.5, Descent Propulsion Section Performance and Design Data**, beginning at **page 2.3-25**, and identifies **Table 2.3-1, Descent Propulsion Section — Performance and Design Data** at that location.
 
-This is a material narrowing of the source-recovery task. The searchable transcription does **not** provide a sufficiently trustworthy page-2.3-25 footer/effective date or legible table values, so no thrust/Isp number from this table is asserted. A later NASA-hosted LMA790-3-LM issue preserves the same section/table/page structure and is used only as a locator cross-check, not as LM-5 evidence.
+A follow-on recovery pass reached the September 1969 scan's **List of Effective Pages**. That primary-document LEP confirms that the main-propulsion pages are individually revision-controlled across Original / 15 March / 15 June / 15 September 1969 states. However, the available indexed rendering is sufficiently OCR-corrupted around the 2.3 page ranges that the issue assigned specifically to **2.3-25** cannot be read defensibly. Searches for the table's likely performance terms likewise do not expose the table body in that rendering.
 
-The next discriminating action is therefore page-image recovery of **2.3-25 / Table 2.3-1** from the September 1969 scan and inspection of its individual effective date. Only a date of **15 June 1969 or earlier** permits LM-5 configuration use.
+This is an evidence boundary, not permission to infer the missing footer. The later LM-10 handbook shows page 2.3-25 at a later effective state and is retained only as a locator/cross-check. No thrust, Isp, or LM-5 applicability is asserted from it.
+
+Accordingly, **page 2.3-25 is now BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**. A usable image of the September 1969 page itself, or a clean LEP transcription from the same primary issue, is required before the table can be configuration-qualified.
 
 ### Supplement 7
 
@@ -39,8 +41,8 @@ No later-LM force calibration was back-projected onto Eagle. No preflight/design
 
 ## Next
 
-Recover the page image for **LMA790-3-LM page 2.3-25 / Table 2.3-1** from the September 1969 LM-6 Volume-I scan; verify its footer/effective date before using any contained performance values. Continue LM-5 acceptance/performance, Supplement 7, and Mission-G PDI-mass recovery in parallel.
+With page 2.3-25 blocked on a legible primary page image, shift the active propulsion search to **Apollo 11 DPS Supplement 7** and LM-5 engine acceptance/performance records while retaining 2.3-25 as a named recovery target. Continue Mission-G PDI-mass recovery only from explicitly event-identified primary records.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** Exact handbook location is now established, but exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** Exact handbook location and revision-control context are established, but page 2.3-25's own effective state and values remain blocked on legible primary-page recovery. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
