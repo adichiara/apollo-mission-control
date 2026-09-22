@@ -12,21 +12,23 @@ Which generic DPS/translational inputs can be tied to primary Apollo 11 evidence
 - Apollo 11 Press Kit: **9,870 lbf** maximum-rated DPS thrust, mission-specific preflight specification.
 - Apollo 11 Mission Report: LM-5 advances to **FTP about 26 s after PDI**; postflight throttle/pressure histories; named LM masses at separation, DOI ignition, DOI cutoff, and landing.
 - NASA TN D-7143: **10,500-lbf** maximum-rated design requirement and design Isp envelope; not LM-5 delivered performance.
-- Later LMA790-3-LM Volume I: **92.5-percent FTP / 9,870-lbf fixed-full-throttle** mature-design semantics; surviving full-copy provenance is LM-7-and-subsequent or later and cannot silently become LM-5 calibration.
+- NASA Apollo News Reference GN&C material: descent-engine throttle hard stop at **92.5 percent thrust**; automatic-throttle counter increments correspond to **2.7 lb thrust per pulse**.
+- LMA790-3-LM control-electronics material in the **15 December 1968 basic-date lineage**, with a page changed **15 March 1969**, independently describes the automatic-throttle ceiling as **92.5 percent thrust**.
+- Later LMA790-3-LM Volume I: **9,870-lbf fixed-full-throttle** mature-design semantics; surviving full-copy provenance is LM-7-and-subsequent or later and cannot silently become LM-5 force calibration.
 
 ## LM-5 handbook recovery advance
 
 LM-5-and-subsequent **Volume II — Operational Procedures** is publicly recovered but does not contain the required calibration.
 
-A subsequent primary-source pass recovered a NASA Apollo Lunar Surface Journal-hosted excerpt from **LMA790-3-LM, Apollo Operations Handbook, Subsystems Data**. The pages carry **Basic Date 15 December 1968** and explicitly distinguish hardware **“On LM 5”** from **“LM 6 and subsequent vehicles.”** This is direct page-level evidence of a configuration-aware LM-5-era **Volume I**.
+A NASA Apollo Lunar Surface Journal-hosted excerpt from **LMA790-3-LM, Apollo Operations Handbook, Subsystems Data** carries **Basic Date 15 December 1968** and explicitly distinguishes hardware **“On LM 5”** from **“LM 6 and subsequent vehicles.”** This directly establishes a configuration-aware LM-5-era Volume I, although the excerpt is not the DPS section.
 
-The excerpt is limited to spacecraft/crew-equipment and waste-management material. It contains no DPS pages and therefore does **not** establish LM-5 FTP percentage-to-force calibration, delivered thrust, or flight-effective Isp.
+The newly recovered control evidence changes one boundary: **92.5-percent FTP/control-law semantics are no longer supported only by a later-LM full handbook**. They are present in pre-Apollo-11 handbook/control documentation. What remains unresolved is the engine-specific mapping from that control state to exact LM-5 force and flight-effective performance.
 
 ### Search consequence
 
-The prior target “find LM-5 Volume I” is now too broad and should be retired. The next exact target is:
+The next exact target is:
 
-> **Recover the descent-propulsion-system section/pages from the LM-5-era LMA790-3-LM Volume-I change state represented by the 15 December 1968 basic-date pages, and preserve page-level change-date/configuration provenance.**
+> **Recover the LM-5-era LMA790-3-LM Volume-I DPS section/performance table with page-level change provenance, specifically testing whether mission-applicable pages tie fixed-full-throttle to 9,870 lbf and provide an LM-5-specific Isp/performance basis.**
 
 Engine acceptance/performance records and Apollo 11 Mission Report Supplement 7 remain parallel preferred sources for delivered performance.
 
@@ -38,7 +40,7 @@ SNA-8-D-027(III) is the correct mass-properties family but the surviving public 
 
 | Model input | Status | Decision |
 | --- | --- | --- |
-| `thrust_n` / `end_thrust_n` | Apollo 11 9,870-lbf preflight specification; LM-5 FTP timing; LM-5 Volume-I provenance now demonstrated but DPS pages missing | Keep caller supplied; no exact LM-5 conversion |
+| `thrust_n` / `end_thrust_n` | Apollo 11 9,870-lbf preflight specification; LM-5 FTP timing; pre-Apollo-11 92.5-percent control ceiling; exact LM-5 force mapping absent | Keep caller supplied; no exact LM-5 conversion |
 | `specific_impulse_s` | Design requirement only; no LM-5 flight-effective history | Keep caller supplied |
 | `mass_kg` | Named event masses documented; PDI absent | Keep PDI mass unresolved |
 | burn duration | 756.3 s documented | Historical checkpoint |
@@ -46,14 +48,14 @@ SNA-8-D-027(III) is the correct mass-properties family but the surviving public 
 
 ## D-022 result
 
-No D-022 closure is claimed for PDI mass, delivered thrust, FTP calibration, or flight-effective Isp. No sourced LM-5 calibration range has yet been recovered whose endpoints can be tested for demonstrated irrelevance.
+No D-022 closure is claimed for PDI mass, delivered thrust, FTP force calibration, or flight-effective Isp. No sourced LM-5 calibration range has yet been recovered whose endpoints can be tested for demonstrated irrelevance.
 
 ## Next
 
-1. Search NASA/ALSJ/Virtual AGC/archive holdings for **LM-5-era Volume-I DPS pages**, keyed to the demonstrated **15 December 1968 basic date** and page-level change provenance.
+1. Recover the **LM-5-era Volume-I DPS performance/design pages**, preserving effective-page/change-date provenance.
 2. Continue targeted recovery of **Apollo 11 DPS Supplement 7** and LM-5 engine acceptance/performance records.
 3. Continue Mission-G PDI-mass recovery only from explicitly event-identified primary records.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** LM-5-era Volume-I provenance is now directly documented from NASA-hosted primary pages, narrowing rather than closing the propulsion question. Exact LM-5 DPS calibration/delivered performance and PDI mass remain unresolved. Apollo 11 DPS Supplement 7 and TRW Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** The 92.5-percent FTP/control-law semantics are now documented in pre-Apollo-11 primary/control documentation, but exact LM-5 force calibration/delivered performance and PDI mass remain unresolved. Apollo 11 DPS Supplement 7 and TRW Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
