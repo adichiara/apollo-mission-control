@@ -32,13 +32,15 @@ NASA technical paper **20080013635**, *Lunar Surface Virtual Simulation* (2008),
 
 The contemporary NASA **Apollo 11 Press Kit** gives a mission-facing DPS specification: **9,870 lbf maximum rated thrust**, throttleable between **1,050 and 6,300 lbf**, and ±6° gimbal capability. NASA TN D-7143 later records a **10,500-lbf maximum-rated design requirement**.
 
-### Fixed-throttle-point distinction narrowed with primary operations documentation
+### Fixed-throttle-point source provenance corrected
 
-The Apollo Operations Handbook control description provides the missing conceptual distinction. Automatic throttle commands drive the descent-engine control to a **92.5-percent fixed-throttle point (FTP)** rather than continuously to the engine's maximum-rated design point. The Apollo 11 Mission Report independently says the engine advanced from minimum thrust to the **fixed throttle point** about 26 seconds after PDI and describes that point operationally as maximum thrust.
+A follow-up provenance audit found that the searchable **LMA790-3-LM** Subsystems Data text previously used for the 92.5-percent fixed-throttle-point control description is not demonstrated to be LM-5 configuration evidence. NTRS identifies the surviving later handbook family as **LM-11 and subsequent** (NASA-CR-115269 / LMA790-3-LM-11), while the widely searchable Volume-I copy carries a **1 February 1970 basic date** and later change pages. Smithsonian independently catalogs the corresponding 1 February 1970 Volume I as **LM-7 and subsequent**.
 
-This substantially explains why a mission/operations source can describe a lower operational full-throttle value while the design-history report retains a 10,500-lbf maximum-rated requirement. It does **not** justify deriving one published number from the other: 9,870 lbf is not exactly 92.5 percent of 10,500 lbf, and the recovered documents do not yet establish a configuration-controlled LM-5 calibration tying those two numbers together. The Press Kit's wording "maximum rated thrust" is therefore retained verbatim but is not used to redefine D-7143's rating basis.
+The same later handbook family explicitly states that the engine develops **9,870 lbf nominal thrust at the fixed full-throttle position**, with a nominal throttle range of 1,050–6,800 lbf. This is strong primary evidence for the mature LM design semantics, but because its configuration postdates LM-5 it is **not promoted to an LM-5 calibration**.
 
-Implementation consequence: treat **FTP/operational full throttle** and **maximum-rated design thrust** as separate concepts. Do not convert Apollo 11 throttle percentage to exact force from either headline number until LM-5-specific calibration/performance evidence is recovered.
+The Apollo 11 Mission Report independently remains mission-specific evidence that LM-5 advanced from minimum thrust to the **fixed throttle point** about 26 seconds after PDI. The Apollo 11 Press Kit independently remains contemporary mission-specific evidence for a **9,870-lbf maximum-rated thrust** specification. What is still missing is a configuration-controlled LM-5 source explicitly tying its FTP calibration to that force value.
+
+Implementation consequence: preserve **9,870 lbf as the Apollo 11 mission-facing preflight specification**, preserve FTP as the Apollo 11 as-flown control state, and treat the later handbook's 9,870-lbf nominal fixed-full-throttle statement as corroborating design-family evidence only. Do not label 9,870 lbf as LM-5 delivered thrust or an LM-5 recovered calibration.
 
 ### Apollo 11 DPS Supplement 7 recovery audit tightened
 
@@ -46,7 +48,7 @@ Later NASA mission-report supplement tables repeatedly identify Apollo 11 Supple
 
 ## Boundary preserved
 
-No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No Apollo 13 LM-7 or later LM-10 pre-PDI value was transferred to LM-5. No amendment-overwritten table was treated as Mission-G evidence solely from its section number. Later event-label drift was quarantined. No design or preflight thrust specification was promoted to delivered flight thrust, no design Isp was promoted to flight-effective Isp, and no reconstructed state was relabeled raw telemetry.
+No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No Apollo 13 LM-7 or later LM-10 pre-PDI value was transferred to LM-5. No amendment-overwritten table was treated as Mission-G evidence solely from its section number. Later event-label drift was quarantined. No later-LM operations handbook was treated as LM-5 configuration evidence. No design or preflight thrust specification was promoted to delivered flight thrust, no design Isp was promoted to flight-effective Isp, and no reconstructed state was relabeled raw telemetry.
 
 ## Repository updates
 
@@ -57,8 +59,8 @@ No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No Ap
 
 ## Next
 
-Continue PDI-mass recovery only from a source explicitly labeling Mission G/LM-5 at PDI or pre-PDI with trustworthy event provenance. For propulsion, the broad 9,870-versus-10,500 question is now narrowed to **LM-5 FTP calibration / delivered performance provenance**: recover a configuration-controlled LM-5 operations/performance record or Apollo 11 DPS Supplement 7 before assigning exact force to the FTP or flight throttle history.
+Continue PDI-mass recovery only from a source explicitly labeling Mission G/LM-5 at PDI or pre-PDI with trustworthy event provenance. For propulsion, prioritize a **LM-5-specific AOH/vehicle manual revision, acceptance/performance record, or Apollo 11 DPS Supplement 7**. The later LMA790-3-LM handbook has clarified mature-design FTP semantics but does not close LM-5 calibration.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** Mission-specific postflight LM masses at separation, DOI ignition, DOI cutoff, and landing are primary-source documented. Exact Mission-G PDI mass remains unresolved. Primary operations documentation now distinguishes operational FTP from the maximum-rated design point, but exact LM-5 FTP force, delivered thrust, and flight-effective Isp remain unresolved. Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** Mission-specific postflight LM masses at separation, DOI ignition, DOI cutoff, and landing are primary-source documented. Exact Mission-G PDI mass remains unresolved. Apollo 11 sources establish a 9,870-lbf preflight specification and as-flown use of FTP; later primary operations documentation establishes 9,870-lbf nominal fixed-full-throttle semantics for later LMs, but exact LM-5 FTP calibration, delivered thrust, and flight-effective Isp remain unresolved. Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
