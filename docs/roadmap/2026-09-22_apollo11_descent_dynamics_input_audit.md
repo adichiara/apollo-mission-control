@@ -15,6 +15,12 @@ The Apollo 11 press kit gives LM-5 launch bookkeeping: 33,205 lb total, includin
 
 The Apollo 11 Mission Report documents a 756.3-second powered descent and reports that DPS propellant use exceeded prediction because of additional landing-site redesignation time. It supplies event/checkpoint validation, not a complete delivered thrust history.
 
+### Postflight trajectory reconstruction recovered
+
+TRW Note 70-FMT-819 / NASA CR-108349, *Apollo Mission 11, Trajectory Reconstruction and Postflight Analysis, Volume 1* (16 March 1970), closes a different part of the problem. Section 7.2.3.1 states that the original powered-descent best-estimate trajectory was based on a fit to low-speed MSFN data from revolution-14 acquisition through touchdown and was modified to force the landing point to the then-current best landing-site estimate. The report then describes a subsequent reconstruction using onboard plus high-speed MSFN data; combined with relative tracking before PDI, this produced a consistent, continuous LM trajectory from DOI through touchdown.
+
+This is strong mission-specific postflight evidence for a **reconstructed continuous trajectory**, but it is not a raw as-flown truth stream and it does not establish an LM-5 PDI mass or delivered DPS thrust/Isp time history. The report itself documents estimation/fitting and landing-site constraints, so simulator provenance must preserve that distinction.
+
 ## Existing model audit
 
 | Model input | Existing semantic fit | Apollo source status | Promotion decision |
@@ -26,6 +32,7 @@ The Apollo 11 Mission Report documents a 756.3-second powered descent and report
 | thrust `direction` | Yes | DPS gimbal capability documented; guidance-mode semantics documented elsewhere | Exact inertial/body-frame command history remains unresolved |
 | central gravity `mu` / center | Yes | Model accepts source-supplied lunar gravity parameter | Source and frame convention still must be frozen before historical validation |
 | burn duration | Yes | 756.3 s total powered descent documented | Useful validation checkpoint; insufficient to derive segment throttle history |
+| continuous position/velocity history | Yes | 70-FMT-819 documents a postflight BET/reconstruction from MSFN, onboard, and relative-tracking data | Admit only as RECONSTRUCTED mission evidence, not raw documented truth |
 
 ## D-022 result
 
@@ -33,12 +40,14 @@ No D-022 closure is claimed in this pass. The recovered design values are not tw
 
 ## Architecture consequence
 
-The generic models already have the correct parameter seams. The next work should not hard-code nominal LM constants into the reusable engine. Instead, build an Apollo 11 scenario input/provenance layer only when epoch-specific mass, gravity/frame convention, and a defensible commanded/delivered thrust profile are sourced or explicitly classified as reconstructed.
+The generic models already have the correct parameter seams. The project may now use the 70-FMT-819 postflight trajectory as a historical **validation/reference trajectory** if its tabulated/graphical states are extracted with provenance. It must not silently become authoritative physical truth or be reverse-engineered into an unsupported delivered thrust profile.
+
+The next work should separate three classes explicitly: DOCUMENTED event/checkpoint facts, RECONSTRUCTED continuous trajectory states from the postflight BET, and MODELLED propulsion/mass inputs needed to reproduce or approximate those states.
 
 ## Next
 
-Recover an Apollo-11-specific PDI mass/state bookkeeping source and LM-5 DPS flight-performance source if available. If the exact delivered profile remains unavailable, define a documented-vs-reconstructed scenario-input contract before implementing a continuous descent profile.
+Extract the usable DOI→touchdown state/checkpoint products from 70-FMT-819 and map their frame/epoch definitions before feeding them to the model lab. Continue a bounded search for LM-5 PDI mass/state bookkeeping and DPS final-flight/performance material; if those remain unavailable, implement the documented/reconstructed/modelled provenance contract rather than inventing them.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** Model semantics align with documented DPS physics, and useful design/resource bounds are recovered. Apollo-11-specific PDI mass and delivered thrust/Isp history remain unresolved.
+**PARTIALLY DOCUMENTED.** Model semantics align with documented DPS physics, and a mission-specific postflight continuous trajectory reconstruction is now identified. Apollo-11-specific PDI mass and delivered thrust/Isp history remain unresolved; the continuous trajectory is explicitly RECONSTRUCTED.
