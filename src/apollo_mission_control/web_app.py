@@ -41,6 +41,7 @@ from .crew_response import (
     record_premature_dps_stop,
 )
 from .descent_decision_gate import (
+    DescentControlMode,
     DescentDecisionGate,
     LandingRadarControllerState,
     Readiness,
@@ -530,6 +531,7 @@ class LandingRadarHistoricalVelocityUpdateRequest(BaseModel):
 
 class LandingRadarDecisionGateRequest(BaseModel):
     get_s: float = Field(ge=0.0)
+    control_mode: str = Field(default="automatic", min_length=1, max_length=32)
     range_data_good: bool | None = None
     velocity_data_good: bool | None = None
     antenna_position: int | None = Field(default=None, ge=1, le=2)
@@ -1807,6 +1809,7 @@ def apollo11_descent_decision_gate_model_proof(
             control_readiness=Readiness(request.control_readiness),
             flight_decision=Readiness(request.flight_decision),
             capcom_relay=RelayState(request.capcom_relay),
+            control_mode=DescentControlMode(request.control_mode),
             provenance=tuple(request.provenance),
         ).validated()
     )
