@@ -39,20 +39,24 @@ The flag is derived only from the sourced control-mode boundary. It does not inf
 
 ## Status
 
-**SUFFICIENT / IMPLEMENTED at the domain-contract layer.**
+**SUFFICIENT / IMPLEMENTED at the domain-contract and site-facing proof layers.**
 
-The existing HTTP/model-lab endpoint still defaults to the pre-existing automatic-mode contract because its request schema has not yet been extended to select manual mode. That site-facing extension is the next implementation step; it should expose the same two-mode proof without adding new historical claims.
+The HTTP/model-lab request now accepts explicit `automatic` / `manual` control mode.
+The Causal Model Lab provides a paired automatic/manual proof that preserves all
+controller-visible observations and human decision inputs while changing only the
+trajectory/guidance abort-rule applicability flag.
 
 ## Next
 
-1. Extend the site-facing descent-decision-gate proof to accept/display `control_mode`.
-2. Add automatic-vs-manual paired cases demonstrating unchanged observations and changed rule applicability.
-3. Then return to the next unresolved powered-descent controller-product dependency rather than expanding P66 detail that is not player-decision critical.
+Return to the next unresolved powered-descent controller-product dependency rather
+than expanding P66 detail that is not player-decision critical. Exact Mission-G P66
+annunciation/keying/voice detail remains deferred unless a player-facing dependency
+reopens it.
 
 ## Evidence status
 
 - **DOCUMENTED / MISSION RULE:** post-takeover trajectory/guidance constraints are not abort causes.
 - **DOCUMENTED / PRIMARY TECHNICAL ACCOUNT:** monitoring/comparison continues through terminal descent/manual takeover.
 - **IMPLEMENTED:** reusable decision-gate authority boundary.
-- **OPEN IMPLEMENTATION:** site-facing model-lab selector/display.
+- **IMPLEMENTED:** site-facing automatic/manual model-lab selector and paired proof.
 - **DEFERRED:** exact P66 ground annunciation/keying/voice detail unless a player-facing dependency makes it material.
