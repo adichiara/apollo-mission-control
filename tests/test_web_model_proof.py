@@ -705,6 +705,66 @@ class WebModelProofTests(unittest.TestCase):
         self.assertEqual(body["capcom_relay"], "not_relayed")
         self.assertEqual(body["landing_radar"]["antenna_position"], 2)
 
+    def test_apollo11_descent_decision_gate_exposes_manual_takeover_rule_boundary(self):
+        payload = {
+            "get_s": 369000.0,
+            "range_data_good": True,
+            "velocity_data_good": True,
+            "antenna_position": 2,
+            "body_axis_velocity_fps": [10.0, -2.0, 1.0],
+            "slant_range_ft": 32000.0,
+            "pgns_altitude_ft": 31500.0,
+            "time_to_go_s": 240.0,
+            "guidance_readiness": "go",
+            "control_readiness": "go",
+            "flight_decision": "unknown",
+            "capcom_relay": "not_relayed",
+            "provenance": ["P66 authority-boundary API test"],
+        }
+
+        automatic = self.client.post(
+            "/api/admin/model-proof/apollo11-descent-decision-gate",
+            json={**payload, "control_mode": "automatic"},
+        )
+        manual = self.client.post(
+            "/api/admin/model-proof/apollo11-descent-decision-gate",
+            json={**payload, "control_mode": "manual"},
+        )
+
+        self.assertEqual(automatic.status_code, 200)
+        self.assertEqual(manual.status_code, 200)
+
+        auto_body = automatic.json()
+        manual_body = manual.json()
+        self.assertEqual(auto_body["control_mode"], "automatic")
+        self.assertEqual(manual_body["control_mode"], "manual")
+        self.assertTrue(
+            auto_body["trajectory_guidance_abort_constraints_applicable"]
+        )
+        self.assertFalse(
+            manual_body["trajectory_guidance_abort_constraints_applicable"]
+        )
+        self.assertEqual(
+            auto_body["landing_radar"],
+            manual_body["landing_radar"],
+        )
+        self.assertEqual(
+            auto_body["guidance_readiness"],
+            manual_body["guidance_readiness"],
+        )
+        self.assertEqual(
+            auto_body["control_readiness"],
+            manual_body["control_readiness"],
+        )
+        self.assertEqual(
+            auto_body["flight_decision"],
+            manual_body["flight_decision"],
+        )
+        self.assertEqual(
+            auto_body["capcom_relay"],
+            manual_body["capcom_relay"],
+        )
+
     def test_apollo11_descent_decision_gate_exposes_conflicting_relay(self):
         response = self.client.post(
             "/api/admin/model-proof/apollo11-descent-decision-gate",
