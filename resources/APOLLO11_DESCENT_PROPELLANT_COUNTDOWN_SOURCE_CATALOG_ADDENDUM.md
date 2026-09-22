@@ -24,14 +24,40 @@ Use: primary operational record for CAPCOM's late-descent 60-second and 30-secon
 
 Boundary: establishes the crew-facing transmission endpoint, not the internal MCC calculation ownership or display path.
 
+## First-person operational evidence
+
+### Robert L. Carlton — JSC Oral History Project, 19 April 2001
+
+NASA Johnson Space Center Oral History Project; interview by Kevin M. Rusnak.
+
+URL: https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/CarltonRL/CarltonRL_4-19-01.pdf
+
+Use: retrospective first-person evidence from the Apollo LM CONTROL controller. Carlton describes LM propellant instrumentation/ground telemetry and, in his landing recollection, the stopwatch used while monitoring altitude; he records 18 seconds remaining to the abort point at engine shutdown.
+
+Boundary: valuable operational testimony, but retrospective rather than a 1969 procedure document. Do not use it to invent an exact CRT field, telemetry mnemonic, or written checklist wording.
+
+## NASA historical synthesis
+
+### Houston We Have a Podcast — “Lesser-Known Stories of Apollo 11”
+
+NASA, 2019; Jennifer Ross-Nazzal discussing JSC Oral History Project material.
+
+URL: https://www.nasa.gov/podcasts/houston-we-have-a-podcast/lesser-known-stories-of-apollo-11/
+
+Use: identifies Bob Carlton as LEM CONTROL on Kranz's White Team and summarizes Carlton's oral-history account: after low level, Carlton started a stopwatch marked for the remaining-time calls.
+
+Boundary: secondary NASA synthesis of the oral-history evidence; use to connect role/procedure, not as a substitute for a missing Apollo-11-effective console procedure.
+
 ## Synthesis boundary
 
-These sources jointly support a separated model:
+The combined evidence now supports:
 
-`low-level indication ≠ exact remaining propellant truth ≠ controller countdown estimate ≠ CAPCOM call ≠ physical depletion`
+`physical/gaging state ≠ low-level observation → CONTROL procedural stopwatch → CONTROL call → CAPCOM relay ≠ exact physical depletion`
 
-No source recovered in this pass establishes the exact Mission-G internal path from low-level telemetry to the countdown voiced by CAPCOM. That remains the next bounded archival target.
+The previously open station-ownership question is therefore research-sufficient: **CONTROL / Bob Carlton** owned the procedural countdown used for the late-descent fuel calls. No RTCC or GUIDANCE calculation is needed or supported by the recovered evidence.
+
+The exact Mission-G written timer procedure, controller display/parameter mnemonic, and internal alert route remain unrecovered. They are optional refinement targets rather than blockers to implementing the sourced operational chain.
 
 ## Evidence status
 
-**PRIMARY / SUFFICIENT** for separating late-descent gaging, decision-time estimate, CAPCOM callouts, and physical depletion. **OPEN** for internal controller-product provenance and station ownership.
+**PRIMARY / SUFFICIENT** for physical/gaging timeline and crew-facing call sequence. **RETROSPECTIVE FIRST-PERSON / SUFFICIENT FOR OPERATIONAL OWNERSHIP** for Carlton/CONTROL stopwatch use. **RESEARCH-SUFFICIENT** for a CONTROL procedural-timer implementation. **UNRESOLVED BUT NOT REQUIRED** for exact Mission-G checklist/display internals.
