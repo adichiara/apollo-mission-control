@@ -17,13 +17,11 @@ Which generic DPS/translational inputs can be tied to primary Apollo 11 evidence
 
 ## DPS handbook target narrowed
 
-The September 1969 LM-6-and-subsequent Volume-I table of contents/list of illustrations identifies the exact propulsion target as **§2.3.5, Descent Propulsion Section Performance and Design Data**, beginning at **page 2.3-25**; the corresponding table is **Table 2.3-1, Descent Propulsion Section — Performance and Design Data**. This is primary handbook structure, but the currently searchable copy does not yield a sufficiently reliable page-level effective date or legible table contents for page 2.3-25. Therefore no LM-5 thrust or Isp value is promoted from it yet.
+The September 1969 LM-6-and-subsequent Volume-I table of contents/list of illustrations identifies **§2.3.5, Descent Propulsion Section Performance and Design Data**, beginning at **page 2.3-25**, with **Table 2.3-1** at that location.
 
-A later NASA-hosted LM handbook independently preserves the same §2.3.5 / page 2.3-25 / Table 2.3-1 structure. It is useful only as a locator/cross-check, not as LM-5 configuration evidence.
+A follow-on pass reached the same primary issue's **List of Effective Pages**. It confirms page-by-page revision control through Original, 15 March, 15 June, and 15 September 1969 states in the relevant handbook. The available indexed rendering is too OCR-corrupted around the 2.3 ranges to assign an issue date specifically to page 2.3-25 without guessing. The table body is likewise not exposed reliably.
 
-### Search consequence
-
-The next exact target is now **page 2.3-25 / Table 2.3-1 in the 15 September 1969 LM-6 Volume-I scan**, with its footer/effective date and table values read from the page image. It qualifies as LM-5 evidence only if its individual effective date is **15 June 1969 or earlier**.
+Therefore page 2.3-25 is **BLOCKED ON LEGIBLE PRIMARY PAGE-IMAGE / LEP RECOVERY**. A later NASA-hosted handbook remains locator evidence only; its later values cannot establish LM-5 configuration.
 
 ## PDI mass
 
@@ -45,10 +43,11 @@ No D-022 closure is claimed for PDI mass, delivered thrust, FTP force calibratio
 
 ## Next
 
-1. Recover/read **page 2.3-25 / Table 2.3-1** from the September 1969 LM-6 Volume-I scan and verify its individual effective date.
-2. Continue targeted recovery of **Apollo 11 DPS Supplement 7** and LM-5 engine acceptance/performance records.
-3. Continue Mission-G PDI-mass recovery only from explicitly event-identified primary records.
+1. Make **Apollo 11 DPS Supplement 7, _Descent Propulsion System Final Flight Evaluation_**, the active propulsion recovery target; prefer NTRS/NASA/MSC holdings and contemporaneous report indexes before secondary mirrors.
+2. Search LM-5 engine acceptance/performance records for delivered thrust/Isp or an explicit FTP force mapping.
+3. Retain **LMA790-3-LM page 2.3-25 / Table 2.3-1** as a named blocked target until a legible September 1969 page image or clean LEP is recovered.
+4. Continue Mission-G PDI-mass recovery only from explicitly event-identified primary records.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** The LM-5 DPS search is now narrowed to an exact handbook page/table, but its LM-5-effective date and values remain unresolved. Exact LM-5 force calibration/delivered performance and PDI mass remain unresolved; Supplement 7 and TRW Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** The handbook target and its revision-control context are documented, but page 2.3-25 is blocked on legible primary-page recovery. Exact LM-5 force calibration/delivered performance and PDI mass remain unresolved; Supplement 7 and TRW Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
