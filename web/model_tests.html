@@ -173,6 +173,7 @@
 <label class="field">LR slant range (ft)<input id="dgRange" type="number" value="32000" step="10"></label>
 <label class="field">PGNS altitude (ft)<input id="dgAltitude" type="number" value="31500" step="10"></label>
 <label class="field">TGO (s)<input id="dgTgo" type="number" value="240" step="1"></label>
+<label class="field">Control mode<select id="dgControlMode"><option value="automatic" selected>AUTOMATIC</option><option value="manual">MANUAL / P66 takeover</option></select></label>
 <label class="field">LR VXB (ft/s)<input id="dgVx" type="number" value="10" step="0.1"></label>
 <label class="field">LR VYB (ft/s)<input id="dgVy" type="number" value="-2" step="0.1"></label>
 <label class="field">LR VZB (ft/s)<input id="dgVz" type="number" value="1" step="0.1"></label>
@@ -182,7 +183,7 @@
 <label class="field">CAPCOM relay<select id="dgRelay"><option value="not_relayed" selected>NOT RELAYED</option><option value="go_relayed">GO RELAYED</option><option value="no_go_relayed">NO-GO RELAYED</option></select></label>
 </div>
 <p><label><input id="dgRangeGood" type="checkbox" checked> LR range data GOOD</label> &nbsp; <label><input id="dgVelocityGood" type="checkbox" checked> LR velocity data GOOD</label></p>
-<div class="actions"><button id="runDescentGate">Run decision gate</button><button id="descentGateUndecided">Station GO / FLIGHT undecided</button><button id="descentGateConflict">Contradictory CAPCOM relay</button></div>
+<div class="actions"><button id="runDescentGate">Run decision gate</button><button id="descentGateCompareMode">Automatic / manual authority comparison</button><button id="descentGateUndecided">Station GO / FLIGHT undecided</button><button id="descentGateConflict">Contradictory CAPCOM relay</button></div>
 <div id="descentGateTrace" class="chain"><div class="stage"><b>Controller-visible LR</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Station calls</b>Not run</div><div class="arrow">→</div><div class="stage"><b>FLIGHT</b>Not run</div><div class="arrow">→</div><div class="stage"><b>CAPCOM</b>Not run</div></div>
 <details class="raw"><summary>Raw descent-gate JSON</summary><pre id="descentGateRaw">No run yet.</pre></details>
 </section>
@@ -649,6 +650,7 @@ function descentGatePayload(mode='normal'){
   body_axis_velocity_fps:[num('dgVx'),num('dgVy'),num('dgVz')],
   slant_range_ft:num('dgRange'),pgns_altitude_ft:num('dgAltitude'),time_to_go_s:num('dgTgo'),
   guidance_readiness:guidance,control_readiness:control,flight_decision:flight,capcom_relay:relay,
+  control_mode:$('dgControlMode').value,
   provenance:['Apollo 11 research 502 decision-gate model-lab projection']
  };
 }
@@ -661,12 +663,34 @@ async function runDescentGate(mode='normal'){
   $('descentGateTrace').innerHTML=
    traceStage('Controller-visible LR','<div>range '+statusBadge(lr.range_data_good,'GOOD','BAD')+'</div><div>velocity '+statusBadge(lr.velocity_data_good,'GOOD','BAD')+'</div><div>antenna position '+(lr.antenna_position??'unknown')+'</div><div>slant '+scalar(lr.slant_range_ft)+' ft / PGNS alt '+scalar(lr.pgns_altitude_ft)+' ft</div><div class="note">No inferred Delta-H decision is computed here.</div>')+
    arrow()+traceStage('Station calls','<div>Guidance '+r.guidance_readiness+'</div><div>CONTROL '+r.control_readiness+'</div><div>modeled inputs explicit '+statusBadge(r.front_room_inputs_complete)+'</div>')+
+   arrow()+traceStage('Control authority','<div>mode '+r.control_mode+'</div><div>Trajectory/guidance abort constraints '+statusBadge(r.trajectory_guidance_abort_constraints_applicable,'APPLICABLE','NOT ABORT CAUSES')+'</div><div class="note">Manual takeover changes rule applicability; observations remain available.</div>')+
    arrow()+traceStage('FLIGHT','<div>decision '+r.flight_decision+'</div><div class="note">Station calls do not auto-create this decision.</div>')+
    arrow()+traceStage('CAPCOM','<div>relay '+r.capcom_relay+'</div><div>consistent with FLIGHT '+statusBadge(r.relay_consistent_with_flight)+'</div><div class="note">A contradiction is exposed, not silently corrected.</div>');
   $('descentGateRaw').textContent=JSON.stringify(r,null,2);
  }catch(e){$('descentGateRaw').textContent=String(e.message||e)}
 }
 $('runDescentGate').onclick=()=>runDescentGate('normal');
+$('descentGateCompareMode').onclick=async()=>{
+ const prior=$('dgControlMode').value;
+ $('descentGateRaw').textContent='Running paired proof…';
+ try{
+  $('dgControlMode').value='automatic';
+  const aPayload=descentGatePayload('normal');
+  const automatic=await request('/api/admin/model-proof/apollo11-descent-decision-gate',aPayload);
+  $('dgControlMode').value='manual';
+  const mPayload=descentGatePayload('normal');
+  const manual=await request('/api/admin/model-proof/apollo11-descent-decision-gate',mPayload);
+  recordCausal('apollo11-descent-control-mode-pair',{automatic:aPayload,manual:mPayload},{automatic,manual});
+  const observationsSame=JSON.stringify(automatic.landing_radar)===JSON.stringify(manual.landing_radar);
+  $('descentGateTrace').innerHTML=
+   traceStage('Same controller observations','<div>unchanged '+statusBadge(observationsSame)+'</div><div>LR antenna '+(automatic.landing_radar.antenna_position??'unknown')+'</div><div>Guidance '+automatic.guidance_readiness+' / CONTROL '+automatic.control_readiness+'</div>')+
+   arrow()+traceStage('Automatic control','<div>Trajectory/guidance abort constraints '+statusBadge(automatic.trajectory_guidance_abort_constraints_applicable,'APPLICABLE','NOT APPLICABLE')+'</div>')+
+   arrow()+traceStage('Manual / P66 takeover','<div>Trajectory/guidance abort constraints '+statusBadge(manual.trajectory_guidance_abort_constraints_applicable,'APPLICABLE','NOT ABORT CAUSES')+'</div><div class="note">Rule 5-11 authority change; no automatic abort or landing decision is generated.</div>')+
+   arrow()+traceStage('Human decision chain','<div>FLIGHT '+manual.flight_decision+'</div><div>CAPCOM '+manual.capcom_relay+'</div><div class="note">The authority transition does not invent either decision.</div>');
+  $('descentGateRaw').textContent=JSON.stringify({automatic,manual},null,2);
+ }catch(e){$('descentGateRaw').textContent=String(e.message||e)}
+ finally{$('dgControlMode').value=prior}
+};
 $('descentGateUndecided').onclick=()=>runDescentGate('undecided');
 $('descentGateConflict').onclick=()=>runDescentGate('conflict');
 
