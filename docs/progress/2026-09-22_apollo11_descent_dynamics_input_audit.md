@@ -14,11 +14,15 @@ The targeted search identified **SNA-8-D-027(III) Rev. 2 / NASA-TM-X-68968, CSM/
 
 ### Public-scan amendment provenance audited
 
-A new recovery pass checked the surviving digitized Rev. 2 binder rather than assuming that its title-page date applies to every page. It does not. Indexed primary-document text shows the section 3 introduction at **Amendment 86 (9/10/70)** and a table 3.1-8 page at **Amendment 110 (7/19/71)** describing **LM-10**. The public binder therefore contains later replacement pages and is not a clean Mission-G-era snapshot.
+A recovery pass checked the surviving digitized Rev. 2 binder rather than assuming that its title-page date applies to every page. It does not. Indexed primary-document text shows the section 3 introduction at **Amendment 86 (9/10/70)** and a table 3.1-8 page at **Amendment 110 (7/19/71)** describing **LM-10**. The public binder therefore contains later replacement pages and is not a clean Mission-G-era snapshot.
 
-This is a material provenance finding. Section/table numbering in that scan cannot by itself prove Apollo 11 applicability, and a value extracted from a later page cannot be back-assigned to LM-5. The remaining mass task is now narrower: recover a sequential mass-properties/consumables page that explicitly identifies Mission G or LM-5 and preserves an effective amendment date appropriate to that state.
+### Primary postflight event masses recovered
 
-Repository Apollo 13 work remains useful only as structural evidence that this source family contains `LM PRE P.D.I.` rows and consumables-change summaries. No LM-7 or LM-10 value is used for Apollo 11.
+The Apollo 11 Mission Report Appendix A.6/table A-I provides mission-specific postflight mass properties based on expendable loading/usage analysis and measured spacecraft/stage weights. For the LM it documents **33,683.5 lb at separation**, **33,669.6 lb at DOI ignition**, **33,401.6 lb at DOI cutoff**, and **16,153.2 lb at lunar landing**.
+
+The table does not contain a PDI row, so PDI mass remains unresolved. These values are now the preferred primary event-mass checkpoints around the missing state.
+
+A cross-check of NASA SP-4029, *Apollo by the Numbers*, found a provenance hazard: its cross-mission table places **33,669.6 lb** under Apollo 11 PDI and **33,401.6 lb** under DOI ignition, whereas the primary Mission Report explicitly identifies those values as DOI ignition and DOI cutoff respectively. The secondary compilation is therefore not used to close PDI mass.
 
 ### As-flown DPS evidence retained
 
@@ -30,7 +34,7 @@ Apollo 11 Mission Report Supplement 7, *Descent Propulsion System Final Flight E
 
 ## Boundary preserved
 
-No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No Apollo 13 LM-7 or later LM-10 pre-PDI value was transferred to LM-5. No amendment-overwritten table was treated as Mission-G evidence solely from its section number. No design Isp was promoted to flight-effective Isp. No throttle percentage was converted into unsupported exact thrust. No reconstructed state was relabeled raw telemetry.
+No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No Apollo 13 LM-7 or later LM-10 pre-PDI value was transferred to LM-5. No amendment-overwritten table was treated as Mission-G evidence solely from its section number. The secondary SP-4029 event labels were not allowed to override the primary Mission Report. No design Isp was promoted to flight-effective Isp. No throttle percentage was converted into unsupported exact thrust. No reconstructed state was relabeled raw telemetry.
 
 ## Repository updates
 
@@ -41,8 +45,8 @@ No launch/unmanned mass plus transfer arithmetic was promoted to PDI mass. No Ap
 
 ## Next
 
-Recover a Mission-G/LM-5 sequential mass-properties or consumables-change page with explicit amendment/effective-date provenance, preferably from an earlier/superseded-page archive or mission-specific postflight mass-properties source. Continue the parallel archival search for Apollo 11 Mission Report Supplement 7. Do not spend another broad-web pass on TRW Volume II absent a new archival lead.
+Continue PDI-mass recovery only from a source explicitly labeling Mission G/LM-5 at PDI or pre-PDI with trustworthy provenance. Prioritize superseded ODB pages, contractor/postflight mass ledgers, and Apollo 11 Mission Report Supplement 7. Do not use SP-4029's apparent PDI value as closure.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** The primary source family/table class is identified, and the public Rev. 2 scan is now proven to contain later amendment replacements, preventing unsafe extraction by section number alone. Exact Mission-G pre-PDI mass remains unresolved pending a correctly provenanced LM-5 page. Exact delivered thrust/Isp remain unresolved; Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** Mission-specific postflight LM masses at separation, DOI ignition, DOI cutoff, and landing are now primary-source documented. Exact Mission-G PDI mass remains unresolved. A conflicting secondary NASA event table has been identified and quarantined from historical model inputs. Exact delivered thrust/Isp remain unresolved; Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
