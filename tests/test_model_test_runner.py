@@ -39,6 +39,8 @@ class ModelTestRunnerTests(unittest.TestCase):
                          "Guidance comparison / multi-source consensus",
                          "Landing-radar reference → quality → historical velocity update",
                          "Apollo 11 descent controller decision gate",
+                         "Automatic / manual authority comparison",
+                         "Trajectory/guidance abort constraints",
                          "Apollo 11 first reacquisition",
                          "Apollo 11 +4 s qualified",
                          "Station GO / FLIGHT undecided",

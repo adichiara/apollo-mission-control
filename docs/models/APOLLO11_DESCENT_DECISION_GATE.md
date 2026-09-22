@@ -66,12 +66,19 @@ It records a station/communication snapshot and provides only two derived checks
 
 Neither check decides whether Apollo should land.
 
-## Next integration step
+## Site-facing proof
 
-Project the existing Apollo 11 landing-radar/guidance products into this contract on
-the site-facing model/test page. Controller decisions should remain explicit inputs
-or controller events so that wrong, delayed, omitted, or conflicting calls remain
-possible simulation outcomes.
+The Causal Model Lab now exposes this contract directly, including the sourced
+automatic→manual/P66 authority transition.
+
+The paired proof holds the controller-visible LR snapshot, Guidance readiness,
+CONTROL readiness, FLIGHT decision, and CAPCOM relay constant while changing only
+`control_mode`. The result demonstrates that trajectory/guidance abort constraints
+are applicable in automatic control but are not themselves abort causes after manual
+takeover under Apollo 11 Flight Mission Rule 5-11.
+
+The proof does not infer P66 entry, an abort, a landing GO/NO-GO, or a CAPCOM relay.
+Those remain explicit scenario/controller events.
 
 ## Evidence status
 

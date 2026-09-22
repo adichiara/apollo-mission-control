@@ -24,13 +24,26 @@ Date: 2026-09-21
 
 This implementation does not convert P66 into an automatic event detector. The exact ground indication of crew takeover remains unresolved. Callers must supply the control mode from a separately sourced scenario/event layer. No trajectory departure automatically creates an abort or FLIGHT decision.
 
+## Site-facing completion
+
+The Causal Model Lab now accepts explicit automatic/manual control mode and includes
+an **Automatic / manual authority comparison** action. The paired proof holds the
+landing-radar observation, Guidance/CONTROL readiness, FLIGHT state, and CAPCOM relay
+constant while changing only control mode.
+
+The UI exposes the resulting
+`trajectory_guidance_abort_constraints_applicable` change without creating an
+automatic abort/continue decision.
+
 ## Next
 
-Extend the existing site-facing Causal Model Lab descent-decision-gate proof so the automatic/manual authority transition can be inspected directly. Keep exact Mission-G P66 annunciation and voice details deferred unless they become player-decision critical.
+Return to the next unresolved powered-descent controller-product dependency. Keep
+exact Mission-G P66 annunciation and voice details deferred unless they become
+player-decision critical.
 
 ## Evidence status
 
 - **DOCUMENTED / PRIMARY:** rule 5-11 and continued ground monitoring.
 - **IMPLEMENTED:** domain contract and regression test.
-- **OPEN:** site-facing proof wiring.
+- **IMPLEMENTED:** site-facing automatic/manual paired proof.
 - **UNRESOLVED BUT NOT REQUIRED:** exact Mission-G P66 ground indication/keying and unique station voice call.
