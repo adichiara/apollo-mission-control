@@ -4,31 +4,34 @@ Date: 2026-09-22
 
 ## GUIDANCE / FIDO
 
-**Status: PARTIALLY DOCUMENTED, bounded.** TRW Note 70-FMT-819 Volume I documents a mission-specific postflight continuous LM trajectory reconstruction from DOI through touchdown using MSFN, onboard, and relative-tracking evidence. It supplies historical reconstruction/validation evidence, not a newly recovered Mission-G live display or raw controller truth stream.
+**Status: PARTIALLY DOCUMENTED, bounded.** TRW Note 70-FMT-819 Volume I documents a mission-specific postflight continuous LM trajectory reconstruction from DOI through touchdown using MSFN, onboard, and relative-tracking evidence. NASA TN D-6846 supplies a primary validation envelope of planned/postflight trajectory, guidance-command, radar-update, attitude, altitude-rate, and landing-phase products. Neither is promoted to a Mission-G live display or raw continuous truth stream.
 
-NASA TN D-6846 adds a primary NASA validation envelope: planned and postflight descent event/trajectory products, guidance thrust-command relationship, landing-radar updates, approach/landing trajectory and attitude, altitude-rate behavior, and landing-phase events. These can validate modeled behavior but are not to be converted into an invented exact controller display or exact continuous state history.
-
-The actual 45-day BET state listing remains assigned to unrecovered Volume II in NASA Apollo Trajectory format. A targeted exact-identifier recovery pass found no public primary copy or traceable NAT-preserving derivative. That thread is now archive-triggered rather than an active broad-web search.
+The actual 45-day BET NAT listing remains **BLOCKED ON NAMED SOURCE RECOVERY — Volume II; broad online discovery exhausted**.
 
 ## CONTROL
 
-**Status: PARTIALLY DOCUMENTED for underlying DPS/resource physics and validation behavior; player product unchanged.** Primary documentation supports DPS throttling/gimbal/resource architecture. TN D-6846 provides planned/commanded thrust behavior useful for validation. LM-5 launch propellant loading is documented, but PDI mass and exact delivered thrust/Isp history remain unresolved. Do not substitute the planned/commanded profile for delivered engine performance.
+**Status: PARTIALLY DOCUMENTED; as-flown propulsion validation strengthened.** Apollo 11 Mission Report §9.8 and fig. 9.8-1 document powered-descent duration/velocity change, 13% start throttle, throttle-up timing, the early telemetry dropout, and flight throttle/chamber/interface/regulator pressure histories. These can constrain model validation without inventing an exact thrust or Isp history.
+
+A primary NASA supplement table identifies Apollo 11 Mission Report Supplement 7, *Descent Propulsion System Final Flight Evaluation* (September 1970). A targeted public recovery pass did not locate the document. It is **BLOCKED ON NAMED SOURCE RECOVERY** and is the preferred mission-specific propulsion follow-up.
+
+LM-5 launch propellant loading is documented; PDI mass remains unresolved. Do not convert throttle position to exact force without a sourced calibration/performance relationship and do not substitute neighboring-mission supplement values.
 
 ## FLIGHT / CAPCOM
 
-**Status: unchanged.** No new GO/NO-GO criterion or crew-facing call follows from the trajectory/propulsion validation audit.
+**Status: unchanged.** No new GO/NO-GO criterion or crew-facing call follows from this propulsion evidence pass.
 
 ## Implementation boundary
 
-Design-envelope values may constrain tests and scenario-input sanity checks. Volume I defines RECONSTRUCTED trajectory provenance/methodology; TN D-6846 supplies source-backed validation/checkpoint relationships. Neither is a license to expose postflight reconstruction as live controller truth or to manufacture exact historical states/engine values.
+The historical model may be validated against Apollo 11 flight throttle/pressure behavior, event timing, command relationships, and reconstructed trajectory/checkpoint products. Exact PDI mass, exact delivered thrust/Isp, and missing BET states remain model/recovery boundaries rather than hidden historical constants.
 
 ## Evidence status
 
 - underlying DPS parameter semantics: **DOCUMENTED**;
 - LM-5 launch resource bookkeeping: **DOCUMENTED**;
+- Apollo 11 as-flown throttle/pressure telemetry relationships: **DOCUMENTED**;
 - Apollo 11 DOI→touchdown reconstruction methodology: **DOCUMENTED AS RECONSTRUCTED**;
 - source-backed descent validation/checkpoint envelope: **DOCUMENTED**;
-- CSM-centered UVW comparison-frame semantics: **DOCUMENTED FOR THE SPECIFIC COMPARISON FIGURES**;
-- 45-day BET NAT state listing / exact state-series metadata: **BLOCKED ON NAMED SOURCE RECOVERY — VOLUME II; BROAD ONLINE DISCOVERY EXHAUSTED**;
-- Apollo 11 PDI mass and delivered DPS time history: **UNRESOLVED**;
+- 45-day BET NAT state listing / exact state-series metadata: **BLOCKED ON NAMED SOURCE RECOVERY — VOLUME II**;
+- Apollo 11 Mission Report Supplement 7, DPS Final Flight Evaluation: **BLOCKED ON NAMED SOURCE RECOVERY**;
+- Apollo 11 PDI mass and exact delivered thrust/Isp history: **UNRESOLVED**;
 - new player-visible station products: **NONE CLAIMED**.
