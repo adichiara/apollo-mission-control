@@ -10,28 +10,31 @@ The actual 45-day BET NAT listing remains **BLOCKED ON NAMED SOURCE RECOVERY —
 
 ## CONTROL
 
-**Status: PARTIALLY DOCUMENTED; as-flown propulsion validation strengthened.** Apollo 11 Mission Report §9.8 and fig. 9.8-1 document powered-descent duration/velocity change, 13% start throttle, throttle-up timing, the early telemetry dropout, and flight throttle/chamber/interface/regulator pressure histories. These can constrain model validation without inventing an exact thrust or Isp history.
+**Status: PARTIALLY DOCUMENTED; PDI mass provenance narrowed.** Apollo 11 Mission Report §9.8 and fig. 9.8-1 document powered-descent duration/velocity change, throttle timing, the early telemetry dropout, and flight throttle/chamber/interface/regulator pressure histories.
 
-A primary NASA supplement table identifies Apollo 11 Mission Report Supplement 7, *Descent Propulsion System Final Flight Evaluation* (September 1970). A targeted public recovery pass did not locate the document. It is **BLOCKED ON NAMED SOURCE RECOVERY** and is the preferred mission-specific propulsion follow-up.
+The Apollo 11 Flight Plan supplies a 33,278.3-lb unmanned LM bookkeeping state and 436.7-lb CSM→LM lunar-orbit transfer, but neither is PDI mass. The primary source family that should contain the event-specific answer is now identified: **SNA-8-D-027(III) Rev. 2 / NASA-TM-X-68968, Volume III Mass Properties**. Its mission-specific sequential mass-properties/consumables structure is independently verified in repository Apollo 13 research, where later LM-7 pages contain an explicit `LM PRE P.D.I.` row. No LM-7 value is transferred to LM-5.
 
-LM-5 launch propellant loading is documented; PDI mass remains unresolved. Do not convert throttle position to exact force without a sourced calibration/performance relationship and do not substitute neighboring-mission supplement values.
+Apollo 11 Mission Report Supplement 7, *Descent Propulsion System Final Flight Evaluation* (September 1970), remains **BLOCKED ON NAMED SOURCE RECOVERY**.
 
 ## FLIGHT / CAPCOM
 
-**Status: unchanged.** No new GO/NO-GO criterion or crew-facing call follows from this propulsion evidence pass.
+**Status: unchanged.** No new GO/NO-GO criterion or crew-facing call follows from this mass-properties provenance pass.
 
 ## Implementation boundary
 
-The historical model may be validated against Apollo 11 flight throttle/pressure behavior, event timing, command relationships, and reconstructed trajectory/checkpoint products. Exact PDI mass, exact delivered thrust/Isp, and missing BET states remain model/recovery boundaries rather than hidden historical constants.
+The historical model may be validated against Apollo 11 flight throttle/pressure behavior, event timing, command relationships, and reconstructed trajectory/checkpoint products. PDI mass remains a model input until the Mission-G/LM-5 sequential mass-properties row is actually recovered and its amendment provenance checked. Do not derive it by adding transfer weights to an unmanned/launch state or by borrowing Apollo 13 values.
 
 ## Evidence status
 
 - underlying DPS parameter semantics: **DOCUMENTED**;
-- LM-5 launch resource bookkeeping: **DOCUMENTED**;
+- LM-5 launch/unmanned configuration bookkeeping: **DOCUMENTED**;
+- CSM→LM lunar-orbit transfer bookkeeping: **DOCUMENTED**;
+- primary mission-specific PDI mass source family/table class: **DOCUMENTED / TARGET IDENTIFIED**;
+- exact LM-5 `LM PRE P.D.I.` sequential mass row: **UNRESOLVED — EXTRACTION TARGET**;
 - Apollo 11 as-flown throttle/pressure telemetry relationships: **DOCUMENTED**;
 - Apollo 11 DOI→touchdown reconstruction methodology: **DOCUMENTED AS RECONSTRUCTED**;
 - source-backed descent validation/checkpoint envelope: **DOCUMENTED**;
 - 45-day BET NAT state listing / exact state-series metadata: **BLOCKED ON NAMED SOURCE RECOVERY — VOLUME II**;
 - Apollo 11 Mission Report Supplement 7, DPS Final Flight Evaluation: **BLOCKED ON NAMED SOURCE RECOVERY**;
-- Apollo 11 PDI mass and exact delivered thrust/Isp history: **UNRESOLVED**;
+- exact delivered thrust/Isp history: **UNRESOLVED**;
 - new player-visible station products: **NONE CLAIMED**.
