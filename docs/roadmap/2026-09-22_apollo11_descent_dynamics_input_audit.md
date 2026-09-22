@@ -22,13 +22,15 @@ LM-5-and-subsequent **Volume II — Operational Procedures** is publicly recover
 
 A NASA Apollo Lunar Surface Journal-hosted excerpt from **LMA790-3-LM, Apollo Operations Handbook, Subsystems Data** carries **Basic Date 15 December 1968** and explicitly distinguishes hardware **“On LM 5”** from **“LM 6 and subsequent vehicles.”** This directly establishes a configuration-aware LM-5-era Volume I, although the excerpt is not the DPS section.
 
-The newly recovered control evidence changes one boundary: **92.5-percent FTP/control-law semantics are no longer supported only by a later-LM full handbook**. They are present in pre-Apollo-11 handbook/control documentation. What remains unresolved is the engine-specific mapping from that control state to exact LM-5 force and flight-effective performance.
+A further publication-lineage check now establishes that **LMA790-3-LM 6 and Subsequent, Volume I, dated 15 September 1969, explicitly superseded LMA790-3-LM 5 and Subsequent dated 15 June 1969**. Its effective-page history retains pages dated 15 March and 15 June 1969. This is useful provenance: a discrete **LM-5-and-subsequent Volume-I issue existed on 15 June 1969, before Apollo 11**, and later copies can preserve unchanged pages from that issue. It does not make a September 1969 replacement page LM-5 evidence, and the DPS performance table itself has not yet been recovered with a 15 June-or-earlier effective date.
+
+The control evidence therefore remains strong for **92.5-percent FTP/control-law semantics**, while the engine-specific mapping from that control state to exact LM-5 force and flight-effective performance remains unresolved.
 
 ### Search consequence
 
 The next exact target is:
 
-> **Recover the LM-5-era LMA790-3-LM Volume-I DPS section/performance table with page-level change provenance, specifically testing whether mission-applicable pages tie fixed-full-throttle to 9,870 lbf and provide an LM-5-specific Isp/performance basis.**
+> **Recover the LMA790-3-LM 5 and Subsequent Volume-I DPS performance/design pages from the 15 June 1969 issue (or pages demonstrably unchanged into the 15 September LM-6 issue), preserving each page's effective/change date.**
 
 Engine acceptance/performance records and Apollo 11 Mission Report Supplement 7 remain parallel preferred sources for delivered performance.
 
@@ -52,10 +54,10 @@ No D-022 closure is claimed for PDI mass, delivered thrust, FTP force calibratio
 
 ## Next
 
-1. Recover the **LM-5-era Volume-I DPS performance/design pages**, preserving effective-page/change-date provenance.
+1. Recover the **15 June 1969 LM-5-and-subsequent Volume-I DPS performance/design pages**, or prove individual DPS pages were unchanged into the 15 September LM-6 issue using effective-page dates.
 2. Continue targeted recovery of **Apollo 11 DPS Supplement 7** and LM-5 engine acceptance/performance records.
 3. Continue Mission-G PDI-mass recovery only from explicitly event-identified primary records.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** The 92.5-percent FTP/control-law semantics are now documented in pre-Apollo-11 primary/control documentation, but exact LM-5 force calibration/delivered performance and PDI mass remain unresolved. Apollo 11 DPS Supplement 7 and TRW Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** The LM-5 Volume-I publication state is now bounded to a **15 June 1969 LM-5-and-subsequent issue**, and 92.5-percent FTP/control-law semantics are documented in pre-Apollo-11 primary/control documentation. Exact LM-5 force calibration/delivered performance and PDI mass remain unresolved. Apollo 11 DPS Supplement 7 and TRW Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
