@@ -14,7 +14,9 @@ The Apollo 11 Press Kit specifies **9,870 lbf** maximum-rated DPS thrust; NASA T
 
 A primary NASA-MSC records-transmittal listing identifies **Operational Calibration Curves, Vol. II — Calibration Curves for LM-5**, dated **12 June 1969**, in the Apollo 11 launch-data holdings. Direct page-image inspection supplies a concrete recovery key: **FRC accession 72-A-1116 / Record Group 255 / agency box 71**. The FRC-only field also bears `3751-30`, but it is struck/annotated on the form and is retained only as a legacy locator. The index does not expose the volume's curves or channel coverage, so it does **not** establish a DPS thrust curve, FTP-force mapping, or telemetry conversion.
 
-A separate primary NASA-MSC/NARA launch-data listing for **Apollo 12** provides a useful series crosscheck: **Operational Calibration Curves Vol. I — CSM-108 (4 Jun 1969), Vol. II — LM-6 (6 Oct 1969), and Vol. III — SLV-AS-507 (1969)**. This independently establishes that the neighboring mission used the same three-volume, vehicle-specific calibration-series structure and that Volume II was the LM volume. It strengthens the archival interpretation of the Apollo 11 LM-5 entry, but does **not** reveal LM-5 curve names or values.
+A separate primary NASA-MSC/NARA launch-data listing for **Apollo 12** establishes the same vehicle-specific calibration-series structure, with **Vol. II assigned to LM-6**. It strengthens the archival interpretation but does not reveal LM-5 curve names or values.
+
+Official NARA **Record Group 255** guidance now independently places **Manned Spacecraft Center / Johnson Space Center textual records in Fort Worth**. An official NARA Apollo-history article likewise identifies the National Archives Southwest Region, Fort Worth, as the repository for more than 8,600 cubic feet of transferred JSC RG 255 records. This makes **NARA Fort Worth / RG 255 / accession 72-A-1116 / agency box 71** the evidence-supported next recovery route. It does not independently prove the current shelf location of box 71. A fresh public-web/NASA/NTRS search did not recover a digitized copy, so the volume remains **BLOCKED ON DOCUMENT RECOVERY**.
 
 The handbook target remains **LMA790-3-LM §2.3.5, page 2.3-25, Table 2.3-1** and is **BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**. Apollo 11 Mission Report Supplement 7 remains blocked on content/identifier recovery.
 
@@ -42,8 +44,8 @@ Keep PDI mass modelled until explicitly recovered. Preserve 9,870 lbf as Apollo 
 - 92.5-percent throttle hard stop: **DOCUMENTED — LM-5-EFFECTIVE HANDBOOK PAGE, 15 JUNE 1969**;
 - LM-5 Operational Calibration Curves Volume II identity/date: **DOCUMENTED — PRIMARY NASA-MSC RECORDS TRANSMITTAL; 12 JUNE 1969**;
 - LM-5 Operational Calibration Curves archival locator: **DOCUMENTED — FRC ACCESSION 72-A-1116 / RG 255 / AGENCY BOX 71; `3751-30` RETAINED ONLY AS STRUCK/ANNOTATED LEGACY FRC LOCATOR**;
-- calibration-volume series structure: **DOCUMENTED — PRIMARY APOLLO 11 + APOLLO 12 NASA-MSC LAUNCH-DATA LISTINGS; VOL. II IS VEHICLE-SPECIFIC LM VOLUME IN BOTH LISTINGS**;
-- LM-5 Operational Calibration Curves contents/DPS applicability: **BLOCKED ON DOCUMENT RECOVERY; NEXT ACTIVE CONTROL TARGET**;
+- MSC/JSC RG 255 repository route: **DOCUMENTED — OFFICIAL NARA RG 255 GUIDE; TEXTUAL RECORDS IN FORT WORTH**;
+- LM-5 Operational Calibration Curves contents/DPS applicability: **BLOCKED ON DOCUMENT RECOVERY; NARA FORT WORTH REFERENCE REQUEST IS NEXT ACTIVE CONTROL ACTION**;
 - 5 June 1969 FTP study identity: **DOCUMENTED — PURDUE MSA 5 + PRIMARY NASA/MSC REFERENCE LIST; JOHN P. MAYER; MEMO 69-FMZ2-149**;
 - 5 June FTP study contents/numerical result: **BLOCKED ON DOCUMENT RECOVERY**;
 - 69-FM-156 June base / July addendum relationship: **PARTIALLY DOCUMENTED; BLOCKED ON TITLE-PAGE/CONTENT RECOVERY**;
