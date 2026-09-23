@@ -37,9 +37,17 @@ Purdue's official Archives and Special Collections catalog identifies two additi
 
 Their titles show that Apollo 11 planning explicitly analyzed throttle-down timing sensitivity to DPS engine dispersion, LM weight, and PDI dispersions immediately before flight. Their underlying contents remain unrecovered, so no engine value, LM weight, PDI mass, or dispersion is inferred.
 
+### Primary NARA/MSC records-transmittal lead recovered
+
+A scanned **NASA-MSC Standard Form 135-A Records Transmittal and Receipt**, dated **26 October 1971**, was recovered from the NARA Southwest overflow collection. Page 17 lists **MSC-69-FM-156** and the Apollo 11 spacecraft-dispersion-analysis sequence, including **Vol. IV — Descent and Ascent Dispersion Analysis, Part 1 — Lunar Descent**, under box notation **3751-33** and disposal authority **WRCS 25, Item 1a**.
+
+This is archival locator evidence, not a dynamics result. It establishes a concrete MSC records-series trail for neighboring Apollo 11 MPAD FM products but does **not** list 69-FMZ2-149 in the scanned index and does not justify assigning memo 149 to box 3751-33.
+
+The recovery also exposes a source-state distinction that must not be silently normalized. The later H-2 lunar-descent document cites **69-FM-156, “G Mission Lunar Descent Dispersion Analysis,” 10 June 1969**; Purdue separately catalogs **Internal Note 69-FM-156, Apollo 11 (Mission G) Spacecraft Dispersion Analysis, Vol. IV, Part 1 Lunar Descent (Addendum), 2 July 1969**. The NARA transmittal confirms the Apollo 11 Vol. IV/Part 1 record family, but its OCR/date alignment cannot prove whether the June citation and July addendum share an unchanged base document. They remain separate source states pending title-page/content recovery.
+
 ## Boundary preserved
 
-No later-LM force calibration was back-projected onto Eagle. No preflight/design thrust was promoted to delivered thrust. No pattern-derived Apollo 11 report number was promoted to sourced metadata. Purdue archive metadata is treated strictly as locator/provenance evidence until underlying items are recovered. The newly recovered 69-FMZ2-149 citation is bibliographic evidence only. PDI mass remains unresolved.
+No later-LM force calibration was back-projected onto Eagle. No preflight/design thrust was promoted to delivered thrust. No pattern-derived Apollo 11 report number was promoted to sourced metadata. Purdue archive metadata is treated strictly as locator/provenance evidence until underlying items are recovered. The 69-FMZ2-149 citation is bibliographic evidence only; the NARA transmittal is records-series locator evidence only. PDI mass remains unresolved.
 
 ## Repository updates
 
@@ -50,8 +58,8 @@ No later-LM force calibration was back-projected onto Eagle. No preflight/design
 
 ## Next
 
-Search directly for **Mayer memorandum 69-FMZ2-149** and recover its title page/body, then recover the two **8 July 1969 throttle-down dispersion items (File 2, Items 20–21)**. Inspect only recovered primary content for explicit LM-5 FTP force/calibration, engine-dispersion assumptions, LM weight/PDI state, and throttle-down sensitivity. Continue the underlying Apollo 11 / LM-5 DPS Final Flight Evaluation contractor-report search in parallel, followed by LM-5 engine acceptance/performance records. Retain page 2.3-25 and BET Volume II as named blocked targets.
+Continue direct recovery of **Mayer memorandum 69-FMZ2-149**, now using the NASA-MSC/NARA MPAD records-series trail as an additional archival locator without assuming box membership. Recover the **69-FM-156 base analysis and 2 July addendum** to resolve their relationship and inspect any explicit LM-5 engine/weight dispersion assumptions. Then recover the two **8 July 1969 throttle-down dispersion items (File 2, Items 20–21)**. Continue the underlying Apollo 11 / LM-5 DPS Final Flight Evaluation contractor-report search in parallel, followed by LM-5 engine acceptance/performance records. Retain page 2.3-25 and BET Volume II as named blocked targets.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** The 5 June FTP study now has a primary-source bibliographic identity — John P. Mayer, MSC/MPAD, memo **69-FMZ2-149** — but its numerical/content evidence remains **BLOCKED ON DOCUMENT RECOVERY**. Purdue metadata establishes the two companion 8 July studies, whose contents remain blocked on archival item recovery. Supplement 7 identifiers/content remain blocked on bibliographic/archival recovery. Page 2.3-25 remains blocked on legible primary-page recovery. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. TRW BET Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** The 5 June FTP study has a primary-source bibliographic identity — John P. Mayer, MSC/MPAD, memo **69-FMZ2-149** — and a primary NASA-MSC records-transmittal now gives a concrete archival trail for neighboring Apollo 11 MPAD FM material. Its numerical/content evidence remains **BLOCKED ON DOCUMENT RECOVERY**. Purdue metadata establishes the two companion 8 July studies, whose contents remain blocked on archival item recovery. The 69-FM-156 June-base/July-addendum relationship remains unresolved. Supplement 7 identifiers/content remain blocked on bibliographic/archival recovery. Page 2.3-25 remains blocked on legible primary-page recovery. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. TRW BET Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
