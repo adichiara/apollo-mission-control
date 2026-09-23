@@ -6,6 +6,7 @@ Date: 2026-09-23
 
 | Source | Direct evidence | Use / restriction |
 | --- | --- | --- |
+| NASA/MSC, _Apollo 10 Mission Rules_, final, 15 Apr 1969, rule 4-5 p. 4-3 | Adjacent-mission MOCR communications list: `FD LOOP`, `AFD CONF LOOP`, `MOCR SYS 1 & 2`, `MOCR DYN`, `A/G 1 LOOP`, `A/G 2 LOOP`; separately identifies remote-site A/G path for crew communication | Primary mission-era authority for loop vocabulary and internal-MOCR/A-G separation immediately before Apollo 11. **Not** authority for Apollo 11 GUIDO/support-room loop assignment, keyset mapping, or alarm-call routing. |
 | NASA JSC Oral History Project, John R. Garman interview, 27 Mar 2001 | Firsthand participant account distinguishing back room/front room; Garman describes himself and colleagues in the back room as helping Steve Bales and notes front room/back-room loop separation | Primary-participant authority for support relationship and room boundary. Does not establish exact loop/channel name, console keying, or every per-alarm call. |
 | NASA, _Apollo Era Hero John “Jack” Garman Dies_, 29 Sep 2016 | Identifies Bales as Guidance Officer; states Bales called Garman, working in the back room supporting him, during the 1202 assessment | NASA agency cross-check for role/assessment chain. Later retrospective, so subordinate to participant/transcript evidence where they overlap. |
 | NASA, _Apollo 11 Air-to-Ground Voice Transcription (GOSS NET 1)_, Tape 66/7 p. 312 | First 1202 sequence: Eagle reports alarm/code, CDR asks Houston for a reading, `CC`/CAPCOM returns ground GO disposition | Primary authority for **crew-interface communication path**. Does not by itself identify internal assessment ownership. |
@@ -18,12 +19,15 @@ Date: 2026-09-23
 
 The Apollo 11 controller-product boundary now has direct mission-specific evidence for independent-source descent comparisons, ground-visible program-alarm/descent status, and the alarm decision chain at useful role resolution. The defensible chain is **guidance-software back-room support → GUIDO/Bales → FLIGHT/ground decision chain → CAPCOM → crew**.
 
-The runtime may model that support/ownership boundary but must not invent exact loop names, keying, DRK behavior, request timing, routing, cadence, or a detailed per-alarm internal sequence.
+Apollo 10 rule 4-5 adds a primary, immediately adjacent configuration baseline for authentic MOCR loop names and confirms the architectural distinction between internal Mission Control loops and crew-facing A/G communications. It does **not** close the Apollo 11 GUIDO/support-room loop assignment.
 
-PHO-TN401 remains blocked on document recovery. Retrieve **Box 078-65/66** before freezing exact Mission-G routing/configuration; use additional mission-effective loop evidence if PHO-TN401 does not identify internal voice-loop mechanics.
+The runtime may model the support/ownership boundary and use sourced era loop vocabulary, but must not invent exact Apollo 11 loop assignments, keying, DRK behavior, request timing, routing, cadence, or a detailed per-alarm internal sequence.
+
+PHO-TN401 remains blocked on document recovery. Retrieve **Box 078-65/66** before freezing exact Mission-G routing/configuration; recover an Apollo-11-effective communications/keyset source for exact internal voice-loop mechanics if PHO-TN401 does not provide them.
 
 ## URLs
 
+- NASA/MSC Apollo 10 Mission Rules: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap10fj/pdf/a10-mission-rules-19690415.pdf
 - NASA JSC Garman oral history: https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/GarmanJR/GarmanJR_3-27-01.pdf
 - NASA Garman history article: https://www.nasa.gov/image-article/apollo-era-hero-john-jack-garman-dies/
 - NASA Apollo 11 air-to-ground transcript: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11transcript_tec.pdf
@@ -36,5 +40,6 @@ PHO-TN401 remains blocked on document recovery. Retrieve **Box 078-65/66** befor
 - **DOCUMENTED / SUFFICIENT:** MSK-1137 alarm/restart/program/DSKY/descent field semantics.
 - **DOCUMENTED / SUFFICIENT:** guidance-software back-room support → GUIDO assessment relationship; crew-facing disposition through CAPCOM.
 - **DOCUMENTED:** mission-specific AGS−PGNCS and MSFN−PGNCS comparison products/event context.
-- **UNRESOLVED:** exact live station request/routing/DRK mapping/cadence and internal loop/channel mechanics.
+- **DOCUMENTED:** adjacent Apollo 10 MOCR loop vocabulary/internal-versus-A/G separation.
+- **UNRESOLVED:** exact Apollo 11 live station request/routing/DRK mapping/cadence and internal loop/channel mechanics.
 - **BLOCKED ON DOCUMENT RECOVERY:** PHO-TN401 direct inspection.
