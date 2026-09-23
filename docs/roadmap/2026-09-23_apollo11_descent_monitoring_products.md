@@ -10,22 +10,22 @@ The alarm call path is now narrowed on both sides of the front room. The air-to-
 
 The supported architecture is therefore **guidance-software back-room support → GUIDO/Bales → FLIGHT/ground decision chain → CAPCOM → crew**. Exact Apollo 11 loop/channel mechanics remain open.
 
-NASA/MSC's final Apollo 10 Mission Rules (15 April 1969), rule 4-5, now supplies an immediately adjacent primary-source loop vocabulary: `FD LOOP`, `AFD CONF LOOP`, `MOCR SYS 1 & 2`, `MOCR DYN`, `A/G 1 LOOP`, and `A/G 2 LOOP`. This documents the era/configuration baseline and internal-MOCR versus air-ground separation, but does not assign the Apollo 11 GUIDO/support-room alarm path to any one of those loops.
+NASA/MSC's _Flight Mission Rules, Apollo 11_, dated 16 April 1969, rule 4-5, now supplies **mission-specific** loop vocabulary: `FD LOOP`, `AFD CONF LOOP`, `MOCR SYS 1 & 2`, `MOCR DYN`, `A/G 1 LOOP`, and `A/G 2 LOOP`. The rule separately identifies an MCC/remote-site air-ground path used for crew communication. This replaces the Apollo 10 evidence as the governing naming/configuration baseline, while still not assigning the GUIDO/support-room alarm path to any one loop.
 
 ## Immediate next work
 
 1. Keep the Apollo 11 reference **OPEN**, but mark the **MSK-1137 alarm/program field semantics SUFFICIENT** for current controller-product architecture.
 2. Mark the **back-room guidance-software support → GUIDO assessment relationship SUFFICIENT** for current role architecture; do not infer exact loop names or keying.
-3. Preserve the Apollo 10 rule-4-5 loop names only as an adjacent-mission naming baseline; do not back-project station assignments into Apollo 11.
+3. Treat the rule-4-5 loop names and internal-MOCR/A-G separation as **Apollo-11-specific documented architecture**; do not infer station-to-loop assignments or keyset privileges.
 4. Preserve `AGS−PGNCS` and `MSFN−PGNCS` as distinct comparison products.
 5. Preserve the sourced crew call boundary: ground decision → CAPCOM disposition to crew; no internal controller speaks directly to Eagle.
 6. Do not expose 70-FM-20 Figure 9 as an exact live MOCR display.
 7. Recover Mission-G-effective routing/configuration evidence. PHO-TN401 remains the strongest target at the Johnson Space Center History Collection, University of Houston-Clear Lake, Apollo Program, Mission Documents: Apollo 11, **Box 078-65/66**.
-8. Freeze exact station request/routing, DRK-button mapping, cadence, Apollo 11 loop/channel identity, and detailed per-alarm internal call sequence only after direct mission-effective evidence is recovered.
+8. Freeze exact station request/routing, DRK-button mapping, cadence, station-to-loop assignment, keyset privileges, and detailed per-alarm internal call sequence only after direct mission-effective evidence is recovered.
 
 ## Sources
 
-- NASA/MSC, _Apollo 10 Mission Rules_, final, 15 April 1969, rule 4-5, p. 4-3: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap10fj/pdf/a10-mission-rules-19690415.pdf
+- NASA/MSC, _Flight Mission Rules, Apollo 11 (AS-506/107/LM-5)_, 16 April 1969, rule 4-5, p. 4-3: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11MissionRules.pdf
 - NASA JSC Oral History Project, John R. Garman interview, 27 March 2001: https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/GarmanJR/GarmanJR_3-27-01.pdf
 - NASA, "Apollo Era Hero John 'Jack' Garman Dies," 29 September 2016: https://www.nasa.gov/image-article/apollo-era-hero-john-jack-garman-dies/
 - NASA, _Apollo 11 Air-to-Ground Voice Transcription (GOSS NET 1)_, Tape 66/7 p. 312: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11transcript_tec.pdf
@@ -36,6 +36,6 @@ NASA/MSC's final Apollo 10 Mission Rules (15 April 1969), rule 4-5, now supplies
 
 - **SUFFICIENT:** Apollo-11-specific MSK-1137 alarm/program/descent field semantics for current product architecture.
 - **SUFFICIENT:** guidance-software back-room support → GUIDO assessment relationship and CAPCOM-mediated crew disposition.
-- **DOCUMENTED:** adjacent Apollo 10 primary-source MOCR loop vocabulary and internal/A-G separation.
-- **OPEN:** exact Apollo 11 station request/routing, DRK mapping, cadence/latency, loop/channel identity, and detailed internal call sequence.
+- **DOCUMENTED / MISSION-SPECIFIC:** Apollo 11 MOCR loop vocabulary and internal/A-G separation.
+- **OPEN:** exact Apollo 11 station request/routing, DRK mapping, cadence/latency, station-to-loop assignment, keyset privileges, and detailed internal call sequence.
 - **BLOCKED ON DOCUMENT RECOVERY:** PHO-TN401 direct inspection.
