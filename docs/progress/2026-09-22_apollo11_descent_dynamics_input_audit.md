@@ -24,9 +24,9 @@ The September 1969 scan's primary List of Effective Pages confirms individual re
 
 A bounded recovery pass searched the current NASA/NTRS public catalog and Apollo mission-report indexes for **Apollo 11 Mission Report Supplement 7, _Descent Propulsion System Final Flight Evaluation_**. No public Apollo 11 Supplement 7 catalog record was recovered. Later NASA mission-report supplement tables remain positive primary evidence for its **September 1970** publication.
 
-Research note **334** then tested the report-identifier path rather than repeating the title search. NTRS metadata for Apollo 11 Supplement 5 shows that an Apollo 11 sibling can be cataloged under parent report **MSC-00171** plus separate supplement/TM identifiers. NTRS metadata for Apollo 12 DPS Supplement 5 explicitly carries **MSC-01855-SUPPL-5**, **TRW-11176-H585-R0-00-SUPPL-5**, **NASA-TM-X-68933**, accession **73N15812**, and contract **NAS9-8166**.
+The identifier-focused follow-up tested the report-number path rather than repeating the title search. NTRS metadata for Apollo 11 Supplement 5 shows that an Apollo 11 sibling can be cataloged under parent report **MSC-00171** plus separate supplement/TM identifiers. NTRS metadata for Apollo 12 DPS Supplement 5 explicitly carries **MSC-01855-SUPPL-5**, **TRW-11176-H585-R0-00-SUPPL-5**, **NASA-TM-X-68933**, accession **73N15812**, and contract **NAS9-8166**.
 
-This establishes the relevant identifier families but not Apollo 11 Supplement 7's values. In particular, **`MSC-00171-SUPPL-7` is not accepted as historical metadata merely because it is a plausible later-mission pattern**. Targeted searches using that string and title/LM-5/TRW combinations did not recover authoritative Apollo 11 metadata.
+This establishes relevant identifier families but not Apollo 11 Supplement 7's identifiers. In particular, **`MSC-00171-SUPPL-7` is not accepted as historical metadata merely because it is a plausible later-mission pattern**. Targeted searches using that string and title/LM-5/TRW combinations did not recover authoritative Apollo 11 metadata.
 
 The next discriminating retrieval is therefore an MSC/NASA September-1970 bibliographic index, TRW Systems Group propulsion-report index, or archival crosswalk that exposes the Apollo 11 report's actual MSC/TRW/NASA-TM/accession identifiers.
 
@@ -38,12 +38,10 @@ No later-LM force calibration was back-projected onto Eagle. No preflight/design
 
 ## Repository updates
 
-- `resources/research/334_apollo11_dps_supplement_identifier_boundary.md`
 - `docs/roadmap/2026-09-22_apollo11_descent_dynamics_input_audit.md`
 - `docs/progress/2026-09-22_apollo11_descent_dynamics_input_audit.md`
 - `docs/station-status/2026-09-22_apollo11_descent_dynamics_input_audit.md`
 - `resources/APOLLO11_DESCENT_DYNAMICS_INPUT_SOURCE_CATALOG_ADDENDUM.md`
-- `docs/ROADMAP.md`
 
 ## Next
 
