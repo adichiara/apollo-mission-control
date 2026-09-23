@@ -12,7 +12,9 @@ Date: 2026-09-22
 
 The Apollo 11 Press Kit specifies **9,870 lbf** maximum-rated DPS thrust; NASA TN D-7143 records a **10,500-lbf maximum-rated design requirement**. The Mission Report confirms LM-5 throttle-up to FTP about 26 seconds after PDI. LMA790-3-LM page 2.2-215, **Change Date 15 June 1969**, directly documents the **92.5% THRUST** TTCA hard stop in the LM-5 handbook state.
 
-A primary NASA-MSC records-transmittal listing identifies **Operational Calibration Curves, Vol. II — Calibration Curves for LM-5**, dated **12 June 1969**, in the Apollo 11 launch-data holdings. Direct page-image inspection now supplies a concrete recovery key: **FRC accession 72-A-1116 / Record Group 255 / agency box 71**. The FRC-only field also bears `3751-30`, but it is struck/annotated on the form and is retained only as a legacy locator. The index does not expose the volume's curves or channel coverage, so it does **not** establish a DPS thrust curve, FTP-force mapping, or telemetry conversion. Recover the volume before making any such claim.
+A primary NASA-MSC records-transmittal listing identifies **Operational Calibration Curves, Vol. II — Calibration Curves for LM-5**, dated **12 June 1969**, in the Apollo 11 launch-data holdings. Direct page-image inspection supplies a concrete recovery key: **FRC accession 72-A-1116 / Record Group 255 / agency box 71**. The FRC-only field also bears `3751-30`, but it is struck/annotated on the form and is retained only as a legacy locator. The index does not expose the volume's curves or channel coverage, so it does **not** establish a DPS thrust curve, FTP-force mapping, or telemetry conversion.
+
+A separate primary NASA-MSC/NARA launch-data listing for **Apollo 12** provides a useful series crosscheck: **Operational Calibration Curves Vol. I — CSM-108 (4 Jun 1969), Vol. II — LM-6 (6 Oct 1969), and Vol. III — SLV-AS-507 (1969)**. This independently establishes that the neighboring mission used the same three-volume, vehicle-specific calibration-series structure and that Volume II was the LM volume. It strengthens the archival interpretation of the Apollo 11 LM-5 entry, but does **not** reveal LM-5 curve names or values.
 
 The handbook target remains **LMA790-3-LM §2.3.5, page 2.3-25, Table 2.3-1** and is **BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**. Apollo 11 Mission Report Supplement 7 remains blocked on content/identifier recovery.
 
@@ -30,7 +32,7 @@ Two related **8 July 1969** Purdue records remain active recovery targets: **“
 
 ## Implementation boundary
 
-Keep PDI mass modelled until explicitly recovered. Preserve 9,870 lbf as Apollo 11 preflight specification, FTP as an Apollo 11 flight control state, and 92.5 percent as an LM-5-effective documented control hard stop. Do **not** numerically equate 92.5 percent with 9,870 lbf without LM-5-specific force-calibration evidence. Do not assume the newly located LM-5 calibration volume contains a DPS force mapping until its pages are recovered.
+Keep PDI mass modelled until explicitly recovered. Preserve 9,870 lbf as Apollo 11 preflight specification, FTP as an Apollo 11 flight control state, and 92.5 percent as an LM-5-effective documented control hard stop. Do **not** numerically equate 92.5 percent with 9,870 lbf without LM-5-specific force-calibration evidence. Do not assume the located LM-5 calibration volume contains a DPS force mapping until its pages are recovered.
 
 ## Evidence status
 
@@ -40,6 +42,7 @@ Keep PDI mass modelled until explicitly recovered. Preserve 9,870 lbf as Apollo 
 - 92.5-percent throttle hard stop: **DOCUMENTED — LM-5-EFFECTIVE HANDBOOK PAGE, 15 JUNE 1969**;
 - LM-5 Operational Calibration Curves Volume II identity/date: **DOCUMENTED — PRIMARY NASA-MSC RECORDS TRANSMITTAL; 12 JUNE 1969**;
 - LM-5 Operational Calibration Curves archival locator: **DOCUMENTED — FRC ACCESSION 72-A-1116 / RG 255 / AGENCY BOX 71; `3751-30` RETAINED ONLY AS STRUCK/ANNOTATED LEGACY FRC LOCATOR**;
+- calibration-volume series structure: **DOCUMENTED — PRIMARY APOLLO 11 + APOLLO 12 NASA-MSC LAUNCH-DATA LISTINGS; VOL. II IS VEHICLE-SPECIFIC LM VOLUME IN BOTH LISTINGS**;
 - LM-5 Operational Calibration Curves contents/DPS applicability: **BLOCKED ON DOCUMENT RECOVERY; NEXT ACTIVE CONTROL TARGET**;
 - 5 June 1969 FTP study identity: **DOCUMENTED — PURDUE MSA 5 + PRIMARY NASA/MSC REFERENCE LIST; JOHN P. MAYER; MEMO 69-FMZ2-149**;
 - 5 June FTP study contents/numerical result: **BLOCKED ON DOCUMENT RECOVERY**;
