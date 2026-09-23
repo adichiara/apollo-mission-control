@@ -20,13 +20,15 @@ The September 1969 LM-6-and-subsequent Volume-I contents/illustration material i
 
 A follow-on recovery pass reached the September 1969 scan's **List of Effective Pages**. That primary-document LEP confirms that the main-propulsion pages are individually revision-controlled across Original / 15 March / 15 June / 15 September 1969 states. However, the available indexed rendering is sufficiently OCR-corrupted around the 2.3 page ranges that the issue assigned specifically to **2.3-25** cannot be read defensibly. Searches for the table's likely performance terms likewise do not expose the table body in that rendering.
 
-This is an evidence boundary, not permission to infer the missing footer. The later LM-10 handbook shows page 2.3-25 at a later effective state and is retained only as a locator/cross-check. No thrust, Isp, or LM-5 applicability is asserted from it.
+Accordingly, **page 2.3-25 is BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**.
 
-Accordingly, **page 2.3-25 is now BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**. A usable image of the September 1969 page itself, or a clean LEP transcription from the same primary issue, is required before the table can be configuration-qualified.
+### Supplement 7 archival pass
 
-### Supplement 7
+A bounded recovery pass searched the current NASA/NTRS public catalog and Apollo mission-report indexes for **Apollo 11 Mission Report Supplement 7, _Descent Propulsion System Final Flight Evaluation_**. The catalog exposes neighboring DPS final-flight evaluations for Apollo 9, Apollo 10, Apollo 12, Apollo 15, and Apollo 16, but no public Apollo 11 Supplement 7 record was recovered. The Virtual AGC mission-document index likewise exposes Apollo 11 Supplement 5 but not Supplement 7.
 
-Apollo 11 Mission Report Supplement 7, *Descent Propulsion System Final Flight Evaluation*, remains **BLOCKED ON NAMED SOURCE RECOVERY**; no performance values are inferred from neighboring mission supplements.
+This is **negative catalog evidence only**, not evidence that Supplement 7 did not exist. The previously recovered later NASA mission-report supplement tables remain the positive primary evidence for its title and September 1970 publication. The useful result is procedural: repeated broad public-catalog searching is no longer the next discriminating step. Recovery now requires a report identifier/accession trail from MSC/NASA bibliographic records, archival holdings, or a contemporaneous citation.
+
+No performance value was imported from neighboring-mission DPS reports. Apollo 16's NTRS record confirms that this report family can contain FTP thrust/Isp and comparison with engine acceptance-test values, which strengthens Supplement 7's relevance but does not establish any LM-5 number.
 
 ## Boundary preserved
 
@@ -41,8 +43,8 @@ No later-LM force calibration was back-projected onto Eagle. No preflight/design
 
 ## Next
 
-With page 2.3-25 blocked on a legible primary page image, shift the active propulsion search to **Apollo 11 DPS Supplement 7** and LM-5 engine acceptance/performance records while retaining 2.3-25 as a named recovery target. Continue Mission-G PDI-mass recovery only from explicitly event-identified primary records.
+For Supplement 7, stop repeating generic NTRS title searches and pursue its **report number/accession/citation trail** through MSC/NASA bibliographic or archival records. In parallel, search LM-5 engine acceptance/performance records for an explicit FTP force mapping or delivered thrust/Isp. Retain page 2.3-25 as a named image-recovery target and continue PDI-mass recovery only from explicitly event-identified primary records.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** Exact handbook location and revision-control context are established, but page 2.3-25's own effective state and values remain blocked on legible primary-page recovery. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. Apollo 11 DPS Supplement 7 and TRW BET Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** Exact handbook location and revision-control context are established, but page 2.3-25's own effective state and values remain blocked on legible primary-page recovery. Supplement 7 existence/publication is documented, while its public catalog record/content remains **BLOCKED ON REPORT-IDENTIFIER / ARCHIVAL RECOVERY**. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. TRW BET Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
