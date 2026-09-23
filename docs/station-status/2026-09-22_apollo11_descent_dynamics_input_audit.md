@@ -12,24 +12,19 @@ Date: 2026-09-22
 
 The Apollo 11 Press Kit specifies **9,870 lbf** maximum-rated DPS thrust; NASA TN D-7143 records a **10,500-lbf maximum-rated design requirement**. The Mission Report confirms LM-5 throttle-up to FTP about 26 seconds after PDI. LMA790-3-LM page 2.2-215, **Change Date 15 June 1969**, directly documents the **92.5% THRUST** TTCA hard stop in the LM-5 handbook state.
 
-The handbook target remains **LMA790-3-LM §2.3.5, page 2.3-25, Table 2.3-1** and is **BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**.
+The handbook target remains **LMA790-3-LM §2.3.5, page 2.3-25, Table 2.3-1** and is **BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**. Apollo 11 Mission Report Supplement 7 remains blocked on content/identifier recovery.
 
-Apollo 11 Mission Report Supplement 7, *Descent Propulsion System Final Flight Evaluation*, is primary-documented by later NASA supplement tables as published in **September 1970**, but its public catalog record/content remains unrecovered. Apollo 10 primary evidence shows its corresponding supplement wraps TRW **11176-H314-R0-00**, so the underlying LM-5 contractor report remains an active target; no Apollo 11 number is interpolated.
+The highest-priority force-calibration lead now has a primary bibliographic identity. A NASA/MSC mission-techniques reference list cites the exact Purdue MSA 5 title as **John P. Mayer, MSC Mission Planning and Analysis Division, memorandum 69-FMZ2-149, 5 June 1969, “Effect of Fixed Throttle Point Thrust on the Time from Loss of Radial Guidance Control to DPS Throttle-down.”** The OCR rendering `FMZ2` is preserved pending recovery of the clean memo title page. This supplies an actionable memo number but no numerical FTP result.
 
-The highest-priority force-calibration lead remains the **5 June 1969** Armstrong MSA 5 planning item, **“Effect of fixed throttle point thrust on the time from loss of radial guidance control to DPS throttle-down.”** A follow-on Purdue catalog pass adds two closely related **8 July 1969** records in the same Mission Planning subgroup:
-
-- **“Effects of DPS engine dispersions and LM weight on throttle-down time”** — File 2, Item 20 (Box 54, Folder 5, Item 14).
-- **“Effects of known dispersions at PDI on throttle-down time”** — File 2, Item 21 (Box 54, Folder 5, Item 15).
-
-These archive records establish that Apollo 11 planning explicitly treated engine dispersion, LM weight, and PDI dispersions as throttle-down-time variables. They do **not** expose the underlying numerical inputs. No force, weight, mass, or dispersion value is inferred from catalog titles. Recovering all three items is now the active CONTROL archival package.
+Two related **8 July 1969** Purdue records remain active recovery targets: **“Effects of DPS engine dispersions and LM weight on throttle-down time”** (File 2, Item 20) and **“Effects of known dispersions at PDI on throttle-down time”** (File 2, Item 21). No force, weight, mass, or dispersion value is inferred from their titles.
 
 ## FLIGHT / CAPCOM
 
-**Status: unchanged.** No new GO/NO-GO criterion or crew-facing call follows from locator recovery alone.
+**Status: unchanged.** No new GO/NO-GO criterion or crew-facing call follows from bibliographic recovery alone.
 
 ## Implementation boundary
 
-Keep PDI mass modelled until explicitly recovered. Preserve 9,870 lbf as Apollo 11 preflight specification, FTP as an Apollo 11 flight control state, and 92.5 percent as an LM-5-effective documented control hard stop. Do **not** numerically equate 92.5 percent with 9,870 lbf without LM-5-specific force-calibration evidence. Do not derive a nominal PDI mass from the existence of a PDI-dispersion study.
+Keep PDI mass modelled until explicitly recovered. Preserve 9,870 lbf as Apollo 11 preflight specification, FTP as an Apollo 11 flight control state, and 92.5 percent as an LM-5-effective documented control hard stop. Do **not** numerically equate 92.5 percent with 9,870 lbf without LM-5-specific force-calibration evidence.
 
 ## Evidence status
 
@@ -37,10 +32,9 @@ Keep PDI mass modelled until explicitly recovered. Preserve 9,870 lbf as Apollo 
 - Apollo 11 DPS 9,870-lbf preflight specification: **DOCUMENTED — CONTEMPORARY PRIMARY MISSION SOURCE**;
 - LM-5 FTP use/timing: **DOCUMENTED — PRIMARY MISSION REPORT**;
 - 92.5-percent throttle hard stop: **DOCUMENTED — LM-5-EFFECTIVE HANDBOOK PAGE, 15 JUNE 1969**;
-- 5 June 1969 Apollo 11 fixed-throttle-point-thrust planning item existence/title/date: **DOCUMENTED — OFFICIAL PURDUE MSA 5 FINDING AID**;
-- 8 July 1969 DPS-engine-dispersion/LM-weight throttle-down study existence/title/date/identifier: **DOCUMENTED — OFFICIAL PURDUE ARCHIVAL CATALOG**;
-- 8 July 1969 PDI-dispersion throttle-down study existence/title/date/identifier: **DOCUMENTED — OFFICIAL PURDUE ARCHIVAL CATALOG**;
-- contents/numerical evidence of those three MSA 5 items: **BLOCKED ON ARCHIVAL ITEM RECOVERY; NEXT ACTIVE CONTROL TARGETS**;
+- 5 June 1969 FTP study identity: **DOCUMENTED — PURDUE MSA 5 + PRIMARY NASA/MSC REFERENCE LIST; JOHN P. MAYER; MEMO 69-FMZ2-149**;
+- 5 June FTP study contents/numerical result: **BLOCKED ON DOCUMENT RECOVERY; NEXT ACTIVE CONTROL TARGET**;
+- two 8 July throttle-down studies: **DOCUMENTED AS ARCHIVAL RECORDS; CONTENT BLOCKED ON ITEM RECOVERY**;
 - DPS performance table location: **DOCUMENTED — §2.3.5 / PAGE 2.3-25 / TABLE 2.3-1**;
 - page 2.3-25 LM-5 effective date/table values: **BLOCKED ON LEGIBLE PRIMARY PAGE-IMAGE / LEP RECOVERY**;
 - exact LM-5 FTP force/calibration: **UNRESOLVED**;
