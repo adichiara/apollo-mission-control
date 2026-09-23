@@ -16,25 +16,21 @@ The Apollo 11 Press Kit gives **9,870 lbf maximum rated thrust**; the Mission Re
 
 ### DPS performance page target recovered
 
-The September 1969 LM-6-and-subsequent Volume-I contents/illustration material identifies the exact missing performance section as **§2.3.5, Descent Propulsion Section Performance and Design Data**, beginning at **page 2.3-25**, and identifies **Table 2.3-1, Descent Propulsion Section — Performance and Design Data** at that location.
-
-The September 1969 scan's primary List of Effective Pages confirms individual revision control, but its indexed rendering is too OCR-corrupted around the 2.3 page ranges to read page 2.3-25's issue defensibly. Accordingly, **page 2.3-25 is BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**.
+The September 1969 LM-6-and-subsequent Volume-I contents/illustration material identifies **§2.3.5**, beginning at **page 2.3-25**, and **Table 2.3-1, Descent Propulsion Section — Performance and Design Data**. The primary LEP rendering is too OCR-corrupted to assign page 2.3-25's issue date defensibly, so the page remains **BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**.
 
 ### Supplement 7 archival pass
 
-A bounded recovery pass searched the current NASA/NTRS public catalog and Apollo mission-report indexes for **Apollo 11 Mission Report Supplement 7, _Descent Propulsion System Final Flight Evaluation_**. No public Apollo 11 Supplement 7 catalog record was recovered. Later NASA mission-report supplement tables remain positive primary evidence for its **September 1970** publication.
+Apollo 11 Mission Report Supplement 7, _Descent Propulsion System Final Flight Evaluation_, is documented by later NASA supplement tables as published in **September 1970**, but its public catalog record/content remains unrecovered. Apollo 10 primary evidence establishes that its corresponding MSC Supplement 7 wraps earlier TRW project report **11176-H314-R0-00**, dated 8 August 1969 under NAS9-8166. This supports searching for the underlying LM-5 contractor report without interpolating an Apollo 11 H-series number.
 
-The identifier-focused follow-up tested the report-number path rather than repeating the title search. NTRS metadata for Apollo 11 Supplement 5 shows that an Apollo 11 sibling can be cataloged under parent report **MSC-00171** plus separate supplement/TM identifiers. NTRS metadata for Apollo 12 DPS Supplement 5 explicitly carries **MSC-01855-SUPPL-5**, **TRW-11176-H585-R0-00-SUPPL-5**, **NASA-TM-X-68933**, accession **73N15812**, and contract **NAS9-8166**.
+### New Apollo 11 FTP archival lead
 
-A primary Apollo 10 comparison now resolves how at least one earlier DPS supplement was assembled. The December 1969 Apollo 10 Mission Report Supplement 7 scan embeds the earlier TRW project technical report **11176-H314-R0-00**, _Apollo 10 LM-4 Descent Propulsion System Final Flight Evaluation_, dated **8 August 1969**, prepared under **NAS 9-8166**. The MSC wrapper explicitly identifies the package as Supplement 7 to **MSC-00126**. The embedded TRW report contains its own contractor title page and performance analysis; it was not a number invented from the MSC parent identifier.
+A primary-archive locator pass found a highly discriminating LM-5 lead in the **official Purdue University Libraries finding aid for the Neil A. Armstrong papers, MSA 5**. In Apollo Program working files / Mission Planning / A-11 Planning, the inventory lists an item titled **“Effect of fixed throttle point thrust on the time from loss of radial guidance control to DPS throttle-down,” dated 5 June 1969**.
 
-This is important for recovery strategy but not a license to interpolate an Apollo 11 report number. It shows that the missing Apollo 11 September-1970 supplement may likewise preserve or wrap an earlier LM-5 contractor project report. The active search target is therefore broadened from the MSC wrapper identifier to the underlying **Apollo 11 / LM-5 DPS Final Flight Evaluation project technical report**, especially TRW `11176-H...-R0-00` records under NAS9-8166. No numeric H-series suffix is inferred.
-
-**`MSC-00171-SUPPL-7` remains unaccepted as historical metadata.** No performance value was imported from Apollo 10, Apollo 12, or later missions.
+The title is directly responsive to the unresolved FTP-force question and is contemporaneous with Apollo 11 planning. However, only the finding aid has been recovered, not the underlying document. Therefore this run records **no numerical FTP force** and makes no inference from the title. The item is promoted to the highest-value named archival target for exact LM-5 FTP calibration.
 
 ## Boundary preserved
 
-No later-LM force calibration was back-projected onto Eagle. No preflight/design thrust was promoted to delivered thrust. No pattern-derived Apollo 11 report number was promoted to sourced metadata. PDI mass remains unresolved.
+No later-LM force calibration was back-projected onto Eagle. No preflight/design thrust was promoted to delivered thrust. No pattern-derived Apollo 11 report number was promoted to sourced metadata. The Armstrong finding-aid entry is treated strictly as locator/provenance evidence until the item itself is recovered. PDI mass remains unresolved.
 
 ## Repository updates
 
@@ -45,8 +41,8 @@ No later-LM force calibration was back-projected onto Eagle. No preflight/design
 
 ## Next
 
-Pursue the **underlying Apollo 11 / LM-5 DPS Final Flight Evaluation contractor report** through TRW Systems Group project-report indexes, NAS9-8166 records, MSC bibliographies, and archival holdings; then crosswalk any recovered contractor identifier to the September 1970 Mission Report Supplement 7 wrapper. In parallel, search LM-5 engine acceptance/performance records for an explicit FTP force mapping or delivered thrust/Isp. Retain page 2.3-25 as a named image-recovery target and continue PDI-mass recovery only from explicitly event-identified primary records.
+Recover the **5 June 1969 MSA 5 fixed-throttle-point-thrust item** from Purdue Archives and inspect it for explicit LM-5 FTP force/calibration. Continue the underlying Apollo 11 / LM-5 DPS Final Flight Evaluation contractor-report search in parallel, followed by LM-5 engine acceptance/performance records. Retain page 2.3-25 and BET Volume II as named blocked targets.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** Supplement 7 existence/title/date are documented; Apollo 10 primary evidence now documents the relevant contractor-report-to-MSC-supplement packaging pattern, but the Apollo 11 contractor/report identifiers and content remain **BLOCKED ON BIBLIOGRAPHIC / ARCHIVAL RECOVERY**. Page 2.3-25 remains blocked on legible primary-page recovery. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. TRW BET Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** Purdue's official finding aid now establishes a contemporaneous Apollo 11 planning document explicitly concerning fixed-throttle-point thrust, but its numerical/content evidence is **BLOCKED ON ARCHIVAL ITEM RECOVERY**. Supplement 7 identifiers/content remain blocked on bibliographic/archival recovery. Page 2.3-25 remains blocked on legible primary-page recovery. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. TRW BET Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
