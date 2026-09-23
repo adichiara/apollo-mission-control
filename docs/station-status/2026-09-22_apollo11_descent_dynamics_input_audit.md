@@ -14,7 +14,7 @@ The Apollo 11 Press Kit specifies **9,870 lbf** maximum-rated DPS thrust; NASA T
 
 The handbook target remains **LMA790-3-LM §2.3.5, page 2.3-25, Table 2.3-1** and is **BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**.
 
-Apollo 11 Mission Report Supplement 7, *Descent Propulsion System Final Flight Evaluation*, is primary-documented by later NASA supplement tables as published in **September 1970**, but its public catalog record/content remains unrecovered. Research note **334** adds an identifier-control boundary: Apollo 11 Supplement 5's NTRS metadata does not justify inventing a simple `MSC-00171-SUPPL-7` identifier, even though later DPS supplements can carry parent-report-plus-supplement numbers. That string is a retrieval key only. The active target is an MSC/NASA or TRW bibliographic crosswalk exposing Supplement 7's actual report/accession identifiers.
+Apollo 11 Mission Report Supplement 7, *Descent Propulsion System Final Flight Evaluation*, is primary-documented by later NASA supplement tables as published in **September 1970**, but its public catalog record/content remains unrecovered. The identifier-focused follow-up establishes an additional control boundary: Apollo 11 Supplement 5's NTRS metadata does not justify inventing a simple `MSC-00171-SUPPL-7` identifier, even though later DPS supplements can carry parent-report-plus-supplement numbers. That string is a retrieval key only. The active target is an MSC/NASA or TRW bibliographic crosswalk exposing Supplement 7's actual report/accession identifiers.
 
 No neighboring-mission performance value is transferable to LM-5.
 
