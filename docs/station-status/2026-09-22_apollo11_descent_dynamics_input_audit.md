@@ -14,7 +14,9 @@ The Apollo 11 Press Kit specifies **9,870 lbf** maximum-rated DPS thrust; NASA T
 
 The handbook target remains **LMA790-3-LM §2.3.5, page 2.3-25, Table 2.3-1** and is **BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**.
 
-A bounded public-catalog pass for **Apollo 11 Mission Report Supplement 7, _Descent Propulsion System Final Flight Evaluation_** found neighboring-mission DPS evaluations in NASA/NTRS but no Apollo 11 Supplement 7 public record. This does not negate the later NASA supplement-table evidence for its September 1970 publication. It changes the recovery method: pursue a report number/accession/citation trail or archival holding rather than repeat generic title searches. No neighboring-mission performance value is transferable to LM-5.
+Apollo 11 Mission Report Supplement 7, *Descent Propulsion System Final Flight Evaluation*, is primary-documented by later NASA supplement tables as published in **September 1970**, but its public catalog record/content remains unrecovered. Research note **334** adds an identifier-control boundary: Apollo 11 Supplement 5's NTRS metadata does not justify inventing a simple `MSC-00171-SUPPL-7` identifier, even though later DPS supplements can carry parent-report-plus-supplement numbers. That string is a retrieval key only. The active target is an MSC/NASA or TRW bibliographic crosswalk exposing Supplement 7's actual report/accession identifiers.
+
+No neighboring-mission performance value is transferable to LM-5.
 
 ## FLIGHT / CAPCOM
 
@@ -35,7 +37,8 @@ Keep PDI mass modelled until explicitly recovered. Preserve 9,870 lbf as Apollo 
 - exact LM-5 FTP force/calibration: **UNRESOLVED**;
 - exact LM-5 PDI/pre-PDI mass: **UNRESOLVED**;
 - 45-day BET NAT state listing: **BLOCKED ON NAMED SOURCE RECOVERY — VOLUME II**;
-- Apollo 11 DPS Supplement 7 existence/publication: **DOCUMENTED — LATER NASA SUPPLEMENT TABLES**;
-- Apollo 11 DPS Supplement 7 report identifier/content: **BLOCKED ON REPORT-IDENTIFIER / ARCHIVAL RECOVERY; NEXT ACTIVE PROPULSION TARGET**;
+- Apollo 11 DPS Supplement 7 existence/title/date: **DOCUMENTED — LATER NASA SUPPLEMENT TABLES**;
+- Apollo 11 DPS Supplement 7 report identifiers/content: **BLOCKED ON BIBLIOGRAPHIC / ARCHIVAL RECOVERY; NEXT ACTIVE PROPULSION TARGET**;
+- `MSC-00171-SUPPL-7`: **SEARCH STRING ONLY — NOT ESTABLISHED METADATA**;
 - exact delivered thrust/Isp history: **UNRESOLVED**;
 - new player-visible station products: **NONE CLAIMED**.
