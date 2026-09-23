@@ -17,11 +17,15 @@ Which generic DPS/translational inputs can be tied to primary Apollo 11 evidence
 
 ## DPS handbook target narrowed
 
-The September 1969 LM-6-and-subsequent Volume-I table of contents/list of illustrations identifies **§2.3.5, Descent Propulsion Section Performance and Design Data**, beginning at **page 2.3-25**, with **Table 2.3-1** at that location.
+The September 1969 LM-6-and-subsequent Volume-I material identifies **§2.3.5, Descent Propulsion Section Performance and Design Data**, beginning at **page 2.3-25**, with **Table 2.3-1** at that location. The available primary LEP rendering is too OCR-corrupted around the 2.3 ranges to assign page 2.3-25's issue date without guessing. Therefore page 2.3-25 is **BLOCKED ON LEGIBLE PRIMARY PAGE-IMAGE / LEP RECOVERY**.
 
-A follow-on pass reached the same primary issue's **List of Effective Pages**. It confirms page-by-page revision control through Original, 15 March, 15 June, and 15 September 1969 states in the relevant handbook. The available indexed rendering is too OCR-corrupted around the 2.3 ranges to assign an issue date specifically to page 2.3-25 without guessing. The table body is likewise not exposed reliably.
+## Supplement 7 recovery boundary
 
-Therefore page 2.3-25 is **BLOCKED ON LEGIBLE PRIMARY PAGE-IMAGE / LEP RECOVERY**. A later NASA-hosted handbook remains locator evidence only; its later values cannot establish LM-5 configuration.
+A fresh bounded search of the current NASA/NTRS public catalog and Apollo document indexes did **not** recover a public record for Apollo 11 Supplement 7. Neighboring DPS final-flight evaluations for Apollo 9, 10, 12, 15, and 16 are cataloged, and the Virtual AGC Apollo 11 index exposes Supplement 5 but not Supplement 7.
+
+This absence is not proof of nonexistence: later NASA mission-report supplement tables already provide positive primary evidence that **Apollo 11 Mission Report Supplement 7, _Descent Propulsion System Final Flight Evaluation_, was published in September 1970**. The search is therefore narrowed from generic title discovery to **report-number/accession/citation recovery** from MSC/NASA bibliographic records, archival holdings, or contemporaneous reports that cite Supplement 7.
+
+The Apollo 16 DPS final-flight-evaluation catalog record also confirms that this report family can contain FTP thrust/Isp corrected to standard inlet conditions and comparison against engine acceptance-test values. That establishes why the missing Apollo 11 report is discriminating evidence; it does not authorize transfer of Apollo 16 values to LM-5.
 
 ## PDI mass
 
@@ -43,11 +47,11 @@ No D-022 closure is claimed for PDI mass, delivered thrust, FTP force calibratio
 
 ## Next
 
-1. Make **Apollo 11 DPS Supplement 7, _Descent Propulsion System Final Flight Evaluation_**, the active propulsion recovery target; prefer NTRS/NASA/MSC holdings and contemporaneous report indexes before secondary mirrors.
+1. Pursue **Apollo 11 DPS Supplement 7's report number/accession/citation trail**, rather than repeating generic public-catalog title searches.
 2. Search LM-5 engine acceptance/performance records for delivered thrust/Isp or an explicit FTP force mapping.
 3. Retain **LMA790-3-LM page 2.3-25 / Table 2.3-1** as a named blocked target until a legible September 1969 page image or clean LEP is recovered.
 4. Continue Mission-G PDI-mass recovery only from explicitly event-identified primary records.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** The handbook target and its revision-control context are documented, but page 2.3-25 is blocked on legible primary-page recovery. Exact LM-5 force calibration/delivered performance and PDI mass remain unresolved; Supplement 7 and TRW Volume II remain **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** The handbook target and its revision-control context are documented, but page 2.3-25 is blocked on legible primary-page recovery. Supplement 7 existence/publication is documented, but its report identifier/content is **BLOCKED ON REPORT-IDENTIFIER / ARCHIVAL RECOVERY**. Exact LM-5 force calibration/delivered performance and PDI mass remain unresolved; TRW Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
