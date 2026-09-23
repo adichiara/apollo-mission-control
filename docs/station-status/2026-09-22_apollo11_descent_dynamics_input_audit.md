@@ -8,13 +8,13 @@ Date: 2026-09-22
 
 ## CONTROL
 
-**Status: PARTIALLY DOCUMENTED; DPS page target blocked on legible primary-page recovery.** Apollo 11 Mission Report §9.8/fig. 9.8-1 document powered-descent timing and flight throttle/pressure histories. Appendix A.6/table A-I documents named event masses but no PDI mass.
+**Status: PARTIALLY DOCUMENTED; DPS delivered-performance evidence remains blocked.** Apollo 11 Mission Report §9.8/fig. 9.8-1 document powered-descent timing and flight throttle/pressure histories. Appendix A.6/table A-I documents named event masses but no PDI mass.
 
 The Apollo 11 Press Kit specifies **9,870 lbf** maximum-rated DPS thrust; NASA TN D-7143 records a **10,500-lbf maximum-rated design requirement**. The Mission Report confirms LM-5 throttle-up to FTP about 26 seconds after PDI. LMA790-3-LM page 2.2-215, **Change Date 15 June 1969**, directly documents the **92.5% THRUST** TTCA hard stop in the LM-5 handbook state.
 
-The exact handbook target remains **LMA790-3-LM §2.3.5, page 2.3-25, Table 2.3-1 — Descent Propulsion Section Performance and Design Data**. A follow-on recovery pass reached the September 1969 issue's primary **List of Effective Pages** and confirmed that the relevant handbook uses individual page revision states. The available indexed rendering is too OCR-corrupted around the 2.3 ranges to read page 2.3-25's own issue date defensibly, and it does not expose the table body reliably. The page is therefore **BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**, not configuration-qualified.
+The handbook target remains **LMA790-3-LM §2.3.5, page 2.3-25, Table 2.3-1** and is **BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**.
 
-A later NASA-hosted handbook preserves the same section/table/page structure but remains a locator cross-check only. Its values must not be back-projected onto Eagle.
+A bounded public-catalog pass for **Apollo 11 Mission Report Supplement 7, _Descent Propulsion System Final Flight Evaluation_** found neighboring-mission DPS evaluations in NASA/NTRS but no Apollo 11 Supplement 7 public record. This does not negate the later NASA supplement-table evidence for its September 1970 publication. It changes the recovery method: pursue a report number/accession/citation trail or archival holding rather than repeat generic title searches. No neighboring-mission performance value is transferable to LM-5.
 
 ## FLIGHT / CAPCOM
 
@@ -35,6 +35,7 @@ Keep PDI mass modelled until explicitly recovered. Preserve 9,870 lbf as Apollo 
 - exact LM-5 FTP force/calibration: **UNRESOLVED**;
 - exact LM-5 PDI/pre-PDI mass: **UNRESOLVED**;
 - 45-day BET NAT state listing: **BLOCKED ON NAMED SOURCE RECOVERY — VOLUME II**;
-- Apollo 11 DPS Supplement 7: **BLOCKED ON NAMED SOURCE RECOVERY; NEXT ACTIVE PROPULSION TARGET**;
+- Apollo 11 DPS Supplement 7 existence/publication: **DOCUMENTED — LATER NASA SUPPLEMENT TABLES**;
+- Apollo 11 DPS Supplement 7 report identifier/content: **BLOCKED ON REPORT-IDENTIFIER / ARCHIVAL RECOVERY; NEXT ACTIVE PROPULSION TARGET**;
 - exact delivered thrust/Isp history: **UNRESOLVED**;
 - new player-visible station products: **NONE CLAIMED**.
