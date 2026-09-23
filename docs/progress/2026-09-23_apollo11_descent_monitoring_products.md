@@ -24,11 +24,15 @@ The defensible chain is therefore: **guidance-software back-room support → GUI
 
 NASA/MSC's _Flight Mission Rules, Apollo 11 (AS-506/107/LM-5)_, dated 16 April 1969, rule 4-5 COMMUNICATIONS, directly lists `FD LOOP`, `AFD CONF LOOP`, `MOCR SYS 1 & 2`, `MOCR DYN`, `A/G 1 LOOP`, and `A/G 2 LOOP`. The same rule separately identifies the MCC/remote-site air-ground path as used for communication with the crew.
 
-This supersedes the need to rely on Apollo 10 rule 4-5 merely as an adjacent-mission baseline: the loop vocabulary and internal-MOCR versus crew-facing A/G separation are now **Apollo-11-specific primary evidence**. The rule still does not assign GUIDO/Bales or Garman's support room to a particular internal loop and does not establish keyset privileges or detailed alarm-call routing.
+## Primary-participant result — support-room keyset semantics
+
+The same Garman oral history directly describes Apollo staff-support-room communications panels: white buttons provided talk capability, amber buttons provided listen capability, multiple loops could be monitored simultaneously, and listening volume was independently controlled. Garman says support personnel could listen to air-ground while very few positions had air-ground talk authority. He also recalls the staff-support room listening to the flight-director loop and says a flight-director talk button was added only "later on" as the computer-support role evolved.
+
+This is enough to require **separate monitor and talk permissions** in the communications model. It is not precise enough to date the FD-talk-button change to a particular Apollo mission, so it does not prove an exact Apollo 11 keyset matrix. In particular, the repository must not invent direct AGC-support air-ground transmit authority or assume that `FD LOOP` carried the Bales/Garman alarm assessment.
 
 ## Boundary preserved
 
-MSK-1137 field semantics do **not** establish exact station request procedure, DRK mapping, routing, cadence/latency, or detailed internal decision rules. The Garman evidence establishes support relationship/assessment ownership but not exact loop names, console keying, or that Garman personally originated every later alarm recommendation. Apollo 11 rule 4-5 constrains the communications vocabulary but does not map stations to loops. Likewise, 70-FM-20 Figure 9 is not treated as an exact live MOCR display.
+MSK-1137 field semantics do **not** establish exact station request procedure, DRK mapping, routing, cadence/latency, or detailed internal decision rules. The Garman evidence establishes support relationship and general keyset semantics but not the exact Apollo 11 loop name or complete per-position privilege matrix. Likewise, 70-FM-20 Figure 9 is not treated as an exact live MOCR display.
 
 ## Archival target
 
@@ -36,12 +40,11 @@ PHO-TN401 remains the leading direct display/control recovery target at Johnson 
 
 ## Next discriminating target
 
-Recover PHO-TN401 or another Apollo-11-effective configuration source to map documented MSK-1137/comparison products to exact station requests/routing/DRK mapping/cadence. Separately seek an Apollo-11-effective station/keyset source for the exact back-room/GUIDO/FLIGHT channel mechanics; rule 4-5 now supplies mission-specific loop names but not their station assignments.
+Recover PHO-TN401 or another Apollo-11-effective configuration source to map documented MSK-1137/comparison products to exact station requests/routing/DRK mapping/cadence. Separately seek a Mission-G-effective station/keyset record for the exact GUIDO/support-room/FLIGHT channel and talk/listen privilege matrix.
 
 ## Sources
 
 - NASA/MSC, _Flight Mission Rules, Apollo 11 (AS-506/107/LM-5)_, 16 April 1969, rule 4-5, p. 4-3: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11MissionRules.pdf
-- NASA/MSC, _Apollo 10 Mission Rules_, final, 15 April 1969, rule 4-5, p. 4-3: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap10fj/pdf/a10-mission-rules-19690415.pdf
 - NASA JSC Oral History Project, John R. Garman interview, 27 March 2001: https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/GarmanJR/GarmanJR_3-27-01.pdf
 - NASA, "Apollo Era Hero John 'Jack' Garman Dies," 29 September 2016: https://www.nasa.gov/image-article/apollo-era-hero-john-jack-garman-dies/
 - NASA, _Apollo 11 Air-to-Ground Voice Transcription (GOSS NET 1)_, Tape 66/7 p. 312: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11transcript_tec.pdf
@@ -54,5 +57,6 @@ Recover PHO-TN401 or another Apollo-11-effective configuration source to map doc
 - **DOCUMENTED / SUFFICIENT:** guidance-software back-room support → GUIDO assessment relationship and CAPCOM-mediated crew disposition.
 - **DOCUMENTED:** Apollo 11 AGS−PGNCS and MSFN−PGNCS comparison-product family.
 - **DOCUMENTED / MISSION-SPECIFIC:** Apollo 11 MOCR loop vocabulary/internal-versus-A/G separation.
-- **UNRESOLVED:** exact Apollo 11 live station request/routing/DRK mapping/cadence, station-to-loop assignment, keyset privileges, and detailed internal channel mechanics.
+- **DOCUMENTED / PARTICIPANT:** support-room talk/listen distinction, multi-loop monitoring, and restricted A/G transmit authority.
+- **UNRESOLVED:** exact Apollo 11 live station request/routing/DRK mapping/cadence, station-to-loop assignment, full keyset privilege matrix, and detailed internal channel mechanics.
 - **BLOCKED ON DOCUMENT RECOVERY:** PHO-TN401 direct inspection.
