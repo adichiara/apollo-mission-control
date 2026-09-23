@@ -27,15 +27,22 @@ Primary Apollo 10 evidence supplies a recovery model. Apollo 10 Mission Report S
 
 Search not only for the September-1970 MSC supplement wrapper, but for an earlier **Apollo 11 / LM-5 Descent Propulsion System Final Flight Evaluation project technical report**, particularly TRW `11176-H...-R0-00` material under NAS9-8166. Apollo 10 `H314` and Apollo 12 `H585` establish a report family, **not an interpolation rule**.
 
-## New LM-5 FTP archival lead
+## LM-5 FTP archival leads
 
 The official Purdue University Libraries finding aid for the **Neil A. Armstrong papers (MSA 5)** identifies a contemporaneous Apollo 11 planning item titled **“Effect of fixed throttle point thrust on the time from loss of radial guidance control to DPS throttle-down,” dated 5 June 1969**. It appears in the Apollo Program working files, Mission Planning / A-11 Planning series alongside other Mission-G descent material.
 
-This is a stronger LM-5-specific calibration lead than continuing to infer from later handbooks: its title explicitly concerns **fixed throttle point thrust** and Apollo 11 planning before flight. The finding aid establishes the item's existence, title, date, collection, and archival location; **it does not expose the item's numerical contents**. No thrust value is therefore extracted or inferred. The item is now a named archival recovery target in MSA 5.
+A follow-on search of Purdue's official archival catalog identified two additional Apollo 11 planning items dated **8 July 1969** in the same Mission Planning subgroup:
+
+- **“Effects of DPS engine dispersions and LM weight on throttle-down time”** — MSA 5, Series 1, Sub-Series 5, Sub-Group 4, File 2, Item 20 (Box 54, Folder 5, Item 14).
+- **“Effects of known dispersions at PDI on throttle-down time”** — MSA 5, Series 1, Sub-Series 5, Sub-Group 4, File 2, Item 21 (Box 54, Folder 5, Item 15).
+
+These are especially useful companion targets because they explicitly connect throttle-down timing to **DPS engine dispersion, LM weight, and PDI dispersions** immediately before flight. The archive metadata establishes titles, dates, collection placement, and identifiers only. The underlying documents are not digitally exposed in the recovered catalog result, so **no numerical FTP force, LM weight, PDI mass, or dispersion is inferred from their titles**.
+
+The three Armstrong items should now be recovered as a set: the 5 June FTP-thrust study first, followed by the two 8 July throttle-down dispersion studies. Together they are a more discriminating LM-5 path than continued inference from later handbooks.
 
 ## PDI mass
 
-Exact Mission-G PDI mass remains unresolved; secondary/reconstructed event relabelings remain rejected.
+Exact Mission-G PDI mass remains unresolved; secondary/reconstructed event relabelings remain rejected. The 8 July “known dispersions at PDI” item is now also a named archival target for this question, but its title alone does not establish a nominal PDI mass.
 
 ## Model decisions
 
@@ -53,12 +60,13 @@ No D-022 closure is claimed for PDI mass, delivered thrust, FTP force calibratio
 
 ## Next
 
-1. Recover the **5 June 1969 Armstrong MSA 5 item, “Effect of fixed throttle point thrust on the time from loss of radial guidance control to DPS throttle-down,”** and inspect it for an explicit LM-5 FTP force/calibration and provenance.
-2. Continue pursuit of the underlying **Apollo 11 / LM-5 DPS Final Flight Evaluation contractor report** and crosswalk any recovered contractor number to the September 1970 Supplement 7 wrapper.
-3. Search LM-5 engine acceptance/performance records for delivered thrust/Isp.
-4. Retain **LMA790-3-LM page 2.3-25 / Table 2.3-1** as a named blocked target until a legible September 1969 page image or clean LEP is recovered.
-5. Continue Mission-G PDI-mass recovery only from explicitly event-identified primary records.
+1. Recover the **5 June 1969 Armstrong MSA 5 fixed-throttle-point-thrust item** and inspect it for explicit LM-5 FTP force/calibration and provenance.
+2. Recover the two **8 July 1969 Armstrong MSA 5 throttle-down dispersion items** (File 2, Items 20–21) and inspect them for explicit engine-dispersion, LM-weight, PDI-state, and throttle-down relationships.
+3. Continue pursuit of the underlying **Apollo 11 / LM-5 DPS Final Flight Evaluation contractor report** and crosswalk any recovered contractor number to the September 1970 Supplement 7 wrapper.
+4. Search LM-5 engine acceptance/performance records for delivered thrust/Isp.
+5. Retain **LMA790-3-LM page 2.3-25 / Table 2.3-1** as a named blocked target until a legible September 1969 page image or clean LEP is recovered.
+6. Continue Mission-G PDI-mass recovery only from explicitly event-identified primary records.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** A contemporaneous, Apollo-11-planning archival item explicitly about fixed-throttle-point thrust is now identified in Purdue's official MSA 5 finding aid, but its contents are **BLOCKED ON ARCHIVAL ITEM RECOVERY**. The finding aid is locator evidence, not force-calibration evidence. Page 2.3-25 remains blocked on legible primary-page recovery. Supplement 7 existence/title/date and the Apollo 10 contractor-report/MSC-wrapper packaging precedent are documented; Apollo 11's actual contractor/report identifiers and content remain blocked on bibliographic/archival recovery. Exact LM-5 force calibration/delivered performance and PDI mass remain unresolved; TRW Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** Three contemporaneous Apollo-11-planning archival items directly bearing on FTP/throttle-down sensitivity are now identified in Purdue's official MSA 5 finding aid/catalog, including exact archival identifiers for the two 8 July dispersion studies. Their contents are **BLOCKED ON ARCHIVAL ITEM RECOVERY**. Archive titles are locator evidence, not numerical force/mass/dispersion evidence. Page 2.3-25 remains blocked on legible primary-page recovery. Supplement 7 existence/title/date and the Apollo 10 contractor-report/MSC-wrapper packaging precedent are documented; Apollo 11's actual contractor/report identifiers and content remain blocked on bibliographic/archival recovery. Exact LM-5 force calibration/delivered performance and PDI mass remain unresolved; TRW Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
