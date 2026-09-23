@@ -16,7 +16,7 @@ The Apollo 11 Press Kit gives **9,870 lbf maximum rated thrust**; the Mission Re
 
 ### DPS performance page target recovered
 
-The September 1969 LM-6-and-subsequent Volume-I contents/illustration material identifies **§2.3.5**, beginning at **page 2.3-25**, and **Table 2.3-1, Descent Propulsion Section — Performance and Design Data**. The primary LEP rendering is too OCR-corrupted to assign page 2.3-25's issue date defensibly, so the page remains **BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**.
+The September 1969 LM-6-and-subsequent Volume-I contents identify **§2.3.5**, **page 2.3-25**, and **Table 2.3-1, Descent Propulsion Section — Performance and Design Data**. The primary LEP rendering is too OCR-corrupted to assign page 2.3-25's issue date defensibly, so the page remains **BLOCKED ON LEGIBLE PAGE-IMAGE / LEP RECOVERY**.
 
 ### Supplement 7 archival pass
 
@@ -24,30 +24,27 @@ Apollo 11 Mission Report Supplement 7, _Descent Propulsion System Final Flight E
 
 ### Apollo 11 FTP archival lead — bibliographic identity recovered
 
-Purdue MSA 5 identifies **“Effect of fixed throttle point thrust on the time from loss of radial guidance control to DPS throttle-down,” dated 5 June 1969**. A separate primary NASA/MSC mission-techniques document was then recovered whose reference list supplies the missing bibliographic identity: **John P. Mayer, NASA Manned Spacecraft Center / Mission Planning and Analysis Division, Memorandum 69-FMZ2-149, 5 June 1969** (OCR renders the branch code as `FMZ2`; retain that rendering until a clean title page is recovered).
-
-This is a substantive narrowing: the archival item is no longer only a title/date target; it now has an author, originating organization, and memo number suitable for direct archival/catalog searches. The citing mission-techniques document does **not** reproduce the memo's numerical FTP-thrust result, so no FTP force is inferred.
+Purdue MSA 5 identifies **“Effect of fixed throttle point thrust on the time from loss of radial guidance control to DPS throttle-down,” dated 5 June 1969**. A separate primary NASA/MSC mission-techniques document supplies the bibliographic identity: **John P. Mayer, NASA Manned Spacecraft Center / Mission Planning and Analysis Division, Memorandum 69-FMZ2-149, 5 June 1969**. The citing document does **not** reproduce the memo's numerical FTP-thrust result, so no FTP force is inferred.
 
 ### Companion throttle-down dispersion records located
 
-Purdue's official Archives and Special Collections catalog identifies two additional Apollo 11 Mission Planning records dated **8 July 1969**:
-
-- **“Effects of DPS engine dispersions and LM weight on throttle-down time”** — MSA 5, Series 1, Sub-Series 5, Sub-Group 4, File 2, Item 20; Box 54, Folder 5, Item 14.
-- **“Effects of known dispersions at PDI on throttle-down time”** — MSA 5, Series 1, Sub-Series 5, Sub-Group 4, File 2, Item 21; Box 54, Folder 5, Item 15.
-
-Their titles show that Apollo 11 planning explicitly analyzed throttle-down timing sensitivity to DPS engine dispersion, LM weight, and PDI dispersions immediately before flight. Their underlying contents remain unrecovered, so no engine value, LM weight, PDI mass, or dispersion is inferred.
+Purdue's official catalog identifies two Apollo 11 Mission Planning records dated **8 July 1969**: **“Effects of DPS engine dispersions and LM weight on throttle-down time”** and **“Effects of known dispersions at PDI on throttle-down time.”** Their titles establish analyzed variables only; their contents remain unrecovered.
 
 ### Primary NARA/MSC records-transmittal lead recovered
 
-A scanned **NASA-MSC Standard Form 135-A Records Transmittal and Receipt**, dated **26 October 1971**, was recovered from the NARA Southwest overflow collection. Page 17 lists **MSC-69-FM-156** and the Apollo 11 spacecraft-dispersion-analysis sequence, including **Vol. IV — Descent and Ascent Dispersion Analysis, Part 1 — Lunar Descent**, under box notation **3751-33** and disposal authority **WRCS 25, Item 1a**.
+A scanned **NASA-MSC Standard Form 135-A Records Transmittal and Receipt**, dated **26 October 1971**, was recovered from the NARA Southwest overflow collection. Page 17 lists **MSC-69-FM-156** and the Apollo 11 spacecraft-dispersion-analysis sequence under **3751-33 / WRCS 25, Item 1a**. This is archival locator evidence, not a dynamics result, and it does not justify assigning 69-FMZ2-149 to that box.
 
-This is archival locator evidence, not a dynamics result. It establishes a concrete MSC records-series trail for neighboring Apollo 11 MPAD FM products but does **not** list 69-FMZ2-149 in the scanned index and does not justify assigning memo 149 to box 3751-33.
+The recovery also preserves a source-state distinction: the later H-2 lunar-descent document cites **69-FM-156, “G Mission Lunar Descent Dispersion Analysis,” 10 June 1969**; Purdue catalogs a **2 July 1969 addendum** under the same internal-note number. They remain separate source states pending recovery.
 
-The recovery also exposes a source-state distinction that must not be silently normalized. The later H-2 lunar-descent document cites **69-FM-156, “G Mission Lunar Descent Dispersion Analysis,” 10 June 1969**; Purdue separately catalogs **Internal Note 69-FM-156, Apollo 11 (Mission G) Spacecraft Dispersion Analysis, Vol. IV, Part 1 Lunar Descent (Addendum), 2 July 1969**. The NARA transmittal confirms the Apollo 11 Vol. IV/Part 1 record family, but its OCR/date alignment cannot prove whether the June citation and July addendum share an unchanged base document. They remain separate source states pending title-page/content recovery.
+### LM-5 operational calibration volume identified
+
+A further read of the same primary NASA-MSC transmittal produced a more direct CONTROL lead. The Apollo 11 launch-data listing on page 15 explicitly records **Operational Calibration Curves, Vol. II — Cal. Curves for LM-5**, dated **12 June 1969**. The neighboring entries identify Volume I for CSM-107 and Volume III for Saturn launch vehicle SA-506, making the LM-5 vehicle scope explicit.
+
+This is a material recovery improvement because the document is both **mission-vehicle-specific and preflight-effective**, and operational calibration curves are the correct document class to inspect for mappings from indications/measurements to engineering units. The index does not expose any curve names or values, however. Therefore no claim is made that Volume II contains a DPS thrust, throttle, chamber-pressure, or FTP-force calibration. The actual volume must be recovered and opened before any evidence label is upgraded.
 
 ## Boundary preserved
 
-No later-LM force calibration was back-projected onto Eagle. No preflight/design thrust was promoted to delivered thrust. No pattern-derived Apollo 11 report number was promoted to sourced metadata. Purdue archive metadata is treated strictly as locator/provenance evidence until underlying items are recovered. The 69-FMZ2-149 citation is bibliographic evidence only; the NARA transmittal is records-series locator evidence only. PDI mass remains unresolved.
+No later-LM force calibration was back-projected onto Eagle. No preflight/design thrust was promoted to delivered thrust. No pattern-derived Apollo 11 report number was promoted to sourced metadata. Archive metadata is treated strictly as locator/provenance evidence until underlying items are recovered. PDI mass remains unresolved.
 
 ## Repository updates
 
@@ -58,8 +55,8 @@ No later-LM force calibration was back-projected onto Eagle. No preflight/design
 
 ## Next
 
-Continue direct recovery of **Mayer memorandum 69-FMZ2-149**, now using the NASA-MSC/NARA MPAD records-series trail as an additional archival locator without assuming box membership. Recover the **69-FM-156 base analysis and 2 July addendum** to resolve their relationship and inspect any explicit LM-5 engine/weight dispersion assumptions. Then recover the two **8 July 1969 throttle-down dispersion items (File 2, Items 20–21)**. Continue the underlying Apollo 11 / LM-5 DPS Final Flight Evaluation contractor-report search in parallel, followed by LM-5 engine acceptance/performance records. Retain page 2.3-25 and BET Volume II as named blocked targets.
+Prioritize direct recovery of **Operational Calibration Curves, Vol. II — Calibration Curves for LM-5 (12 Jun 1969)** and inspect its actual channel/curve contents for any DPS/control/pressure/thrust mapping. Continue direct recovery of **Mayer memorandum 69-FMZ2-149**, the **69-FM-156 base analysis and 2 July addendum**, and the two **8 July 1969 throttle-down dispersion items**. Continue the underlying Apollo 11 / LM-5 DPS Final Flight Evaluation contractor-report search and LM-5 engine acceptance/performance records in parallel. Retain page 2.3-25 and BET Volume II as named blocked targets.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** The 5 June FTP study has a primary-source bibliographic identity — John P. Mayer, MSC/MPAD, memo **69-FMZ2-149** — and a primary NASA-MSC records-transmittal now gives a concrete archival trail for neighboring Apollo 11 MPAD FM material. Its numerical/content evidence remains **BLOCKED ON DOCUMENT RECOVERY**. Purdue metadata establishes the two companion 8 July studies, whose contents remain blocked on archival item recovery. The 69-FM-156 June-base/July-addendum relationship remains unresolved. Supplement 7 identifiers/content remain blocked on bibliographic/archival recovery. Page 2.3-25 remains blocked on legible primary-page recovery. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. TRW BET Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** Primary NASA-MSC records metadata now establishes an **LM-5-specific Operational Calibration Curves Volume II dated 12 June 1969**; its contents are **BLOCKED ON DOCUMENT RECOVERY**, so no DPS calibration value is claimed. Mayer memo **69-FMZ2-149** remains identified but content-blocked. The companion July studies and 69-FM-156 source states remain archival recovery targets. Supplement 7 identifiers/content and page 2.3-25 remain blocked. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. TRW BET Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
