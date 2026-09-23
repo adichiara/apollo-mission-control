@@ -12,8 +12,10 @@ Parent: `resources/APOLLO11_DESCENT_CONTINUOUS_TRAJECTORY_SOURCE_CATALOG_ADDENDU
 | **LMA790-3-LM 5 and Subsequent, Volume II — Operational Procedures** | Public primary scan explicitly identifies **LM 5 and Subsequent**. | **PRIMARY LM-5-CONFIGURATION OPERATIONAL-PROCEDURE EVIDENCE.** No recovered FTP force calibration. |
 | NASA TN D-7143, *Apollo Experience Report: Descent Propulsion System* | **10,500-lbf maximum-rated thrust** and design Isp requirement. | **PROGRAM/DESIGN ENVELOPE.** |
 | **Apollo 11 Mission Report, MSC-00171** | Named event masses; FTP about 26 s after ignition; throttle/chamber/interface-pressure histories; 756.3-s powered descent. | **PRIMARY LM-5 AS-FLOWN/POSTFLIGHT EVIDENCE.** No exact FTP force, flight-effective Isp, or PDI mass. |
-| **Apollo 11 Mission Report Supplement 7: Descent Propulsion System Final Flight Evaluation** | Later NASA supplement tables identify report and September 1970 publication. Current public NASA/NTRS title/index pass did not recover its record; Virtual AGC Apollo 11 index exposes Supplement 5 but not Supplement 7. | **EXISTENCE/PUBLICATION DOCUMENTED; CONTENT BLOCKED ON REPORT-IDENTIFIER / ARCHIVAL RECOVERY.** Public-catalog absence is negative evidence only, not evidence of nonexistence. |
-| **Apollo 16 LM-11 Descent Propulsion System Final Flight Evaluation**, NASA CR-128826 / TRW-20029-H156-R0-00 | NTRS abstract reports FTP thrust/Isp corrected to standard inlet conditions and comparison with engine acceptance-test values. | **REPORT-FAMILY STRUCTURE ONLY.** Demonstrates why the missing Apollo 11 DPS evaluation is discriminating evidence; Apollo 16 values are not LM-5 evidence. |
+| **Apollo 11 Mission Report Supplement 7: Descent Propulsion System Final Flight Evaluation** | Later NASA supplement tables identify report and **September 1970** publication. Current public NASA/NTRS title/index pass did not recover its record. | **EXISTENCE/TITLE/DATE DOCUMENTED; CONTENT/IDENTIFIERS BLOCKED ON BIBLIOGRAPHIC / ARCHIVAL RECOVERY.** |
+| **NTRS 19720018196 — Apollo 11 Mission Report Supplement 5** | Sibling Apollo 11 supplement cataloged with `SUPPL-5`, `NASA-TM-X-68342`, parent `MSC-00171`, and `MSC-PA-R-69-2`. | **IDENTIFIER-TOPOLOGY EVIDENCE ONLY.** Demonstrates that a simple constructed `MSC-00171-SUPPL-n` identifier cannot be assumed for Supplement 7. |
+| **NTRS 19730078844 — Apollo 12 DPS Supplement 5** | DPS report carries `MSC-01855-SUPPL-5`, `TRW-11176-H585-R0-00-SUPPL-5`, `NASA-TM-X-68933`, accession `73N15812`, contract `NAS9-8166`. | **REPORT-FAMILY IDENTIFIER EVIDENCE ONLY.** Confirms parallel MSC/TRW/TM/accession identifiers exist; none is transferable to Apollo 11. |
+| **Apollo 16 LM-11 Descent Propulsion System Final Flight Evaluation**, NASA CR-128826 / TRW-20029-H156-R0-00 | NTRS abstract reports FTP thrust/Isp corrected to standard inlet conditions and comparison with engine acceptance-test values. | **REPORT-FAMILY STRUCTURE ONLY.** Apollo 16 values are not LM-5 evidence. |
 | TRW Note 70-FMT-819 / NASA CR-108349, Volume I | DOI→touchdown reconstruction methodology; names Volume-II 45-day BET listing. | **RECONSTRUCTED** provenance only. |
 | TRW Note 70-FMT-819, Volume II | Named NAT-format BET listing; not generally distributed. | **BLOCKED ON NAMED SOURCE RECOVERY.** |
 
@@ -25,11 +27,12 @@ Parent: `resources/APOLLO11_DESCENT_CONTINUOUS_TRAJECTORY_SOURCE_CATALOG_ADDENDU
 - https://www.ibiblio.org/apollo/Documents/Apollo%20Operations%20Handbook%20LM%205%20and%20Subsequent%20Vol%20II.pdf
 - https://ntrs.nasa.gov/citations/19730011150
 - https://www.nasa.gov/wp-content/uploads/static/apollo50th/pdf/A11_MissionReport.pdf
-- https://ntrs.nasa.gov/citations/19700014995
+- https://ntrs.nasa.gov/citations/19720018196
+- https://ntrs.nasa.gov/citations/19730078844
 - https://ntrs.nasa.gov/citations/19720018205
 - https://ntrs.nasa.gov/citations/19730011138
 - https://www.ibiblio.org/apollo/links.html
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** Page 2.3-25 remains **BLOCKED ON LEGIBLE PRIMARY PAGE-IMAGE / LEP RECOVERY**. Supplement 7 existence/publication is documented, but its report identifier and contents are **BLOCKED ON REPORT-IDENTIFIER / ARCHIVAL RECOVERY** after a bounded public-catalog pass. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved; BET Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** Page 2.3-25 remains **BLOCKED ON LEGIBLE PRIMARY PAGE-IMAGE / LEP RECOVERY**. Supplement 7 existence/title/date are documented, but its actual report identifiers and contents are **BLOCKED ON BIBLIOGRAPHIC / ARCHIVAL RECOVERY**. `MSC-00171-SUPPL-7` is retained only as a search string, not sourced metadata. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved; BET Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
