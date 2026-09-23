@@ -22,15 +22,24 @@ The September 1969 LM-6-and-subsequent Volume-I contents/illustration material i
 
 Apollo 11 Mission Report Supplement 7, _Descent Propulsion System Final Flight Evaluation_, is documented by later NASA supplement tables as published in **September 1970**, but its public catalog record/content remains unrecovered. Apollo 10 primary evidence establishes that its corresponding MSC Supplement 7 wraps earlier TRW project report **11176-H314-R0-00**, dated 8 August 1969 under NAS9-8166. This supports searching for the underlying LM-5 contractor report without interpolating an Apollo 11 H-series number.
 
-### New Apollo 11 FTP archival lead
+### Apollo 11 FTP archival lead
 
 A primary-archive locator pass found a highly discriminating LM-5 lead in the **official Purdue University Libraries finding aid for the Neil A. Armstrong papers, MSA 5**. In Apollo Program working files / Mission Planning / A-11 Planning, the inventory lists an item titled **“Effect of fixed throttle point thrust on the time from loss of radial guidance control to DPS throttle-down,” dated 5 June 1969**.
 
-The title is directly responsive to the unresolved FTP-force question and is contemporaneous with Apollo 11 planning. However, only the finding aid has been recovered, not the underlying document. Therefore this run records **no numerical FTP force** and makes no inference from the title. The item is promoted to the highest-value named archival target for exact LM-5 FTP calibration.
+The title is directly responsive to the unresolved FTP-force question and is contemporaneous with Apollo 11 planning. However, only the finding aid has been recovered, not the underlying document. Therefore no numerical FTP force is recorded or inferred.
+
+### Companion throttle-down dispersion records located
+
+A follow-on pass through Purdue's official Archives and Special Collections catalog found two additional Apollo 11 Mission Planning records dated **8 July 1969**:
+
+- **“Effects of DPS engine dispersions and LM weight on throttle-down time”** — MSA 5, Series 1, Sub-Series 5, Sub-Group 4, File 2, Item 20; Box 54, Folder 5, Item 14.
+- **“Effects of known dispersions at PDI on throttle-down time”** — MSA 5, Series 1, Sub-Series 5, Sub-Group 4, File 2, Item 21; Box 54, Folder 5, Item 15.
+
+This is meaningful narrowing rather than numerical closure. The records' titles show that the Apollo 11 planning team explicitly analyzed throttle-down timing sensitivity to DPS engine dispersion, LM weight, and PDI dispersions immediately before flight. Their underlying contents were not exposed by the catalog, so no engine value, LM weight, PDI mass, or dispersion was inferred. These two items are now paired recovery targets with the 5 June FTP-thrust study.
 
 ## Boundary preserved
 
-No later-LM force calibration was back-projected onto Eagle. No preflight/design thrust was promoted to delivered thrust. No pattern-derived Apollo 11 report number was promoted to sourced metadata. The Armstrong finding-aid entry is treated strictly as locator/provenance evidence until the item itself is recovered. PDI mass remains unresolved.
+No later-LM force calibration was back-projected onto Eagle. No preflight/design thrust was promoted to delivered thrust. No pattern-derived Apollo 11 report number was promoted to sourced metadata. Purdue archive metadata is treated strictly as locator/provenance evidence until the underlying items are recovered. PDI mass remains unresolved.
 
 ## Repository updates
 
@@ -41,8 +50,8 @@ No later-LM force calibration was back-projected onto Eagle. No preflight/design
 
 ## Next
 
-Recover the **5 June 1969 MSA 5 fixed-throttle-point-thrust item** from Purdue Archives and inspect it for explicit LM-5 FTP force/calibration. Continue the underlying Apollo 11 / LM-5 DPS Final Flight Evaluation contractor-report search in parallel, followed by LM-5 engine acceptance/performance records. Retain page 2.3-25 and BET Volume II as named blocked targets.
+Recover the **5 June 1969 MSA 5 fixed-throttle-point-thrust item** and the two **8 July 1969 throttle-down dispersion items (File 2, Items 20–21)** from Purdue Archives. Inspect them for explicit LM-5 FTP force/calibration, engine-dispersion assumptions, LM weight/PDI state, and throttle-down sensitivity. Continue the underlying Apollo 11 / LM-5 DPS Final Flight Evaluation contractor-report search in parallel, followed by LM-5 engine acceptance/performance records. Retain page 2.3-25 and BET Volume II as named blocked targets.
 
 ## Evidence status
 
-**PARTIALLY DOCUMENTED.** Purdue's official finding aid now establishes a contemporaneous Apollo 11 planning document explicitly concerning fixed-throttle-point thrust, but its numerical/content evidence is **BLOCKED ON ARCHIVAL ITEM RECOVERY**. Supplement 7 identifiers/content remain blocked on bibliographic/archival recovery. Page 2.3-25 remains blocked on legible primary-page recovery. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. TRW BET Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
+**PARTIALLY DOCUMENTED.** Purdue's official archival metadata now establishes three contemporaneous Apollo 11 planning documents directly relevant to FTP/throttle-down calibration and sensitivity, but their numerical/content evidence is **BLOCKED ON ARCHIVAL ITEM RECOVERY**. Supplement 7 identifiers/content remain blocked on bibliographic/archival recovery. Page 2.3-25 remains blocked on legible primary-page recovery. Exact LM-5 FTP force calibration, delivered thrust/Isp, and PDI mass remain unresolved. TRW BET Volume II remains **BLOCKED ON NAMED SOURCE RECOVERY**.
