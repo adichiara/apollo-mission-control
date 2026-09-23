@@ -7,29 +7,25 @@ Date: 2026-09-23
 | Source | Direct evidence | Use / restriction |
 | --- | --- | --- |
 | NASA/MSC, _Flight Mission Rules, Apollo 11 (AS-506/107/LM-5)_, 16 Apr 1969, rule 4-5 p. 4-3 | Mission-G MOCR communications list: `FD LOOP`, `AFD CONF LOOP`, `MOCR SYS 1 & 2`, `MOCR DYN`, `A/G 1 LOOP`, `A/G 2 LOOP`; separately identifies remote-site A/G path used for crew communication | Primary mission-specific authority for loop vocabulary and internal-MOCR/A-G separation. **Not** authority for GUIDO/support-room station-to-loop assignment, keyset mapping, or alarm-call routing. |
-| NASA/MSC, _Apollo 10 Mission Rules_, final, 15 Apr 1969, rule 4-5 p. 4-3 | Same immediately preceding MOCR communications inventory | Corroborating adjacent-mission baseline only; superseded by Apollo 11 mission rules for Mission-G applicability. |
-| NASA JSC Oral History Project, John R. Garman interview, 27 Mar 2001 | Firsthand participant account distinguishing back room/front room; Garman describes himself and colleagues in the back room as helping Steve Bales and notes front room/back-room loop separation | Primary-participant authority for support relationship and room boundary. Does not establish exact loop/channel name, console keying, or every per-alarm call. |
-| NASA, _Apollo Era Hero John “Jack” Garman Dies_, 29 Sep 2016 | Identifies Bales as Guidance Officer; states Bales called Garman, working in the back room supporting him, during the 1202 assessment | NASA agency cross-check for role/assessment chain. Later retrospective, so subordinate to participant/transcript evidence where they overlap. |
-| NASA, _Apollo 11 Air-to-Ground Voice Transcription (GOSS NET 1)_, Tape 66/7 p. 312 | First 1202 sequence: Eagle reports alarm/code, CDR asks Houston for a reading, `CC`/CAPCOM returns ground GO disposition | Primary authority for **crew-interface communication path**. Does not by itself identify internal assessment ownership. |
-| AC Electronics, _Apollo 11 Manual_, `ASPO 45 CRT DISPLAYS`, `MSK-1137` | Apollo-11-specific ground-display semantics including `TIG`, `TGO`, significant-event timing, descent-only time-to-end-of-phase, warning/caution status, alarm codes, restart count, computer program, DSKY context | Primary mission-specific authority for field semantics. **Not** authority for exact station ownership, request timing, DRK mapping, routing, or cadence. |
-| NASA/MSC MPAD, _The Apollo 11 Adventure_, MSC Internal Note 70-FM-20, MSC-01562, 5 Feb 1970 | Apollo 11 descent narrative; powered-descent monitoring flowchart; Figure 9 with `AGS−PGNCS` and `MSFN−PGNCS` comparison traces/event markers | Primary NASA/MSC post-mission authority for monitored comparison-product family/event context. **Not** authority for exact live CRT/MSK layout/routing/request workflow/cadence. |
-| LOC/NPS, HAER No. TX-109-C, _Johnson Space Center, Apollo Mission Control_ | Footnote 37 cites PHO-TN401 p. 5-5; bibliography gives JSC History Collection, UHCL, Apollo Program, Mission Documents: Apollo 11, Box 078-65/66 | Secondary federal historic-documentation authority used only as archival locator/bibliographic cross-check. |
-| Costis, B.; Ortolani, W.; Moreland, W., _NASA MCC Display/Control System Usage and Effectiveness, Apollo 11_, PHO-TN401, 24 Dec 1969 | **Not yet inspected** | Primary Philco-Ford/NASA contractor recovery target. Do not infer contents from title or HAER citation. |
+| NASA JSC Oral History Project, John R. Garman interview, 27 Mar 2001 | Firsthand participant account of back-room support for Bales; staff-support keysets used white talk and amber listen buttons; multiple loops could be monitored; support personnel listened to A/G while A/G transmit authority was restricted; Garman recalls FD-loop talk capability being added to the support position only later | Primary-participant authority for support relationship and general keyset semantics. The "later on" recollection is date-imprecise: **not** authority for the exact Apollo 11 FD-loop privilege matrix or the name of the Bales/Garman alarm loop. |
+| NASA, _Apollo Era Hero John “Jack” Garman Dies_, 29 Sep 2016 | Identifies Bales as Guidance Officer; states Bales called Garman, working in the back room supporting him, during the 1202 assessment | NASA agency cross-check for role/assessment chain. Later retrospective. |
+| NASA, _Apollo 11 Air-to-Ground Voice Transcription (GOSS NET 1)_, Tape 66/7 p. 312 | First 1202 sequence: Eagle reports alarm/code, CDR asks Houston for a reading, `CC`/CAPCOM returns ground GO disposition | Primary authority for crew-interface communication path. |
+| AC Electronics, _Apollo 11 Manual_, `ASPO 45 CRT DISPLAYS`, `MSK-1137` | Apollo-11-specific ground-display semantics including descent timing, warning/caution, alarm codes, restart count, computer program, DSKY context | Primary mission-specific authority for field semantics; not exact station ownership/routing/cadence. |
+| NASA/MSC MPAD, _The Apollo 11 Adventure_, MSC Internal Note 70-FM-20, MSC-01562, 5 Feb 1970 | Apollo 11 descent narrative; `AGS−PGNCS` and `MSFN−PGNCS` comparison traces/event markers | Primary NASA/MSC post-mission authority for monitored comparison-product family/event context; not exact live CRT layout. |
+| LOC/NPS, HAER No. TX-109-C, _Johnson Space Center, Apollo Mission Control_ | Bibliographic/archival locator for PHO-TN401, Box 078-65/66 | Secondary federal historic-documentation authority used only as archival locator/cross-check. |
+| Costis, B.; Ortolani, W.; Moreland, _NASA MCC Display/Control System Usage and Effectiveness, Apollo 11_, PHO-TN401, 24 Dec 1969 | **Not yet inspected** | Primary Philco-Ford/NASA contractor recovery target. Do not infer contents from title or HAER citation. |
 
 ## Catalog consequence
 
-The Apollo 11 controller-product boundary now has direct mission-specific evidence for independent-source descent comparisons, ground-visible program-alarm/descent status, the alarm decision chain at useful role resolution, and the Mission-G communications-loop inventory. The defensible alarm chain remains **guidance-software back-room support → GUIDO/Bales → FLIGHT/ground decision chain → CAPCOM → crew**.
+The communications model now has direct participant evidence that **monitor and talk were distinct privileges**. The runtime may represent multi-loop monitoring and may keep AGC support listening to relevant A/G/internal traffic, but it must not grant back-room support direct A/G transmit authority or infer an Apollo 11 FD-loop talk privilege from loop availability alone.
 
-Apollo 11 rule 4-5 upgrades the communications baseline from adjacent-mission evidence to Mission-G-specific primary evidence. It confirms authentic MOCR loop names and the architectural distinction between internal Mission Control communications and crew-facing A/G communications, but it does **not** close the GUIDO/support-room loop assignment.
+The defensible alarm chain remains **guidance-software back-room support → GUIDO/Bales → FLIGHT/ground decision chain → CAPCOM → crew**. The exact Bales/Garman loop remains unresolved. Garman's recollection that an FD-loop talk button arrived "later on" constrains inference but is not dated precisely enough to establish the 20 July 1969 station keyset.
 
-The runtime may model the support/ownership boundary and use the sourced Mission-G loop vocabulary, but must not invent station-to-loop assignments, keying, DRK behavior, request timing, routing, cadence, or a detailed per-alarm internal sequence.
-
-PHO-TN401 remains blocked on document recovery. Retrieve **Box 078-65/66** before freezing exact Mission-G display/routing configuration; recover a station/keyset source for exact internal voice-loop mechanics if PHO-TN401 does not provide them.
+PHO-TN401 remains blocked on document recovery. Retrieve **Box 078-65/66** before freezing exact Mission-G display/routing configuration; separately recover a Mission-G-effective station/keyset record for exact internal voice-loop mechanics.
 
 ## URLs
 
 - NASA/MSC Apollo 11 Mission Rules: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11MissionRules.pdf
-- NASA/MSC Apollo 10 Mission Rules: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap10fj/pdf/a10-mission-rules-19690415.pdf
 - NASA JSC Garman oral history: https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/GarmanJR/GarmanJR_3-27-01.pdf
 - NASA Garman history article: https://www.nasa.gov/image-article/apollo-era-hero-john-jack-garman-dies/
 - NASA Apollo 11 air-to-ground transcript: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11transcript_tec.pdf
@@ -41,7 +37,8 @@ PHO-TN401 remains blocked on document recovery. Retrieve **Box 078-65/66** befor
 
 - **DOCUMENTED / SUFFICIENT:** MSK-1137 alarm/restart/program/DSKY/descent field semantics.
 - **DOCUMENTED / SUFFICIENT:** guidance-software back-room support → GUIDO assessment relationship; crew-facing disposition through CAPCOM.
-- **DOCUMENTED:** mission-specific AGS−PGNCS and MSFN−PGNCS comparison products/event context.
 - **DOCUMENTED / MISSION-SPECIFIC:** Apollo 11 MOCR loop vocabulary/internal-versus-A/G separation.
-- **UNRESOLVED:** exact Apollo 11 live station request/routing/DRK mapping/cadence, station-to-loop assignment, keyset privileges, and detailed internal channel mechanics.
+- **DOCUMENTED / PARTICIPANT:** support-room talk/listen distinction, multi-loop monitoring, restricted A/G transmit authority.
+- **DATE-IMPRECISE:** later addition of FD-loop talk capability to support position.
+- **UNRESOLVED:** exact Apollo 11 station-to-loop assignment, complete keyset privileges, station request/routing/DRK mapping/cadence, and detailed internal channel mechanics.
 - **BLOCKED ON DOCUMENT RECOVERY:** PHO-TN401 direct inspection.
