@@ -16,7 +16,12 @@ The handbook target remains **LMA790-3-LM §2.3.5, page 2.3-25, Table 2.3-1** an
 
 Apollo 11 Mission Report Supplement 7, *Descent Propulsion System Final Flight Evaluation*, is primary-documented by later NASA supplement tables as published in **September 1970**, but its public catalog record/content remains unrecovered. Apollo 10 primary evidence shows its corresponding supplement wraps TRW **11176-H314-R0-00**, so the underlying LM-5 contractor report remains an active target; no Apollo 11 number is interpolated.
 
-A new, mission-specific archival lead now takes priority for the force-calibration question. The **official Purdue University Libraries finding aid for Neil A. Armstrong papers (MSA 5)** lists, in Apollo 11 mission-planning working files, **“Effect of fixed throttle point thrust on the time from loss of radial guidance control to DPS throttle-down,” 5 June 1969**. This is direct archival locator evidence for a contemporaneous Apollo 11 document explicitly concerned with FTP thrust. The underlying item has not been recovered, so its title is **not** used to infer a force value.
+The highest-priority force-calibration lead remains the **5 June 1969** Armstrong MSA 5 planning item, **“Effect of fixed throttle point thrust on the time from loss of radial guidance control to DPS throttle-down.”** A follow-on Purdue catalog pass adds two closely related **8 July 1969** records in the same Mission Planning subgroup:
+
+- **“Effects of DPS engine dispersions and LM weight on throttle-down time”** — File 2, Item 20 (Box 54, Folder 5, Item 14).
+- **“Effects of known dispersions at PDI on throttle-down time”** — File 2, Item 21 (Box 54, Folder 5, Item 15).
+
+These archive records establish that Apollo 11 planning explicitly treated engine dispersion, LM weight, and PDI dispersions as throttle-down-time variables. They do **not** expose the underlying numerical inputs. No force, weight, mass, or dispersion value is inferred from catalog titles. Recovering all three items is now the active CONTROL archival package.
 
 ## FLIGHT / CAPCOM
 
@@ -24,7 +29,7 @@ A new, mission-specific archival lead now takes priority for the force-calibrati
 
 ## Implementation boundary
 
-Keep PDI mass modelled until explicitly recovered. Preserve 9,870 lbf as Apollo 11 preflight specification, FTP as an Apollo 11 flight control state, and 92.5 percent as an LM-5-effective documented control hard stop. Do **not** numerically equate 92.5 percent with 9,870 lbf without LM-5-specific force-calibration evidence.
+Keep PDI mass modelled until explicitly recovered. Preserve 9,870 lbf as Apollo 11 preflight specification, FTP as an Apollo 11 flight control state, and 92.5 percent as an LM-5-effective documented control hard stop. Do **not** numerically equate 92.5 percent with 9,870 lbf without LM-5-specific force-calibration evidence. Do not derive a nominal PDI mass from the existence of a PDI-dispersion study.
 
 ## Evidence status
 
@@ -33,7 +38,9 @@ Keep PDI mass modelled until explicitly recovered. Preserve 9,870 lbf as Apollo 
 - LM-5 FTP use/timing: **DOCUMENTED — PRIMARY MISSION REPORT**;
 - 92.5-percent throttle hard stop: **DOCUMENTED — LM-5-EFFECTIVE HANDBOOK PAGE, 15 JUNE 1969**;
 - 5 June 1969 Apollo 11 fixed-throttle-point-thrust planning item existence/title/date: **DOCUMENTED — OFFICIAL PURDUE MSA 5 FINDING AID**;
-- contents/numerical evidence of that MSA 5 item: **BLOCKED ON ARCHIVAL ITEM RECOVERY; NEXT ACTIVE FTP TARGET**;
+- 8 July 1969 DPS-engine-dispersion/LM-weight throttle-down study existence/title/date/identifier: **DOCUMENTED — OFFICIAL PURDUE ARCHIVAL CATALOG**;
+- 8 July 1969 PDI-dispersion throttle-down study existence/title/date/identifier: **DOCUMENTED — OFFICIAL PURDUE ARCHIVAL CATALOG**;
+- contents/numerical evidence of those three MSA 5 items: **BLOCKED ON ARCHIVAL ITEM RECOVERY; NEXT ACTIVE CONTROL TARGETS**;
 - DPS performance table location: **DOCUMENTED — §2.3.5 / PAGE 2.3-25 / TABLE 2.3-1**;
 - page 2.3-25 LM-5 effective date/table values: **BLOCKED ON LEGIBLE PRIMARY PAGE-IMAGE / LEP RECOVERY**;
 - exact LM-5 FTP force/calibration: **UNRESOLVED**;
