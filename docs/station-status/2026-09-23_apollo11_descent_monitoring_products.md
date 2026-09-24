@@ -15,15 +15,17 @@ NASA History Division reproduces an original Apollo 11 Historical Recorder #1 tr
 
 Research note 511 uses NASA TN D-7685 to establish the Apollo-generic display interaction: a console could request a display format and have the system allocate the next available computer-driven TV channel and connect it automatically, or attach to an already active channel. The same NASA report treats display-system configuration and intercommunication-panel configuration separately.
 
+Research note 512 adds near-contemporary primary console semantics from the Apollo 12 SA-507 Flight Manual. The DRK is a fast pre-labeled equivalent of MSK display-request mode, while the FDK can flag a preprogrammed analog out-of-tolerance condition and return the four-digit identifying format code when acknowledged. These are generic MCC interaction semantics, not Mission-G GUIDO configuration evidence.
+
 ## Station consequence
 
 The supported alarm-assessment chain remains **guidance-software back-room support → GUIDO/Bales → FLIGHT/ground decision chain → CAPCOM → crew**.
 
-The simulator may now represent console display selection as a request to the central display system rather than as a modern locally rendered dashboard. Channel identity need not be fixed to a console or display. This is an Apollo-wide architecture result, not evidence for the exact Mission-G GUIDO DRK keys or Bales's P63/P64/P66 callups.
+The simulator may represent central display requests and may distinguish MSK numeric request, DRK fast request, and FDK alert/format lookup. It must not assign actual Apollo 11 GUIDO DRK labels/formats, FDK loading, or program-alarm behavior from the Apollo 12 manual.
 
 The next station-level voice evidence can come directly from the restored GUIDO L/R audio for audible participants and sequence. However, a voice captured on a GUIDO station recording does not prove which named conference loop supplied it or whether the speaker had transmit privilege on that loop. Do not grant back-room AGC support direct A/G transmit authority or assign Bales/Garman traffic to `FD LOOP`, `MOCR DYN`, or another named loop from the present evidence.
 
-No broader station maturity is promoted. Exact Apollo 11 internal loop assignment, complete per-console keyset privileges, GUIDO DRK mapping, exact descent display callups/cadence, and directly verified per-alarm call timing remain unresolved.
+No broader station maturity is promoted. Exact Apollo 11 internal loop assignment, complete per-console keyset privileges, GUIDO DRK mapping, FDK configuration, exact descent display callups/cadence, and directly verified per-alarm call timing remain unresolved.
 
 ## Recovery target
 
@@ -32,6 +34,7 @@ Inspect restored GUIDO L/R audio around 1201/1202. PHO-TN401 remains at the **Jo
 ## Sources
 
 - NASA/JSC, Richard A. Hoover, _Apollo Experience Report: Flight-Control Data Needs, Terminal Display Devices, and Ground System Configuration Requirements_, NASA TN D-7685 / JSC S-396, May 1974: https://ntrs.nasa.gov/citations/19740015284
+- NASA/MSFC, _Saturn V Flight Manual, SA-507_, mission-control console-keyboard discussion, 1969: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap12fj/pdf/a12_sa507-flightmanual.pdf
 - NASA History Division, _News & Notes_ 35(3): https://www.nasa.gov/wp-content/uploads/2023/01/NewsNotes-35-3-Fall-2018.pdf
 - Apollo in Real Time, Apollo 11 Mission Control Audio: https://apolloinrealtime.org/11/MOCRviz/MOCRviz.html
 - NASA, _Apollo 11 Mission Audio_: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11MissionAudio.html
@@ -44,7 +47,8 @@ Inspect restored GUIDO L/R audio around 1201/1202. PHO-TN401 remains at the **Jo
 - **DOCUMENTED / PRIMARY-AUDIO RECOVERY ROUTE:** restored GUIDO L/R audio with IRIG-B timing provenance.
 - **DOCUMENTED / PRIMARY TECHNICAL:** talk/listen versus monitor-only circuit architecture.
 - **DOCUMENTED / PRIMARY NASA / APOLLO-GENERIC:** display-request mode, dynamic TV-channel allocation, automatic console connection, and channel-attach mode.
+- **DOCUMENTED / PRIMARY / NEAR-CONTEMPORARY GENERIC:** DRK fast-request and FDK alert-to-format-code semantics.
 - **RESTRICTED TO NAVIGATION:** automated Mission Control transcripts; direct audio verification required.
-- **UNRESOLVED / MISSION-G-SPECIFIC:** station-to-loop assignment, complete keyset privilege matrix, GUIDO DRK mapping, exact descent display callups/cadence, and directly verified internal alarm-call sequence.
+- **UNRESOLVED / MISSION-G-SPECIFIC:** station-to-loop assignment, complete keyset privilege matrix, GUIDO DRK labels/format mapping, FDK configuration, exact descent display callups/cadence, and directly verified internal alarm-call sequence.
 - **BLOCKED ON DOCUMENT RECOVERY:** PHO-TN401 and Mission-G-effective station/keyset/display configuration.
 - **UNCHANGED:** Apollo 13 station maturity.
