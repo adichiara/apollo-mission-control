@@ -1,4 +1,4 @@
-# Apollo 11 descent voice source-catalog addendum — note 519
+# Apollo 11 descent voice source-catalog addendum — note 606
 
 Date: 2026-09-24
 
@@ -6,8 +6,8 @@ Date: 2026-09-24
 | --- | --- | --- |
 | NASA/JSC `792-AAI`, Flight Director's Loop, Apollo 11 lunar descent 1955–2025 | Primary historical audio | Controlling artifact for audible Flight Director-loop content during descent. |
 | Apollo Flight Journal, *Apollo 11: The Complete Descent* | Later synchronized presentation of historical audio | Listening/discovery aid. Air/ground and Flight Director-loop audio are separated by stereo channel. Do not treat subtitles, speaker labels, or synchronization as primary evidence. |
-| NASA, *Apollo 11 Technical Air-to-Ground Voice Transcription (GOSS NET 1)*, NTRS 20160014392 | Primary transcript | Radio-side wording/timing anchors only; note 518. |
-| NASA/JSC Oral History Project, John R. Garman | Primary retrospective testimony | Establishes back-room advice to Bales but does not name the circuit; note 514. |
+| NASA, *Apollo 11 Technical Air-to-Ground Voice Transcription (GOSS NET 1)*, NTRS 20160014392 | Primary transcript | Radio-side wording/timing anchors only; note 605. |
+| NASA/JSC Oral History Project, John R. Garman | Primary retrospective testimony | Establishes back-room advice to Bales but does not name the circuit; note 603. |
 
 ## Catalog consequence
 
