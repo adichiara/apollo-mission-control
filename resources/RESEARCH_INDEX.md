@@ -316,29 +316,29 @@ Run `python3 scripts/update_research_indexes.py` after adding or renaming resear
 
 ## 600–699 — `apollo11-program-alarm-controller-flow`
 
-- **600** — [Apollo 11 msk1137 descent program alarm fields](research/600_apollo11_msk1137_descent_program_alarm_fields.md)
-- **601** — [Apollo 11 program alarm air ground call path](research/601_apollo11_program_alarm_air_ground_call_path.md)
-- **602** — [Apollo 11 program alarm internal assessment path](research/602_apollo11_program_alarm_internal_assessment_path.md)
-- **603** — [Apollo 11 program alarm internal voice sequence](research/603_apollo11_program_alarm_internal_voice_sequence.md)
-- **604** — [Apollo 11 descent alarm computer timeline](research/604_apollo11_descent_alarm_computer_timeline.md)
-- **605** — [Apollo 11 air ground alarm timing](research/605_apollo11_air_ground_alarm_timing.md)
-- **606** — [Apollo 11 flight loop recovery path](research/606_apollo11_flight_loop_recovery_path.md)
+- **600** — [apollo11 msk1137 descent program alarm fields](research/600_apollo11_msk1137_descent_program_alarm_fields.md)
+- **601** — [apollo11 program alarm air ground call path](research/601_apollo11_program_alarm_air_ground_call_path.md)
+- **602** — [apollo11 program alarm internal assessment path](research/602_apollo11_program_alarm_internal_assessment_path.md)
+- **603** — [apollo11 program alarm internal voice sequence](research/603_apollo11_program_alarm_internal_voice_sequence.md)
+- **604** — [apollo11 descent alarm computer timeline](research/604_apollo11_descent_alarm_computer_timeline.md)
+- **605** — [apollo11 air ground alarm timing](research/605_apollo11_air_ground_alarm_timing.md)
+- **606** — [apollo11 flight loop recovery path](research/606_apollo11_flight_loop_recovery_path.md)
 
 ## 700–799 — `apollo-mocr-controller-interface`
 
 - **700** — [apollo10 mission rules mocr voice loop baseline](research/700_apollo10_mission_rules_mocr_voice_loop_baseline.md)
-- **701** — [Apollo 11 mission rules mocr voice loop baseline](research/701_apollo11_mission_rules_mocr_voice_loop_baseline.md)
+- **701** — [apollo11 mission rules mocr voice loop baseline](research/701_apollo11_mission_rules_mocr_voice_loop_baseline.md)
 - **702** — [garman staff support room voice keyset semantics](research/702_garman_staff_support_room_voice_keyset_semantics.md)
 - **703** — [pho fam001 voice keyset circuit semantics](research/703_pho_fam001_voice_keyset_circuit_semantics.md)
 - **704** — [Apollo display request and channel attach semantics](research/704_apollo_display_request_and_channel_attach_semantics.md)
 - **705** — [mcc forced display and drk semantics](research/705_mcc_forced_display_and_drk_semantics.md)
-- **706** — [Apollo 11 mocr display availability](research/706_apollo11_mocr_display_availability.md)
+- **706** — [apollo11 mocr display availability](research/706_apollo11_mocr_display_availability.md)
 
 ## 800–899 — `apollo11-descent-audio-provenance`
 
-- **800** — [Apollo 11 guido audio corpus provenance](research/800_apollo11_guido_audio_corpus_provenance.md)
-- **801** — [Apollo 11 flight director loop descent audio archive](research/801_apollo11_flight_director_loop_descent_audio_archive.md)
-- **802** — [Apollo 11 air ground transcript scope boundary](research/802_apollo11_air_ground_transcript_scope_boundary.md)
-- **803** — [Apollo 11 descent audio provenance boundary](research/803_apollo11_descent_audio_provenance_boundary.md)
-- **804** — [Apollo 11 792aai clock window](research/804_apollo11_792aai_clock_window.md)
-- **805** — [Apollo 11 792aai dvids asset identity](research/805_apollo11_792aai_dvids_asset_identity.md)
+- **800** — [apollo11 guido audio corpus provenance](research/800_apollo11_guido_audio_corpus_provenance.md)
+- **801** — [apollo11 flight director loop descent audio archive](research/801_apollo11_flight_director_loop_descent_audio_archive.md)
+- **802** — [apollo11 air ground transcript scope boundary](research/802_apollo11_air_ground_transcript_scope_boundary.md)
+- **803** — [apollo11 descent audio provenance boundary](research/803_apollo11_descent_audio_provenance_boundary.md)
+- **804** — [apollo11 792aai clock window](research/804_apollo11_792aai_clock_window.md)
+- **805** — [apollo11 792aai dvids asset identity](research/805_apollo11_792aai_dvids_asset_identity.md)
