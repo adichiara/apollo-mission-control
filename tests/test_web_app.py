@@ -231,6 +231,56 @@ class WebAppTests(unittest.TestCase):
         self.assertFalse(second_loss.json()["replay"]["data_good"])
         self.assertIn("no stochastic dropout process", second_loss.json()["boundary_note"])
 
+    def test_apollo11_descent_product_schema_model_proof(self):
+        response = self.client.post(
+            "/api/admin/model-proof/apollo11-descent-products",
+            json={
+                "values": {
+                    "lr.range_data_good": True,
+                    "lr.vxb_fps": 10.0,
+                    "pgns.altitude_ft": 31500.0,
+                    "program.alarm_latest": "1202",
+                    "control.lr_antenna_position": 2,
+                },
+                "field_provenance": {
+                    "program.alarm_latest": [
+                        "Apollo 11 MSK-1137 field semantics",
+                        "synthetic controller-visible proof input",
+                    ]
+                },
+                "provenance": ["research 502", "research 600"],
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        products = {item["key"]: item for item in body["products"]}
+
+        self.assertTrue(products["lr.range_data_good"]["available"])
+        self.assertEqual(products["lr.vxb_fps"]["value"], 10.0)
+        self.assertEqual(
+            products["pgns.altitude_ft"]["route_status"],
+            "mixed_downlink_rtcc_unresolved",
+        )
+        self.assertEqual(
+            products["lr.vxb_fps"]["route_status"],
+            "downlink_family_route_unresolved",
+        )
+        self.assertEqual(
+            products["control.lr_antenna_position"]["route_status"],
+            "controller_reported",
+        )
+
+        # A known but unsupplied field must remain unavailable.
+        self.assertFalse(products["guidance.tgo_s"]["available"])
+        self.assertIsNone(products["guidance.tgo_s"]["value"])
+
+        rejected = self.client.post(
+            "/api/admin/model-proof/apollo11-descent-products",
+            json={"values": {"hidden.agc.truth": 1}},
+        )
+        self.assertEqual(rejected.status_code, 400)
+        self.assertIn("unknown Apollo 11 descent product key", rejected.json()["detail"])
+
     def test_health_and_phone_shell(self):
         self.assertEqual(self.client.get("/api/health").json(), {"status": "ok"})
         page = self.client.get("/")

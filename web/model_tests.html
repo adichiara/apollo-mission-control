@@ -164,6 +164,24 @@
 <details class="raw"><summary>Raw radar-chain JSON</summary><pre id="radarRaw">No run yet.</pre></details>
 </section>
 
+<section id="descentProducts" class="panel">
+<h2>Apollo 11 descent controller-product boundary</h2>
+<p class="note">Projects only explicitly supplied controller-visible values into the source-backed MSK-1137 / CONTROL field family. Missing fields remain unavailable, and unresolved D/L/RTCC routing is shown rather than guessed.</p>
+<div class="grid">
+<label class="field">LR VXB (ft/s)<input id="dpVx" type="number" value="10" step="0.1"></label>
+<label class="field">LR slant range (ft)<input id="dpRange" type="number" value="32000" step="10"></label>
+<label class="field">PGNS altitude (ft)<input id="dpAltitude" type="number" value="31500" step="10"></label>
+<label class="field">TGO (s)<input id="dpTgo" type="number" value="240" step="1"></label>
+<label class="field">Latest alarm code<input id="dpAlarm" value="1202"></label>
+<label class="field">Program<input id="dpProgram" value="63"></label>
+<label class="field">CONTROL LR position<select id="dpAntenna"><option value="">unsupplied</option><option value="1">1</option><option value="2" selected>2</option></select></label>
+</div>
+<p><label><input id="dpRangeGood" type="checkbox" checked> supply LR range GOOD</label> &nbsp; <label><input id="dpVelocityGood" type="checkbox" checked> supply LR velocity GOOD</label> &nbsp; <label><input id="dpSupplyTgo" type="checkbox"> supply TGO</label></p>
+<div class="actions"><button id="runDescentProducts">Project controller products</button><button id="descentProductsSparse">Sparse LR-only proof</button></div>
+<div id="descentProductsTrace" class="chain"><div class="stage"><b>Explicit inputs</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Field schema</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Routing boundary</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Unavailable fields</b>Not run</div></div>
+<details class="raw"><summary>Raw descent-product JSON</summary><pre id="descentProductsRaw">No run yet.</pre></details>
+</section>
+
 <section id="descentGate" class="panel">
 <h2>Apollo 11 descent controller decision gate</h2>
 <p class="note">Exercises the documented station-to-FLIGHT-to-CAPCOM decision boundary from research 502. This surface does not calculate a landing decision from radar values and does not implement an inferred ground Delta-H algorithm.</p>
@@ -638,6 +656,45 @@ async function runRadarReplay(queryTime){
 $('radarReplayReacquire').onclick=()=>runRadarReplay(369861);
 $('radarReplayQualified').onclick=()=>runRadarReplay(369865);
 
+
+function descentProductsPayload(mode='normal'){
+ const values={};
+ if($('dpRangeGood').checked)values['lr.range_data_good']=true;
+ if($('dpVelocityGood').checked)values['lr.velocity_data_good']=true;
+ values['lr.vxb_fps']=num('dpVx');
+ values['lr.slant_range_ft']=num('dpRange');
+ values['pgns.altitude_ft']=num('dpAltitude');
+ values['program.alarm_latest']=$('dpAlarm').value.trim();
+ values['program.number']=$('dpProgram').value.trim();
+ const antenna=$('dpAntenna').value;
+ if(antenna!=='')values['control.lr_antenna_position']=Number(antenna);
+ if($('dpSupplyTgo').checked)values['guidance.tgo_s']=num('dpTgo');
+ if(mode==='sparse'){
+  return {values:{'lr.range_data_good':true,'lr.vxb_fps':num('dpVx')},
+   provenance:['Apollo 11 research 502/600 controller-product boundary proof']};
+ }
+ return {values,
+  field_provenance:{'program.alarm_latest':['Apollo 11 MSK-1137 field semantics','explicit browser proof input']},
+  provenance:['Apollo 11 research 502/600 controller-product boundary proof']};
+}
+async function runDescentProducts(mode='normal'){
+ const p=descentProductsPayload(mode);$('descentProductsRaw').textContent='Running…';
+ try{
+  const r=await request('/api/admin/model-proof/apollo11-descent-products',p);
+  recordCausal('apollo11-descent-products-'+mode,p,r);
+  const by=Object.fromEntries(r.products.map(x=>[x.key,x]));
+  const available=r.products.filter(x=>x.available),missing=r.products.filter(x=>!x.available);
+  const routes=[...new Set(available.map(x=>x.route_status))];
+  $('descentProductsTrace').innerHTML=
+   traceStage('Explicit inputs','<div>supplied = '+Object.keys(p.values).length+'</div><div>available = '+available.length+'</div><div class="note">No hidden simulator state is consulted.</div>')+
+   arrow()+traceStage('Field schema','<div>LR range '+(by['lr.range_data_good'].available?String(by['lr.range_data_good'].value):'unavailable')+'</div><div>VXB '+(by['lr.vxb_fps'].available?scalar(by['lr.vxb_fps'].value)+' ft/s':'unavailable')+'</div><div>alarm '+(by['program.alarm_latest'].available?by['program.alarm_latest'].value:'unavailable')+'</div>')+
+   arrow()+traceStage('Routing boundary','<div>'+routes.join('<br>')+'</div><div class="note">Candidate D/L/RTCC paths remain unresolved where the Mission-G source chain is incomplete.</div>')+
+   arrow()+traceStage('Unavailable fields','<div>withheld = '+missing.length+'</div><div>TGO '+(by['guidance.tgo_s'].available?scalar(by['guidance.tgo_s'].value)+' s':'unavailable')+'</div><div class="note">Missing known fields are not derived from onboard truth.</div>');
+  $('descentProductsRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){$('descentProductsRaw').textContent=String(e.message||e)}
+}
+$('runDescentProducts').onclick=()=>runDescentProducts('normal');
+$('descentProductsSparse').onclick=()=>runDescentProducts('sparse');
 
 function descentGatePayload(mode='normal'){
  const antenna=$('dgAntenna').value;

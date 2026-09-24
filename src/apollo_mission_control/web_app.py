@@ -40,6 +40,7 @@ from .crew_response import (
     record_inverter_transfer_completion_report,
     record_premature_dps_stop,
 )
+from .apollo11_descent_products import project_apollo11_descent_products
 from .descent_decision_gate import (
     DescentControlMode,
     DescentDecisionGate,
@@ -527,6 +528,20 @@ class LandingRadarHistoricalVelocityUpdateRequest(BaseModel):
     program: str | None = Field(default=None, min_length=1, max_length=32)
     reasonableness_passed: bool = True
     updates_permitted: bool = True
+
+
+class Apollo11DescentProductsRequest(BaseModel):
+    values: dict[str, Any] = Field(default_factory=dict)
+    field_provenance: dict[str, list[str]] = Field(default_factory=dict)
+    applicability: str = Field(
+        default=(
+            "Apollo 11 powered-descent controller-product boundary; "
+            "field semantics source-backed, exact routing unresolved where noted"
+        ),
+        min_length=1,
+        max_length=1000,
+    )
+    provenance: list[str] = Field(default_factory=list, max_length=50)
 
 
 class LandingRadarDecisionGateRequest(BaseModel):
@@ -1780,6 +1795,27 @@ def landing_radar_historical_velocity_update_model_proof(
         "profile": profile.to_public_dict(),
         "velocity_update": result.to_dict(),
     }
+
+
+@app.post(
+    "/api/admin/model-proof/apollo11-descent-products",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def apollo11_descent_products_model_proof(
+    request: Apollo11DescentProductsRequest,
+) -> dict[str, object]:
+    result = _domain_call(
+        lambda: project_apollo11_descent_products(
+            request.values,
+            field_provenance={
+                key: tuple(items)
+                for key, items in request.field_provenance.items()
+            },
+            applicability=request.applicability,
+            provenance=tuple(request.provenance),
+        )
+    )
+    return result.to_dict()
 
 
 @app.post(
