@@ -7,6 +7,7 @@ Date: 2026-09-23
 | Source | Direct evidence | Use / restriction |
 | --- | --- | --- |
 | NASA/JSC, Richard A. Hoover, _Apollo Experience Report: Flight-Control Data Needs, Terminal Display Devices, and Ground System Configuration Requirements_, NASA TN D-7685 / JSC S-396, May 1974 | Apollo display-request mode: console requests format, computer assigns next available TV channel and automatically connects it; channel-attach mode; channel-usage management; display and intercom configuration treated separately | Primary NASA Apollo-wide operational architecture. Not Mission-G authority for GUIDO DRK mapping, exact descent callups, or cadence. |
+| NASA/MSFC, _Saturn V Flight Manual, SA-507_, 1969, mission-control console-keyboard discussion | DRK = fast pre-labeled equivalent of MSK display-request mode; FDK out-of-tolerance acknowledgement returns four-digit identifying display-format code | Primary near-contemporary generic MCC interaction evidence. Apollo 12 vehicle manual; not Mission-G GUIDO key/format/FDK configuration. |
 | NASA History Division, _News & Notes_, 35(3), 2018; reproduced Apollo 11 `AS-506 3RD FL` Historical Recorder #1 track sheet dated `06-09-69` | Ch. 21 `GUIDO [L]` → pos. 018; ch. 22 `GUIDO [R]` → pos. 019 | Mission-G-specific archival recorder map. Not a keyset/loop assignment. |
 | Apollo in Real Time, Apollo 11 Mission Control Audio | Restored corpus of ~11,000 hours of headset/back-room recordings; selectable GUIDO L/R channels; timing restoration retains original IRIG-B signal | Primary-recording recovery route. Automated Whisper transcripts are imperfect navigation aids, not historical authority. |
 | NASA, _Apollo 11 Mission Audio_ / Apollo Journals | NASA-hosted Apollo 11 mission-audio provenance and journal access | Agency corroboration for mission-audio corpus context. |
@@ -21,9 +22,9 @@ Date: 2026-09-23
 
 ## Catalog consequence
 
-NASA TN D-7685 closes the generic display-selection mechanism: Apollo controllers could request a display format and have the central system dynamically allocate an available TV channel and connect it to their console, or attach to a channel already carrying a display. This permits historically grounded request-driven CRT behavior without inventing fixed modern dashboard semantics. The report's separation of display-system and intercommunication-panel configuration also reinforces that display-routing evidence cannot establish voice-loop routing.
+NASA TN D-7685 closes the generic central display-selection mechanism. SA-507 further distinguishes controller-side interactions: MSK numeric display request, DRK fast pre-labeled request, and FDK out-of-tolerance acknowledgement yielding a four-digit display-format identifier. Together these permit historically grounded request-driven CRT behavior without inventing a fixed modern dashboard or automatic alert navigation.
 
-The remaining display question is now Mission-G-specific: GUIDO DRK key mapping, exact powered-descent display callups, and request cadence/latency. PHO-TN401 remains the strongest recovery target for those details.
+The remaining display question is Mission-G-specific: GUIDO DRK labels/format mapping, FDK configuration, exact powered-descent display callups, and request cadence/latency. PHO-TN401 remains the strongest recovery target for those details. No program alarm is mapped to FDK behavior from the present evidence.
 
 The project also has a Mission-G archival recorder map and an accessible restored primary-audio corpus exposing GUIDO left/right. Searchable automated transcripts may locate candidate timestamps, but any historical claim about participants, wording, or sequence must be verified against the restored audio.
 
@@ -34,6 +35,7 @@ The defensible alarm chain remains **guidance-software back-room support → GUI
 ## URLs
 
 - NASA NTRS, NASA TN D-7685: https://ntrs.nasa.gov/citations/19740015284
+- NASA/MSFC SA-507 Flight Manual: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap12fj/pdf/a12_sa507-flightmanual.pdf
 - NASA History Division track-sheet reproduction: https://www.nasa.gov/wp-content/uploads/2023/01/NewsNotes-35-3-Fall-2018.pdf
 - Apollo in Real Time Mission Control Audio: https://apolloinrealtime.org/11/MOCRviz/MOCRviz.html
 - NASA Apollo 11 Mission Audio: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11MissionAudio.html
@@ -48,10 +50,11 @@ The defensible alarm chain remains **guidance-software back-room support → GUI
 ## Evidence status
 
 - **DOCUMENTED / PRIMARY NASA / APOLLO-GENERIC:** display-request and channel-attach modes; dynamic TV-channel allocation; channel-usage management.
+- **DOCUMENTED / PRIMARY / NEAR-CONTEMPORARY GENERIC:** DRK fast-request and FDK alert-to-format-code semantics.
 - **DOCUMENTED / MISSION-SPECIFIC ARCHIVAL:** Historical Recorder #1 ch. 21/22 = GUIDO L/R, positions 018/019.
 - **DOCUMENTED / PRIMARY-AUDIO RECOVERY ROUTE:** restored GUIDO L/R corpus with IRIG-B timing provenance.
 - **RESTRICTED TO NAVIGATION:** automated Mission Control transcripts; verify against audio.
 - **DOCUMENTED / SUFFICIENT:** MSK-1137 fields; back-room support → GUIDO relationship; CAPCOM crew disposition.
 - **DOCUMENTED / PRIMARY TECHNICAL:** local conference/intersite loop classes and talk/listen versus monitor-only circuits.
-- **UNRESOLVED / MISSION-G-SPECIFIC:** GUIDO DRK mapping, exact descent display callups/cadence, station-to-loop assignment, complete keyset privileges, and directly verified internal alarm sequence.
+- **UNRESOLVED / MISSION-G-SPECIFIC:** GUIDO DRK labels/format mapping, FDK configuration, exact descent display callups/cadence, station-to-loop assignment, complete keyset privileges, and directly verified internal alarm sequence.
 - **BLOCKED ON DOCUMENT RECOVERY:** PHO-TN401 and Mission-G-effective station/keyset/display configuration.
