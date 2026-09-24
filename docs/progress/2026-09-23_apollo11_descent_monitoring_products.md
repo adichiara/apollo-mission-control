@@ -4,74 +4,49 @@ Date: 2026-09-23
 
 Continued the open Apollo 11 powered-descent controller-product reference.
 
-## Primary-source result — comparison products
+## Established evidence
 
-NASA/MSC **70-FM-20, _The Apollo 11 Adventure_** preserves Apollo 11 descent strip-chart comparisons labeled `AGS−PGNCS` and `MSFN−PGNCS`, with descent-event markers and in-plane/crossrange monitoring logic. This supports the repository's pairwise/consensus architecture without establishing exact live CRT presentation.
+NASA/MSC 70-FM-20 preserves Apollo 11 descent products labeled `AGS−PGNCS` and `MSFN−PGNCS`; AC Electronics `MSK-1137` establishes mission-specific ground-visible descent timing, warning/caution, alarm-code, restart-count, computer-program, and DSKY-context fields. The Apollo 11 air-ground transcript establishes that Eagle requested alarm disposition and CAPCOM returned the ground GO. Jack Garman's firsthand NASA oral history establishes guidance-software back-room support to GUIDO/Steve Bales. The defensible chain remains **guidance-software back-room support → GUIDO/Bales → FLIGHT/ground decision chain → CAPCOM → crew**.
 
-## Primary-source result — program-alarm/descent fields
+Apollo 11 Flight Mission Rules rule 4-5 documents the Mission-G MOCR loop vocabulary. PHO-FAM001 documents local conference/intersite loops and talk/listen versus monitor-only keyset circuits. Garman independently describes support-room talk/listen buttons, multi-loop monitoring, and restricted A/G transmit authority. None establishes the exact Bales/Garman Mission-G circuit.
 
-The mission-specific AC Electronics _Apollo 11 Manual_, `ASPO 45 CRT DISPLAYS`, `MSK-1137`, establishes ground-visible `TIG`, `TGO`, significant-event timing, descent-only time-to-end-of-phase, LGC/ISS warning status, PGNCS/program caution status, first/second/most-recent alarm code, restart count, computer program, and DSKY verb/noun/flasher/rows.
+NASA History Division's reproduction of the original `AS-506 3RD FL` Historical Recorder #1 track sheet dated `06-09-69` maps channels 21/22 to `GUIDO [L]/[R]`, positions 018/019. This is recorder/station mapping, not keyset or loop mapping.
 
-## Primary-source result — program-alarm call path
+## New result — restored GUIDO audio recovery route
 
-NASA's _Apollo 11 Air-to-Ground Voice Transcription (GOSS NET 1)_, Tape 66/7 p. 312, establishes that Eagle announced the first 1202 and requested Houston's disposition; `CC`/CAPCOM returned the ground GO disposition.
+Research note 510 connected that Mission-G recorder map to the publicly accessible restored Apollo 11 Mission Control Audio corpus. The corpus exposes selectable GUIDO left/right channels and documents approximately 11,000 hours of headset/back-room recordings digitized from the historical tapes. Its provenance statement records correction of playback wow/flutter and retention of the original IRIG-B timing signal.
 
-NASA JSC's 27 March 2001 oral-history interview with Jack Garman narrows the internal assessment path. Garman's firsthand account distinguishes the back room from the front room and describes himself and colleagues in the back room as helping Steve Bales. NASA's agency history identifies Bales as the Guidance Officer and explicitly states that Bales called Garman in the back room for support on the 1202.
+This gives the project a direct primary-recording route for the next unresolved question: the participants and sequence around the descent program alarms. The corpus's automated Whisper `large-v3` transcripts are explicitly described as imperfect. They may be used to find candidate timestamps but **not as historical authority**; claims must be verified against the restored audio itself.
 
-The defensible chain is therefore: **guidance-software back-room support → GUIDO/Bales → FLIGHT/ground decision chain → CAPCOM → crew**.
-
-## Primary-source result — Apollo 11 voice-loop vocabulary
-
-NASA/MSC's _Flight Mission Rules, Apollo 11 (AS-506/107/LM-5)_, dated 16 April 1969, rule 4-5 COMMUNICATIONS, directly lists `FD LOOP`, `AFD CONF LOOP`, `MOCR SYS 1 & 2`, `MOCR DYN`, `A/G 1 LOOP`, and `A/G 2 LOOP`. The same rule separately identifies the MCC/remote-site air-ground path as used for communication with the crew.
-
-## Primary archival result — Apollo 11 recorder/station mapping
-
-NASA History Division's 2018 publication reproduces an original Apollo 11 `AS-506 3RD FL` Historical Recorder #1 track sheet dated `06-09-69`. The artifact maps recorder channels 21 and 22 to `GUIDO [L]` and `GUIDO [R]`, positions 018 and 019; adjacent channels identify FIDO, LOAD CONTROL, RTC, CCATS CMD, TIC, CCATS TM, and TRACK positions. NASA states that the surviving Apollo historical tapes preserve the controller/support conversations carried on communications loops.
-
-This is Mission-G-specific archival evidence for the historical recording map and gives a direct primary-recording route for further GUIDO-channel research. It is **not a keyset configuration record**: channel labels and console positions do not establish which named voice loops GUIDO could monitor or transmit on, nor which circuit carried Bales/Garman traffic.
-
-## Primary technical result — keyset circuit semantics
-
-Philco-Ford PHO-FAM001, revised through 30 June 1967, states in §3-2-2-1 that MCC station keyset pushbuttons connected operators to **local conference loops** or **intersite loops**, and that a keyset could provide **talk/listen** or **monitor-only** circuits. Section II states that keysets existed in different configurations according to usage requirements. Air/ground transmitter control is described separately.
-
-This independently corroborates the communications-model requirement previously inferred from Garman's participant account: monitoring a loop and transmitting on it are distinct privileges. The runtime can safely represent monitor-only access without inventing a station's ability to speak on that circuit.
-
-## Primary-participant result — support-room keyset semantics
-
-Garman directly describes white talk buttons, amber listen buttons, simultaneous monitoring of multiple loops, independently controlled listening volume, and restricted air-ground talk authority. He recalls an FD-loop talk button being added to the support position only "later on."
-
-PHO-FAM001 does not date or identify the Apollo 11 Bales/Garman circuit. Its 1967 effectivity means it establishes architecture, not the exact Mission-G keyset matrix. The exact Apollo 11 loop name therefore remains unresolved.
+A voice present on a recorded GUIDO station channel does not establish the named conference loop that delivered it or that speaker's keyset transmit privilege. Those configuration questions remain open.
 
 ## Boundary preserved
 
-MSK-1137 field semantics do **not** establish exact station request procedure, DRK mapping, routing, cadence/latency, or detailed internal decision rules. PHO-FAM001 establishes circuit classes and permissions but not Apollo 11 station-to-loop assignments. Garman establishes support relationship and operational semantics but not the exact Apollo 11 loop name. The historical recorder track sheet establishes recording channels/positions, not keyset privileges or loop identity. Likewise, 70-FM-20 Figure 9 is not treated as an exact live MOCR display.
-
-## Archival target
-
-PHO-TN401 remains the leading direct display/control recovery target at Johnson Space Center History Collection, University of Houston-Clear Lake, Apollo Program, Mission Documents: Apollo 11, **Box 078-65/66**.
+No exact station request procedure, DRK mapping, routing, cadence/latency, station-to-loop assignment, or complete keyset privilege matrix is inferred. 70-FM-20 Figure 9 is not treated as an exact live MOCR display.
 
 ## Next discriminating target
 
-Use the recovered Mission-G recorder map to inspect the Apollo 11 GUIDO channel around the descent alarms for what it can establish directly about traffic participants and call sequence, while preserving the distinction between a recorder channel and a named voice loop. Separately recover a Mission-G-effective station/keyset record for exact talk/listen privilege mapping and PHO-TN401 for display/control routing evidence.
+Inspect restored GUIDO L/R audio around 1201/1202 and document only directly audible participants, wording, and sequence. Separately recover a Mission-G-effective station/keyset record and PHO-TN401 (Johnson Space Center History Collection, University of Houston-Clear Lake, Apollo 11 Mission Documents, **Box 078-65/66**).
 
 ## Sources
 
-- NASA History Division, _News & Notes_, Vol. 35 No. 3, 3rd Quarter 2018, pp. 3–5, including reproduced Apollo 11 `AS-506 3RD FL` Historical Recorder #1 track sheet dated 06-09-69: https://www.nasa.gov/wp-content/uploads/2023/01/NewsNotes-35-3-Fall-2018.pdf
-- Philco-Ford / Western Development Laboratories, _Familiarization Manual — Mission Control Center Houston_, PHO-FAM001, revised through 30 June 1967, §§2-1-2, 3-2-2-1: https://www.ibiblio.org/apollo/Documents/Familiarization%20Manual%20Mission%20Control%20Center%20Houston.pdf
-- NASA/MSC, _Flight Mission Rules, Apollo 11 (AS-506/107/LM-5)_, 16 April 1969, rule 4-5, p. 4-3: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11MissionRules.pdf
-- NASA JSC Oral History Project, John R. Garman interview, 27 March 2001: https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/GarmanJR/GarmanJR_3-27-01.pdf
-- NASA, _Apollo 11 Air-to-Ground Voice Transcription (GOSS NET 1)_, Tape 66/7 p. 312: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11transcript_tec.pdf
-- AC Electronics, _Apollo 11 Manual_, `ASPO 45 CRT DISPLAYS`, `MSK-1137`: https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
-- NASA/MSC MPAD, _The Apollo 11 Adventure_, MSC Internal Note 70-FM-20, MSC-01562, 5 February 1970: https://www.ibiblio.org/apollo/NARA-SW/TheApollo11Adventure.pdf
+- NASA History Division, _News & Notes_ 35(3), reproduced Apollo 11 recorder track sheet: https://www.nasa.gov/wp-content/uploads/2023/01/NewsNotes-35-3-Fall-2018.pdf
+- Apollo in Real Time, Apollo 11 Mission Control Audio: https://apolloinrealtime.org/11/MOCRviz/MOCRviz.html
+- NASA, _Apollo 11 Mission Audio_: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11MissionAudio.html
+- Philco-Ford PHO-FAM001: https://www.ibiblio.org/apollo/Documents/Familiarization%20Manual%20Mission%20Control%20Center%20Houston.pdf
+- NASA/MSC Apollo 11 Mission Rules: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11MissionRules.pdf
+- NASA JSC Garman oral history: https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/GarmanJR/GarmanJR_3-27-01.pdf
+- NASA Apollo 11 air-to-ground transcript: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11transcript_tec.pdf
+- AC Electronics Apollo 11 Manual: https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
+- NASA/MSC 70-FM-20: https://www.ibiblio.org/apollo/NARA-SW/TheApollo11Adventure.pdf
 
 ## Evidence status
 
-- **DOCUMENTED / SUFFICIENT:** MSK-1137 alarm/restart/program/DSKY/descent field semantics.
-- **DOCUMENTED / SUFFICIENT:** guidance-software back-room support → GUIDO assessment relationship and CAPCOM-mediated crew disposition.
-- **DOCUMENTED:** Apollo 11 AGS−PGNCS and MSFN−PGNCS comparison-product family.
+- **DOCUMENTED / SUFFICIENT:** MSK-1137 alarm/program/descent fields; back-room support → GUIDO assessment; CAPCOM-mediated crew disposition.
+- **DOCUMENTED:** Apollo 11 `AGS−PGNCS` and `MSFN−PGNCS` comparison-product family.
 - **DOCUMENTED / MISSION-SPECIFIC:** Apollo 11 MOCR loop vocabulary/internal-versus-A/G separation.
-- **DOCUMENTED / MISSION-SPECIFIC ARCHIVAL:** Historical Recorder #1 mapped channels 21/22 to GUIDO left/right, positions 018/019, on the reproduced Apollo 11 track sheet.
-- **DOCUMENTED / PRIMARY TECHNICAL:** local conference/intersite loop classes and talk/listen versus monitor-only keyset circuits.
-- **DOCUMENTED / PARTICIPANT:** support-room button semantics, multi-loop monitoring, and restricted A/G transmit authority.
-- **UNRESOLVED:** exact Apollo 11 live station request/routing/DRK mapping/cadence, station-to-loop assignment, full keyset privilege matrix, and detailed internal channel mechanics.
-- **BLOCKED ON DOCUMENT RECOVERY:** PHO-TN401 direct inspection and Mission-G-effective station/keyset configuration.
+- **DOCUMENTED / MISSION-SPECIFIC ARCHIVAL:** Historical Recorder #1 channels 21/22 = GUIDO L/R, positions 018/019.
+- **DOCUMENTED / PRIMARY-AUDIO RECOVERY ROUTE:** restored GUIDO L/R recordings with IRIG-B timing provenance.
+- **RESTRICTED TO NAVIGATION:** automated Mission Control transcripts.
+- **UNRESOLVED:** exact station/loop/keyset configuration and directly verified per-alarm internal call sequence.
+- **BLOCKED ON DOCUMENT RECOVERY:** PHO-TN401 and Mission-G-effective station/keyset configuration.
