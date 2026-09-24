@@ -6,6 +6,7 @@ Date: 2026-09-23
 
 | Source | Direct evidence | Use / restriction |
 | --- | --- | --- |
+| NASA History Division, _News & Notes_, Vol. 35 No. 3, 3rd Quarter 2018, pp. 3–5; reproduced Apollo 11 `AS-506 3RD FL` Historical Recorder #1 track sheet dated `06-09-69` | Original track-sheet artifact maps ch. 21 `GUIDO [L]` → pos. 018 and ch. 22 `GUIDO [R]` → pos. 019; NASA describes surviving historical tapes as preserving controller/support communications-loop conversations | Mission-G-specific archival authority for recorder channel/station mapping and a direct route to primary GUIDO audio. **Not** a keyset configuration or proof of named loop membership/talk privilege. |
 | Philco-Ford / Western Development Laboratories, _Familiarization Manual — Mission Control Center Houston_, PHO-FAM001, revised through 30 Jun 1967, §§2-1-2, 3-2-2-1 | Station keysets connected to local conference or intersite loops; keysets could provide talk/listen or monitor-only circuits; configurations varied by usage requirement; A/G transmitter control described separately | Primary contemporary technical authority for generic MCC keyset/circuit semantics. **Not** Mission-G authority for exact station-to-loop assignment or July 1969 privilege matrix. |
 | NASA/MSC, _Flight Mission Rules, Apollo 11 (AS-506/107/LM-5)_, 16 Apr 1969, rule 4-5 p. 4-3 | Mission-G MOCR communications list: `FD LOOP`, `AFD CONF LOOP`, `MOCR SYS 1 & 2`, `MOCR DYN`, `A/G 1 LOOP`, `A/G 2 LOOP`; separately identifies remote-site A/G path used for crew communication | Primary mission-specific authority for loop vocabulary and internal-MOCR/A-G separation. **Not** authority for GUIDO/support-room station-to-loop assignment, keyset mapping, or alarm-call routing. |
 | NASA JSC Oral History Project, John R. Garman interview, 27 Mar 2001 | Firsthand participant account of back-room support for Bales; staff-support keysets used white talk and amber listen buttons; multiple loops could be monitored; support personnel listened to A/G while A/G transmit authority was restricted; Garman recalls FD-loop talk capability being added to the support position only later | Primary-participant authority for support relationship and operational keyset semantics. The "later on" recollection is date-imprecise. |
@@ -18,14 +19,17 @@ Date: 2026-09-23
 
 ## Catalog consequence
 
-The communications model now has both contemporary technical and participant evidence that **monitor and talk were distinct privileges**. PHO-FAM001 explicitly permits talk/listen and monitor-only circuits; Garman supplies the operational support-room semantics. The runtime may therefore represent multi-loop monitoring and monitor-only access without treating loop membership as transmit authority.
+The Apollo 11 historical-recorder map now identifies the primary recorded GUIDO station channels: Historical Recorder #1 channels 21/22, left/right, positions 018/019. That enables direct station-specific analysis of the descent alarms without guessing which recording to inspect. The artifact does **not** close the voice-routing question: a recorder assignment is not evidence of which keyset circuits were selected or which named loop carried a particular exchange.
+
+The communications model has both contemporary technical and participant evidence that **monitor and talk were distinct privileges**. PHO-FAM001 explicitly permits talk/listen and monitor-only circuits; Garman supplies the operational support-room semantics. The runtime may therefore represent multi-loop monitoring and monitor-only access without treating loop membership as transmit authority.
 
 The defensible alarm chain remains **guidance-software back-room support → GUIDO/Bales → FLIGHT/ground decision chain → CAPCOM → crew**. The exact Bales/Garman loop remains unresolved. PHO-FAM001's June 1967 effectivity prevents using its generic architecture as proof of a July 1969 station assignment, and Garman's recollection that an FD-loop talk button arrived "later on" is not dated precisely enough to establish the 20 July 1969 station keyset.
 
-PHO-TN401 remains blocked on document recovery. Retrieve **Box 078-65/66** before freezing exact Mission-G display/routing configuration; separately recover a Mission-G-effective station/keyset record for exact internal voice-loop mechanics.
+PHO-TN401 remains blocked on document recovery. Retrieve **Box 078-65/66** before freezing exact Mission-G display/routing configuration; separately recover a Mission-G-effective station/keyset record for exact internal voice-loop mechanics. In parallel, inspect the primary GUIDO recording identified by the recovered track sheet for direct evidence of alarm traffic participants and sequence.
 
 ## URLs
 
+- NASA History Division _News & Notes_ 35(3): https://www.nasa.gov/wp-content/uploads/2023/01/NewsNotes-35-3-Fall-2018.pdf
 - PHO-FAM001: https://www.ibiblio.org/apollo/Documents/Familiarization%20Manual%20Mission%20Control%20Center%20Houston.pdf
 - NASA/MSC Apollo 11 Mission Rules: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11MissionRules.pdf
 - NASA JSC Garman oral history: https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/GarmanJR/GarmanJR_3-27-01.pdf
@@ -37,6 +41,7 @@ PHO-TN401 remains blocked on document recovery. Retrieve **Box 078-65/66** befor
 
 ## Evidence status
 
+- **DOCUMENTED / MISSION-SPECIFIC ARCHIVAL:** Historical Recorder #1 channels 21/22 map to GUIDO left/right, positions 018/019.
 - **DOCUMENTED / SUFFICIENT:** MSK-1137 alarm/restart/program/DSKY/descent field semantics.
 - **DOCUMENTED / SUFFICIENT:** guidance-software back-room support → GUIDO assessment relationship; crew-facing disposition through CAPCOM.
 - **DOCUMENTED / MISSION-SPECIFIC:** Apollo 11 MOCR loop vocabulary/internal-versus-A/G separation.
