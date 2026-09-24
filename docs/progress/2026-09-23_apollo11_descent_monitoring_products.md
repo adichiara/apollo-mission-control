@@ -12,24 +12,31 @@ Apollo 11 Flight Mission Rules rule 4-5 documents the Mission-G MOCR loop vocabu
 
 NASA History Division's reproduction of the original `AS-506 3RD FL` Historical Recorder #1 track sheet dated `06-09-69` maps channels 21/22 to `GUIDO [L]/[R]`, positions 018/019. This is recorder/station mapping, not keyset or loop mapping.
 
-## New result — restored GUIDO audio recovery route
+## Restored GUIDO audio recovery route
 
 Research note 510 connected that Mission-G recorder map to the publicly accessible restored Apollo 11 Mission Control Audio corpus. The corpus exposes selectable GUIDO left/right channels and documents approximately 11,000 hours of headset/back-room recordings digitized from the historical tapes. Its provenance statement records correction of playback wow/flutter and retention of the original IRIG-B timing signal.
 
-This gives the project a direct primary-recording route for the next unresolved question: the participants and sequence around the descent program alarms. The corpus's automated Whisper `large-v3` transcripts are explicitly described as imperfect. They may be used to find candidate timestamps but **not as historical authority**; claims must be verified against the restored audio itself.
+This gives the project a direct primary-recording route for the participants and sequence around the descent program alarms. The corpus's automated Whisper `large-v3` transcripts are explicitly imperfect. They may be used to find candidate timestamps but **not as historical authority**; claims must be verified against the restored audio itself.
 
-A voice present on a recorded GUIDO station channel does not establish the named conference loop that delivered it or that speaker's keyset transmit privilege. Those configuration questions remain open.
+## New result — Apollo display request/routing semantics
+
+Research note 511 uses NASA/JSC's 1974 Apollo Experience Report, NASA TN D-7685, to close the generic console-display interaction question. In **display request mode**, an individual console requested a display format; the computer generated/formatted it, assigned the next available computer-driven TV channel, and automatically connected that channel to the requesting console. Allocation was first-come/first-served rather than a permanent channel-to-console/display binding. In **channel attach mode**, a console requested an existing TV channel and received the data already on that channel.
+
+The report also records a channel-usage display that identified the active format and requesting console when channel saturation needed management. Separately, it treats display-system configuration and intercommunication-panel configuration as distinct configuration categories. This supports keeping display selection and voice-loop assignment as separate evidence problems.
+
+The simulator can therefore model Apollo-generic display requests without inventing a modern fixed dashboard. The remaining unknown is narrower: exact Mission-G GUIDO DRK keys, powered-descent display callups, and request cadence/latency.
 
 ## Boundary preserved
 
-No exact station request procedure, DRK mapping, routing, cadence/latency, station-to-loop assignment, or complete keyset privilege matrix is inferred. 70-FM-20 Figure 9 is not treated as an exact live MOCR display.
+A voice present on a recorded GUIDO station channel does not establish the named conference loop that delivered it or that speaker's keyset transmit privilege. NASA TN D-7685 does not establish Apollo 11 GUIDO DRK mapping or which display Bales actually selected during P63/P64/P66. 70-FM-20 Figure 9 is not treated as an exact live MOCR display.
 
 ## Next discriminating target
 
-Inspect restored GUIDO L/R audio around 1201/1202 and document only directly audible participants, wording, and sequence. Separately recover a Mission-G-effective station/keyset record and PHO-TN401 (Johnson Space Center History Collection, University of Houston-Clear Lake, Apollo 11 Mission Documents, **Box 078-65/66**).
+Inspect restored GUIDO L/R audio around 1201/1202 and document only directly audible participants, wording, and sequence. Separately recover a Mission-G-effective station/keyset/display record and PHO-TN401 (Johnson Space Center History Collection, University of Houston-Clear Lake, Apollo 11 Mission Documents, **Box 078-65/66**).
 
 ## Sources
 
+- NASA/JSC, Richard A. Hoover, _Apollo Experience Report: Flight-Control Data Needs, Terminal Display Devices, and Ground System Configuration Requirements_, NASA TN D-7685 / JSC S-396, May 1974: https://ntrs.nasa.gov/citations/19740015284
 - NASA History Division, _News & Notes_ 35(3), reproduced Apollo 11 recorder track sheet: https://www.nasa.gov/wp-content/uploads/2023/01/NewsNotes-35-3-Fall-2018.pdf
 - Apollo in Real Time, Apollo 11 Mission Control Audio: https://apolloinrealtime.org/11/MOCRviz/MOCRviz.html
 - NASA, _Apollo 11 Mission Audio_: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11MissionAudio.html
@@ -47,6 +54,7 @@ Inspect restored GUIDO L/R audio around 1201/1202 and document only directly aud
 - **DOCUMENTED / MISSION-SPECIFIC:** Apollo 11 MOCR loop vocabulary/internal-versus-A/G separation.
 - **DOCUMENTED / MISSION-SPECIFIC ARCHIVAL:** Historical Recorder #1 channels 21/22 = GUIDO L/R, positions 018/019.
 - **DOCUMENTED / PRIMARY-AUDIO RECOVERY ROUTE:** restored GUIDO L/R recordings with IRIG-B timing provenance.
+- **DOCUMENTED / PRIMARY NASA / APOLLO-GENERIC:** display-request and channel-attach modes and dynamic TV-channel allocation.
 - **RESTRICTED TO NAVIGATION:** automated Mission Control transcripts.
-- **UNRESOLVED:** exact station/loop/keyset configuration and directly verified per-alarm internal call sequence.
-- **BLOCKED ON DOCUMENT RECOVERY:** PHO-TN401 and Mission-G-effective station/keyset configuration.
+- **UNRESOLVED / MISSION-G-SPECIFIC:** GUIDO DRK mapping, exact descent display callups/cadence, station/loop/keyset configuration, and directly verified per-alarm internal call sequence.
+- **BLOCKED ON DOCUMENT RECOVERY:** PHO-TN401 and Mission-G-effective station/keyset/display configuration.
