@@ -342,3 +342,4 @@ Run `python3 scripts/update_research_indexes.py` after adding or renaming resear
 - **803** — [apollo11 descent audio provenance boundary](research/803_apollo11_descent_audio_provenance_boundary.md)
 - **804** — [apollo11 792aai clock window](research/804_apollo11_792aai_clock_window.md)
 - **805** — [apollo11 792aai dvids asset identity](research/805_apollo11_792aai_dvids_asset_identity.md)
+- **806** — [apollo11 alternate fd loop cassette route](research/806_apollo11_alternate_fd_loop_cassette_route.md)

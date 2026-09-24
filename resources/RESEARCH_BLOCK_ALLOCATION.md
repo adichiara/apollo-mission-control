@@ -14,4 +14,4 @@ The allocation is descriptive; enforcement lives in `scripts/audit_documentation
 - **500–599** — `apollo11-landing-radar` — 3 note(s), IDs 500–502; claim: [500_apollo11_landing_radar_velocity_weighting_update.md](research/500_apollo11_landing_radar_velocity_weighting_update.md)
 - **600–699** — `apollo11-program-alarm-controller-flow` — 7 note(s), IDs 600–606; claim: [600_apollo11_msk1137_descent_program_alarm_fields.md](research/600_apollo11_msk1137_descent_program_alarm_fields.md)
 - **700–799** — `apollo-mocr-controller-interface` — 7 note(s), IDs 700–706; claim: [700_apollo10_mission_rules_mocr_voice_loop_baseline.md](research/700_apollo10_mission_rules_mocr_voice_loop_baseline.md)
-- **800–899** — `apollo11-descent-audio-provenance` — 6 note(s), IDs 800–805; claim: [800_apollo11_guido_audio_corpus_provenance.md](research/800_apollo11_guido_audio_corpus_provenance.md)
+- **800–899** — `apollo11-descent-audio-provenance` — 7 note(s), IDs 800–806; claim: [800_apollo11_guido_audio_corpus_provenance.md](research/800_apollo11_guido_audio_corpus_provenance.md)
