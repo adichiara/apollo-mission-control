@@ -30,11 +30,17 @@ Research note 512 adds primary near-contemporary MCC evidence from the Apollo 12
 
 This supplies a useful controller-interaction distinction without filling in Apollo 11 configuration gaps. The generic simulator can distinguish numeric MSK request, fast pre-labeled DRK request, and FDK alert/format lookup. It must not invent GUIDO's Mission-G DRK labels, format numbers, FDK loading, or an automatic program-alarm-to-FDK mapping.
 
-## New result — Mission-G display resource boundary
+## Mission-G display resource boundary
 
 Research note 513 returns to the Apollo 11 Flight Mission Rules and rule 4-9. This Mission-G primary source states that **10 of 36 MOCR D/TV channels were mandatory prelaunch**, with the minimum allocation including **one for GUIDO**. It also lists `GUIDO ANALOG CHART RECORDERS ONE AND TWO` as highly desirable on D/TV. Adjacent launch-navigation products include CMC dynamic-status comparison and wedge-angle monitoring.
 
 This closes a narrow resource question without inventing display callups. `GUIDO 1` is treated as a required minimum D/TV resource under the prelaunch rule, **not** permanent ownership of a fixed TV channel. Rule 4-9 does not identify a DRK key, RTCC format number, FDK loading, powered-descent screen, or 1201/1202 display action.
+
+## New result — participant-recollected internal alarm sequence
+
+Research note 514 returns to Garman's NASA oral history for the unresolved internal sequence. Garman explicitly says he advised Bales on a **back-room voice loop** that the first alarm was acceptable if it did not recur too often. He recalls Bales simultaneously checking the rest of the data—vehicle stable and computer recovering—before issuing the GO to Flight. For a later different-but-same-class alarm, Garman recalls calling `Same type!`, hearing Bales repeat it, and then hearing CAPCOM repeat it.
+
+This materially narrows role behavior: the back room supplied alarm-class expertise, while GUIDO remained an assessment node rather than a blind relay. It still does not name the conference loop and does not replace direct 1969 audio verification for exact words, timing, overlap, or the full participant set.
 
 ## Boundary preserved
 
@@ -42,7 +48,7 @@ A voice present on a recorded GUIDO station channel does not establish the named
 
 ## Next discriminating target
 
-Inspect restored GUIDO L/R audio around 1201/1202 and document only directly audible participants, wording, and sequence. Separately recover a Mission-G-effective station/keyset/display record and PHO-TN401 (Johnson Space Center History Collection, University of Houston-Clear Lake, Apollo 11 Mission Documents, **Box 078-65/66**).
+Inspect restored GUIDO L/R audio around 1201/1202 and verify the participant-recollected sequence directly from the 1969 recordings. Separately recover a Mission-G-effective station/keyset/display record and PHO-TN401 (Johnson Space Center History Collection, University of Houston-Clear Lake, Apollo 11 Mission Documents, **Box 078-65/66**).
 
 ## Sources
 
@@ -61,6 +67,7 @@ Inspect restored GUIDO L/R audio around 1201/1202 and document only directly aud
 ## Evidence status
 
 - **DOCUMENTED / SUFFICIENT:** MSK-1137 alarm/program/descent fields; back-room support → GUIDO assessment; CAPCOM-mediated crew disposition.
+- **DOCUMENTED / PRIMARY PARTICIPANT:** first-alarm support advice on an unnamed back-room voice loop; Bales checks broader data before GO; later `Same type` support → Bales → CAPCOM relay recollection.
 - **DOCUMENTED:** Apollo 11 `AGS−PGNCS` and `MSFN−PGNCS` comparison-product family.
 - **DOCUMENTED / MISSION-SPECIFIC:** Apollo 11 MOCR loop vocabulary/internal-versus-A/G separation.
 - **DOCUMENTED / MISSION-G-SPECIFIC DISPLAY RESOURCE:** rule 4-9 prelaunch minimum includes one D/TV channel for GUIDO; GUIDO analog chart recorders one and two are highly desirable on D/TV.
@@ -69,5 +76,5 @@ Inspect restored GUIDO L/R audio around 1201/1202 and document only directly aud
 - **DOCUMENTED / PRIMARY NASA / APOLLO-GENERIC:** display-request and channel-attach modes and dynamic TV-channel allocation.
 - **DOCUMENTED / PRIMARY / NEAR-CONTEMPORARY GENERIC:** DRK fast-request and FDK alert-to-format-code semantics.
 - **RESTRICTED TO NAVIGATION:** automated Mission Control transcripts.
-- **UNRESOLVED / MISSION-G-SPECIFIC:** GUIDO DRK labels/format mapping, FDK configuration, exact descent display callups/cadence, channel identity, station/loop/keyset configuration, and directly verified per-alarm internal call sequence.
+- **UNRESOLVED / MISSION-G-SPECIFIC:** named GUIDO/support loop, exact per-alarm wording/timing/overlap, GUIDO DRK labels/format mapping, FDK configuration, exact descent display callups/cadence, channel identity, and complete station/loop/keyset configuration.
 - **BLOCKED ON DOCUMENT RECOVERY:** PHO-TN401 and Mission-G-effective station/keyset/display configuration.
