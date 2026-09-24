@@ -1,12 +1,13 @@
-# Research note 507 — Apollo 11 mission-rules MOCR voice-loop baseline
+# Research note 701 — Apollo 11 mission-rules MOCR voice-loop baseline
 
 Date: 2026-09-23
+Research thread: `apollo-mocr-controller-interface`
 
 ## Question
 
-Can the adjacent Apollo 10 communications baseline in note 506 be replaced by a mission-specific Apollo 11 primary source without inventing a station-to-loop mapping?
+Can the adjacent Apollo 10 communications baseline in note 700 be replaced by a mission-specific Apollo 11 primary source without inventing a station-to-loop mapping?
 
-## Primary source
+## Sources
 
 NASA Manned Spacecraft Center, _Flight Mission Rules, Apollo 11 (AS-506/107/LM-5)_, 16 April 1969, Section 4, Ground Instrumentation Requirements, rule 4-5 COMMUNICATIONS, p. 4-3.
 
@@ -27,7 +28,7 @@ The rule states that one of the two flight-director loops is mandatory and the r
 
 ## Consequence
 
-Note 506's Apollo 10 evidence is no longer merely an adjacent-mission naming baseline: the same communications inventory is directly documented in the Apollo 11 mission rules. The simulator may therefore treat these names and the internal-MOCR versus crew-facing air-ground separation as **Mission-G-specific documented architecture**.
+Note 700's Apollo 10 evidence is no longer merely an adjacent-mission naming baseline: the same communications inventory is directly documented in the Apollo 11 mission rules. The simulator may therefore treat these names and the internal-MOCR versus crew-facing air-ground separation as **Mission-G-specific documented architecture**.
 
 This still does **not** identify which internal loop Steve Bales/GUIDO and Jack Garman's guidance-software support room used during the 1201/1202 assessments. Rule 4-5 does not provide per-console monitor/talk privileges, support-room keyset assignments, detailed alarm-call routing, or DRK/display routing. `MOCR DYN` must not be assigned to GUIDO merely because the name appears trajectory-related.
 

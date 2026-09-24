@@ -1,6 +1,7 @@
-# Research note 521 — Apollo 11 `792-AAI` clock-window reconciliation
+# Research note 804 — Apollo 11 `792-AAI` clock-window reconciliation
 
 Date: 2026-09-24
+Research thread: `apollo11-descent-audio-provenance`
 
 ## Question
 
@@ -39,6 +40,8 @@ Direct audio inspection must retain a separate distinction between catalog GMT, 
 - DVIDS, *Apollo 11* audio catalog entry, including `792-AAI`: https://www.dvidshub.net/audio/32176/apollo-11
 
 ## Evidence status
+
+- **UNRESOLVED:** open retrieval/alignment questions listed below remain unresolved.
 
 - **CLOSED:** semantic meaning of the `792-AAI` catalog descent range `1955–2025` as GMT/time-of-day.
 - **DERIVED:** approximate GET coverage 102:23:00–102:53:00 from NASA range zero.

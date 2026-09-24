@@ -1,9 +1,10 @@
-# Research Note 509 — PHO-FAM001 voice-keyset circuit semantics
+# Research Note 703 — PHO-FAM001 voice-keyset circuit semantics
 
 **Date:** 2026-09-23  
+Research thread: `apollo-mocr-controller-interface`
 **Status:** REVIEWED-PARTIAL
 
-## Primary technical source
+## Sources
 
 Philco-Ford / Western Development Laboratories, *Familiarization Manual — Mission Control Center Houston*, PHO-FAM001, revised through 30 June 1967.
 

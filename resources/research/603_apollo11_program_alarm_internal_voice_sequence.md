@@ -1,6 +1,7 @@
-# 514 — Apollo 11 program-alarm internal voice sequence
+# 603 — Apollo 11 program-alarm internal voice sequence
 
 Date: 2026-09-24
+Research thread: `apollo11-program-alarm-controller-flow`
 
 ## Question
 
@@ -33,7 +34,7 @@ The Apollo 11 alarm interaction may represent:
 
 For repeated same-class alarms, a compressed “same type” relay is historically supported at participant-recollection level. Do not assign a named conference loop, exact latency, exact wording for every occurrence, or direct support-room air-ground authority until the primary recordings/configuration evidence supports it.
 
-## Source
+## Sources
 
 - NASA Johnson Space Center Oral History Project, John R. Garman interview, 27 March 2001: https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/GarmanJR/GarmanJR_3-27-01.pdf
 

@@ -1,6 +1,7 @@
-# Research Note 510 — Apollo 11 GUIDO audio corpus provenance
+# Research Note 800 — Apollo 11 GUIDO audio corpus provenance
 
 **Date:** 2026-09-23  
+Research thread: `apollo11-descent-audio-provenance`
 **Status:** REVIEWED-PARTIAL
 
 ## Question
@@ -41,3 +42,9 @@ The next descent-alarm research pass should use the GUIDO left/right restored re
 - **RESTRICTED TO NAVIGATION:** automated Mission Control transcripts; verify historical claims against audio.
 - **NEXT:** inspect the restored GUIDO L/R audio around 1201/1202 and document only directly audible participants, wording, and sequence.
 - **UNRESOLVED:** named loop carrying Bales/Garman traffic and exact Mission-G keyset privilege matrix.
+
+## Sources
+
+- Apollo in Real Time, Apollo 11 Mission Control Audio / MOCRviz: https://apolloinrealtime.org/11/MOCRviz/MOCRviz.html
+- NASA, Apollo 11 Mission Audio: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11MissionAudio.html
+- NASA, Apollo Lunar Surface Journal and Apollo Flight Journal: https://www.nasa.gov/history/alsj-and-afj/

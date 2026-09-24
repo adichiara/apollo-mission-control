@@ -1,13 +1,14 @@
-# Research note 516 — Apollo 11 descent alarm computer timeline
+# Research note 604 — Apollo 11 descent alarm computer timeline
 
 Date: 2026-09-24
+Research thread: `apollo11-program-alarm-controller-flow`
 Status: DOCUMENTED / PRIMARY / MISSION-G-SPECIFIC
 
 ## Question
 
 Before direct GUIDO L/R and Flight Director-loop audio comparison, can the alarm search windows be anchored to a primary Mission-G event chronology without treating later transcripts as exact timing authority?
 
-## Primary source
+## Sources
 
 NASA/MSC, _Apollo 11 Mission Report_, MSC-00171, November 1969, table 5-I, `Lunar descent event times`.
 

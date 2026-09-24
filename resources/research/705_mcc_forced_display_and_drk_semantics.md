@@ -1,6 +1,7 @@
-# 512 — MCC forced-display and DRK semantics
+# 705 — MCC forced-display and DRK semantics
 
 Date: 2026-09-24
+Research thread: `apollo-mocr-controller-interface`
 
 ## Question
 
@@ -39,7 +40,7 @@ The generic console interaction can now distinguish three historically grounded 
 
 For the Apollo 11 GUIDO reference, the simulator should expose those mechanics only at the architecture level until Mission-G-effective configuration evidence identifies actual keys/formats. A modern alert that automatically opens a guessed GUIDO display would exceed the evidence.
 
-## Source
+## Sources
 
 - NASA/MSFC, _Saturn V Flight Manual, SA-507_, mission-control section, console-keyboard discussion (Apollo 12 vehicle; 1969): https://www.nasa.gov/wp-content/uploads/static/history/afj/ap12fj/pdf/a12_sa507-flightmanual.pdf
 

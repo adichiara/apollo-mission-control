@@ -1,6 +1,7 @@
-# 503 — Apollo 11 MSK-1137 descent/program-alarm fields
+# 600 — Apollo 11 MSK-1137 descent/program-alarm fields
 
 Date: 2026-09-23
+Research thread: `apollo11-program-alarm-controller-flow`
 Status: **SUFFICIENT for controller-product field semantics; exact DRK/button routing remains OPEN**
 
 ## Bounded question
@@ -34,7 +35,7 @@ The Apollo 11 powered-descent/program-alarm reference no longer needs to invent 
 
 This does **not** establish which controller requested MSK-1137 at a particular instant, a one-button DRK legend, display cadence/latency, or that every field was simultaneously visible to every station. Those remain separate configuration/routing questions.
 
-## Source
+## Sources
 
 AC Electronics, _Apollo 11 Manual_, Apollo 11 mission-era guidance/control documentation, section `ASPO 45 CRT DISPLAYS`, `MSK-1137` and `MSK-1137 (CONTINUED)`: https://www.ibiblio.org/apollo/Documents/AcElectronicsApollo11.pdf
 

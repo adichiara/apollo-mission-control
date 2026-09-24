@@ -1,6 +1,7 @@
-# 505 — Apollo 11 program-alarm internal assessment path
+# 602 — Apollo 11 program-alarm internal assessment path
 
 Date: 2026-09-23
+Research thread: `apollo11-program-alarm-controller-flow`
 
 ## Question
 
@@ -20,7 +21,7 @@ The previously broad internal ownership question can be narrowed:
 
 `guidance-software back-room support (Garman/team) → GUIDO (Steve Bales) → FLIGHT/ground decision chain → CAPCOM → crew`
 
-The first two links are now supported by NASA participant/agency evidence; the CAPCOM-to-crew link was already established directly by the Apollo 11 air-to-ground transcript in note 504.
+The first two links are now supported by NASA participant/agency evidence; the CAPCOM-to-crew link was already established directly by the Apollo 11 air-to-ground transcript in note 601.
 
 This does **not** establish the exact voice-loop name/channel, console keying, DRK/display request, timing of every individual alarm call, or whether Garman alone originated every later 1201/1202 recommendation. Those details remain open.
 

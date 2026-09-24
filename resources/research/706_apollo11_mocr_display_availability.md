@@ -1,6 +1,7 @@
-# 513 — Apollo 11 MOCR display availability
+# 706 — Apollo 11 MOCR display availability
 
 Date: 2026-09-24
+Research thread: `apollo-mocr-controller-interface`
 
 ## Question
 
@@ -18,7 +19,7 @@ The same rule separately lists trajectory/display products. Of particular releva
 - `WEDGE ANGLE MONITOR` as highly desirable on D/TV for launch-vehicle and spacecraft navigation-performance monitoring;
 - `GUIDO ANALOG CHART RECORDERS ONE AND TWO` as highly desirable on D/TV.
 
-This is stronger than the adjacent-mission evidence in note 512 for one narrow question: it establishes an Apollo-11-effective minimum D/TV resource for GUIDO and confirms that GUIDO's information environment included analog chart-recorder products that could be displayed on D/TV.
+This is stronger than the adjacent-mission evidence in note 705 for one narrow question: it establishes an Apollo-11-effective minimum D/TV resource for GUIDO and confirms that GUIDO's information environment included analog chart-recorder products that could be displayed on D/TV.
 
 ## Effectivity and interpretation boundary
 
@@ -38,7 +39,7 @@ The Apollo 11 reference may now encode a Mission-G-specific **display-resource c
 
 The station may also acknowledge analog chart recorders as part of the documented GUIDO information environment, but their exact powered-descent use, variables, routing, and on-screen presentation remain open unless separately sourced.
 
-## Source
+## Sources
 
 - NASA/MSC, _Flight Mission Rules, Apollo 11_, 16 April 1969, rule 4-9, Ground Instrumentation Requirements, MCC p. 4-5: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11MissionRules.pdf
 

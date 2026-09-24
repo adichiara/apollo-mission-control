@@ -1,6 +1,7 @@
-# Research note 522 — Apollo 11 `792-AAI` DVIDS asset-identity gate
+# Research note 805 — Apollo 11 `792-AAI` DVIDS asset-identity gate
 
 Date: 2026-09-24
+Research thread: `apollo11-descent-audio-provenance`
 
 ## Question
 
@@ -24,12 +25,14 @@ This prevents a false-positive source attribution: a page can mention `792-AAI` 
 
 The public page exposes a `Download Audio` control, but direct automated retrieval returned HTTP 403 in this research environment. That access result is operational, not historical evidence, and does not establish that the underlying audio is unavailable through other authorized/manual routes.
 
-## Source
+## Sources
 
 - DVIDS, *Apollo 11*, Audio ID 32176: https://www.dvidshub.net/audio/32176/apollo-11
 - Comparison catalog pages inspected during discovery include DVIDS Audio IDs 32145, 32208, 32214, and 32222; each repeats the same collection inventory while reporting a different page-specific filename/duration.
 
 ## Evidence status
+
+- **UNRESOLVED:** open retrieval/alignment questions listed below remain unresolved.
 
 - **CLOSED:** a DVIDS page's repeated Apollo-collection description is insufficient to map that page to `792-AAI`.
 - **OPEN:** explicit public asset/reel mapping for `792-AAI`; actual descent-file retrieval; file elapsed-time alignment; direct FD-loop transcription.

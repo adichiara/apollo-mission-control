@@ -10,21 +10,21 @@ NASA/MSC 70-FM-20 preserves Apollo 11 descent products labeled `AGS−PGNCS` and
 
 Apollo 11 Flight Mission Rules rule 4-5 documents Mission-G MOCR loop vocabulary. PHO-FAM001 documents local conference/intersite loops and talk/listen versus monitor-only keyset circuits. Neither establishes the exact Bales/Garman Mission-G circuit.
 
-NASA History Division's reproduced Apollo 11 Historical Recorder #1 track sheet maps channels 21/22 to `GUIDO [L]/[R]`, positions 018/019. Research note 510 connects that map to the restored Apollo 11 Mission Control audio corpus; automated transcripts are navigation aids only.
+NASA History Division's reproduced Apollo 11 Historical Recorder #1 track sheet maps channels 21/22 to `GUIDO [L]/[R]`, positions 018/019. Research note 800 connects that map to the restored Apollo 11 Mission Control audio corpus; automated transcripts are navigation aids only.
 
-Research notes 511–513 establish generic display request/channel attach behavior, DRK/FDK interaction semantics, and the Mission-G rule 4-9 display-resource boundary. They do not establish Apollo 11 GUIDO DRK labels, FDK loading, exact descent callups, or alarm-to-FDK behavior.
+Research notes 704–513 establish generic display request/channel attach behavior, DRK/FDK interaction semantics, and the Mission-G rule 4-9 display-resource boundary. They do not establish Apollo 11 GUIDO DRK labels, FDK loading, exact descent callups, or alarm-to-FDK behavior.
 
-Research note 514 narrows the participant-recollected internal alarm sequence: Garman advised Bales on an unnamed back-room voice loop; Bales checked broader data before the GO; a later same-class alarm produced a rapid `Same type` relay. This supports GUIDO as an assessment node, not a blind relay, but exact wording/timing remains an audio-verification problem.
+Research note 603 narrows the participant-recollected internal alarm sequence: Garman advised Bales on an unnamed back-room voice loop; Bales checked broader data before the GO; a later same-class alarm produced a rapid `Same type` relay. This supports GUIDO as an assessment node, not a blind relay, but exact wording/timing remains an audio-verification problem.
 
 ## Primary-audio recovery routes
 
-Research note 515 identifies a complementary primary recording in the NASA Apollo 11 audio collection hosted by DVIDS. The catalog explicitly identifies `792-AAI` as **Flight Director's Loop** audio and lists **Lunar Descent 1955–2025** among its covered intervals. DVIDS identifies NASA as the courtesy source and states that the collection was digitized, cataloged, and archived by the Houston Audio Control Room at Johnson Space Center under NASA identifier `Apollo11Audio`.
+Research note 801 identifies a complementary primary recording in the NASA Apollo 11 audio collection hosted by DVIDS. The catalog explicitly identifies `792-AAI` as **Flight Director's Loop** audio and lists **Lunar Descent 1955–2025** among its covered intervals. DVIDS identifies NASA as the courtesy source and states that the collection was digitized, cataloged, and archived by the Houston Audio Control Room at Johnson Space Center under NASA identifier `Apollo11Audio`.
 
 This gives the project a second primary-recording perspective for the alarm sequence: restored GUIDO L/R for station-local traffic and `792-AAI` for traffic that reached the Flight Director loop. Cross-comparison can test ordering and relay behavior without inferring that Garman's unnamed back-room circuit was itself `FD LOOP`.
 
 ## New result — Mission Report alarm anchors
 
-Research note 516 adds a Mission-G primary timing baseline from NASA/MSC _Apollo 11 Mission Report_ table 5-I. Its postflight event chronology records five descent alarms at `102:38:22` (1202, computer determined), `102:39:02` (1202), `102:42:18` (1201, computer determined), `102:42:43` (1202, computer determined), and `102:42:58` (1202, computer determined). It also places P64 entry at `102:41:32` and P66 entry at `102:43:22`.
+Research note 604 adds a Mission-G primary timing baseline from NASA/MSC _Apollo 11 Mission Report_ table 5-I. Its postflight event chronology records five descent alarms at `102:38:22` (1202, computer determined), `102:39:02` (1202), `102:42:18` (1201, computer determined), `102:42:43` (1202, computer determined), and `102:42:58` (1202, computer determined). It also places P64 entry at `102:41:32` and P66 entry at `102:43:22`.
 
 These are now the search anchors for GUIDO L/R ↔ `792-AAI` comparison. They are **computer/event times, not assumed voice-call times**. NASA's Lunar Surface Journal chronology, for example, places Armstrong's first audible `Program Alarm` report at `102:38:26`, after the Mission Report's first computer-determined alarm. Exact spoken timing, overlap, and speaker attribution therefore remain recording-verification questions rather than being copied from a transcript clock.
 

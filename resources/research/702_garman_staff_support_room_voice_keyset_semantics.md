@@ -1,12 +1,13 @@
-# Research note 508 — Garman staff-support-room voice keyset semantics
+# Research note 702 — Garman staff-support-room voice keyset semantics
 
 Date: 2026-09-23
+Research thread: `apollo-mocr-controller-interface`
 
 ## Question
 
 Can the unresolved Apollo 11 GUIDO/support-room communications boundary be narrowed without inventing a named loop assignment?
 
-## Primary source
+## Sources
 
 NASA Johnson Space Center Oral History Project, John R. Garman interview, 27 March 2001.
 

@@ -1,6 +1,7 @@
-# Research note 520 — Apollo 11 descent audio provenance boundary
+# Research note 803 — Apollo 11 descent audio provenance boundary
 
 Date: 2026-09-24
+Research thread: `apollo11-descent-audio-provenance`
 
 ## Question
 
@@ -35,6 +36,8 @@ Do not encode a 1201/1202 internal relay timestamp, named circuit, or speaker at
 - NASA/JSC audio catalog entry `792-AAI`, Flight Director's Loop: lunar descent 1955–2025.
 
 ## Evidence status
+
+- **UNRESOLVED:** open retrieval/alignment questions listed below remain unresolved.
 
 - **PRIMARY/ARCHIVAL CONFIGURATION:** Historical Recorder #1 track sheet: channel 1 IRIG-B GMT; FLIGHT L/R 7/8; CAPCOM L/R 14/15; GUIDO L/R 21/22.
 - **NASA PROVENANCE:** ALSJ mission-audio corpus description documents JSC digitization provenance.

@@ -1,6 +1,7 @@
-# 504 — Apollo 11 program-alarm air-ground call path
+# 601 — Apollo 11 program-alarm air-ground call path
 
 Date: 2026-09-23
+Research thread: `apollo11-program-alarm-controller-flow`
 
 ## Question
 
@@ -26,7 +27,7 @@ For the Apollo 11 reference architecture, alarm disposition to the crew should b
 
 Internal alarm assessment ownership remains unresolved pending controller-loop/configuration evidence. PHO-TN401 remains relevant to display/control routing but must not be presumed to answer the voice-loop ownership question until inspected.
 
-## Source
+## Sources
 
 - NASA, _Apollo 11 Air-to-Ground Voice Transcription (GOSS NET 1)_, Tape 66/7, p. 312: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11transcript_tec.pdf
 

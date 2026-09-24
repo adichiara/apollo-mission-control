@@ -12,7 +12,7 @@ Treat that source as primary evidence for the **crew ↔ CAPCOM radio path only*
 
 ## Immediate next work
 
-1. Keep the five Mission Report alarm-event anchors from note 516 as search windows, not voice timestamps.
+1. Keep the five Mission Report alarm-event anchors from note 604 as search windows, not voice timestamps.
 2. Inspect restored GUIDO L/R and NASA `792-AAI` for the internal alarm chronology.
 3. Use `AS11_TEC` to verify only the spacecraft/CAPCOM side of each window.
 4. Reconcile recording clocks before asserting exact timing or overlap.

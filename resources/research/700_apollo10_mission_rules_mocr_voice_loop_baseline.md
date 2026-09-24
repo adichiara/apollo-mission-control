@@ -1,12 +1,13 @@
-# Research note 506 — Apollo 10 mission-rules MOCR voice-loop baseline
+# Research note 700 — Apollo 10 mission-rules MOCR voice-loop baseline
 
 Date: 2026-09-23
+Research thread: `apollo-mocr-controller-interface`
 
 ## Question
 
 Can a primary, mission-era source narrow the unresolved Apollo 11 Mission Control voice-loop vocabulary without inventing an Apollo 11 station-to-loop mapping?
 
-## Primary source
+## Sources
 
 NASA Manned Spacecraft Center, _Apollo 10 Mission Rules_, final revision, 15 April 1969, Section 4, Ground Instrumentation Requirements, rule 4-5 COMMUNICATIONS, p. 4-3.
 

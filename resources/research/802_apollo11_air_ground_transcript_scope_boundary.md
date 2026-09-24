@@ -1,13 +1,14 @@
-# Research note 517 — Apollo 11 air-ground transcript scope boundary
+# Research note 802 — Apollo 11 air-ground transcript scope boundary
 
 Date: 2026-09-24
+Research thread: `apollo11-descent-audio-provenance`
 Status: DOCUMENTED / PRIMARY / MISSION-G-SPECIFIC SOURCE SCOPE
 
 ## Question
 
 Can NASA's contemporary Apollo 11 technical voice transcript be used to close any part of the open descent-alarm voice chronology, and what does it *not* record?
 
-## Primary source
+## Sources
 
 NASA, _Apollo 11 Technical Air-to-Ground Voice Transcription (GOSS NET 1)_, NTRS document 20160014392, publication date July 1969.
 

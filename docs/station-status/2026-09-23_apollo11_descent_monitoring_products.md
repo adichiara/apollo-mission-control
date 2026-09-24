@@ -11,15 +11,15 @@ NASA/MSC 70-FM-20 preserves Apollo 11 `AGS−PGNCS` and `MSFN−PGNCS` descent c
 
 Apollo 11 Flight Mission Rules document Mission-G loop vocabulary. PHO-FAM001 documents local conference/intersite loops and talk/listen versus monitor-only keyset circuits. Exact Mission-G station-to-loop assignment remains unresolved.
 
-NASA History Division reproduces an Apollo 11 Historical Recorder #1 track sheet assigning channels 21/22 to `GUIDO [L]/[R]`, positions 018/019. Research note 510 connects this to restored GUIDO L/R audio; automated transcripts are navigation aids only.
+NASA History Division reproduces an Apollo 11 Historical Recorder #1 track sheet assigning channels 21/22 to `GUIDO [L]/[R]`, positions 018/019. Research note 800 connects this to restored GUIDO L/R audio; automated transcripts are navigation aids only.
 
-Research notes 511–513 establish Apollo-generic display request/channel attach behavior, DRK/FDK interaction semantics, and Mission-G display-resource evidence: one GUIDO D/TV channel in the mandatory prelaunch minimum and two GUIDO analog chart recorders listed as highly desirable on D/TV. These are not evidence for actual Apollo 11 GUIDO DRK/FDK mapping or descent callups.
+Research notes 704–513 establish Apollo-generic display request/channel attach behavior, DRK/FDK interaction semantics, and Mission-G display-resource evidence: one GUIDO D/TV channel in the mandatory prelaunch minimum and two GUIDO analog chart recorders listed as highly desirable on D/TV. These are not evidence for actual Apollo 11 GUIDO DRK/FDK mapping or descent callups.
 
-Research note 514 adds primary participant evidence for the internal alarm workflow. Garman says he used an unnamed back-room voice loop to advise Bales; Bales checked broader data before making the GO call; a later same-class alarm produced a rapid `Same type` relay. This establishes participant-recollected role behavior, not a named loop or exact transcript.
+Research note 603 adds primary participant evidence for the internal alarm workflow. Garman says he used an unnamed back-room voice loop to advise Bales; Bales checked broader data before making the GO call; a later same-class alarm produced a rapid `Same type` relay. This establishes participant-recollected role behavior, not a named loop or exact transcript.
 
-Research note 515 identifies NASA `792-AAI`, cataloged by DVIDS under `Apollo11Audio`, as **Flight Director's Loop** audio including **Lunar Descent 1955–2025**. This provides an independent primary-recording route for calls that reached the Flight loop during descent.
+Research note 801 identifies NASA `792-AAI`, cataloged by DVIDS under `Apollo11Audio`, as **Flight Director's Loop** audio including **Lunar Descent 1955–2025**. This provides an independent primary-recording route for calls that reached the Flight loop during descent.
 
-Research note 516 establishes the Mission-G event anchors for audio inspection from NASA/MSC _Apollo 11 Mission Report_ table 5-I: 1202 at `102:38:22`, 1202 at `102:39:02`, 1201 at `102:42:18`, 1202 at `102:42:43`, and 1202 at `102:42:58`; P64 entry is `102:41:32` and P66 entry `102:43:22`. These are postflight computer/event timestamps and are not promoted to exact spoken-call timestamps.
+Research note 604 establishes the Mission-G event anchors for audio inspection from NASA/MSC _Apollo 11 Mission Report_ table 5-I: 1202 at `102:38:22`, 1202 at `102:39:02`, 1201 at `102:42:18`, 1202 at `102:42:43`, and 1202 at `102:42:58`; P64 entry is `102:41:32` and P66 entry `102:43:22`. These are postflight computer/event timestamps and are not promoted to exact spoken-call timestamps.
 
 ## Station consequence
 

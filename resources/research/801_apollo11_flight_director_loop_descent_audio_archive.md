@@ -1,6 +1,7 @@
-# 515 — Apollo 11 lunar-descent Flight Director loop archive
+# 801 — Apollo 11 lunar-descent Flight Director loop archive
 
 Date: 2026-09-24
+Research thread: `apollo11-descent-audio-provenance`
 
 ## Question
 
@@ -29,7 +30,7 @@ The alarm-decision sequence can now be verified from two complementary primary-r
 
 Cross-comparison can establish ordering and relay behavior more strongly than either recording alone while preserving the unresolved named back-room-loop question.
 
-## Source
+## Sources
 
 - DVIDS / NASA, _Apollo 11_, NASA identifier `Apollo11Audio`; catalog metadata for `792-AAI`, Flight Director's Loop, Lunar Descent 1955–2025: https://www.dvidshub.net/audio/32176/apollo-11
 

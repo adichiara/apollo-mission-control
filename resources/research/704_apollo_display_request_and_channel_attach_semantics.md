@@ -1,13 +1,14 @@
-# Research Note 511 — Apollo display-request and channel-attach semantics
+# Research Note 704 — Apollo display-request and channel-attach semantics
 
 **Date:** 2026-09-23  
+Research thread: `apollo-mocr-controller-interface`
 **Status:** REVIEWED-PARTIAL
 
 ## Question
 
 What historically supported interaction can the simulator use for controller CRT display selection while exact Apollo 11 GUIDO DRK mapping and Mission-G display routing remain unresolved?
 
-## Primary source
+## Sources
 
 Richard A. Hoover, NASA Johnson Space Center, _Apollo Experience Report: Flight-Control Data Needs, Terminal Display Devices, and Ground System Configuration Requirements_, NASA TN D-7685 / JSC S-396, May 1974.
 
