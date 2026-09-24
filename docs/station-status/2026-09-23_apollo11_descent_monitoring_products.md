@@ -17,7 +17,9 @@ Research notes 511–513 establish Apollo-generic display request/channel attach
 
 Research note 514 adds primary participant evidence for the internal alarm workflow. Garman says he used an unnamed back-room voice loop to advise Bales; Bales checked broader data before making the GO call; a later same-class alarm produced a rapid `Same type` relay. This establishes participant-recollected role behavior, not a named loop or exact transcript.
 
-Research note 515 identifies NASA `792-AAI`, cataloged by DVIDS under `Apollo11Audio`, as **Flight Director's Loop** audio including **Lunar Descent 1955–2025**. The catalog states that the material was digitized, cataloged, and archived by the Houston Audio Control Room at JSC. This provides an independent primary-recording route for calls that reached the Flight loop during descent.
+Research note 515 identifies NASA `792-AAI`, cataloged by DVIDS under `Apollo11Audio`, as **Flight Director's Loop** audio including **Lunar Descent 1955–2025**. This provides an independent primary-recording route for calls that reached the Flight loop during descent.
+
+Research note 516 establishes the Mission-G event anchors for audio inspection from NASA/MSC _Apollo 11 Mission Report_ table 5-I: 1202 at `102:38:22`, 1202 at `102:39:02`, 1201 at `102:42:18`, 1202 at `102:42:43`, and 1202 at `102:42:58`; P64 entry is `102:41:32` and P66 entry `102:43:22`. These are postflight computer/event timestamps and are not promoted to exact spoken-call timestamps.
 
 ## Station consequence
 
@@ -25,27 +27,30 @@ The supported alarm-assessment chain remains **guidance-software back-room suppo
 
 The simulator may represent central display requests and distinguish MSK numeric request, DRK fast request, and FDK alert/format lookup. For Apollo 11 it may represent the documented GUIDO D/TV resource and analog chart recorders, but must not assign fixed channel identity, unsupported DRK labels/formats, FDK loading, or program-alarm behavior.
 
-For voice research, GUIDO L/R and `792-AAI` now provide complementary station-local and Flight-loop primary recordings. Cross-comparison may establish audible relay order, but hearing a voice on either recording does not prove the originating named loop or transmit privilege. Do not map Garman's `back-room voice loop` to `FD LOOP`, `MOCR DYN`, or another Mission-G circuit without configuration evidence.
+For voice research, GUIDO L/R and `792-AAI` provide complementary station-local and Flight-loop primary recordings. Use the Mission Report alarm times as search anchors, not as voice timestamps. Hearing a voice on either recording does not prove the originating named loop or transmit privilege. Do not map Garman's `back-room voice loop` to `FD LOOP`, `MOCR DYN`, or another Mission-G circuit without configuration evidence.
 
-No broader station maturity is promoted. Exact internal loop assignment, complete per-console keyset privileges, GUIDO DRK mapping, FDK configuration, exact powered-descent display callups/cadence, channel identity, and exact per-alarm wording/timing remain unresolved.
+No broader station maturity is promoted. Exact internal loop assignment, complete per-console keyset privileges, GUIDO DRK mapping, FDK configuration, exact powered-descent display callups/cadence, channel identity, exact per-alarm spoken wording/timing, and recording-clock reconciliation remain unresolved.
 
 ## Recovery target
 
-Inspect restored GUIDO L/R around 1201/1202 and cross-compare with NASA `792-AAI` lunar-descent Flight Director-loop audio. PHO-TN401 remains at the **Johnson Space Center History Collection, University of Houston-Clear Lake, Apollo Program, Mission Documents: Apollo 11, Box 078-65/66**. A Mission-G-effective station/keyset/display record remains the discriminating configuration target.
+Inspect restored GUIDO L/R and NASA `792-AAI` around the five Mission Report alarm anchors with enough lead/lag to capture the complete relay sequence; reconcile recording clocks before freezing timing. PHO-TN401 remains at the **Johnson Space Center History Collection, University of Houston-Clear Lake, Apollo Program, Mission Documents: Apollo 11, Box 078-65/66**. A Mission-G-effective station/keyset/display record remains the discriminating configuration target.
 
 ## Sources
 
+- NASA/MSC, _Apollo 11 Mission Report_, MSC-00171: https://www.nasa.gov/wp-content/uploads/static/apollo50th/pdf/A11_MissionReport.pdf
 - NASA/MSC, _Flight Mission Rules, Apollo 11_: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11MissionRules.pdf
 - NASA/JSC, NASA TN D-7685: https://ntrs.nasa.gov/citations/19740015284
 - NASA/MSFC, _Saturn V Flight Manual, SA-507_: https://www.nasa.gov/wp-content/uploads/static/history/afj/ap12fj/pdf/a12_sa507-flightmanual.pdf
 - NASA History Division, _News & Notes_ 35(3): https://www.nasa.gov/wp-content/uploads/2023/01/NewsNotes-35-3-Fall-2018.pdf
 - Apollo in Real Time, Apollo 11 Mission Control Audio: https://apolloinrealtime.org/11/MOCRviz/MOCRviz.html
 - DVIDS / NASA, `Apollo11Audio`, `792-AAI`: https://www.dvidshub.net/audio/32176/apollo-11
+- NASA Apollo Lunar Surface Journal, landing chronology: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/a11.landing.html
 - NASA JSC Oral History Project, John R. Garman: https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/GarmanJR/GarmanJR_3-27-01.pdf
 
 ## Evidence status
 
 - **DOCUMENTED / SUFFICIENT:** Apollo-11-specific MSK-1137 field semantics; guidance-software back-room → GUIDO relationship; CAPCOM-mediated crew disposition.
+- **DOCUMENTED / PRIMARY / MISSION-G-SPECIFIC TIMING:** five alarm-event anchors and P64/P66 boundaries; not exact spoken timing.
 - **DOCUMENTED / PRIMARY PARTICIPANT:** unnamed back-room voice-loop alarm advice; Bales checks broader data before GO; later `Same type` relay recollection.
 - **DOCUMENTED / MISSION-SPECIFIC:** Apollo 11 MOCR loop vocabulary/internal-versus-A/G separation.
 - **DOCUMENTED / PRIMARY / MISSION-G-SPECIFIC DISPLAY RESOURCE:** one GUIDO D/TV channel in prelaunch minimum; two GUIDO analog chart recorders highly desirable on D/TV.
@@ -55,6 +60,6 @@ Inspect restored GUIDO L/R around 1201/1202 and cross-compare with NASA `792-AAI
 - **DOCUMENTED / PRIMARY NASA / APOLLO-GENERIC:** display-request/channel-attach modes.
 - **DOCUMENTED / PRIMARY / NEAR-CONTEMPORARY GENERIC:** DRK fast-request and FDK alert-to-format-code semantics.
 - **RESTRICTED TO NAVIGATION:** automated/derivative transcripts; direct audio verification required.
-- **UNRESOLVED / MISSION-G-SPECIFIC:** named GUIDO/support loop, exact per-alarm wording/timing/overlap, complete keyset privilege matrix, GUIDO DRK labels/format mapping, FDK configuration, exact powered-descent display callups/cadence, and channel identity.
+- **UNRESOLVED / MISSION-G-SPECIFIC:** named GUIDO/support loop, exact per-alarm spoken wording/timing/overlap, recording-clock reconciliation, complete keyset privilege matrix, GUIDO DRK labels/format mapping, FDK configuration, exact powered-descent display callups/cadence, and channel identity.
 - **BLOCKED ON DOCUMENT RECOVERY:** PHO-TN401 and Mission-G-effective station/keyset/display configuration.
 - **UNCHANGED:** Apollo 13 station maturity.
