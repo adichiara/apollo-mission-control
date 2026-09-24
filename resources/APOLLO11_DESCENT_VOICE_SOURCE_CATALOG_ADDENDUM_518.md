@@ -1,11 +1,11 @@
-# Apollo 11 descent voice source-catalog addendum — note 518
+# Apollo 11 descent voice source-catalog addendum — note 605
 
 Date: 2026-09-24
 
 | Source | Direct evidence | Use / restriction |
 | --- | --- | --- |
 | NASA, _Apollo 11 Technical Air-to-Ground Voice Transcription (GOSS NET 1)_, NTRS 20160014392, tape 66/7–66/10 | Mission-G crew/CAPCOM timestamps for the 1202/1201 descent-alarm radio exchange | Primary source for radio-side wording and timing. Do not use it as an internal MOCR/support-room transcript. |
-| NASA, _Apollo 11 Mission Report_ | Computer/event alarm anchors documented in note 516 | Compare to radio timestamps to keep event and voice observables distinct; do not assume a common event/utterance timestamp. |
+| NASA, _Apollo 11 Mission Report_ | Computer/event alarm anchors documented in note 604 | Compare to radio timestamps to keep event and voice observables distinct; do not assume a common event/utterance timestamp. |
 
 ## Catalog consequence
 
