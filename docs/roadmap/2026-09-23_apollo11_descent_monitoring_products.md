@@ -10,7 +10,9 @@ The supported alarm architecture remains **guidance-software back-room support �
 
 Jack Garman's NASA JSC oral history adds primary-participant keyset semantics: Apollo support-room communications distinguished white **talk** buttons from amber **listen** buttons, supported simultaneous monitoring of multiple loops, and allowed support personnel to monitor air-ground without general air-ground transmit authority. Garman recalls that the support position gained an FD-loop talk button only "later on"; the date is too imprecise to freeze an Apollo 11 FD-loop privilege.
 
-PHO-FAM001 now supplies contemporary primary technical corroboration: MCC station keysets connected to local conference or intersite loops and could be configured with **talk/listen** or **monitor-only** circuits. Keyset configuration varied by usage requirement. This makes separate monitor/transmit permissions a sourced MCC-system property rather than an inference from the Garman recollection alone.
+PHO-FAM001 supplies contemporary primary technical corroboration: MCC station keysets connected to local conference or intersite loops and could be configured with **talk/listen** or **monitor-only** circuits. Keyset configuration varied by usage requirement. This makes separate monitor/transmit permissions a sourced MCC-system property rather than an inference from the Garman recollection alone.
+
+A NASA History Division publication now supplies a Mission-G-specific archival recorder map: its reproduced Apollo 11 `AS-506 3RD FL` Historical Recorder #1 track sheet dated `06-09-69` maps channels 21/22 to `GUIDO [L]/[R]`, positions 018/019. This identifies the primary recorded GUIDO channels for direct descent-alarm research, but it is a recorder assignment—not a keyset/loop privilege map.
 
 ## Immediate next work
 
@@ -18,14 +20,17 @@ PHO-FAM001 now supplies contemporary primary technical corroboration: MCC statio
 2. Keep the **back-room guidance-software support → GUIDO assessment relationship SUFFICIENT** for current role architecture.
 3. Treat rule-4-5 loop names and internal-MOCR/A-G separation as **Apollo-11-specific documented architecture**.
 4. Treat separate loop **monitor** and **talk** permissions as **DOCUMENTED primary technical architecture**; do not give AGC support direct A/G transmit authority from the available evidence.
-5. Do not assign the Bales/Garman assessment to `FD LOOP`, `MOCR DYN`, or another named loop without Mission-G-effective configuration evidence.
-6. Preserve `AGS−PGNCS` and `MSFN−PGNCS` as distinct comparison products and CAPCOM as the crew-facing disposition path.
-7. Do not expose 70-FM-20 Figure 9 as an exact live MOCR display.
-8. Recover Mission-G-effective routing/configuration evidence. PHO-TN401 remains the strongest display/control target at the Johnson Space Center History Collection, University of Houston-Clear Lake, Apollo Program, Mission Documents: Apollo 11, **Box 078-65/66**.
-9. Seek a Mission-G-effective station/keyset record before freezing exact station-to-loop assignment, complete talk/listen privilege matrix, DRK mapping, request routing, or cadence.
+5. Treat Historical Recorder #1 channels 21/22 as **DOCUMENTED Apollo 11 GUIDO recording assignments**, not as named voice-loop assignments.
+6. Inspect the primary GUIDO recording around the descent alarms for traffic participants and call sequence; do not infer keyset privileges merely from voices present on a recorded channel.
+7. Do not assign the Bales/Garman assessment to `FD LOOP`, `MOCR DYN`, or another named loop without Mission-G-effective configuration evidence.
+8. Preserve `AGS−PGNCS` and `MSFN−PGNCS` as distinct comparison products and CAPCOM as the crew-facing disposition path.
+9. Do not expose 70-FM-20 Figure 9 as an exact live MOCR display.
+10. Recover Mission-G-effective routing/configuration evidence. PHO-TN401 remains the strongest display/control target at the Johnson Space Center History Collection, University of Houston-Clear Lake, Apollo Program, Mission Documents: Apollo 11, **Box 078-65/66**.
+11. Seek a Mission-G-effective station/keyset record before freezing exact station-to-loop assignment, complete talk/listen privilege matrix, DRK mapping, request routing, or cadence.
 
 ## Sources
 
+- NASA History Division, _News & Notes_, Vol. 35 No. 3, 3rd Quarter 2018, pp. 3–5, including reproduced Apollo 11 Historical Recorder #1 track sheet: https://www.nasa.gov/wp-content/uploads/2023/01/NewsNotes-35-3-Fall-2018.pdf
 - Philco-Ford / Western Development Laboratories, _Familiarization Manual — Mission Control Center Houston_, PHO-FAM001, revised through 30 June 1967, §3-2-2-1: https://www.ibiblio.org/apollo/Documents/Familiarization%20Manual%20Mission%20Control%20Center%20Houston.pdf
 - NASA/MSC, _Flight Mission Rules, Apollo 11 (AS-506/107/LM-5)_, 16 April 1969, rule 4-5, p. 4-3: https://www.nasa.gov/wp-content/uploads/static/history/alsj/a11/A11MissionRules.pdf
 - NASA JSC Oral History Project, John R. Garman interview, 27 March 2001: https://historycollection.jsc.nasa.gov/JSCHistoryPortal/history/oral_histories/GarmanJR/GarmanJR_3-27-01.pdf
@@ -38,6 +43,7 @@ PHO-FAM001 now supplies contemporary primary technical corroboration: MCC statio
 - **SUFFICIENT:** Apollo-11-specific MSK-1137 alarm/program/descent field semantics.
 - **SUFFICIENT:** guidance-software back-room support → GUIDO assessment relationship and CAPCOM-mediated crew disposition.
 - **DOCUMENTED / MISSION-SPECIFIC:** Apollo 11 MOCR loop vocabulary and internal/A-G separation.
+- **DOCUMENTED / MISSION-SPECIFIC ARCHIVAL:** Historical Recorder #1 channels 21/22 are GUIDO left/right, positions 018/019.
 - **DOCUMENTED / PRIMARY TECHNICAL:** keysets could expose talk/listen or monitor-only circuits on local conference/intersite loops.
 - **DOCUMENTED / PARTICIPANT:** support-room button semantics, multi-loop monitoring, and restricted A/G transmit authority.
 - **OPEN:** exact Apollo 11 station request/routing, DRK mapping, cadence/latency, station-to-loop assignment, complete keyset privilege matrix, and detailed per-alarm internal call sequence.
