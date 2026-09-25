@@ -176,3 +176,7 @@ Automated coverage includes continuous-clock/event rules, crew response, shutdow
 Facilitator-driven validation against the deployed browser application has now passed both the complete nominal PC+2 sequence through post-burn/PTC preparation and the synthetic ΔP branch through corroborated CONTROL evidence without hidden engine truth. See `docs/progress/2026-09-14_live_nominal_and_delta_p_validation.md`.
 
 Physical seven-seat and five-player compact **multi-human** PASS claims remain unmade.
+
+## 2026-09-25 Apollo 11 P66 load-gate update
+
+Research 904 establishes that the P66 ROD scale, ROD time constant, lag ratio, and force limits are erasable load inputs in Apollo-11-effective LUMINARY 1A rather than fixed P66 code constants. The surviving 1969 MIT Apollo 11 landing digital simulation supplies a usable simulation-load profile, but not yet LM-5 flight-load effectivity. Current work may use that profile only when explicitly labeled as simulation evidence; an as-flown numerical claim remains source-gated on Apollo 11 pad-load/erasable-memory evidence. Continuous LM-5 propulsion calibration remains separately blocked on Supplement 7 or equivalent primary evidence. See research 904 and `docs/roadmap/2026-09-25_apollo11_p66_load_gate.md`.
