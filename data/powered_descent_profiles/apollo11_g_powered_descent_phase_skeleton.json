@@ -1,0 +1,85 @@
+{
+  "schema_version": "0.1-powered-descent-phase-profile",
+  "profile_id": "apollo11_g_powered_descent_phase_skeleton",
+  "mission_profile_id": "apollo11_g",
+  "status": "source-backed nominal phase skeleton with separate flown propulsion observations",
+  "applicability": "Apollo 11 Mission G powered-descent architecture reference; nominal phase anchors are not exact flown transition states",
+  "planned_anchors": [
+    {
+      "event_id": "pdi",
+      "tfi_s": 0,
+      "phase_after": "braking",
+      "nominal_altitude_ft": null,
+      "evidence_basis": "Apollo 11 final Flight Plan / Mission Operation Report phase start"
+    },
+    {
+      "event_id": "high_gate",
+      "tfi_s": 504,
+      "phase_after": "approach",
+      "nominal_altitude_ft": 7600,
+      "evidence_basis": "Apollo 11 final Flight Plan nominal high gate / Mission Operation Report approach boundary"
+    },
+    {
+      "event_id": "low_gate",
+      "tfi_s": 608,
+      "phase_after": "landing",
+      "nominal_altitude_ft": 500,
+      "evidence_basis": "Apollo 11 final Flight Plan nominal low gate / Mission Operation Report landing boundary"
+    },
+    {
+      "event_id": "planned_touchdown",
+      "tfi_s": 718,
+      "phase_after": "post_planned_touchdown",
+      "nominal_altitude_ft": 0,
+      "evidence_basis": "Apollo 11 final Flight Plan nominal touchdown anchor"
+    }
+  ],
+  "untimed_nominal_events": [
+    "fixed-throttle operation",
+    "landing-radar altitude update",
+    "throttle recovery",
+    "landing-radar velocity update"
+  ],
+  "flown_observations": [
+    {
+      "key": "powered_descent_duration",
+      "value": 756.3,
+      "unit": "s",
+      "qualifier": "flown/postflight total powered-descent firing duration; not used to move nominal phase state"
+    },
+    {
+      "key": "powered_descent_delta_v",
+      "value": 6775,
+      "unit": "ft/s",
+      "qualifier": "approximately; mission-level flown/postflight observation"
+    },
+    {
+      "key": "initial_throttle",
+      "value": 13,
+      "unit": "percent",
+      "qualifier": "minimum-throttle start; flown/postflight observation"
+    },
+    {
+      "key": "full_throttle_after_pdi",
+      "value": 26,
+      "unit": "s",
+      "qualifier": "approximately; flown/postflight observation"
+    },
+    {
+      "key": "early_propulsion_data_loss",
+      "value": 45,
+      "unit": "s",
+      "qualifier": "approximately; early propulsion-data loss, so no continuous measured trace is asserted through the gap"
+    }
+  ],
+  "provenance": [
+    "NASA Apollo 11 Flight Plan, final, 1 July 1969",
+    "NASA Apollo 11 Mission Report, MSC-00171, November 1969, section 9.8",
+    "NASA Apollo 11 AS-506 Mission Operation Report, M-932-69-11, 24 June 1969"
+  ],
+  "unresolved": [
+    "historically exact continuous flown thrust and trajectory history between anchors",
+    "exact flown high-gate and low-gate transition states",
+    "exact controller-visible phase-product routing and cadence not separately sourced"
+  ]
+}

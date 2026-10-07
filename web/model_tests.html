@@ -164,6 +164,18 @@
 <details class="raw"><summary>Raw radar-chain JSON</summary><pre id="radarRaw">No run yet.</pre></details>
 </section>
 
+<section id="descentPhase" class="panel">
+<h2>Apollo 11 powered-descent nominal phase skeleton</h2>
+<p class="note">Evaluates only the source-backed nominal Flight Plan phase anchors. Flown Mission Report propulsion observations are displayed alongside the phase result but never drive phase selection.</p>
+<div class="grid">
+<label class="field">Time from PDI / TFI (s)<input id="pdTfi" type="number" value="504" step="1"></label>
+</div>
+<div class="actions"><button id="runDescentPhase">Evaluate phase</button><button id="descentPhaseHighGate">High gate</button><button id="descentPhaseLowGate">Low gate</button><button id="descentPhasePlannedTouchdown">After planned touchdown</button></div>
+<div id="descentPhaseTrace" class="chain"><div class="stage"><b>Nominal time</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Planned phase</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Next nominal anchor</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Flown observations</b>Not run</div></div>
+<div class="boundary">Planned anchors and flown observations are intentionally separate. A nominal touchdown anchor is not substituted for the flown 756.3 s DPS firing duration.</div>
+<details class="raw"><summary>Raw powered-descent phase JSON</summary><pre id="descentPhaseRaw">No run yet.</pre></details>
+</section>
+
 <section id="descentProducts" class="panel">
 <h2>Apollo 11 descent controller-product boundary</h2>
 <p class="note">Projects only explicitly supplied controller-visible values into the source-backed MSK-1137 / CONTROL field family. Missing fields remain unavailable, and unresolved D/L/RTCC routing is shown rather than guessed.</p>
@@ -656,6 +668,27 @@ async function runRadarReplay(queryTime){
 $('radarReplayReacquire').onclick=()=>runRadarReplay(369861);
 $('radarReplayQualified').onclick=()=>runRadarReplay(369865);
 
+
+async function runDescentPhase(tfi=num('pdTfi')){
+ const payload={profile_id:'apollo11_g_powered_descent_phase_skeleton',tfi_s:tfi};
+ $('descentPhaseRaw').textContent='Running…';
+ try{
+  const r=await request('/api/admin/model-proof/powered-descent-phase',payload);
+  recordCausal('apollo11-powered-descent-phase',payload,r);
+  const recent=r.most_recent_anchor,next=r.next_anchor;
+  const obs=Object.fromEntries((r.flown_observations||[]).map(x=>[x.key,x]));
+  $('descentPhaseTrace').innerHTML=
+   traceStage('Nominal time','<div>TFI = '+scalar(r.tfi_s)+' s</div><div class="note">Referenced to PDI.</div>')+
+   arrow()+traceStage('Planned phase','<div><span class="badge good">'+String(r.phase).toUpperCase()+'</span></div><div>basis = '+r.phase_basis+'</div><div class="note">'+(recent?'after '+recent.event_id+' @ '+scalar(recent.tfi_s)+' s':'before PDI')+'</div>')+
+   arrow()+traceStage('Next nominal anchor','<div>'+(next?next.event_id+' @ '+scalar(next.tfi_s)+' s':'none')+'</div><div>'+(next&&next.nominal_altitude_ft!==null?'nominal altitude '+scalar(next.nominal_altitude_ft)+' ft':'')+'</div><div class="note">Untimed nominal events: '+(r.untimed_nominal_events.join(', ')||'none')+'</div>')+
+   arrow()+traceStage('Flown observations','<div>DPS firing = '+scalar(obs.powered_descent_duration?.value)+' s</div><div>ΔV ≈ '+scalar(obs.powered_descent_delta_v?.value)+' ft/s</div><div>initial throttle = '+scalar(obs.initial_throttle?.value)+'%</div><div>full throttle ≈ +'+scalar(obs.full_throttle_after_pdi?.value)+' s</div><div>early data loss ≈ '+scalar(obs.early_propulsion_data_loss?.value)+' s</div><div class="note">These observations do not move the nominal phase state.</div>');
+  $('descentPhaseRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){$('descentPhaseRaw').textContent=String(e.message||e)}
+}
+$('runDescentPhase').onclick=()=>runDescentPhase();
+$('descentPhaseHighGate').onclick=()=>{$('pdTfi').value='504';runDescentPhase(504)};
+$('descentPhaseLowGate').onclick=()=>{$('pdTfi').value='608';runDescentPhase(608)};
+$('descentPhasePlannedTouchdown').onclick=()=>{$('pdTfi').value='730';runDescentPhase(730)};
 
 function descentProductsPayload(mode='normal'){
  const values={};

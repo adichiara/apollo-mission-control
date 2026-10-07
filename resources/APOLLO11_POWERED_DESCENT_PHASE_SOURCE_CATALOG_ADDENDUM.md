@@ -13,7 +13,7 @@ Parent: `resources/APOLLO11_LUMINARY1A_SOURCE_CATALOG_ADDENDUM.md`
 
 ## Current result
 
-The Apollo 11 architecture reference can use a deterministic phase/event skeleton for powered descent while keeping nominal planning, flown propulsion evidence, hidden causal state, and controller-visible products separate. The P66/manual-control transition is now executable at the reusable decision-gate layer as a **rule-authority change without observation loss**. Continuous historical thrust/trajectory reconstruction and exact station product routing remain unresolved.
+The Apollo 11 architecture reference now uses an executable deterministic phase/event skeleton for powered descent while keeping nominal planning, flown propulsion evidence, hidden causal state, and controller-visible products separate. Only the nominal Flight Plan PDI/high-gate/low-gate/planned-touchdown anchors drive the phase state. The Mission Report's 756.3-s firing duration, approximate 6775-ft/s delta-V, 13-percent start, approximately +26-s throttle-up, and approximately 45-s data gap remain explicit flown observations and do not drive phase transitions. The P66/manual-control transition remains executable at the reusable decision-gate layer as a **rule-authority change without observation loss**. Continuous historical thrust/trajectory reconstruction and exact station product routing remain unresolved.
 
 ## Sources
 
@@ -30,5 +30,6 @@ The Apollo 11 architecture reference can use a deterministic phase/event skeleto
 - **DOCUMENTED / LIMITATION:** approximately 45 s of early propulsion data were lost; the Mission Report's smoothed plot does not represent that gap.
 - **DOCUMENTED / MISSION RULE:** after crew takeover, trajectory/guidance constraints are not themselves abort causes.
 - **DOCUMENTED / PRIMARY TECHNICAL ACCOUNT:** ground guidance monitoring continued through the manual-landing interval.
+- **IMPLEMENTED / SOURCE-BOUNDED:** nominal PDI/high-gate/low-gate/planned-touchdown phase skeleton, with flown propulsion observations explicitly non-state-driving.
 - **IMPLEMENTED / SOURCE-BOUNDED:** decision-gate control mode changes trajectory/guidance abort-rule applicability while preserving controller-visible observations.
 - **UNRESOLVED:** exact continuous flown thrust/trajectory history, exact Mission-G P66 ground indication/CRT field, and exact station product routing/cadence where not already recovered.

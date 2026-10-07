@@ -112,6 +112,8 @@ from .mission_profiles import (
     discover_mission_profiles,
     get_mission_profile,
 )
+from .powered_descent_phase import evaluate_powered_descent_phase
+from .powered_descent_profiles import get_powered_descent_phase_profile
 from .pc2_action_consequence_probe import run_pc2_action_consequence_matrix
 from .pc2_inverter_consequence_probe import run_pc2_inverter_consequence_matrix
 from .pc2_nominal import load_fixture
@@ -528,6 +530,15 @@ class LandingRadarHistoricalVelocityUpdateRequest(BaseModel):
     program: str | None = Field(default=None, min_length=1, max_length=32)
     reasonableness_passed: bool = True
     updates_permitted: bool = True
+
+
+class PoweredDescentPhaseProofRequest(BaseModel):
+    profile_id: str = Field(
+        default="apollo11_g_powered_descent_phase_skeleton",
+        min_length=1,
+        max_length=128,
+    )
+    tfi_s: float
 
 
 class Apollo11DescentProductsRequest(BaseModel):
@@ -1795,6 +1806,22 @@ def landing_radar_historical_velocity_update_model_proof(
         "profile": profile.to_public_dict(),
         "velocity_update": result.to_dict(),
     }
+
+
+@app.post(
+    "/api/admin/model-proof/powered-descent-phase",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def powered_descent_phase_model_proof(
+    request: PoweredDescentPhaseProofRequest,
+) -> dict[str, object]:
+    profile = _domain_call(
+        lambda: get_powered_descent_phase_profile(request.profile_id)
+    )
+    snapshot = _domain_call(
+        lambda: evaluate_powered_descent_phase(request.tfi_s, profile)
+    )
+    return snapshot.to_dict()
 
 
 @app.post(

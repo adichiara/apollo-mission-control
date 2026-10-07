@@ -171,9 +171,9 @@ Stop broad numerical-gate searching and do not schedule D-022 sensitivity work u
 ## Active exception — Apollo 11 powered-descent reference
 
 - **Status:** **OPEN**
-- **Reason:** the second architecture reference still has explicit current dependencies: landing-radar geometry/reference computation, downstream estimator/filter behavior, powered-descent trajectory/propulsion, controller-product interfaces, and sourced decision rules. Those questions can materially change the reusable engine and eventual Apollo 11 runtime.
-- **Closed bounded subquestion:** research 502 marks the descent landing-radar/controller-call workflow **SUFFICIENT** for current station and decision-topology architecture. It documents MSK-1137 decision ingredients, the separate CONTROL LR-position and Guidance poll calls, FLIGHT integration, and CAPCOM relay. Exact Mission-G per-field LR ground-processing provenance remains separately **BLOCKED** on named source recovery.
-- **Current next dependency:** define an implementation-neutral descent decision-gate contract that joins the existing LR/guidance causal state to the documented mission-rule and station workflow without inventing historical constants or automatic controller decisions.
+- **Reason:** the second architecture reference still has explicit current dependencies around runtime composition and eventual player-facing use, even though several formerly open subquestions are now implemented.
+- **Closed bounded subquestions:** research 502 marks the descent landing-radar/controller-call workflow **SUFFICIENT** for current station and decision-topology architecture; the implementation-neutral decision-gate contract and its generic-runtime projection are implemented; the MSK-1137/CONTROL controller-product schema is implemented; and the powered-descent phase/event question is now executable as a nominal Flight Plan skeleton with flown propulsion observations kept separate. Exact Mission-G per-field LR ground-processing provenance remains separately **BLOCKED** on named source recovery.
+- **Current next dependency:** compose the existing nominal phase state, landing-radar/guidance state, controller-product projection, program-alarm state, and explicit human decision events into a bounded Apollo 11 runtime projection without inventing automatic controller decisions or a continuous flown trajectory.
 - **Stop condition:** apply D-024 separately to each bounded question as those dependencies are resolved. Do not keep the entire Apollo 11 domain permanently OPEN.
 
 ## Portfolio operating rule

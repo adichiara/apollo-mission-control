@@ -281,6 +281,40 @@ class WebAppTests(unittest.TestCase):
         self.assertEqual(rejected.status_code, 400)
         self.assertIn("unknown Apollo 11 descent product key", rejected.json()["detail"])
 
+    def test_apollo11_powered_descent_phase_model_proof(self):
+        response = self.client.post(
+            "/api/admin/model-proof/powered-descent-phase",
+            json={
+                "profile_id": "apollo11_g_powered_descent_phase_skeleton",
+                "tfi_s": 504.0,
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body["phase"], "approach")
+        self.assertEqual(body["phase_basis"], "planned_nominal_anchors_only")
+        self.assertEqual(body["most_recent_anchor"]["event_id"], "high_gate")
+        self.assertEqual(body["most_recent_anchor"]["nominal_altitude_ft"], 7600.0)
+        self.assertFalse(body["flown_observations_drive_phase"])
+        flown = {item["key"]: item for item in body["flown_observations"]}
+        self.assertEqual(flown["powered_descent_duration"]["value"], 756.3)
+
+        later = self.client.post(
+            "/api/admin/model-proof/powered-descent-phase",
+            json={
+                "profile_id": "apollo11_g_powered_descent_phase_skeleton",
+                "tfi_s": 730.0,
+            },
+        )
+        self.assertEqual(later.status_code, 200)
+        self.assertEqual(later.json()["phase"], "post_planned_touchdown")
+        self.assertEqual(
+            {item["key"]: item["value"] for item in later.json()["flown_observations"]}[
+                "powered_descent_duration"
+            ],
+            756.3,
+        )
+
     def test_health_and_phone_shell(self):
         self.assertEqual(self.client.get("/api/health").json(), {"status": "ok"})
         page = self.client.get("/")
