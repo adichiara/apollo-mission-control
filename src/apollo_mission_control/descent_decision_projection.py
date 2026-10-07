@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from typing import Sequence
 
 from .descent_decision_gate import (
+    DescentControlMode,
     DescentDecisionGate,
     LandingRadarControllerState,
     Readiness,
@@ -135,6 +136,7 @@ def project_generic_runtime_descent_gate(
     audit_events: Sequence[GenericAuditEvent],
     capcom_queue: Sequence[GenericCapcomQueueItem],
     config: DescentDecisionProjectionConfig,
+    control_mode: DescentControlMode = DescentControlMode.AUTOMATIC,
     provenance: tuple[str, ...] = (),
 ) -> DescentDecisionGate:
     """Build a gate snapshot from explicit human/runtime events.
@@ -165,5 +167,6 @@ def project_generic_runtime_descent_gate(
             no_go_action=cfg.capcom_no_go_action,
             get_s=get_s,
         ),
+        control_mode=control_mode,
         provenance=tuple(provenance),
     ).validated()

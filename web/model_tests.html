@@ -176,6 +176,15 @@
 <details class="raw"><summary>Raw powered-descent phase JSON</summary><pre id="descentPhaseRaw">No run yet.</pre></details>
 </section>
 
+<section id="descentRuntime" class="panel">
+<h2>Apollo 11 bounded descent runtime projection</h2>
+<p class="note">Composes the nominal phase skeleton, explicit controller products, generic-runtime human readiness/FLIGHT/CAPCOM events, and guidance-computer state without generating a landing decision or back-filling hidden state into controller displays.</p>
+<div class="actions"><button id="runDescentRuntime">Run composition cases</button></div>
+<div id="descentRuntimeTrace" class="chain"><div class="stage"><b>Station GO / FLIGHT undecided</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Explicit FLIGHT + CAPCOM</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Manual authority</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Alarm/product boundary</b>Not run</div></div>
+<div class="boundary">Architecture composition only. Probe controller values/timings are synthetic and are not an Apollo 11 historical replay.</div>
+<details class="raw"><summary>Raw descent-runtime projection JSON</summary><pre id="descentRuntimeRaw">No run yet.</pre></details>
+</section>
+
 <section id="descentProducts" class="panel">
 <h2>Apollo 11 descent controller-product boundary</h2>
 <p class="note">Projects only explicitly supplied controller-visible values into the source-backed MSK-1137 / CONTROL field family. Missing fields remain unavailable, and unresolved D/L/RTCC routing is shown rather than guessed.</p>
@@ -689,6 +698,29 @@ $('runDescentPhase').onclick=()=>runDescentPhase();
 $('descentPhaseHighGate').onclick=()=>{$('pdTfi').value='504';runDescentPhase(504)};
 $('descentPhaseLowGate').onclick=()=>{$('pdTfi').value='608';runDescentPhase(608)};
 $('descentPhasePlannedTouchdown').onclick=()=>{$('pdTfi').value='730';runDescentPhase(730)};
+
+async function runDescentRuntime(){
+ $('descentRuntimeRaw').textContent='Running…';
+ try{
+  const r=await request('/api/admin/model-proof/apollo11-descent-runtime-projection');
+  recordCausal('apollo11-descent-runtime-projection',{},r);
+  const by=Object.fromEntries(r.cases.map(x=>[x.case_id,x.projection]));
+  const undecided=by.high_gate_station_go_flight_undecided;
+  const relayed=by.high_gate_flight_go_capcom_relay;
+  const manual=by.manual_control_rule_authority;
+  const hidden=by.alarm_not_backfilled_into_product;
+  const explicit=by.alarm_explicitly_supplied_to_product;
+  const hiddenProducts=Object.fromEntries(hidden.controller_products.products.map(x=>[x.key,x]));
+  const explicitProducts=Object.fromEntries(explicit.controller_products.products.map(x=>[x.key,x]));
+  $('descentRuntimeTrace').innerHTML=
+   traceStage('Station GO / FLIGHT undecided','<div>phase = '+undecided.phase.phase+'</div><div>Guidance = '+undecided.decision_gate.guidance_readiness+'</div><div>CONTROL = '+undecided.decision_gate.control_readiness+'</div><div>FLIGHT = '+undecided.decision_gate.flight_decision+'</div><div>CAPCOM = '+undecided.decision_gate.capcom_relay+'</div><div class="note">Station GO calls do not create a FLIGHT decision.</div>')+
+   arrow()+traceStage('Explicit FLIGHT + CAPCOM','<div>FLIGHT = '+relayed.decision_gate.flight_decision+'</div><div>CAPCOM = '+relayed.decision_gate.capcom_relay+'</div><div>relay consistent '+statusBadge(relayed.decision_gate.relay_consistent_with_flight)+'</div><div class="note">Separate generic-runtime events.</div>')+
+   arrow()+traceStage('Manual authority','<div>phase = '+manual.phase.phase+'</div><div>control mode = '+manual.decision_gate.control_mode+'</div><div>trajectory/guidance abort constraints '+statusBadge(manual.decision_gate.trajectory_guidance_abort_constraints_applicable,'APPLICABLE','NOT ABORT CAUSES')+'</div><div>LR observations remain '+statusBadge(manual.decision_gate.landing_radar.range_data_good,'PRESENT','MISSING')+'</div>')+
+   arrow()+traceStage('Alarm/product boundary','<div>guidance alarm = '+hidden.guidance_computer_state.active_alarm_code+'</div><div>unsupplied product available '+statusBadge(hiddenProducts['program.alarm_latest'].available)+'</div><div>explicitly supplied product available '+statusBadge(explicitProducts['program.alarm_latest'].available)+'</div><div>explicit value = '+(explicitProducts['program.alarm_latest'].value||'—')+'</div><div class="note">Hidden model state is never auto-projected.</div>');
+  $('descentRuntimeRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){$('descentRuntimeRaw').textContent=String(e.message||e)}
+}
+$('runDescentRuntime').onclick=runDescentRuntime;
 
 function descentProductsPayload(mode='normal'){
  const values={};
