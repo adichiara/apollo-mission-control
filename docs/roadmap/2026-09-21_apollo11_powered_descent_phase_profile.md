@@ -21,9 +21,15 @@ The second architecture reference may now use a source-backed **phase/event skel
 
 This is enough to define deterministic phase transitions for an architecture proof while continuous trajectory/propulsion reconstruction remains a separate unresolved model question.
 
+## Implementation update — 2026-10-07
+
+The phase/event skeleton is now executable through `powered_descent_phase.py` and the Apollo 11 profile `apollo11_g_powered_descent_phase_skeleton`.
+
+Only the nominal PDI/high-gate/low-gate/planned-touchdown anchors drive phase state. The Mission Report's flown propulsion observations are carried beside the phase result but do not alter it. This explicitly preserves plan-versus-flight differences.
+
 ## Next bounded target
 
-Recover mission-effective controller-visible powered-descent propulsion/trajectory products and decision rules at the phase boundaries, beginning with what GUIDO/CONTROL/FLIGHT could actually see or call at throttle recovery/high gate. Do not expose hidden vehicle state merely because the flight plan provides it.
+Compose this phase state with the already implemented descent decision gate, controller-product schema, landing-radar state, and program-alarm state into a bounded Apollo 11 runtime projection. Do not expose hidden vehicle state or convert a nominal phase boundary into an automatic historical controller decision.
 
 ## Sources
 
