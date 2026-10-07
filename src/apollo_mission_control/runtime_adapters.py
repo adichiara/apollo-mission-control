@@ -60,6 +60,18 @@ _ADAPTERS: dict[str, RuntimeAdapter] = {
             }
         ),
     ),
+    "apollo11_descent_v1": RuntimeAdapter(
+        adapter_id="apollo11_descent_v1",
+        builder=_build_generic,
+        capabilities=frozenset(
+            {
+                "mission_control_core",
+                "generic_timed_events",
+                "apollo11_descent_reference",
+                "apollo11_descent_projection",
+            }
+        ),
+    ),
 }
 
 
