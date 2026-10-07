@@ -42,6 +42,46 @@ class RuntimeAdapterTests(unittest.TestCase):
         self.assertNotIn("pc2_delta_p", capabilities)
         self.assertNotIn("pc2_dps_shutdown", capabilities)
 
+    def test_apollo11_adapter_builds_gated_generic_runtime_reference(self):
+        record = get_scenario_record(
+            "apollo11_descent_program_alarm_reference"
+        )
+        self.assertFalse(record.execution_enabled)
+        self.assertTrue(has_runtime_adapter("apollo11_descent_v1"))
+
+        runtime = create_runtime(record)
+        self.assertIsInstance(runtime, GenericScenarioSession)
+        self.assertIsInstance(runtime, SessionRuntime)
+        self.assertEqual(runtime.state.get_s, 369450.0)
+        self.assertEqual(runtime.state.phase, "braking")
+        self.assertEqual(
+            runtime.available_stations,
+            ("FLIGHT", "CAPCOM", "GUIDO", "CONTROL", "TELCOM"),
+        )
+
+        capabilities = runtime_capabilities("apollo11_descent_v1")
+        self.assertIn("mission_control_core", capabilities)
+        self.assertIn("generic_timed_events", capabilities)
+        self.assertIn("apollo11_descent_reference", capabilities)
+        self.assertIn("apollo11_descent_projection", capabilities)
+        self.assertNotIn("state_injection", capabilities)
+        self.assertNotIn("pc2_delta_p", capabilities)
+
+        runtime.start()
+        runtime.advance_to(369692.0)
+        self.assertEqual(runtime.state.phase, "approach")
+        self.assertEqual(runtime.state.variables["program.number"], "P64")
+
+        runtime.advance_to(369802.0)
+        self.assertEqual(runtime.state.phase, "landing")
+        self.assertEqual(runtime.state.variables["program.number"], "P66")
+        self.assertEqual(runtime.state.variables["control.mode"], "manual")
+        self.assertEqual(runtime.state.variables["program.restart_count"], 5)
+
+        runtime.assign_stations("guido", ["GUIDO"])
+        snapshot = runtime.player_snapshot("guido")
+        self.assertEqual(snapshot.presentation["observations"], {})
+
     def test_capabilities_keep_pc2_specific_operations_explicit(self):
         capabilities = runtime_capabilities("pc2_v1")
         self.assertIn("mission_control_core", capabilities)
@@ -58,7 +98,7 @@ class RuntimeAdapterTests(unittest.TestCase):
             mission=source.mission,
             status="test",
             scenario_class="test",
-            runtime_adapter="apollo11_descent_v1",
+            runtime_adapter="not_implemented_v1",
             mission_profile_id="apollo11_g",
             model_profile_id="synthetic_model_profile",
             required_model_domains=("test",),
