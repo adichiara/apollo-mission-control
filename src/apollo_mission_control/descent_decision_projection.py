@@ -31,12 +31,16 @@ class DescentDecisionProjectionConfig:
     gate_id: str
     capcom_go_action: str
     capcom_no_go_action: str
+    guidance_station: str = "GUIDANCE"
+    control_station: str = "CONTROL"
 
     def validated(self) -> "DescentDecisionProjectionConfig":
         values = {
             "gate_id": self.gate_id,
             "capcom_go_action": self.capcom_go_action,
             "capcom_no_go_action": self.capcom_no_go_action,
+            "guidance_station": self.guidance_station,
+            "control_station": self.control_station,
         }
         for name, value in values.items():
             if not isinstance(value, str) or not value.strip():
@@ -47,6 +51,8 @@ class DescentDecisionProjectionConfig:
             gate_id=self.gate_id.strip(),
             capcom_go_action=self.capcom_go_action.strip(),
             capcom_no_go_action=self.capcom_no_go_action.strip(),
+            guidance_station=self.guidance_station.strip().upper(),
+            control_station=self.control_station.strip().upper(),
         )
 
 
@@ -153,10 +159,10 @@ def project_generic_runtime_descent_gate(
         get_s=float(get_s),
         landing_radar=landing_radar.validated(),
         guidance_readiness=_latest_readiness(
-            readiness_reports, station="GUIDANCE", get_s=get_s
+            readiness_reports, station=cfg.guidance_station, get_s=get_s
         ),
         control_readiness=_latest_readiness(
-            readiness_reports, station="CONTROL", get_s=get_s
+            readiness_reports, station=cfg.control_station, get_s=get_s
         ),
         flight_decision=_latest_flight_decision(
             audit_events, gate_id=cfg.gate_id, get_s=get_s
