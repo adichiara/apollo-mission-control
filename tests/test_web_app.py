@@ -315,6 +315,95 @@ class WebAppTests(unittest.TestCase):
             756.3,
         )
 
+    def test_apollo11_descent_runtime_projection_model_proof(self):
+        response = self.client.get(
+            "/api/admin/model-proof/apollo11-descent-runtime-projection"
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(
+            body["model_status"],
+            "apollo11_descent_runtime_reference_probe",
+        )
+        cases = {
+            item["case_id"]: item["projection"]
+            for item in body["cases"]
+        }
+
+        undecided = cases["high_gate_station_go_flight_undecided"]
+        self.assertEqual(undecided["phase"]["phase"], "approach")
+        self.assertEqual(
+            undecided["decision_gate"]["guidance_readiness"],
+            "go",
+        )
+        self.assertEqual(
+            undecided["decision_gate"]["control_readiness"],
+            "go",
+        )
+        self.assertEqual(
+            undecided["decision_gate"]["flight_decision"],
+            "unknown",
+        )
+        self.assertEqual(
+            undecided["decision_gate"]["capcom_relay"],
+            "not_relayed",
+        )
+
+        relayed = cases["high_gate_flight_go_capcom_relay"]
+        self.assertEqual(relayed["decision_gate"]["flight_decision"], "go")
+        self.assertEqual(
+            relayed["decision_gate"]["capcom_relay"],
+            "go_relayed",
+        )
+
+        manual = cases["manual_control_rule_authority"]
+        self.assertEqual(manual["decision_gate"]["control_mode"], "manual")
+        self.assertFalse(
+            manual["decision_gate"][
+                "trajectory_guidance_abort_constraints_applicable"
+            ]
+        )
+        self.assertTrue(
+            manual["decision_gate"]["landing_radar"]["range_data_good"]
+        )
+
+        hidden = cases["alarm_not_backfilled_into_product"]
+        explicit = cases["alarm_explicitly_supplied_to_product"]
+        hidden_products = {
+            item["key"]: item
+            for item in hidden["controller_products"]["products"]
+        }
+        explicit_products = {
+            item["key"]: item
+            for item in explicit["controller_products"]["products"]
+        }
+        self.assertEqual(
+            hidden["guidance_computer_state"]["active_alarm_code"],
+            "1202",
+        )
+        self.assertFalse(
+            hidden_products["program.alarm_latest"]["available"]
+        )
+        self.assertTrue(
+            explicit_products["program.alarm_latest"]["available"]
+        )
+        self.assertEqual(
+            explicit_products["program.alarm_latest"]["value"],
+            "1202",
+        )
+        self.assertEqual(
+            body["invariants"],
+            {
+                "human_decisions_auto_generated": False,
+                "hidden_state_auto_projected_to_controller_products": False,
+                "probe_mutates_authoritative_live_session": False,
+            },
+        )
+        self.assertIn(
+            "not an Apollo 11 historical replay",
+            body["scope"],
+        )
+
     def test_health_and_phone_shell(self):
         self.assertEqual(self.client.get("/api/health").json(), {"status": "ok"})
         page = self.client.get("/")
