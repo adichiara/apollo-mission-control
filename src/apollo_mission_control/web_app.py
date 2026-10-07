@@ -41,6 +41,9 @@ from .crew_response import (
     record_premature_dps_stop,
 )
 from .apollo11_descent_products import project_apollo11_descent_products
+from .apollo11_descent_runtime_probe import (
+    run_apollo11_descent_runtime_reference_probe,
+)
 from .descent_decision_gate import (
     DescentControlMode,
     DescentDecisionGate,
@@ -1806,6 +1809,14 @@ def landing_radar_historical_velocity_update_model_proof(
         "profile": profile.to_public_dict(),
         "velocity_update": result.to_dict(),
     }
+
+
+@app.get(
+    "/api/admin/model-proof/apollo11-descent-runtime-projection",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def apollo11_descent_runtime_projection_model_proof() -> dict[str, object]:
+    return _domain_call(run_apollo11_descent_runtime_reference_probe)
 
 
 @app.post(
