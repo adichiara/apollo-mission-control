@@ -47,6 +47,39 @@ class ScenarioCatalogTests(unittest.TestCase):
         self.assertEqual(record.model_profile_id, "apollo11_g_descent_partial")
         self.assertIn("guidance_computer", record.required_model_domains)
         self.assertIn("landing_radar", record.required_model_domains)
+        self.assertFalse(record.execution_enabled)
+        self.assertIn("partial/unresolved", record.execution_gate_reason)
+
+    def test_disabled_scenario_requires_explicit_gate_reason(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "bad_gate.json"
+            path.write_text(
+                json.dumps(
+                    {
+                        "scenario_id": "bad_gate",
+                        "title": "Bad gate",
+                        "mission": "Test",
+                        "status": "test",
+                        "scenario_class": "test",
+                        "runtime_adapter": "generic_v1",
+                        "mission_profile_id": "test_profile",
+                        "model_profile_id": "test_model_profile",
+                        "required_model_domains": ["test"],
+                        "start_get_s": 0,
+                        "start_get_hms": "00:00:00",
+                        "end_target_get_hms": "00:01:00",
+                        "vehicle_configuration": "test",
+                        "execution_enabled": False,
+                        "sources": [],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(
+                ValueError,
+                "execution_gate_reason is required",
+            ):
+                load_scenario_record(path)
 
     def test_unknown_scenario_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "unknown scenario_id"):
