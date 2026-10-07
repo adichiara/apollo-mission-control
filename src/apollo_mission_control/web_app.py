@@ -837,7 +837,11 @@ def list_scenarios() -> list[dict[str, object]]:
             {
                 **record.to_public_dict(),
                 "default": record.scenario_id == DEFAULT_SCENARIO_ID,
-                "executable": has_runtime_adapter(record.runtime_adapter),
+                "adapter_available": has_runtime_adapter(record.runtime_adapter),
+                "executable": (
+                    record.execution_enabled
+                    and has_runtime_adapter(record.runtime_adapter)
+                ),
                 "model_readiness": readiness.to_public_dict(),
             }
         )
@@ -892,6 +896,14 @@ def create_session(
                     f"{model_profile.model_profile_id!r} belongs to mission profile "
                     f"{model_profile.mission_profile_id!r}, not "
                     f"{profile.mission_profile_id!r}"
+                ),
+            )
+        if not record.execution_enabled:
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    f"scenario {record.scenario_id} execution is disabled: "
+                    f"{record.execution_gate_reason}"
                 ),
             )
         session = _domain_call(lambda: create_runtime(record))
