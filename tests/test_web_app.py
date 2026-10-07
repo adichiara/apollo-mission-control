@@ -430,7 +430,10 @@ class WebAppTests(unittest.TestCase):
         )
         self.assertEqual(pc2["scenario_class"], "historical_flight_reconstruction")
         self.assertTrue(pc2["default"])
+        self.assertTrue(pc2["adapter_available"])
+        self.assertTrue(pc2["execution_enabled"])
         self.assertTrue(pc2["executable"])
+        self.assertIsNone(pc2["execution_gate_reason"])
         self.assertFalse(
             pc2["model_readiness"]["historical_validation_ready"]
         )
@@ -450,7 +453,10 @@ class WebAppTests(unittest.TestCase):
         self.assertEqual(apollo11["mission"], "Apollo 11")
         self.assertEqual(apollo11["runtime_adapter"], "apollo11_descent_v1")
         self.assertFalse(apollo11["default"])
+        self.assertTrue(apollo11["adapter_available"])
+        self.assertFalse(apollo11["execution_enabled"])
         self.assertFalse(apollo11["executable"])
+        self.assertIn("partial/unresolved", apollo11["execution_gate_reason"])
         self.assertFalse(
             apollo11["model_readiness"]["historical_validation_ready"]
         )
@@ -463,7 +469,8 @@ class WebAppTests(unittest.TestCase):
             "/api/session/create?scenario_id=apollo11_descent_program_alarm_reference"
         )
         self.assertEqual(unavailable.status_code, 400)
-        self.assertIn("unsupported runtime adapter", unavailable.json()["detail"])
+        self.assertIn("execution is disabled", unavailable.json()["detail"])
+        self.assertIn("partial/unresolved", unavailable.json()["detail"])
 
         created = self.client.post(
             "/api/session/create?scenario_id=apollo13_pc2_nominal"
