@@ -6,6 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from apollo_mission_control.descent_decision_gate import (  # noqa: E402
+    DescentControlMode,
     LandingRadarControllerState,
     Readiness,
     RelayState,
@@ -145,6 +146,43 @@ class DescentDecisionProjectionTests(unittest.TestCase):
         self.assertEqual(gate.flight_decision, Readiness.NO_GO)
         self.assertEqual(gate.capcom_relay, RelayState.GO_RELAYED)
         self.assertFalse(gate.relay_consistent_with_flight)
+
+    def test_control_mode_is_passed_through_without_changing_observations(self):
+        automatic = project_generic_runtime_descent_gate(
+            get_s=100.0,
+            landing_radar=LandingRadarControllerState(
+                antenna_position=2,
+                slant_range_ft=1000.0,
+            ),
+            readiness_reports=[],
+            audit_events=[],
+            capcom_queue=[],
+            config=self.config(),
+            control_mode=DescentControlMode.AUTOMATIC,
+        )
+        manual = project_generic_runtime_descent_gate(
+            get_s=100.0,
+            landing_radar=LandingRadarControllerState(
+                antenna_position=2,
+                slant_range_ft=1000.0,
+            ),
+            readiness_reports=[],
+            audit_events=[],
+            capcom_queue=[],
+            config=self.config(),
+            control_mode=DescentControlMode.MANUAL,
+        )
+
+        self.assertEqual(
+            automatic.landing_radar,
+            manual.landing_radar,
+        )
+        self.assertTrue(
+            automatic.trajectory_guidance_abort_constraints_applicable
+        )
+        self.assertFalse(
+            manual.trajectory_guidance_abort_constraints_applicable
+        )
 
     def test_future_transmission_is_not_visible_yet(self):
         item = GenericCapcomQueueItem(
