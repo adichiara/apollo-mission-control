@@ -231,6 +231,52 @@ class WebAppTests(unittest.TestCase):
         self.assertFalse(second_loss.json()["replay"]["data_good"])
         self.assertIn("no stochastic dropout process", second_loss.json()["boundary_note"])
 
+    def test_apollo11_reference_product_feed_model_proof(self):
+        before = self.client.post(
+            "/api/admin/model-proof/apollo11-reference-product-feed",
+            json={"get_s": 369500.0},
+        )
+        self.assertEqual(before.status_code, 200)
+        before_body = before.json()
+        self.assertFalse(
+            before_body["snapshot"]["historical_ground_display_timing_claimed"]
+        )
+        before_products = {
+            item["key"]: item
+            for item in before_body["snapshot"]["controller_products"]["products"]
+        }
+        self.assertFalse(before_products["program.alarm_latest"]["available"])
+        self.assertIn(
+            "not a claim about exact Mission-G ground-display availability",
+            before_body["boundary_note"],
+        )
+
+        first_alarm = self.client.post(
+            "/api/admin/model-proof/apollo11-reference-product-feed",
+            json={"get_s": 369502.0},
+        )
+        self.assertEqual(first_alarm.status_code, 200)
+        first_body = first_alarm.json()["snapshot"]
+        self.assertEqual(first_body["applied_event_ids"], ["first_1202_reference"])
+        first_products = {
+            item["key"]: item
+            for item in first_body["controller_products"]["products"]
+        }
+        self.assertEqual(first_products["program.alarm_latest"]["value"], "1202")
+        self.assertFalse(first_products["program.number"]["available"])
+
+        p64 = self.client.post(
+            "/api/admin/model-proof/apollo11-reference-product-feed",
+            json={"get_s": 369692.0},
+        )
+        self.assertEqual(p64.status_code, 200)
+        p64_products = {
+            item["key"]: item
+            for item in p64.json()["snapshot"]["controller_products"]["products"]
+        }
+        self.assertEqual(p64_products["program.alarm_latest"]["value"], "1202")
+        self.assertEqual(p64_products["program.number"]["value"], 64)
+
     def test_apollo11_descent_product_schema_model_proof(self):
         response = self.client.post(
             "/api/admin/model-proof/apollo11-descent-products",
