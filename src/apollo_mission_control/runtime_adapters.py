@@ -9,6 +9,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass
 
+from .apollo11_descent_session import Apollo11DescentSession
 from .generic_runtime import GenericScenarioSession
 from .pc2_session import PC2Session
 from .scenario_catalog import ScenarioRecord, load_scenario_fixture
@@ -31,6 +32,10 @@ def _build_pc2(record: ScenarioRecord) -> SessionRuntime:
 
 def _build_generic(record: ScenarioRecord) -> SessionRuntime:
     return GenericScenarioSession.create(load_scenario_fixture(record))
+
+
+def _build_apollo11_descent(record: ScenarioRecord) -> SessionRuntime:
+    return Apollo11DescentSession.create(load_scenario_fixture(record))
 
 
 _ADAPTERS: dict[str, RuntimeAdapter] = {
@@ -62,7 +67,7 @@ _ADAPTERS: dict[str, RuntimeAdapter] = {
     ),
     "apollo11_descent_v1": RuntimeAdapter(
         adapter_id="apollo11_descent_v1",
-        builder=_build_generic,
+        builder=_build_apollo11_descent,
         capabilities=frozenset(
             {
                 "mission_control_core",
