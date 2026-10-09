@@ -7,31 +7,31 @@
   "domains": {
     "guidance_computer": {
       "status": "partial",
-      "note": "Apollo 11 1201/1202 Executive-overflow meanings, software-restart behavior, and P63/P64 restart protection are source-backed; exact real-time workload state, display path, and complete alarm-response rule set remain incomplete."
+      "note": "Apollo 11 1201/1202 meanings, restart protection, source-backed alarm chronology, and controller-product field semantics are sufficient for the fixed reference-event architecture. The domain remains partial because exact real-time Executive workload generation and a complete counterfactual alarm-response model are not historically validated; those are not required by the current adapter."
     },
     "backup_guidance": {
       "status": "partial",
-      "note": "Apollo 11 powered-descent monitoring source pairs and several component limits are now source-bounded in a dedicated historical guidance-monitoring profile: AGS-PGNS and powered-flight-processor/PGNS in-plane comparisons use 10-fps radial/downrange problem/isolation limits; PFP/PGNS PGNS-failure limits are 35 fps radial and 30 fps downrange; AGS-PGNS crossrange problem detection uses 20 fps. Generic comparison machinery is implemented. Historical freshness/update cadence, exact attitude limits, remaining crossrange/misalignment thresholds, controller presentation, and complete decision rules remain unresolved, so the profile is intentionally non-executable."
+      "note": "Apollo 11 AGS/PGNS monitoring source pairs and several component limits are source-bounded. A causal AGS numerical model is not executed by the current reference-event adapter and is deferred until a selected branch requires backup-guidance dynamics/control. Automated historical cross-source comparison remains a separate guidance-monitoring question."
     },
     "landing_radar": {
       "status": "partial",
-      "note": "Apollo 11 radar-good/update-enable/velocity-update chronology is sourced. Generic update gating and a separate generic measurement-qualification layer are implemented. Apollo 11 profile data now captures 4-s Data Good persistence, 1-s range-scale stability, 50,000-ft range-update altitude boundary, 2,000-ft/s velocity-update speed boundary, astronaut approval requirement, and source-shaped affine residual rules. LM-5 beam/terrain measurement generation, exact radar-axis reference computation, estimator weighting/filter equations, processing cadence, and controller presentation remain unresolved."
+      "note": "Apollo-11-effective DATA GOOD chronology/requalification, range-scale behavior, beam/reference transform boundary, velocity reasonableness/weighting update, and controller field semantics are source-bounded and implemented for deterministic/reference-event use. The domain remains partial because historical stochastic LM-5 measurement/error generation and exact Mission-G ground routing/cadence are blocked on named source recovery; those capabilities are not required by the current explicit reference-event adapter."
     },
     "propulsion": {
       "status": "unresolved",
-      "note": "Generic variable-thrust machinery exists, but Apollo 11 LM-5 powered-descent thrust/mass-flow profile and historical acceptance inputs are not yet frozen for this reference interval."
+      "note": "Generic variable-thrust machinery and multiple Apollo 11 mission checkpoints exist, but exact LM-5 flight-effective thrust/calibration and delivered performance remain unresolved/blocked on named archival sources. The current reference-event adapter does not execute a propulsion model; generated historical descent dynamics therefore remain a separate blocked capability."
     },
     "translational_dynamics": {
       "status": "unresolved",
-      "note": "Generic central-gravity propagation exists, but Apollo 11 descent frame, initial state, lunar gravity/perturbation scope, thrust-direction coupling, and validation tolerance are not yet frozen."
+      "note": "Generic translational propagation exists, but an exact continuous Apollo 11 as-flown descent history is not directly available as primary-source truth and would require explicitly reconstructed/estimated inputs. The current reference-event adapter does not execute continuous trajectory propagation, so this model is deferred for that scope and remains unresolved for generated historical dynamics."
     },
     "controller_observation": {
       "status": "partial",
-      "note": "Alarm chronology and selected controller/crew communications are documented; exact GUIDO display fields, update cadence, and independent PGNS/AGS/radar observation products remain incomplete."
+      "note": "Apollo 11 MSK-1137 field semantics, landing-radar/PGNS product family, CONTROL antenna-position state, landing poll topology, FLIGHT integration, and CAPCOM relay are sufficient for the current neutral controller-product boundary. Exact Mission-G per-field source identifiers, engineering conversion, CCATS/RTCC ownership, request cadence, and display timing remain blocked on PHO-TR155/Data Formats/data-pack recovery."
     },
     "guidance_monitoring": {
       "status": "partial",
-      "note": "Apollo 11 powered-descent monitoring used PGNCS, AGS, and MSFN-derived velocity with a documented two-out-of-three comparison topology. Generic multi-source consensus machinery is implemented. Existing source-specific pairwise limits remain in the historical guidance-monitoring profile. Observation freshness/update cadence, exact phase/source-pair applicability, MSFN powered-flight processing, controller presentation, and operational response rules remain unresolved, so this domain is non-executable."
+      "note": "Apollo 11 PGNCS/AGS/MSFN source topology, several pairwise limits, two-out-of-three monitoring structure, and human decision authority are source-bounded and sufficient for explicit controller products/readiness in the reference-event architecture. Historical automated comparison remains partial/blocked because permissible inter-source observation freshness/synchronization is unresolved; PFP 0.2/0.4-s processing cadence is not a substitute."
     }
   },
   "sources": [
@@ -46,11 +46,11 @@
     "MSC Internal Note 70-FM-80 / MSC-02419, Project Apollo: Lunar Descent and Ascent Trajectories, 21 April 1970"
   ],
   "deferred": [
-    "complete Apollo 11 powered-descent state vector/trajectory initialization",
-    "LM-5 delivered thrust and mass-flow profile",
-    "LM-5 landing-radar beam/terrain measurement generation, radar-axis reference computation, and estimator/filter implementation",
-    "historical guidance observation freshness/cadence and exact GUIDO/FLIGHT alarm/cross-check presentation",
-    "historically validated alarm decision rule implementation",
-    "live historical Apollo 11 descent execution until all scenario-required model domains are validated"
+    "counterfactual guidance-computer workload/alarm generation beyond the fixed historical reference-event chronology",
+    "causal AGS numerical/backup-control execution until a selected scenario branch requires it",
+    "historically timed automated PGNCS/AGS/MSFN comparison until inter-source freshness is sourced",
+    "historical stochastic LM-5 landing-radar measurement/error generation and exact Mission-G product routing/cadence",
+    "generated LM-5 propulsion/translational descent dynamics until the named calibration/trajectory evidence gates are satisfied",
+    "live historical Apollo 11 descent execution until the explicit reference-event controller-product feed and player-surface validation are complete and the scenario execution policy is revised deliberately"
   ]
 }
