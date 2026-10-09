@@ -15,7 +15,7 @@
     "translational_dynamics",
     "controller_observation"
   ],
-  "status": "source-backed architecture reference; runtime adapter implemented but live execution disabled",
+  "status": "source-backed architecture reference; runtime adapter implemented; historical execution gated by model readiness",
   "mission": "Apollo 11",
   "start_get_s": 369450,
   "start_get_hms": "102:37:30",
@@ -76,8 +76,8 @@
     "preflight_simulation_exact_replay": false,
     "note": "A preflight program-alarm simulation is documented, but exact alarm identity/timing/injection details remain insufficient for exact reconstruction."
   },
-  "execution_enabled": false,
-  "execution_gate_reason": "Apollo 11 descent model profile remains partial/unresolved; adapter is architecture-testable but live historical scenario execution is not yet approved",
+  "execution_enabled": true,
+  "execution_gate_reason": "Historical Apollo 11 descent execution requires all required model domains to be validated; the current model profile remains partial/unresolved",
   "pdi_get_s": 369185.2,
   "pdi_get_hms": "102:33:05.2",
   "generic_runtime": {
@@ -140,7 +140,8 @@
         "get_s": 369689.2,
         "name": "nominal_high_gate",
         "phase": "approach",
-        "updates": {}
+        "updates": {},
+        "gate": "landing_go"
       },
       {
         "get_s": 369692,
@@ -199,5 +200,17 @@
     "phase_note": "nominal high/low-gate events are Flight Plan phase anchors referenced to the source-controlled 102:33:05.2 PDI GET; they are not exact flown transition states.",
     "controller_product_note": "generic runtime station views are intentionally empty until a source-backed player product adapter explicitly projects fields; internal reference variables are not exposed automatically.",
     "alarm_note": "reference-event alarm variables are internal scenario state only and do not automatically populate controller-visible alarm products or decisions."
+  },
+  "execution_requires_validated_model": true,
+  "apollo11_descent_runtime": {
+    "pdi_get_s": 369185.2,
+    "phase_profile_id": "apollo11_g_powered_descent_phase_skeleton",
+    "decision_projection": {
+      "gate_id": "landing_go",
+      "capcom_go_action": "landing_go",
+      "capcom_no_go_action": "landing_no_go",
+      "guidance_station": "GUIDO",
+      "control_station": "CONTROL"
+    }
   }
 }
