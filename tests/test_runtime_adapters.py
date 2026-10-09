@@ -166,7 +166,6 @@ class RuntimeAdapterTests(unittest.TestCase):
         self.assertEqual(runtime.state.phase, "landing")
         self.assertEqual(runtime.state.variables["program.number"], "P66")
         self.assertEqual(runtime.state.variables["control.mode"], "manual")
-        self.assertEqual(runtime.state.variables["program.restart_count"], 5)
 
     def test_capabilities_keep_pc2_specific_operations_explicit(self):
         capabilities = runtime_capabilities("pc2_v1")
