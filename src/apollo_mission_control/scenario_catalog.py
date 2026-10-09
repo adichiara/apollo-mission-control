@@ -65,6 +65,7 @@ class ScenarioRecord:
     source_count: int
     fixture_path: Path
     execution_enabled: bool = True
+    execution_requires_validated_model: bool = False
     execution_gate_reason: str | None = None
 
     def to_public_dict(self) -> dict[str, object]:
@@ -84,6 +85,9 @@ class ScenarioRecord:
             "vehicle_configuration": self.vehicle_configuration,
             "source_count": self.source_count,
             "execution_enabled": self.execution_enabled,
+            "execution_requires_validated_model": (
+                self.execution_requires_validated_model
+            ),
             "execution_gate_reason": self.execution_gate_reason,
         }
 
@@ -105,6 +109,14 @@ def load_scenario_record(path: str | Path) -> ScenarioRecord:
     execution_enabled = data.get("execution_enabled", True)
     if not isinstance(execution_enabled, bool):
         raise ValueError("scenario metadata 'execution_enabled' must be boolean")
+    execution_requires_validated_model = data.get(
+        "execution_requires_validated_model",
+        False,
+    )
+    if not isinstance(execution_requires_validated_model, bool):
+        raise ValueError(
+            "scenario metadata 'execution_requires_validated_model' must be boolean"
+        )
     raw_gate_reason = data.get("execution_gate_reason")
     if raw_gate_reason is None:
         execution_gate_reason = None
@@ -136,6 +148,7 @@ def load_scenario_record(path: str | Path) -> ScenarioRecord:
         source_count=len(sources),
         fixture_path=fixture_path,
         execution_enabled=execution_enabled,
+        execution_requires_validated_model=execution_requires_validated_model,
         execution_gate_reason=execution_gate_reason,
     )
 
