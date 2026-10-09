@@ -168,13 +168,16 @@ Stop broad numerical-gate searching and do not schedule D-022 sensitivity work u
 
 ---
 
-## Active exception — Apollo 11 powered-descent reference
+## Apollo 11 powered-descent reference
 
-- **Status:** **OPEN**
-- **Reason:** the second architecture reference still has explicit current dependencies around historical execution readiness and eventual player-facing use, even though its major causal/product/decision domains and runtime-adapter boundary are now composed.
-- **Closed bounded subquestions:** research 502 marks the descent landing-radar/controller-call workflow **SUFFICIENT** for current station and decision-topology architecture; the decision-gate contract and generic-runtime decision projection are implemented; the MSK-1137/CONTROL controller-product schema is implemented; the powered-descent phase/event question is executable as a nominal Flight Plan skeleton with flown propulsion observations kept separate; the domains are composed in a read-only Apollo 11 descent runtime projection; and the cataloged `apollo11_descent_v1` adapter/fixture is implemented on `GenericScenarioSession` with explicit human-decision/product boundaries. Exact Mission-G per-field LR ground-processing provenance remains separately **BLOCKED** on named source recovery.
-- **Current next dependency:** apply D-024 to the scenario's remaining required model domains and identify which unresolved/partial domains materially block historical execution at the current player/product resolution. Do not treat adapter availability as execution approval; the live session gate requires a historically validated model profile for this scenario.
-- **Stop condition:** close or classify each remaining execution-readiness dependency separately as **SUFFICIENT**, **DEFERRED**, or **BLOCKED**. Do not keep the entire Apollo 11 domain permanently OPEN once no named implementation dependency remains.
+- **Status:** **SUFFICIENT for the current architecture/reference-event research scope; scoped blockers remain**
+- **Bounded question:** Is there enough historical evidence to implement the current Apollo 11 reference-event adapter, controller-product boundary, and human decision topology without inventing hidden state or controller authority?
+- **Implementation dependency:** `apollo11_descent_v1`, explicit controller-product feed, and eventual player-facing reference-event session.
+- **Decision-relevant findings:** research 502 closes the descent landing-radar/controller-call topology; research 600 closes controller-product field semantics; the powered-descent phase skeleton, guidance alarm/restart boundary, landing-radar deterministic update boundary, read-only descent projection, and readiness-gated runtime adapter are implemented. The D-024 domain review is canonical in `docs/APOLLO11_EXECUTION_READINESS.md`.
+- **Remaining gaps and disposition:** generated historical LM-5 descent dynamics are **BLOCKED** on named propulsion/calibration evidence and exact continuous flown trajectory is reconstruction-only; automated historically timed PGNCS/AGS/MSFN comparison is **BLOCKED** on inter-source freshness; historical stochastic landing-radar generation is **BLOCKED** on Apollo-11-effective numerical error evidence; exact Mission-G per-field ground routing/cadence is **BLOCKED** on PHO-TR155/Data Formats/data-pack recovery. Backup-guidance numerical execution and generated propulsion/translational dynamics are **DEFERRED** for the current reference-event adapter because it does not execute those models.
+- **Closure challenge:** the current model profile, landing-radar/guidance-monitoring research, controller-product workflow, descent dynamics input audit, and runtime adapter were reviewed together. No unresolved item was found that requires broad Apollo 11 research merely to preserve the current reference-event architecture. The remaining gaps affect narrower generated-model or exact-routing claims.
+- **Reopen triggers:** a selected scenario branch requires generated AGS behavior, historically timed automated guidance comparison, stochastic LR measurement generation, generated LM-5 descent dynamics, exact Mission-G ground routing/cadence, or another player-visible product whose evidence is not already sufficient.
+- **Next implementation dependency:** build an explicit source-bounded controller-product feed for the reference interval and validate it on the player surface. Do not weaken the live execution gate merely because the architecture research is sufficient.
 
 ## Portfolio operating rule
 
