@@ -84,15 +84,39 @@ The schema deliberately does not:
 
 Those belong to separate causal, station, or human-decision layers.
 
+## Reference-event feed
+
+A separate facilitator/reference layer now exercises this schema without reading hidden
+runtime state:
+
+- `src/apollo_mission_control/apollo11_reference_product_feed.py`;
+- `data/controller_product_feeds/apollo11_descent_reference_products_v1.json`;
+- `/api/admin/model-proof/apollo11-reference-product-feed`;
+- Causal Model Lab: **Apollo 11 reference-event controller-product feed**.
+
+The initial feed deliberately contains only values whose historical event state and
+MSK-1137 field semantics are both directly controlled:
+
+- most-recent program alarm code at the Mission Report 1201/1202 event anchors;
+- computer program number at the Mission Report P64/P66 entry anchors.
+
+The source-event GET is used as a **project reference activation time**. It is explicitly
+not claimed to be the historical ground-display availability time. Exact downlink/RTCC
+routing, station request ownership, refresh cadence, and latency remain unresolved.
+
+The feed never reads the runtime's internal `program.*` variables. Unsupplied schema
+fields remain unavailable.
+
 ## Next dependency
 
-The product schema is sufficient for the current architecture and Causal Model Lab.
+The product schema and reference-event feed are sufficient for the current facilitator
+architecture proof.
 
 The next Apollo 11 controller-product work should be driven by one of these conditions:
 
 1. recovery of Mission-G-effective per-field routing/external-name/computation identifiers;
 2. a concrete player-facing CONTROL/GUIDO product prototype requiring a subset of this
-   field family;
+   field family, after the existing human playability checkpoint;
 3. a sourced decision rule requiring additional controller-visible inputs.
 
 Until then, exact DRK/FDK mapping, request cadence, channel identity, and display timing

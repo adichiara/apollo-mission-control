@@ -1,0 +1,132 @@
+{
+  "schema_version": "0.1-reference-product-feed",
+  "feed_id": "apollo11_descent_reference_products_v1",
+  "mission_profile_id": "apollo11_g",
+  "status": "source-bounded reference-event feed; not historical ground-display timing",
+  "applicability": "Apollo 11 powered-descent architecture/reference interval. Values are activated at source-event GET solely for deterministic reference playback; exact ground-display availability, routing, and latency remain unresolved.",
+  "timing_policy": "project_reference_at_source_event_time_not_historical_display_time",
+  "events": [
+    {
+      "event_id": "first_1202_reference",
+      "source_get_s": 369502,
+      "source_get_hms": "102:38:22",
+      "activation_get_s": 369502,
+      "label": "Mission Report first 1202 computer/event anchor",
+      "values": {
+        "program.alarm_latest": "1202"
+      },
+      "field_provenance": {
+        "program.alarm_latest": [
+          "NASA Apollo 11 Mission Report Table 5-I: 1202 alarm (computer determined) at 102:38:22",
+          "AC Electronics Apollo 11 Manual MSK-1137: FREG2 most-recent alarm-code field"
+        ]
+      }
+    },
+    {
+      "event_id": "second_1202_reference",
+      "source_get_s": 369542,
+      "source_get_hms": "102:39:02",
+      "activation_get_s": 369542,
+      "label": "Mission Report second 1202 event anchor",
+      "values": {
+        "program.alarm_latest": "1202"
+      },
+      "field_provenance": {
+        "program.alarm_latest": [
+          "NASA Apollo 11 Mission Report Table 5-I: 1202 alarm at 102:39:02",
+          "AC Electronics Apollo 11 Manual MSK-1137: FREG2 most-recent alarm-code field"
+        ]
+      }
+    },
+    {
+      "event_id": "enter_p64_reference",
+      "source_get_s": 369692,
+      "source_get_hms": "102:41:32",
+      "activation_get_s": 369692,
+      "label": "Mission Report P64 entry anchor",
+      "values": {
+        "program.number": 64
+      },
+      "field_provenance": {
+        "program.number": [
+          "NASA Apollo 11 Mission Report Table 5-I: enter program P64 at 102:41:32",
+          "AC Electronics Apollo 11 Manual MSK-1137: PROG computer-program field"
+        ]
+      }
+    },
+    {
+      "event_id": "1201_reference",
+      "source_get_s": 369738,
+      "source_get_hms": "102:42:18",
+      "activation_get_s": 369738,
+      "label": "Mission Report 1201 computer/event anchor",
+      "values": {
+        "program.alarm_latest": "1201"
+      },
+      "field_provenance": {
+        "program.alarm_latest": [
+          "NASA Apollo 11 Mission Report Table 5-I: 1201 alarm (computer determined) at 102:42:18",
+          "AC Electronics Apollo 11 Manual MSK-1137: FREG2 most-recent alarm-code field"
+        ]
+      }
+    },
+    {
+      "event_id": "third_1202_reference",
+      "source_get_s": 369763,
+      "source_get_hms": "102:42:43",
+      "activation_get_s": 369763,
+      "label": "Mission Report third 1202 computer/event anchor",
+      "values": {
+        "program.alarm_latest": "1202"
+      },
+      "field_provenance": {
+        "program.alarm_latest": [
+          "NASA Apollo 11 Mission Report Table 5-I: 1202 alarm (computer determined) at 102:42:43",
+          "AC Electronics Apollo 11 Manual MSK-1137: FREG2 most-recent alarm-code field"
+        ]
+      }
+    },
+    {
+      "event_id": "fourth_1202_reference",
+      "source_get_s": 369778,
+      "source_get_hms": "102:42:58",
+      "activation_get_s": 369778,
+      "label": "Mission Report fourth 1202 computer/event anchor",
+      "values": {
+        "program.alarm_latest": "1202"
+      },
+      "field_provenance": {
+        "program.alarm_latest": [
+          "NASA Apollo 11 Mission Report Table 5-I: 1202 alarm (computer determined) at 102:42:58",
+          "AC Electronics Apollo 11 Manual MSK-1137: FREG2 most-recent alarm-code field"
+        ]
+      }
+    },
+    {
+      "event_id": "enter_p66_reference",
+      "source_get_s": 369802,
+      "source_get_hms": "102:43:22",
+      "activation_get_s": 369802,
+      "label": "Mission Report P66 entry anchor",
+      "values": {
+        "program.number": 66
+      },
+      "field_provenance": {
+        "program.number": [
+          "NASA Apollo 11 Mission Report Table 5-I: enter program P66 at 102:43:22",
+          "AC Electronics Apollo 11 Manual MSK-1137: PROG computer-program field"
+        ]
+      }
+    }
+  ],
+  "sources": [
+    "NASA Apollo 11 Mission Report, MSC-00171, Table 5-I Lunar descent event times",
+    "AC Electronics Apollo 11 Manual, MSK-1137 and MSK-1137 continued"
+  ],
+  "unresolved": [
+    "exact Mission-G ground-display availability time for each source event",
+    "exact per-field D/L versus RTCC/ground-processing route",
+    "exact station request/ownership and DRK/FDK mapping",
+    "display refresh cadence and latency"
+  ]
+}

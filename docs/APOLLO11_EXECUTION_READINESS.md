@@ -79,7 +79,7 @@ The current strict `execution_requires_validated_model` gate remains conservativ
 
 However, the review shows that “all seven model domains must become fully validated” is not the correct long-term execution criterion for the **reference-event** scenario. Several listed domains are deliberately not executed by the adapter.
 
-The next implementation task is therefore to define a scenario-specific execution contract that distinguishes:
+The first explicit facilitator/reference product feed is now implemented. It replays only source-controlled alarm-code and P64/P66 program-number values at project reference activations and keeps all other fields unavailable. The next implementation task is therefore to define a scenario-specific execution contract that distinguishes:
 
 ### Required before a source-bounded reference-event player session
 
@@ -105,7 +105,7 @@ The next implementation task is therefore to define a scenario-specific executio
 
 No broad archival search is on the critical path.
 
-The immediate critical path is implementation and validation of an explicit controller-product feed using already sufficient field/decision evidence, followed by human interface checkout.
+The facilitator/reference product feed is implemented and site-facing. The immediate critical path is human/interface validation before mapping any subset into a player station view, followed by a deliberate scenario-execution policy decision.
 
 ### Generated historical descent dynamics
 
