@@ -64,6 +64,9 @@ class ScenarioRecord:
     vehicle_configuration: str
     source_count: int
     fixture_path: Path
+    execution_enabled: bool = True
+    execution_requires_validated_model: bool = False
+    execution_gate_reason: str | None = None
 
     def to_public_dict(self) -> dict[str, object]:
         return {
@@ -81,6 +84,11 @@ class ScenarioRecord:
             "end_target_get_hms": self.end_target_get_hms,
             "vehicle_configuration": self.vehicle_configuration,
             "source_count": self.source_count,
+            "execution_enabled": self.execution_enabled,
+            "execution_requires_validated_model": (
+                self.execution_requires_validated_model
+            ),
+            "execution_gate_reason": self.execution_gate_reason,
         }
 
 
@@ -98,6 +106,31 @@ def load_scenario_record(path: str | Path) -> ScenarioRecord:
     if not isinstance(sources, list) or not all(isinstance(item, str) for item in sources):
         raise ValueError("scenario metadata 'sources' must be a list of strings")
 
+    execution_enabled = data.get("execution_enabled", True)
+    if not isinstance(execution_enabled, bool):
+        raise ValueError("scenario metadata 'execution_enabled' must be boolean")
+    execution_requires_validated_model = data.get(
+        "execution_requires_validated_model",
+        False,
+    )
+    if not isinstance(execution_requires_validated_model, bool):
+        raise ValueError(
+            "scenario metadata 'execution_requires_validated_model' must be boolean"
+        )
+    raw_gate_reason = data.get("execution_gate_reason")
+    if raw_gate_reason is None:
+        execution_gate_reason = None
+    elif isinstance(raw_gate_reason, str) and raw_gate_reason.strip():
+        execution_gate_reason = raw_gate_reason.strip()
+    else:
+        raise ValueError(
+            "scenario metadata 'execution_gate_reason' must be a non-empty string or null"
+        )
+    if not execution_enabled and execution_gate_reason is None:
+        raise ValueError(
+            "execution_gate_reason is required when scenario execution is disabled"
+        )
+
     return ScenarioRecord(
         scenario_id=_text(data, "scenario_id"),
         title=_text(data, "title"),
@@ -114,6 +147,9 @@ def load_scenario_record(path: str | Path) -> ScenarioRecord:
         vehicle_configuration=_text(data, "vehicle_configuration"),
         source_count=len(sources),
         fixture_path=fixture_path,
+        execution_enabled=execution_enabled,
+        execution_requires_validated_model=execution_requires_validated_model,
+        execution_gate_reason=execution_gate_reason,
     )
 
 

@@ -807,6 +807,23 @@ def _status_payload(session: SessionRuntime) -> dict[str, Any]:
     }
 
 
+def _scenario_execution_allowed(
+    record: ScenarioRecord,
+    *,
+    historical_validation_ready: bool,
+) -> bool:
+    if not record.execution_enabled:
+        return False
+    if not has_runtime_adapter(record.runtime_adapter):
+        return False
+    if (
+        record.execution_requires_validated_model
+        and not historical_validation_ready
+    ):
+        return False
+    return True
+
+
 def _snapshot_payload(session: SessionRuntime, player_id: str) -> dict[str, Any]:
     stations = session.stations_for(player_id)
     if len(stations) == 1:
@@ -833,11 +850,22 @@ def list_scenarios() -> list[dict[str, object]]:
                 record.required_model_domains,
             )
         )
+        adapter_available = has_runtime_adapter(record.runtime_adapter)
         result.append(
             {
                 **record.to_public_dict(),
                 "default": record.scenario_id == DEFAULT_SCENARIO_ID,
-                "executable": has_runtime_adapter(record.runtime_adapter),
+                "adapter_available": adapter_available,
+                "execution_model_gate_satisfied": (
+                    not record.execution_requires_validated_model
+                    or readiness.historical_validation_ready
+                ),
+                "executable": _scenario_execution_allowed(
+                    record,
+                    historical_validation_ready=(
+                        readiness.historical_validation_ready
+                    ),
+                ),
                 "model_readiness": readiness.to_public_dict(),
             }
         )
@@ -893,6 +921,33 @@ def create_session(
                     f"{model_profile.mission_profile_id!r}, not "
                     f"{profile.mission_profile_id!r}"
                 ),
+            )
+        readiness = _domain_call(
+            lambda: assess_model_readiness(
+                model_profile,
+                record.required_model_domains,
+            )
+        )
+        if not record.execution_enabled:
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    f"scenario {record.scenario_id} execution is disabled: "
+                    f"{record.execution_gate_reason}"
+                ),
+            )
+        if (
+            record.execution_requires_validated_model
+            and not readiness.historical_validation_ready
+        ):
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    f"scenario {record.scenario_id} execution is blocked by "
+                    f"model readiness; unvalidated domains: "
+                    f"{', '.join(readiness.unvalidated_domains)}. "
+                    f"{record.execution_gate_reason or ''}"
+                ).strip(),
             )
         session = _domain_call(lambda: create_runtime(record))
         _session = session
