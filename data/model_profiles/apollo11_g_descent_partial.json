@@ -51,6 +51,6 @@
     "LM-5 landing-radar beam/terrain measurement generation, radar-axis reference computation, and estimator/filter implementation",
     "historical guidance observation freshness/cadence and exact GUIDO/FLIGHT alarm/cross-check presentation",
     "historically validated alarm decision rule implementation",
-    "Apollo 11 descent runtime adapter"
+    "live historical Apollo 11 descent execution until all scenario-required model domains are validated"
   ]
 }
