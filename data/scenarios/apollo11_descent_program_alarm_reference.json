@@ -92,7 +92,6 @@
     "initial_variables": {
       "program.number": "P63",
       "program.alarm_latest": null,
-      "program.restart_count": 0,
       "control.mode": "automatic",
       "lr.data_good": false,
       "lr.updates_enabled": false
@@ -117,8 +116,7 @@
         "get_s": 369502,
         "name": "program_alarm_1202_first",
         "updates": {
-          "program.alarm_latest": "1202",
-          "program.restart_count": 1
+          "program.alarm_latest": "1202"
         }
       },
       {
@@ -132,8 +130,7 @@
         "get_s": 369542,
         "name": "program_alarm_1202_second",
         "updates": {
-          "program.alarm_latest": "1202",
-          "program.restart_count": 2
+          "program.alarm_latest": "1202"
         }
       },
       {
@@ -154,24 +151,21 @@
         "get_s": 369738,
         "name": "program_alarm_1201",
         "updates": {
-          "program.alarm_latest": "1201",
-          "program.restart_count": 3
+          "program.alarm_latest": "1201"
         }
       },
       {
         "get_s": 369763,
         "name": "program_alarm_1202_third",
         "updates": {
-          "program.alarm_latest": "1202",
-          "program.restart_count": 4
+          "program.alarm_latest": "1202"
         }
       },
       {
         "get_s": 369778,
         "name": "program_alarm_1202_fourth",
         "updates": {
-          "program.alarm_latest": "1202",
-          "program.restart_count": 5
+          "program.alarm_latest": "1202"
         }
       },
       {
@@ -199,7 +193,8 @@
     "station_identity_note": "GUIDO remains the player/station identity; the Flight-loop poll word Guidance is mapped by the descent decision projection and is not a synthetic station.",
     "phase_note": "nominal high/low-gate events are Flight Plan phase anchors referenced to the source-controlled 102:33:05.2 PDI GET; they are not exact flown transition states.",
     "controller_product_note": "generic runtime station views are intentionally empty until a source-backed player product adapter explicitly projects fields; internal reference variables are not exposed automatically.",
-    "alarm_note": "reference-event alarm variables are internal scenario state only and do not automatically populate controller-visible alarm products or decisions."
+    "alarm_note": "reference-event alarm variables are internal scenario state only and do not automatically populate controller-visible alarm products or decisions.",
+    "gate_note": "The landing_go gate opens at the nominal high-gate phase anchor for architecture testing. This is not a claim that the historical FLIGHT decision occurred at exactly that nominal anchor."
   },
   "execution_requires_validated_model": true,
   "apollo11_descent_runtime": {
