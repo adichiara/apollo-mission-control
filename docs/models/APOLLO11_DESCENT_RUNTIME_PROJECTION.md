@@ -1,6 +1,6 @@
 # Apollo 11 Descent Runtime Projection
 
-Status: **implemented read-only architecture composition; not yet an executable historical scenario**
+Status: **implemented read-only architecture composition and runtime adapter; live historical scenario execution remains model-readiness gated**
 
 ## Purpose
 
@@ -10,7 +10,10 @@ Implementation:
 
 - `src/apollo_mission_control/apollo11_descent_runtime_projection.py`
 - `src/apollo_mission_control/apollo11_descent_runtime_probe.py`
+- `src/apollo_mission_control/apollo11_descent_session.py`
+- `data/scenarios/apollo11_descent_program_alarm_reference.json`
 - `tests/test_apollo11_descent_runtime_projection.py`
+- `tests/test_runtime_adapters.py`
 - `tests/test_apollo11_descent_runtime_probe.py`
 
 ## Reused domains
@@ -82,12 +85,30 @@ The Causal Model Lab shows five architecture cases:
 
 Probe values and event timings are synthetic. The proof is not an Apollo 11 historical replay.
 
+## Runtime-adapter boundary
+
+The cataloged `apollo11_descent_v1` adapter is now implemented as an `Apollo11DescentSession` layered on `GenericScenarioSession`.
+
+It binds:
+
+- source-controlled PDI GET;
+- the nominal powered-descent phase profile;
+- the explicit `landing_go` decision-gate identifier;
+- GUIDO as the player/station identity for the bounded Guidance-readiness input;
+- CONTROL as the CONTROL readiness input;
+- explicit CAPCOM GO/NO-GO action identifiers.
+
+The fixture keeps station views empty. Internal reference-event variables therefore do not become controller-visible products automatically. The bound `project_descent()` method still requires landing-radar state, controller-product values, and guidance-computer state as separate explicit inputs.
+
+The nominal high-gate anchor opens `landing_go` for architecture testing. That scheduling is a project integration anchor, not a claim that the historical FLIGHT decision occurred at exactly nominal high gate.
+
+The scenario catalog also separates adapter availability from execution approval. Apollo 11 advertises the adapter but requires validated historical model domains before the live session API will create it. PC+2 retains its separately accepted partial-model prototype policy.
+
 ## Deliberately not done
 
-This projection is not yet:
+This projection/adapter is not yet:
 
-- an executable selectable Apollo 11 scenario;
-- a new runtime adapter;
+- an executable selectable Apollo 11 historical session;
 - a continuous trajectory/thrust simulation;
 - a historical reconstruction of station timing;
 - a source of automatic GO/NO-GO, abort, or landing decisions;
@@ -95,4 +116,4 @@ This projection is not yet:
 
 ## Next
 
-Use this projection as the read-only boundary for an Apollo 11 descent runtime adapter/fixture. The adapter should reuse `GenericScenarioSession` mechanics and existing causal domains, expose only source-backed/controller-supplied products, and keep the scenario non-executable until its required model/readiness gates are explicitly satisfied.
+Treat the adapter/fixture integration question as complete. Use D-024 to bound the remaining execution-readiness dependencies rather than broadening the adapter. Live execution remains blocked by the scenario's validated-model gate, while unresolved Mission-G controller-product routing remains separate from onboard/vehicle model readiness.
