@@ -41,6 +41,10 @@ from .crew_response import (
     record_premature_dps_stop,
 )
 from .apollo11_descent_products import project_apollo11_descent_products
+from .apollo11_reference_product_feed import (
+    evaluate_reference_product_feed,
+    get_reference_product_feed,
+)
 from .apollo11_descent_runtime_probe import (
     run_apollo11_descent_runtime_reference_probe,
 )
@@ -556,6 +560,15 @@ class Apollo11DescentProductsRequest(BaseModel):
         max_length=1000,
     )
     provenance: list[str] = Field(default_factory=list, max_length=50)
+
+
+class Apollo11ReferenceProductFeedRequest(BaseModel):
+    feed_id: str = Field(
+        default="apollo11_descent_reference_products_v1",
+        min_length=1,
+        max_length=128,
+    )
+    get_s: float = Field(ge=0.0)
 
 
 class LandingRadarDecisionGateRequest(BaseModel):
@@ -1888,6 +1901,31 @@ def powered_descent_phase_model_proof(
         lambda: evaluate_powered_descent_phase(request.tfi_s, profile)
     )
     return snapshot.to_dict()
+
+
+@app.post(
+    "/api/admin/model-proof/apollo11-reference-product-feed",
+    dependencies=[Depends(_facilitator_guard)],
+)
+def apollo11_reference_product_feed_model_proof(
+    request: Apollo11ReferenceProductFeedRequest,
+) -> dict[str, object]:
+    feed = _domain_call(lambda: get_reference_product_feed(request.feed_id))
+    snapshot = _domain_call(
+        lambda: evaluate_reference_product_feed(
+            feed,
+            get_s=request.get_s,
+        )
+    )
+    return {
+        "feed": feed.to_public_dict(),
+        "snapshot": snapshot.to_dict(),
+        "boundary_note": (
+            "Feed activation uses source-event GET as a project reference convention. "
+            "It is not a claim about exact Mission-G ground-display availability, "
+            "routing, cadence, or latency."
+        ),
+    }
 
 
 @app.post(

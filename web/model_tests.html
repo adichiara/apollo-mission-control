@@ -185,6 +185,18 @@
 <details class="raw"><summary>Raw descent-runtime projection JSON</summary><pre id="descentRuntimeRaw">No run yet.</pre></details>
 </section>
 
+<section id="referenceProducts" class="panel">
+<h2>Apollo 11 reference-event controller-product feed</h2>
+<p class="note">Replays only explicitly sourced Mission Report event values into the existing controller-product schema. Event GET is used as a project reference activation time; it is not a claim about exact Mission-G display availability, routing, refresh cadence, or latency.</p>
+<div class="grid">
+<label class="field">Reference GET (s)<input id="arpGet" type="number" value="369502" step="1"></label>
+</div>
+<div class="actions"><button id="runReferenceProducts">Evaluate feed</button><button id="referenceFirstAlarm">First 1202</button><button id="referenceP64">P64</button><button id="reference1201">1201</button><button id="referenceP66">P66</button></div>
+<div id="referenceProductsTrace" class="chain"><div class="stage"><b>Source event</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Project reference activation</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Explicit products</b>Not run</div><div class="arrow">→</div><div class="stage"><b>Timing boundary</b>Not run</div></div>
+<div class="boundary">No hidden AGC/runtime state is read. Unsupplied MSK-1137 fields remain unavailable, and station ownership is not inferred.</div>
+<details class="raw"><summary>Raw reference-product feed JSON</summary><pre id="referenceProductsRaw">No run yet.</pre></details>
+</section>
+
 <section id="descentProducts" class="panel">
 <h2>Apollo 11 descent controller-product boundary</h2>
 <p class="note">Projects only explicitly supplied controller-visible values into the source-backed MSK-1137 / CONTROL field family. Missing fields remain unavailable, and unresolved D/L/RTCC routing is shown rather than guessed.</p>
@@ -721,6 +733,30 @@ async function runDescentRuntime(){
  }catch(e){$('descentRuntimeRaw').textContent=String(e.message||e)}
 }
 $('runDescentRuntime').onclick=runDescentRuntime;
+
+async function runReferenceProducts(getS=null){
+ const query=getS===null?num('arpGet'):getS;
+ $('arpGet').value=query;$('referenceProductsRaw').textContent='Running…';
+ const payload={feed_id:'apollo11_descent_reference_products_v1',get_s:query};
+ try{
+  const r=await request('/api/admin/model-proof/apollo11-reference-product-feed',payload);
+  recordCausal('apollo11-reference-product-feed',payload,r);
+  const s=r.snapshot,products=s.controller_products.products,available=products.filter(p=>p.available);
+  const latest=s.latest_applied_event,next=s.next_event;
+  const values=available.length?available.map(p=>p.label+' = '+String(p.value)).join('<br>'):'No supplied product values yet';
+  $('referenceProductsTrace').innerHTML=
+   traceStage('Source event',latest?'<div>'+latest.label+'</div><div>source GET = '+scalar(latest.source_get_s)+'</div>':'<div>No source event applied yet</div>')+
+   arrow()+traceStage('Project reference activation',latest?'<div>activation GET = '+scalar(latest.activation_get_s)+'</div><div class="note">'+s.timing_policy+'</div>':'<div>waiting for first reference event</div>')+
+   arrow()+traceStage('Explicit products','<div>'+values+'</div><div class="note">'+available.length+' supplied; all other schema fields unavailable</div>')+
+   arrow()+traceStage('Timing boundary','<div>historical display timing claimed '+statusBadge(s.historical_ground_display_timing_claimed)+'</div><div class="note">'+r.boundary_note+'</div>'+(next?'<div>next = '+next.label+'</div>':'<div>no later feed event</div>'));
+  $('referenceProductsRaw').textContent=JSON.stringify(r,null,2);
+ }catch(e){$('referenceProductsRaw').textContent=String(e.message||e)}
+}
+$('runReferenceProducts').onclick=()=>runReferenceProducts();
+$('referenceFirstAlarm').onclick=()=>runReferenceProducts(369502);
+$('referenceP64').onclick=()=>runReferenceProducts(369692);
+$('reference1201').onclick=()=>runReferenceProducts(369738);
+$('referenceP66').onclick=()=>runReferenceProducts(369802);
 
 function descentProductsPayload(mode='normal'){
  const values={};
